@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>a.b</groupId>
 	<artifactId>c</artifactId>
-	<name>FinalProject</name>
+	<name>Final</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
