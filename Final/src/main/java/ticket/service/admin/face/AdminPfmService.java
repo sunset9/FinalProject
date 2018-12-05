@@ -1,5 +1,5 @@
 package ticket.service.admin.face;
 
-public class test2 {
+public interface AdminPfmService {
 
 }

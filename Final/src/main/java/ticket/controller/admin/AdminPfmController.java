@@ -6,12 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ticket.service.admin.face.PfmService;
+import ticket.service.admin.face.AdminPfmService;
 
 @Controller
 public class AdminPfmController {
 	
-	@Autowired PfmService pService;
+	@Autowired AdminPfmService pService;
 	
 
 	/**
