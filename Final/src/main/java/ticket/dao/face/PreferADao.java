@@ -1,5 +1,5 @@
 package ticket.dao.face;
 
-public class test2 {
+public interface PreferADao {
 
 }
