@@ -1,5 +1,5 @@
 package ticket.dto;
 
-public class test2 {
+public class Seat {
 
 }
