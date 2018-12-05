@@ -1,5 +1,3 @@
-package ticket.dto;
-
 import java.sql.Date;
 
 public class User {
@@ -105,6 +103,4 @@ public class User {
 	}
 	
 	
-
-
 }

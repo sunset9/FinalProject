@@ -1,5 +1,3 @@
-package ticket.dto;
-
 import java.util.Date;
 
 public class Performance {
