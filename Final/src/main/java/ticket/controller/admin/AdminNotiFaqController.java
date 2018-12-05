@@ -16,7 +16,10 @@ public class AdminNotiFaqController {
 	 */
 	@RequestMapping(value="notice/list")	
 	public void notiList() {
+
+		// b
 		// a
+
 	}
 	
 	/**
