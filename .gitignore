@@ -10,8 +10,5 @@ target/
 tmp/
 *.tmp
 
-.classpath
-
-
 
 .DS_Store
