@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ticket.service.admin.face.PfmService;
 
 @Controller
-public class PfmController {
+public class AdminPfmController {
 	
 	@Autowired PfmService pService;
 	
 
 	/**
-	 * 2018.12.05
-	 * @Method설명: 새 공연 등록 폼 띄우기
+	 * 2018.12AdminPfmControllerod설명: 새 공연 등록 폼 띄우기
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/admin/pfm/registPfm", method=RequestMethod.GET)
