@@ -4,11 +4,3 @@
 ### Java-Web ###
 ## ignoring target file
 target/
-
-*.bak
-
-tmp/
-*.tmp
-
-
-.DS_Store
