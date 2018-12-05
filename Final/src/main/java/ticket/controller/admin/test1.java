@@ -11,4 +11,9 @@ public class test1 {
 	public void test() {
 		
 	}
+	
+	@RequestMapping(value="/test2")
+	public void test2() {
+		
+	}
 }
