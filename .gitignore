@@ -1,0 +1,17 @@
+# sbteclipse plugin
+.target
+
+### Java-Web ###
+## ignoring target file
+target/
+
+*.bak
+
+tmp/
+*.tmp
+
+.classpath
+
+
+
+.DS_Store
