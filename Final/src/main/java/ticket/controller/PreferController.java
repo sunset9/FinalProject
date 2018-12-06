@@ -15,11 +15,12 @@ import ticket.dto.Theme;
 import ticket.service.face.PreferAService;
 import ticket.service.face.PreferTService;
 
+
 @Controller
 public class PreferController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PreferController.class);
-
+  
 	@Autowired
 	private PreferTService preferTService;
 	@Autowired
@@ -30,7 +31,7 @@ public class PreferController {
 		logger.info("선호 선택 페이지 폼");
 		
 		// 세션에서 유저 idx 얻기
-		int userIdx = (int)session.getAttribute("userIdx");
+		int userIdx = 0;
 		
 		// 유저가 선택한 테마 리스트 얻어오기 
 		preferTService.choiceList(userIdx);
