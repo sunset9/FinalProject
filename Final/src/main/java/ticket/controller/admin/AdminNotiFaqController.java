@@ -1,21 +1,28 @@
 package ticket.controller.admin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ticket.service.admin.face.AdminNotiFaqService;
+
 @Controller
 public class AdminNotiFaqController {
 
-	
+	static final Logger logger = LoggerFactory.getLogger(AdminNotiFaqController.class);
+
+	@Autowired AdminNotiFaqService adminNotiFaqService;
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.06
 	 * @Method설명: 공지사항 목록 페이징 리스트
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/list")	
+	@RequestMapping(value="/admin/notice/list", method=RequestMethod.GET)	
 	public void notiList(Model model) {
 		
 	}
@@ -25,9 +32,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 상세보기
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/view")
+	@RequestMapping(value="/admin/notice/view", method=RequestMethod.GET)
 	public void notiView(Model model) {
-		
+		logger.info("공지 상세");
 	}
 	
 	/**
@@ -35,9 +42,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 쓰기
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/write", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/notice/write", method=RequestMethod.GET)
 	public void notiWrite() {
-		
+		logger.info("공지 글 쓰기");
 	}
 	
 	/**
@@ -45,8 +52,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 쓰기 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/write", method=RequestMethod.POST)
-	public void notiWriteProc() {
+	@RequestMapping(value="/admin/notice/write", method=RequestMethod.POST)
+	public String notiWriteProc() {
+		return null;
 		
 	}
 	
@@ -55,7 +63,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 수정
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/update", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/notice/update", method=RequestMethod.GET)
 	public void notiUpdate() {
 		
 	}
@@ -66,8 +74,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 수정 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/update", method=RequestMethod.POST)
-	public void notiUpdateProc() {
+	@RequestMapping(value="/admin/notice/update", method=RequestMethod.POST)
+	public String notiUpdateProc() {
+		return null;
 		
 	}
 
@@ -77,7 +86,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 삭제
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/delete", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/notice/delete", method=RequestMethod.GET)
 	public void notiDelete() {
 		
 	}
@@ -88,8 +97,9 @@ public class AdminNotiFaqController {
 	 * @Method설명:
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/delete", method=RequestMethod.POST)
-	public void notiDeleteProc() {
+	@RequestMapping(value="/admin/notice/delete", method=RequestMethod.POST)
+	public String notiDeleteProc() {
+		return null;
 		
 	}
 
@@ -99,7 +109,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 파일 업로드
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/fileupload", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/notice/fileupload", method=RequestMethod.GET)
 	public void notiFileup() {
 		
 	}
@@ -109,8 +119,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 파일 업로드 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/fileupload", method=RequestMethod.POST)
-	public void notiFileupProc() {
+	@RequestMapping(value="/admin/notice/fileupload", method=RequestMethod.POST)
+	public String notiFileupProc() {
+		return null;
 		
 	}
 	
@@ -119,7 +130,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 파일 다운로드
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="notice/filedownload", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/notice/filedownload", method=RequestMethod.GET)
 	public void notiFiledownload() {
 		
 	}
@@ -132,7 +143,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 목록 페이징 리스트
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/list")
+	@RequestMapping(value="/admin/faq/list", method=RequestMethod.GET)
 	public void faqList(Model model) {
 		
 	}
@@ -142,9 +153,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 상세보기
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/view")
+	@RequestMapping(value="/admin/faq/view", method=RequestMethod.GET)
 	public void faqView(Model model) {
-		
+		logger.info("FAQ 상세");
 	}
 	
 	/**
@@ -152,9 +163,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 쓰기
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/write")
+	@RequestMapping(value="/admin/faq/write", method=RequestMethod.GET)
 	public void faqWrite() {
-		
+		logger.info("FAQ 글 쓰기");
 	}
 	
 	/**
@@ -162,8 +173,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 쓰기 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/write")
-	public void faqWriteProc() {
+	@RequestMapping(value="/admin/faq/write", method=RequestMethod.POST)
+	public String faqWriteProc() {
+		return null;
 		
 	}
 	
@@ -172,7 +184,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글에 달린 답변
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/answer")
+	@RequestMapping(value="/admin/faq/answer", method=RequestMethod.GET)
 	public void faqAnswer() {
 		
 	}
@@ -182,8 +194,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글에 달린 답변 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/answer")
-	public void faqAnswerProc() {
+	@RequestMapping(value="/admin/faq/answer", method=RequestMethod.POST)
+	public String faqAnswerProc() {
+		return null;
 		
 	}
 	
@@ -193,7 +206,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 수정
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/update")
+	@RequestMapping(value="/admin/faq/update", method=RequestMethod.GET)
 	public void faqUpdate() {
 		
 	}
@@ -203,8 +216,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 수정 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/update")
-	public void faqUpdateProc() {
+	@RequestMapping(value="/admin/faq/update", method=RequestMethod.POST)
+	public String faqUpdateProc() {
+		return null;
 		
 	}
 	
@@ -213,7 +227,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 삭제
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/delete")
+	@RequestMapping(value="/admin/faq/delete", method=RequestMethod.GET)
 	public void faqDelete() {
 			
 	}
@@ -223,8 +237,9 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 삭제 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="faq/delete")
-	public void faqDeleteProc() {
+	@RequestMapping(value="/admin/faq/delete", method=RequestMethod.POST)
+	public String faqDeleteProc() {
+		return null;
 			
 	}
 	
