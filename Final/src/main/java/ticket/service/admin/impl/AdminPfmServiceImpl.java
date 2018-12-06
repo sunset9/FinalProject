@@ -1,4 +1,3 @@
-
 package ticket.service.admin.impl;
 
 import java.io.File;
@@ -131,7 +130,11 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		return pDao.selectAllHall();
 	}
   
-
+	@Override
+	public void registPfm(Performance pfm, Genre genre, ThemeList themeList) {
+		
+	}
+  
 	@Override
 	public List<PosterInfo> getListCon() {
 		// TODO Auto-generated method stub

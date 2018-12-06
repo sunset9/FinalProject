@@ -149,6 +149,13 @@ public interface AdminPfmService {
 	public List<Hall> getHallList();
   
   /**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 새 공연 등록하기
+	 * @작성자: 전해진
+	 */
+	public void registPfm(Performance pfm, Genre genre, ThemeList themeList);
+  
+  /**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명:콘서트 배너 리스트
 	 * @작성자:박주희
