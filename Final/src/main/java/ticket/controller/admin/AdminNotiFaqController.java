@@ -1,6 +1,7 @@
 package ticket.controller.admin;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,11 +16,8 @@ public class AdminNotiFaqController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="notice/list")	
-	public void notiList() {
-
-		// b
-		// a
-
+	public void notiList(Model model) {
+		
 	}
 	
 	/**
@@ -28,7 +26,7 @@ public class AdminNotiFaqController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="notice/view")
-	public void notiView() {
+	public void notiView(Model model) {
 		
 	}
 	
@@ -135,7 +133,7 @@ public class AdminNotiFaqController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="faq/list")
-	public void faqList() {
+	public void faqList(Model model) {
 		
 	}
 	
@@ -145,7 +143,7 @@ public class AdminNotiFaqController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="faq/view")
-	public void faqView() {
+	public void faqView(Model model) {
 		
 	}
 	
