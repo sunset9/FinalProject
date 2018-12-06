@@ -8,22 +8,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ticket.service.admin.face.AdminNotiFaqService;
+import ticket.service.admin.face.AdminBoardService;
 
 @Controller
-public class AdminNotiFaqController {
+public class AdminBoardController {
 
-	static final Logger logger = LoggerFactory.getLogger(AdminNotiFaqController.class);
+	static final Logger logger = LoggerFactory.getLogger(AdminBoardController.class);
 
-	@Autowired AdminNotiFaqService adminNotiFaqService;
+	@Autowired AdminBoardService adminNotiFaqService;
 	
 	/**
 	 * 2018.12.06
 	 * @Method설명: 공지사항 목록 페이징 리스트
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/list", method=RequestMethod.GET)	
-	public void notiList(Model model) {
+	@RequestMapping(value="/admin/list", method=RequestMethod.GET)	
+	public String notiList(Model model) {
+		return "/admin/notice/list";
 		
 	}
 	
@@ -32,7 +33,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 상세보기
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/view", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/view", method=RequestMethod.GET)
 	public void notiView(Model model) {
 		logger.info("공지 상세");
 	}
@@ -42,7 +43,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 쓰기
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/write", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public void notiWrite() {
 		logger.info("공지 글 쓰기");
 	}
@@ -52,7 +53,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 쓰기 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/write", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 	public String notiWriteProc() {
 		return null;
 		
@@ -63,7 +64,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 수정
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/update", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/update", method=RequestMethod.GET)
 	public void notiUpdate() {
 		
 	}
@@ -74,7 +75,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 수정 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/update", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/update", method=RequestMethod.POST)
 	public String notiUpdateProc() {
 		return null;
 		
@@ -86,7 +87,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 글 삭제
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/delete", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/delete", method=RequestMethod.GET)
 	public void notiDelete() {
 		
 	}
@@ -97,7 +98,7 @@ public class AdminNotiFaqController {
 	 * @Method설명:
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/delete", method=RequestMethod.POST)
 	public String notiDeleteProc() {
 		return null;
 		
@@ -109,7 +110,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 파일 업로드
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/fileupload", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/fileupload", method=RequestMethod.GET)
 	public void notiFileup() {
 		
 	}
@@ -119,7 +120,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 파일 업로드 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/fileupload", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/fileupload", method=RequestMethod.POST)
 	public String notiFileupProc() {
 		return null;
 		
@@ -130,7 +131,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: 공지사항 파일 다운로드
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/notice/filedownload", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/filedownload", method=RequestMethod.GET)
 	public void notiFiledownload() {
 		
 	}
@@ -173,7 +174,7 @@ public class AdminNotiFaqController {
 	 * @Method설명: FAQ 글 쓰기 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/faq/write", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/faqwrite", method=RequestMethod.POST)
 	public String faqWriteProc() {
 		return null;
 		
