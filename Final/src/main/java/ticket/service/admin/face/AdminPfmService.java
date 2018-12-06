@@ -6,7 +6,9 @@ import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
+import ticket.dto.Performance;
 import ticket.dto.Theme;
+import ticket.dto.ThemeList;
 
 public interface AdminPfmService {
 
@@ -47,5 +49,13 @@ public interface AdminPfmService {
 	 * @작성자: 전해진
 	 */
 	public List<Hall> getHallList();
+
+
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 새 공연 등록하기
+	 * @작성자: 전해진
+	 */
+	public void registPfm(Performance pfm, Genre genre, ThemeList themeList);
 
 }
