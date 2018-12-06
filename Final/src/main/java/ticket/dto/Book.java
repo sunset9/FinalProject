@@ -8,7 +8,7 @@ public class Book {
 	private int userIdx;
 	private int bookCateIdx;
 	private int seatIdx;
-	private DATE createDate;
+	private Date createDate;
 
 	@Override
 	public String toString() {
@@ -56,11 +56,11 @@ public class Book {
 		this.seatIdx = seatIdx;
 	}
 
-	public DATE getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(DATE createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
