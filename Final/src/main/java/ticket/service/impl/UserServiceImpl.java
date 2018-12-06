@@ -14,27 +14,11 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public boolean loginCheck(User user) {
-		
-		userDao.selectByIdByPw(user);
-		
-		return false;
+	public int loginCheck(User user) {
+	
+		return 	userDao.selectCntUser(user);
 	}
 	
-	@Override
-	public int getUserIdx(User user) {
-		
-		userDao.selectIdxById(user);
-		return 0;
-	}
-
-	@Override
-	public String getNick(User user) {
-		
-		userDao.selectNickByIdx(user);
-		
-		return null;
-	}
 
 	@Override
 	public boolean checkPw(User user) {
