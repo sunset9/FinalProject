@@ -46,4 +46,27 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public List<Hall> selectAllHall();
+	
+	
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 오늘의 예매수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTodayBook();
+	
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 오늘의 예매취소수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTodayCancel();
+	
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 오늘 등록된 콘서트수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTodayCon();
+	
 }
