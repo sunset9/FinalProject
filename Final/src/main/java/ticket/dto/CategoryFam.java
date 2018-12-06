@@ -5,7 +5,7 @@ import java.util.Date;
 public class CategoryFam {
 	private int cateFamIdx;
 	private int pfmIdx;
-	private DATE createDate;
+	private Date createDate;
 
 	@Override
 	public String toString() {
@@ -28,11 +28,11 @@ public class CategoryFam {
 		this.pfmIdx = pfmIdx;
 	}
 
-	public DATE getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(DATE createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 

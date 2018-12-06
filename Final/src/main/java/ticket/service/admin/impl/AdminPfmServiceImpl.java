@@ -19,6 +19,7 @@ import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Theme;
+import ticket.dto.ThemeList;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
@@ -32,7 +33,7 @@ import ticket.dto.PosterInfo;
 @Service
 public class AdminPfmServiceImpl implements AdminPfmService{
 	@Autowired PfmDao pDao;
-		@Autowired
+	@Autowired
 	CategoryConDao conDao;
 	@Autowired
 	CategoryMuDao muDao;
@@ -222,5 +223,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		info.setStoredName(dest.getName());
 		infoDao.insert(info);
 	}
+
+
 
 }
