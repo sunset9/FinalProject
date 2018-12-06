@@ -18,7 +18,7 @@ public class MainController {
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 홈페이지 접속시 첫 페이지
 	 * @작성자: 배수연
 	 */
@@ -28,17 +28,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
-	 * @Method설명: 메인에 각 정보 띄우기
-	 * @작성자: 배수연
-	 */
-	@RequestMapping(value="/ticket/ticketmain", method=RequestMethod.POST)
-	public void ticketmainProc() {
-		
-	}
-	
-	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 메인 상단에서 콘서트 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
@@ -48,7 +38,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 콘서트 관련 띄우기
 	 * @작성자: 배수연
 	 */
@@ -58,7 +48,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 메인 상단에서 뮤지컬&연극 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
@@ -68,7 +58,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 뮤지컬&콘서트 관련 띄우기
 	 * @작성자: 배수연
 	 */
@@ -78,7 +68,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 메인 상단에서 가족&아동 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
@@ -88,7 +78,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 가족&아동 관련 띄우기
 	 * @작성자: 배수연
 	 */
@@ -98,7 +88,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 메인 상단에서 티켓 오픈 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
@@ -108,7 +98,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 티켓 오픈 관련 띄우기
 	 * @작성자: 배수연
 	 */
@@ -118,7 +108,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 메인 상단에서 예매 랭킹 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
@@ -128,7 +118,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 예매 랭킹 관련 띄우기
 	 * @작성자: 배수연
 	 */
@@ -138,7 +128,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 검색시 보여질 페이지
 	 * @작성자: 배수연
 	 */
@@ -148,7 +138,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 2018.12.04
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 검색 결과 띄우기
 	 * @작성자: 배수연
 	 */
