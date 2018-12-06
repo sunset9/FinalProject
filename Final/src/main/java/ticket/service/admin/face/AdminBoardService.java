@@ -6,7 +6,7 @@ import ticket.dto.Faq;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 
-public interface AdminNotiFaqService {
+public interface AdminBoardService {
 
 	// 공지사항 글 리스트 가져오기
 	public List getNotiList(Notice notice);

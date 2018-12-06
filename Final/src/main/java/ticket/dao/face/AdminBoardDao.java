@@ -6,7 +6,7 @@ import ticket.dto.Faq;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 
-public interface AdminNotiFaqDao {
+public interface AdminBoardDao {
 
 
 	// 공지사항 글 리스트

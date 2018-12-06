@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import ticket.dto.Faq;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
-import ticket.service.admin.face.AdminNotiFaqService;
+import ticket.service.admin.face.AdminBoardService;
 
 @Service
-public class AdminNotiFaqServiceImpl implements AdminNotiFaqService{
+public class AdminBoardServiceImpl implements AdminBoardService{
 
 	@Override
 	public List getNotiList(Notice notice) {
