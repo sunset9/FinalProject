@@ -2,7 +2,7 @@ package ticket.dto;
 
 import java.sql.Date;
 
-public class PreferGenre {
+public class PreferTheme {
 
 	private int preGenreIdx;
 	private int userIdx;

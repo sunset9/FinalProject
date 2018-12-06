@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ticket.dto.MyChoice;
 import ticket.service.face.MyChoiceService;
 import ticket.service.face.PreferAService;
-import ticket.service.face.PreferGService;
+import ticket.service.face.PreferTService;
 
 @Controller
 public class MyChoiceController {
@@ -20,7 +20,7 @@ public class MyChoiceController {
 	private PreferAService preferAService;
 	
 	@Autowired
-	private PreferGService preferGService;
+	private PreferTService preferGService;
 	
 	@RequestMapping(value="/mychoice/main" , method = RequestMethod.GET)
 	public void list(int userIdx) {
