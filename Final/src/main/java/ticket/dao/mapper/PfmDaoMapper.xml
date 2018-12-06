@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mapper namespace="ticket.dao.face">
+<!-- 마이바티스 3 매퍼 DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<mapper namespace="ticket.dao.face.PfmDao">
+
+	<resultMap type="ticket.dto.Genre" id="Genre">
+		<result column="genre_idx" property="genreIdx"/>
+		<result column="genre" property="genre"/>
+	</resultMap>
+	
+	<resultMap type="ticket.dto.Theme" id="Theme">
+		<result column="theme_idx" property="themeIdx"/>
+		<result column="theme_name" property="themeName"/>
+		<result column="genre_idx" property="genreIdx"/>
+	</resultMap>
+
+	<select id="selectAllGenre" resultMap="Genre">
+		SELECT genre_idx, genre
+		FROM genre
+		ORDER BY genre_idx
+	</select>
+
+	<select id="selectAllTheme" parameterType="ticket.dto.Genre" resultMap="Theme">
+		SELECT theme_idx, theme_name, genre_idx
+		FROM theme
+		WHERE genre_idx = ${genreIdx }
+		ORDER BY theme_idx
+	</select>
+	
+	<select id="selectAllAgeGrade">
+	
+	</select>
+	
+	<select id="selectArtistByName">
+	
+	</select>
+	
+	<select id="selectAllHall">
+	
+	</select>
+	
 </mapper>
