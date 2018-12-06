@@ -10,7 +10,6 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
 import ticket.dao.face.CategoryMuDao;
@@ -33,7 +32,7 @@ import ticket.service.admin.face.AdminPfmService;
 @Service
 public class AdminPfmServiceImpl implements AdminPfmService{
 	@Autowired PfmDao pDao;
-		@Autowired
+	@Autowired
 	CategoryConDao conDao;
 	@Autowired
 	CategoryMuDao muDao;
@@ -223,5 +222,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		info.setStoredName(dest.getName());
 		infoDao.insert(info);
 	}
+
+
 
 }
