@@ -2,6 +2,7 @@ package ticket.dto;
 
 public class Theme {
 
+
 	private int themeIdx;
 	private String themeName;
 	private int genreIdx;
@@ -30,6 +31,6 @@ public class Theme {
 	
 	
 	
-	
+
 	
 }

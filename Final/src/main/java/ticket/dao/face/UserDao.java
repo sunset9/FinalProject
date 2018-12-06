@@ -5,23 +5,12 @@ import ticket.dto.User;
 public interface UserDao {
 	
 	/**
-	 * @Method설명:로그인시 비밀번호와 아이디로 회원 조회
-	 * @작성자 : 홍나영
+	 * @최종수정일: 2018.12.06
+	 * @Method설명:유저 email,pw로 유저 존재하는지 확인
+	 * @작성자:이상지
 	 */
-	public int selectByIdByPw(User user);
 	
-	/**
-	 * @Method설명: 세션에 저장할 user idx 얻어오기
-	 * @작성자 : 홍나영
-	 */
-	public int selectIdxById(User user);
-	
-	/**
-	 * @Method설명: 세션에 저장할 idx 얻기
-	 * @작성자 : 홍나영
-	 */
-	public String selectNickByIdx(User user);
-	
+	public int selectCntUser(User user);
 	/**
 	 * @Method설명: 정보 수정시 비밀번호 확인하기
 	 * @작성자 : 홍나영

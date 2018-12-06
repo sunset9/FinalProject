@@ -2,6 +2,7 @@ package ticket.dto;
 
 public class Artist {
 
+
 	private int artistIdx;
 	private String name;
 	private String imgUri;
@@ -39,4 +40,5 @@ public class Artist {
 	}
 	
 	
+
 }
