@@ -54,7 +54,7 @@ $(document).ready(function(){
 공연 제목: <input type="text" name="name"/><br>
 공연 분류:
 <select name="genreIdx">
-	<option value="-1" selected="selected">분류 선택</option>
+	<option value="0" selected="selected">분류 선택</option>
 	<c:forEach var="genre" items="${genreList }">
 		<option value="${genre.genreIdx }">${genre.genre }</option>
 	</c:forEach>

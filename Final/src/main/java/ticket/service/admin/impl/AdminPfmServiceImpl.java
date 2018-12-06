@@ -132,7 +132,11 @@ public class AdminPfmServiceImpl implements AdminPfmService{
   
 	@Override
 	public void registPfm(Performance pfm, Genre genre, ThemeList themeList) {
+		// 공연 기본 정보 등록
+		pDao.insertPfm(pfm);
 		
+		// 장르 정보 등록
+		genre.setGenreIdx(pfm.getPfmIdx());
 	}
   
 	@Override
