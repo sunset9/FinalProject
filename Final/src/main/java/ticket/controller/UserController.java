@@ -42,25 +42,31 @@ public class UserController {
 	
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
-	public void loginProc(User user) {
+	public String loginProc(User user, HttpSession session) {
 		logger.info("로그인 처리");
 	
 		// 아이디와 비밀번호 확인
-		userService.loginCheck(user);
-
-		// 유저 idx 얻기 
-		userService.getUserIdx(user);
+		if(userService.loginCheck(user) == 1) { 
+			session.setAttribute("login", true);
+			user = userService.getUser(user);
+			session.setAttribute("loginUser", user);
+			
+		} else {
+			session.setAttribute("login", false);
+		}
 		
-		// 닉네임 얻어오기
-		userService.getNick(user);
+		return null; //메인으로가게끔 처리해주세욤
+
 	}
 
 
 	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
-	public void logout(HttpSession session) {
+	public String logout(HttpSession session) {
 		logger.info("로그 아웃");
 		
 		session.invalidate();
+		
+		return null; //메인으로가게끔 처리
 	}
 	
 	@RequestMapping(value="/user/update", method = RequestMethod.GET)
