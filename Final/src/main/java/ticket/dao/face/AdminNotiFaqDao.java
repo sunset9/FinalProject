@@ -1,4 +1,4 @@
-package ticket.dao.admin.face;
+package ticket.dao.face;
 
 import java.util.List;
 
