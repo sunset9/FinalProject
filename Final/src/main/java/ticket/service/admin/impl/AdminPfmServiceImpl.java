@@ -33,7 +33,7 @@ import ticket.dto.PosterInfo;
 @Service
 public class AdminPfmServiceImpl implements AdminPfmService{
 	@Autowired PfmDao pDao;
-		@Autowired
+	@Autowired
 	CategoryConDao conDao;
 	@Autowired
 	CategoryMuDao muDao;
@@ -223,5 +223,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		info.setStoredName(dest.getName());
 		infoDao.insert(info);
 	}
+
+
 
 }
