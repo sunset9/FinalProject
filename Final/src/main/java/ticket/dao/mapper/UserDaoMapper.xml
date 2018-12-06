@@ -5,4 +5,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="ticket.dao.face.UserDao">
+  
+  <resultMap type="ticket.dto.User" id="UserMap">
+	<result column="user_idx" property="userIdx"/>
+	<result column="addr_detail" property="addrDetail"/>
+	<result column="create_date" property="createDate"/>
+</resultMap>
+  
+  	<select id="selectCntUser" parameterType="ticket.dto.User" resultType="int">
+		  select count(*) cnt from userinfo
+		  where 1=1
+		  <if test = "email != null and email != ''">
+		  	AND email = #{email}
+		  </if>
+		  <if test = "password != null and password != ''">
+		  	AND password = #{password}
+		  </if>
+	 </select>
+	 
+  <select id ="selectUser" parameterType="ticket.dto.User" resultMap="UserMap">
+  	select * from userinfo where email = #{email}
+  </select>
+  
   </mapper>
