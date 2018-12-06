@@ -17,6 +17,7 @@ import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Theme;
+import ticket.dto.ThemeList;
 
 public interface AdminPfmService {
 	
