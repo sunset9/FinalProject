@@ -5,22 +5,12 @@ import ticket.dto.User;
 public interface UserService {
 
 	/**
+	 * @최종수정일: 18.12.06
 	 * @Method설명: 아이디와 비밀번호 확인
 	 * @작성자 : 홍나영
+	 * @사용자 : 이상지
 	 */
-	public boolean loginCheck(User user);
-	
-	/**
-	 * @Method설명: 닉네임 얻기
-	 * @작성자 : 홍나영
-	 */
-	public String getNick(User user);
-	
-	/**
-	 * @Method설명: 유저 인덱스 얻기 
-	 * @작성자 : 홍나영
-	 */
-	public int getUserIdx(User user);
+	public int loginCheck(User user);
 	
 	/**
 	 * @Method설명: 회원 등록

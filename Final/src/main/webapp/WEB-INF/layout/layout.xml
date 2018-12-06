@@ -6,6 +6,7 @@
 
 <tiles-definitions>
 
+<!-- header, footer 적용안시킬 페이지 설정 해주기 name ="적용안시킬 페이지 uri", templeate = "적용안시킬 jsp 주소" -->
 	<!-- <definition name="file/fileup" template="/WEB-INF/views/file/fileup.jsp" 
 		/> -->
 
