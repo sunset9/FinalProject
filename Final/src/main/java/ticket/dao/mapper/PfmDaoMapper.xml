@@ -27,7 +27,7 @@
 	<select id="selectAllTheme" parameterType="ticket.dto.Genre" resultMap="Theme">
 		SELECT theme_idx, theme_name, genre_idx
 		FROM theme
-		WHERE genre_idx = ${genreIdx }
+		WHERE genre_idx = #{genreIdx }
 		ORDER BY theme_idx
 	</select>
 	
@@ -42,5 +42,22 @@
 	<select id="selectAllHall">
 	
 	</select>
+	
+	<insert id="insertPfm" parameterType="ticket.dto.Performance">
+		<selectKey keyProperty="pfmIdx" resultType="int" order="BEFORE">
+			SELECT performance_seq.nextval FROM DUAL
+		</selectKey>
+		
+		INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
+			,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
+		VALUES (#{pfmIdx }, #{name }, #{genreIdx }, '2018-08-01', '2018-08-02'
+			, '2018-08-01', '2018-08-02', 1, 1, 60)
+		
+		-- INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
+		-- 	,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
+		-- VALUES (#{pfmIdx }, #{name }, #{genreIdx }, #{pfmStart }, #{pfmEnd }
+		-- 	, #{ticketStart }, #{ticketEnd }, #{hallIdx }, #{ageGradeIdx }, #{runningTime })
+		
+	</insert>
 	
 </mapper>
