@@ -56,20 +56,20 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 
 	@Override
 	public int getTodayBook() {
-		 
-		return 0;
+		//오늘의 예매수 불러오기
+		return pDao.selectTodayBook();
 	}
 
 	@Override
 	public int getTodayCancel() {
-		 
-		return 0;
+		//오늘의 예매취소수 불러오기
+		return pDao.selectTodayCancel();
 	}
 
 	@Override
 	public int getTodayCon() {
-		 
-		return 0;
+		//오늘 등록된 콘서트의 수 불러오기
+		return pDao.selectTodayCon();
 	}
 
 	@Override

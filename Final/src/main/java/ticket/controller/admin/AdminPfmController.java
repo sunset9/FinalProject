@@ -27,8 +27,6 @@ public class AdminPfmController {
 
 	@Autowired AdminPfmService pService;
 	
-	private Logger logger = LoggerFactory.getLogger(AdminPfmController.class);
-
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 새 공연 등록 폼 띄우기

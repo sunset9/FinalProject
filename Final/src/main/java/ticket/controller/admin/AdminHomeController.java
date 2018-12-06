@@ -1,7 +1,10 @@
 package ticket.controller.admin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,15 +14,22 @@ import ticket.service.admin.face.AdminUserService;
 @Controller
 public class AdminHomeController {
 
+	private static final Logger logger = LoggerFactory.getLogger(AdminHomeController.class);
+	
 	@Autowired AdminPfmService pService;
 	@Autowired AdminUserService uService;
 	
 	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
-	public void adminMain() {
+	public void adminMain(Model model) {
 		//오늘의 예매수 불러오기 pService.getTodayBook() 
+		int todayBook = pService.getTodayBook();
+		logger.info("today book : "+ Integer.toString(todayBook));
+		
 		//오늘의 예매취소수 불러오기 pService.getTodayCancel()
+		int todayCancel = pService.getTodayCancel();
 		
 		//오늘 등록된 콘서트수 pService.getTodayCon()
+		int todayConcert = pService.getTodayCon();
 		//오늘 등록된 뮤지컬&연극수 pService.getTodayMu()
 		//오늘 등록된 가족&아동수 pService.getTodayFam()
 		
@@ -28,5 +38,8 @@ public class AdminHomeController {
 		//1:1 문의 미답변수 불러오기 uService.getUnanswered()
 		
 		//뷰에전달
+		model.addAttribute("todayBook", todayBook);
+		model.addAttribute("todayCancel", todayCancel);
+		
 	}
 }
