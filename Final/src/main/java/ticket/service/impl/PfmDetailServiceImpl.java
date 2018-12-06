@@ -5,18 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ticket.dao.face.MainDetailDao;
+import ticket.dao.face.PfmDetailDao;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
-import ticket.service.face.MainDetailService;
+import ticket.service.face.PfmDetailService;
 
 @Service
-public class MainDetailServiceImpl implements MainDetailService {
+public class PfmDetailServiceImpl implements PfmDetailService {
 	
-	@Autowired MainDetailDao mDetailDao;
+	@Autowired PfmDetailDao mDetailDao;
 
 	@Override
 	public Performance getChoicePfmDetail(Performance pfm) {

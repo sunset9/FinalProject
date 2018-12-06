@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainDetailController {
+public class PfmDetailController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MainDetailController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PfmDetailController.class);
 
 	/**
 	 * 최종수정일: 2018.12.04

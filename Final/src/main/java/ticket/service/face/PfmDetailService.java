@@ -8,7 +8,7 @@ import ticket.dto.Performance;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
 
-public interface MainDetailService {
+public interface PfmDetailService {
 
 	/**
 	 * 최종수정일: 2018.12.05
