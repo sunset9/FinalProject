@@ -1,6 +1,6 @@
 package ticket.dto;
 
-import oracle.sql.DATE;
+import java.util.Date;
 
 public class CategoryCon {
 	private int cateConIdx;
@@ -35,5 +35,4 @@ public class CategoryCon {
 	public void setCreateDate(DATE createDate) {
 		this.createDate = createDate;
 	}
-
 }

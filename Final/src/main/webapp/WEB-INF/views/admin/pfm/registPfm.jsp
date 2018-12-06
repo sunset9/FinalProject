@@ -4,6 +4,13 @@
 
 <script>
 $(document).ready(function(){
+	// 장르 변경 시
+	$("select[name='genreIdx']").on("change",function(){
+		console.log("장르 변경");
+		// 테마 체크 박스 창 초기화
+		$('#themeModal').find('.modal-body').html('');
+	});
+	
 	// 테마 선택 버튼 클릭시
 	$("#themeSelBtn").on("click",function(){
 		// 장르에 맞는 테마 리스트 가져오기
@@ -14,10 +21,14 @@ $(document).ready(function(){
 			, data: {"genreIdx": $("select[name=genreIdx]").val()}
 			, success : function(d){
 				var thmDiv = $('#themeModal').find('.modal-body');
-				d.forEach(function(theme){
-					var inputTag = "<input type='checkbox' name='themeIdx' value='"+theme.themeIdx+"'/>"+theme.themeName ;
-					thmDiv.append(inputTag);
-				});
+				var idx = 0;
+				if(thmDiv.find("input").length == 0){
+					console.log("checkbox만들기!!")
+					d.forEach(function(theme){
+						var inputTag = "<input type='checkbox' name='thmList["+ (idx++) + "].themeIdx' value='"+theme.themeIdx+"'/>"+theme.themeName ;
+						thmDiv.append(inputTag);
+					});
+				}
 				$('#themeModal').modal('show');
 			}
 			, error: function(){
@@ -39,11 +50,11 @@ $(document).ready(function(){
 <h1>공연 등록 페이지</h1>
 <hr>
 
-<form action="/admin/pfm/registPfm" method="post">
+<form action="/admin/registPfm" method="post">
 공연 제목: <input type="text" name="name"/><br>
 공연 분류:
 <select name="genreIdx">
-	<option value="-1" selected="selected">분류 선택</option>
+	<option value="0" selected="selected">분류 선택</option>
 	<c:forEach var="genre" items="${genreList }">
 		<option value="${genre.genreIdx }">${genre.genre }</option>
 	</c:forEach>

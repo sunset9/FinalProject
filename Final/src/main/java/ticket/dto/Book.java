@@ -1,6 +1,6 @@
 package ticket.dto;
 
-import oracle.sql.DATE;
+import java.util.Date;
 
 public class Book {
 	private int bookIdx;

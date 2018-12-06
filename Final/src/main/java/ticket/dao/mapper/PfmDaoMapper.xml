@@ -43,4 +43,36 @@
 	
 	</select>
 	
+  	<insert id="insertPfm" parameterType="ticket.dto.Performance">
+		<selectKey keyProperty="pfmIdx" resultType="int" order="BEFORE">
+			SELECT performance_seq.nextval FROM DUAL
+		</selectKey>
+		
+		INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
+			,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
+		VALUES (#{pfmIdx }, #{name }, #{genreIdx }, '2018-08-01', '2018-08-02'
+			, '2018-08-01', '2018-08-02', 1, 1, 60)
+		
+		-- INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
+		-- 	,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
+		-- VALUES (#{pfmIdx }, #{name }, #{genreIdx }, #{pfmStart }, #{pfmEnd }
+		-- 	, #{ticketStart }, #{ticketEnd }, #{hallIdx }, #{ageGradeIdx }, #{runningTime })
+		
+	</insert>
+  
+	<select id="selectTodayBook" resultType="int">
+		SELECT COUNT(*) FROM book
+		WHERE to_char(create_date, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')
+			AND book_cate_idx = 1
+	</select>
+	
+	<select id="selectTodayCancel" resultType="int">
+		SELECT COUNT(*) FROM book
+		WHERE to_char(create_date, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')
+			AND book_cate_idx = 2
+	</select>
+	
+	<select id="selectTodayCon" resultType="int">
+		
+	</select>
 </mapper>

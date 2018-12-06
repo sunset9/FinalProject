@@ -15,14 +15,22 @@ public class User {
 	private String addrDetail;
 	private String postcode;
 	private int mGradeIdx;
+	private String profile;
+	
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	private Date createDate;
 	
 	@Override
 	public String toString() {
 		return "User [userIdx=" + userIdx + ", email=" + email + ", nick=" + nick + ", password=" + password + ", name="
 				+ name + ", sex=" + sex + ", birth=" + birth + ", phone=" + phone + ", addr=" + addr + ", addrDetail="
-				+ addrDetail + ", postcode=" + postcode + ", mGradeIdx=" + mGradeIdx + ", createDate=" + createDate
-				+ "]";
+				+ addrDetail + ", postcode=" + postcode + ", mGradeIdx=" + mGradeIdx + ", profile=" + profile
+				+ ", createDate=" + createDate + "]";
 	}
 	public int getUserIdx() {
 		return userIdx;

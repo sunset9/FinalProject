@@ -1,3 +1,4 @@
+
 package ticket.service.admin.impl;
 
 import java.util.List;
@@ -49,6 +50,5 @@ public class AdminUserServiceImpl implements AdminUserService{
 		 
 		return 0;
 	}
-	
-	
 }
+	

@@ -1,4 +1,3 @@
-
 package ticket.dao.face;
 
 import java.util.List;
@@ -7,6 +6,7 @@ import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
+import ticket.dto.Performance;
 import ticket.dto.Theme;
 
 public interface PfmDao {
@@ -46,4 +46,40 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public List<Hall> selectAllHall();
+	
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 공연테이블 idx nextval 가져오는 메소드
+	 * @작성자: 전해진
+	 */
+	public int selectNextPfmIdx();
+
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 공연 기본 정보 삽입
+	 * @작성자: 전해진
+	 */
+	public void insertPfm(Performance pfm);
+  
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 오늘의 예매수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTodayBook();
+	
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 오늘의 예매취소수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTodayCancel();
+	
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 오늘 등록된 콘서트수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTodayCon();
+	
 }
