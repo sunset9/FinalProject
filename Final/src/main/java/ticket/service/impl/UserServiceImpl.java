@@ -43,5 +43,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public int checkSignup(String email) {
+		return userDao.selectUserByEmail(email);
+	}
+
+
 
 }

@@ -12,6 +12,14 @@ public interface UserService {
 	 */
 	public int loginCheck(User user);
 	
+	
+	/**
+	 * @최종수정일: 2018.12.07
+	 * @Method설명: 아이디 중복 체크
+	 * @작성자:홍나영
+	 */
+	public int checkSignup(String email);
+	
 	/**
 	 * @Method설명: 회원 등록
 	 * @작성자 : 홍나영

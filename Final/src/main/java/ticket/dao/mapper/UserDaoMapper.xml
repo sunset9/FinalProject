@@ -27,4 +27,36 @@
   	select * from userinfo where email = #{email}
   </select>
   
+  <select id ="selectUserByEmail" parameterType="String" resultType="int">
+  	SELECT COUNT(*) FROM userinfo
+  	WHERE email = #{email }
+  </select>
+  
+  <insert id="insert" parameterType="ticket.dto.User">
+  <selectKey  resultType="int" keyProperty="userIdx" order="BEFORE">
+  	SELECT USERINFO_SEQ.nextval FROM dual
+  </selectKey>
+  
+  INSERT INTO userinfo (
+	 user_idx
+	,email
+	,nick
+	,password
+	,name
+	,sex
+	,birth
+	,phone
+	,addr
+	,addr_detail
+	,postcode
+	,m_grade_idx
+	,profile
+	)
+	VALUES ( 
+		#{userIdx },#{email } ,#{nick },#{password },#{name },#{sex },#{birth },#{phone }
+		,#{addr },#{addrDetail },#{postcode },#{mGradeIdx },#{profile }
+	)
+  
+  </insert>
+  
   </mapper>
