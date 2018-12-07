@@ -17,8 +17,46 @@
 // 회원가입 날짜 선택하기 
 
 $(document).ready(function() {
+	// 생년월일 뿌리는 함수 
 	setDate();
 	
+	// 아이디 중복 체크 
+	$("#emailCheck").click(function() {
+		console.log("아이디 체크 실행?")
+		$.ajax ({
+			type:"POST"
+			, url : "/user/emailcheck"
+			, data: {
+				"email":$('#email').val()+"@"+$('#email2').val()
+			}
+			, success:function(data) {
+				if($.trim(data) == 0) {
+					 $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+				} else {
+					 $('#checkMsg').html('<p style="color:red">사용불가</p>');
+				}
+			}
+		}); // end ajax
+	}); // end on
+	
+	// 닉네임 중복 체크 
+	$("#nickCheck").click(function() {
+		console.log("닉네임 체크 실행?")
+		$.ajax ({
+			type:"POST"
+			, url : "/user/nickcheck"
+			, data: {
+				"nick":$('#nick').val()
+			}
+			, success:function(data) {
+				if($.trim(data) == 0) {
+					 $('#checkMsg2').html('<p style="color:blue">사용가능</p>');
+				} else {
+					 $('#checkMsg2').html('<p style="color:red">사용불가</p>');
+				}
+			}
+		}); // end ajax
+	}); // end on
 
 });
 
@@ -149,7 +187,7 @@ td {
 	<table>
 		<tr>
 			<td><label>이메일 주소</label></td> 
-			<td><input type="text" class="form-control" id="exampleInputEmail1" name="email" placeholder="이메일을 입력하세요" /> 
+			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" /> 
 			 @ <input name="email2" type="text"  class="form-control" id="email2" readonly="readonly">
 				<select class="form-control" name="email_select" id="email_select" onchange="directInput(); ">
 				
@@ -159,13 +197,15 @@ td {
 				    <option value="gmail.com">gmail.com</option>
 				</select>
   
-			<input type="button" name="idCheck " value="중복확인" class="btn btn-default"/></td>
+			<input type="button" name="emailCheck"  id="emailCheck"  value="중복확인" class="btn btn-default"/>
+			<div id = "checkMsg"></div></td>
 		</tr>
 
 		<tr>
 			<td><label>닉네임</label></td>
-			<td style="width: 80%;"><input type="text" class="form-control"	name="nick" placeholder="닉네임을 입력하세요" />
-			<input type="button" name="nickCheck" value="중복확인" class="btn btn-default" /></td>
+			<td><input type="text" class="form-control"	name="nick" placeholder="닉네임을 입력하세요" />
+			<input type="button" name="nickCheck" id="nickCheck" value="중복확인" class="btn btn-default" />
+			<div id = "checkMsg2"></div></td>
 		</tr>	
 
 		<tr>
@@ -188,10 +228,10 @@ td {
 	
 			<td>
 				<label class="radio-inline"> 
-					<input type="radio" name="sex" id="sex" value="m" /> 남
+					<input type="radio" name="sex"  value="m" /> 남
 				</label> 
 				<label class="radio-inline"> 
-					<input type="radio" name="sex" id="sex" value="f"/> 여
+					<input type="radio" name="sex" value="f"/> 여
 				</label>
 			</td>
 		</tr>

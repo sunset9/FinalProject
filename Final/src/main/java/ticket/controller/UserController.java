@@ -2,14 +2,18 @@ package ticket.controller;
 
 import java.sql.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.User;
 import ticket.service.face.UserService;
@@ -28,25 +32,45 @@ public class UserController {
 		logger.info("회원 가입 폼");
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/user/emailcheck", method = RequestMethod.POST)
+	public String emailCheck( 
+			HttpServletRequest req
+			, Model mode) {
+		
+		logger.info("아이디 중복 체크");
+		String email = req.getParameter("email");
+		int cnt = userService.checkSignup(email);
+		
+		return String.valueOf(cnt);
+		
+	}
 
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
 	public void joinProc(
 			User user
+			, String email2
 			, String year
 			, String month
 			, String day
+			, @RequestParam(defaultValue="/upload/profile.png") String profile
 			) {
 		logger.info("회원 가입 처리");
+		
+		user.setEmail(user.getEmail()+"@"+email2);
+		
+		// String 타입 -> Date 타입으로 변경
 		ChangeDate changeDate = new ChangeDate();
-		
-		
 		Date birth = changeDate.changeformDate(year, month, day);
 		logger.info(""+birth);
-		
+
+		user.setProfile(profile);
 		user.setBirth(birth);
 		logger.info(""+ user);
+		
+		
 		// 회원 가입
-//		userService.join(user);
+		userService.join(user);
 	}
 	
 
