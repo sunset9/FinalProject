@@ -158,10 +158,10 @@ public interface AdminPfmService {
 	
 	/**
 	 * @최종수정일: 2018.12.07
-	 * @Method설명: 포스터 이미지 파일 업로드
+	 * @Method설명: 포스터 이미지 파일 업로드/ 저장된 포스터 정보 반환
 	 * @작성자: 전해진
 	 */
-	public void uploadPoster(MultipartFile posterUpload);
+	public Poster uploadPoster(MultipartFile posterUpload);
   
   /**
 	 * @최종수정일: 2018.12.05

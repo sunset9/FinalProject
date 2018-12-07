@@ -140,7 +140,10 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		pDao.insertPfm(pfm);
 		
 		// 포스터 업로드
-		uploadPoster(posterUpload);
+		Poster poster = uploadPoster(posterUpload);
+		poster.setPfmIdx(pfm.getPfmIdx()); // 공연 idx 지정
+		// 포스터 업로드 정보 DB 저장
+		pDao.insertPoster(poster);
 		
 		// 테마들 등록
 		for(PfmTheme thm : themeList.getThmList()) {
@@ -155,7 +158,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 			
 	}
   
-	public void uploadPoster(MultipartFile posterUpload) {
+	public Poster uploadPoster(MultipartFile posterUpload) {
 		// UUID, 고유 식별자
 		String uId = UUID.randomUUID().toString().split("-")[0];
 		
@@ -163,9 +166,8 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		String stored = context.getRealPath("resources/image");
 		
 		//저장될 파일의 이름
-		String name = posterUpload.getOriginalFilename()+"_"+uId;
-		System.out.println("------저장될 이름-------");
-		System.out.println(name);
+		String oriName = posterUpload.getOriginalFilename();
+		String name = oriName+"_"+uId;
 		
 		//파일객체
 		File dest = new File(stored, name);
@@ -180,6 +182,12 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 			e.printStackTrace();
 		}
 		
+		// 반환할 포스터 객체 생성
+		Poster poster = new Poster();
+		poster.setOrginName(oriName);
+		poster.setStoredName(name);
+		
+		return poster;
 	}
 
 	@Override
