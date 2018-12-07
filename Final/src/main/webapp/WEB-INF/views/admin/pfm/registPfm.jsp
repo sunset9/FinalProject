@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script src="../resources/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+
+
+
 <style>
 #posterImg input[type="file"] { 
 	position: absolute;
@@ -64,6 +70,21 @@ $(document).ready(function(){
 		$(this).siblings('.posterName').val(filename);
 	});
 
+	// 포스터 업로드 버튼 클릭 시 미리보기 띄워주기
+	$('#posterBtn').on('change',function(){
+		var file = this.files; // files 를 사용하면 파일의 정보를 알 수 있음
+
+        var reader = new FileReader(); // FileReader 객체 사용
+        reader.onload = function(rst) { // 이미지를 선택후 로딩이 완료되면 실행될 부분
+			var postImg = $('#posterImg').find('img');
+            postImg.attr('src', rst.target.result);
+           // 이미지는 base64 문자열로 추가
+           // 이 방법을 응용하면 선택한 이미지를 미리보기 할 수 있음
+        }
+       
+        reader.readAsDataURL(file[0]); // 파일을 읽는다, 배열이기 때문에 0 으로 접근
+	});
+	
 	// 장르 변경 시
 	$("select[name='genreIdx']").on("change",function(){
 		// 테마 체크 박스 창 초기화
@@ -122,6 +143,17 @@ $(document).ready(function(){
 		
 	});
 	
+	// 티켓 오픈일 선택
+	$('#ticketDate').datepicker({
+        calendarWeeks: false,
+        todayHighlight: true,
+        autoclose: true,
+        format: "yyyy/mm/dd",
+        language: "kr"
+    });
+
+
+
 	// 저장 버튼
 	$('#storeBtn').on('click', function(){
 		var complete = false;
@@ -151,7 +183,7 @@ $(document).ready(function(){
 
 <form id="registForm" action="/admin/registpfm" method="post" enctype="multipart/form-data" style="width:80%">
 <div id="posterImg" style="float: right;width: 310px;">
-	<img src="/resources/image/poster_empty.png" width="143" height="201">
+	<img src="/resources/image/poster_empty.png" accept="image/*" width="143" height="201">
 	
 	<input class="posterName" value="파일선택" disabled="disabled">
 	<label for="posterBtn">포스터 등록</label>
@@ -182,7 +214,11 @@ $(document).ready(function(){
 </tr>
 <tr>
 	<th>티켓오픈: </th> 
-	<td><input type="text" name="ssss"/></td>
+	<td>
+		<input type="text" class="form-control" id="ticketDate" style="width:70%">
+		<span class="input-group-addon glyphicon glyphicon-calendar">
+		</span>
+	</td>
 </tr>
 <tr>
 	<th>런닝타임: </th> 
