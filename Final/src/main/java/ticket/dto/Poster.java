@@ -12,11 +12,6 @@ public class Poster {
 	private Date createDate; //등록일 
 	
 	
-	@Override
-	public String toString() {
-		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", originName=" + originName
-				+ ", storedName=" + storedName + ", createDate=" + createDate + "]";
-	}
 
 	public int getPosterIdx() {
 		return posterIdx;
