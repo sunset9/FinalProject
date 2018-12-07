@@ -22,7 +22,7 @@ import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
 import ticket.dto.Theme;
-import ticket.dto.ThemeList;
+import ticket.dto.PfmThemeList;
 import ticket.service.admin.face.AdminPfmService;
 
 @Controller
@@ -39,7 +39,7 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	 * @Method설명: 새 공연 등록 폼 띄우기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/admin/registPfm", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/registpfm", method=RequestMethod.GET)
 	public String viewRistForm(Model model) {
 		// 공연 분류(장르) 가져오기
 		List<Genre> genreList = pService.getGenreList();
@@ -64,7 +64,7 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	 * @Method설명: 특정 장르에 따른 모든 테마 리스트 정보 가져오기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/viewTheme", method=RequestMethod.GET)
+	@RequestMapping(value="/viewtheme", method=RequestMethod.GET)
 	public @ResponseBody List<Theme> getThemeList(
 			Genre genre
 			, Model model) {
@@ -81,7 +81,7 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	 * @Method설명: 검색한 이름과 일치하는 아티스트 목록 리턴
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/searchArtist", method=RequestMethod.GET)
+	@RequestMapping(value="/searchartist", method=RequestMethod.GET)
 	public @ResponseBody List<Artist> getArtistList(Artist artist) {
 		List<Artist> artistList = pService.getArtistList(artist);
 		
@@ -94,19 +94,16 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/admin/registPfm", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/registpfm", method=RequestMethod.POST)
 	public String registPfm(
 			Performance pfm
-			, Genre genre
-			, ThemeList themeList
+			, MultipartFile posterUpload
+			, PfmThemeList themeList
 			) {
 		// 공연 기본 정보 등록
 		logger.info(pfm.toString());
 		
 		// 포스터 정보 등록
-		
-		// 장르 정보 등록
-		logger.info(genre.toString());
 		
 		// 테마 정보들 등록
 		logger.info(themeList.toString());
@@ -120,9 +117,9 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 		// 예매 상세 정보 등록
 		
 		// 새 공연 등록
-		pService.registPfm(pfm, genre, themeList);
+		pService.registPfm(pfm, posterUpload, themeList);
 		
-		return "redirect:/admin/registPfm";
+		return "redirect:/admin/registpfm";
 	}
 
 	/**
@@ -130,7 +127,7 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	 * @Method설명: 공연 정보 수정 폼 띄우기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/admin/pfm/editPfm", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/pfm/editpfm", method=RequestMethod.GET)
 	public void editForm(
 			Performance pfm
 			,Model model
@@ -142,7 +139,7 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	 * @Method설명: 공연 정보 수정하기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value = "/admin/pfm/editPfm", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/pfm/editpfm", method = RequestMethod.POST)
 	public void editPfm() {
 
 		//

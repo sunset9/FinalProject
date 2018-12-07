@@ -2,7 +2,7 @@ package ticket.dto;
 
 import java.util.Date;
 
-public class PosterInfo {
+public class Poster {
 	private int posterIdx;//포스터번호
 	private int pfmIdx; //공연번호 
 	private String orginName;//포스터 원본이름 
