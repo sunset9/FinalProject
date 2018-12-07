@@ -57,14 +57,18 @@
   
 	<select id="selectTodayBook" resultType="int">
 		SELECT COUNT(*) FROM book
-		WHERE to_char(create_date, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')
-			AND book_cate_idx = 1
+		WHERE to_char(create_date, 'yy/mm/dd') = to_char(SYSDATE, 'yy/mm/dd')
+			AND (book_cate_idx = 1 OR book_cate_idx = 2)
 	</select>
 	
 	<select id="selectTodayCancel" resultType="int">
 		SELECT COUNT(*) FROM book
-		WHERE to_char(create_date, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')
-			AND book_cate_idx = 2
+		WHERE to_char(create_date, 'yy/mm/dd') = to_char(SYSDATE, 'yy/mm/dd')
+			AND (book_cate_idx = 3 OR book_cate_idx = 4)
+	</select>
+	
+	<select id="selectTodayAllPfm" resultType="int">
+		
 	</select>
 	
 	<select id="selectTodayCon" resultType="int">

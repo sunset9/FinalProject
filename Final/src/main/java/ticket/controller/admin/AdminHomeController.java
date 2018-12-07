@@ -19,18 +19,30 @@ public class AdminHomeController {
 	@Autowired AdminPfmService pService;
 	@Autowired AdminUserService uService;
 	
+	/**
+	 * @최종수정일: 2018.12.07
+	 * @Method설명: 관리자 홈에 필요한 정보 불러오기 
+	 * @작성자: 김지은
+	 */
 	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
 	public void adminMain(Model model) {
-		//오늘의 예매수 불러오기 pService.getTodayBook() 
+		//오늘의 예매수 불러오기
 		int todayBook = pService.getTodayBook();
 		logger.info("today book : "+ Integer.toString(todayBook));
 		
 		//오늘의 예매취소수 불러오기 pService.getTodayCancel()
 		int todayCancel = pService.getTodayCancel();
+		logger.info("today cancel : "+ Integer.toString(todayCancel));
+		
+		//오늘 등록된 모든 공연수 가져오기
+		//int todayAllPfm = pService.getTodayAllPfm();
+		//logger.info("today all registed pfm : "+ Integer.toString(todayAllPfm));
 		
 		//오늘 등록된 콘서트수 pService.getTodayCon()
-		int todayConcert = pService.getTodayCon();
+		//int todayConcert = pService.getTodayCon();
+		
 		//오늘 등록된 뮤지컬&연극수 pService.getTodayMu()
+		
 		//오늘 등록된 가족&아동수 pService.getTodayFam()
 		
 		//현재 접속자수 불러오기 uService.getConnectUser()
