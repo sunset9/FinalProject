@@ -34,7 +34,7 @@
 	<select id="selectAllAgeGrade" resultType="ticket.dto.AgeGrade">
 		SELECT age_grade_idx as ageGradeIdx, age_limit as ageLimit  
 		FROM age_grade
-		ORDER BY age_limit
+		ORDER BY age_grade_idx
 	</select>
 	
 	<select id="selectArtistByName" parameterType="ticket.dto.Artist" resultType="ticket.dto.Artist">
@@ -44,8 +44,15 @@
 		WHERE name LIKE '%${name }%'
 	</select>
 	
-	<select id="selectAllHall">
-	
+	<select id="selectAllHall" parameterType="ticket.dto.Hall" resultType="ticket.dto.Hall">
+		SELECT 
+			hall_idx hallIdx,
+			hall_name hallName,
+			hall_loc hallLoc,
+			hall_phone hallPhone,
+			create_date createDate
+		FROM hall
+		ORDER BY hall_name
 	</select>
 	
   	<insert id="insertPfm" parameterType="ticket.dto.Performance">
@@ -56,7 +63,7 @@
 		INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
 			,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
 		VALUES (#{pfmIdx }, #{name }, #{genreIdx }, '2018-08-01', '2018-08-02'
-			, #{ticketStart }, #{ticketEnd }, 1, #{ageGradeIdx }, #{runningTime })
+			, #{ticketStart }, #{ticketEnd }, #{hallIdx }, #{ageGradeIdx }, #{runningTime })
 		
 	</insert>
   
