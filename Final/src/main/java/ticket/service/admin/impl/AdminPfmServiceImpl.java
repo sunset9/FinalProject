@@ -43,7 +43,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 	CategoryFamDao famDao;
 	@Autowired
 	PosterDao infoDao;
-	
+
 	@Override
 	public List getMBannerList() {
 		return null;
