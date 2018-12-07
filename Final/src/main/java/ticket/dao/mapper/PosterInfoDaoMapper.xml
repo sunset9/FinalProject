@@ -11,4 +11,5 @@
 		(poster_info_seq.nextval,PERFORMANCE_seq.nextval,#{orginName},
 		#{storedName})
 	</insert>
+	
 </mapper>
