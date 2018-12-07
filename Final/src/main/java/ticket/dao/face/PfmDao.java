@@ -7,6 +7,7 @@ import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmTheme;
 import ticket.dto.Theme;
 
 public interface PfmDao {
@@ -81,5 +82,12 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public int selectTodayCon();
+
+	/**
+	 * @최종수정일: 2018.12.06
+	 * @Method설명: 공연에 해당하는 테마 리스트들 등록하기
+	 * @작성자: 전해진
+	 */
+	public void insertPfmTheme(PfmTheme thm);
 	
 }
