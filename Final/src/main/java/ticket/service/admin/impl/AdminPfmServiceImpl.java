@@ -184,7 +184,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		
 		// 반환할 포스터 객체 생성
 		Poster poster = new Poster();
-		poster.setOrginName(oriName);
+		poster.setOriginName(oriName);
 		poster.setStoredName(name);
 		
 		return poster;
@@ -269,7 +269,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 			e.printStackTrace();
 		}
 		Poster info = new Poster();
-		info.setOrginName(file.getOriginalFilename());
+		info.setOriginName(file.getOriginalFilename());
 		info.setStoredName(dest.getName());
 		infoDao.insert(info);
 	}

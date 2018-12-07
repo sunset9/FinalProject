@@ -143,15 +143,37 @@ $(document).ready(function(){
 		
 	});
 	
-	// 티켓 오픈일 선택
-	$('#ticketDate').datepicker({
-        calendarWeeks: false,
+	
+	// 티켓 오픈 일정 지정
+	var startDate = new Date(); 
+	var endDate = new Date(); 
+	// 티켓 오픈 시작일 선택
+	$('#ticketStartDate').datepicker({
+		startDate: startDate, // 오늘 이후로 선택 가능
         todayHighlight: true,
         autoclose: true,
         format: "yyyy/mm/dd",
         language: "kr"
+    }).on('changeDate', function(selected){ 
+		// 종료일 조정(시작일보다 빠르지 않게)    	
+        startDate = new Date(selected.date.valueOf()); 
+        startDate.setDate(startDate.getDate(new Date(selected.date.valueOf()))); 
+        $('#ticketEndDate').datepicker('setStartDate', startDate); 
     });
-
+    
+	// 티켓 오픈 종료일 선택
+	$('#ticketEndDate').datepicker({
+		startDate: startDate, // 오늘 이후로 선택 가능
+        todayHighlight: true,
+        autoclose: true,
+        format: "yyyy/mm/dd",
+        language: "kr",
+    }) .on('changeDate', function(selected){ 
+    	// 시작일 조정(종료일보다 늦지 않게)
+    	endDate = new Date(selected.date.valueOf()); 
+    	endDate.setDate(endDate.getDate(new Date(selected.date.valueOf()))); 
+        $('#ticketStartDate').datepicker('setEndDate', endDate); 
+    }); 
 
 
 	// 저장 버튼
@@ -213,11 +235,17 @@ $(document).ready(function(){
 	</td>
 </tr>
 <tr>
-	<th>티켓오픈: </th> 
+	<th rowspan=2>티켓오픈: </th> 
 	<td>
-		<input type="text" class="form-control" id="ticketDate" style="width:70%">
-		<span class="input-group-addon glyphicon glyphicon-calendar">
-		</span>
+		<input type="text" class="form-control" id="ticketStartDate" placeholder="출발일" style="width:70%; float: left;">
+		<span class="input-group-addon glyphicon glyphicon-calendar" style="clear:both"></span>
+	</td>
+	
+</tr>
+<tr>
+	<td>
+		<input type="text" class="form-control" id="ticketEndDate" placeholder="도착일" style="width:70%; float: left;">
+		<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 	</td>
 </tr>
 <tr>
