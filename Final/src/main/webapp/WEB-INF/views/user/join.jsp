@@ -18,10 +18,24 @@
 
 $(document).ready(function() {
 	setDate();
+	
+
 });
 
-// select box 연도, 월, 일 표시 
+// 이메일 주소 선택 함수
+function directInput(){
+    if (join.email_select.value == '1') {
+    	join.email2.readonly = false;
+    	join.email2.value = '';
+        join.email2.focus();
+    }
+    else {
+    	join.email2.readonly = true;
+    	join.email2.value = join.email_select.value;
+    }
+}
 
+// select box 연도, 월, 일 표시 
 function setDate() {
 	
 	console.log("실행?");
@@ -47,12 +61,42 @@ function setDate() {
 	}
 	
 	
-	// 일 뿌리ㅣㄱ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
 }
 
-    
+	// 월 별로 일 뿌리ㅣㄱ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function setDay(){
+		var frm = document.getElementById('join');
+		
+		var year = frm['year'].value;
+		var month = frm['month'].value;
+		var day = frm['day'];
+		
+		var listMonth =[31,28,31,30,31,30,31,31,30,31,30,31,30,31];
+		
+		
+		// 윤달 체크
+		if(year%4 == 0 ){
+			listMonth[1]=29;
+		}
+		
+		// 기존 day 옵션 삭제
+        for( var i=day.length; i>0; i--) {
+           day.remove(day.selectedIndex);
+        }
+            
+        // day 옵션 생성
+        $("#day").append("<option value=''>일</option>");
+        for (var i=1; i<=listMonth[month-1]; i++) {
+        	$("#day").append("<option value='"+i+"'>"+i+"일"+"</option>");
+        }
+
+        
+	}
+	
+	// 다음 우편번호/ 주소 API
 function DaumPostcode() {
+	 daum.postcode.load(function(){
        new daum.Postcode({
     	   oncomplete: function(data) {
            	 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -88,29 +132,40 @@ function DaumPostcode() {
                document.getElementById('addrDetail').focus();
            }
        }).open();
+})
 }
+
 
 </script>
 
 <style type="text/css">
-tr.secondChild{
-	width: 200px;
+td {
+	padding: 5px;
 }
 </style>
 <div class="container">
 
-<form class ="form-inline">
+<form class ="form-inline" id = "join" name ="join" action="/user/join" method="POST">
 	<table>
 		<tr>
 			<td><label>이메일 주소</label></td> 
-			<td><input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="이메일을 입력하세요" /> 
-			<input type="button" name="idCheck " value="중복확인" /></td>
+			<td><input type="text" class="form-control" id="exampleInputEmail1" name="email" placeholder="이메일을 입력하세요" /> 
+			 @ <input name="email2" type="text"  class="form-control" id="email2" readonly="readonly">
+				<select class="form-control" name="email_select" id="email_select" onchange="directInput(); ">
+				
+				    <option value="1" selected="selected">직접입력</option>
+				    <option value="naver.com">naver.com</option>
+				    <option value="daum.net">daum.net</option>
+				    <option value="gmail.com">gmail.com</option>
+				</select>
+  
+			<input type="button" name="idCheck " value="중복확인" class="btn btn-default"/></td>
 		</tr>
 
 		<tr>
 			<td><label>닉네임</label></td>
 			<td style="width: 80%;"><input type="text" class="form-control"	name="nick" placeholder="닉네임을 입력하세요" />
-			<input type="button" name="nickCheck" value="중복확인" /></td>
+			<input type="button" name="nickCheck" value="중복확인" class="btn btn-default" /></td>
 		</tr>	
 
 		<tr>
@@ -133,10 +188,10 @@ tr.secondChild{
 	
 			<td>
 				<label class="radio-inline"> 
-					<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" /> 남
+					<input type="radio" name="sex" id="sex" value="m" /> 남
 				</label> 
 				<label class="radio-inline"> 
-					<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"/> 여
+					<input type="radio" name="sex" id="sex" value="f"/> 여
 				</label>
 			</td>
 		</tr>
@@ -144,9 +199,11 @@ tr.secondChild{
 		<tr>
 			<td><label>생년월일</label> </td>
 			<td>
-				<select name="year" id= "year" title="년도"></select> 
-				<select name="month" id = "month" title="월"></select> 
-				<select name="day" id = "day" title="일"></select>
+				<select class="form-control" name="year" id= "year" title="년도" ></select> 
+				<select class="form-control" name="month" id = "month" title="월" onchange="setDay();"></select> 
+				<select class="form-control" name="day" id = "day" title="일">
+				<option class="form-control" value=''>일</option>
+				</select>
 			</td>
 		</tr>
 
@@ -159,8 +216,8 @@ tr.secondChild{
 			<td><label>주소</label> </td>
 			<td> 
 				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" /> 
-				<input type="button" onclick="DaumPostcode()" value="우편번호 찾기" /><br>
-				<input type="text" class="form-control" name="addr" id="addr"placeholder="주소" /><br> 
+				<input type="button" class="btn btn-default" onclick="DaumPostcode()" value="우편번호 찾기" /><br>
+				<input type="text" class="form-control" name="addr" id="addr"placeholder="주소" /> 
 				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" /> 
 			</td>
 		</tr>

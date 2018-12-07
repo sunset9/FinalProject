@@ -1,5 +1,7 @@
 package ticket.controller;
 
+import java.sql.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ticket.dto.User;
 import ticket.service.face.UserService;
+import ticket.utils.ChangeDate;
 
 @Controller
 public class UserController {
@@ -27,11 +30,23 @@ public class UserController {
 	
 
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
-	public void joinProc(User user) {
+	public void joinProc(
+			User user
+			, String year
+			, String month
+			, String day
+			) {
 		logger.info("회원 가입 처리");
+		ChangeDate changeDate = new ChangeDate();
 		
+		
+		Date birth = changeDate.changeformDate(year, month, day);
+		logger.info(""+birth);
+		
+		user.setBirth(birth);
+		logger.info(""+ user);
 		// 회원 가입
-		userService.join(user);
+//		userService.join(user);
 	}
 	
 
