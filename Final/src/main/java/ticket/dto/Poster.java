@@ -3,11 +3,20 @@ package ticket.dto;
 import java.util.Date;
 
 public class Poster {
-	private int posterIdx;// 포스터번호
-	private int pfmIdx; // 공연번호
-	private String originName;// 포스터 원본이름
-	private String storedName; // 포스터 저장이름
-	private Date createDate; // 등록일
+
+
+	private int posterIdx;//포스터번호
+	private int pfmIdx; //공연번호 
+	private String originName;//포스터 원본이름 
+	private String storedName; //포스터 저장이름
+	private Date createDate; //등록일 
+	
+	
+	@Override
+	public String toString() {
+		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", originName=" + originName
+				+ ", storedName=" + storedName + ", createDate=" + createDate + "]";
+	}
 
 	public int getPosterIdx() {
 		return posterIdx;
@@ -28,7 +37,6 @@ public class Poster {
 	public String getOriginName() {
 		return originName;
 	}
-
 	public void setOriginName(String originName) {
 		this.originName = originName;
 	}
