@@ -40,7 +40,7 @@ public class AdminPfmController {
 	 * @Method설명: 새 공연 등록 폼 띄우기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/admin/registpfm", method=RequestMethod.GET)
+	@RequestMapping(value = "/admin/registpfm", method = RequestMethod.GET)
 	public String viewRistForm(Model model) {
 		// 공연 분류(장르) 가져오기
 		List<Genre> genreList = pService.getGenreList();
@@ -64,6 +64,7 @@ public class AdminPfmController {
 	 * @Method설명: 특정 장르에 따른 모든 테마 리스트 정보 가져오기
 	 * @작성자: 전해진
 	 */
+
 	@RequestMapping(value="/viewtheme", method=RequestMethod.GET)
 	public @ResponseBody List<Theme> getThemeList(
 			Genre genre
@@ -76,7 +77,7 @@ public class AdminPfmController {
 	 * @Method설명: 검색한 이름과 일치하는 아티스트 목록 리턴
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/searchartist", method=RequestMethod.GET)
+	@RequestMapping(value = "/searchartist", method = RequestMethod.GET)
 	public @ResponseBody List<Artist> getArtistList(Artist artist) {
 		return pService.getArtistList(artist);
 	}
@@ -109,6 +110,7 @@ public class AdminPfmController {
 		// 예매 상세 정보 등록
 
 		// 새 공연 등록
+
 		pService.registPfm(pfm, posterUpload, themeList, castList);
 		
 		return "redirect:/admin/registpfm";
@@ -119,11 +121,8 @@ public class AdminPfmController {
 	 * @Method설명: 공연 정보 수정 폼 띄우기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/admin/pfm/editpfm", method=RequestMethod.GET)
-	public void editForm(
-			Performance pfm
-			,Model model
-			) {
+	@RequestMapping(value = "/admin/pfm/editpfm", method = RequestMethod.GET)
+	public void editForm(Performance pfm, Model model) {
 	}
 
 	/**
@@ -161,10 +160,13 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/registcateCon", method = RequestMethod.GET)
 	public String registerCategoryCon(Model model) {
 
-		List<Poster> list = pService.getListCon();
-		if(list!=null)
-		 model.addAttribute("list", list);
-	
+		List<Poster> posterList = pService.getListCon();
+		List<Poster> modalList = pService.getModalListCon();
+		if (modalList != null)
+			model.addAttribute("list", modalList);
+		if (posterList != null)
+			model.addAttribute("posterList", posterList);
+
 		return "admin/pfm/registcateCon";
 	}
 
@@ -174,8 +176,9 @@ public class AdminPfmController {
 	 * @작성자:
 	 */
 	@RequestMapping(value = "/admin/registcateCon", method = RequestMethod.POST)
-	public String registerCategoryConProc(Model model) {
+	public String registerCategoryConProc(String pfmIdx, Model model) {
 
+		logger.info(pfmIdx);
 		logger.info("POST");
 
 		return "admin/pfm/registcateCon";

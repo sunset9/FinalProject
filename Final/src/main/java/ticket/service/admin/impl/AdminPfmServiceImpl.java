@@ -34,9 +34,11 @@ import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 
 @Service
-public class AdminPfmServiceImpl implements AdminPfmService{
-	@Autowired ServletContext context;
-	@Autowired PfmDao pDao;
+public class AdminPfmServiceImpl implements AdminPfmService {
+	@Autowired
+	ServletContext context;
+	@Autowired
+	PfmDao pDao;
 	@Autowired
 	CategoryConDao conDao;
 	@Autowired
@@ -63,7 +65,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 
 	@Override
 	public void registMBanner() {
-		//pfmDao.insertMBanner()
+		// pfmDao.insertMBanner()
 	}
 
 	@Override
@@ -83,34 +85,34 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 
 	@Override
 	public int getTodayBook() {
-		//오늘의 예매수 불러오기
+		// 오늘의 예매수 불러오기
 		return pDao.selectTodayBook();
 	}
 
 	@Override
 	public int getTodayCancel() {
-		//오늘의 예매취소수 불러오기
+		// 오늘의 예매취소수 불러오기
 		return pDao.selectTodayCancel();
 	}
 
 	@Override
 	public int getTodayCon() {
-		//오늘 등록된 콘서트의 수 불러오기
+		// 오늘 등록된 콘서트의 수 불러오기
 		return pDao.selectTodayCon();
 	}
 
 	@Override
 	public int getTodayMu() {
-		 
+
 		return 0;
 	}
 
 	@Override
 	public int getTodayFam() {
-		 
+
 		return 0;
 	}
-	
+
 	@Override
 	public List<Genre> getGenreList() {
 		return pDao.selectAllGenre();
@@ -135,20 +137,21 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 	public List<Hall> getHallList() {
 		return pDao.selectAllHall();
 	}
-  
+
 	@Override
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList) {
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
+
 		int pfmIdx = pfm.getPfmIdx();
-		
 		// 포스터 업로드
 		Poster poster = uploadPoster(posterUpload);
 		poster.setPfmIdx(pfmIdx); // 공연 idx 지정
 		// 포스터 업로드 정보 DB 저장
 		pDao.insertPoster(poster);
-		
+
 		// 테마들 등록
+
 		for(PfmTheme thm : themeList.getThmList()) {
 			if(thm.getThemeIdx() != 0 ) { // theme가 존재하는 경우에 insert
 				// 공연 idx 지정
@@ -168,22 +171,22 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 			}
 		}
 	}
-  
+
 	public Poster uploadPoster(MultipartFile posterUpload) {
 		// UUID, 고유 식별자
 		String uId = UUID.randomUUID().toString().split("-")[0];
-		
-		//파일이 저장될 경로
+
+		// 파일이 저장될 경로
 		String stored = context.getRealPath("resources/image");
-		
-		//저장될 파일의 이름
+
+		// 저장될 파일의 이름
 		String oriName = posterUpload.getOriginalFilename();
-		String name = oriName+"_"+uId;
-		
-		//파일객체
+		String name = oriName + "_" + uId;
+
+		// 파일객체
 		File dest = new File(stored, name);
-		
-		//파일 저장(업로드)
+
+		// 파일 저장(업로드)
 		try {
 			posterUpload.transferTo(dest);
 
@@ -192,18 +195,18 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// 반환할 포스터 객체 생성
 		Poster poster = new Poster();
 		poster.setOriginName(oriName);
 		poster.setStoredName(name);
-		
+
 		return poster;
 	}
 
 	@Override
 	public List<Poster> getListCon() {
-		return infoDao.selectBygenreIdx(1);
+		return infoDao.selectBypfmIdx();
 	}
 
 	@Override
@@ -290,6 +293,11 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		return pDao.selectTodayAllPfm();
 	}
 
+	@Override
+	public List<Poster> getModalListCon() {
 
+		//장르로 선택된(콘서트) 리스트 가져오기
+		return infoDao.selectBygenreIdx(1);
+	}
 
 }
