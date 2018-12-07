@@ -8,6 +8,7 @@ import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
 import ticket.dto.PfmTheme;
+import ticket.dto.Poster;
 import ticket.dto.Theme;
 
 public interface PfmDao {
@@ -89,5 +90,12 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public void insertPfmTheme(PfmTheme thm);
+
+	/**
+	 * @최종수정일: 2018.12.07
+	 * @Method설명: 포스터 정보 등록하기
+	 * @작성자: 전해진
+	 */
+	public void insertPoster(Poster poster);
 	
 }

@@ -75,4 +75,9 @@
 		INSERT INTO pfm_theme(pfm_theme_idx ,pfm_idx ,theme_idx)
 		VALUES (pfm_theme_seq.nextval, #{pfmIdx }, #{themeIdx } )
 	</insert>
+	
+	<insert id="insertPoster" parameterType="ticket.dto.Poster">
+		INSERT INTO poster_info (poster_idx , pfm_idx , origin_name , stored_name )
+		VALUES (poster_info_seq.nextval, #{pfmIdx }, #{orginName }, #{storedName })
+	</insert>
 </mapper>
