@@ -4,6 +4,7 @@ import java.util.List;
 
 import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
+import ticket.dto.Cast;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
@@ -104,5 +105,12 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public void insertPoster(Poster poster);
+
+	/**
+	 * @최종수정일: 2018.12.08
+	 * @Method설명: 출연진 정보 등록하기
+	 * @작성자: 전해진
+	 */
+	public void insertCast(Cast cast);
 	
 }

@@ -54,6 +54,20 @@
 	appearance: none; 
  }
 
+#resultArtist{
+	display: flex; /* 자식이 float 인 경우 높이 자동 조절 */
+}
+
+#selectedArtist{
+	display: flex; /* 자식이 float 인 경우 높이 자동 조절 */
+    border-top: 1px solid;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+#selectedArtist div{
+	margin-right: 15px;
+}
 </style>
 
 <script>
@@ -108,7 +122,6 @@ $(document).ready(function(){
 				var thmDiv = $('#themeModal').find('.modal-body');
 				var idx = 0;
 				if(thmDiv.find("input").length == 0){
-					console.log("checkbox만들기!!")
 					d.forEach(function(theme){
 						var inputTag = $("<input type='checkbox'/>") ;
 						var id = 'thmList['+ (idx++) + '].themeIdx';
@@ -175,7 +188,137 @@ $(document).ready(function(){
         $('#ticketStartDate').datepicker('setEndDate', endDate); 
     }); 
 
+	// 출연진 선택 버튼 
+	$('#artistBtn').on('click', function(){
+		$('#artistModal').modal('show');
+		checkEmptyArtist();
+	});
+	
+	// 출연진 검색 버튼
+	$('#searchArtistBtn').on('click', function(){
+		$.ajax({
+			url: "/searchartist"
+				, method : "GET"
+				, dataType: "json"
+				, data: {"name": $('#searchArtist').val() }
+				, success : function(d){
+					$('#resultArtist').html('');
+					if(d.length == 0){
+						$('#resultArtist').html('검색 결과가 없습니다.');
+					}
+					d.forEach(function(artist){
+						// 하나의 검색 결과 저장할 div
+						var resDiv = $('<div style="width: fit-content; float:left">');
+						resDiv.data('aIdx', artist.artistIdx); // 커스텀 태그로 artist 정보 삽입
+						resDiv.data('aName', artist.name); // 커스텀 태그로 artist 정보 삽입
+						// 아티스트 이미지 띄울 태그
+						var img = $('<img>');
+						img.attr('src', artist.imgUri);
+						// 아티스트명 띄울 태그
+						var name = $('<p>');
+						name.text(artist.name);
 
+						resDiv.append(img);
+						resDiv.append(name);
+						resDiv.append("<input type='button' class='addArtist' value='추가'>")
+						
+						// 모달의 검색 결과 창에 결과 태그들 추가
+						$('#resultArtist').append(resDiv);
+					});
+				}
+				, error: function(){
+					console.log("아티스트 검색 실패");
+				}
+		})
+	});
+	
+	// 출연진 검색 후 추가 버튼 클릭 시 호출되는 메소드
+	$('#resultArtist').on('click', '.addArtist', function(){
+		// 현재 선택된 출연진 목록이 없는 경우
+		if($('#selectedArtist').find('div').length == 0){
+			$('#selectedArtist').html('');
+		}
+		
+		var artistIdx = $(this).parent().data('aIdx');
+		var artistName = $(this).parent().data('aName');
+		
+		// 이미 등록된 출연진인 경우
+		var isExist = false;
+		var selectedList = $('#selectedArtist').find('div');
+		selectedList.each(function(i){
+			if($(selectedList[i]).data('aIdx') == artistIdx){
+				isExist = true;
+				return false; // each문 중단
+			}
+		});
+		if(isExist){return;} // 메소드 중단
+		
+		// 선택 결과 태그
+		var selected = $("<div style='float:left'>");
+		selected.data('aIdx', artistIdx); // idx 정보 저장해놓음 
+		selected.data('aName', artistName); // name 정보 저장해놓음 
+		// 선택된 출연진 명 띄우기 위한 태그
+		var name = $("<span>");
+		name.text(artistName);
+		selected.append(name);
+		selected.append("<span class='glyphicon glyphicon-remove' style='cursor:pointer'></span>")
+		
+		$('#selectedArtist').append(selected);
+		
+	});
+	
+	// 모달의 선택된 출연진 목록에서 삭제 버튼 클릭 시
+	$('#selectedArtist').on('click', '.glyphicon-remove', function(){
+		$(this).parent().remove();
+		checkEmptyArtist();
+	});
+	
+	// 현재 선택된 출연진 목록이 없는 경우 검사
+	function checkEmptyArtist(){
+		if($('#selectedArtist').find('div').length == 0){
+			$('#selectedArtist').html('');
+			$('#selectedArtist').append('<p> 출연진을 선택해주세요 </p>');
+		}
+		return false;
+	}
+	
+	// 출연진 선택 모달에서 최종 선택 버튼 클릭 시
+	$('#artistModal .btn-primary').on('click', function(){
+		var selectedList = $('#selectedArtist').find('div');
+		// 아무도 선택안한 경우
+		if(selectedList.length == 0){
+			alert("출연진을 한 명이상 선택해야합니다.");
+			return;
+		}
+		
+		// 모달 창 밖 출연진 리스트 텍스트로 보여주는 p 태그
+		var artistTextList = $('#artistBtn').next();
+		artistTextList.show();
+		artistTextList.html(''); // 초기화
+		
+		// 서버에 값 넘기기위한 input 태그들(기존에 존재하던)
+		$('#artistBtn').parent().find('input[name="artistIdx"]').remove();
+		
+		
+		// 선택된 출연진 목록을 가져와서
+		var idx = 0;
+		selectedList.each(function(i){
+			// 서버에 값을 넘기기위해 input 태그 생성
+			var inputTag = $('<input type="hidden">');
+			inputTag.attr('name','castList['+ (idx++) +'].artistIdx');
+			inputTag.attr('value', $(selectedList[i]).data('aIdx'));
+			inputTag.data('aName', $(selectedList[i]).data('aName'));
+			
+			console.log(inputTag);
+			$('#artistBtn').parent().append(inputTag);
+			
+			// 메인 화면에 선택한 출연진 리스트를 텍스트로 띄워줌
+			artistTextList.append("<span style='margin-right:10px;'>"+ $(selectedList[i]).data('aName') +"</span>")
+		});
+		
+		$('#artistModal').modal('hide');
+	});
+	
 	// 저장 버튼
 	$('#storeBtn').on('click', function(){
 		var complete = false;
@@ -189,6 +332,7 @@ $(document).ready(function(){
 // 		} else{
 // 			complete = true;
 // 		}
+		// 출연진 목록 검사는 따로 메소드 있음(checkEmptyArtist: boolean)
 		
 		// 유효성 검사 완료 후 submit
 		if(complete){
@@ -237,33 +381,43 @@ $(document).ready(function(){
 <tr>
 	<th rowspan=2>티켓오픈: </th> 
 	<td>
-		<input type="text" class="form-control" id="ticketStartDate" placeholder="출발일" style="width:70%; float: left;">
+		<input type="text" name="ticketStart" class="form-control" id="ticketStartDate" placeholder="출발일" style="width:70%; float: left;">
 		<span class="input-group-addon glyphicon glyphicon-calendar" style="clear:both"></span>
 	</td>
 	
 </tr>
 <tr>
 	<td>
-		<input type="text" class="form-control" id="ticketEndDate" placeholder="도착일" style="width:70%; float: left;">
+		<input type="text" name="ticketEnd" class="form-control" id="ticketEndDate" placeholder="도착일" style="width:70%; float: left;">
 		<span class="input-group-addon glyphicon glyphicon-calendar"></span>
 	</td>
 </tr>
 <tr>
 	<th>런닝타임: </th> 
-	<td><input type="number" name="ssss"/></td>
+	<td><input type="number" name="runningTime" min='0'onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
 </tr>
 <tr>
 	<th>관람등급: </th> 
-	<td><input type="text" name="ssss"/></td>
+	<td>
+		<select name="ageGradeIdx">
+		<option value="0" selected="selected">관람등급 선택</option>
+		<c:forEach var="ageGrade" items="${ageList }">
+			<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }세 이상</option>
+		</c:forEach>
+		</select>
+	</td>
 </tr>
 <tr>
 	<th>출연진: </th> 
-	<td><input type="text" name="ssss"/></td>
+	<td>
+		<button type="button" id="artistBtn">출연진 선택</button>
+		<p style="display:none;"></p>
+	</td>
 </tr>
 </table>
 
-
-<div class="modal fade" id="themeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- 장르 선택 모달창 -->
+<div class="modal fade" id="themeModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -271,6 +425,7 @@ $(document).ready(function(){
         <h4 class="modal-title">장르 선택</h4>
       </div>
       <div class="modal-body">
+      <!-- 장르 선택 checkbox 란 -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">선택</button>
@@ -278,6 +433,32 @@ $(document).ready(function(){
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- 출연진 선택 모달창 -->
+<div class="modal fade" id="artistModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">출연진 선택</h4>
+      </div>
+      <div class="modal-body">
+      	<div id="viewArtist">
+      		<input type="text" id="searchArtist" placeholder="출연진 검색" onkeypress="if(event.keyCode==13){$('#searchArtistBtn').trigger('click'); return false;}"/> 
+      		<button type="button" id="searchArtistBtn">검색</button> 
+      		<div id="resultArtist">
+      		</div>
+      	</div>
+      	<div id="selectedArtist">
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">선택</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <br>
 <button type="button" id="storeBtn">저장</button>

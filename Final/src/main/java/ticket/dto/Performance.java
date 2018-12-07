@@ -1,15 +1,21 @@
 package ticket.dto;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 public class Performance {
 	
 	private int pfmIdx;
 	private String name;
 	private int genreIdx;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date pfmStart;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date pfmEnd;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date ticketStart;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date ticketEnd;
 	private int hallIdx;
 	private int ageGradeIdx;
