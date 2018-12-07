@@ -18,6 +18,8 @@ import ticket.dao.face.PfmDao;
 import ticket.dao.face.PosterDao;
 import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
+import ticket.dto.Cast;
+import ticket.dto.CastList;
 import ticket.dto.CategoryCon;
 import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
@@ -137,27 +139,37 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList) {
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
 
+		int pfmIdx = pfm.getPfmIdx();
 		// 포스터 업로드
 		Poster poster = uploadPoster(posterUpload);
-		poster.setPfmIdx(pfm.getPfmIdx()); // 공연 idx 지정
+		poster.setPfmIdx(pfmIdx); // 공연 idx 지정
 		// 포스터 업로드 정보 DB 저장
 		pDao.insertPoster(poster);
 
 		// 테마들 등록
-		for (PfmTheme thm : themeList.getThmList()) {
-			if (thm.getThemeIdx() != 0) {
-				// 공연 idx 지정
-				thm.setPfmIdx(pfm.getPfmIdx());
-				System.out.println(thm);
 
+		for(PfmTheme thm : themeList.getThmList()) {
+			if(thm.getThemeIdx() != 0 ) { // theme가 존재하는 경우에 insert
+				// 공연 idx 지정
+				thm.setPfmIdx(pfmIdx);
+				
 				pDao.insertPfmTheme(thm);
 			}
 		}
-
+		
+		// 출연진들 등록
+		for(Cast cast : castList.getCastList()) {
+			if(cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
+				// 공연 idx 지정
+				cast.setPfmIdx(pfmIdx);
+				
+				pDao.insertCast(cast);
+			}
+		}
 	}
 
 	public Poster uploadPoster(MultipartFile posterUpload) {

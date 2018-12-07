@@ -27,20 +27,32 @@
 	<select id="selectAllTheme" parameterType="ticket.dto.Genre" resultMap="Theme">
 		SELECT theme_idx, theme_name, genre_idx
 		FROM theme
-		WHERE genre_idx = ${genreIdx }
+		WHERE genre_idx = #{genreIdx }
 		ORDER BY theme_idx
 	</select>
 	
-	<select id="selectAllAgeGrade">
-	
+	<select id="selectAllAgeGrade" resultType="ticket.dto.AgeGrade">
+		SELECT age_grade_idx as ageGradeIdx, age_limit as ageLimit  
+		FROM age_grade
+		ORDER BY age_grade_idx
 	</select>
 	
-	<select id="selectArtistByName">
-	
+	<select id="selectArtistByName" parameterType="ticket.dto.Artist" resultType="ticket.dto.Artist">
+		SELECT 
+			artist_idx as artistIdx, theme_idx as themeIdx, name as name, img_uri as imgUri
+		FROM artist
+		WHERE name LIKE '%${name }%'
 	</select>
 	
-	<select id="selectAllHall">
-	
+	<select id="selectAllHall" parameterType="ticket.dto.Hall" resultType="ticket.dto.Hall">
+		SELECT 
+			hall_idx hallIdx,
+			hall_name hallName,
+			hall_loc hallLoc,
+			hall_phone hallPhone,
+			create_date createDate
+		FROM hall
+		ORDER BY hall_name
 	</select>
 	
   	<insert id="insertPfm" parameterType="ticket.dto.Performance">
@@ -51,7 +63,7 @@
 		INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
 			,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
 		VALUES (#{pfmIdx }, #{name }, #{genreIdx }, '2018-08-01', '2018-08-02'
-			, '2018-08-01', '2018-08-02', 1, 1, 60)
+			, #{ticketStart }, #{ticketEnd }, #{hallIdx }, #{ageGradeIdx }, #{runningTime })
 		
 	</insert>
   
@@ -83,5 +95,10 @@
 	<insert id="insertPoster" parameterType="ticket.dto.Poster">
 		INSERT INTO poster_info (poster_idx , pfm_idx , origin_name , stored_name )
 		VALUES (poster_info_seq.nextval, #{pfmIdx }, #{originName }, #{storedName })
+	</insert>
+	
+	<insert id="insertCast" parameterType="ticket.dto.Cast">
+		INSERT INTO cast (cast_idx ,pfm_idx ,artist_idx)
+		VALUES (cast_seq.nextval, #{pfmIdx }, #{artistIdx })
 	</insert>
 </mapper>

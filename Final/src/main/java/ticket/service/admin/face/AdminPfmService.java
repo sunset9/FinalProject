@@ -6,18 +6,19 @@ import javax.servlet.ServletContext;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ticket.dto.AgeGrade;
+import ticket.dto.Artist;
+import ticket.dto.CastList;
 import ticket.dto.CategoryCon;
 import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
-import ticket.dto.Poster;
-import ticket.dto.MainBanner;
-import ticket.dto.Performance;
-import ticket.dto.AgeGrade;
-import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
-import ticket.dto.Theme;
+import ticket.dto.MainBanner;
+import ticket.dto.Performance;
 import ticket.dto.PfmThemeList;
+import ticket.dto.Poster;
+import ticket.dto.Theme;
 
 public interface AdminPfmService {
 	
@@ -161,7 +162,7 @@ public interface AdminPfmService {
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList);
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList);
 	
 	/**
 	 * @최종수정일: 2018.12.07

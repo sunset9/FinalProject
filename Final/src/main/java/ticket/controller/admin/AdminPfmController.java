@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
+import ticket.dto.CastList;
 import ticket.dto.Genre;
+import ticket.dto.Hall;
 import ticket.dto.Performance;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
@@ -44,12 +47,12 @@ public class AdminPfmController {
 		model.addAttribute("genreList", genreList);
 
 		// 관람 등급 가져오기
-//		List<AgeGrade> ageList = pService.getAgeGradeList();
-//		model.addAttribute("ageList", ageList);
+		List<AgeGrade> ageList = pService.getAgeGradeList();
+		model.addAttribute("ageList", ageList);
 
 		// 공연장 리스트 가져오기
-//		List<Hall> hallList = pService.getHallList();
-//		model.addAttribute("hallList", hallList);
+		List<Hall> hallList = pService.getHallList();
+		model.addAttribute("hallList", hallList);
 
 		// 좌석정보 가져오기(ui 뿌리기 위해)
 
@@ -61,13 +64,12 @@ public class AdminPfmController {
 	 * @Method설명: 특정 장르에 따른 모든 테마 리스트 정보 가져오기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value = "/viewtheme", method = RequestMethod.GET)
-	public @ResponseBody List<Theme> getThemeList(Genre genre, Model model) {
-		// 테마 리스트 가져오기
-		List<Theme> themeList = pService.getThemeList(genre);
-		model.addAttribute("themeList", themeList);
 
-		return themeList;
+	@RequestMapping(value="/viewtheme", method=RequestMethod.GET)
+	public @ResponseBody List<Theme> getThemeList(
+			Genre genre
+			, Model model) {
+		return pService.getThemeList(genre);
 	}
 
 	/**
@@ -77,9 +79,7 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/searchartist", method = RequestMethod.GET)
 	public @ResponseBody List<Artist> getArtistList(Artist artist) {
-		List<Artist> artistList = pService.getArtistList(artist);
-
-		return artistList;
+		return pService.getArtistList(artist);
 	}
 
 	/**
@@ -87,27 +87,32 @@ public class AdminPfmController {
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value = "/admin/registpfm", method = RequestMethod.POST)
-	public String registPfm(Performance pfm, @RequestParam(name = "poster") MultipartFile posterUpload,
-			PfmThemeList themeList) {
-		// 공연 기본 정보 등록
+	@RequestMapping(value="/admin/registpfm", method=RequestMethod.POST)
+	public String registPfm(
+			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
+			, @RequestParam(name="poster") MultipartFile posterUpload // 포스터 업로드 파일
+			, PfmThemeList themeList // 테마 리스트
+			, CastList castList // 출연진 리스트
+			) {
+		
+		// 공연 기본 정보
 		logger.info(pfm.toString());
-
-		// 포스터 정보 등록
 
 		// 테마 정보들 등록
 		logger.info(themeList.toString());
 
 		// 출연진 등록
-
+		logger.info(castList.toString());
+		
 		// 좌석 정보 & 가격 등록
 		// 공연 날짜 & 시간 등록
 		// 공연 상세 정보 등록
 		// 예매 상세 정보 등록
 
 		// 새 공연 등록
-		pService.registPfm(pfm, posterUpload, themeList);
 
+		pService.registPfm(pfm, posterUpload, themeList, castList);
+		
 		return "redirect:/admin/registpfm";
 	}
 
