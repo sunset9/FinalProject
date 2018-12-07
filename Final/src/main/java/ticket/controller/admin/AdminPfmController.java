@@ -1,8 +1,6 @@
 package ticket.controller.admin;
 
 
-import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -21,8 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Performance;
-import ticket.dto.Theme;
 import ticket.dto.PfmThemeList;
+import ticket.dto.Poster;
+import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 
 @Controller
@@ -165,15 +164,10 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/registcateCon", method = RequestMethod.GET)
 	public String registerCategoryCon(Model model) {
 
-		// String path = context.getRealPath("upload")+"\\dddd.PNG";
-		// logger.info(path+"\\공연포스터.PNG_7de7e959");
-		List<String> test = new ArrayList<String>();
-		test.add("포스터1");
-		test.add("포스터2");
-		test.add("포스터3");
-		// model.addAttribute("path", path);
-		model.addAttribute("test", test);
-
+		List<Poster> list = pService.getListCon();
+		if(list!=null)
+		 model.addAttribute("list", list);
+	
 		return "admin/pfm/registcateCon";
 	}
 

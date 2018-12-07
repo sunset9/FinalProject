@@ -9,7 +9,15 @@
 	<insert id="insert" parameterType="ticket.dto.Poster">
 		INSERT INTO POSTER_INFO
 		(poster_idx,pfm_idx,origin_name,stored_name)VALUES
-		(poster_info_seq.nextval,PERFORMANCE_seq.nextval,#{orginName},
+		(poster_info_seq.nextval,PERFORMANCE_seq.nextval,#{originName},
 		#{storedName})
 	</insert>
+
+	<select id="selectBygenreIdx" parameterType="int"
+		resultType="ticket.dto.Poster">
+		SELECT c.pfm_idx pfmIdx,
+		p.origin_name originName ,p.stored_name storedName
+		FROM performance c, poster_info p
+		WHERE c.genre_idx=#{genreIdx} AND p.pfm_idx=c.pfm_idx
+	</select>
 </mapper>
