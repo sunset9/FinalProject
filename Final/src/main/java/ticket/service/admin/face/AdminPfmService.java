@@ -17,7 +17,7 @@ import ticket.dto.Artist;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Theme;
-import ticket.dto.ThemeList;
+import ticket.dto.PfmThemeList;
 
 public interface AdminPfmService {
 	
@@ -150,11 +150,18 @@ public interface AdminPfmService {
 	public List<Hall> getHallList();
   
   /**
-	 * @최종수정일: 2018.12.06
+   	 * @최종수정일: 2018.12.07
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
-	public void registPfm(Performance pfm, Genre genre, ThemeList themeList);
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList);
+	
+	/**
+	 * @최종수정일: 2018.12.07
+	 * @Method설명: 포스터 이미지 파일 업로드
+	 * @작성자: 전해진
+	 */
+	public void uploadPoster(MultipartFile posterUpload);
   
   /**
 	 * @최종수정일: 2018.12.05

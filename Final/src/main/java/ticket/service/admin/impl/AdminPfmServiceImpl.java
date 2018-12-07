@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
 import ticket.dao.face.CategoryMuDao;
@@ -24,13 +25,15 @@ import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
+import ticket.dto.PfmTheme;
+import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
-import ticket.dto.ThemeList;
 import ticket.service.admin.face.AdminPfmService;
 
 @Service
 public class AdminPfmServiceImpl implements AdminPfmService{
+	@Autowired ServletContext context;
 	@Autowired PfmDao pDao;
 	@Autowired
 	CategoryConDao conDao;
@@ -40,6 +43,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 	CategoryFamDao famDao;
 	@Autowired
 	PosterDao infoDao;
+
 	@Override
 	public List getMBannerList() {
 		return null;
@@ -131,14 +135,53 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 	}
   
 	@Override
-	public void registPfm(Performance pfm, Genre genre, ThemeList themeList) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList) {
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
 		
-		// 장르 정보 등록
-		genre.setGenreIdx(pfm.getPfmIdx());
+		// 포스터 업로드
+		uploadPoster(posterUpload);
+		
+		// 테마들 등록
+		for(PfmTheme thm : themeList.getThmList()) {
+			if(thm.getThemeIdx() != 0 ) { 
+				// 공연 idx 지정
+				thm.setPfmIdx(pfm.getPfmIdx());
+				System.out.println(thm);
+				
+				pDao.insertPfmTheme(thm);
+			}
+		}
+			
 	}
   
+	public void uploadPoster(MultipartFile posterUpload) {
+		// UUID, 고유 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+		
+		//파일이 저장될 경로
+		String stored = context.getRealPath("resources/image");
+		
+		//저장될 파일의 이름
+		String name = posterUpload.getOriginalFilename()+"_"+uId;
+		System.out.println("------저장될 이름-------");
+		System.out.println(name);
+		
+		//파일객체
+		File dest = new File(stored, name);
+		
+		//파일 저장(업로드)
+		try {
+			posterUpload.transferTo(dest);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 	@Override
 	public List<Poster> getListCon() {
 		// TODO Auto-generated method stub

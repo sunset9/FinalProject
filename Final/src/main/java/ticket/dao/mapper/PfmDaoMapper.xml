@@ -53,11 +53,6 @@
 		VALUES (#{pfmIdx }, #{name }, #{genreIdx }, '2018-08-01', '2018-08-02'
 			, '2018-08-01', '2018-08-02', 1, 1, 60)
 		
-		-- INSERT INTO performance(pfm_idx ,name ,genre_idx ,pfm_start ,pfm_end 
-		-- 	,ticket_start ,ticket_end ,hall_idx ,age_grade_idx ,running_time )
-		-- VALUES (#{pfmIdx }, #{name }, #{genreIdx }, #{pfmStart }, #{pfmEnd }
-		-- 	, #{ticketStart }, #{ticketEnd }, #{hallIdx }, #{ageGradeIdx }, #{runningTime })
-		
 	</insert>
   
 	<select id="selectTodayBook" resultType="int">
@@ -75,4 +70,9 @@
 	<select id="selectTodayCon" resultType="int">
 		
 	</select>
+	
+	<insert id="insertPfmTheme" parameterType="ticket.dto.PfmTheme">
+		INSERT INTO pfm_theme(pfm_theme_idx ,pfm_idx ,theme_idx)
+		VALUES (pfm_theme_seq.nextval, #{pfmIdx }, #{themeIdx } )
+	</insert>
 </mapper>
