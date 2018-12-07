@@ -5,14 +5,14 @@ import java.util.Date;
 public class Poster {
 	private int posterIdx;//포스터번호
 	private int pfmIdx; //공연번호 
-	private String orginName;//포스터 원본이름 
+	private String originName;//포스터 원본이름 
 	private String storedName; //포스터 저장이름
 	private Date createDate; //등록일 
 	
 	
 	@Override
 	public String toString() {
-		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", orginName=" + orginName
+		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", originName=" + originName
 				+ ", storedName=" + storedName + ", createDate=" + createDate + "]";
 	}
 	public int getPosterIdx() {
@@ -27,11 +27,11 @@ public class Poster {
 	public void setPfmIdx(int pfmIdx) {
 		this.pfmIdx = pfmIdx;
 	}
-	public String getOrginName() {
-		return orginName;
+	public String getOriginName() {
+		return originName;
 	}
-	public void setOrginName(String orginName) {
-		this.orginName = orginName;
+	public void setOriginName(String originName) {
+		this.originName = originName;
 	}
 	public String getStoredName() {
 		return storedName;
