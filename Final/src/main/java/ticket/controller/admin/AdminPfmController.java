@@ -97,7 +97,7 @@ private static final Logger logger = LoggerFactory.getLogger(AdminPfmController.
 	@RequestMapping(value="/admin/registpfm", method=RequestMethod.POST)
 	public String registPfm(
 			Performance pfm
-			, MultipartFile posterUpload
+			, @RequestParam(name="poster") MultipartFile posterUpload
 			, PfmThemeList themeList
 			) {
 		// 공연 기본 정보 등록

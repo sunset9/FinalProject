@@ -11,4 +11,11 @@
 		(poster_info_seq.nextval,PERFORMANCE_seq.nextval,#{orginName},
 		#{storedName})
 	</insert>
+	
+	<select id="findActiveBlogLike" parameterType="Blog" resultType="Blog">
+		SELECT * FROM blog
+		<choose>
+		<when test="#{title } "></when>
+		</choose>
+	</select>
 </mapper>
