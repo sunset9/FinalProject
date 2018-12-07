@@ -12,7 +12,7 @@ public class Poster {
 	
 	@Override
 	public String toString() {
-		return "PosterInfo [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", orginName=" + orginName
+		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", orginName=" + orginName
 				+ ", storedName=" + storedName + ", createDate=" + createDate + "]";
 	}
 	public int getPosterIdx() {
