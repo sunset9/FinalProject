@@ -192,8 +192,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 
 	@Override
 	public List<Poster> getListCon() {
-		// TODO Auto-generated method stub
-		return null;
+		return infoDao.selectBygenreIdx(1);
 	}
 
 	@Override

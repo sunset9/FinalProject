@@ -4,17 +4,23 @@
 
 <script>
 	$(document).ready(function() {
-		$('#modal').click(function() {
+		$('#add_poster').click(function() {
 			console.log("떴다");
 			$('#myModal').modal('show');
 		});
+		// 테마 선택 완료 시
+		$('#myModal').find('.btn').on('click', function(){
+			var Selected = $("input[name^='check_test']:checked");
+			console.log(Selected);
+			});
+		
 	}); // end ready
 </script>
-카테고리 배너 관리 
+카테고리 배너 관리
 <hr>
 <form action="/admin/registcateCon" method="post">
 	<button>최종저장</button>
-	<br> <span class="glyphicon glyphicon-plus-sign" id="modal"></span>
+	<br> <span class="glyphicon glyphicon-plus-sign" id="add_poster"></span>
 
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -30,8 +36,12 @@
 				</div>
 				<div class="modal-body">
 					내용
-					<c:forEach var="item" items="${test }">
-						<input type="select">${item }
+					<c:forEach var="item" items="${list }">
+						<input type="checkbox" id="check_test" name="check_test"
+							style="display: none;">
+						<label id="check_test" style="width: 150px; height: 220px;"><div
+								class="chk_img"
+								style="height: 220px; background:url('/resources/image/${item.storedName}');">체크</div></label>
 					</c:forEach>
 
 				</div>
