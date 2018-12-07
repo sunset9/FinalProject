@@ -100,9 +100,6 @@ public class AdminPfmController {
 
 		// 포스터 정보 등록
 
-		// 장르 정보 등록
-		logger.info(genre.toString());
-		
 		// 테마 정보들 등록
 		logger.info(themeList.toString());
 
