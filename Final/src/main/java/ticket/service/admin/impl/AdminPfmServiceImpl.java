@@ -24,7 +24,7 @@ import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
-import ticket.dto.PosterInfo;
+import ticket.dto.Poster;
 import ticket.dto.Theme;
 import ticket.dto.ThemeList;
 import ticket.service.admin.face.AdminPfmService;
@@ -140,19 +140,19 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 	}
   
 	@Override
-	public List<PosterInfo> getListCon() {
+	public List<Poster> getListCon() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<PosterInfo> getListFam() {
+	public List<Poster> getListFam() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<PosterInfo> getListMu() {
+	public List<Poster> getListMu() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -217,7 +217,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		PosterInfo info = new PosterInfo();
+		Poster info = new Poster();
 		info.setOrginName(file.getOriginalFilename());
 		info.setStoredName(dest.getName());
 		infoDao.insert(info);

@@ -5,7 +5,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ticket.dao.face.PosterInfoDao">
-	<insert id="insert" parameterType="ticket.dto.PosterInfo">
+	<insert id="insert" parameterType="ticket.dto.Poster">
 		INSERT INTO POSTER_INFO
 		(poster_idx,pfm_idx,origin_name,stored_name)VALUES
 		(poster_info_seq.nextval,PERFORMANCE_seq.nextval,#{orginName},

@@ -1,8 +1,8 @@
 package ticket.dao.face;
 
-import ticket.dto.PosterInfo;
+import ticket.dto.Poster;
 
 public interface PosterInfoDao {
 
-	public void insert(PosterInfo info);
+	public void insert(Poster info);
 }

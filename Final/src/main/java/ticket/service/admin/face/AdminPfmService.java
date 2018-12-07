@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dto.CategoryCon;
 import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
-import ticket.dto.PosterInfo;
+import ticket.dto.Poster;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.AgeGrade;
@@ -161,21 +161,21 @@ public interface AdminPfmService {
 	 * @Method설명:콘서트 배너 리스트
 	 * @작성자:박주희
 	 */
-	public List<PosterInfo> getListCon();
+	public List<Poster> getListCon();
 
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 가족아동 배너 리스트
 	 * @작성자:박주희
 	 */
-	public List<PosterInfo> getListFam();
+	public List<Poster> getListFam();
 
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 뮤지컬 배너 리스트
 	 * @작성자:박주희
 	 */
-	public List<PosterInfo> getListMu();
+	public List<Poster> getListMu();
 
 	/**
 	 * @최종수정일: 2018.12.05
