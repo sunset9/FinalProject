@@ -266,6 +266,12 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 		infoDao.insert(info);
 	}
 
+	@Override
+	public int getTodayAllPfm() {
+		// 오늘 등록된 모든 공연의 수 가져오기
+		return pDao.selectTodayAllPfm();
+	}
+
 
 
 }

@@ -91,6 +91,13 @@ public interface AdminPfmService {
 	public int getTodayCancel();
 	
 	/**
+	 * @최종수정일: 2018.12.07
+	 * @Method설명: 오늘 등록된 모든 공연의 수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int getTodayAllPfm();
+	
+	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 오늘 등록된 콘서트 공연수 가져오기
 	 * @작성자: 김지은
