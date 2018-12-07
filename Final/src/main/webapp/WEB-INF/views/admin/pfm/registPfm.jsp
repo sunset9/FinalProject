@@ -68,6 +68,21 @@
 #selectedArtist div{
 	margin-right: 15px;
 }
+
+.glyphicon-remove, .glyphicon-plus-sign{
+	cursor:pointer
+}
+/*<input type="number"/> 화살표 지우기*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#seatDiv input[type='text']{
+	text-align: right;
+}
+
 </style>
 
 <script>
@@ -261,7 +276,7 @@ $(document).ready(function(){
 		var name = $("<span>");
 		name.text(artistName);
 		selected.append(name);
-		selected.append("<span class='glyphicon glyphicon-remove' style='cursor:pointer'></span>")
+		selected.append("<span class='glyphicon glyphicon-remove' ></span>")
 		
 		$('#selectedArtist').append(selected);
 		
@@ -319,7 +334,67 @@ $(document).ready(function(){
 		$('#artistModal').modal('hide');
 	});
 	
-	// 저장 버튼
+	// 공연장 선택 시 좌석 정보칸 보여주기
+	$('select[name="hallIdx"]').on('change', function(){
+		if($('select[name="hallIdx"]').val() > 0){
+			$('#seatDiv').slideDown(250);
+			addSeatInput();
+		}else{
+			$('#seatDiv').slideUp(250);
+		}
+	});
+	
+	// 좌석 정보 추가 하는 경우(석, 가격)
+	$('#seatDiv').on('click', '.glyphicon-plus-sign', function(){
+		addSeatInput();
+	});
+	
+	function addSeatInput(){
+		var td = $('<td class="seatInfo">')
+		var inputSec = $('<input type="text" name="app_sec" placeholder="VIP">석</input>');
+		var inputPay = $('<input type="text" name="sec_pay" placeholder="0">원</input>');
+		var plus = $('<span class="glyphicon glyphicon-plus-sign"></span>');
+		var minus = $('<span class="glyphicon glyphicon-minus-sign"></span>');
+			
+		td.append(inputSec);
+		td.append(inputPay);
+		
+		var existTd = $('#seatDiv tr').find('td');
+		
+		// 입력창이 0개인 경우 - 처음 만들어지는 경우
+		if(existTd.length == 0){
+			td.append(plus);
+			$('#seatDiv tr').append(td);
+		}else{ // 이미 만들어져있는게 있는 경우
+			// 입력창이 6개 미만인 경우 - 추가 
+			if(existTd.length < 6){
+				var lastTd = existTd.last();
+				lastTd.find('span').remove(); // 기존에 + 삭제
+				lastTd.append(minus); // - 삽입
+			
+				if(existTd.length == 5){ // 6번째 추가하는 경우라면 
+					td.append(minus.clone()); // 더이상 추가 못하도록 - 삽입
+				}else{
+					td.append(plus);
+				}
+				
+				var tr = $('<tr>');
+				tr.append(td);
+				$('#seatDiv table').append(tr);
+				$('#seatDiv tr').find('th').attr('rowspan', existTd.length +1);
+			}
+		}
+		
+	}
+	
+	
+	// 좌석 가격입력창 - 화폐 포멧으로 콤마 찍어주기
+	$('input[name="sec_pay"]').on('change keyup',function(){
+		getNumber(this);
+	});
+	
+	
+	//저장 버튼
 	$('#storeBtn').on('click', function(){
 		var complete = false;
 		var complete = true;
@@ -338,10 +413,27 @@ $(document).ready(function(){
 		if(complete){
 			$('#registForm').submit();
 		}
-		
 	});
 });
 
+var rgx1 = /\D/g;  // /[^0-9]/g 와 같은 표현
+var rgx2 = /(\d+)(\d{3})/; 
+function getNumber(obj){
+   var num01;
+   var num02;
+   num01 = obj.value;
+   num02 = num01.replace(rgx1,"");
+   num01 = setComma(num02);
+   obj.value =  num01;
+}
+function setComma(inNum){
+   var outNum;
+   outNum = inNum; 
+   while (rgx2.test(outNum)) {
+        outNum = outNum.replace(rgx2, '$1' + ',' + '$2');
+    }
+   return outNum;
+}
 </script>
 
 <h1>공연 등록 페이지</h1>
@@ -394,7 +486,7 @@ $(document).ready(function(){
 </tr>
 <tr>
 	<th>런닝타임: </th> 
-	<td><input type="number" name="runningTime" min='0'onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
+	<td><input type="number" name="runningTime" min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
 </tr>
 <tr>
 	<th>관람등급: </th> 
@@ -402,7 +494,7 @@ $(document).ready(function(){
 		<select name="ageGradeIdx">
 		<option value="0" selected="selected">관람등급 선택</option>
 		<c:forEach var="ageGrade" items="${ageList }">
-			<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }세 이상</option>
+			<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }</option>
 		</c:forEach>
 		</select>
 	</td>
@@ -414,7 +506,28 @@ $(document).ready(function(){
 		<p style="display:none;"></p>
 	</td>
 </tr>
+<tr>
+	<th>공연장: </th> 
+	<td>
+		<select name="hallIdx">
+		<option value="0" selected="selected">공연장 선택</option>
+		<c:forEach var="hall" items="${hallList }">
+			<option value="${hall.hallIdx }">${hall.hallName }</option>
+		</c:forEach>
+		</select>
+	</td>
+</tr>
 </table>
+<!-- 좌석 관련 div -->
+<div id="seatDiv" style="display:none;"> 
+<table>
+<tr>
+	<th>좌석정보: </th>
+	<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
+</tr>
+</table>
+</div>
+
 
 <!-- 장르 선택 모달창 -->
 <div class="modal fade" id="themeModal" tabindex="-1" role="dialog" aria-hidden="true">

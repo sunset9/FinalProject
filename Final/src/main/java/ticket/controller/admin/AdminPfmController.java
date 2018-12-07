@@ -1,6 +1,5 @@
 package ticket.controller.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -20,6 +19,7 @@ import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.CastList;
 import ticket.dto.Genre;
+import ticket.dto.Hall;
 import ticket.dto.Performance;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
@@ -51,8 +51,8 @@ public class AdminPfmController {
 		model.addAttribute("ageList", ageList);
 
 		// 공연장 리스트 가져오기
-//		List<Hall> hallList = pService.getHallList();
-//		model.addAttribute("hallList", hallList);
+		List<Hall> hallList = pService.getHallList();
+		model.addAttribute("hallList", hallList);
 
 		// 좌석정보 가져오기(ui 뿌리기 위해)
 
@@ -88,7 +88,7 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value="/admin/registpfm", method=RequestMethod.POST)
 	public String registPfm(
-			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급)
+			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
 			, @RequestParam(name="poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
