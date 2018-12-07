@@ -14,7 +14,7 @@ import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
 import ticket.dao.face.CategoryMuDao;
 import ticket.dao.face.PfmDao;
-import ticket.dao.face.PosterInfoDao;
+import ticket.dao.face.PosterDao;
 import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.CategoryCon;
@@ -39,7 +39,7 @@ public class AdminPfmServiceImpl implements AdminPfmService{
 	@Autowired
 	CategoryFamDao famDao;
 	@Autowired
-	PosterInfoDao infoDao;
+	PosterDao infoDao;
 	@Override
 	public List getMBannerList() {
 		return null;
