@@ -170,12 +170,18 @@ public interface AdminPfmService {
 	 */
 	public Poster uploadPoster(MultipartFile posterUpload);
   
-  /**
-	 * @최종수정일: 2018.12.05
-	 * @Method설명:콘서트 배너 리스트
-	 * @작성자:박주희
-	 */
-	public List<Poster> getListCon();
+	 /**
+		 * @최종수정일: 2018.12.08
+		 * @Method설명:콘서트 모달안에배너 리스트
+		 * @작성자:박주희
+		 */
+		public List<Poster> getModalListCon();
+		 /**
+		 * @최종수정일: 2018.12.08
+		 * @Method설명:콘서트 배너 리스트
+		 * @작성자:박주희
+		 */
+		public List<Poster> getListCon();
 
 	/**
 	 * @최종수정일: 2018.12.05

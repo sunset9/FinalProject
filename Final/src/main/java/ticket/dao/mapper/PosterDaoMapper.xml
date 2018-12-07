@@ -16,8 +16,18 @@
 	<select id="selectBygenreIdx" parameterType="int"
 		resultType="ticket.dto.Poster">
 		SELECT c.pfm_idx pfmIdx,
-		p.origin_name originName ,p.stored_name storedName
+		p.origin_name originName
+		,p.stored_name storedName
 		FROM performance c, poster_info p
-		WHERE c.genre_idx=#{genreIdx} AND p.pfm_idx=c.pfm_idx
+		WHERE
+		c.genre_idx=#{genreIdx} AND p.pfm_idx=c.pfm_idx
+	</select>
+
+	<select id="selectBypfmIdx" 
+		resultType="ticket.dto.Poster">
+		SELECT c.pfm_idx pfmIdx,
+		p.origin_name originName ,p.stored_name storedName
+		FROM category_con c ,poster_info p
+		WHERE p.pfm_idx=c.pfm_idx
 	</select>
 </mapper>
