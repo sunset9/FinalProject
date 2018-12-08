@@ -5,16 +5,39 @@ import java.util.List;
 import ticket.dto.Faq;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
+import ticket.utils.Paging;
 
 public interface AdminBoardDao {
 
 
-	// 공지사항 글 리스트
-	public List selectNotiList(Notice notice);
+	// 공지사항 전체 글 리스트
+	public List selectNotiList(Paging paging);
+	
+	// 전체 게시글 조회
+	public int selectCntAll();
+	
+	
+	
+	
+	
 	
 	// 공지사항 상세보기
 	public void viewNoti(Notice notice);
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 공지사항 글 쓰기
 	public void insertNoti();
 	
