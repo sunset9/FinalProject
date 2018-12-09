@@ -2,13 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!-- Datepicker -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 <script src="../resources/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
 
+<!-- Timepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
 
 
 <style>
+.registPfmTab {
+	width:100%;
+}
+
+#registStep-2 {
+	display: flex;
+}
+.pfmDate{
+	display: inline;
+    width: 110px;
+}
+
 #posterImg input[type="file"] { 
 	position: absolute;
 	width: 1px; 
@@ -54,6 +70,11 @@
 	appearance: none; 
  }
 
+#ticketStartDate, #ticketEndDate{
+	width:70%;
+	float: left;
+}
+
 #resultArtist{
 	display: flex; /* 자식이 float 인 경우 높이 자동 조절 */
 }
@@ -69,9 +90,81 @@
 	margin-right: 15px;
 }
 
-.glyphicon-remove, .glyphicon-plus-sign{
+.glyphicon-remove, .glyphicon-plus-sign, .glyphicon-minus-sign{
 	cursor:pointer
 }
+
+#registStep{
+	width: 700px;
+    height: 100px;
+    margin: 0px auto;
+}
+.progressbar {
+	counter-reset: step;
+}
+.progressbar li {
+	list-style-type: none;
+	float:left;
+	width: 25%;
+	position: relative;
+	text-align: center;
+    color: #7d7d7d;
+    font-size: 12px;
+}
+/* 현재 머물러있는 단계 */
+.progressbar li.inProgress{
+	font-weight: bold;
+	font-size: 14px;
+}
+.progressbar li.inProgress:before{
+	border-color: #999;
+	background-color: #eee;
+}
+/* step 글자 위에 서클 모양 */
+.progressbar li:before { 
+	content: counter(step);
+	counter-increment: step;
+	width: 30px;
+    height: 30px;
+    line-height: 28px;
+    border: 2px solid #7d7d7d;
+    border-radius: 50%;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    background-color: white;
+}
+.progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    background-color: #7d7d7d;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+/* 첫번째 li 의 progress bar 줄 제거*/
+.progressbar li:first-child:after {
+     content: none; 
+}
+/* 활성화된 요소의 글자 색 */
+.progressbar li.completeStep {
+	color: green; 
+}
+/* 활성화된 요소의 step 서클 */
+.progressbar li.completeStep:before {
+	content: '';
+	background-image: url(/resources/image/checked.png);
+	background-size: 28px 28px;
+    background-position: -1px -1px;
+	border-color: #55b776; 
+}
+/* 활성화 된 요소에 연결된 progress 줄 색 변경*/
+.progressbar li.completeStep + li:after {
+     background-color: #55b776; 
+}
+
 /*<input type="number"/> 화살표 지우기*/
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -83,10 +176,86 @@ input[type="number"]::-webkit-inner-spin-button {
 	text-align: right;
 }
 
+#registStep-2 div{
+	flex: 1; 
+}
+
+#registTimeForm{
+	float:left;
+}
+#registTimeRes {
+	float:right;
+	border: 1px solid #aaa;
+	margin-top: 40px;
+	padding: 10px;
+}
+
 </style>
 
 <script>
 $(document).ready(function(){
+	// 단계 이동 버튼 클릭 시
+	$('.stepBtn').on('click', function(){
+		var lastCompletedTab = $('.completeStep').last().attr('id');
+		var curStep = 0;
+		// 현재 단계 구하기
+		if(!lastCompletedTab){
+			curStep = 1;
+		}else{
+			curStep = Number(lastCompletedTab.split("-")[1]) + 1;
+		}
+		var prevStep = curStep - 1;
+		var nextStep = curStep + 1;
+		
+		// 다음 단계 클릭 시
+		if($(this).is($('#nextBtn'))){
+			if(curStep == 1){ // 현재 STEP1 단계라면
+				// '이전 단계' 버튼 활성화
+				$('#prevBtn').show();
+			} else if(curStep == 3){ // 현재 STEP 3 단계라면(=다음이 4단계)
+				// '다음 단계' 버튼 비활성화
+				$('#nextBtn').hide();
+				// '저장' 버튼 활성화
+				$('#storeBtn').show();
+			}
+			
+			// 현재 단계 탭 완료 상태 전환
+			$('#step-'+curStep).addClass('completeStep');
+			// 다음 단계 탭 현재 진행 상태 표시로 전환
+			$('#step-'+curStep).removeClass('inProgress');
+			$('#step-'+nextStep).addClass('inProgress');
+			
+			// 현재 띄워주고 있는 등록 양식 숨김
+			$('#registStep-'+curStep).hide();
+			// 다음 등록 양식 보여줌
+			$('#registStep-'+nextStep).show("slide", {direction: "right"}, 'fast');
+			
+		} else { // 이전 단계 클릭 시
+			if(curStep == 2){ // 현재 STEP2 단계라면 ( =전환될 화면이 1단계)
+				// '이전 단계' 버튼 비활성화
+				$('#prevBtn').hide();
+			} else if(curStep == 4){ // 현재 STEP4 단계라면 ( =전환될 화면이 3단계)
+				// '다음 단계' 버튼 활성화
+				$('#nextBtn').show();
+				// '저장' 버튼 비활성화
+				$('#storeBtn').hide();
+			}
+		
+			// 이전 단계 탭(전환될 탭) 미완료 상태 전환
+			$('#step-'+prevStep).removeClass('completeStep');
+			// 이전 단계 탭 현재 진행 상태 표시로 전환
+			$('#step-'+curStep).removeClass('inProgress');
+			$('#step-'+prevStep).addClass('inProgress');
+			
+			// 현재 띄워주고 있는 등록 양식 숨김
+			$('#registStep-'+curStep).hide();
+			// 다음 등록 양식 보여줌
+			$('#registStep-'+prevStep).show("slide", {direction: "left"}, 'fast');
+		}
+		
+	});
+	
+	
 	// 포스터 업로드
 	var fileTarget = $('#posterImg .upload-hidden');
 	fileTarget.on('change', function(){ // 값이 변경되면 
@@ -172,36 +341,44 @@ $(document).ready(function(){
 	});
 	
 	
-	// 티켓 오픈 일정 지정
+	// 티켓 오픈 일정, 공연 일정 지정
 	var startDate = new Date(); 
 	var endDate = new Date(); 
-	// 티켓 오픈 시작일 선택
-	$('#ticketStartDate').datepicker({
+	$('.pfmDate').datepicker({
 		startDate: startDate, // 오늘 이후로 선택 가능
-        todayHighlight: true,
-        autoclose: true,
-        format: "yyyy/mm/dd",
-        language: "kr"
-    }).on('changeDate', function(selected){ 
-		// 종료일 조정(시작일보다 빠르지 않게)    	
-        startDate = new Date(selected.date.valueOf()); 
-        startDate.setDate(startDate.getDate(new Date(selected.date.valueOf()))); 
-        $('#ticketEndDate').datepicker('setStartDate', startDate); 
-    });
-    
-	// 티켓 오픈 종료일 선택
-	$('#ticketEndDate').datepicker({
-		startDate: startDate, // 오늘 이후로 선택 가능
-        todayHighlight: true,
-        autoclose: true,
-        format: "yyyy/mm/dd",
-        language: "kr",
-    }) .on('changeDate', function(selected){ 
-    	// 시작일 조정(종료일보다 늦지 않게)
-    	endDate = new Date(selected.date.valueOf()); 
-    	endDate.setDate(endDate.getDate(new Date(selected.date.valueOf()))); 
-        $('#ticketStartDate').datepicker('setEndDate', endDate); 
-    }); 
+	    todayHighlight: true,
+	    autoclose: true,
+	    format: "yyyy/mm/dd",
+	    language: "kr"
+	}).on('changeDate', function(selected){ 
+		if($(this).is('#ticketStartDate')){ // 티켓 오픈 시작일 선택
+			// 종료일 조정(시작일보다 빠르지 않게)    	
+		    startDate = new Date(selected.date.valueOf()); 
+		    startDate.setDate(startDate.getDate(new Date(selected.date.valueOf()))); 
+		    $('#ticketEndDate').datepicker('setStartDate', startDate); 
+		
+		} else if($(this).is('#ticketEndDate')){ // 티켓 오픈 종료일 선택
+			// 시작일 조정(종료일보다 늦지 않게)
+			endDate = new Date(selected.date.valueOf()); 
+			endDate.setDate(endDate.getDate(new Date(selected.date.valueOf()))); 
+			$('#ticketStartDate').datepicker('setEndDate', endDate); 
+		
+		} else if($(this).is('#pfmStartDate')){ // 공연 시작일 선택
+			// 종료일 조정(시작일보다 빠르지 않게)    	
+		    startDate = new Date(selected.date.valueOf()); 
+		    startDate.setDate(startDate.getDate(new Date(selected.date.valueOf()))); 
+		    $('#pfmEndDate').datepicker('setStartDate', startDate); 
+		
+		} else if($(this).is('#pfmEndDate')){ // 공연 종료일 선택
+			// 시작일 조정(종료일보다 늦지 않게)
+			endDate = new Date(selected.date.valueOf()); 
+			endDate.setDate(endDate.getDate(new Date(selected.date.valueOf()))); 
+			$('#pfmStartDate').datepicker('setEndDate', endDate); 
+		
+		}
+	});
+
+
 
 	// 출연진 선택 버튼 
 	$('#artistBtn').on('click', function(){
@@ -324,7 +501,6 @@ $(document).ready(function(){
 			inputTag.attr('value', $(selectedList[i]).data('aIdx'));
 			inputTag.data('aName', $(selectedList[i]).data('aName'));
 			
-			console.log(inputTag);
 			$('#artistBtn').parent().append(inputTag);
 			
 			// 메인 화면에 선택한 출연진 리스트를 텍스트로 띄워줌
@@ -348,10 +524,10 @@ $(document).ready(function(){
 	$('#seatDiv').on('click', '.glyphicon-plus-sign', function(){
 		addSeatInput();
 	});
-	
+	// 좌석 정보 추가 input 태그 생성 메소드
 	function addSeatInput(){
 		var td = $('<td class="seatInfo">')
-		var inputSec = $('<input type="text" name="app_sec" placeholder="VIP">석</input>');
+		var inputSec = $('<input type="text" name="app_sec" placeholder="(VIP)">석</input>');
 		var inputPay = $('<input type="text" name="sec_pay" placeholder="0">원</input>');
 		var plus = $('<span class="glyphicon glyphicon-plus-sign"></span>');
 		var minus = $('<span class="glyphicon glyphicon-minus-sign"></span>');
@@ -387,12 +563,246 @@ $(document).ready(function(){
 		
 	}
 	
+	// 좌석 정보 삭제 하는 경우(석, 가격)
+	$('#seatDiv').on('click', '.glyphicon-minus-sign', function(){
+		// 첫번째 요소 삭제하는 경우(첫번째 요소의 <tr>에만 <th>태그 존재함)
+		var thisTr = $($(this).parents('tr'));
+		if(thisTr.find('th').length == 1){
+			// '좌석정보:' 라는 th요소를
+			var th = thisTr.find('th:first-child');
+			// 두번째 tr 로 위치 옮김
+			var secondTr = thisTr.parents('table').find('tr:nth-child(2)');
+			secondTr.prepend(th);
+		} 
+		// 지우려는 요소를 담고있는 tr 전체 삭제
+		thisTr.remove();
+		
+		// rowspan 변경
+		var th = thisTr.parents('table').find('th:first-child');
+		th.attr('rowspan', th.attr('rowspan') -1)
+		
+	});
 	
 	// 좌석 가격입력창 - 화폐 포멧으로 콤마 찍어주기
-	$('input[name="sec_pay"]').on('change keyup',function(){
+	$('#seatDiv table').on('change keyup','input[name="sec_pay"]', function(){
 		getNumber(this);
 	});
 	
+	// 공연 시간 '일괄등록' 버튼 클릭 시
+	$('#registTimeForm input[type="checkbox"]').on('click', function(){
+		if($(this).is(":checked")){
+			$('#onceRegForm').show();
+		}else{{
+			$('#onceRegForm').hide();
+		}}
+	});
+	 
+
+	$('#pfmTimeSelect').timepicker();
+	$('#pfmTimeSelect').timepicker('option', { useSelect: true });
+	$('.ui-timepicker-select').prepend('<option value="0" selected="selected">시간 선택</option>');
+	// 공연 시간 선택
+	$('.ui-timepicker-select').on('change', function() {
+		var targetTime = $('#pfmTimeTarget'); 
+		var selectedTime = $('.ui-timepicker-select').val();
+		if(selectedTime == 0){
+			return;
+		}
+		// 이미 추가한 시간이라면 pass
+		var isExist = false;
+		targetTime.find("div").each(function(){
+			var existTime = $(this).find('span').first().text();
+			if(selectedTime == existTime){
+				isExist = true;
+				return;
+			}
+		});
+		if(isExist){ return;}
+		
+		
+		// 선택한 시간 추가하기
+		var resDiv = $("<div style='float:left'>");
+		var time = $("<span>");
+		time.text(selectedTime);
+		
+		// 삭제용 x 추가
+		var removeSpan = $("<span class='glyphicon glyphicon-remove' ></span>");
+		removeSpan.click(function(){$(this).parent().remove();});
+		
+		resDiv.append(time);
+		resDiv.append(removeSpan);
+		targetTime.append(resDiv);
+	  
+	});
+
+	
+	// '공연일 추가' 버튼 클릭 시
+	var timeList = [];
+	$('#addPfmTimeBtn').on('click', function(){
+		// 공연 시작일
+		var pfmStartDate = $('#pfmStartDate').val();
+		var pfmEndDate = pfmStartDate;
+		
+		// 일괄등록 시
+		if($('#registTimeForm input[type="checkbox"]').is(':checked')){
+			pfmEndDate = $('#pfmEndDate').val();
+		}
+		
+		var one_day = 1000 * 60 * 60 * 24;
+		var diffDay = new Date(pfmEndDate) - new Date(pfmStartDate);
+		diffDay = Math.round (diffDay / one_day);
+		
+		for(var day=0; day<=diffDay; day++){
+			var pfmDate = new Date(pfmStartDate);
+			pfmDate.setDate(pfmDate.getDate() + day);
+			
+			// json list 만들기
+			$('#pfmTimeTarget div').each(function(){
+				// 공연 시간
+				var pfmTime = $(this).find('span').first().text();
+
+				// json 만들기
+				var timeJson = {};
+				timeJson['date'] = formatDate(pfmDate);
+				timeJson['time'] = pfmTime;
+				
+				// list에 json 추가하기
+				timeList.push(timeJson);
+			});
+		}
+
+		// 중복 제거
+		timeList = arrUnique(timeList);
+		// 날짜, 시간 순으로 오름차순 정렬
+		timeList = sortJsonList(timeList);
+		
+		// 오른쪽 뷰 - 기간 정보 보여주기
+		var periodP = $('#registTimeRes').find('p:nth-child(2)');
+		periodP.find('span:nth-child(1)').text(pfmStartDate);
+		periodP.find('span:nth-child(2)').text(pfmEndDate);
+		// 오른쪽 뷰 - 날짜, 시간 정보 보여주기
+		viewTimeList(timeList);
+		
+		// 기존 선택 정보들 초기화
+		$('#pfmStartDate').val(''); $('#pfmStartDate').datepicker('setEndDate', '');
+		$('#pfmEndDate').val(''); $('#pfmEndDate').datepicker('setStartDate', new Date()); 
+		$('.ui-timepicker-select').val(0);
+		$('#pfmTimeTarget').text('');
+	});
+	
+	// 공연 시간 json 담고있는 list 중복값 제거 메소드
+	function arrUnique(arr) {
+	    var cleaned = [];
+	    arr.forEach(function(itm) {
+	        var unique = true;
+	        cleaned.forEach(function(itm2) {
+	            if(itm.date == itm2.date && itm.time == itm2.time)	unique = false;
+	        });
+	        if(unique)  cleaned.push(itm);
+	    });
+	    return cleaned;
+	}
+	
+	// 공연 시간 json list 정렬
+	function sortJsonList(arr){
+		arr.sort(function(a, b){
+			if(a.date < b.date) return -1;
+			else if(a.date > b.date) return 1;
+			else {
+				if(a.time < b.time) return -1;
+				else if(a.time > b.time) return 1;
+				else return 0;
+			}
+		});
+		return arr;
+	}
+	
+	// 추가한 공연 일정 보여주는 메소드
+	function viewTimeList(list){
+		var target = $('#registTimeRes tbody');
+		// 초기화
+		target.html('');
+		
+		var isFirst = true;
+		var prevDate ="";
+		var rowspanCnt = 1; 
+		
+		for(var i=0; i<list.length ; i++){
+			// td 삽입(보여주기 용)
+			var tr = $("<tr>");
+			var dateTd = $("<td>").text(list[i].date);
+			var timeTd = $("<td>").text(list[i].time);
+			var removeTd = $("<td>").append("<span class='glyphicon glyphicon-remove'></span>");
+			
+			tr.append(dateTd);
+			tr.append(timeTd);
+			tr.append(removeTd);
+			target.append(tr);
+			
+			// input 삽입(서버에 값 넘기기 위해)
+			
+			// 첫 요소인 경우
+			if(i == 0){
+				prevDate = list[i].date; continue;
+			}
+			
+			if(prevDate == list[i].date){ // 이전날과 같은 날인경우
+				rowspanCnt++;
+				// 이전 tr에 같은 날이 있다는 표시를 남김
+				target.find('tr:nth-child(' + i +')').addClass('existSameDate');
+				// 오늘 날짜와 같은 날이 있다는 표시를 남김
+				target.find('tr:nth-child(' + (i+1) +')').addClass('existSameDate');
+				// for 문 마지막 요소인 경우
+				if(i == list.length-1){
+					// 같은 날로 표시되어있는 첫번째 요소의 rowspan을 속성을 지정한다
+					target.find('.existSameDate:first').find('td:first-child').attr('rowspan', rowspanCnt);
+					// 위의 rowspan 준 첫번째 요소를 제외한 같은 날 표시 요소들의 td를 숨긴다
+					target.find('.existSameDate:not(:first)').find('td:first-child').hide();
+					target.find('tr').removeClass('existSameDate');
+				}
+			} else { // 이전날과 다른 날인 경우
+				// 같은 날이 있다는 표시가 있는 요소 중에 첫번째 요소의 td에 rowspan을 줌 (같은 날이 있는 카운트 만큼)
+				target.find('.existSameDate:first').find('td:first-child').attr('rowspan', rowspanCnt);
+				// 위에서 rowspan준(첫번째) 요소가아닌 요소들의 날짜정보 td는 숨김
+				target.find('.existSameDate:not(:first)').find('td:first-child').hide();
+				// 같은 날이 있다는 표시는 모두 삭제
+				target.find('tr').removeClass('existSameDate');
+				// 비교에 쓰일 이전 날짜를 현재 날짜로 변경
+				prevDate = list[i].date;
+				// 초기화
+				rowspanCnt = 1;
+			}
+		}
+		
+	}
+	
+	// Date  'yyyy-mm-dd' 포멧으로 변환
+	function formatDate(date){
+		 var d = new Date(date),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+
+	    return [year, month, day].join('-');
+	}
+	
+	// 공연 일정 뷰에서 '삭제(x)' 버튼 클릭 시
+	$('#registTimeRes').on('click', '.glyphicon-remove', function(){
+		// 지우려는 날짜, 시간
+		var targetDate = $(this).parent().prev().prev().text();
+		var targetTime = $(this).parent().prev().text();
+		// json 리스트에서 해당 요소 삭제
+		for(var i=0; i<timeList.length; i++){
+			if(timeList[i].date == targetDate && timeList[i].time == targetTime ){
+				timeList.splice(i,1); break;
+			}
+		}
+		// 다시 그려주기
+		viewTimeList(timeList);
+	});
 	
 	//저장 버튼
 	$('#storeBtn').on('click', function(){
@@ -416,6 +826,9 @@ $(document).ready(function(){
 	});
 });
 
+
+
+/* 화폐 단위로 숫자 찍기 관련 */
 var rgx1 = /\D/g;  // /[^0-9]/g 와 같은 표현
 var rgx2 = /(\d+)(\d{3})/; 
 function getNumber(obj){
@@ -439,96 +852,109 @@ function setComma(inNum){
 <h1>공연 등록 페이지</h1>
 <hr>
 
+<!-- 공연 등록 STEP 탭 -->
+<div id="registStep">
+<ul class="progressbar">
+	<li id="step-1" class='inProgress'>공연 기본 정보</li>
+	<li id="step-2">공연일 등록</li>
+	<li id="step-3">상세 정보</li>
+	<li id="step-4">예매 정보</li>
+</ul>
+</div>
+
 <form id="registForm" action="/admin/registpfm" method="post" enctype="multipart/form-data" style="width:80%">
-<div id="posterImg" style="float: right;width: 310px;">
-	<img src="/resources/image/poster_empty.png" accept="image/*" width="143" height="201">
-	
-	<input class="posterName" value="파일선택" disabled="disabled">
-	<label for="posterBtn">포스터 등록</label>
-	<input type="file" id="posterBtn" class="upload-hidden" name="poster"> 
-</div>
-<table>
-<tr>
-	<th>공연 제목:</th> 
-	<td><input type="text" name="name"/></td>
-</tr>
-<tr>
-	<th>공연 분류: </th> 
-	<td>
-		<select name="genreIdx">
-		<option value="0" selected="selected">분류 선택</option>
-		<c:forEach var="genre" items="${genreList }">
-			<option value="${genre.genreIdx }">${genre.genre }</option>
-		</c:forEach>
-		</select>
-	</td>
-</tr>
-<tr>
-	<th>테마: </th> 
-	<td>
-		<button type="button" id="themeSelBtn">테마 선택</button>
-		<p style="display:none;"></p>
-	</td>
-</tr>
-<tr>
-	<th rowspan=2>티켓오픈: </th> 
-	<td>
-		<input type="text" name="ticketStart" class="form-control" id="ticketStartDate" placeholder="출발일" style="width:70%; float: left;">
-		<span class="input-group-addon glyphicon glyphicon-calendar" style="clear:both"></span>
-	</td>
-	
-</tr>
-<tr>
-	<td>
-		<input type="text" name="ticketEnd" class="form-control" id="ticketEndDate" placeholder="도착일" style="width:70%; float: left;">
-		<span class="input-group-addon glyphicon glyphicon-calendar"></span>
-	</td>
-</tr>
-<tr>
-	<th>런닝타임: </th> 
-	<td><input type="number" name="runningTime" min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
-</tr>
-<tr>
-	<th>관람등급: </th> 
-	<td>
-		<select name="ageGradeIdx">
-		<option value="0" selected="selected">관람등급 선택</option>
-		<c:forEach var="ageGrade" items="${ageList }">
-			<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }</option>
-		</c:forEach>
-		</select>
-	</td>
-</tr>
-<tr>
-	<th>출연진: </th> 
-	<td>
-		<button type="button" id="artistBtn">출연진 선택</button>
-		<p style="display:none;"></p>
-	</td>
-</tr>
-<tr>
-	<th>공연장: </th> 
-	<td>
-		<select name="hallIdx">
-		<option value="0" selected="selected">공연장 선택</option>
-		<c:forEach var="hall" items="${hallList }">
-			<option value="${hall.hallIdx }">${hall.hallName }</option>
-		</c:forEach>
-		</select>
-	</td>
-</tr>
-</table>
-<!-- 좌석 관련 div -->
-<div id="seatDiv" style="display:none;"> 
-<table>
-<tr>
-	<th>좌석정보: </th>
-	<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
-</tr>
-</table>
-</div>
+<!-- 공연등록 1st Tab : 공연 기본 정보 -->
+<div class='registPfmTab' id='registStep-1'>
+	<!-- 포스터 등록 -->
+	<div id="posterImg" style="float: right;width: 310px;">
+		<img src="/resources/image/poster_empty.png" accept="image/*" width="143" height="201">
+		
+		<input class="posterName" value="파일선택" disabled="disabled">
+		<label for="posterBtn">포스터 등록</label>
+		<input type="file" id="posterBtn" class="upload-hidden" name="poster"> 
+	</div>
+	<!-- 기본 정보 입력 -->
+	<table>
+	<tr>
+		<th>공연 제목:</th> 
+		<td><input type="text" name="name"/></td>
+	</tr>
+	<tr>
+		<th>공연 분류: </th> 
+		<td>
+			<select name="genreIdx">
+			<option value="0" selected="selected">분류 선택</option>
+			<c:forEach var="genre" items="${genreList }">
+				<option value="${genre.genreIdx }">${genre.genre }</option>
+			</c:forEach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>테마: </th> 
+		<td>
+			<button type="button" id="themeSelBtn">테마 선택</button>
+			<p style="display:none;"></p>
+		</td>
+	</tr>
+	<tr>
+		<th rowspan=2>티켓오픈: </th> 
+		<td>
+			<input type="text" name="ticketStart" class="form-control pfmDate" id="ticketStartDate" placeholder="시작일" >
+		</td>
+		
+	</tr>
+	<tr>
+		<td>
+			<input type="text" name="ticketEnd" class="form-control pfmDate" id="ticketEndDate" placeholder="종료일">
+		</td>
+	</tr>
+	<tr>
+		<th>런닝타임: </th> 
+		<td><input type="number" name="runningTime" min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
+	</tr>
+	<tr>
+		<th>관람등급: </th> 
+		<td>
+			<select name="ageGradeIdx">
+			<option value="0" selected="selected">관람등급 선택</option>
+			<c:forEach var="ageGrade" items="${ageList }">
+				<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }</option>
+			</c:forEach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>출연진: </th> 
+		<td>
+			<button type="button" id="artistBtn">출연진 선택</button>
+			<p style="display:none;"></p>
+		</td>
+	</tr>
+	<tr>
+		<th>공연장: </th> 
+		<td>
+			<select name="hallIdx">
+			<option value="0" selected="selected">공연장 선택</option>
+			<c:forEach var="hall" items="${hallList }">
+				<option value="${hall.hallIdx }">${hall.hallName }</option>
+			</c:forEach>
+			</select>
+		</td>
+	</tr>
+	</table>
+	<!-- 좌석 관련 div -->
+	<div id="seatDiv" style="display:none;"> 
+	<table>
+	<tr>
+		<th>좌석정보: </th>
+		<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
+	</tr>
+	</table>
+	</div>
+</div> <!-- registStep-1 Div-->
 
-
+<!-- 모달창 -->
 <!-- 장르 선택 모달창 -->
 <div class="modal fade" id="themeModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
@@ -573,8 +999,72 @@ function setComma(inNum){
 </div><!-- /.modal -->
 
 
+<!-- 공연등록 2st Tab : 공연일 등록-->
+<div class='registPfmTab' id='registStep-2' style="display:none">
+	<div id='registTimeForm'>
+	<input type="checkbox"><label for='onceRegist'>날짜/시간 일괄등록 하기</label> 
+	<table>
+	<tr>
+		<th>공연 날짜: </th>
+		<td>
+			<input type="text" name="pfmStart" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
+			<span id="onceRegForm" style="display:none;">
+			 ~ 
+			<input type="text" name="pfmEnd" class="form-control pfmDate" id="pfmEndDate" placeholder="종료일" >
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>공연 시간: </th>
+		<td>
+			<div id="pfmTimeSelect"></div>
+		</td>
+	</tr>
+	<tr>
+		<th></th>
+		<td>
+			<p id="pfmTimeTarget"> </p>
+		</td>
+	</tr>
+	</table>
+	<button type="button" id="addPfmTimeBtn">공연일 추가</button>
+	</div><!-- // registTimeForm -->
+	
+	<div id='registTimeRes'>
+		<p style='font-size: 13px; font-weight:bold;'>등록예정 공연일정</p>
+		<p>(<span>2018.08.01</span> ~ <span>2018.09.01</span>)</p>
+		<hr>
+		<table class='table' style="width: 70%;">
+		<thead>
+			<tr>
+				<th>날짜</th>
+				<th>시간</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan=3>추가된 공연 일정이 없습니다.</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- 공연등록 3st Tab : 상세정보 등록-->
+<div class='registPfmTab' id='registStep-3' style="display:none">
+상세정보 등록
+</div>
+
+<!-- 공연등록 4st Tab : 예매정보 등록-->
+<div class='registPfmTab' id='registStep-4' style="display:none">
+예매정보 등록
+</div>
+
 <br>
-<button type="button" id="storeBtn">저장</button>
+<button type="button" class="stepBtn" id="prevBtn" style="display:none">이전 단계</button>
+<button type="button" class="stepBtn" id="nextBtn">다음 단계</button>
+<button type="button" id="storeBtn" style="display:none">저장</button>
 
 </form>
 
