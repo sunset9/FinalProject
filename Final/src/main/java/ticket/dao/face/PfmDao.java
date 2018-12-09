@@ -87,11 +87,20 @@ public interface PfmDao {
 	
 	/**
 	 * @최종수정일: 2018.12.06
-	 * @Method설명: 오늘 등록된 콘서트수 가져오기
+	 * @Method설명: 오늘 등록된 콘서트/뮤지컬&연극/가족&아동 공연수 가져오기
 	 * @작성자: 김지은
 	 */
 	public int selectTodayCon();
+	public int selectTodayMu();
+	public int selectTodayFam();
 
+	/**
+	 * @최종수정일: 2018.12.09
+	 * @Method설명: 1:1 문의 미답변수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectUnanswered();
+	
 	/**
 	 * @최종수정일: 2018.12.06
 	 * @Method설명: 공연에 해당하는 테마 리스트들 등록하기

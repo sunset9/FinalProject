@@ -35,23 +35,30 @@ public class AdminHomeController {
 		logger.info("today cancel : "+ Integer.toString(todayCancel));
 		
 		//오늘 등록된 모든 공연수 가져오기
-		//int todayAllPfm = pService.getTodayAllPfm();
-		//logger.info("today all registed pfm : "+ Integer.toString(todayAllPfm));
+		int todayAllPfm = pService.getTodayAllPfm();
+		logger.info("오늘 등록된 공연의 수 : "+ Integer.toString(todayAllPfm));
 		
 		//오늘 등록된 콘서트수 pService.getTodayCon()
-		//int todayConcert = pService.getTodayCon();
+		int todayConcert = pService.getTodayCon();
 		
 		//오늘 등록된 뮤지컬&연극수 pService.getTodayMu()
+		int todayMusical = pService.getTodayMu();
 		
 		//오늘 등록된 가족&아동수 pService.getTodayFam()
+		int todayFamily = pService.getTodayFam();
 		
 		//현재 접속자수 불러오기 uService.getConnectUser()
 		
 		//1:1 문의 미답변수 불러오기 uService.getUnanswered()
+		int unansweredInq = pService.getUnanswered();
 		
 		//뷰에전달
 		model.addAttribute("todayBook", todayBook);
 		model.addAttribute("todayCancel", todayCancel);
-		
+		model.addAttribute("todayAllPfm", todayAllPfm);
+		model.addAttribute("todayConcert", todayConcert);
+		model.addAttribute("todayMusical", todayMusical);
+		model.addAttribute("todayFamily", todayFamily);
+		model.addAttribute("unansweredInq", unansweredInq);
 	}
 }

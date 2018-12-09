@@ -120,6 +120,13 @@ public interface AdminPfmService {
 	public int getTodayFam();
 	
 	/**
+	 * @최종수정일: 2018.12.09
+	 * @Method설명: 1:1 문의 미답변수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int getUnanswered();
+	
+	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 모든 장르 리스트 가져오기
 	 * @작성자: 전해진

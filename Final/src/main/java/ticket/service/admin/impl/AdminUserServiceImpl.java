@@ -18,7 +18,8 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public String getSearch(HttpServletRequest req) {
-		return null;
+		String search = req.getParameter("search");
+		return search;
 	}
 
 	@Override
