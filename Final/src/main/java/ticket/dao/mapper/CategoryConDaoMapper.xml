@@ -5,5 +5,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-  <mapper namespace="ticket.dao.face.CategoryConDao">
-  </mapper>
+<mapper namespace="ticket.dao.face.CategoryConDao">
+	<insert id="insert" parameterType="ticket.dto.CategoryCon">
+		INSERT INTO category_con
+		(cate_con_idx,pfm_idx)VALUES(CATEGORY_CON_SEQ.nextval,#{pfmIdx})
+
+	</insert>
+	<delete id="delete" parameterType="ticket.dto.CategoryCon">
+		DELETE FROM category_con WHERE pfm_idx=#{pfmIdx}
+	</delete>
+</mapper>
