@@ -25,11 +25,13 @@ public class AdminUserController {
 	 * @Method설명: 전체 회원 리스트 또는 검색된 회원의 리스트 불러오기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/user/list", method = RequestMethod.GET)
-	public void getUserList(HttpServletRequest req, @RequestParam(defaultValue = "1") int curPage, Model model) {
+	@RequestMapping(value = "/admin/userlist", method = RequestMethod.GET)
+	public String getUserList(HttpServletRequest req, @RequestParam(defaultValue = "1") int curPage, Model model) {
 
 		// 검색어 얻기 String search = userService.getSearch(req)
-
+		String search = userService.getSearch(req);
+		logger.info("search값 : "+search);
+		
 		// 전체 회원수 얻기 userService.getTotalUser(search)
 
 		// 페이징 객체 생성하기
@@ -38,6 +40,7 @@ public class AdminUserController {
 
 		// 회원 목록을 뷰에 전달하기
 
+		return "/admin/user/list";
 	}
 
 	/**

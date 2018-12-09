@@ -80,11 +80,31 @@
 	</select>
 	
 	<select id="selectTodayAllPfm" resultType="int">
-		
+		SELECT COUNT(*) FROM performance
+		WHERE to_char(create_date, 'yy/mm/dd') = to_char(SYSDATE, 'yy/mm/dd')
 	</select>
 	
 	<select id="selectTodayCon" resultType="int">
-		
+		SELECT COUNT(*) FROM performance
+		WHERE genre_idx = 1
+		AND to_char(create_date, 'yy/mm/dd') = to_char(SYSDATE, 'yy/mm/dd')
+	</select>
+	
+	<select id="selectTodayMu" resultType="int">
+		SELECT COUNT(*) FROM performance
+		WHERE genre_idx = 2
+		AND to_char(create_date, 'yy/mm/dd') = to_char(SYSDATE, 'yy/mm/dd')
+	</select>
+	
+	<select id="selectTodayFam" resultType="int">
+		SELECT COUNT(*) FROM performance
+		WHERE genre_idx = 3
+		AND to_char(create_date, 'yy/mm/dd') = to_char(SYSDATE, 'yy/mm/dd')
+	</select>
+	
+	<select id="selectUnanswered" resultType="int">
+		SELECT COUNT(*) FROM inquiry
+		WHERE reply_status = 1
 	</select>
 	
 	<insert id="insertPfmTheme" parameterType="ticket.dto.PfmTheme">

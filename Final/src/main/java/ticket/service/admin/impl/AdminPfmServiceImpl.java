@@ -104,13 +104,13 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public int getTodayMu() {
 
-		return 0;
+		return pDao.selectTodayMu();
 	}
 
 	@Override
 	public int getTodayFam() {
 
-		return 0;
+		return pDao.selectTodayFam();
 	}
 
 	@Override
@@ -298,6 +298,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 		//장르로 선택된(콘서트) 리스트 가져오기
 		return infoDao.selectBygenreIdx(1);
+	}
+
+	@Override
+	public int getUnanswered() {
+		//1:1 문의 미답변수 가져오기
+		return pDao.selectUnanswered();
 	}
 
 }
