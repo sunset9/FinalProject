@@ -4,6 +4,7 @@ import java.util.List;
 
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
@@ -12,6 +13,20 @@ import ticket.dto.User;
 public interface TicketDao {
 	
 
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 해당공연의 시간 데이터 불러오기
+	 * @작성자:이상지
+	 */
+	public List<PfmDateByTime> selectDateTime(Performance pfm); 
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 해당공연의 데이트 데이터 불러오기 
+	 * @작성자:이상지
+	 */
+	public List<PfmDateByTime> selectDates(Performance pfm);
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명:티켓예매하기

@@ -4,4 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="ticket.dao.face.TicketDao">
+
+ <resultMap type="ticket.dto.PfmDateByTime" id="DateTimeMap">
+	<result column="pfm_dbt_idx" property="pfmDbtIdx"/>
+	<result column="pfm_idx" property="pfmIdx"/>
+	<result column="pfm_date" property="pfmDate"/>
+	<result column="pfm_time" property="pfmTime"/>
+	<result column="create_date" property="createDate"/>
+</resultMap>
+
+<select id="selectDates" parameterType="ticket.dto.Performance" resultMap="DateTimeMap">
+	select pfm_date from pfm_dateBytime WHERE pfm_idx = #{pfmIdx} GROUP BY pfm_date
+</select>
+
+<select id ="selectDateTime" parameterType="ticket.dto.Performance" resultMap="DateTimeMap">
+	select pfm_idx,pfm_date,pfm_time from pfm_dateBytime WHERE pfm_idx= #{pfmIdx}
+</select>
+
 </mapper>

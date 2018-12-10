@@ -10,12 +10,12 @@
 <title>Insert title here</title>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		// 검색
-		$("#btnSearch").click(function() {
-			$(location).attr("href", "/ticket/ticketsearch");
-		});
-	});
+// 	$(document).ready(function() {
+// 		// 검색
+// 		$("#btnSearch").click(function() {
+// 			$(location).attr("href", "/ticket/ticketsearch");
+// 		});
+// 	});
 </script>
 
 <style type="text/css">
