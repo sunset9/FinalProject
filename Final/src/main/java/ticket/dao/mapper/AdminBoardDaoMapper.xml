@@ -15,14 +15,14 @@
   	<result column="notice_content" property="noticeContent" />
   	<result column="create_date" property="createDate" />  
   </resultMap>
-  
+   
   
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
   	select * from ( 
   		select rownum rnum, B.* from (
   			select * from notice
   		) B
-  		order by notice_idx desc
+  		order by notice_title desc
   	) R
   	where R.rnum between #{startNo} AND #{endNo}
   	order by rnum
@@ -34,6 +34,25 @@
   	) cnt
   </select>
   
+  <select id="selectNotiView" resultMap="notice">
+  	select * from notice
+  		where notice_idx = #{notice_idx}
+  </select>
+  
+  
+  
+  
+  
   
   
   </mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

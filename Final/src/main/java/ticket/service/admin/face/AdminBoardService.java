@@ -11,7 +11,7 @@ public interface AdminBoardService {
 
 	// 공지사항 글 리스트 가져오기
 	public List getNotiList(Paging paging);
-		
+		 
 	// 게시글 전체 수
 	public int selectCountAll();
 	
@@ -20,8 +20,15 @@ public interface AdminBoardService {
 	
 	
 	// 공지사항 상세보기
-	public void getViewNoti(Notice notice);
+	public Notice getViewNoti(int noticeIdx);
 
+	
+	
+	
+	
+	
+	
+	
 	// 공지사항 글 쓰기
 	public void writeNoti();
 

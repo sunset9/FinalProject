@@ -34,7 +34,6 @@ public class AdminBoardController {
 			@RequestParam(required=false, defaultValue="10")int pageCount			
 			) {
 	
-		logger.info("공지리스트테스트");
 		Paging paging = adminBoardService.getPaging(curPage, listCount, pageCount);
 		model.addAttribute("paging", paging);
 		
@@ -51,35 +50,54 @@ public class AdminBoardController {
 	
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.10
 	 * @Method설명: 공지사항 글 상세보기
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticeview", method=RequestMethod.GET)
-	public void notiView(Model model) {
+	public String notiView(Model model, int noticeIdx) {
 		logger.info("공지 상세");
+		
+		
+		
+		Notice noticeView = adminBoardService.getViewNoti(noticeIdx);
+		
+		model.addAttribute("noticeView", noticeView);
+		return "/admin/notice/view";
+		
 	}
 	
+	
+	
 	/**
-	 * 2018.12.05
+	 * 2018.12.10
 	 * @Method설명: 공지사항 글 쓰기
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.GET)
-	public void notiWrite() {
+	public String notiWrite() {
 		logger.info("공지 글 쓰기");
+	
+		return "/admin/notice/write";
+				
 	}
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.10
 	 * @Method설명: 공지사항 글 쓰기 처리
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.POST)
 	public String notiWriteProc() {
-		return null;
+		
+		return "redirect:/admin/noticelist";
 		
 	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * 2018.12.05
