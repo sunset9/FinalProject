@@ -1,19 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript"	scr="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+	
+	
 <!-- 다음 주소 API -->
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script
 	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
+	
+	// 약관 확인 하고 정보 입력창 넘어가기 
+	$("#btnAgree").click(function() {
+		
+		$("#joinInfo").show();
+		$("#agree").hide();
+	  	$("#infoTab").addClass("joinActive");
+
+	});
+	
+		
+	// 정보입력 하고 선호테마 선택창으로 넘어가기 
+	$("#btnJoin").click(function() {
+		
+		$("#joinInfo").hide();
+		$("#agree").show();
+		
+	  	$("#infoTab").addClass("joinActive");
+
+	})
+	
 // 회원가입 날짜 선택하기 
 	// 생년월일 뿌리는 함수 
 	setDate();
@@ -72,8 +89,7 @@ function directInput(){
     	join.email2.readonly = false;
     	join.email2.value = '';
         join.email2.focus();
-    }
-    else {
+    }  else {
     	join.email2.readonly = true;
     	join.email2.value = join.email_select.value;
     }
@@ -94,20 +110,18 @@ function passRule() {
 	
 	console.log(pRule.test(pw1))
 	
-	if(passRule.test(pw1)){
+	if(pRule.test(pw1)){
 		
 		console.log("정규식 맞음");
 		$('#passRule').html('<span style="color:green">안전</span>');
 
-	} else (!pRule.test(pw1)) {
+	} else {
 	
 		console.log("정규식 안맞음");
 	    $('#passRule').html('<span style="color:red">숫자와 문자를 포함 형태의 8~15자리 이내로 설정해주세요!</span>');
 	    
 	} 
-	
 }
-
 
 // 비밀번호 일치 확인 
 function checkPw() {
@@ -126,8 +140,27 @@ function checkPw() {
 	} else{
 		$('#checkPW3').html('<span style="color:red">동일한 비밀번호 입력해주세요.</span>');
 	}
-}
+} 
 
+// 연락처 정규식
+function checkPhone() {
+	console.log("연락처 폼 체크");
+	
+	var phRule =  /^[0-9]*.{10,11}$/;
+	var p1 = phone.value;
+	console.log("연락처 : " + p1);
+	
+	console.log("phRule.test(p1)" + phRule.test(p1))
+	
+	if(!phRule.test(p1)) {
+	    $('#phoneCheck').html('<span style="color:red">잘못된 전화번호 형식입니다. 숫자만 입력해 주세요!</span>');
+	}else {
+		$('#phoneCheck').html('<span></span>');
+	}
+	
+	
+	
+}
 
 // select box 연도, 월, 일 표시 
 function setDate() {
@@ -232,13 +265,56 @@ function DaumPostcode() {
 
 </script>
 
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
 <style type="text/css">
 td {
 	padding: 5px;
 }
+
+.joinActive{
+	color: green;
+}
+
 </style>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+
+
 <div class="container">
 
+	<div class="row" id="joinStep">
+		<ol class="breadcrumb">
+		  <li id ="agreeTab" class="joinActive">약관동의<span class = "glyphicon glyphicon-ok-circle"/></li>
+		  <li id ="infoTab" > 정보입력 <span class = "glyphicon glyphicon-ok-circle"/></li>
+		  <li id = "preferTab">선호 테마 선택 <span class = "glyphicon glyphicon-ok-circle"/></li>
+		  <li id = "completeTab">회원 가입 완료 <span class = "glyphicon glyphicon-ok-circle"/></li>
+		</ol>
+	</div>
+		
+		
+		
+		
+		
+		
+		
+		
+<!-- 약관 동의 페이지 -->
+<div id = "agree">
+<h1>약관 동의 페이지 입니다아~</h1>
+
+<button id="btnAgree" class="btn btn-default">다음단계</button>
+</div>	
+	
+	
+	
+	
+	
+	
+<!-- 회원 가입 div -->
+<div id = "joinInfo" style="display: none;">
 <form class ="form-inline" id = "join" name ="join" action="/user/join" method="POST">
 	<table>
 		<tr>
@@ -265,7 +341,7 @@ td {
 		</tr>	
 
 		<tr>
-			<td><label>비밀번호</label></td> 
+			<td><label>비밀번호</label></td>
 			<td><input type="password" class="form-control"	name="password" id="password" placeholder="비밀번호 입력" />
 			<div id="passRule"></div></td>
 		</tr>
@@ -307,7 +383,9 @@ td {
 
 		<tr>
 			<td><label>연락처</label> </td>
-			<td><input type="text" class="form-control" name="phone" placeholder="숫자만 입력" /></td>
+			<td><input type="text" class="form-control" id = "phone" name="phone" placeholder="숫자만 입력"
+			onblur="checkPhone();" />
+			<div id = "phoneCheck"></div></td>
 		</tr>
 
 		<tr>
@@ -319,10 +397,15 @@ td {
 				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" /> 
 			</td>
 		</tr>
+
 </table>
-		<button type="submit" class="btn btn-default">다음단계</button>
+		<button type="submit"  id="btnJoin" class="btn btn-default">다음단계</button>
 		
 		
 	</form>
+</div>
+
+
+<!-- 선호 테마 선택 -->
 
 </div>
