@@ -69,7 +69,7 @@
   </insert>
   
   
-  <select id="selectCntUser" parameterType="String" resultType="int">
+  <select id="selectCntUserBySearch" parameterType="String" resultType="int">
   	SELECT COUNT(*) FROM userinfo
   	<if test = "search != null">
   		WHERE email LIKE #{search}

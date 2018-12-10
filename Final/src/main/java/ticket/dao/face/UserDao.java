@@ -48,7 +48,7 @@ public interface UserDao {
 	 * @Method설명: 전체 유저수 가져오기
 	 * @작성자: 김지은
 	 */
-	public int selectCntUser(String search);
+	public int selectCntUserBySearch(String search);
 
 	
 	/**
