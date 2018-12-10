@@ -12,8 +12,12 @@
 	<result column="create_date" property="createDate"/>
 </resultMap>
   
+  <sql id="selectCnt">
+  	SELECT COUNT(*) FROM userinfo
+  </sql>
+  
   	<select id="selectCntUser" parameterType="ticket.dto.User" resultType="int">
-		  select count(*) cnt from userinfo
+		 <include refid="selectCnt"/>
 		  where 1=1
 		  <if test = "email != null and email != ''">
 		  	AND email = #{email}
@@ -28,9 +32,14 @@
   </select>
   
   <select id ="selectUserByEmail" parameterType="String" resultType="int">
-  	SELECT COUNT(*) FROM userinfo
+  	<include refid="selectCnt"/>
   	WHERE email = #{email }
   </select>
+  
+    <select id ="selectUserByNick" parameterType="String" resultType="int">
+  		<include refid="selectCnt"/>
+  		WHERE nick = #{nick }
+   </select>
   
   <insert id="insert" parameterType="ticket.dto.User">
   <selectKey  resultType="int" keyProperty="userIdx" order="BEFORE">
