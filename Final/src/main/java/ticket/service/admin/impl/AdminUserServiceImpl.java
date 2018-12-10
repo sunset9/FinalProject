@@ -24,7 +24,8 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public int getTotalUser(String search) {
-		return uDao.selectCntUser(search);
+		//return uDao.selectCntUser(search);
+		return 0;
 	}
 
 	@Override
