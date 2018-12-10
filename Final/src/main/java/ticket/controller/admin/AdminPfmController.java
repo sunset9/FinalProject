@@ -206,6 +206,10 @@ public class AdminPfmController {
 		return "redirect:/admin/registcatecon";
 	}
 
+	@RequestMapping(value = "/searchposter", method = RequestMethod.GET)
+	public @ResponseBody List<Poster> searchPoster(@RequestParam String searchPoster) {
+		return pService.getSearchListForCon(searchPoster);
+	}
 	/**
 	 * 2018.12.05
 	 * 

@@ -5,9 +5,9 @@
 
 <div id="searchBox">
 
+	<input type="text" id="main_search" />
+	<button id="main_searchbtn">검색</button>
 
-	<input type="text" id="search" />
-	<button id="btnSearch">검색</button>
 </div>
 
 <div class="main1">

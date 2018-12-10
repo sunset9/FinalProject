@@ -35,13 +35,16 @@ public class AdminUserController {
 
 		//현재 페이지 얻기
 		int curPage = bService.getCurPage(req);
+		logger.info("curPage : "+curPage);
 		
 		// 검색어 얻기 String search = userService.getSearch(req)
+		// search 스트링 말고 dto로 바꾸기!! 
 		String search = userService.getSearch(req);
 		logger.info("search값 : "+search);
 		
 		// 전체 회원수 얻기 userService.getTotalUser(search)
 		int totalUser = userService.getTotalUser(search);
+		
 		
 		// 페이징 객체 생성하기
 		Paging paging = new Paging(totalUser, curPage);
@@ -52,8 +55,12 @@ public class AdminUserController {
 		logger.info("페이징 : "+paging);
 		
 		// 회원 목록을 뷰에 전달하기
-		//List<User> userList = userService.getPagingList(paging);
-
+		List<User> userList = userService.getPagingListByPaging(paging);
+		logger.info("userList : "+userList);
+		
+		model.addAttribute("userList",userList);
+		model.addAttribute("paging", paging);
+		
 		return "/admin/user/list";
 	}
 

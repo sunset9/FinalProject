@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import ticket.dto.User;
+import ticket.utils.Paging;
 
 public interface AdminUserService {
 	/**
@@ -54,5 +55,5 @@ public interface AdminUserService {
 	 * @Method설명: 전체 회원 목록 가져오기
 	 * @작성자: 김지은
 	 */
-	public List<User> getPagingList();
+	public List<User> getPagingListByPaging(Paging paging);
 }
