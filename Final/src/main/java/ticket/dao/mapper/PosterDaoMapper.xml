@@ -15,7 +15,7 @@
 
 	<select id="selectBygenreIdx" parameterType="int"
 		resultType="ticket.dto.Poster">
-		SELECT c.pfm_idx pfmIdx,
+		SELECT c.pfm_idx pfmIdx,c.name,
 		p.origin_name originName
 		,p.stored_name storedName
 		FROM performance c, poster_info p

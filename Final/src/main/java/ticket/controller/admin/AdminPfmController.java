@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -194,10 +195,10 @@ public class AdminPfmController {
 	 * @Method설명: 카테고리 콘서트 배너 정보 삭제하기
 	 * @작성자: 박주희
 	 */
-	@RequestMapping(value = "/admin/deletecatecon", method = RequestMethod.POST)
-	public String deletecateCon(@RequestParam int pfmIdx) {
+	@RequestMapping(value = "/admin/deletecatecon/{pfmIdx}", method = RequestMethod.GET)
+	public String deletecateCon(@PathVariable int pfmIdx) {
 
-		logger.info("delete category banner consert POST");
+		logger.info("delete category banner consert GET");
 		logger.info(pfmIdx + "");
 		CategoryCon con = new CategoryCon();
 		con.setPfmIdx(pfmIdx);

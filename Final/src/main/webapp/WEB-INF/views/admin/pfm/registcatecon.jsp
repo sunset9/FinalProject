@@ -29,7 +29,11 @@
 													.attr('id');
 											console.log(labelName);
 											console.log(selectedId);
-
+											if($(
+											'div[class^=pfmIdx]').attr('id')==selectedId){
+												alert("이미 존재합니다.");
+												return;
+											}
 											posterList
 													.append('<img src=/resources/image/'+labelName+'>');
 											$('#hide').append(
@@ -55,7 +59,7 @@
 
 											$.ajax({
 												type : "post",
-												url : "/admin/registcateCon",
+												url : "/admin/registcatecon",
 												dataType : "text",
 												data : {
 													'pfmIdx' : listData
@@ -98,11 +102,22 @@
 <button id="btn">최종저장</button>
 <form action="/admin/registcateCon" method="post">
 	<div id="hide"></div>
-	<c:forEach var="item" items="${posterList }">
-		<button type="button" id="btndelete${item.pfmIdx }"
-			name="${item.pfmIdx }">삭제</button>
-		<img src="/resources/image/${item.storedName }">
-	</c:forEach>
+	<div class="row">
+		<c:forEach var="item" items="${posterList }">
+			<div class="col-md-4">
+				<div class="thumbnail">
+
+					<div class="caption">
+						<div class="pfmIdx" id="${item.pfmIdx }">
+							<img src="/resources/image/${item.storedName }"> <a
+								href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />"
+								class="btn btn-lg btn-danger">삭제</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
 	<br> <span class="glyphicon glyphicon-plus-sign" id="add_poster"></span>
 	<p style="display: none;"></p>
 	<!-- Modal -->
@@ -118,19 +133,20 @@
 					<h4 class="modal-title" id="myModalLabel">공연검색</h4>
 				</div>
 				<div class="modal-body">
-					내용
-					<c:forEach var="item" items="${list }">
-						<input type="radio" id="${item.pfmIdx }" name="radio_test"
-							value="${item.storedName}">
-						<label id="radio_test${item.pfmIdx }"
-							style="width: 150px; height: 220px;"><div
-								class="radio_img"
-								style="height: 220px; background:url('/resources/image/${item.storedName}');">${item.pfmIdx }</div></label>
-					</c:forEach>
 
+					<div class="row">
+						<c:forEach var="item" items="${list }">
+							<input type="radio" id="${item.pfmIdx }" name="radio_test"
+								value="${item.storedName}">
+							<div class="thumbnail">
+								<img src="/resources/image/${item.storedName}" />
+								<h3>${ item.name }</h3>
+							</div>
+						</c:forEach>
+
+					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Save
 						changes</button>
 				</div>
