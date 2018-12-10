@@ -16,6 +16,7 @@ public class Paging {
 	
 	private String search; //검색어
 	
+
 	
 	// 총 게시글 수만 입력하는 생성자
 	//	curPage == 1

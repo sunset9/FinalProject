@@ -356,4 +356,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return responseData;
     }
 
+	public List<Poster> getSearchListForCon(String name) {
+		// TODO Auto-generated method stub
+		return infoDao.selectPosterByName(name);
+	}
+
 }

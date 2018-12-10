@@ -1,6 +1,9 @@
 package ticket.dao.face;
 
+import java.util.List;
+
 import ticket.dto.User;
+import ticket.utils.Paging;
 
 public interface UserDao {
 	
@@ -49,6 +52,13 @@ public interface UserDao {
 	 * @작성자: 김지은
 	 */
 	public int selectCntUserBySearch(String search);
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 검색어 적용된 유저 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<User> selectPagingUserListByPaging(Paging paging);
 
 	
 	/**
