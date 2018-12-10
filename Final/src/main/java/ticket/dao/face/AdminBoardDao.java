@@ -15,31 +15,24 @@ public interface AdminBoardDao {
 	
 	// 전체 게시글 조회
 	public int selectCntAll();
-	
-	
-	
-	
-	
-	
+	 
+					
 	// 공지사항 상세보기
-	public void viewNoti(Notice notice);
+	public Notice selectNotiView(int noticeIdx);
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 조회수 (향후 추가? (멜론, 카카오 오븐엔 없음)
+//	public Notice hit(int noticeIdx);
 	
 	
 	// 공지사항 글 쓰기
 	public void insertNoti();
+	
+	
+	
+	
+	
+	
 	
 	// 공지사항 글 수정
 	public void updateNoti();

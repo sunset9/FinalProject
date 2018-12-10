@@ -25,7 +25,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 			
 		return adminBoardDao.selectNotiList(paging);
 	}
-
+ 
 	// 게시글 전체 수
 	@Override
 	public int selectCountAll() {
@@ -44,15 +44,15 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 	
 	
-	
-	
-	
+
 	@Override
-	public void getViewNoti(Notice notice) {
-		// TODO Auto-generated method stub
+	public Notice getViewNoti(int noticeIdx) {
+
+		return adminBoardDao.selectNotiView(noticeIdx);
 		
 	}
 
+	
 	@Override
 	public void writeNoti() {
 		// TODO Auto-generated method stub
@@ -121,6 +121,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		// null이나 "" 이면 0으로 반환
 		return 0;
 	}
+
 
 
 
