@@ -45,6 +45,20 @@ public class UserController {
 		return String.valueOf(cnt);
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/user/nickcheck", method = RequestMethod.POST)
+	public String nickCheck( 
+			HttpServletRequest req
+			, Model mode) {
+		
+		logger.info("닉네임 중복 체크");
+		String nick = req.getParameter("nick");
+		int cnt = userService.checkNick(nick);
+		
+		return String.valueOf(cnt);
+		
+	}
 
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
 	public void joinProc(

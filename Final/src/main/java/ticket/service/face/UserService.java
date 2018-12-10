@@ -21,6 +21,13 @@ public interface UserService {
 	public int checkSignup(String email);
 	
 	/**
+	 * @최종수정일: 2018.12.07
+	 * @Method설명: 닉네임 중복 체크
+	 * @작성자:홍나영
+	 */
+	public int checkNick(String nick);
+	
+	/**
 	 * @Method설명: 회원 등록
 	 * @작성자 : 홍나영
 	 */

@@ -7,16 +7,14 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript"
-	scr="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript"	scr="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <!-- 다음 주소 API -->
 <script
 	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script type="text/javascript">
 
-// 회원가입 날짜 선택하기 
-
 $(document).ready(function() {
+// 회원가입 날짜 선택하기 
 	// 생년월일 뿌리는 함수 
 	setDate();
 	
@@ -31,9 +29,9 @@ $(document).ready(function() {
 			}
 			, success:function(data) {
 				if($.trim(data) == 0) {
-					 $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+					 $('#checkMsg').html('<span style="color:blue">사용가능</span>');
 				} else {
-					 $('#checkMsg').html('<p style="color:red">사용불가</p>');
+					 $('#checkMsg').html('<span style="color:red">사용불가</span>');
 				}
 			}
 		}); // end ajax
@@ -50,13 +48,21 @@ $(document).ready(function() {
 			}
 			, success:function(data) {
 				if($.trim(data) == 0) {
-					 $('#checkMsg2').html('<p style="color:blue">사용가능</p>');
+					 $('#checkMsg2').html('<span style="color:blue">사용가능</span>');
 				} else {
-					 $('#checkMsg2').html('<p style="color:red">사용불가</p>');
+					 $('#checkMsg2').html('<span style="color:red">사용불가</span>');
 				}
 			}
 		}); // end ajax
 	}); // end on
+	
+	
+
+// 첫번째 비밀번호입력칸 포커스 잃을때  정규식 확인
+$("#password").blur(function() {
+		console.log ("포커스 잃음");
+		passRule();
+	});
 
 });
 
@@ -72,6 +78,56 @@ function directInput(){
     	join.email2.value = join.email_select.value;
     }
 }
+
+
+
+// 비밀번호 정규식 체크
+function passRule() {
+	
+	// 조건 1. 8~15자리 영문 대소문자
+	// 조건 2. 최소 1개의 숫자를 포함해야 함
+
+	console.log("비밀번호 정규식 확인하러 왔습니다~");
+	
+	var pRule = /^(?=.*[a-zA-Z])(?=.*\d).{8,15}$/;
+	var pw1 = password.value;
+	
+	console.log(pRule.test(pw1))
+	
+	if(passRule.test(pw1)){
+		
+		console.log("정규식 맞음");
+		$('#passRule').html('<span style="color:green">안전</span>');
+
+	} else (!pRule.test(pw1)) {
+	
+		console.log("정규식 안맞음");
+	    $('#passRule').html('<span style="color:red">숫자와 문자를 포함 형태의 8~15자리 이내로 설정해주세요!</span>');
+	    
+	} 
+	
+}
+
+
+// 비밀번호 일치 확인 
+function checkPw() {
+	console.log("비밀번호 확인되나~?");
+
+	// 처음 입력한 비밀번호 값 가져오기
+// 	var pw1 = $('#password').val();
+	var pw1 = password.value;
+	
+	// 비밀번오 확인 값 얻기
+	var pw2 = $('#passwordc').val();
+	console.log(pw1+" and "+pw2);
+	
+	if(pw1== pw2) {
+		 $('#checkPW3').html('<span style="color:blue">비밀번호 확인완료!</span>');
+	} else{
+		$('#checkPW3').html('<span style="color:red">동일한 비밀번호 입력해주세요.</span>');
+	}
+}
+
 
 // select box 연도, 월, 일 표시 
 function setDate() {
@@ -203,19 +259,21 @@ td {
 
 		<tr>
 			<td><label>닉네임</label></td>
-			<td><input type="text" class="form-control"	name="nick" placeholder="닉네임을 입력하세요" />
+			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" />
 			<input type="button" name="nickCheck" id="nickCheck" value="중복확인" class="btn btn-default" />
 			<div id = "checkMsg2"></div></td>
 		</tr>	
 
 		<tr>
 			<td><label>비밀번호</label></td> 
-			<td><input type="password" class="form-control"	name="password" placeholder="비밀번호 입력" /></td>
+			<td><input type="password" class="form-control"	name="password" id="password" placeholder="비밀번호 입력" />
+			<div id="passRule"></div></td>
 		</tr>
 
 		<tr>
 			<td><label>비밀번호 체크</label></td> 
-			<td><input type="password" class="form-control" placeholder="비밀번호 확인 입력" /></td>
+			<td><input type="password" class="form-control"name="passwordc" id="passwordc"onkeyup="checkPw()" placeholder="비밀번호 확인 입력" />
+			<div id="checkPW3"></div></td>
 		</tr>	
 	
 		<tr>
@@ -256,8 +314,8 @@ td {
 			<td><label>주소</label> </td>
 			<td> 
 				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" /> 
-				<input type="button" class="btn btn-default" onclick="DaumPostcode()" value="우편번호 찾기" /><br>
-				<input type="text" class="form-control" name="addr" id="addr"placeholder="주소" /> 
+				<input type="button" class="btn btn-default" onclick="DaumPostcode();" value="우편번호 찾기" /><br>
+				<input type="text" class="form-control" name="addr" id="addr" placeholder="주소" /> 
 				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" /> 
 			</td>
 		</tr>

@@ -49,5 +49,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public int checkNick(String nick) {
+		return userDao.selectUserByNick(nick);
+	}
+
+
 
 }
