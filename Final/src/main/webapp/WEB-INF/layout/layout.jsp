@@ -9,17 +9,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		// 검색
+		$("#btnSearch").click(function() {
+			$(location).attr("href", "/ticket/ticketsearch");
+		});
+	});
+</script>
+
 <style type="text/css">
 /* 모든 페이지에 적용되는 스타일 */
+#searchBox {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
 .maintext {
 	margin-left: 10px;
 }
 
-.top_menu {
+.top_menu, .tap_menu {
 	display: inline-block;
 }
 
-.top_menu ul {
+.top_menu ul, .tap_menu ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -29,7 +43,7 @@
 	display: inline-block;
 }
 
-.top_menu ul>li {
+.top_menu ul>li, .tap_menu ul>li {
 	margin: 0 5px 0 0;
 	padding: 0 0 0 0;
 	border: 0;
