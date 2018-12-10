@@ -185,6 +185,14 @@ public interface AdminPfmService {
 	 */
 	public List<Poster> getListCon();
 
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 검색결과를 불러옴 
+	 * @작성자: 박주희
+	 */
+	public List<Poster> getSearchListForCon(String name);
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 가족아동 배너 리스트
