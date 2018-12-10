@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.CastList;
+import ticket.dto.CategoryCon;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
@@ -65,10 +68,8 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 
-	@RequestMapping(value="/viewtheme", method=RequestMethod.GET)
-	public @ResponseBody List<Theme> getThemeList(
-			Genre genre
-			, Model model) {
+	@RequestMapping(value = "/viewtheme", method = RequestMethod.GET)
+	public @ResponseBody List<Theme> getThemeList(Genre genre, Model model) {
 		return pService.getThemeList(genre);
 	}
 
@@ -83,18 +84,17 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.05
+	 * @최종수정일: 2018.12.09
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/admin/registpfm", method=RequestMethod.POST)
-	public String registPfm(
-			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
-			, @RequestParam(name="poster") MultipartFile posterUpload // 포스터 업로드 파일
+	@RequestMapping(value = "/admin/registpfm", method = RequestMethod.POST)
+	public String registPfm(Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
+			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
+			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
 			) {
-		
 		// 공연 기본 정보
 		logger.info(pfm.toString());
 
@@ -103,16 +103,17 @@ public class AdminPfmController {
 
 		// 출연진 등록
 		logger.info(castList.toString());
-		
+
 		// 좌석 정보 & 가격 등록
 		// 공연 날짜 & 시간 등록
+		logger.info(pfmDbtList.toString());
+		
 		// 공연 상세 정보 등록
 		// 예매 상세 정보 등록
 
 		// 새 공연 등록
+		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList);
 
-		pService.registPfm(pfm, posterUpload, themeList, castList);
-		
 		return "redirect:/admin/registpfm";
 	}
 
@@ -157,7 +158,7 @@ public class AdminPfmController {
 	 * @Method설명:카테고리 배너 - 콘서트 배너 등록 하기
 	 * @작성자:
 	 */
-	@RequestMapping(value = "/admin/registcateCon", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/registcatecon", method = RequestMethod.GET)
 	public String registerCategoryCon(Model model) {
 
 		List<Poster> posterList = pService.getListCon();
@@ -167,7 +168,7 @@ public class AdminPfmController {
 		if (posterList != null)
 			model.addAttribute("posterList", posterList);
 
-		return "admin/pfm/registcateCon";
+		return "admin/pfm/registcatecon";
 	}
 
 	/**
@@ -175,13 +176,34 @@ public class AdminPfmController {
 	 * @Method설명:카테고리 배너 - 콘서트 배너 등록 하기
 	 * @작성자:
 	 */
-	@RequestMapping(value = "/admin/registcateCon", method = RequestMethod.POST)
-	public String registerCategoryConProc(String pfmIdx, Model model) {
+	@RequestMapping(value = "/admin/registcatecon", method = RequestMethod.POST)
+	public String registerCategoryConProc(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
 
-		logger.info(pfmIdx);
+		logger.info(pfmIdx.toString());
 		logger.info("POST");
+		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
+			CategoryCon con = new CategoryCon();
+			con.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));
+			pService.addCon(con);// 개수만큼 insert
+		}
 
-		return "admin/pfm/registcateCon";
+		return "redirect:/admin/registcatecon";
+	}
+
+	/**
+	 * @최종수정일: 2018.12.09
+	 * @Method설명: 카테고리 콘서트 배너 정보 삭제하기
+	 * @작성자: 박주희
+	 */
+	@RequestMapping(value = "/admin/deletecatecon/{pfmIdx}", method = RequestMethod.GET)
+	public String deletecateCon(@PathVariable int pfmIdx) {
+
+		logger.info("delete category banner consert GET");
+		logger.info(pfmIdx + "");
+		CategoryCon con = new CategoryCon();
+		con.setPfmIdx(pfmIdx);
+		pService.removeCon(con);
+		return "redirect:/admin/registcatecon";
 	}
 
 	/**

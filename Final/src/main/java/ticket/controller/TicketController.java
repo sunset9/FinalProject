@@ -2,6 +2,7 @@ package ticket.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import ticket.service.face.TicketService;
 
@@ -11,6 +12,18 @@ public class TicketController {
 	
 	@Autowired
 	TicketService ticketService;
+	
+	
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 테스트 메소드
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/bookInfo")
+	public void ticketpicker() {
+		
+	}
 	
 	/**
 	 * @최종수정일: 2018.12.05

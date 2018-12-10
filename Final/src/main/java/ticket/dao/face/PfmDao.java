@@ -8,6 +8,7 @@ import ticket.dto.Cast;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmDateByTime;
 import ticket.dto.PfmTheme;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
@@ -121,5 +122,12 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public void insertCast(Cast cast);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 공연 일정 정보(날짜, 시간) 등록하기
+	 * @작성자: 전해진
+	 */
+	public void insertPfmDbt(PfmDateByTime pfmDbt);
 	
 }

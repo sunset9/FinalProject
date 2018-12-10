@@ -27,6 +27,8 @@ import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
+import ticket.dto.PfmDateByTime;
+import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmTheme;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
@@ -139,7 +141,8 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
+			, CastList castList, PfmDateByTimeList pfmDbtList) {
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
 
@@ -151,23 +154,32 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		pDao.insertPoster(poster);
 
 		// 테마들 등록
-
 		for(PfmTheme thm : themeList.getThmList()) {
 			if(thm.getThemeIdx() != 0 ) { // theme가 존재하는 경우에 insert
 				// 공연 idx 지정
 				thm.setPfmIdx(pfmIdx);
-				
+
 				pDao.insertPfmTheme(thm);
 			}
 		}
-		
+
 		// 출연진들 등록
-		for(Cast cast : castList.getCastList()) {
-			if(cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
+		for (Cast cast : castList.getCastList()) {
+			if (cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
 				// 공연 idx 지정
 				cast.setPfmIdx(pfmIdx);
-				
+
 				pDao.insertCast(cast);
+			}
+		}
+		
+		// 공연 일정들(날짜, 시간) 등록
+		for(PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
+			if(pfmDbt.getPfmDate() != null && pfmDbt.getPfmTime() != null) { // 일정 정보가 존재하는 경우에 insert
+				// 공연 idx 지정
+				pfmDbt.setPfmIdx(pfmIdx);
+				
+				pDao.insertPfmDbt(pfmDbt);
 			}
 		}
 	}
@@ -223,8 +235,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void addCon(CategoryCon con) {
-		// TODO Auto-generated method stub
-
+		conDao.insert(con);
 	}
 
 	@Override
@@ -241,8 +252,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void removeCon(CategoryCon con) {
-		// TODO Auto-generated method stub
-
+		conDao.delete(con);
 	}
 
 	@Override
@@ -296,7 +306,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public List<Poster> getModalListCon() {
 
-		//장르로 선택된(콘서트) 리스트 가져오기
+		// 장르로 선택된(콘서트) 리스트 가져오기
 		return infoDao.selectBygenreIdx(1);
 	}
 
