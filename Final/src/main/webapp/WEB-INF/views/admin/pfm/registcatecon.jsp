@@ -9,6 +9,7 @@
 						$('#add_poster').click(function() {
 							//console.log("떴다");
 							$('#myModal').modal('show'); //모달창 보여주기 
+
 						});
 						// 테마 선택 완료 시
 						$('#myModal')
@@ -29,8 +30,8 @@
 													.attr('id');
 											console.log(labelName);
 											console.log(selectedId);
-											if($(
-											'div[class^=pfmIdx]').attr('id')==selectedId){
+											if ($('div[class^=pfmIdx]').attr(
+													'id') == selectedId) {
 												alert("이미 존재합니다.");
 												return;
 											}
@@ -94,6 +95,78 @@
 
 						});
 
+						$('#searchbtn')
+								.click(
+										function() {
+											console.log($('#searchposter')
+													.val());
+											$
+													.ajax({
+														type : "get",
+														url : "/searchposter",
+														dataType : "json",
+														data : {
+															'searchPoster' : $(
+																	'#searchposter')
+																	.val()
+														},
+														success : function(data) {
+															$('#resultposter')
+																	.html('');
+															data
+																	.forEach(function(
+																			poster) {
+
+																		var resDiv = $('<div style="width: fit-content; float:left">');
+																		resDiv
+																				.data(
+																						'aIdx',
+																						poster.pfmIdx); // 커스텀 태그로 artist 정보 삽입
+																		resDiv
+																				.data(
+																						'aName',
+																						poster.name); // 커스텀 태그로 artist 정보 삽입
+																		// 아티스트 이미지 띄울 태그
+																		var img = $('<img>');
+																		console
+																				.log(poster.storedName);
+																		img
+																				.attr(
+																						'src',
+																						'/resources/image/'
+																								+ poster.storedName);
+																		///resources/image/${item.storedName}
+																		// 포스터 정보 띄울 태그 
+																		var name = $('<p>');
+																		name
+																				.text(poster.name);
+
+																		resDiv
+																				.append(img);
+																		resDiv
+																				.append(name);
+																		resDiv
+																				.append("<input type='radio' id="
+																						+ poster.pfmIdx
+																						+ " name='radio_test' value="
+																						+ poster.storedName+">");
+																	
+																		// 모달의 검색 결과 창에 결과 태그들 추가
+																		$(
+																				'#resultposter')
+																				.append(
+																						resDiv);
+
+																	});
+
+														},
+														error : function() {
+															console
+																	.log("error");
+														}
+													});
+										});
+
 					}); // end ready
 </script>
 카테고리 배너 관리
@@ -133,17 +206,20 @@
 					<h4 class="modal-title" id="myModalLabel">공연검색</h4>
 				</div>
 				<div class="modal-body">
+					<input type="text" name="searchposter" id="searchposter" />
+					<button type="button" id="searchbtn">검색하기</button>
 
 					<div class="row">
-						<c:forEach var="item" items="${list }">
-							<input type="radio" id="${item.pfmIdx }" name="radio_test"
-								value="${item.storedName}">
-							<div class="thumbnail">
-								<img src="/resources/image/${item.storedName}" />
-								<h3>${ item.name }</h3>
-							</div>
-						</c:forEach>
-
+						<div id="resultposter">
+							<c:forEach var="item" items="${list }">
+								<input type="radio" id="${item.pfmIdx }" name="radio_test"
+									value="${item.storedName}">
+								<div class="thumbnail">
+									<img src="/resources/image/${item.storedName}" />
+									<h3>${ item.name }</h3>
+								</div>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">

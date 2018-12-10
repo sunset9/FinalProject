@@ -9,15 +9,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript">
-// 	$(document).ready(function() {
-// 		// 검색
-// 		$("#btnSearch").click(function() {
-// 			$(location).attr("href", "/ticket/ticketsearch");
-// 		});
-// 	});
-</script>
-
 <style type="text/css">
 /* 모든 페이지에 적용되는 스타일 */
 #searchBox {
@@ -66,6 +57,12 @@
 
 <script type="text/javascript">
 	/* 모든 페이지에 적용되는 자바스크립트 */
+	$(document).ready(function() {
+		// 검색
+		$("#main_searchbtn").click(function() {
+			$(location).attr("href", "/ticket/ticketsearch");
+		});
+	});
 </script>
 
 </head>
