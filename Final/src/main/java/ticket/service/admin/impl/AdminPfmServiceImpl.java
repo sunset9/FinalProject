@@ -158,17 +158,17 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			if(thm.getThemeIdx() != 0 ) { // theme가 존재하는 경우에 insert
 				// 공연 idx 지정
 				thm.setPfmIdx(pfmIdx);
-				
+
 				pDao.insertPfmTheme(thm);
 			}
 		}
-		
+
 		// 출연진들 등록
-		for(Cast cast : castList.getCastList()) {
-			if(cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
+		for (Cast cast : castList.getCastList()) {
+			if (cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
 				// 공연 idx 지정
 				cast.setPfmIdx(pfmIdx);
-				
+
 				pDao.insertCast(cast);
 			}
 		}
@@ -235,8 +235,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void addCon(CategoryCon con) {
-		// TODO Auto-generated method stub
-
+		conDao.insert(con);
 	}
 
 	@Override
@@ -253,8 +252,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void removeCon(CategoryCon con) {
-		// TODO Auto-generated method stub
-
+		conDao.delete(con);
 	}
 
 	@Override
@@ -308,7 +306,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public List<Poster> getModalListCon() {
 
-		//장르로 선택된(콘서트) 리스트 가져오기
+		// 장르로 선택된(콘서트) 리스트 가져오기
 		return infoDao.selectBygenreIdx(1);
 	}
 
