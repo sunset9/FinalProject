@@ -2,6 +2,8 @@ package ticket.service.admin.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,6 +105,21 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	public void writeFaqAnswer() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	// 현재 페이지 얻기
+	@Override
+	public int getCurPage(HttpServletRequest req) {
+		//요청 파라미터 받기
+		String curPage = req.getParameter("curPage");
+
+		// null이나 ""이 아니면 int로 리턴
+		if (curPage != null && !"".equals(curPage)) {
+			return Integer.parseInt(curPage);
+		}
+
+		// null이나 "" 이면 0으로 반환
+		return 0;
 	}
 
 

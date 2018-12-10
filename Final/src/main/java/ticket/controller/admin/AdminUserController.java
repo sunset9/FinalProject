@@ -1,5 +1,7 @@
 package ticket.controller.admin;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -12,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ticket.dto.User;
+import ticket.service.admin.face.AdminBoardService;
 import ticket.service.admin.face.AdminUserService;
+import ticket.utils.Paging;
 
 @Controller
 public class AdminUserController {
 	@Autowired AdminUserService userService;
+	@Autowired AdminBoardService bService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 
@@ -26,19 +31,28 @@ public class AdminUserController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value = "/admin/userlist", method = RequestMethod.GET)
-	public String getUserList(HttpServletRequest req, @RequestParam(defaultValue = "1") int curPage, Model model) {
+	public String getUserList(HttpServletRequest req, Model model) {
 
+		//현재 페이지 얻기
+		int curPage = bService.getCurPage(req);
+		
 		// 검색어 얻기 String search = userService.getSearch(req)
 		String search = userService.getSearch(req);
 		logger.info("search값 : "+search);
 		
 		// 전체 회원수 얻기 userService.getTotalUser(search)
-
+		int totalUser = userService.getTotalUser(search);
+		
 		// 페이징 객체 생성하기
+		Paging paging = new Paging(totalUser, curPage);
 
 		// 페이징 객체에 검색어 적용 paging.setSearch(search)
-
+		paging.setSearch(search);
+		
+		logger.info("페이징 : "+paging);
+		
 		// 회원 목록을 뷰에 전달하기
+		//List<User> userList = userService.getPagingList(paging);
 
 		return "/admin/user/list";
 	}

@@ -2,6 +2,8 @@ package ticket.service.admin.face;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import ticket.dto.Faq;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
@@ -33,13 +35,10 @@ public interface AdminBoardService {
 
 	// 파일 업로드
 	public void inseNotiFile(NoticeFile noticeFile);
+	
+	//현재 페이지 얻기
+	public int getCurPage(HttpServletRequest req);
 
-	
-	
-	
-	
-	
-	
 	// FAQ 글 리스트
 	public List getFaqList(Faq faq);
 	

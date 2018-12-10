@@ -24,8 +24,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public int getTotalUser(String search) {
-		 
-		return 0;
+		return uDao.selectCntUser(search);
 	}
 
 	@Override
@@ -50,6 +49,11 @@ public class AdminUserServiceImpl implements AdminUserService{
 	public int getUnanswered() {
 		 
 		return 0;
+	}
+
+	@Override
+	public List<User> getPagingList() {
+		return null;
 	}
 }
 	

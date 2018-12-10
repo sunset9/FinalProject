@@ -48,4 +48,11 @@ public interface AdminUserService {
 	 * @작성자: 김지은
 	 */
 	public int getUnanswered();
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 전체 회원 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<User> getPagingList();
 }
