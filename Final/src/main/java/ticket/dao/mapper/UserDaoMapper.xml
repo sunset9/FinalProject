@@ -59,4 +59,17 @@
   
   </insert>
   
+  
+  <select id="selectCntUser" parameterType="String" resultType="int">
+  	SELECT COUNT(*) FROM userinfo
+  	<if test = "search != null">
+  		WHERE email LIKE #{search}
+  		OR nick LIKE #{search}
+  	</if>
+  </select>
   </mapper>
+  
+  
+  
+  
+  

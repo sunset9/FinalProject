@@ -41,4 +41,11 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public int selectUserByEmail(String email);
+	
+	/**
+	 * @최종수정일: 2018.12.09
+	 * @Method설명: 전체 유저수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectCntUser(String search);
 }
