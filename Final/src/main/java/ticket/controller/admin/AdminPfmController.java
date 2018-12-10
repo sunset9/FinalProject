@@ -22,6 +22,7 @@ import ticket.dto.CategoryCon;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
@@ -82,7 +83,7 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.05
+	 * @최종수정일: 2018.12.09
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
@@ -91,8 +92,8 @@ public class AdminPfmController {
 			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
-	) {
-
+			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
+			) {
 		// 공연 기본 정보
 		logger.info(pfm.toString());
 
@@ -104,12 +105,13 @@ public class AdminPfmController {
 
 		// 좌석 정보 & 가격 등록
 		// 공연 날짜 & 시간 등록
+		logger.info(pfmDbtList.toString());
+		
 		// 공연 상세 정보 등록
 		// 예매 상세 정보 등록
 
 		// 새 공연 등록
-
-		pService.registPfm(pfm, posterUpload, themeList, castList);
+		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList);
 
 		return "redirect:/admin/registpfm";
 	}

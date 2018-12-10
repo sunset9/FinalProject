@@ -9,13 +9,13 @@ public class Performance {
 	private int pfmIdx;
 	private String name;
 	private int genreIdx;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date pfmStart;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date pfmEnd;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ticketStart;
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ticketEnd;
 	private int hallIdx;
 	private int ageGradeIdx;
