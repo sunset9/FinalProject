@@ -1,8 +1,14 @@
 package ticket.controller.admin;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
 
 import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
@@ -67,7 +75,6 @@ public class AdminPfmController {
 	 * @Method설명: 특정 장르에 따른 모든 테마 리스트 정보 가져오기
 	 * @작성자: 전해진
 	 */
-
 	@RequestMapping(value = "/viewtheme", method = RequestMethod.GET)
 	public @ResponseBody List<Theme> getThemeList(Genre genre, Model model) {
 		return pService.getThemeList(genre);
@@ -94,6 +101,8 @@ public class AdminPfmController {
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
 			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
+			, String pfmDetailContents // 예매상세 내용
+//			, String pfmBookinfoContents // 예약 상태 내용
 			) {
 		// 공연 기본 정보
 		logger.info(pfm.toString());
@@ -109,10 +118,13 @@ public class AdminPfmController {
 		logger.info(pfmDbtList.toString());
 		
 		// 공연 상세 정보 등록
+		logger.info(pfmDetailContents);
+		
 		// 예매 상세 정보 등록
 
 		// 새 공연 등록
-		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList);
+		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList
+				,pfmDetailContents);
 
 		return "redirect:/admin/registpfm";
 	}
@@ -443,4 +455,27 @@ public class AdminPfmController {
 
 		// 디비에 인서트
 	}
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 공연 등록 부분 - 이미지 업로드 처리(상세정보, 예매정보)
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/uploadpfmimg", method = RequestMethod.POST)
+	public void uploadDetailImg(
+			@RequestParam(name = "file") MultipartFile pfmImgUpload
+			, HttpServletResponse response) {
+		Map<Object, Object> responseData = pService.uploadPfmImg(pfmImgUpload);
+
+        String jsonResponseData = new Gson().toJson(responseData);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        try {
+			response.getWriter().write(jsonResponseData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}	
+	
 }
