@@ -121,4 +121,9 @@
 		INSERT INTO cast (cast_idx ,pfm_idx ,artist_idx)
 		VALUES (cast_seq.nextval, #{pfmIdx }, #{artistIdx })
 	</insert>
+	
+	<insert id="insertPfmDbt" parameterType="ticket.dto.PfmDateByTime">
+		INSERT INTO pfm_datebytime(pfm_dbt_idx ,pfm_idx ,pfm_date ,pfm_time)
+		VALUES (pfm_datebytime_seq.nextval, #{pfmIdx }, #{pfmDate }, #{pfmTime })
+	</insert>
 </mapper>

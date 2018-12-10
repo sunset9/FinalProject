@@ -11,6 +11,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
 
+<!-- Froara Editor 관련 -->
+<!-- Include external CSS. -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+<!-- Include Editor style. -->
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Include external JS libs. -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+<!-- Include Editor JS files. -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/js/froala_editor.pkgd.min.js"></script>
 
 <style>
 .registPfmTab {
@@ -190,6 +204,9 @@ input[type="number"]::-webkit-inner-spin-button {
 	padding: 10px;
 }
 
+#registStep-3 div{
+/* 	display: inline; */
+}
 </style>
 
 <script>
@@ -332,6 +349,7 @@ $(document).ready(function(){
 		// 선택한 테마 목록들 띄우는 영역 활성화
 		var themeTextList = $('#themeSelBtn').next();
 		themeTextList.show();
+		themeTextList.html('');
 		// 선택한 테마 목록들 보여주기
 		thmSelected.each(function(idx){
 			var labelName = $(thmSelected[idx]).next().text();
@@ -348,7 +366,7 @@ $(document).ready(function(){
 		startDate: startDate, // 오늘 이후로 선택 가능
 	    todayHighlight: true,
 	    autoclose: true,
-	    format: "yyyy/mm/dd",
+	    format: "yyyy-mm-dd",
 	    language: "kr"
 	}).on('changeDate', function(selected){ 
 		if($(this).is('#ticketStartDate')){ // 티켓 오픈 시작일 선택
@@ -676,10 +694,6 @@ $(document).ready(function(){
 		// 날짜, 시간 순으로 오름차순 정렬
 		timeList = sortJsonList(timeList);
 		
-		// 오른쪽 뷰 - 기간 정보 보여주기
-		var periodP = $('#registTimeRes').find('p:nth-child(2)');
-		periodP.find('span:nth-child(1)').text(pfmStartDate);
-		periodP.find('span:nth-child(2)').text(pfmEndDate);
 		// 오른쪽 뷰 - 날짜, 시간 정보 보여주기
 		viewTimeList(timeList);
 		
@@ -740,12 +754,21 @@ $(document).ready(function(){
 			target.append(tr);
 			
 			// input 삽입(서버에 값 넘기기 위해)
+			var inputD = $('<input type="hidden">');
+			inputD.attr('name', 'pfmDbtList['+ i +'].pfmDate');
+			inputD.val(list[i].date);
+			var inputT = $('<input type="hidden">');
+			inputT.attr('name', 'pfmDbtList['+ i +'].pfmTime');
+			inputT.val(list[i].time);
+			$('#registTimeRes').append(inputD);
+			$('#registTimeRes').append(inputT);
 			
+			
+			// 같은 날인 경우 rowspan 설정을 위한 코드
 			// 첫 요소인 경우
 			if(i == 0){
 				prevDate = list[i].date; continue;
 			}
-			
 			if(prevDate == list[i].date){ // 이전날과 같은 날인경우
 				rowspanCnt++;
 				// 이전 tr에 같은 날이 있다는 표시를 남김
@@ -774,6 +797,13 @@ $(document).ready(function(){
 			}
 		}
 		
+		// 오른쪽 뷰 - 기간 정보 보여주기
+		var periodP = $('#registTimeRes').find('p:nth-child(2)');
+		periodP.show();
+		pfmStartDate = $('#registTimeRes tbody tr').first().find('td:first-child').text();
+		pfmEndDate = $('#registTimeRes tbody tr').last().find('td:first-child').text();
+		periodP.find('span:nth-child(1)').text(pfmStartDate);
+		periodP.find('span:nth-child(2)').text(pfmEndDate);
 	}
 	
 	// Date  'yyyy-mm-dd' 포멧으로 변환
@@ -803,6 +833,40 @@ $(document).ready(function(){
 		// 다시 그려주기
 		viewTimeList(timeList);
 	});
+	
+	$('textarea').froalaEditor({
+		width: '900' // 너비
+		, heightMin : 400 // 초기화시 크기
+		, heightMax : 400 // 스크롤 생기는 지점의 크기
+		, language: 'ko'
+// 		, dragInline: false
+		// 툴바 버튼 목록
+		, toolbarButtons: ['fontFamily','bold', 'italic', 'underline','align','|','insertLink','insertImage','|', 'undo', 'redo']
+		// 이미지 드래그&드롭 가능
+// 		, pluginsEnabled: ['image', 'link', 'draggable']
+		 // Set the image upload URL.
+        , imageUploadURL: '/resources/image'
+        , imageUploadParams: {
+          id: 'my_editor'
+        }
+	}).on('froalaEditor.image.error', function (e, editor, error, response) { //이미지업로드 실패
+  	  console.log(error);
+	  console.log(response);
+	})
+// 	.on('froalaEditor.image.removed', function (e, editor, $img) { //이미지 삭제 
+//         $.ajax({
+//             method: "POST",
+//             url: "/resources/image/", //이미지삭제 경로
+//             data: {
+//               src: $img.attr('src')
+//             }
+//           }).done (function (data) { //이미지 삭제 성공
+//             console.log ('image was deleted');
+//             console.log($img.attr('src'));
+//           }).fail (function () { //이미지 삭제 실패
+//             console.log ('image delete problem');
+//           })
+//      });
 	
 	//저장 버튼
 	$('#storeBtn').on('click', function(){
@@ -1032,7 +1096,7 @@ function setComma(inNum){
 	
 	<div id='registTimeRes'>
 		<p style='font-size: 13px; font-weight:bold;'>등록예정 공연일정</p>
-		<p>(<span>2018.08.01</span> ~ <span>2018.09.01</span>)</p>
+		<p style="display:none">(<span>시작일</span> ~ <span>종료일</span>)</p>
 		<hr>
 		<table class='table' style="width: 70%;">
 		<thead>
@@ -1053,7 +1117,10 @@ function setComma(inNum){
 
 <!-- 공연등록 3st Tab : 상세정보 등록-->
 <div class='registPfmTab' id='registStep-3' style="display:none">
-상세정보 등록
+<span>공연<br> 상세정보 등록</span>
+<div>
+<textarea></textarea>
+</div>
 </div>
 
 <!-- 공연등록 4st Tab : 예매정보 등록-->
