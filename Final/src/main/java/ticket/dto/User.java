@@ -3,6 +3,7 @@ import java.sql.Date;
 
 public class User {
 
+	private int no;
 	private int userIdx;
 	private String email;
 	private String nick;
@@ -16,22 +17,45 @@ public class User {
 	private String postcode;
 	private int mGradeIdx;
 	private String profile;
+	private Date createDate;
+	private int amount; //결제 총액
+	private int totalCnt; //결제 건수
 	
+	
+	
+	@Override
+	public String toString() {
+		return "User [no=" + no + ", userIdx=" + userIdx + ", email=" + email + ", nick=" + nick + ", password="
+				+ password + ", name=" + name + ", sex=" + sex + ", birth=" + birth + ", phone=" + phone + ", addr="
+				+ addr + ", addrDetail=" + addrDetail + ", postcode=" + postcode + ", mGradeIdx=" + mGradeIdx
+				+ ", profile=" + profile + ", amount=" + amount + ", totalCnt=" + totalCnt + ", createDate="
+				+ createDate + "]";
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getTotalCnt() {
+		return totalCnt;
+	}
+	public void setTotalCnt(int totalCnt) {
+		this.totalCnt = totalCnt;
+	}
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
 	public String getProfile() {
 		return profile;
 	}
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
-	private Date createDate;
 	
-	@Override
-	public String toString() {
-		return "User [userIdx=" + userIdx + ", email=" + email + ", nick=" + nick + ", password=" + password + ", name="
-				+ name + ", sex=" + sex + ", birth=" + birth + ", phone=" + phone + ", addr=" + addr + ", addrDetail="
-				+ addrDetail + ", postcode=" + postcode + ", mGradeIdx=" + mGradeIdx + ", profile=" + profile
-				+ ", createDate=" + createDate + "]";
-	}
 	public int getUserIdx() {
 		return userIdx;
 	}
