@@ -1,8 +1,11 @@
 package ticket.service.admin.face;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -162,7 +165,7 @@ public interface AdminPfmService {
 	 * @작성자: 전해진
 	 */
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList);
+			, CastList castList, PfmDateByTimeList pfmDbtList, String pfmDetailContents);
 
 	/**
 	 * @최종수정일: 2018.12.07
@@ -255,5 +258,12 @@ public interface AdminPfmService {
 	 * @작성자:박주희
 	 */
 	public void removeMu(CategoryCon mu);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 공연 등록 시 이미지(상세정보, 예약정보) 업로드
+	 * @작성자: 전해진
+	 */
+	public Map<Object, Object> uploadPfmImg(MultipartFile pfmImgUpload);
 
 }

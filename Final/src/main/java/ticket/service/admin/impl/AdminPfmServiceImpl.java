@@ -2,7 +2,9 @@ package ticket.service.admin.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -142,7 +144,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList) {
+			, CastList castList, PfmDateByTimeList pfmDbtList, String pfmDetailContents) {
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
 
@@ -182,6 +184,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				pDao.insertPfmDbt(pfmDbt);
 			}
 		}
+		
+		// 공연 상세정보 등록
+		
 	}
 
 	public Poster uploadPoster(MultipartFile posterUpload) {
@@ -317,6 +322,40 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
+	public Map<Object, Object> uploadPfmImg(MultipartFile pfmImgUpload) {
+		// UUID, 고유 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		// 파일이 저장될 경로
+		String stored = context.getRealPath("resources/image");
+
+		// 저장될 파일의 이름
+		String oriName = pfmImgUpload.getOriginalFilename();
+		String name = oriName + "_" + uId;
+
+		// 파일객체
+		File dest = new File(stored, name);
+
+		// 파일 저장(업로드)
+		try {
+			pfmImgUpload.transferTo(dest);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// 저장 경로 반환
+		String linkName ="http://localhost:8088/resources/image/"+name;
+		System.out.println(linkName);
+		
+		Map < Object, Object > responseData = new HashMap < Object, Object > ();
+        responseData.put("link", linkName);
+        
+		return responseData;
+    }
+
 	public List<Poster> getSearchListForCon(String name) {
 		// TODO Auto-generated method stub
 		return infoDao.selectPosterByName(name);

@@ -845,7 +845,7 @@ $(document).ready(function(){
 		// 이미지 드래그&드롭 가능
 // 		, pluginsEnabled: ['image', 'link', 'draggable']
 		 // Set the image upload URL.
-        , imageUploadURL: '/resources/image'
+        , imageUploadURL: '/admin/uploadpfmimg'
         , imageUploadParams: {
           id: 'my_editor'
         }
@@ -1119,7 +1119,7 @@ function setComma(inNum){
 <div class='registPfmTab' id='registStep-3' style="display:none">
 <span>공연<br> 상세정보 등록</span>
 <div>
-<textarea></textarea>
+<textarea name="pfmDetailContents"></textarea>
 </div>
 </div>
 
@@ -1134,7 +1134,6 @@ function setComma(inNum){
 <button type="button" id="storeBtn" style="display:none">저장</button>
 
 </form>
-
 
 
 <hr>
