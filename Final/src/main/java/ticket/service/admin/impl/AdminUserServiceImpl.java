@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ticket.dao.face.UserDao;
 import ticket.dto.User;
 import ticket.service.admin.face.AdminUserService;
+import ticket.utils.Paging;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService{
@@ -18,14 +19,13 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public String getSearch(HttpServletRequest req) {
-		String search = req.getParameter("search");
+		String search = req.getParameter("userListSearch");
 		return search;
 	}
 
 	@Override
 	public int getTotalUser(String search) {
-		//return uDao.selectCntUser(search);
-		return 0;
+		return uDao.selectCntUserBySearch(search);
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
-	public List<User> getPagingList() {
-		return null;
+	public List<User> getPagingListByPaging(Paging paging) {
+		return uDao.selectPagingUserListByPaging(paging);
 	}
 }
 	
