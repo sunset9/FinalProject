@@ -1,9 +1,18 @@
 package ticket.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import ticket.dto.Performance;
+import ticket.dto.PfmDateByTime;
 import ticket.service.face.TicketService;
 
 
@@ -21,7 +30,43 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value="/ticket/bookInfo")
-	public void ticketpicker() {
+	public void ticketpicker(Model model) {
+		
+		Performance pfm = new Performance();
+		pfm.setPfmIdx(1);
+		
+		
+		// 해당공연의 공연날짜 불러오기
+		List<PfmDateByTime> dates = new ArrayList<PfmDateByTime>();
+		dates = ticketService.ticketDatePicker(pfm);
+		
+		
+		List<String> dateStr = new ArrayList<String>();
+		
+		SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for(int i=0 ; i<dates.size();i++) {
+			dateStr.add("'"+ trans.format(dates.get(i).getPfmDate()) + "'");
+		}
+		
+		model.addAttribute("dates", dateStr);
+		
+		//-------------------
+		
+		//해당 공연의 공연시간 불러오기 
+		List<PfmDateByTime> times = new ArrayList<PfmDateByTime>();
+		
+		times= ticketService.ticketTime(pfm);
+		
+
+		ModelAndView mav = new ModelAndView();
+		
+		
+		
+		
+		model.addAttribute("times", times);
+		
+		
 		
 	}
 	
