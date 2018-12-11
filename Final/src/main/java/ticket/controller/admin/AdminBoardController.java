@@ -2,6 +2,8 @@ package ticket.controller.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,7 @@ public class AdminBoardController {
 	public String notiView(Model model, int noticeIdx) {
 		logger.info("공지 상세");
 		
-		
+		 
 		
 		Notice noticeView = adminBoardService.getViewNoti(noticeIdx);
 		
@@ -88,7 +90,7 @@ public class AdminBoardController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.POST)
-	public String notiWriteProc() {
+	public String notiWriteProc(HttpSession session) {
 		
 		return "redirect:/admin/noticelist";
 		

@@ -42,7 +42,7 @@ Bootstrap Table
 		<th>제목</th>
 		<th>등록일</th>	
 	</tr>
- 
+  
 	<c:forEach items="${noticelist }" var="noli">
 	<tr>		
 		<td>${noli.noticeIdx }</td>
@@ -56,7 +56,7 @@ Bootstrap Table
 
 </div>
 
-<a href="/admin/noticewrite"><button id="btnWrite"> 글쓰기 </button></a>
+<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 
 <jsp:include page="../../utils/noticepaging.jsp"/>
 
