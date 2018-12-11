@@ -392,6 +392,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Poster> getModalListMu() {
 		return  infoDao.selectBygenreIdx(2);
 	}
+
 	public void deletePfmImg(String src) {
 		//파일경로
 		String filePath = context.getRealPath("upload/story")+"\\";
