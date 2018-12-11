@@ -176,12 +176,20 @@ public interface AdminPfmService {
 	public Poster uploadPoster(MultipartFile posterUpload);
 
 	/**
+	 * @param paging 
 	 * @최종수정일: 2018.12.08
 	 * @Method설명:콘서트 모달안에배너 리스트
 	 * @작성자:박주희
 	 */
-	public List<Poster> getModalListCon();
+	public List<Poster> getModalListCon(Paging paging);
 
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명:콘서트 모달 안에 들어갈 배너 갯수 
+	 * @작성자:박주희
+	 */
+	public int getModalListConCnt();
+	
 	/**
 	 * @최종수정일: 2018.12.08
 	 * @Method설명:콘서트 배너 리스트

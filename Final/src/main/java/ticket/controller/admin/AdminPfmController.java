@@ -1,7 +1,6 @@
 package ticket.controller.admin;
 
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,21 +86,18 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/searchartist", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> getArtistList(
-			Artist artist
-			,@RequestParam(defaultValue="1") int curPage
-			, Model model
-		) {
+	public @ResponseBody HashMap<String, Object> getArtistList(Artist artist,
+			@RequestParam(defaultValue = "1") int curPage, Model model) {
 		// 페이징 계산
 		int totalCnt = pService.getArtistSearchCnt(artist);
 		Paging paging = new Paging(totalCnt, curPage, 8, 4);
-		
+
 		// HashMap 을 통해 결과값 넘기기
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<Artist> artists = pService.getArtistList(artist, paging);
 		map.put("artists", artists);
 		map.put("paging", paging);
-		
+
 		return map;
 	}
 
@@ -118,7 +114,7 @@ public class AdminPfmController {
 			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
 			, String pfmDetailContents // 예매상세 내용
 			, String pfmBookinfoContents // 예약 상태 내용
-			) {
+	) {
 		// 공연 기본 정보
 		logger.info(pfm.toString());
 
@@ -129,7 +125,7 @@ public class AdminPfmController {
 		logger.info(castList.toString());
 
 		// 좌석 정보 & 가격 등록
-		
+
 		// 공연 날짜 & 시간 등록
 		logger.info(pfmDbtList.toString());
 
@@ -140,8 +136,7 @@ public class AdminPfmController {
 		logger.info(pfmBookinfoContents);
 
 		// 새 공연 등록
-		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList
-				,pfmDetailContents, pfmBookinfoContents);
+		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
 		return "redirect:/admin/registpfm";
 	}
 
@@ -187,16 +182,37 @@ public class AdminPfmController {
 	 * @작성자:
 	 */
 	@RequestMapping(value = "/admin/registcatecon", method = RequestMethod.GET)
-	public String registerCategoryCon(Model model) {
+	public String registerCategoryCon(Model model, @RequestParam(defaultValue = "1") int curPage) {
 
-		List<Poster> posterList = pService.getListCon();
-		List<Poster> modalList = pService.getModalListCon();
+		List<Poster> posterList = pService.getListCon();// selectBypfmIdx();
+		int totalCnt = pService.getModalListConCnt();
+		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		List<Poster> modalList = pService.getModalListCon(paging);
+		Gson jsonParser = new Gson();
+
 		if (modalList != null)
-			model.addAttribute("list", modalList);
+			model.addAttribute("list", jsonParser.toJson(modalList));
 		if (posterList != null)
 			model.addAttribute("posterList", posterList);
+		if (paging != null)
+			model.addAttribute("paging",jsonParser.toJson(paging));
+			return "admin/pfm/registcatecon";
+	}
 
-		return "admin/pfm/registcatecon";
+	@RequestMapping(value = "/pagingcatecon", method = RequestMethod.GET)
+	public @ResponseBody HashMap ajaxCategoryCon(@RequestParam(defaultValue = "1") int curPage) {
+		logger.info(curPage+"");
+		int totalCnt = pService.getModalListConCnt();
+		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		List<Poster> modalList = pService.getModalListCon(paging);
+//		Gson jsonParser = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if (modalList != null) {
+			map.put("list", modalList);
+			map.put("paging", paging);
+		}
+		return map;
 	}
 
 	/**
@@ -277,7 +293,8 @@ public class AdminPfmController {
 	 * @작성자: 박주희
 	 */
 	@RequestMapping(value = "/admin/registcatemu", method = RequestMethod.POST)
-	public @ResponseBody String registerCategoryMuProc(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
+	public @ResponseBody String registerCategoryMuProc(@RequestParam(value = "pfmIdx") List<String> pfmIdx,
+			Model model) {
 		logger.info(pfmIdx.toString());
 		logger.info("POST");
 
@@ -293,6 +310,7 @@ public class AdminPfmController {
 		return "1";
 
 	}
+
 	/**
 	 * @최종수정일: 2018.12.09
 	 * @Method설명: 카테고리 뮤지컬&공연 배너 정보 삭제하기
@@ -313,6 +331,7 @@ public class AdminPfmController {
 	public @ResponseBody List<Poster> searchPosterMu(@RequestParam String searchPoster) {
 		return pService.getSearchListForMu(searchPoster);
 	}
+
 	/**
 	 * 2018.12.05
 	 * 
@@ -527,9 +546,8 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/uploadpfmimg", method = RequestMethod.POST)
-	public void uploadPfmInfoImg(
-			@RequestParam(name = "file") MultipartFile pfmImgUpload
-			, HttpServletResponse response) {
+	public void uploadPfmInfoImg(@RequestParam(name = "file") MultipartFile pfmImgUpload,
+			HttpServletResponse response) {
 		Map<Object, Object> responseData = pService.uploadPfmImg(pfmImgUpload);
 
 		String jsonResponseData = new Gson().toJson(responseData);
@@ -540,8 +558,8 @@ public class AdminPfmController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}	
-	
+	}
+
 	/**
 	 * @최종수정일: 2018.12.10
 	 * @Method설명:공연 등록 부분 - 이미지 삭제 처리
@@ -550,8 +568,8 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/deletepfmimg", method = RequestMethod.POST)
 	public @ResponseBody void deletePfmInfoImg(String src) {
 		pService.deletePfmImg(src);
-	}	
-	
+	}
+
 	/**
 	 * @최종수정일: 2018.12.11
 	 * @Method설명: 공연 관리 페이지 띄워주기
@@ -559,7 +577,7 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
 	public String viewPfmManager() {
-		
+
 		return "admin/pfm/managerPfm";
 	}
 }

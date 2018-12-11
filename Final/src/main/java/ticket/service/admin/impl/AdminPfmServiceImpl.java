@@ -147,17 +147,16 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList
-			, String pfmDetailContents, String pfmBookinfoContents) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
+			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
 		int pfmIdx = 0;
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
 		// 저장한 공연 인덱스
 		pfmIdx = pfm.getPfmIdx();
-		
+
 		// 포스터 업로드
-		if(posterUpload.getSize() != 0) {
+		if (posterUpload.getSize() != 0) {
 			Poster poster = uploadPoster(posterUpload);
 			poster.setPfmIdx(pfmIdx); // 공연 idx 지정
 			// 포스터 업로드 정보 DB 저장
@@ -165,9 +164,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 
 		// 테마들 등록
-		if(themeList.getThmList() != null) {
-			for(PfmTheme thm : themeList.getThmList()) {
-				if(thm.getThemeIdx() != 0 ) { // theme가 존재하는 경우에 insert
+		if (themeList.getThmList() != null) {
+			for (PfmTheme thm : themeList.getThmList()) {
+				if (thm.getThemeIdx() != 0) { // theme가 존재하는 경우에 insert
 					// 공연 idx 지정
 					thm.setPfmIdx(pfmIdx);
 					pDao.insertPfmTheme(thm);
@@ -176,7 +175,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 
 		// 출연진들 등록
-		if(castList.getCastList() != null) {
+		if (castList.getCastList() != null) {
 			for (Cast cast : castList.getCastList()) {
 				if (cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
 					// 공연 idx 지정
@@ -187,9 +186,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 
 		// 공연 일정들(날짜, 시간) 등록
-		if(pfmDbtList.getPfmDbtList() != null) {
-			for(PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
-				if(pfmDbt.getPfmDate() != null && pfmDbt.getPfmTime() != null) { // 일정 정보가 존재하는 경우에 insert
+		if (pfmDbtList.getPfmDbtList() != null) {
+			for (PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
+				if (pfmDbt.getPfmDate() != null && pfmDbt.getPfmTime() != null) { // 일정 정보가 존재하는 경우에 insert
 					// 공연 idx 지정
 					pfmDbt.setPfmIdx(pfmIdx);
 					pDao.insertPfmDbt(pfmDbt);
@@ -198,15 +197,15 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 
 		// 공연 상세정보 등록
-		if(!"".equals(pfmDetailContents)) {
+		if (!"".equals(pfmDetailContents)) {
 			PfmDetail pfmDetail = new PfmDetail();
 			pfmDetail.setPfmIdx(pfmIdx);
 			pfmDetail.setContents(pfmDetailContents);
 			pDao.insertPfmDetail(pfmDetail);
 		}
-		
+
 		// 공연 예약정보 등록
-		if(!"".equals(pfmBookinfoContents)) {
+		if (!"".equals(pfmBookinfoContents)) {
 			PfmBookinfo pfmBookinfo = new PfmBookinfo();
 			pfmBookinfo.setPfmIdx(pfmIdx);
 			pfmBookinfo.setContents(pfmBookinfoContents);
@@ -333,10 +332,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public List<Poster> getModalListCon() {
+	public List<Poster> getModalListCon(Paging paging) {
 
 		// 장르로 선택된(콘서트) 리스트 가져오기
-		return infoDao.selectBygenreIdx(1);
+		return infoDao.selectBygenreIdx(1,paging);
 	}
 
 	@Override
@@ -370,12 +369,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			e.printStackTrace();
 		}
 
-    String linkName ="http://localhost:8088/resources/image/"+name;
-		
-		Map < Object, Object > responseData = new HashMap < Object, Object > ();
-        responseData.put("link", linkName);
-        
-        // 저장 경로 반환
+		String linkName = "http://localhost:8088/resources/image/" + name;
+
+		Map<Object, Object> responseData = new HashMap<Object, Object>();
+		responseData.put("link", linkName);
+
+		// 저장 경로 반환
 		return responseData;
 	}
 
@@ -390,24 +389,30 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Poster> getModalListMu() {
-		return  infoDao.selectBygenreIdx(2);
+		return infoDao.selectBygenreIdx(2, null);
 	}
 
 	public void deletePfmImg(String src) {
-		//파일경로
-		String filePath = context.getRealPath("upload/story")+"\\";
-		//파일이름 구하기
-	    String[] fileName = src.split("/");
-	    //삭제할 파일 경로 + 파일이름
-	    filePath += fileName[5];
-	    	
-	    File f = new File(filePath); // 파일 객체생성
-	    if( f.exists()) f.delete(); // 파일이 존재하면 파일을 삭제한다.
+		// 파일경로
+		String filePath = context.getRealPath("upload/story") + "\\";
+		// 파일이름 구하기
+		String[] fileName = src.split("/");
+		// 삭제할 파일 경로 + 파일이름
+		filePath += fileName[5];
+
+		File f = new File(filePath); // 파일 객체생성
+		if (f.exists())
+			f.delete(); // 파일이 존재하면 파일을 삭제한다.
 	}
 
 	@Override
 	public int getArtistSearchCnt(Artist artist) {
 		return pDao.selectCntArtist(artist);
+	}
+
+	@Override
+	public int getModalListConCnt() {
+		return infoDao.selectCntBygenreIdx(1); // 장르 1번 콘서트
 	}
 
 }

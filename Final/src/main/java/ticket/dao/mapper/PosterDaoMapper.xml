@@ -12,12 +12,22 @@
 		(poster_info_seq.nextval,PERFORMANCE_seq.nextval,#{originName},
 		#{storedName})
 	</insert>
-
-	<select id="selectBygenreIdx" parameterType="int"
+	<select id="selectBygenreIdx"
 		resultType="ticket.dto.Poster">
+			SELECT * FROM (
+		SELECT rownum rnum, B.* FROM (
 		SELECT c.pfm_idx pfmIdx,c.name,
-		p.origin_name originName
-		,p.stored_name storedName
+		p.origin_name originName ,p.stored_name storedName
+		FROM performance c, poster_info p
+		WHERE c.genre_idx=#{genreIdx} AND p.pfm_idx=c.pfm_idx
+		ORDER BY pfmidx desc
+		)B
+		ORDER BY rnum)
+		WHERE rnum between #{paging.startNo } AND #{paging.endNo }
+	</select>
+	<select id="selectCntBygenreIdx" parameterType="int"
+		resultType="int">
+		SELECT count(*)
 		FROM performance c, poster_info p
 		WHERE
 		c.genre_idx=#{genreIdx} AND p.pfm_idx=c.pfm_idx

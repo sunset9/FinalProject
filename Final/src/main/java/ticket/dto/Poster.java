@@ -6,14 +6,25 @@ public class Poster {
 
 	private int posterIdx;// 포스터번호
 	private int pfmIdx; // 공연번호
+	private String name ; //공연이름 
 	private String originName;// 포스터 원본이름
 	private String storedName; // 포스터 저장이름
 	private Date createDate; // 등록일
+	
+	
 
 	@Override
 	public String toString() {
-		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", originName=" + originName + ", storedName="
-				+ storedName + ", createDate=" + createDate + "]";
+		return "Poster [posterIdx=" + posterIdx + ", pfmIdx=" + pfmIdx + ", name=" + name + ", originName=" + originName
+				+ ", storedName=" + storedName + ", createDate=" + createDate + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getPosterIdx() {
