@@ -50,7 +50,7 @@
 </tr>
 </table>
 
-
+ 
 <!-- 다음글 -->
 <table class="table table-striped table-hover" id="nextwr">
 <tr>   

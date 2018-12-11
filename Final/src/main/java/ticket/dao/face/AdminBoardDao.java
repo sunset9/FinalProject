@@ -20,7 +20,7 @@ public interface AdminBoardDao {
 	// 공지사항 상세보기
 	public Notice selectNotiView(int noticeIdx);
 
-	
+
 	// 조회수 (향후 추가? (멜론, 카카오 오븐엔 없음)
 //	public Notice hit(int noticeIdx);
 	

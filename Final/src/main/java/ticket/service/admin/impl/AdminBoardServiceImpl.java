@@ -44,7 +44,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 	
 	
-
+ 
 	@Override
 	public Notice getViewNoti(int noticeIdx) {
 
