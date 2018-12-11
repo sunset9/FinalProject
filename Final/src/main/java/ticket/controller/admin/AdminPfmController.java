@@ -90,7 +90,6 @@ public class AdminPfmController {
 	public @ResponseBody HashMap<String, Object> getArtistList(
 			Artist artist
 			,@RequestParam(defaultValue="1") int curPage
-			, Model model
 		) {
 		// 페이징 계산
 		int totalCnt = pService.getArtistSearchCnt(artist);
