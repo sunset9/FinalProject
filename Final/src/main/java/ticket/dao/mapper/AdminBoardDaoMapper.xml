@@ -16,7 +16,7 @@
   	<result column="create_date" property="createDate" />  
   </resultMap>
    
-   
+	
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
   	select * from ( 
   		select rownum rnum, B.* from (
@@ -38,13 +38,25 @@
   	select * from notice
   		where notice_idx = #{notice_idx}
   </select>
-  
-  
-  
-  
-  
-  
-  
+
+
+  <insert id="insertNoti" parameterType="ticket.dto.Notice">
+  	insert into notice (notice_idx,  n_type_idx, notice_title , notice_content) 
+  			values (notice_seq.nextval, #{NTypeIdx}, #{noticeTitle} , #{noticeContent})
+  </insert>
+
+	
+
+<!-- 	<update id="updateNoti" parameterType="ticket.dto.Notice">	 -->
+<!-- 	</update> -->
+
+
+	<delete id="deleteNoti" parameterType="ticket.dto.Notice">
+		delete from notice where notice_idx = #{noticeIdx}
+	</delete>
+
+
+
   </mapper>
   
   

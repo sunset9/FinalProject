@@ -26,19 +26,14 @@ public interface AdminBoardDao {
 	
 	
 	// 공지사항 글 쓰기
-	public void insertNoti();
-	
-	
-	
-	
-	
+	public void insertNoti(Notice notice);
 	
 	
 	// 공지사항 글 수정
-	public void updateNoti();
+	public void updateNoti(Notice notice);
 	
 	// 공지사항 글 삭제
-	public void deleteNoti();	
+	public void deleteNoti(Notice deleteNotice);	
 	
 	// 파일 업로드
 	public void insertNotiFile(NoticeFile noticeFile);
