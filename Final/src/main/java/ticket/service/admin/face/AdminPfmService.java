@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -196,13 +194,28 @@ public interface AdminPfmService {
 	 */
 	public List<Poster> getSearchListForCon(String name);
 	
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 검색결과를 불러옴 (뮤지컬)
+	 * @작성자: 박주희
+	 */
+	public List<Poster> getSearchListForMu(String name);
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 가족아동 배너 리스트
 	 * @작성자:박주희
 	 */
 	public List<Poster> getListFam();
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명:뮤지컬 모달안에배너 리스트
+	 * @작성자:박주희
+	 */
+	public List<Poster> getModalListMu();
 
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 뮤지컬 배너 리스트
@@ -250,14 +263,14 @@ public interface AdminPfmService {
 	 * @Method설명:카테고리(가족&아동) 배너 삭제
 	 * @작성자:박주희
 	 */
-	public void removeFam(CategoryCon fam);
+	public void removeFam(CategoryFam fam);
 
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명:카테고리(뮤지컬) 배너 삭제
 	 * @작성자:박주희
 	 */
-	public void removeMu(CategoryCon mu);
+	public void removeMu(CategoryMu mu);
 
 	/**
 	 * @최종수정일: 2018.12.10

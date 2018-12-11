@@ -143,8 +143,8 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList, String pfmDetailContents) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
+			PfmDateByTimeList pfmDbtList, String pfmDetailContents) {
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
 
@@ -156,8 +156,8 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		pDao.insertPoster(poster);
 
 		// 테마들 등록
-		for(PfmTheme thm : themeList.getThmList()) {
-			if(thm.getThemeIdx() != 0 ) { // theme가 존재하는 경우에 insert
+		for (PfmTheme thm : themeList.getThmList()) {
+			if (thm.getThemeIdx() != 0) { // theme가 존재하는 경우에 insert
 				// 공연 idx 지정
 				thm.setPfmIdx(pfmIdx);
 
@@ -174,19 +174,19 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				pDao.insertCast(cast);
 			}
 		}
-		
+
 		// 공연 일정들(날짜, 시간) 등록
-		for(PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
-			if(pfmDbt.getPfmDate() != null && pfmDbt.getPfmTime() != null) { // 일정 정보가 존재하는 경우에 insert
+		for (PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
+			if (pfmDbt.getPfmDate() != null && pfmDbt.getPfmTime() != null) { // 일정 정보가 존재하는 경우에 insert
 				// 공연 idx 지정
 				pfmDbt.setPfmIdx(pfmIdx);
-				
+
 				pDao.insertPfmDbt(pfmDbt);
 			}
 		}
-		
+
 		// 공연 상세정보 등록
-		
+
 	}
 
 	public Poster uploadPoster(MultipartFile posterUpload) {
@@ -235,7 +235,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public List<Poster> getListMu() {
 		// TODO Auto-generated method stub
-		return null;
+		return infoDao.selectBypfmIdxMu();
 	}
 
 	@Override
@@ -251,7 +251,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void addMu(CategoryMu mu) {
-		// TODO Auto-generated method stub
+		muDao.insert(mu);
 
 	}
 
@@ -261,15 +261,14 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void removeFam(CategoryCon fam) {
+	public void removeFam(CategoryFam fam) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void removeMu(CategoryCon mu) {
-		// TODO Auto-generated method stub
-
+	public void removeMu(CategoryMu mu) {
+		muDao.delete(mu);
 	}
 
 	@Override
@@ -317,7 +316,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public int getUnanswered() {
-		//1:1 문의 미답변수 가져오기
+		// 1:1 문의 미답변수 가져오기
 		return pDao.selectUnanswered();
 	}
 
@@ -347,18 +346,27 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 
 		// 저장 경로 반환
-		String linkName ="http://localhost:8088/resources/image/"+name;
+		String linkName = "http://localhost:8088/resources/image/" + name;
 		System.out.println(linkName);
-		
-		Map < Object, Object > responseData = new HashMap < Object, Object > ();
-        responseData.put("link", linkName);
-        
+
+		Map<Object, Object> responseData = new HashMap<Object, Object>();
+		responseData.put("link", linkName);
+
 		return responseData;
-    }
+	}
 
 	public List<Poster> getSearchListForCon(String name) {
-		// TODO Auto-generated method stub
 		return infoDao.selectPosterByName(name);
+	}
+
+	@Override
+	public List<Poster> getSearchListForMu(String name) {
+		return infoDao.selectPosterByNameMu(name);
+	}
+
+	@Override
+	public List<Poster> getModalListMu() {
+		return  infoDao.selectBygenreIdx(2);
 	}
 
 }

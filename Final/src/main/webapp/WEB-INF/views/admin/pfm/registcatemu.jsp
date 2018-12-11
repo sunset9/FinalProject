@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<!DOCTYPE html>
 <script>
 	$(document).ready(function() {
 	$('#add_poster').click(function() {
@@ -38,15 +38,20 @@
 		//form 데이터를 List로 보내기 위한 설정 
 		$.ajax({
 				type : "post",
-				url : "/admin/registcatecon",
+				url : "/admin/registcatemu",
 				dataType : "text",
 				data : {
 					'pfmIdx' : listData
 						},
 				success : function(data) {
-					console.log(data);
+					//console.log(data);
+					if(data==1){
+						$(location).attr('href', '/admin/registcatemu')
+					}else{
+						alert("추가 하신게 없습니다.");
+					}
 				},
-				error : function() {
+				error : function() { 
 				console.log("error");
 				}
 			}); //end of ajax 
@@ -58,7 +63,7 @@
 	//console.log(name);
 		$.ajax({
 		type : "post",
-		url : "/admin/deletecatecon",
+		url : "/admin/deletecatemu",
 		dataType : "text",
 		data : {
 		'pfmIdx' : name
@@ -75,7 +80,7 @@
 			console.log($('#searchposter').val());
 			$.ajax({
 			type : "get",
-			url : "/searchposter",
+			url : "/searchpostermu",
 			dataType : "json",
 			data : {
 			'searchPoster' : $('#searchposter').val()
@@ -114,29 +119,27 @@
 
 		}); // end ready
 </script>
-카테고리 콘서트 배너 관리
+카테고리 뮤지컬 배너 관리
 <hr>
-<!-- 카테고리 부분 FORM 시작  -->
 <button id="btn">최종저장</button>
-<form action="/admin/registcateCon" method="post">
-	<div id="hide"></div>
-	<div class="row">
-		<c:forEach var="item" items="${posterList }">
-			<div class="col-md-4">
-				<div class="thumbnail">
+<div id="hide"></div>
+<div class="row">
+	<c:forEach var="item" items="${posterList }">
+		<div class="col-md-4">
+			<div class="thumbnail">
 
-					<div class="caption">
-						<div class="pfmIdx" id="${item.pfmIdx }">
-							<img src="/resources/image/${item.storedName }"> <a
-								href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />"
-								class="btn btn-lg btn-danger">삭제</a>
-						</div>
+				<div class="caption">
+					<div class="pfmIdx" id="${item.pfmIdx }">
+						<img src="/resources/image/${item.storedName }"> <a
+							href="<c:url value='/admin/deletecatemu/${ item.pfmIdx }' />"
+							class="btn btn-lg btn-danger">삭제</a>
 					</div>
 				</div>
 			</div>
-		</c:forEach>
-	</div>
-	<br> <span class="glyphicon glyphicon-plus-sign" id="add_poster"></span>
+		</div>
+	</c:forEach>
+</div>
+<br> <span class="glyphicon glyphicon-plus-sign" id="add_poster"></span>
 	<p style="display: none;"></p>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -174,6 +177,3 @@
 			</div>
 		</div>
 	</div>
-
-</form>
-
