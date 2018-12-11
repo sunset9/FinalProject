@@ -31,27 +31,32 @@ public class AdminUserController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value = "/admin/userlist", method = RequestMethod.GET)
-	public String getUserList(HttpServletRequest req, Model model) {
+	public String getUserList(
+			HttpServletRequest req, 
+			Model model,
+			@RequestParam(defaultValue="1") int curPage
+			) {
 
 		//현재 페이지 얻기
-		int curPage = bService.getCurPage(req);
 		logger.info("curPage : "+curPage);
 		
 		// 검색어 얻기 String search = userService.getSearch(req)
 		// search 스트링 말고 dto로 바꾸기!! 
-		String search = userService.getSearch(req);
+		String search = req.getParameter("userSearchData");
+		//Paging paging = new Paging(search);
 		logger.info("search값 : "+search);
+		//----------- OK ------------
+		
 		
 		// 전체 회원수 얻기 userService.getTotalUser(search)
 		int totalUser = userService.getTotalUser(search);
-		
+		logger.info("totalUser : "+totalUser);
 		
 		// 페이징 객체 생성하기
 		Paging paging = new Paging(totalUser, curPage);
 
 		// 페이징 객체에 검색어 적용 paging.setSearch(search)
 		paging.setSearch(search);
-		
 		logger.info("페이징 : "+paging);
 		
 		// 회원 목록을 뷰에 전달하기
@@ -63,6 +68,8 @@ public class AdminUserController {
 		
 		return "/admin/user/list";
 	}
+	
+	
 
 	/**
 	 * @최종수정일: 2018.12.05
