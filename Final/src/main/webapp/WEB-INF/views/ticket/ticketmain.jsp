@@ -22,7 +22,7 @@
 			$mainbanner_list.eq(nextSlide).css("left", "100%");
 
 			// 현재 이미지 숨기기
-			$mainbanner_list.eq(curSlide).animate({ "left" : "-=120%" });
+			$mainbanner_list.eq(curSlide).animate({ "left" : "-=100%" });
 
 			// 다음 이미지 보여주기
 			$mainbanner_list.eq(nextSlide).animate({ "left" : "-=100%" });

@@ -13,21 +13,21 @@ public interface MainDao {
 	 * @Method설명: 관리자가 선택한 콘서트 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List selectAdminBanCon();
+	public List<Poster> selectAdminBanCon();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 뮤지컬&공연 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List selectAdminBanMu();
+	public List<Poster> selectAdminBanMu();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 가족&아동 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List selectAdminBanFam();
+	public List<Poster> selectAdminBanFam();
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -60,16 +60,30 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.11
-	 * @Method설명: 테마 종류 출력 ( 선택하여 원하는 결과 출력할 수 있도록 )
+	 * @Method설명: 콘서트 테마 종류 출력해주기
 	 * @작성자: 배수연
 	 */
-	public List<Theme> selectThemeKind();
+	public List<Theme> selectConThemeKind();
+
+	/**
+	 * 최종수정일: 2018.12.11
+	 * @Method설명: 뮤지컬&공연 테마 종류 출력해주기
+	 * @작성자: 배수연
+	 */
+	public List<Theme> selectMuThemeKind();
+
+	/**
+	 * 최종수정일: 2018.12.11
+	 * @Method설명: 가족&아동 테마 종류 출력해주기
+	 * @작성자: 배수연
+	 */
+	public List<Theme> selectFamThemeKind();
 
 	/**
 	 * 최종수정일: 2018.12.11
 	 * @Method설명: 장르가 콘서트이면서 원하는 테마 선택시 해당하는 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectThemeChoice();
+	public List<Poster> ConThemeChoice(Theme theme);
 
 }
