@@ -1,5 +1,7 @@
 package ticket.service.impl;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,16 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public int loginCheck(User user) {
+	public int loginCheck(User user, HttpSession session) {
 	
+		if(userDao.selectCntUser(user) == 1) { 
+			session.setAttribute("login", true);
+			user = userDao.selectUser(user);
+			session.setAttribute("loginUser", user);
+			
+		} else {
+			session.setAttribute("login", false);
+		}
 		return 	userDao.selectCntUser(user);
 	}
 	
@@ -38,8 +48,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void join(User user) {
-		userDao.insert(user);
+	public int join(User user) {
+		return userDao.insert(user);
 	}
 
 

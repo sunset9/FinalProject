@@ -33,10 +33,12 @@ public interface UserDao {
 	public void updateUser(User user);
 	
 	/**
+	 * @최종수정일: 2018.12.10
 	 * @Method설명: 회원가입 할 때 유저 정보 넣기
+	 * 				들어갔는지 확인해서 useridx 값 받기
 	 * @작성자 : 홍나영
 	 */
-	public void insert(User user);
+	public int insert(User user);
 	
 	/**
 	 * @최종수정일: 2018.12.07

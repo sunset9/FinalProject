@@ -47,9 +47,7 @@
    </select>
   
   <insert id="insert" parameterType="ticket.dto.User">
-  <selectKey  resultType="int" keyProperty="userIdx" order="BEFORE">
-  	SELECT USERINFO_SEQ.nextval FROM dual
-  </selectKey>
+
   
   INSERT INTO userinfo (
 	 user_idx
@@ -67,10 +65,14 @@
 	,profile
 	)
 	VALUES ( 
-		#{userIdx },#{email } ,#{nick },#{password },#{name },#{sex },#{birth },#{phone }
+		USERINFO_SEQ.nextval,#{email } ,#{nick },#{password },#{name },#{sex },#{birth },#{phone }
 		,#{addr },#{addrDetail },#{postcode },#{mGradeIdx },#{profile }
 	)
-  
+    
+    <selectKey  resultType="int" keyProperty="userIdx" order="AFTER">
+  		SELECT user_idx FROM userinfo WHERE email = #{email }
+  	</selectKey>
+  	
   </insert>
   
   
