@@ -61,6 +61,10 @@
 		</beans:property>
 	</beans:bean>
 
+	<!--JSONVIEW 라는 VIEW 객체로 따로 만듬 -->
+	<beans:bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" id="jsonView">
+		<beans:property value="application/json;charset=utf-8" name="contentType"></beans:property>
+	</beans:bean>
 
 	<!-- 다운로드뷰 를 down 이라는 이름으로 빈 등록 -->
 

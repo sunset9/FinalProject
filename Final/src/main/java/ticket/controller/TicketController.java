@@ -3,12 +3,15 @@ package ticket.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ticket.dto.Performance;
@@ -29,7 +32,7 @@ public class TicketController {
 	 * @Method설명: 테스트 메소드
 	 * @작성자:이상지
 	 */
-	@RequestMapping(value="/ticket/bookInfo")
+	@RequestMapping(value="/ticket/bookInfo", method=RequestMethod.GET)
 	public void ticketpicker(Model model) {
 		
 		Performance pfm = new Performance();
@@ -53,19 +56,33 @@ public class TicketController {
 		
 		//-------------------
 		
-		//해당 공연의 공연시간 불러오기 
+		
+	}
+	
+	
+	@RequestMapping(value= "/ticket/bookTimeInfo", method=RequestMethod.GET)
+	public ModelAndView loadsTimes() {
+		
+		
+		Performance pfm = new Performance();
+		pfm.setPfmIdx(1);
+
+		//해당 공연의 공연시간 불러오기 	
 		List<PfmDateByTime> times = new ArrayList<PfmDateByTime>();
 		
 		times= ticketService.ticketTime(pfm);
 		
-
 		ModelAndView mav = new ModelAndView();
 		
+		//JSON 활용 키,값 형태면 JSON으로보내준다
 		
+		mav.setViewName("jsonView");
 		
+		Map timeMap = new HashMap();
+		timeMap.put("timeslist", times);
 		
-		model.addAttribute("times", times);
-		
+		mav.addObject(timeMap);
+		return mav;
 		
 		
 	}
