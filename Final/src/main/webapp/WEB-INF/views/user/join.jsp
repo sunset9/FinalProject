@@ -12,6 +12,28 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+	// 체크박스 선택시 다음단계 버튼 활성화
+	 $("#allAgreement").change(function(){
+	        if($("#allAgreement").is(":checked")){
+	        	console.log("동의 후 다음버튼 활성화");
+	        	$("#agreement1").attr("checked","checked");
+	        	$("#agreement2").attr("checked","checked");
+	        	$("#agreement3").attr("checked","checked");
+	        	$("#agreement4").attr("checked","checked");
+	        	$("#btnAgree").attr('disabled',false);
+	            
+	        }else{
+	        	console.log("동의 후 다음버튼 비활성화");
+	        	$("#agreement1").attr("checked",false);
+	        	$("#agreement2").attr("checked",false);
+	        	$("#agreement3").attr("checked",false);
+	        	$("#agreement4").attr("checked",false);
+	        	$("#btnAgree").attr('disabled',true);
+	           
+	        
+	        }
+	    });
 	
 	// 약관 확인 하고 정보 입력창 넘어가기 
 	$("#btnAgree").click(function() {
@@ -26,14 +48,137 @@ $(document).ready(function() {
 	// 정보입력 하고 선호테마 선택창으로 넘어가기 
 	$("#btnJoin").click(function() {
 		
-		console.log("name"+name.value);
-		// 회원가입 ajax로 처리하기이이이이
+// 		if($("#eCheck").length < 1){
+// 			console.log("이메일 중복확인 안함");
+// 			$('#emailCheck').attr('data-toggle', "tooltip");
+// 			$('#emailCheck').attr('data-placement', "top");
+// 			$('#emailCheck').attr('title', "이메일 중복 확인을 해주세요!");
+// 			$('#emailCheck').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#nCheck").length < 1){
+// 			console.log("닉네임 중복확인 안함");
+// 			$('#nickCheck').attr('data-toggle', "tooltip");
+// 			$('#nickCheck').attr('data-placement', "top");
+// 			$('#nickCheck').attr('title', "닉네임 중복 확인을 해주세요!");
+// 			$('#nickCheck').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#pwCheck").length < 1){
+// 			console.log("비밀번호 정규식 확인 안함");
+// 			$('#password').attr('data-toggle', "tooltip");
+// 			$('#password').attr('data-placement', "top");
+// 			$('#password').attr('title', "비밀번호를 확인을 해주세요!");
+// 			$('#password').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#pw2Check").length < 1){
+// 			console.log("비밀번호 일치 확인 안함");
+// 			$('#passwordc').attr('data-toggle', "tooltip");
+// 			$('#passwordc').attr('data-placement', "top");
+// 			$('#passwordc').attr('title', "비밀번호 일치를 확인을 해주세요!");
+// 			$('#passwordc').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#name").val().length < 1){
+// 			console.log("이름 확인 안함");
+// 			$('#name').attr('data-toggle', "tooltip");
+// 			$('#name').attr('data-placement', "top");
+// 			$('#name').attr('title', "이름을 확인 해주세요!");
+// 			$('#name').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#sex").val().length < 1){
+// 			console.log("이름 확인 안함");
+// 			$('#sex').attr('data-toggle', "tooltip");
+// 			$('#sex').attr('data-placement', "top");
+// 			$('#sex').attr('title', "성별을 입력해주세요!");
+// 			$('#sex').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#phCheck").length < 1){
+// 			console.log("연락처 확인 안함");
+// 			$('#phone').attr('data-toggle', "tooltip");
+// 			$('#phone').attr('data-placement', "top");
+// 			$('#phone').attr('title', "연락처를 확인해주세요!");
+// 			$('#phone').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#postcode").val().length < 1){
+// 			console.log("우편번호 확인 안함");
+// 			$('#postcode').attr('data-toggle', "tooltip");
+// 			$('#postcode').attr('data-placement', "top");
+// 			$('#postcode').attr('title', "우편번호를 입력해주세요!");
+// 			$('#postcode').focus();
+			
+// 			return;
+			
+// 		}
+		
+// 		if($("#addr").val().length < 1){
+// 			console.log("주소 확인 안함");
+// 			$('#addr').attr('data-toggle', "tooltip");
+// 			$('#addr').attr('data-placement', "top");
+// 			$('#addr').attr('title', "주소를 입력해주세요!");
+// 			$('#addr').focus();
+			
+// 			return;
+			
+// 		}
+	
+		$("#joinInfo").hide();
+		$("#theme").show();
+		$("#preferTab").addClass("joinActive");
+
+	});
+	
+	// 선호 테마 선택후 완료창 가기
+	$("#btnTheme").click(function() {
+	  	
+	 // 선택된 체크박스 값 담기
+		 var checkboxes = [];
+		    $("input[name='themeIdx']:checked").each(function(i) {
+		    	checkboxes.push($(this).val());
+		    });
+	  	
+		    console.log("체크된 값");
+		    console.log(checkboxes);
+			console.log(checkboxes.length);
+			
+		if (checkboxes.length < 1) {
+			alert ("하나는 선택해야함");
+			
+			return;
+			
+		}    
+		    
 		$.ajax ({
 			type:"POST"
 			, url : "/user/join"
 			, data: {
-				
-				"email": email.value+"@"+email2.value
+				"themeIdx":checkboxes
+				,"email": email.value+"@"+email2.value
 				,"nick": nick.value
 				,"password": password.value
 				,"name": userName.value
@@ -45,48 +190,6 @@ $(document).ready(function() {
 				,"addr": addr.value
 				,"addrDetail":addrDetail.value
 				,"postcode":postcode.value
-				
-			}
-			, success:function(data) {
-		console.log($.trim(data));
-				if($.trim(data) == 1 ){
-					$("#joinInfo").hide();
-					$("#theme").show();
-				  	$("#preferTab").addClass("joinActive");
-				}
-			}
-			
-		}); // end ajax
-		
-
-	});
-	
-	// 선호 테마 선택후 완료창 가기
-	$("#btnTheme").click(function() {
-		
-		$("#theme").hide();
-		$("#complete").show();
-		
-	  	$("#completeTab").addClass("joinActive");
-	  	
-	  	
-	 // 선택된 체크박스 값 담기
-		 var checkboxes = [];
-		    $("input[name='themeIdx']:checked").each(function(i) {
-		    	checkboxes.push($(this).val());
-		    });
-	  	
-		    console.log("체크된 값");
-		    console.log(checkboxes);
-		var userIdx = '${loginUser.userIdx }'
-			console.log("useridx = "+userIdx);
-		
-		$.ajax ({
-			type:"POST"
-			, url : "/user/prefer"
-			, data: {
-				"themeIdx":checkboxes
-				,"userIdx":${loginUser.userIdx}
 			}
 			, success:function(data) {
 				console.log("성공쓰");
@@ -94,6 +197,11 @@ $(document).ready(function() {
 			
 		}); // end ajax
 
+		$("#theme").hide();
+		$("#complete").show();
+		
+	  	$("#completeTab").addClass("joinActive");
+	  	
 	}); // end click
 	
 
@@ -113,13 +221,15 @@ $(document).ready(function() {
 			}
 			, success:function(data) {
 				if($.trim(data) == 0) {
-					 $('#checkMsg').html('<span style="color:blue">사용가능</span>');
+					 $('#checkMsg').html('<span id = "eCheck"style="color:blue">사용가능</span>');
+					 $('#emailCheck').attr('disabled', true);
 				} else {
 					 $('#checkMsg').html('<span style="color:red">사용불가</span>');
 				}
 			}
 		}); // end ajax
 	}); // end on
+	
 	
 	// 닉네임 중복 체크 
 	$("#nickCheck").click(function() {
@@ -132,7 +242,8 @@ $(document).ready(function() {
 			}
 			, success:function(data) {
 				if($.trim(data) == 0) {
-					 $('#checkMsg2').html('<span style="color:blue">사용가능</span>');
+					 $('#checkMsg2').html('<span id ="nCheck" style="color:blue">사용가능</span>');
+					 $('#emailCheck').attr('disabled', true);
 				} else {
 					 $('#checkMsg2').html('<span style="color:red">사용불가</span>');
 				}
@@ -152,16 +263,31 @@ $("#password").blur(function() {
 
 // 이메일 주소 선택 함수
 function directInput(){
+	changeEmail();
     if (join.email_select.value == '1') {
-    	join.email2.readonly = false;
+    	$("#email2").attr('readonly', false);
     	join.email2.value = '';
         join.email2.focus();
     }  else {
-    	join.email2.readonly = true;
+    	$("#email2").attr('readonly', true);
     	join.email2.value = join.email_select.value;
     }
 }
 
+	// 아이디 중복확인 후 변경하고 싶을 때
+function changeEmail(){
+	
+		 $('#emailCheck').attr('disabled', false);
+		 $('#checkMsg').html('');
+}
+
+
+// 닉네임 중복확인 후 변경하고 싶을 때
+function changeNick(){
+
+	 $('#nickCheck').attr('disabled', false);
+	 $('#checkMsg2').html('');
+}
 
 
 // 비밀번호 정규식 체크
@@ -180,7 +306,7 @@ function passRule() {
 	if(pRule.test(pw1)){
 		
 		console.log("정규식 맞음");
-		$('#passRule').html('<span style="color:green">안전</span>');
+		$('#passRule').html('<span id ="pwCheck" style="color:green">안전</span>');
 
 	} else {
 	
@@ -203,7 +329,7 @@ function checkPw() {
 	console.log(pw1+" and "+pw2);
 	
 	if(pw1== pw2) {
-		 $('#checkPW3').html('<span style="color:blue">비밀번호 확인완료!</span>');
+		 $('#checkPW3').html('<span id = "pw2Check"style="color:blue">비밀번호 확인완료!</span>');
 	} else{
 		$('#checkPW3').html('<span style="color:red">동일한 비밀번호 입력해주세요.</span>');
 	}
@@ -220,7 +346,7 @@ function checkPhone() {
 	console.log("phRule.test(p1)" + phRule.test(p1))
 	
 	if(!phRule.test(p1)) {
-	    $('#phoneCheck').html('<span style="color:red">잘못된 전화번호 형식입니다. 숫자만 입력해 주세요!</span>');
+	    $('#phoneCheck').html('<span id ="phCheck"style="color:red">잘못된 전화번호 형식입니다. 숫자만 입력해 주세요!</span>');
 	}else {
 		$('#phoneCheck').html('<span></span>');
 	}
@@ -375,7 +501,20 @@ td {
 <div id ="agree">
 <h1>약관 동의 페이지 입니다아~</h1>
 
-<button id="btnAgree" class="btn btn-default">다음단계</button>
+<div>
+
+<label><input type="checkbox"  id="allAgreement" > 전체 동의 </label><br>
+
+<hr>
+
+<label><input type="checkbox"  id="agreement1" > 이용약관(필수) </label><br>
+<label><input type="checkbox"  id="agreement2" > 유료서비스약관(필수) </label><br>
+<label><input type="checkbox"  id="agreement3" > 개인정보 수집 및 이용(필수) </label><br>
+<label><input type="checkbox"  id="agreement4" > 이벤트, 서비스안내 수신(선택) </label><br>
+
+</div>
+
+<button id="btnAgree" class="btn btn-default" disabled="disabled" >다음단계</button>
 </div>	
 	
 	
@@ -389,9 +528,9 @@ td {
 	<table>
 		<tr>
 			<td><label>이메일 주소</label></td> 
-			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" value="test<%=new Date().getTime()%>"/> 
-			 @ <input name="email2" type="text"  class="form-control" id="email2" readonly="readonly" value="daum.net">
-				<select class="form-control" name="email_select" id="email_select" onchange="directInput();" >
+			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" onchange="changeEmail();"  value="test<%=new Date().getTime()%>"/> 
+			 @ <input name="email2" type="text"  class="form-control" id="email2"  value="daum.net">
+				<select class="form-control" name="email_select" id="email_select"  onchange="directInput(); " >
 				
 				    <option value="1" selected="selected">직접입력</option>
 				    <option value="naver.com">naver.com</option>
@@ -405,7 +544,7 @@ td {
 
 		<tr>
 			<td><label>닉네임</label></td>
-			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" value="testNick<%=new Date().getTime()%>"/>
+			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" onchange="changeNick();"value="testNick<%=new Date().getTime()%>"/>
 			<input type="button" name="nickCheck" id="nickCheck" value="중복확인" class="btn btn-default" />
 			<div id = "checkMsg2"></div></td>
 		</tr>	
@@ -461,7 +600,7 @@ td {
 		<tr>
 			<td><label>주소</label> </td>
 			<td> 
-				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" value="05576"/> 
+				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" onclick="DaumPostcode();" value="05576"/> 
 				<input type="button" class="btn btn-default" onclick="DaumPostcode();" value="우편번호 찾기" /><br>
 				<input type="text" class="form-control" name="addr" id="addr" placeholder="주소" value="testAddr"/> 
 				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" value="testAddrDetail"/> 

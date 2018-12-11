@@ -13,9 +13,34 @@
   	<result column = "genre_idx" property="genreIdx"/>
   </resultMap>
   
+   <resultMap type="ticket.dto.PreferTheme" id="PreferThemeMap">
+  	<result column = "prefer_theme_idx" property="preThemeIdx"/>
+  	<result column = "user_idx" property="userIdx"/>
+  	<result column = "theme_idx" property="themeIdx"/>
+  	<result column = "create_date" property="createDate"/>
+  </resultMap>
+  
   <select id="selectAll" resultMap="ThemeMap">
   	SELECT theme_idx , theme_name, genre_idx 
   	FROM theme
   </select>
+  
+  <insert id="insertTheme" parameterType="ticket.dto.PreferTheme">
+	<selectKey resultType="int" keyProperty="preThemeIdx" order="BEFORE">
+		SELECT prefer_theme_seq.nextval FROM dual
+	</selectKey>
+
+	INSERT INTO prefer_theme (
+		pre_theme_idx
+		,user_idx
+		,theme_idx
+		) 
+	VALUES ( #{preThemeIdx }, #{userIdx },#{themeIdx } )
+  
+  </insert>
+  
+  <delete id="deleteTheme" parameterType="int">
+  	DELETE prefer_theme WHERE user_idx = #{userIdx }
+  </delete>
   
   </mapper>
