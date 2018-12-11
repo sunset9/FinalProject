@@ -1,12 +1,17 @@
 package ticket.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ticket.dto.Poster;
+import ticket.dto.Theme;
 import ticket.service.face.MainService;
 
 @Controller
@@ -28,13 +33,26 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.04
+	 * 최종수정일: 2018.12.10
 	 * @Method설명: 메인 상단에서 콘서트 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/concert", method=RequestMethod.GET)
-	public void concert() {
+	public void concert(
+			Model model
+		) {
+		logger.info("CONCERT FORM");
 		
+		// 전체 리스트 뽑아 테스트중
+//		List<Poster> posterList = mainService.getPfmPoster();
+//		model.addAttribute("posterList", posterList);
+		
+		// 테마 전체 뿌려주기
+		List<Theme> themeList = mainService.getThemeKind();
+		model.addAttribute("themeList", themeList);
+		
+		// 콘서트 - 테마 선택 후
+		List<Poster> posterList = mainService.getpfmThemeChoicePoster();
 	}
 	
 	/**
@@ -42,10 +60,10 @@ public class MainController {
 	 * @Method설명: 콘서트 관련 띄우기
 	 * @작성자: 배수연
 	 */
-	@RequestMapping(value="/ticket/concert", method=RequestMethod.POST)
-	public void concertProc() {
-		
-	}
+//	@RequestMapping(value="/ticket/concert", method=RequestMethod.POST)
+//	public void concertProc() {
+//		logger.info("CONCERT PROCESS");
+//	}
 	
 	/**
 	 * 최종수정일: 2018.12.04

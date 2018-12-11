@@ -2,5 +2,34 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="ticket.dao.face.MainDao">
+	
+	<resultMap type="ticket.dto.Theme" id="Theme">
+		<result column="theme_name" property="themeName"/>
+	</resultMap>
+	
+	<select id="selectPfmPosterInfo" resultType="ticket.dto.Poster">
+		SELECT
+			poster_idx as posterIdx,
+			pfm_idx as pfmIdx,
+			origin_name as originName,
+			stored_name as storedName,
+			create_date as createDate
+		FROM poster_info
+		WHERE pfm_idx IN (
+		    SELECT pfm_idx FROM performance
+		    WHERE genre_idx=1
+		)
+	</select>
+	
+	<select id="selectThemeKind" resultMap="Theme">
+		SELECT theme_name
+		FROM theme
+	</select>
+	
+<!-- 	<select id="selectThemeChoice" resultMap=""> -->
+		
+<!-- 	</select> -->
+
 </mapper>
