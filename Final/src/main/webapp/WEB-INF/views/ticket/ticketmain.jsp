@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		// 모든 이미지 리스트
@@ -81,15 +81,17 @@
 }
 
 /* 탭 */
-.container{
-  width: 300px;
-  margin: 0 auto;
+.main_tabs {
+	margin-top: 15px;
+	width: 70%;
+ 	padding-left: 15%;
+	text-align: center;
 }
 
 ul.tabs{
-  margin: 0px;
-  padding: 0px;
-  list-style: none;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
 }
 ul.tabs li{
   background: none;
@@ -105,9 +107,15 @@ ul.tabs li.current{
 }
  
 .tab-content{
-  display: none;
-  background: #ededed;
-  padding: 15px;
+	display: none;
+	background: #ededed;
+	padding: 15px;
+}
+
+.tab-content img {
+	text-align: center;
+	width: 10%%;
+	height: 150px;
 }
  
 .tab-content.current{
@@ -117,12 +125,13 @@ ul.tabs li.current{
 /* 메인 하단 () */
 .mainranking {
 	margin: 5px;
-	width: 60%;
+	width: 400px;
 	float: left;
+	text-align: center;
 }
 
 .recommendpfm {
-	width: 40%;
+	width: 300px;
 	margin: 5px;
 }
 </style>
@@ -131,7 +140,7 @@ ul.tabs li.current{
 <div id="mainbannerbox">
 	<ul id="mainbanner">
 		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test.PNG" /></a></li>
-		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test1.PNG" /></a></li>
+		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test5.PNG" /></a></li>
 		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test2.PNG" /></a></li>
 	</ul>
 </div>
@@ -144,54 +153,54 @@ ul.tabs li.current{
 <!-- </div> -->
 
 <!-- 탭 (new, 콘서트, 뮤지컬&연극) -->
-<ul class="tabs">
-	<li class="tab-link current" data-tab="tab-1">new</li>
-	<li class="tab-link" data-tab="tab-2">콘서트</li>
-	<li class="tab-link" data-tab="tab-3">뮤지컬&공연</li>
-</ul>
- 
-<div id="tab-1" class="tab-content current">
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-</div>
-
-<div id="tab-2" class="tab-content">
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-</div>
-
-<div id="tab-3" class="tab-content">
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
-	<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" style="width: 15%; height: 150px;" /></a>
+<div class="main_tabs">
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="tab-1">new</li>
+		<li class="tab-link" data-tab="tab-2">콘서트</li>
+		<li class="tab-link" data-tab="tab-3">뮤지컬&공연</li>
+	</ul>
+	 
+	<div id="tab-1" class="tab-content current">
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+	</div>
+	
+	<div id="tab-2" class="tab-content">
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+	</div>
+	
+	<div id="tab-3" class="tab-content">
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+	</div>
 </div>
 
 <!-- 메인 하단 (장르별 랭킹, 추천공연) -->
 <!-- <div class="mainbottom"> -->
 	<div class="mainranking">
-<!-- 		<ul class="tabs"> -->
-<!-- 			<li class="tab-link current" data-tab="tab-1">콘서트</li> -->
-<!-- 			<li class="tab-link" data-tab="tab-2">뮤지컬&공연</li> -->
-<!-- 			<li class="tab-link" data-tab="tab-3">가족&아동</li> -->
-<!-- 		</ul> -->
-		 
-<!-- 		<div id="tab-1" class="tab-content current"> -->
+<!-- 		<div class="toponeimg"> -->
+<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
+<!-- 			style="float: left; width: 100px; height: 200px;" /></a> -->
 <!-- 		</div> -->
-		
-<!-- 		<div id="tab-2" class="tab-content"> -->
-			
-<!-- 		</div> -->
-		
-<!-- 		<div id="tab-3" class="tab-content"> -->
-			
+<!-- 		<div class="topotherimg"> -->
+<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
+<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
+<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
+<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
+<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
+<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
+<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
+<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
 <!-- 		</div> -->
 	</div>
 	
