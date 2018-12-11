@@ -74,6 +74,7 @@ public class UserController {
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
 	public String joinProc(
 			User user
+			,@RequestParam(value="themeIdx[]") List<String> themeIdx
 			, HttpSession session
 			, String year
 			, String month
@@ -95,18 +96,19 @@ public class UserController {
 		
 		
 		// 회원 가입
-		int userIdx = userService.join(user);
-		logger.info("가입한 user idx"+userIdx);
+		userService.join(user);
+		int userIdx = user.getUserIdx();
+		
+		logger.info("가입한 user idx = "+userIdx);
 		
 		// 결과 담을 변수
-		int res =0;
+		int res =1;
+			
+		logger.info("선호 선택 처리");
+		logger.info(""+themeIdx);
 		
-		if(userIdx!=0 ) {
-			logger.info("세션에 등록할 user정보"+user);
-			res = userService.loginCheck(user, session);
-		}
+		preferTService.choiceTheme(userIdx, themeIdx);
 		
-		logger.info(""+session.getAttribute("loginUser"));
 		return String.valueOf(res);
 	}
 	
@@ -125,8 +127,7 @@ public class UserController {
 		userService.loginCheck(user, session) ;
 			
 		
-		return null; //메인으로가게끔 처리해주세욤
-
+		return "/ticket/ticketmain";
 	}
 
 

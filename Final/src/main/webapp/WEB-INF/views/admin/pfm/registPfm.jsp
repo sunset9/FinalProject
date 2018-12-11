@@ -434,8 +434,8 @@ $(document).ready(function(){
 		$.ajax({
 			url: url
 			, method : "GET"
-			, dataType: "json"
 			, data: {"name": $('#searchArtist').val() }
+			, dataType: "json"
 			, success : function(d){
 				var artists = d.artists;
 				var paging = d.paging;
@@ -1117,7 +1117,7 @@ function setComma(inNum){
 			 	</ul>
 			</div>
       	</div>
-      	ㅣ
+      	
       	<!-- 선택한 리스트 띄워주기 -->
       	<div id="selectedArtist">
       	</div>

@@ -47,10 +47,6 @@ public class AdminBoardController {
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * 2018.12.10
 	 * @Method설명: 공지사항 글 상세보기
@@ -69,28 +65,28 @@ public class AdminBoardController {
 		
 	}
 	
-	
-	
+		
 	/**
-	 * 2018.12.10
-	 * @Method설명: 공지사항 글 쓰기
+	 * 2018.12.11
+	 * @Method설명: 공지사항 글 쓰기, 처리
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.GET)
 	public String notiWrite() {
-		logger.info("공지 글 쓰기");
+		logger.info("공지 글 쓰기 폼");
 	
 		return "/admin/notice/write";
 				
 	}
 	
-	/**
-	 * 2018.12.10
-	 * @Method설명: 공지사항 글 쓰기 처리
-	 * @작성자: 조요한
-	 */
+	
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.POST)
-	public String notiWriteProc(HttpSession session) {
+	public String notiWriteProc(HttpSession session, Notice notice) {
+		
+		logger.info("공지 글 쓰기 처리");
+		logger.info(notice.toString());
+		
+		adminBoardService.writeNoti(notice);
 		
 		return "redirect:/admin/noticelist";
 		
@@ -122,29 +118,22 @@ public class AdminBoardController {
 		return null;
 		
 	}
-
-	
 	/**
-	 * 2018.12.05
+	 * 2018.12.11
 	 * @Method설명: 공지사항 글 삭제
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticedelete", method=RequestMethod.GET)
-	public void notiDelete() {
+	public String notiDelete(Notice deleteNotice) {
+		
+		adminBoardService.delNoti(deleteNotice);
+		return "redirect:/admin/noticelist";
 		
 	}
+	
+	
 
-
-	/**
-	 * 2018.12.05
-	 * @Method설명:
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/noticedelete", method=RequestMethod.POST)
-	public String notiDeleteProc() {
-		return null;
-		
-	}
+	
 
 	
 	/**

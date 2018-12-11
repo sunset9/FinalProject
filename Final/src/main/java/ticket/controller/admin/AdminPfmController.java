@@ -86,8 +86,11 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/searchartist", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> getArtistList(Artist artist,
-			@RequestParam(defaultValue = "1") int curPage, Model model) {
+	public @ResponseBody HashMap<String, Object> getArtistList(
+			Artist artist
+			,@RequestParam(defaultValue="1") int curPage
+		) {
+
 		// 페이징 계산
 		int totalCnt = pService.getArtistSearchCnt(artist);
 		Paging paging = new Paging(totalCnt, curPage, 8, 4);

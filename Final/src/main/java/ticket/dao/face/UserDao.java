@@ -2,6 +2,8 @@ package ticket.dao.face;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import ticket.dto.User;
 import ticket.utils.Paging;
 
@@ -69,6 +71,13 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public int selectUserByNick(String nick);
+	
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: user의 등급 변경(업데이트)
+	 * @작성자: 김지은
+	 */
+	public void updateUserGrade(@Param("currUser") int currUser, @Param("currUserGrade") int currUserGrade);
 	
 
 }

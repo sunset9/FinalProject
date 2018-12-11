@@ -25,27 +25,31 @@ public interface AdminBoardService {
 	public Notice getViewNoti(int noticeIdx);
 
 	
-	
-	
-	 
-	
-	
-	
 	// 공지사항 글 쓰기
-	public void writeNoti();
+	public void writeNoti(Notice notice);
 
+	
+	
+	
 	// 공지사항 글 수정
-	public void updaNoti();
+	public void upNoti();
 
 	// 공지사항 글 삭제
-	public void deleNoti();
+	public void delNoti(Notice deleteNotice);
 
 	// 파일 업로드
-	public void inseNotiFile(NoticeFile noticeFile);
+	public void inNotiFile(NoticeFile noticeFile);
 	
 	//현재 페이지 얻기
 	public int getCurPage(HttpServletRequest req);
 
+	
+	
+	
+	
+	
+	
+	
 	// FAQ 글 리스트
 	public List getFaqList(Faq faq);
 	
@@ -53,10 +57,10 @@ public interface AdminBoardService {
 	public void writeFaq();
 
 	// FAQ 글 수정
-	public void updaFaq();
+	public void upFaq();
 
 	// FAQ 글 삭제
-	public void deleFaq();
+	public void delFaq();
 	
 	// FAQ 답변 쓰기
 	public void writeFaqAnswer();

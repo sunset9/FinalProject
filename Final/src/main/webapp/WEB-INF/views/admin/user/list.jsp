@@ -10,10 +10,21 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-
-	
-});
+function changeUserGradeIdx(e, userIdx){
+	if(confirm("회원 등급을 변경하시겠습니까?")){
+		console.log("등급이 변경됨");
+		console.log("userIdx : "+userIdx);
+		var chgGrade = $(e).val();
+		console.log("변경된 등급 idx : "+chgGrade);
+		
+		$('#currUser').val(userIdx);
+		$('#currUserGrade').val(chgGrade);
+		
+		$('#UserGradeForm').submit();
+	} else {
+		console.log("취소");
+	}
+;};
 </script>
 <style type="text/css">
 th, td:not(:nth-child(2)) {
@@ -68,7 +79,7 @@ td {
 </thead>
 
 <tbody>
-<c:forEach items="${userList }" var="user">
+<c:forEach items="${userList }" var="user" varStatus="status">
 <tr>
 	<td>${user.no}</td>
 	<td>${user.email }</td>
@@ -76,11 +87,15 @@ td {
 	<td>${user.amount }(${user.totalCnt })</td>
 	<td>${user.createDate }</td>
 	<td>
-		<select name="mGradeIdx">
-			<option value="1">일반회원</option>
-			<option value="2">관리자</option>
-			<option value="3">회원정지</option>
+	<form action="/admin/userlist" method="post" id="UserGradeForm">
+		<select name="mGradeIdx" id="mGradeIdx" onchange="changeUserGradeIdx(this, '${user.userIdx}');">
+			<option value="1" <c:if test="${user.mGradeIdx == 1}">selected</c:if>>일반회원</option>
+			<option value="2" <c:if test="${user.mGradeIdx == 2}">selected</c:if>>관리자</option>
+			<option value="3" <c:if test="${user.mGradeIdx == 3}">selected</c:if>>회원정지</option>
 		</select>
+		<input type="hidden" name="currUser" id="currUser"/>
+		<input type="hidden" name="currUserGrade" id="currUserGrade"/>
+	</form>
 	</td>
 </tr>
 </c:forEach>

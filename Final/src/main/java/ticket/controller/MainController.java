@@ -33,46 +33,51 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.10
+	 * 최종수정일: 2018.12.11
 	 * @Method설명: 메인 상단에서 콘서트 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/concert", method=RequestMethod.GET)
 	public void concert(
 			Model model
+			, Theme theme
 		) {
-		logger.info("CONCERT FORM");
+		logger.info("콘서트 FORM");
+		// 관리자가 선택한 콘서트 상단 배너 15개
+		List<Poster> topBanList = mainService.adminChoiceBannerCon();
+		model.addAttribute("topBanList", topBanList);
 		
-		// 전체 리스트 뽑아 테스트중
-//		List<Poster> posterList = mainService.getPfmPoster();
+		// 전체 리스트
+		List<Poster> posterList = mainService.getPfmPoster();
+		model.addAttribute("posterList", posterList);
+		
+		// 콘서트 - 테마 선택 후 리스트 출력( 테스트중 )
+//		List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
 //		model.addAttribute("posterList", posterList);
 		
-		// 테마 전체 뿌려주기
-		List<Theme> themeList = mainService.getThemeKind();
+		// 테마 리스트 뿌려주기
+		List<Theme> themeList = mainService.getConThemeKind();
 		model.addAttribute("themeList", themeList);
-		
-		// 콘서트 - 테마 선택 후
-		List<Poster> posterList = mainService.getpfmThemeChoicePoster();
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 콘서트 관련 띄우기
-	 * @작성자: 배수연
-	 */
-//	@RequestMapping(value="/ticket/concert", method=RequestMethod.POST)
-//	public void concertProc() {
-//		logger.info("CONCERT PROCESS");
-//	}
-	
-	/**
-	 * 최종수정일: 2018.12.04
+	 * 최종수정일: 2018.12.11
 	 * @Method설명: 메인 상단에서 뮤지컬&연극 탭 선택시 이동하는 페이지
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/musicalplay", method=RequestMethod.GET)
-	public void musicalandplay() {
+	public void musicalandplay(
+			Model model
+		) {
+		logger.info("뮤지컬&연극 FORM");
 		
+		// 관리자가 선택한 뮤지컬&연극 상단배너 출력
+		List<Poster> topBanList = mainService.adminChoiceBannerMu();
+		model.addAttribute("topBanList", topBanList);
+		
+		// 테마 리스트 뿌려주기
+		List<Theme> themeList = mainService.getMuThemeKind();
+		model.addAttribute("themeList", themeList);
 	}
 	
 	/**
