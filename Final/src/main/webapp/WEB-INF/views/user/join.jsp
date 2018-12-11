@@ -1,6 +1,8 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>	
 	
 <!-- 다음 주소 API -->
 <script type="text/javascript"
@@ -24,12 +26,77 @@ $(document).ready(function() {
 	// 정보입력 하고 선호테마 선택창으로 넘어가기 
 	$("#btnJoin").click(function() {
 		
-		$("#joinInfo").hide();
-		$("#agree").show();
+		console.log("name"+name.value);
+		// 회원가입 ajax로 처리하기이이이이
+		$.ajax ({
+			type:"POST"
+			, url : "/user/join"
+			, data: {
+				
+				"email": email.value+"@"+email2.value
+				,"nick": nick.value
+				,"password": password.value
+				,"name": userName.value
+				,"sex": $('input[name=sex]:checked').val()
+				,"year": year.value
+				,"month": month.value
+				,"day": day.value
+				,"phone":phone.value
+				,"addr": addr.value
+				,"addrDetail":addrDetail.value
+				,"postcode":postcode.value
+				
+			}
+			, success:function(data) {
+		console.log($.trim(data));
+				if($.trim(data) == 1 ){
+					$("#joinInfo").hide();
+					$("#theme").show();
+				  	$("#preferTab").addClass("joinActive");
+				}
+			}
+			
+		}); // end ajax
 		
-	  	$("#infoTab").addClass("joinActive");
 
-	})
+	});
+	
+	// 선호 테마 선택후 완료창 가기
+	$("#btnTheme").click(function() {
+		
+		$("#theme").hide();
+		$("#complete").show();
+		
+	  	$("#completeTab").addClass("joinActive");
+	  	
+	  	
+	 // 선택된 체크박스 값 담기
+		 var checkboxes = [];
+		    $("input[name='themeIdx']:checked").each(function(i) {
+		    	checkboxes.push($(this).val());
+		    });
+	  	
+		    console.log("체크된 값");
+		    console.log(checkboxes);
+		var userIdx = '${loginUser.userIdx }'
+			console.log("useridx = "+userIdx);
+		
+		$.ajax ({
+			type:"POST"
+			, url : "/user/prefer"
+			, data: {
+				"themeIdx":checkboxes
+				,"userIdx":${loginUser.userIdx}
+			}
+			, success:function(data) {
+				console.log("성공쓰");
+				}
+			
+		}); // end ajax
+
+	}); // end click
+	
+
 	
 // 회원가입 날짜 선택하기 
 	// 생년월일 뿌리는 함수 
@@ -71,7 +138,7 @@ $(document).ready(function() {
 				}
 			}
 		}); // end ajax
-	}); // end on
+	}); // end click
 	
 	
 
@@ -187,7 +254,11 @@ function setDate() {
 		$("#month").append("<option value='"+i+"'>"+i+"월"+"</option>");
 	}
 	
-	
+    $("#year").val("1948");
+    $("#month").val("12");
+    $("#month").change();
+    $("#day").val("13");
+
 	
 }
 
@@ -218,7 +289,6 @@ function setDay(){
         	$("#day").append("<option value='"+i+"'>"+i+"일"+"</option>");
         }
 
-        
 	}
 	
 	// 다음 우편번호/ 주소 API
@@ -302,7 +372,7 @@ td {
 		
 		
 <!-- 약관 동의 페이지 -->
-<div id = "agree">
+<div id ="agree">
 <h1>약관 동의 페이지 입니다아~</h1>
 
 <button id="btnAgree" class="btn btn-default">다음단계</button>
@@ -319,9 +389,9 @@ td {
 	<table>
 		<tr>
 			<td><label>이메일 주소</label></td> 
-			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" /> 
-			 @ <input name="email2" type="text"  class="form-control" id="email2" readonly="readonly">
-				<select class="form-control" name="email_select" id="email_select" onchange="directInput(); ">
+			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" value="test<%=new Date().getTime()%>"/> 
+			 @ <input name="email2" type="text"  class="form-control" id="email2" readonly="readonly" value="daum.net">
+				<select class="form-control" name="email_select" id="email_select" onchange="directInput();" >
 				
 				    <option value="1" selected="selected">직접입력</option>
 				    <option value="naver.com">naver.com</option>
@@ -335,26 +405,26 @@ td {
 
 		<tr>
 			<td><label>닉네임</label></td>
-			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" />
+			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" value="testNick<%=new Date().getTime()%>"/>
 			<input type="button" name="nickCheck" id="nickCheck" value="중복확인" class="btn btn-default" />
 			<div id = "checkMsg2"></div></td>
 		</tr>	
 
 		<tr>
 			<td><label>비밀번호</label></td>
-			<td><input type="password" class="form-control"	name="password" id="password" placeholder="비밀번호 입력" />
+			<td><input type="password" class="form-control"	name="password" id="password" placeholder="비밀번호 입력" value="123123abc"/>
 			<div id="passRule"></div></td>
 		</tr>
 
 		<tr>
 			<td><label>비밀번호 체크</label></td> 
-			<td><input type="password" class="form-control"name="passwordc" id="passwordc"onkeyup="checkPw()" placeholder="비밀번호 확인 입력" />
+			<td><input type="password" class="form-control"name="passwordc" id="passwordc"onkeyup="checkPw()" placeholder="비밀번호 확인 입력" value="123123abc"/>
 			<div id="checkPW3"></div></td>
 		</tr>	
 	
 		<tr>
 			<td><label>이름</label></td>
-			<td> <input type="text" class="form-control"name="name" placeholder="이름 입렵" /></td>
+			<td> <input type="text" class="form-control" name="name" id ="userName" placeholder="이름 입력" value="testName"/></td>
 		<tr>
 	
 		<tr>	
@@ -362,7 +432,7 @@ td {
 	
 			<td>
 				<label class="radio-inline"> 
-					<input type="radio" name="sex"  value="m" /> 남
+					<input type="radio" name="sex"  value="m" checked/> 남
 				</label> 
 				<label class="radio-inline"> 
 					<input type="radio" name="sex" value="f"/> 여
@@ -373,7 +443,7 @@ td {
 		<tr>
 			<td><label>생년월일</label> </td>
 			<td>
-				<select class="form-control" name="year" id= "year" title="년도" ></select> 
+				<select class="form-control" name="year" id= "year" title="년도"></select> 
 				<select class="form-control" name="month" id = "month" title="월" onchange="setDay();"></select> 
 				<select class="form-control" name="day" id = "day" title="일">
 				<option class="form-control" value=''>일</option>
@@ -384,22 +454,22 @@ td {
 		<tr>
 			<td><label>연락처</label> </td>
 			<td><input type="text" class="form-control" id = "phone" name="phone" placeholder="숫자만 입력"
-			onblur="checkPhone();" />
+			onblur="checkPhone();" value="01099998888"/>
 			<div id = "phoneCheck"></div></td>
 		</tr>
 
 		<tr>
 			<td><label>주소</label> </td>
 			<td> 
-				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" /> 
+				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" value="05576"/> 
 				<input type="button" class="btn btn-default" onclick="DaumPostcode();" value="우편번호 찾기" /><br>
-				<input type="text" class="form-control" name="addr" id="addr" placeholder="주소" /> 
-				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" /> 
+				<input type="text" class="form-control" name="addr" id="addr" placeholder="주소" value="testAddr"/> 
+				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" value="testAddrDetail"/> 
 			</td>
 		</tr>
 
 </table>
-		<button type="submit"  id="btnJoin" class="btn btn-default">다음단계</button>
+		<button type="button"  id="btnJoin"class="btn btn-default">다음단계</button>
 		
 		
 	</form>
@@ -407,5 +477,31 @@ td {
 
 
 <!-- 선호 테마 선택 -->
+<div id = "theme" style="display: none;">
+<h1>테마 선택 창</h1>
+
+user name = ${loginUser.name}<br>
+useridx = ${loginUser.userIdx}
+<div>
+
+<c:forEach items="${tList }" var="t">
+	<label class="checkbox-inline" style ="width:30%">
+		<input type="checkbox" name ="themeIdx" value="${t.themeIdx}"> ${t.themeName }
+	</label>
+</c:forEach>
+</div>
+
+	<button id="btnTheme" class="btn btn-default">다음단계</button>
+
+</div>
+
+
+
+<!-- 회원가입 완료! 선택 -->
+<div id = "complete" style="display: none;">
+<h1>회원가입 완료 창</h1>
+<button id="btnComplete" class="btn btn-default" onclick="location='/user/login'">로그인 하기</button>
+		
+</div>
 
 </div>

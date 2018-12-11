@@ -6,4 +6,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="ticket.dao.face.PreferTDao">
+  
+  <resultMap type="ticket.dto.Theme" id="ThemeMap">
+  	<result column = "theme_idx" property="themeIdx"/>
+  	<result column = "theme_name" property="themeName"/>
+  	<result column = "genre_idx" property="genreIdx"/>
+  </resultMap>
+  
+  <select id="selectAll" resultMap="ThemeMap">
+  	SELECT theme_idx , theme_name, genre_idx 
+  	FROM theme
+  </select>
+  
   </mapper>

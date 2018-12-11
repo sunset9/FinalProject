@@ -25,4 +25,12 @@ public class PreferTServiceImpl implements PreferTService {
 		return preferTDao.selectAll();
 	}
 
+	@Override
+	public void choiceTheme(List<String> themeIdx) {
+		
+		for(int i = 0; i <themeIdx.size(); i++) {
+//			preferTDao.insertTheme(themeIdx.get(i));
+		}
+	}
+
 }

@@ -1,5 +1,7 @@
 package ticket.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ticket.dto.Theme;
 import ticket.service.face.PreferAService;
@@ -25,6 +28,11 @@ public class PreferController {
 	private PreferTService preferTService;
 	@Autowired
 	private PreferAService preferAService;
+	
+	
+
+	
+	
 	
 	@RequestMapping(value="/user/prefer", method=RequestMethod.GET)
 	public void choice(HttpSession session) {
@@ -51,9 +59,12 @@ public class PreferController {
 	}
 	
 	@RequestMapping(value="/user/prefer", method=RequestMethod.POST)
-	public void choiceProc() {
+	public void choiceProc(@RequestParam(value="themeIdx[]") List<String> themeIdx) {
+		
 		logger.info("선호 선택 처리");
-
+		logger.info(""+themeIdx);
+		
+		preferTService.choiceTheme(themeIdx);
 		// 선택한거 취소하고 다 넣기..ㅎ
 		
 	}

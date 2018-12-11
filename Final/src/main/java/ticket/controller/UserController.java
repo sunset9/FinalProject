@@ -1,6 +1,7 @@
 package ticket.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.Theme;
 import ticket.dto.User;
+import ticket.service.face.PreferTService;
 import ticket.service.face.UserService;
 import ticket.utils.ChangeDate;
 
@@ -26,10 +29,17 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private PreferTService preferTService;
+	 
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
-	public void join() {
+	public void join(Model model) {
 		logger.info("회원 가입 폼");
+		
+		List<Theme> tList = preferTService.themeAllList();
+		
+		model.addAttribute("tList", tList);
+		
 	}
 	
 	@ResponseBody
@@ -60,10 +70,11 @@ public class UserController {
 		
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
-	public void joinProc(
+	public String joinProc(
 			User user
-			, String email2
+			, HttpSession session
 			, String year
 			, String month
 			, String day
@@ -71,7 +82,7 @@ public class UserController {
 			) {
 		logger.info("회원 가입 처리");
 		
-		user.setEmail(user.getEmail()+"@"+email2);
+		
 		
 		// String 타입 -> Date 타입으로 변경
 		ChangeDate changeDate = new ChangeDate();
@@ -84,7 +95,19 @@ public class UserController {
 		
 		
 		// 회원 가입
-		userService.join(user);
+		int userIdx = userService.join(user);
+		logger.info("가입한 user idx"+userIdx);
+		
+		// 결과 담을 변수
+		int res =0;
+		
+		if(userIdx!=0 ) {
+			logger.info("세션에 등록할 user정보"+user);
+			res = userService.loginCheck(user, session);
+		}
+		
+		logger.info(""+session.getAttribute("loginUser"));
+		return String.valueOf(res);
 	}
 	
 
@@ -98,15 +121,9 @@ public class UserController {
 	public String loginProc(User user, HttpSession session) {
 		logger.info("로그인 처리");
 	
-		// 아이디와 비밀번호 확인
-		if(userService.loginCheck(user) == 1) { 
-			session.setAttribute("login", true);
-			user = userService.getUser(user);
-			session.setAttribute("loginUser", user);
+		// 아이디와 비밀번호 확인, 세션 처리
+		userService.loginCheck(user, session) ;
 			
-		} else {
-			session.setAttribute("login", false);
-		}
 		
 		return null; //메인으로가게끔 처리해주세욤
 

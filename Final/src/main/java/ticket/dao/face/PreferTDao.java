@@ -19,4 +19,11 @@ public interface PreferTDao {
 	 * @작성자:홍나영
 	 */
 	public List<Theme> selectAll();
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: themeIdx와 userIdx로 유저가 선택한 테마 넣기!
+	 * @작성자:홍나영
+	 */
+	public void insertTheme(int themeIdx);
 }
