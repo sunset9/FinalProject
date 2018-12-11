@@ -11,6 +11,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 <script src="../resources/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+<!-- 부트스트랩 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!--   <link rel="stylesheet" href="/resources/demos/style.css"> -->
@@ -42,37 +45,61 @@
 	    	  
 	    	  $("#timeList").html("");
 	    	  
-	    	  var times = ${times};
-	    	  console.log(times);
-	    	  for(var i =0;i<times.length;i++){
-	    		  
-// 	    		  if(times[i] == date){
-	    			  
-	    			  
-// 	    		  }
-	    		  
-	    	  }
+				$.ajax({
+					type:"GET",
+					url:"/ticket/bookTimeInfo",
+					data:{},
+					dataType:"json",
+					success:function(res){
+						for(var i =0;i<res.hashMap.timeslist.length;i++){
+							var date= new Date(res.hashMap.timeslist[i].pfmDate);
+					
+							var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
+							if(dateStr==dateText){
+								var time = res.hashMap.timeslist[i].pfmTime;
+								$("#timeList").append("<li class='list-group-item times' onmouseover='overm($(this))' onmouseleave='leavem($(this))'>"+time+"</li>");
+							}
+						}
+					},
+					error:function(e){
+						console.log(e);
+					}
+				})
+				
 		    		  
 	    	  
 	       }
 	  });
+	  
+	
 
 	  });
+  function overm(obj) {
+	  obj.css("background-color","yellow");
+  }
   
+  function leavem(obj) {
+	  obj.css("background-color","white");
+  }
   </script>
-
+<style type="text/css">
+.times{
+    width: 249px;
+    height: 59px;
+    font-size: 19px;
+  }
+</style>
 </head>
 <body>
-<div id = "datepicker">
-<div id = "timeDiv">
-<ul id = "timeList">
-	<c:forEach items="${times}" var = "times">
-	<c:if test=""></c:if>
-		<li>${times.pfmTime}</li>
-	</c:forEach>
-</ul>
+<div>
+	<div id = "datepicker" style="float: left"></div>
+	
+	<div id = "timeDiv" style="float: left;">
+		<ul id = "timeList" class="list-group">
+		</ul>
+	</div>
 </div>
 
-</div>
+
 </body>
 </html>

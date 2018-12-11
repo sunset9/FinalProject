@@ -9,6 +9,8 @@
 <!-- header, footer 적용안시킬 페이지 설정 해주기 name ="적용안시킬 페이지 uri", templeate = "적용안시킬 jsp 주소" -->
 	<!-- <definition name="file/fileup" template="/WEB-INF/views/file/fileup.jsp" 
 		/> -->
+		
+		<definition name="ticket/bookInfo" template="/WEB-INF/views/ticket/bookInfo.jsp"/>
 
 	<definition name="tilesbase"
 		template="/WEB-INF/layout/layout.jsp">
