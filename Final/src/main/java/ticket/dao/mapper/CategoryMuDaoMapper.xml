@@ -6,4 +6,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="ticket.dao.face.CategoryMuDao">
+ <insert id="insert" parameterType="ticket.dto.CategoryMu">
+		INSERT INTO category_mu
+		(cate_mu_idx,pfm_idx)VALUES(CATEGORY_MU_SEQ.nextval,#{pfmIdx})
+
+	</insert>
+	<delete id="delete" parameterType="ticket.dto.CategoryMu">
+		DELETE FROM category_mu WHERE pfm_idx=#{pfmIdx}
+	</delete>
   </mapper>

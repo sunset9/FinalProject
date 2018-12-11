@@ -146,6 +146,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
+
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
 			, CastList castList, PfmDateByTimeList pfmDbtList
 			, String pfmDetailContents, String pfmBookinfoContents) {
@@ -184,7 +185,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
-		
+
 		// 공연 일정들(날짜, 시간) 등록
 		if(pfmDbtList.getPfmDbtList() != null) {
 			for(PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
@@ -195,7 +196,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
-		
+
 		// 공연 상세정보 등록
 		if(!"".equals(pfmDetailContents)) {
 			PfmDetail pfmDetail = new PfmDetail();
@@ -259,7 +260,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public List<Poster> getListMu() {
 		// TODO Auto-generated method stub
-		return null;
+		return infoDao.selectBypfmIdxMu();
 	}
 
 	@Override
@@ -275,7 +276,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void addMu(CategoryMu mu) {
-		// TODO Auto-generated method stub
+		muDao.insert(mu);
 
 	}
 
@@ -285,15 +286,14 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void removeFam(CategoryCon fam) {
+	public void removeFam(CategoryFam fam) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void removeMu(CategoryCon mu) {
-		// TODO Auto-generated method stub
-
+	public void removeMu(CategoryMu mu) {
+		muDao.delete(mu);
 	}
 
 	@Override
@@ -341,7 +341,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public int getUnanswered() {
-		//1:1 문의 미답변수 가져오기
+		// 1:1 문의 미답변수 가져오기
 		return pDao.selectUnanswered();
 	}
 
@@ -370,21 +370,28 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			e.printStackTrace();
 		}
 
-		String linkName ="http://localhost:8088/resources/image/"+name;
+    String linkName ="http://localhost:8088/resources/image/"+name;
 		
 		Map < Object, Object > responseData = new HashMap < Object, Object > ();
         responseData.put("link", linkName);
         
         // 저장 경로 반환
 		return responseData;
-    }
+	}
 
 	public List<Poster> getSearchListForCon(String name) {
-		// TODO Auto-generated method stub
 		return infoDao.selectPosterByName(name);
 	}
 
 	@Override
+	public List<Poster> getSearchListForMu(String name) {
+		return infoDao.selectPosterByNameMu(name);
+	}
+
+	@Override
+	public List<Poster> getModalListMu() {
+		return  infoDao.selectBygenreIdx(2);
+
 	public void deletePfmImg(String src) {
 		//파일경로
 		String filePath = context.getRealPath("upload/story")+"\\";

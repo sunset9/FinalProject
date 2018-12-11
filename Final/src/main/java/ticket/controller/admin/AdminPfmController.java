@@ -1,6 +1,7 @@
 package ticket.controller.admin;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.CastList;
 import ticket.dto.CategoryCon;
+import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
@@ -130,17 +132,16 @@ public class AdminPfmController {
 		
 		// 공연 날짜 & 시간 등록
 		logger.info(pfmDbtList.toString());
-		
+
 		// 공연 상세 정보 등록
 		logger.info(pfmDetailContents);
-		
+
 		// 예매 상세 정보 등록
 		logger.info(pfmBookinfoContents);
 
 		// 새 공연 등록
 		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList
 				,pfmDetailContents, pfmBookinfoContents);
-
 		return "redirect:/admin/registpfm";
 	}
 
@@ -177,7 +178,7 @@ public class AdminPfmController {
 //		  제일 마지막에 등록된 공연의 다음 칸에  '추가하기' 버튼을 띄워준다.
 
 		logger.info("/admin/pfm/cateCon GET");
-
+//18.12.10 현재 안쓰이는 함수 
 	}
 
 	/**
@@ -237,6 +238,7 @@ public class AdminPfmController {
 	public @ResponseBody List<Poster> searchPoster(@RequestParam String searchPoster) {
 		return pService.getSearchListForCon(searchPoster);
 	}
+
 	/**
 	 * 2018.12.05
 	 * 
@@ -248,25 +250,69 @@ public class AdminPfmController {
 //		- 카테고리는 '콘서트', '뮤지컬&공연', '가족&아동' 이 있다.
 //		- 각 카테고리 탭을 클릭하면 배너 목록을 확인할 수 있고, 등록된 공연이 15개 이하인 경우
 //		  제일 마지막에 등록된 공연의 다음 칸에  '추가하기' 버튼을 띄워준다.
-
+//안쓰임 메소드 18.12.10
 	}
 
 	/**
-	 * 2018.12.05
+	 * 2018.12.10
 	 * 
 	 * @Method설명: 카테고리 배너 - 뮤지컬&공연 배너 등록 하기
 	 * @작성자: 박주희
 	 */
-	@RequestMapping(value = "/admin/pfm/cateMu", method = RequestMethod.POST)
-	public void registerCategoryMu() {
-//		- 배너는 각 분류별로 15개 까지만 등록이 가능하다.
-//		- '추가하기' 버튼을 누르면 각 분류별로 필터링된 공연 목록들과 검색창이 있는 모달창을
-//		  띄워준다.
-//		- 배너를 추가한 후에 '최종 저장' 버튼을 클릭하면 최종적으로 사이트에 적용된다.
-//		- '최종저장' 버튼은 수정 사항이 생겼을 경우에만 활성화된다.
-//		- 15개 중 등록되지 않은 배너는 '기본 이미지'로 채워준다.
+	@RequestMapping(value = "/admin/registcatemu", method = RequestMethod.GET)
+	public String registerCategoryMu(Model model) {
+		List<Poster> posterList = pService.getListMu();
+		List<Poster> modalList = pService.getModalListMu();
+		if (modalList != null)
+			model.addAttribute("list", modalList);
+		if (posterList != null)
+			model.addAttribute("posterList", posterList);
+		return "admin/pfm/registcatemu";
 	}
 
+	/**
+	 * 2018.12.10
+	 * 
+	 * @Method설명: 카테고리 배너 - 뮤지컬&공연 배너 등록 하기
+	 * @작성자: 박주희
+	 */
+	@RequestMapping(value = "/admin/registcatemu", method = RequestMethod.POST)
+	public @ResponseBody String registerCategoryMuProc(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
+		logger.info(pfmIdx.toString());
+		logger.info("POST");
+
+		if (pfmIdx.size() == 0) {
+			return "0";
+		}
+		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
+			CategoryMu mu = new CategoryMu();
+			mu.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));
+			pService.addMu(mu);// 개수만큼 insert
+		}
+
+		return "1";
+
+	}
+	/**
+	 * @최종수정일: 2018.12.09
+	 * @Method설명: 카테고리 뮤지컬&공연 배너 정보 삭제하기
+	 * @작성자: 박주희
+	 */
+	@RequestMapping(value = "/admin/deletecatemu/{pfmIdx}", method = RequestMethod.GET)
+	public String deletecateMu(@PathVariable int pfmIdx) {
+
+		logger.info("delete category banner mu GET");
+		logger.info(pfmIdx + "");
+		CategoryMu con = new CategoryMu();
+		con.setPfmIdx(pfmIdx);
+		pService.removeMu(con);
+		return "redirect:/admin/registcatemu";
+	}
+
+	@RequestMapping(value = "/searchpostermu", method = RequestMethod.GET)
+	public @ResponseBody List<Poster> searchPosterMu(@RequestParam String searchPoster) {
+		return pService.getSearchListForMu(searchPoster);
+	}
 	/**
 	 * 2018.12.05
 	 * 
@@ -474,7 +520,7 @@ public class AdminPfmController {
 
 		// 디비에 인서트
 	}
-	
+
 	/**
 	 * @최종수정일: 2018.12.10
 	 * @Method설명: 공연 등록 부분 - 이미지 업로드 처리(상세정보, 예매정보)
@@ -486,10 +532,10 @@ public class AdminPfmController {
 			, HttpServletResponse response) {
 		Map<Object, Object> responseData = pService.uploadPfmImg(pfmImgUpload);
 
-        String jsonResponseData = new Gson().toJson(responseData);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        try {
+		String jsonResponseData = new Gson().toJson(responseData);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		try {
 			response.getWriter().write(jsonResponseData);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -516,5 +562,4 @@ public class AdminPfmController {
 		
 		return "admin/pfm/managerPfm";
 	}
-	
 }

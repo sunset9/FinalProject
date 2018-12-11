@@ -30,6 +30,20 @@
 		,poster_info p
 		WHERE p.pfm_idx=c.pfm_idx
 	</select>
+	<select id="selectBypfmIdxMu" resultType="ticket.dto.Poster">
+		SELECT c.pfm_idx pfmIdx,
+		p.origin_name originName ,p.stored_name storedName
+		FROM category_mu c
+		,poster_info p
+		WHERE p.pfm_idx=c.pfm_idx		
+	</select>
+	<select id="selectBypfmIdxFam" resultType="ticket.dto.Poster">
+		SELECT c.pfm_idx pfmIdx,
+		p.origin_name originName ,p.stored_name storedName
+		FROM category_fam c
+		,poster_info p
+		WHERE p.pfm_idx=c.pfm_idx		
+	</select>
 
 	<select id="selectPosterByName" parameterType="String"
 		resultType="ticket.dto.Poster">
@@ -43,4 +57,28 @@
 			AND c.name LIKE '%${value }%'
 		</if>
 	</select>
+	<select id="selectPosterByNameMu" parameterType="String"
+		resultType="ticket.dto.Poster">
+		SELECT c.pfm_idx pfmIdx,c.name,
+		p.origin_name originName ,p.stored_name
+		storedName
+		FROM performance c, poster_info p
+		WHERE c.genre_idx=2 AND
+		p.pfm_idx=c.pfm_idx
+		<if test='value!=null and value!=""'>
+			AND c.name LIKE '%${value }%'
+		</if>
+	</select>
+	<select id="selectPosterByNameFam" parameterType="String"
+		resultType="ticket.dto.Poster">
+		SELECT c.pfm_idx pfmIdx,c.name,
+		p.origin_name originName ,p.stored_name
+		storedName
+		FROM performance c, poster_info p
+		WHERE c.genre_idx=3 AND
+		p.pfm_idx=c.pfm_idx
+		<if test='value!=null and value!=""'>
+			AND c.name LIKE '%${value }%'
+		</if>
+	</select>	
 </mapper>
