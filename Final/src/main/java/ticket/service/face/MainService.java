@@ -13,21 +13,22 @@ public interface MainService {
 	 * @Method설명: 관리자가 선택한 콘서트 상단배너 15개
 	 * @작성자: 배수연
 	 */
-	public List adminChoiceBannerCon();
+	public List<Poster> adminChoiceBannerCon();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 뮤지컬&공연 상단배너 15개
 	 * @작성자: 배수연
 	 */
-	public List adminChoiceBannerMu();
+	public List<Poster> adminChoiceBannerMu();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 가족&아동 상단배너 15개
 	 * @작성자: 배수연
 	 */
-	public List adminChoiceBannerFam();
+	public List<Poster> adminChoiceBannerFam();
+	
 	
 	/**
 	 * 최종수정일: 2018.12.05
@@ -49,20 +50,33 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public List<Poster> getPfmPoster();
-
 	
 	/**
 	 * 최종수정일: 2018.12.11
-	 * @Method설명: 테마 종류 가져오기
+	 * @Method설명: 콘서트 테마 종류(GENRE) 가져오기
 	 * @작성자: 배수연
 	 */
-	public List<Theme> getThemeKind();
+	public List<Theme> getConThemeKind();
 
 	/**
 	 * 최종수정일: 2018.12.11
-	 * @Method설명: 장르가 콘서트이면서 원하는 테마 선택시 맞는 포스터 이미지 출력
+	 * @Method설명: 뮤지컬&연극 테마 종류(GENRE) 가져오기
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getpfmThemeChoicePoster();
+	public List<Theme> getMuThemeKind();
+	
+	/**
+	 * 최종수정일: 2018.12.11
+	 * @Method설명: 가족&아동 테마 종류(GENRE) 가져오기
+	 * @작성자: 배수연
+	 */
+	public List<Theme> getFamThemeKind();
+
+	/**
+	 * 최종수정일: 2018.12.11
+	 * @Method설명: 원하는 테마 선택 후 리스트 출력하기( 테스트중 )
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getpfmThemeChoicePoster(Theme theme);
 	
 }

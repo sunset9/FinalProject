@@ -21,17 +21,17 @@ public class MainServiceImpl implements MainService {
 	@Autowired MainDao mainDao;
 
 	@Override
-	public List adminChoiceBannerCon() {
+	public List<Poster> adminChoiceBannerCon() {
 		return mainDao.selectAdminBanCon();
 	}
 
 	@Override
-	public List adminChoiceBannerMu() {
+	public List<Poster> adminChoiceBannerMu() {
 		return mainDao.selectAdminBanMu();
 	}
 
 	@Override
-	public List adminChoiceBannerFam() {
+	public List<Poster> adminChoiceBannerFam() {
 		return mainDao.selectAdminBanFam();
 	}
 
@@ -47,17 +47,27 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public List<Poster> getPfmPoster() {
-		logger.info(mainDao.selectPfmPosterInfo().toString());
+//		logger.info(mainDao.selectPfmPosterInfo().toString());
 		return mainDao.selectPfmPosterInfo();
 	}
 
 	@Override
-	public List<Theme> getThemeKind() {
-		return mainDao.selectThemeKind();
+	public List<Theme> getConThemeKind() {
+		return mainDao.selectConThemeKind();
 	}
 
 	@Override
-	public List<Poster> getpfmThemeChoicePoster() {
-		return mainDao.selectThemeChoice();
+	public List<Theme> getMuThemeKind() {
+		return mainDao.selectMuThemeKind();
+	}
+
+	@Override
+	public List<Theme> getFamThemeKind() {
+		return mainDao.selectFamThemeKind();
+	}
+
+	@Override
+	public List<Poster> getpfmThemeChoicePoster(Theme theme) {
+		return mainDao.ConThemeChoice(theme);
 	}
 }
