@@ -1,6 +1,8 @@
 package ticket.controller.admin;
 
 import java.io.IOException;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
+import ticket.utils.Paging;
 
 @Controller
 public class AdminPfmController {
@@ -80,12 +83,26 @@ public class AdminPfmController {
 
 	/**
 	 * @최종수정일: 2018.12.05
-	 * @Method설명: 검색한 이름과 일치하는 아티스트 목록 리턴
+	 * @Method설명: 검색한 이름과 일치하는 아티스트 목록 리턴(페이징)
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/searchartist", method = RequestMethod.GET)
-	public @ResponseBody List<Artist> getArtistList(Artist artist) {
-		return pService.getArtistList(artist);
+	public @ResponseBody HashMap<String, Object> getArtistList(
+			Artist artist
+			,@RequestParam(defaultValue="1") int curPage
+			, Model model
+		) {
+		// 페이징 계산
+		int totalCnt = pService.getArtistSearchCnt(artist);
+		Paging paging = new Paging(totalCnt, curPage, 8, 4);
+		
+		// HashMap 을 통해 결과값 넘기기
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<Artist> artists = pService.getArtistList(artist, paging);
+		map.put("artists", artists);
+		map.put("paging", paging);
+		
+		return map;
 	}
 
 	/**
@@ -100,8 +117,8 @@ public class AdminPfmController {
 			, CastList castList // 출연진 리스트
 			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
 			, String pfmDetailContents // 예매상세 내용
-//			, String pfmBookinfoContents // 예약 상태 내용
-	) {
+			, String pfmBookinfoContents // 예약 상태 내용
+			) {
 		// 공연 기본 정보
 		logger.info(pfm.toString());
 
@@ -112,6 +129,7 @@ public class AdminPfmController {
 		logger.info(castList.toString());
 
 		// 좌석 정보 & 가격 등록
+		
 		// 공연 날짜 & 시간 등록
 		logger.info(pfmDbtList.toString());
 
@@ -119,10 +137,11 @@ public class AdminPfmController {
 		logger.info(pfmDetailContents);
 
 		// 예매 상세 정보 등록
+		logger.info(pfmBookinfoContents);
 
 		// 새 공연 등록
-		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList, pfmDetailContents);
-
+		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList
+				,pfmDetailContents, pfmBookinfoContents);
 		return "redirect:/admin/registpfm";
 	}
 
@@ -508,7 +527,9 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/uploadpfmimg", method = RequestMethod.POST)
-	public void uploadDetailImg(@RequestParam(name = "file") MultipartFile pfmImgUpload, HttpServletResponse response) {
+	public void uploadPfmInfoImg(
+			@RequestParam(name = "file") MultipartFile pfmImgUpload
+			, HttpServletResponse response) {
 		Map<Object, Object> responseData = pService.uploadPfmImg(pfmImgUpload);
 
 		String jsonResponseData = new Gson().toJson(responseData);
@@ -519,7 +540,26 @@ public class AdminPfmController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+	}	
+	
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명:공연 등록 부분 - 이미지 삭제 처리
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/deletepfmimg", method = RequestMethod.POST)
+	public @ResponseBody void deletePfmInfoImg(String src) {
+		pService.deletePfmImg(src);
+	}	
+	
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 공연 관리 페이지 띄워주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
+	public String viewPfmManager() {
+		
+		return "admin/pfm/managerPfm";
 	}
-
 }

@@ -75,10 +75,20 @@ public class Paging {
 		if (totalPage < curPage)	curPage = totalPage;
 		
 		
-		// 화면에 보일 시작 페이지 & 끝 페이지 설정 
-		startPage = ((curPage-1)/pageCount)*pageCount+1;
-		endPage = startPage+pageCount-1;
+		// 화면에 보일 시작 페이지 & 끝 페이지 설정
+		// 		pageCount 단위로 끊어서 표시
+//		startPage = ((curPage-1)/pageCount)*pageCount+1;
+//		endPage = startPage+pageCount-1;
 
+		// 화면에 보일 시작 페이지 & 끝 페이지 설정
+		// 		현재 페이지 중앙 정렬 표시 (뒤에가 1개 더
+		startPage = curPage - Math.round(pageCount/2 -1) ;
+		endPage = curPage + (int)Math.floor(pageCount/2);
+		if(startPage <= 0) {
+			startPage = 1;
+			endPage = pageCount;
+		}
+		
 		// 계산된 마지막 페이지가 totalPage보다 커질 경우
 		// 강제로 최종 페이지까지만 보이도록 설정
 		if(endPage > totalPage)	endPage = totalPage;
