@@ -59,12 +59,15 @@ public class PreferController {
 	}
 	
 	@RequestMapping(value="/user/prefer", method=RequestMethod.POST)
-	public void choiceProc(@RequestParam(value="themeIdx[]") List<String> themeIdx) {
+	public void choiceProc(
+			@RequestParam(value="themeIdx[]") List<String> themeIdx
+			, int userIdx
+			) {
 		
 		logger.info("선호 선택 처리");
 		logger.info(""+themeIdx);
 		
-		preferTService.choiceTheme(themeIdx);
+		preferTService.choiceTheme(userIdx, themeIdx);
 		// 선택한거 취소하고 다 넣기..ㅎ
 		
 	}

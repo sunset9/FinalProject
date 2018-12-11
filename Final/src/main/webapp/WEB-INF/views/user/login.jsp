@@ -37,7 +37,7 @@
 
 <div id = "loginFrom">
 	<h1 id = "loginlogo">TICKET</h1>
-		<form action="/main/login" method="POST">
+		<form action="/user/login" method="POST">
 		  <div class="form-group">
 		    <div class="col-sm-10">
 		      <input type="email" class="form-control login-input" id="inputEmail3" name="email" placeholder="아이디(이메일)">
