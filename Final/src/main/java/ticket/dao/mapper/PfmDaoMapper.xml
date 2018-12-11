@@ -37,11 +37,20 @@
 		ORDER BY age_grade_idx
 	</select>
 	
-	<select id="selectArtistByName" parameterType="ticket.dto.Artist" resultType="ticket.dto.Artist">
+	<select id="selectArtistByName" resultType="ticket.dto.Artist">
 		SELECT 
-			artist_idx as artistIdx, theme_idx as themeIdx, name as name, img_uri as imgUri
-		FROM artist
-		WHERE name LIKE '%${name }%'
+			aa.artist_idx as artistIdx,
+			aa.theme_idx as themeIdx, 
+			aa.name as name, 
+			aa.img_uri as imgUri 
+		FROM (
+    		SELECT ROWNUM as rnum, a.* FROM (
+       			SELECT  * FROM artist
+                WHERE name LIKE '%${artist.name }%'
+    		) a
+		)aa
+		WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+		ORDER BY rnum
 	</select>
 	
 	<select id="selectAllHall" parameterType="ticket.dto.Hall" resultType="ticket.dto.Hall">
@@ -126,4 +135,22 @@
 		INSERT INTO pfm_datebytime(pfm_dbt_idx ,pfm_idx ,pfm_date ,pfm_time)
 		VALUES (pfm_datebytime_seq.nextval, #{pfmIdx }, #{pfmDate }, #{pfmTime })
 	</insert>
+	
+	<insert id="insertPfmDetail" parameterType="ticket.dto.PfmDetail">
+	 	INSERT INTO pfm_detail(pfm_detail_idx ,pfm_idx ,contents)
+	 	VALUES (pfm_detail_seq.nextval, #{pfmIdx }, #{contents })
+	</insert>
+	
+	<insert id="insertPfmBookinfo" parameterType="ticket.dto.PfmBookinfo">
+	 	INSERT INTO pfm_bookinfo(pfm_bookinfo_idx ,pfm_idx ,contents)
+	 	VALUES (pfm_bookinfo_seq.nextval, #{pfmIdx }, #{contents })
+	</insert>
+	
+	<select id="selectCntArtist" parameterType="ticket.dto.Artist"
+		resultType="int">
+		SELECT 
+			count(*)
+		FROM artist
+		WHERE name LIKE '%${name }%'
+	</select>
 </mapper>

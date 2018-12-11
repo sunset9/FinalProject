@@ -90,9 +90,19 @@
 }
 
 #resultArtist{
-	display: flex; /* 자식이 float 인 경우 높이 자동 조절 */
+/* 	display: flex;  자식이 float 인 경우 높이 자동 조절 */
 }
-
+.resUnit {
+	display: flex;
+}
+.resUnit div {
+	float:left;
+    margin: 8px 10px;
+}
+.resUnit img {
+	width: 120px;
+}
+ 
 #selectedArtist{
 	display: flex; /* 자식이 float 인 경우 높이 자동 조절 */
     border-top: 1px solid;
@@ -204,9 +214,13 @@ input[type="number"]::-webkit-inner-spin-button {
 	padding: 10px;
 }
 
-#registStep-3 div{
-/* 	display: inline; */
+#registStep-3, #registStep-4{
+	display: flex;	
 }
+#registStep-3 div:first, #registStep-3 div:first{
+    float: left;  
+}
+
 </style>
 
 <script>
@@ -406,41 +420,94 @@ $(document).ready(function(){
 	
 	// 출연진 검색 버튼
 	$('#searchArtistBtn').on('click', function(){
-		$.ajax({
-			url: "/searchartist"
-				, method : "GET"
-				, dataType: "json"
-				, data: {"name": $('#searchArtist').val() }
-				, success : function(d){
-					$('#resultArtist').html('');
-					if(d.length == 0){
-						$('#resultArtist').html('검색 결과가 없습니다.');
-					}
-					d.forEach(function(artist){
-						// 하나의 검색 결과 저장할 div
-						var resDiv = $('<div style="width: fit-content; float:left">');
-						resDiv.data('aIdx', artist.artistIdx); // 커스텀 태그로 artist 정보 삽입
-						resDiv.data('aName', artist.name); // 커스텀 태그로 artist 정보 삽입
-						// 아티스트 이미지 띄울 태그
-						var img = $('<img>');
-						img.attr('src', artist.imgUri);
-						// 아티스트명 띄울 태그
-						var name = $('<p>');
-						name.text(artist.name);
-
-						resDiv.append(img);
-						resDiv.append(name);
-						resDiv.append("<input type='button' class='addArtist' value='추가'>")
-						
-						// 모달의 검색 결과 창에 결과 태그들 추가
-						$('#resultArtist').append(resDiv);
-					});
-				}
-				, error: function(){
-					console.log("아티스트 검색 실패");
-				}
-		})
+		searchArtistAjax();
 	});
+	
+	// 출연진 - 페이지 버튼 클릭 시
+	$('ul.pagination').on('click','a',function(){
+		searchArtistAjax($(this).attr('url'));
+	});
+	
+	// 아티스트 검색을 위한 ajax 통신
+	function searchArtistAjax(url){
+		if(!url) url = "/searchartist"
+		$.ajax({
+			url: url
+			, method : "GET"
+			, dataType: "json"
+			, data: {"name": $('#searchArtist').val() }
+			, success : function(d){
+				var artists = d.artists;
+				var paging = d.paging;
+				
+				// 아티스트 검색 결과 띄워주기
+				$('#resultArtist').html('');
+				if(artists.length == 0){
+					$('#resultArtist').html('검색 결과가 없습니다.');
+				}
+				var unit = 1;
+				var unitDiv = $('<div class="resUnit">'); 
+				artists.forEach(function(artist){
+					// 4개 결과 단위로 줄바꿈
+					if((unit++)%4 == 1){
+						unitDiv = $('<div class="resUnit">'); 
+					}
+					
+					// 하나의 검색 결과 저장할 div
+					var resDiv = $('<div>');
+					resDiv.data('aIdx', artist.artistIdx); // 커스텀 태그로 artist 정보 삽입
+					resDiv.data('aName', artist.name); // 커스텀 태그로 artist 정보 삽입
+					// 아티스트 이미지 띄울 태그
+					var img = $('<img>');
+					img.attr('src', artist.imgUri);
+					// 아티스트명 띄울 태그
+					var name = $('<p>');
+					name.text(artist.name);
+
+					resDiv.append(img);
+					resDiv.append(name);
+					resDiv.append("<input type='button' class='addArtist' value='추가'>")
+					
+					// 모달의 검색 결과 창에 결과 태그들 추가
+					$('#resultArtist').append(unitDiv.append(resDiv));
+				});
+				
+				// 페이징 처리
+				var pagination = $('ul.pagination');
+				pagination.html('');
+
+				// 이전 페이지
+				var prePage = $('<li>');
+				if(paging.curPage == 1) prePage.addClass('disabled');
+				var a = $('<a url="/searchartist?curPage=' + (paging.curPage-1) + '" aria-label="Previous">');
+				var span = $('<span aria-hidden="true">&laquo;</span>');
+				pagination.append(prePage.append(a.append(span)));
+				
+				// 페이징 리스트
+				for(var i=paging.startPage; i<=paging.endPage; i++){
+					// 현재 보고 있는 페이지 번호만 강조하기
+					var li = $('<li>');
+					if(paging.curPage == i){
+						li.addClass('active');
+					}
+					var a = $('<a url="/searchartist?curPage='+i+'">'+i+'</a>');
+					
+					pagination.append(li.append(a));
+				}
+				
+				// 다음 페이지
+				var nextPage = $('<li>')
+				if(paging.curPage == paging.totalPage) nextPage.addClass('disabled');
+				var a = $('<a url="/searchartist?curPage=' + (paging.curPage+1) + '" aria-label="Next">');
+				var span = $('<span aria-hidden="true">&raquo;</span>');
+				pagination.append(nextPage.append(a.append(span)));
+
+			}
+			, error: function(){
+				console.log("아티스트 검색 실패");
+			}
+		});
+	}
 	
 	// 출연진 검색 후 추가 버튼 클릭 시 호출되는 메소드
 	$('#resultArtist').on('click', '.addArtist', function(){
@@ -835,15 +902,12 @@ $(document).ready(function(){
 	});
 	
 	$('textarea').froalaEditor({
-		width: '900' // 너비
+		width: '760' // 너비
 		, heightMin : 400 // 초기화시 크기
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
 		, language: 'ko'
-// 		, dragInline: false
 		// 툴바 버튼 목록
 		, toolbarButtons: ['fontFamily','bold', 'italic', 'underline','align','|','insertLink','insertImage','|', 'undo', 'redo']
-		// 이미지 드래그&드롭 가능
-// 		, pluginsEnabled: ['image', 'link', 'draggable']
 		 // Set the image upload URL.
         , imageUploadURL: '/admin/uploadpfmimg'
         , imageUploadParams: {
@@ -852,21 +916,17 @@ $(document).ready(function(){
 	}).on('froalaEditor.image.error', function (e, editor, error, response) { //이미지업로드 실패
   	  console.log(error);
 	  console.log(response);
-	})
-// 	.on('froalaEditor.image.removed', function (e, editor, $img) { //이미지 삭제 
-//         $.ajax({
-//             method: "POST",
-//             url: "/resources/image/", //이미지삭제 경로
-//             data: {
-//               src: $img.attr('src')
-//             }
-//           }).done (function (data) { //이미지 삭제 성공
-//             console.log ('image was deleted');
-//             console.log($img.attr('src'));
-//           }).fail (function () { //이미지 삭제 실패
-//             console.log ('image delete problem');
-//           })
-//      });
+	}).on('froalaEditor.image.removed', function (e, editor, $img) { //이미지 삭제 
+        $.ajax({
+            method: "POST",
+            url: "/admin/deletepfmimg", //이미지삭제 경로
+            data: {
+              src: $img.attr('src')
+            }
+          }).fail (function () { //이미지 삭제 실패
+            console.log ('image delete problem');
+         });
+     });
 	
 	//저장 버튼
 	$('#storeBtn').on('click', function(){
@@ -1046,14 +1106,22 @@ function setComma(inNum){
         <h4 class="modal-title">출연진 선택</h4>
       </div>
       <div class="modal-body">
-      	<div id="viewArtist">
+      	<!-- 검색 & 결과 뷰-->
+      	<div id="viewArtist" class="text-center">
       		<input type="text" id="searchArtist" placeholder="출연진 검색" onkeypress="if(event.keyCode==13){$('#searchArtistBtn').trigger('click'); return false;}"/> 
       		<button type="button" id="searchArtistBtn">검색</button> 
       		<div id="resultArtist">
       		</div>
+	      	<div class="text-center">
+				<ul class="pagination">
+			 	</ul>
+			</div>
       	</div>
+      	
+      	<!-- 선택한 리스트 띄워주기 -->
       	<div id="selectedArtist">
       	</div>
+      	
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">선택</button>
@@ -1117,7 +1185,7 @@ function setComma(inNum){
 
 <!-- 공연등록 3st Tab : 상세정보 등록-->
 <div class='registPfmTab' id='registStep-3' style="display:none">
-<span>공연<br> 상세정보 등록</span>
+<span>공연<br> 상세정보</span>
 <div>
 <textarea name="pfmDetailContents"></textarea>
 </div>
@@ -1125,7 +1193,10 @@ function setComma(inNum){
 
 <!-- 공연등록 4st Tab : 예매정보 등록-->
 <div class='registPfmTab' id='registStep-4' style="display:none">
-예매정보 등록
+<span>공연<br> 예매정보</span>
+<div>
+<textarea name="pfmBookinfoContents"></textarea>
+</div>
 </div>
 
 <br>

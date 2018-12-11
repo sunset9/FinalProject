@@ -2,16 +2,21 @@ package ticket.dao.face;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.Cast;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmBookinfo;
 import ticket.dto.PfmDateByTime;
+import ticket.dto.PfmDetail;
 import ticket.dto.PfmTheme;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
+import ticket.utils.Paging;
 
 public interface PfmDao {
 
@@ -42,7 +47,8 @@ public interface PfmDao {
 	 * @Method설명: 일치하는 이름의 아티스트 리스트 가져오기
 	 * @작성자: 전해진
 	 */
-	public List<Artist> selectArtistByName(Artist artist);
+	public List<Artist> selectArtistByName(@Param(value = "artist") Artist artist
+			, @Param(value = "paging") Paging paging);
 
 	/**
 	 * @최종수정일: 2018.12.06
@@ -129,5 +135,26 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public void insertPfmDbt(PfmDateByTime pfmDbt);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 공연 상세정보 등록하기
+	 * @작성자: 전해진
+	 */
+	public void insertPfmDetail(PfmDetail pfmDetail);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 공연 예약정보 등록하기
+	 * @작성자: 전해진
+	 */
+	public void insertPfmBookinfo(PfmBookinfo pfmBookinfo);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 검색결과와 일치하는 아티스트 수 조회
+	 * @작성자: 전해진
+	 */
+	public int selectCntArtist(Artist artist);
 	
 }
