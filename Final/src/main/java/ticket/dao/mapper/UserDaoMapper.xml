@@ -85,18 +85,24 @@
   <select id="selectPagingUserListByPaging" parameterType="ticket.utils.Paging" resultType="ticket.dto.User">
   		SELECT * FROM (
   			SELECT ROWNUM NO, B.* FROM(
-  			SELECT u.email, u.nick, sum(p.paid_amount) amount, count(p.paid_amount) totalCnt, u.create_date as createDate, u.m_grade_idx as mGradeIdx
+  			SELECT u.user_idx as userIdx, u.email, u.nick, sum(p.paid_amount) amount, count(p.paid_amount) totalCnt, u.create_date as createDate, u.m_grade_idx as mGradeIdx
   			FROM userinfo u JOIN payment p
   			ON u.user_idx = p.user_idx(+)
   			<if test = "search != null">
   				WHERE email LIKE '%' || #{search} || '%'
   				OR nick LIKE '%' || #{search} || '%'
   			</if>
-  			GROUP BY u.email, u.nick, u.create_date, u.m_grade_idx
+  			GROUP BY u.user_idx, u.email, u.nick, u.create_date, u.m_grade_idx
   			ORDER BY u.create_date) B
   		)
   		WHERE no between #{startNo} AND #{endNo}
   </select>
+  
+  <update id="updateUserGrade">
+		UPDATE userinfo
+		SET m_grade_idx = #{currUserGrade}
+		WHERE user_idx = #{currUser}
+  </update>
   </mapper>
   
   

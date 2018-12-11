@@ -27,7 +27,7 @@ public interface AdminUserService {
 	 * @Method설명: 회원등급 변경하기
 	 * @작성자: 김지은
 	 */
-	public void changeUserGrade(User user);
+	public void changeUserGrade(int currUser, int currUserGrade);
 	
 	/**
 	 * @최종수정일: 2018.12.05

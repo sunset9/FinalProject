@@ -1,5 +1,6 @@
 package ticket.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +63,7 @@ public class AdminUserController {
 		// 회원 목록을 뷰에 전달하기
 		List<User> userList = userService.getPagingListByPaging(paging);
 		logger.info("userList : "+userList);
+		List gradeList = new ArrayList();
 		
 		model.addAttribute("userList",userList);
 		model.addAttribute("paging", paging);
@@ -76,10 +78,15 @@ public class AdminUserController {
 	 * @Method설명: 회원의 등급(일반회원, 관리자, 회원정지)을 변경하기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/user/list", method = RequestMethod.POST)
-	public void changeUserGrade() {
+	@RequestMapping(value = "/admin/userlist", method = RequestMethod.POST)
+	public String changeUserGrade(int currUser, int currUserGrade) {
+		System.out.println("changeUserGrade UserIdx : "+currUser);
+		System.out.println("changeUserGrade changed gradeIdx : "+currUserGrade);
+		
 //		변경된 grade값 받아서 회원 등급 변경해주기 userService.changeUserGrade(user)
-
+		userService.changeUserGrade(currUser, currUserGrade);
+		
+		return "redirect:/admin/userlist";
 	}
 
 	/**
