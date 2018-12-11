@@ -23,6 +23,7 @@ import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
+import ticket.utils.Paging;
 
 public interface AdminPfmService {
 
@@ -150,7 +151,7 @@ public interface AdminPfmService {
 	 * @Method설명: 일치하는 이름의 아티스트 리스트 가져오기
 	 * @작성자: 전해진
 	 */
-	public List<Artist> getArtistList(Artist artist);
+	public List<Artist> getArtistList(Artist artist, Paging paging);
 
 	/**
 	 * @최종수정일: 2018.12.05
@@ -160,12 +161,14 @@ public interface AdminPfmService {
 	public List<Hall> getHallList();
 
 	/**
+	 * @param pfmBookinfoContents 
 	 * @최종수정일: 2018.12.07
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList, String pfmDetailContents);
+			, CastList castList, PfmDateByTimeList pfmDbtList
+			, String pfmDetailContents, String pfmBookinfoContents);
 
 	/**
 	 * @최종수정일: 2018.12.07
@@ -265,5 +268,19 @@ public interface AdminPfmService {
 	 * @작성자: 전해진
 	 */
 	public Map<Object, Object> uploadPfmImg(MultipartFile pfmImgUpload);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: Froala에 업로드한 이미지 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePfmImg(String src);
+
+	/**
+	 * @최종수정일: 2018.12.10
+	 * @Method설명: 검색결과와 일치하는 아티스트 수 가져오기
+	 * @작성자: 전해진
+	 */
+	public int getArtistSearchCnt(Artist artist);
 
 }
