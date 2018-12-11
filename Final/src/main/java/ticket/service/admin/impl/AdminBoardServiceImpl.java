@@ -54,25 +54,27 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	
 	@Override
-	public void writeNoti() {
+	public void writeNoti(Notice notice) {
+	
+		adminBoardDao.insertNoti(notice);
+	
+	}
+
+	@Override
+	public void upNoti() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updaNoti() {
-		// TODO Auto-generated method stub
+	public void delNoti(Notice deleteNotice) {
+
+		adminBoardDao.deleteNoti(deleteNotice);
 		
 	}
 
 	@Override
-	public void deleNoti() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void inseNotiFile(NoticeFile noticeFile) {
+	public void inNotiFile(NoticeFile noticeFile) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -90,13 +92,13 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public void updaFaq() {
+	public void upFaq() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void deleFaq() {
+	public void delFaq() {
 		// TODO Auto-generated method stub
 		
 	}

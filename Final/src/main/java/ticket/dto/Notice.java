@@ -11,6 +11,7 @@ public class Notice {
 	private String noticeContent;
 	private Date createDate;
 	
+	
 	@Override
 	public String toString() {
 		return "Notice [noticeIdx=" + noticeIdx + ", userIdx=" + userIdx + ", NTypeIdx=" + NTypeIdx + ", noticeTitle="

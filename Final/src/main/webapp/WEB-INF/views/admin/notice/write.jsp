@@ -40,9 +40,11 @@ $(document).ready(function(){
 <div class="conta">
 <form action="/admin/noticewrite" method="post" enctype="multipart/form-data">
 <table class="table table-striped table-hover">
-<tr> <td>제목</td> <td><input type="text"></td> </tr>
+
 <tr> <td>작성자</td><td>${userIdx }</td> </tr>
-<tr> <td>내용</td><td><textarea rows="30" cols="70"></textarea></td> </tr>
+<tr> <td>분류</td><td><input type="text" name="NTypeIdx"></td> </tr>
+<tr> <td>제목</td> <td><input type="text" name="noticeTitle"></td> </tr>
+<tr> <td>내용</td><td><textarea rows="30" cols="70" name="noticeContent"></textarea></td> </tr>
 <tr> <td>첨부파일 #1</td> <td><input type="file" id="file1"></td> </tr>
 <tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr>
 <tr> <td>첨부파일 #3</td> <td><input type="file" id="file3"></td> </tr>

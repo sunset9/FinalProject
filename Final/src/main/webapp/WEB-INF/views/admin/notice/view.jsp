@@ -15,6 +15,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("btnDelete").click(function(){
+		$(location).attr("href", "/admin/noticedelete?noticeIdx=${noticeView.noticeIdx}")
+	});
+});
+</script>
 
 </head>
 <body>
@@ -62,7 +69,8 @@
 </div>
 
 
-<a href="/admin/noticelist"><button class="notilistbtn">목록</button></a>
+<a href="/admin/noticelist"><button class="btnList">목록</button></a>
+<button id="btnDelete">삭제</button>
 
 </body>
 
