@@ -42,18 +42,33 @@
 }
 </style>
 
-<!-- jQuery 2.2.4 -->
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+ <!-- jQuery 2.2.4 --> 
+<!-- <script type="text/javascript" -->
+<!-- 	src="http://code.jquery.com/jquery-2.2.4.min.js"></script> -->
+ <!-- jQuery UI --> 
+<!-- <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script> -->
+ <!-- 부트스트랩 3.3.2 --> 
+<!-- <link rel="stylesheet" -->
+<!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" -->
+<!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+<!-- <script -->
+<!-- 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+
+<!-- jquery -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- DATEPICKER -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script src="../resources/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
 <!-- jQuery UI -->
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-<!-- 부트스트랩 3.3.2 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 부트스트랩 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
+
 
 <script type="text/javascript">
 	/* 모든 페이지에 적용되는 자바스크립트 */

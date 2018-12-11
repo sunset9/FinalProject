@@ -7,18 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- DATEPICKER -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
-<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
-<script src="../resources/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
-<!-- 부트스트랩 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!--   <link rel="stylesheet" href="/resources/demos/style.css"> -->
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
 	  //활성화 시킬 날짜들
@@ -57,7 +46,7 @@
 							var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
 							if(dateStr==dateText){
 								var time = res.hashMap.timeslist[i].pfmTime;
-								$("#timeList").append("<li class='list-group-item times' onmouseover='overm($(this))' onmouseleave='leavem($(this))'>"+time+"</li>");
+								$("#timeList").append("<li id='times_"+i+"' class='list-group-item times' onmouseover='overm($(this))' onmouseleave='leavem($(this))' onmousedown='downm($(this))'>"+time+"</li>");
 							}
 						}
 					},
@@ -75,12 +64,60 @@
 
 	  });
   function overm(obj) {
-	  obj.css("background-color","yellow");
+	  obj.css("border","2px solid cyan");
   }
   
   function leavem(obj) {
-	  obj.css("background-color","white");
+	  obj.css("border","1px solid #BCBCBC");
   }
+  
+  function downm(obj) {
+	  var finds = $('#timeList').find("li");
+	  for(var i =0;i<finds.length;i++){
+		  var findsId = finds[i].id;
+		  var id = '#'+findsId;
+		  if(findsId==obj.attr("id")){
+			  $(id).css("background-color",'yellow');
+			  $(id).attr("class","list-group-item times selected");
+		  }else{	
+			  $(id).css("background-color",'white');
+			  $(id).attr("class","list-group-item times non_selected");
+		  } 
+	  }
+  }
+  
+  
+  $(document).ready(function () {
+  $('#bookBtn').click(function() {
+	  
+
+		  var date = new Date($('#datepicker').datepicker( "getDate" ));
+			var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
+		  $(this).attr("data-date",dateStr);
+		  
+		  var selectDate = $(this).data("date");
+		  var time = $('#timeList').find(".selected").html();
+		  
+		  
+		  $("#dates").text(selectDate+' '+time);
+
+		$.ajax({
+			type:"get",
+			url:"/ticket/seatSection",
+			data:{},
+			dataType:"html",
+			success:function(res){
+			$('#selectedSeats').html(res);
+// 			$('#legend').html('');
+			
+			}
+		});	
+	  
+	});
+	
+});
+  
+  
   </script>
 <style type="text/css">
 .times{
@@ -97,6 +134,49 @@
 	<div id = "timeDiv" style="float: left;">
 		<ul id = "timeList" class="list-group">
 		</ul>
+	</div>
+	
+	<div style="float: left;">여기 잔여석 나올공간~</div>
+	
+	<div style="float: left;">
+		<!-- Button trigger modal -->
+		<button type="button" id ="bookBtn" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		  예매하기
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content" style="    width: 900px; height: 700px;">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">좌석선택  공연이름넣어주기</h4>
+		        <span id= "dates"></span>
+		      </div>
+		      <div class="modal-body" style="height: 560px;">
+		        <div id = "selectedSeats" style="float: left; width: 650px; " ></div>
+				<div class="booking-details"style="float: right">
+		            <h2>Booking Details</h2>
+		            <h3>
+		               Selected Seats (<span id="counter">0</span>):
+		            </h3>
+		            <div class="allScreen"></div>
+		            <ul id="selected-seats"></ul>
+		
+		            Total: <b>$<span id="total">0</span></b>
+		
+		            <button class="checkout-button">Checkout &raquo;</button>
+		
+		            <div id="legend"></div>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	</div>
 </div>
 
