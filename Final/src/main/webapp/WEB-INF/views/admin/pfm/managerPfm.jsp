@@ -39,13 +39,14 @@ ul.tabs li a {
 ul.tabs li a:hover {
     background: #ccc;
 }
+
 </style>
 
-<h1>공연 관리 - 전체 목록 조회</h1>
+<script>
 
-<!-- <div>콘서트</div> -->
-<!-- <div>뮤지컬&연극</div> -->
-<!-- <div>가족&아동</div> -->
+</script>
+
+<h1>공연 관리 - 전체 목록 조회</h1>
 
 <ul class="tabs">
     <li><a href="#tab1">콘서트</a></li>

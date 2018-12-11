@@ -1117,7 +1117,7 @@ function setComma(inNum){
 			 	</ul>
 			</div>
       	</div>
-      	
+      	ㅣ
       	<!-- 선택한 리스트 띄워주기 -->
       	<div id="selectedArtist">
       	</div>
