@@ -26,6 +26,7 @@ import ticket.dto.AgeGrade;
 import ticket.dto.Artist;
 import ticket.dto.CastList;
 import ticket.dto.CategoryCon;
+import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
@@ -86,10 +87,8 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/searchartist", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> getArtistList(
-			Artist artist
-			,@RequestParam(defaultValue="1") int curPage
-		) {
+	public @ResponseBody HashMap<String, Object> getArtistList(Artist artist,
+			@RequestParam(defaultValue = "1") int curPage) {
 
 		// 페이징 계산
 		int totalCnt = pService.getArtistSearchCnt(artist);
@@ -192,25 +191,32 @@ public class AdminPfmController {
 		Paging paging = new Paging(totalCnt, curPage, 8, 5);
 		List<Poster> modalList = pService.getModalListCon(paging);
 		Gson jsonParser = new Gson();
-
+		
 		if (modalList != null)
 			model.addAttribute("list", jsonParser.toJson(modalList));
 		if (posterList != null)
 			model.addAttribute("posterList", posterList);
 		if (paging != null)
-			model.addAttribute("paging",jsonParser.toJson(paging));
-			return "admin/pfm/registcatecon";
+			model.addAttribute("paging", jsonParser.toJson(paging));
+		int cnt = 0;
+		cnt = pService.getListAllCntCon();
+		model.addAttribute("cnt", cnt);
+		return "admin/pfm/registcatecon";
 	}
 
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명:ajax 통신용
+	 * @작성자:박주희
+	 */
 	@RequestMapping(value = "/pagingcatecon", method = RequestMethod.GET)
 	public @ResponseBody HashMap ajaxCategoryCon(@RequestParam(defaultValue = "1") int curPage) {
-		logger.info(curPage+"");
+		logger.info(curPage + "");
 		int totalCnt = pService.getModalListConCnt();
 		Paging paging = new Paging(totalCnt, curPage, 8, 5);
 		List<Poster> modalList = pService.getModalListCon(paging);
 //		Gson jsonParser = new Gson();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-
 		if (modalList != null) {
 			map.put("list", modalList);
 			map.put("paging", paging);
@@ -279,14 +285,43 @@ public class AdminPfmController {
 	 * @작성자: 박주희
 	 */
 	@RequestMapping(value = "/admin/registcatemu", method = RequestMethod.GET)
-	public String registerCategoryMu(Model model) {
+	public String registerCategoryMu(Model model, @RequestParam(defaultValue = "1") int curPage) {
 		List<Poster> posterList = pService.getListMu();
-		List<Poster> modalList = pService.getModalListMu();
+		int totalCnt = pService.getModalListMuCnt();
+		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		List<Poster> modalList = pService.getModalListMu(paging);
+		Gson jsonParser = new Gson();
 		if (modalList != null)
-			model.addAttribute("list", modalList);
+			model.addAttribute("list", jsonParser.toJson(modalList));
 		if (posterList != null)
 			model.addAttribute("posterList", posterList);
+		if (paging != null)
+			model.addAttribute("paging", jsonParser.toJson(paging));
+		int cnt = 0;
+		cnt = pService.getListAllCntMu();
+		model.addAttribute("cnt", cnt);
 		return "admin/pfm/registcatemu";
+	}
+
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: ajax 통신용 뮤지컬 배너 (카테고리)
+	 * @작성자:박주희
+	 */
+	@RequestMapping(value = "/pagingcatemu", method = RequestMethod.GET)
+	public @ResponseBody HashMap ajaxCategoryMu(@RequestParam(defaultValue = "1") int curPage) {
+		logger.info(curPage + "");
+		int totalCnt = pService.getModalListMuCnt();
+		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		List<Poster> modalList = pService.getModalListMu(paging);
+//		Gson jsonParser = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		if (modalList != null) {
+			map.put("list", modalList);
+			map.put("paging", paging);
+		}
+		return map;
 	}
 
 	/**
@@ -309,9 +344,7 @@ public class AdminPfmController {
 			mu.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));
 			pService.addMu(mu);// 개수만큼 insert
 		}
-
 		return "1";
-
 	}
 
 	/**
@@ -355,29 +388,74 @@ public class AdminPfmController {
 	 * @Method설명: 카테고리 배너 - 가족&아동 배너 등록 하기
 	 * @작성자: 박주희
 	 */
-	@RequestMapping(value = "/admin/pfm/registcateFam", method = RequestMethod.GET)
-	public void registerCategoryFam() {
-//		- 배너는 각 분류별로 15개 까지만 등록이 가능하다.
-//		- '추가하기' 버튼을 누르면 각 분류별로 필터링된 공연 목록들과 검색창이 있는 모달창을
-//		  띄워준다.
-//		- 배너를 추가한 후에 '최종 저장' 버튼을 클릭하면 최종적으로 사이트에 적용된다.
-//		- '최종저장' 버튼은 수정 사항이 생겼을 경우에만 활성화된다.
-//		- 15개 중 등록되지 않은 배너는 '기본 이미지'로 채워준다.
+	@RequestMapping(value = "/admin/registcateFam", method = RequestMethod.GET)
+	public String registerCategoryFam(Model model, @RequestParam(defaultValue = "1") int curPage) {
+		List<Poster> posterList = pService.getListFam();// selectBypfmIdx();
+		int totalCnt = pService.getModalListFamCnt();
+		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		List<Poster> modalList = pService.getModalListFam(paging);
+		Gson jsonParser = new Gson();
+		if (modalList != null)
+			model.addAttribute("list", jsonParser.toJson(modalList));
+		if (posterList != null)
+			model.addAttribute("posterList", posterList);
+		if (paging != null)
+			model.addAttribute("paging", jsonParser.toJson(paging));
 
+		int cnt = 0;
+		cnt = pService.getListAllCntFam();
+		model.addAttribute("cnt", cnt);
+		return "admin/pfm/registcatefam";
 	}
 
-	@RequestMapping(value = "/admin/pfm/registcateFam", method = RequestMethod.POST)
-	public void registerCategoryFam(@RequestParam(value = "title") String title,
-			@RequestParam(value = "file") MultipartFile fileupload) {
-//		- 배너는 각 분류별로 15개 까지만 등록이 가능하다.
-//		- '추가하기' 버튼을 누르면 각 분류별로 필터링된 공연 목록들과 검색창이 있는 모달창을
-//		  띄워준다.
-//		- 배너를 추가한 후에 '최종 저장' 버튼을 클릭하면 최종적으로 사이트에 적용된다.
-//		- '최종저장' 버튼은 수정 사항이 생겼을 경우에만 활성화된다.
-//		- 15개 중 등록되지 않은 배너는 '기본 이미지'로 채워준다.
-		logger.info(title + "GET");
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명:Ajax 통신 카테고리 가족
+	 * @작성자:박주희
+	 */
+	@RequestMapping(value = "/pagingcatefam", method = RequestMethod.GET)
+	public @ResponseBody HashMap ajaxCategoryFam(@RequestParam(defaultValue = "1") int curPage) {
+		logger.info(curPage + "");
+		int totalCnt = pService.getModalListFamCnt();
+		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		List<Poster> modalList = pService.getModalListFam(paging);
+//		Gson jsonParser = new Gson();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		pService.addFamPoster(context, fileupload);
+		if (modalList != null) {
+			map.put("list", modalList);
+			map.put("paging", paging);
+		}
+		return map;
+	}
+
+	@RequestMapping(value = "/admin/registcatefam", method = RequestMethod.POST)
+	public @ResponseBody String registerCategoryFam(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
+		if (pfmIdx.size() == 0) {
+			return "0";
+		}
+		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
+			CategoryFam fam = new CategoryFam();
+			fam.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));
+			pService.addFam(fam);// 개수만큼 insert
+		}
+		return "1";
+	}
+
+	@RequestMapping(value = "/admin/deletecatefam/{pfmIdx}", method = RequestMethod.GET)
+	public String deletecateFam(@PathVariable int pfmIdx) {
+
+		logger.info("delete category banner fam GET");
+		logger.info(pfmIdx + "");
+		CategoryFam fam = new CategoryFam();
+		fam.setPfmIdx(pfmIdx);
+		pService.removeFam(fam);
+		return "redirect:/admin/registcatemu";
+	}
+
+	@RequestMapping(value = "/searchposterfam", method = RequestMethod.GET)
+	public @ResponseBody List<Poster> searchPosterFam(@RequestParam String searchPoster) {
+		return pService.getSearchListForFam(searchPoster);
 	}
 
 	/**
@@ -583,4 +661,6 @@ public class AdminPfmController {
 
 		return "admin/pfm/managerPfm";
 	}
+	
+	
 }

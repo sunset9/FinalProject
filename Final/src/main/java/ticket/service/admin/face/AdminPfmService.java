@@ -23,6 +23,14 @@ import ticket.dto.Poster;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
+/**
+ * @author PIAOZHUZI
+ *
+ */
+/**
+ * @author PIAOZHUZI
+ *
+ */
 public interface AdminPfmService {
 
 	/**
@@ -183,12 +191,43 @@ public interface AdminPfmService {
 	 */
 	public List<Poster> getModalListCon(Paging paging);
 
+
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 뮤지컬 모달 안에 배너 리스트 
+	 * @작성자:박주희
+	 */
+	public List<Poster> getModalListMu(Paging paging);
+	
+
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 가족 모달 안에 배너 리스트 
+	 * @작성자:박주희
+	 */
+	public List<Poster> getModalListFam(Paging paging);
+
 	/**
 	 * @최종수정일: 2018.12.11
 	 * @Method설명:콘서트 모달 안에 들어갈 배너 갯수 
 	 * @작성자:박주희
 	 */
 	public int getModalListConCnt();
+
+	
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 뮤지컬 모달안에 들어갈 배너 갯수 
+	 * @작성자: 박주희
+	 */
+	public int getModalListMuCnt();
+
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 가족&아동 모달안에 들어갈 배너 갯수 
+	 * @작성자:박주희
+	 */
+	public int getModalListFamCnt();
 	
 	/**
 	 * @최종수정일: 2018.12.08
@@ -213,6 +252,13 @@ public interface AdminPfmService {
 	 */
 	public List<Poster> getSearchListForMu(String name);
 	
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 검색결과를 불러옴(가족&아동)
+	 * @작성자:박주희
+	 */
+	public List<Poster> getSearchListForFam(String searchPoster);
+
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 가족아동 배너 리스트
@@ -284,6 +330,25 @@ public interface AdminPfmService {
 	public void removeMu(CategoryMu mu);
 
 	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명:포스터로 등록된 배너 개수 
+	 * @작성자:박주희
+	 */
+	public int getListAllCntCon();
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명:포스터로 등록된 배너 개수 
+	 * @작성자:박주희
+	 */
+	public int getListAllCntMu();
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명:포스터로 등록된 배너 개수 
+	 * @작성자:박주희
+	 */
+	public int getListAllCntFam();
+	
+	/**
 	 * @최종수정일: 2018.12.10
 	 * @Method설명: 공연 등록 시 이미지(상세정보, 예약정보) 업로드
 	 * @작성자: 전해진
@@ -303,5 +368,9 @@ public interface AdminPfmService {
 	 * @작성자: 전해진
 	 */
 	public int getArtistSearchCnt(Artist artist);
+
+
+	
+
 
 }

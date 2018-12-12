@@ -33,5 +33,12 @@ public interface CategoryMuDao {
 	 * @작성자:박주희
 	 */
 	public void delete(CategoryMu con);
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명:등록된 포스터 총 개수 
+	 * @작성자:박주희
+	 */
+	public int selectAllCnt();
 
 }
