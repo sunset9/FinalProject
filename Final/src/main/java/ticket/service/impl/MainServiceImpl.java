@@ -16,7 +16,7 @@ import ticket.service.face.MainService;
 
 @Service
 public class MainServiceImpl implements MainService {
-	private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
+//	private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
 
 	@Autowired MainDao mainDao;
 
@@ -54,6 +54,11 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<Poster> getMuPfmPoster() {
 		return mainDao.selectMuPfmPosterInfo();
+	}
+
+	@Override
+	public List<Poster> getFamPfmPoster() {
+		return mainDao.selectFamPfmPosterInfo();
 	}
 
 	@Override
