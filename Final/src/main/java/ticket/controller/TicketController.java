@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ticket.dto.Hall;
+import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
+import ticket.dto.SeatSection;
 import ticket.service.face.TicketService;
 
 
@@ -25,11 +30,12 @@ public class TicketController {
 	@Autowired
 	TicketService ticketService;
 	
-	
+	private static final Logger logger = LoggerFactory.getLogger(TicketController.class);
+
 	
 	/**
 	 * @최종수정일: 2018.12.10
-	 * @Method설명: 테스트 메소드
+	 * @Method설명: 공연의 날짜정보 불러와 bookInfo.jsp 띄워주기
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value="/ticket/bookInfo", method=RequestMethod.GET)
@@ -60,6 +66,11 @@ public class TicketController {
 	}
 	
 	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 해당공연의 공연시작시간 정보 불러오기
+	 * @작성자:이상지
+	 */
 	@RequestMapping(value= "/ticket/bookTimeInfo", method=RequestMethod.GET)
 	public ModelAndView loadsTimes() {
 		
@@ -141,6 +152,74 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	public void loadSeats() {
+		
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: DB에 등록된 오리진 섹션정보 불러오기
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/oriSec", method=RequestMethod.GET)
+	public ModelAndView loadOriginSection() {
+
+		Hall hall = new Hall();
+		
+		hall.setHallIdx(2);
+		
+		
+		List<OriginSection> oriSecList = new ArrayList<OriginSection>();
+		
+		oriSecList= ticketService.loadOriginSection(hall);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		//JSON 활용 키,값 형태면 JSON으로보내준다
+		
+		mav.setViewName("jsonView");
+		
+		Map oriSecMap = new HashMap();
+		oriSecMap.put("oriSecMap", oriSecList);
+		
+		mav.addObject(oriSecMap);
+		
+		return mav;
+		
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 관리자가 지정해준 섹션 불러오기
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/seatSection", method=RequestMethod.POST)
+	public ModelAndView loadSectionData() {
+		
+	
+		
+		Performance pfm = new Performance();
+		
+		pfm.setPfmIdx(1);
+		
+		List<SeatSection> seatSection = new ArrayList<SeatSection>();
+		
+		List<String> secName = new ArrayList<String>();
+		
+		seatSection = ticketService.loadSection(pfm);
+		
+		secName = ticketService.countSection(pfm);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("jsonView");
+		
+		Map secMap = new HashMap();
+		secMap.put("secMap", seatSection);
+		secMap.put("secName", secName);
+		
+		mav.addObject(secMap);
+		
+		return mav;
 		
 	}
 

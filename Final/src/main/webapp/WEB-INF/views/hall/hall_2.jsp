@@ -8,7 +8,31 @@ $(document).ready(function () {
 
 $('path').attr("fill","#CCC");
 $('rect').attr("fill","#CCC");
-	
+
+//섹션에 idx를 넣어주기위해 ajax로 DB에 저장된 원본 구역정보를 불러온다 
+	$.ajax({
+		type:"GET",
+		url:"/ticket/oriSec",
+		data:{},
+		dataType:"json",
+		success:function(res){
+			
+			for(var i=0;i<res.hashMap.oriSecMap.length;i++){
+				var str = 'path.'+res.hashMap.oriSecMap[i].secName; 
+				var path = $('.seat_block').find(str); //seat_block 하위요소중 path중에 불러온 이름중 원본섹션이름을 가진걸 불러와라
+				path.data("secIdx",res.hashMap.oriSecMap[i].oriSecIdx); //path에다가 커스텀 데이터 secIdx를 저장하라
+				
+				if(path.data("secIdx") == undefined){ // 만약 path를 찾을수 없다면 rect로 찾자
+					var str_rect='rect.'+res.hashMap.oriSecMap[i].secName;
+					var rect=$('html').find(str_rect);
+					rect.data("secIdx",res.hashMap.oriSecMap[i].oriSecIdx);
+				}
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	})
 	
 })
 </script>
@@ -23,7 +47,7 @@ $('rect').attr("fill","#CCC");
 					<svg version="1.1"  
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink"
-						style="overflow: hidden; position: relative; top: -0.98261px; background-color: rgb(244, 244, 244); width: 650px; height: 530px;"
+						style="overflow: hidden; position: relative; top: -0.98261px; background-color: rgb(244, 244, 244);"
 						viewBox="0 0 3730 2570" preserveAspectRatio="xMidYMid meet">
 	                  <image x="0" y="0" width="3730" height="2570"
 							preserveAspectRatio="none"

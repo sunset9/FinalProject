@@ -3,10 +3,12 @@ package ticket.service.face;
 import java.util.List;
 
 import ticket.dto.Hall;
+import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatCurrent;
+import ticket.dto.SeatSection;
 import ticket.dto.User;
 
 public interface TicketService {
@@ -64,5 +66,26 @@ public interface TicketService {
 	 * @작성자:이상지
 	 */
 	public void removeTempSeat(Seat seat);
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 원본구역 불러오기
+	 * @작성자:이상지
+	 */
+	public List<OriginSection> loadOriginSection(Hall hall);
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 관리자가 지정해준 자리등급섹션? 불러오기 
+	 * @작성자:이상지
+	 */
+	public List<SeatSection> loadSection(Performance pfm);
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 공연 idx로 관리자가 지정한 섹션불러오기
+	 * @작성자:이상지
+	 */
+	public List<String> countSection(Performance pfm);
 }
 

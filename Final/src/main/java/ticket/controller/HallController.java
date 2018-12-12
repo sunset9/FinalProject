@@ -10,6 +10,11 @@ import ticket.dto.Performance;
 public class HallController {
 
 	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: hallIdx에 따른 공연장 불러오기
+	 * @작성자:이상지
+	 */
 	@RequestMapping(value="/ticket/seatSection", method=RequestMethod.GET)
 	public String loadhallSection() {
 		

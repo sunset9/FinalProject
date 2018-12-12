@@ -5,7 +5,7 @@
   
 <mapper namespace="ticket.dao.face.TicketDao">
 
- <resultMap type="ticket.dto.PfmDateByTime" id="DateTimeMap">
+ <resultMap type="ticket.dto.PfmDateByTime" id="dateTimeMap">
 	<result column="pfm_dbt_idx" property="pfmDbtIdx"/>
 	<result column="pfm_idx" property="pfmIdx"/>
 	<result column="pfm_date" property="pfmDate"/>
@@ -13,12 +13,53 @@
 	<result column="create_date" property="createDate"/>
 </resultMap>
 
-<select id="selectDates" parameterType="ticket.dto.Performance" resultMap="DateTimeMap">
+<resultMap type="ticket.dto.OriginSection" id="oriSecMap">
+	<result column="ori_sec_idx" property="oriSecIdx"/>
+	<result column="hall_idx" property="hallIdx"/>
+	<result column="sec_name" property="secName"/>
+</resultMap>
+
+<resultMap type="ticket.dto.SeatSection" id="seatSectionMap">
+	<result column="sec_idx" property="secIdx"/>
+	<result column="hall_idx" property="hallIdx"/>
+	<result column="pfm_idx" property="pfmIdx"/>
+	<result column="ori_sec_idx" property="oriSecIdx"/>
+	<result column="app_sec" property="appSec"/>
+	<result column="sec_pay" property="secPay"/>
+	<result column="create_date" property="createDate"/>
+</resultMap>
+
+
+<select id="selectDates" parameterType="ticket.dto.Performance" resultMap="dateTimeMap">
 	select pfm_date from pfm_dateBytime WHERE pfm_idx = #{pfmIdx} GROUP BY pfm_date
 </select>
 
-<select id ="selectDateTime" parameterType="ticket.dto.Performance" resultMap="DateTimeMap">
+<select id ="selectDateTime" parameterType="ticket.dto.Performance" resultMap="dateTimeMap">
 	select pfm_idx,pfm_date,pfm_time from pfm_dateBytime WHERE pfm_idx= #{pfmIdx}
+</select>
+
+<select id="selectOriSecByHallIdx" parameterType="ticket.dto.Hall" resultMap="oriSecMap">
+	select ori_sec_idx, hall_idx, sec_name from originsection where hall_idx = #{hallIdx}
+</select>
+
+<select id ="selectSeatSectionByPfmIdx" parameterType="ticket.dto.Performance" resultMap="seatSectionMap">
+	SELECT
+	    sec.sec_idx,
+	    sec.hall_idx,
+	    sec.ori_sec_idx,
+	    sec.app_sec,
+	    sec.sec_pay,
+	    sec.create_date,
+	    orisec.sec_name as oriSecName
+	FROM
+	    seatsection sec
+	    LEFT JOIN originsection orisec ON sec.ori_sec_idx = orisec.ori_sec_idx
+	WHERE
+	    pfm_idx = #{pfmIdx}
+</select>
+
+<select id="selectCntSectionByPfmIdx" parameterType="ticket.dto.Performance" resultType="String">
+	Select DISTINCT app_sec from seatsection
 </select>
 
 </mapper>
