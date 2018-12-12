@@ -56,7 +56,14 @@ public interface MainDao {
 	 * @Method설명: 장르가 콘서트인 모든 포스터 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectPfmPosterInfo();
+	public List<Poster> selectConPfmPosterInfo();
+
+	/**
+	 * 최종수정일: 2018.12.11
+	 * @Method설명: 장르가 뮤지컬&공연인 모든 포스터 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectMuPfmPosterInfo();
 
 	/**
 	 * 최종수정일: 2018.12.11

@@ -5,6 +5,7 @@ import java.util.List;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
+import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
 
@@ -15,7 +16,7 @@ public interface PfmDetailService {
 	 * @Method설명: 선택한 공연의 상세 정보 출력
 	 * @작성자: 배수연
 	 */
-	public Performance getChoicePfmDetail(Performance pfm);
+	public Poster getChoicePfmDetail(Performance pfm);
 	
 	
 	/**0
@@ -87,5 +88,8 @@ public interface PfmDetailService {
 	 * @작성자: 배수연
 	 */
 	public boolean getDelReviewRecomm(ReviewRecomm reRecom);
+
+
+	public Performance getPfmInfo(Performance pfm);
 	
 }

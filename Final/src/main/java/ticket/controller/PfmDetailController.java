@@ -1,13 +1,22 @@
 package ticket.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ticket.dto.Performance;
+import ticket.dto.Poster;
+import ticket.service.face.PfmDetailService;
+
 @Controller
 public class PfmDetailController {
+	@Autowired PfmDetailService detailService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PfmDetailController.class);
 
@@ -18,8 +27,17 @@ public class PfmDetailController {
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/pfmdetail", method=RequestMethod.GET)
-	public void pfmdetail() {
+	public void pfmdetail(
+			Model model
+			, Performance pfm
+		) {
+		// 선택한 이미지의 포스터 출력해주기
+		Poster posterList = detailService.getChoicePfmDetail(pfm);
+		model.addAttribute("posterList", posterList);
 		
+		// 공연 정보 불러오기
+		Performance pfmInfoList = detailService.getPfmInfo(pfm);
+		model.addAttribute("pfmInfoList", pfmInfoList);
 	}
 	
 	/**
