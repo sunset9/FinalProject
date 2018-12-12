@@ -25,6 +25,10 @@ function changeUserGradeIdx(e, userIdx){
 		console.log("취소");
 	}
 ;};
+
+function emailClick(userIdx) {
+	console.log(userIdx);
+};
 </script>
 <style type="text/css">
 th, td:not(:nth-child(2)) {
@@ -82,8 +86,8 @@ td {
 <c:forEach items="${userList }" var="user" varStatus="status">
 <tr>
 	<td>${user.no}</td>
-	<td>${user.email }</td>
-	<td>${user.nick }</a></td>
+	<td><a href="/admin/userdetail?userIdx=${user.userIdx}">${user.email }</a></td>
+	<td>${user.nick }</td>
 	<td>${user.amount }(${user.totalCnt })</td>
 	<td>${user.createDate }</td>
 	<td>

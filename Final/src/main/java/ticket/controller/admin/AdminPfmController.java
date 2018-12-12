@@ -657,10 +657,31 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
-	public String viewPfmManager() {
-
+	public String viewPfmManager(Model model) {
+		String genre = "con"; //목록 불러오는 기본값: 콘서트 기준
+		
+		// 페이징 계산
+		int totalCnt = pService.getPfmCntByGenre(genre);
+		Paging paging = new Paging(totalCnt, 1, 8, 4);
+		
+		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
+		model.addAttribute("pfmList",pfmList);
+		
 		return "admin/pfm/managerPfm";
 	}
 	
-	
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 장르에 맞는 공연 리스트 검색
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/viewpfmlist", method = RequestMethod.GET)
+	public HashMap<String,Object> getPfmList() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("pfm", 1);
+		
+		return map;
+	}
+
 }

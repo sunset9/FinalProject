@@ -56,4 +56,11 @@ public interface AdminUserService {
 	 * @작성자: 김지은
 	 */
 	public List<User> getPagingListByPaging(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: user_idx로 회원 정보 가져오기
+	 * @작성자: 김지은
+	 */
+	public User getUserByUserIdx(User user);
 }

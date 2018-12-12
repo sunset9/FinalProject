@@ -425,6 +425,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
+
 	public int getModalListMuCnt() {
 		return infoDao.selectCntBygenreIdx(2);
 	}
@@ -446,5 +447,44 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public int getListAllCntFam() {
 		return famDao.selectAllCnt();
-	};
+	}
+  @Override 
+	public int getPfmCntByGenre(String genre) {
+		int genreIdx = 0;
+		
+		switch (genre){
+		case "con":
+			genreIdx = 1;
+			break;
+		case "mu":
+			genreIdx = 2;
+			break;
+		case "fam":
+			genreIdx = 3;
+			break;
+		}
+		
+		return pDao.selectAllCntPfmByGenre(genreIdx);
+	}
+
+	@Override
+	public List<Performance> getPfmListByGenre(String genre, Paging paging) {
+		int genreIdx = 0;
+		
+		switch (genre){
+		case "con":
+			genreIdx = 1;
+			break;
+		case "mu":
+			genreIdx = 2;
+			break;
+		case "fam":
+			genreIdx = 3;
+			break;
+		}
+		
+		return pDao.selectPfmByGenre(genreIdx, paging);
+	}
+
+
 }

@@ -156,5 +156,20 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public int selectCntArtist(Artist artist);
+
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 총 콘서트 공연 개수 가져오기 
+	 * @작성자: 전해진
+	 */
+	public int selectAllCntPfmByGenre(int genreIdx);
+
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 장르로 맞는 공연 목록 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmByGenre(
+			@Param(value="genreIdx") int genreIdx, @Param(value="paging") Paging paging);
 	
 }
