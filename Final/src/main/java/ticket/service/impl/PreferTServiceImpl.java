@@ -17,7 +17,7 @@ public class PreferTServiceImpl implements PreferTService {
 	private PreferTDao preferTDao;
 	
 	@Override
-	public List<Theme> choiceList(int userIdx) {
+	public List<PreferTheme> choiceList(int userIdx) {
 		return preferTDao.selectThemeByUserIdx(userIdx);
 	}
 

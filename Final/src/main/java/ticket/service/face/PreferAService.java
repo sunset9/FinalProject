@@ -3,6 +3,7 @@ package ticket.service.face;
 import java.util.List;
 
 import ticket.dto.Artist;
+import ticket.dto.PreferTheme;
 import ticket.dto.Theme;
 
 public interface PreferAService {
@@ -12,7 +13,7 @@ public interface PreferAService {
 	 * @Method설명: 테마에 관련된 아티스트 리스트 조회
 	 * @작성자:홍나영
 	 */
-	public List<Artist> artistByTheme(List<Theme> tList);
+	public List<Artist> artistByTheme(List<PreferTheme> tList);
 	
 	/**
 	 * @최종수정일: 2018.12.05

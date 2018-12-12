@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
     
 <style type="text/css">
+#userinfo{
+	background-color: #CCC;
+}
 
 #userProfile{
 	width: 150px;

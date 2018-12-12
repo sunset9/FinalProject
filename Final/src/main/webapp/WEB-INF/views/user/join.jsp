@@ -656,13 +656,11 @@ td {
 <div id = "theme" style="display: none;">
 <h1>테마 선택 창</h1>
 
-user name = ${loginUser.name}<br>
-useridx = ${loginUser.userIdx}
 <div>
 
 <c:forEach items="${tList }" var="t">
 	<label class="checkbox-inline" style ="width:30%">
-		<input type="checkbox" name ="themeIdx" value="${t.themeIdx}"> ${t.themeName }
+		<input type="checkbox" name ="themeIdx"  value="${t.themeIdx}"> ${t.themeName }
 	</label>
 </c:forEach>
 </div>

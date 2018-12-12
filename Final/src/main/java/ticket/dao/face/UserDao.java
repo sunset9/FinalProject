@@ -44,7 +44,7 @@ public interface UserDao {
 	
 	/**
 	 * @최종수정일: 2018.12.07
-	 * @Method설명: email로 등록된 user 조회하기
+	 * @Method설명: email로 등록된 user 조회해서 useridx 받아오기
 	 * @작성자:홍나영
 	 */
 	public int selectUserByEmail(String email);
