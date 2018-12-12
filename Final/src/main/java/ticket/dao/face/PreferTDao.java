@@ -12,7 +12,7 @@ public interface PreferTDao {
 	 * @Method설명: 유저 idx로 선택된 테마 조회 
 	 * @작성자:홍나영
 	 */
-	public List<Theme> selectThemeByUserIdx(int userIdx);
+	public List<PreferTheme> selectThemeByUserIdx(int userIdx);
 	
 	/**
 	 * @최종수정일: 2018.12.05

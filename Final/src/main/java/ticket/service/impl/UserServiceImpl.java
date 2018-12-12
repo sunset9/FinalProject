@@ -17,8 +17,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public int loginCheck(User user, HttpSession session) {
-	
-		if(userDao.selectCntUser(user) == 1) { 
+			int userIdx =userDao.selectCntUser(user) ;
+		if(userIdx!= 0) { 
+			user.setUserIdx(userIdx);
 			session.setAttribute("login", true);
 			user = userDao.selectUser(user);
 			session.setAttribute("loginUser", user);

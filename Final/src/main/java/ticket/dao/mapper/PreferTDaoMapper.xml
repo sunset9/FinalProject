@@ -14,7 +14,7 @@
   </resultMap>
   
    <resultMap type="ticket.dto.PreferTheme" id="PreferThemeMap">
-  	<result column = "prefer_theme_idx" property="preThemeIdx"/>
+  	<result column = "pre_theme_idx" property="preThemeIdx"/>
   	<result column = "user_idx" property="userIdx"/>
   	<result column = "theme_idx" property="themeIdx"/>
   	<result column = "create_date" property="createDate"/>
@@ -42,5 +42,15 @@
   <delete id="deleteTheme" parameterType="int">
   	DELETE prefer_theme WHERE user_idx = #{userIdx }
   </delete>
+  
+  <select id="selectThemeByUserIdx" parameterType="int" resultMap="PreferThemeMap">
+  	SELECT 
+  		pre_theme_idx
+		,user_idx
+		,theme_idx
+		,create_date
+	 FROM prefer_theme
+	 WHERE user_idx=  #{userIdx }
+  </select>
   
   </mapper>

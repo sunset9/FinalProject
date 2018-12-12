@@ -1,9 +1,9 @@
 package ticket.dao.face;
 
 import java.util.List;
+import java.util.Map;
 
 import ticket.dto.Artist;
-import ticket.dto.Theme;
 
 public interface PreferADao {
 	
@@ -12,7 +12,7 @@ public interface PreferADao {
 	 * @Method설명: 유저가 선택한 테마로 아티스트 조회
 	 * @작성자:홍나영
 	 */
-	public List<Artist> selectArtistByTheme(List<Theme> tList);
+	public List<Artist> selectArtistByTheme(Map themeMap);
 	
 	/**
 	 * @최종수정일: 2018.12.05
