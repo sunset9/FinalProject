@@ -26,6 +26,7 @@ import ticket.dto.CategoryCon;
 import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
+import ticket.dto.GenreEnum;
 import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
@@ -146,7 +147,6 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
 			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
 		int pfmIdx = 0;
@@ -417,40 +417,28 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public int getPfmCntByGenre(String genre) {
-		int genreIdx = 0;
-		
-		switch (genre){
-		case "con":
-			genreIdx = 1;
-			break;
-		case "mu":
-			genreIdx = 2;
-			break;
-		case "fam":
-			genreIdx = 3;
-			break;
-		}
+		// 검색하려는 장르 인덱스 
+		int genreIdx = GenreEnum.valueOf(genre).getIdx();
 		
 		return pDao.selectAllCntPfmByGenre(genreIdx);
 	}
 
 	@Override
 	public List<Performance> getPfmListByGenre(String genre, Paging paging) {
-		int genreIdx = 0;
-		
-		switch (genre){
-		case "con":
-			genreIdx = 1;
-			break;
-		case "mu":
-			genreIdx = 2;
-			break;
-		case "fam":
-			genreIdx = 3;
-			break;
-		}
+		// 검색하려는 장르 인덱스 
+		int genreIdx = GenreEnum.valueOf(genre).getIdx();
 		
 		return pDao.selectPfmByGenre(genreIdx, paging);
+	}
+
+	@Override
+	public int getPfmSearchCnt(String keyword) {
+		return pDao.selectCntPfmSearch(keyword);
+	}
+
+	@Override
+	public List<Performance> getPfmSearchList(String keyword, Paging paging) {
+		return pDao.selectPfmSearch(keyword);
 	}
 
 }
