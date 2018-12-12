@@ -485,6 +485,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public List<Performance> getPfmSearchList(String keyword, Paging paging) {
 		return pDao.selectPfmSearch(keyword);
+	}
 
 	public void registHall(Hall hall, MultipartFile file) {
 		// TODO Auto-generated method stub
