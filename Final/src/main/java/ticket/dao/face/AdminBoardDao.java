@@ -28,9 +28,11 @@ public interface AdminBoardDao {
 	// 공지사항 글 쓰기
 	public void insertNoti(Notice notice);
 	
+	// 글번호로 게시글 조회
+//	public Notice selectNoticeBynoticeIdx(Notice viewNotice);
 	
 	// 공지사항 글 수정
-	public void updateNoti(Notice notice);
+	public void updateNoti(Notice updateNotice);
 	
 	// 공지사항 글 삭제
 	public void deleteNoti(Notice deleteNotice);	
@@ -39,6 +41,12 @@ public interface AdminBoardDao {
 	public void insertNotiFile(NoticeFile noticeFile);
 	
 
+	
+	
+	
+	
+	
+	
 	
 	// FAQ 글 리스트
 	public List selectFaqList(Faq faq);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 마이바티스 3 매퍼 DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ticket.dao.face.HallDao">
+	<insert id="insert" parameterType="ticket.dto.Hall">
+		<selectKey keyProperty="hallIdx" resultType="int"
+			order="BEFORE">
+			SELECT hall_seq.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO hall (
+		hall_idx, hall_name,hall_loc,
+		hall_phone)VALUES
+		(#{hallIdx},#{hallName},#{hallLoc},#{hallPhone})
+	</insert>
+</mapper>

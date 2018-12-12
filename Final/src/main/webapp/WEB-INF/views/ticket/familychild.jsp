@@ -18,7 +18,7 @@
 	margin-bottom: 20px;
 }
 
-#muImg {
+#pamImg {
 	width: 250px;
 	height: 300px;
 }
@@ -28,7 +28,7 @@
 	text-align: center;
 }
 
-.muList {
+.pamList {
 	margin: 10px;
 	width: 200px;
 	float: left;
@@ -39,7 +39,7 @@
 <div class="container">
 	<!-- 관리자가 선택한 뮤지컬&공연 상단 배너 15개 -->
 	<!-- 슬라이드 추가하기 -->
-	<h3>뮤지컬&공연</h3>
+	<h3>가족&아동</h3>
 	<div class="conTopBanner">
 		<c:forEach items="${topBanList }" var="topList">
 			<a href="#"><img id="concertImg" src="/resources/image/${topList.originName}" /></a>
@@ -58,9 +58,9 @@
 		
 	<!-- 포스터 전체 리스트 출력 -->
 	<c:forEach items="${posterList }" var="list">
-	<div class="muList">
+	<div class="famList">
 			<button id="imgDetailInfo" type="submit" style="border: none; background-color: #FFFFFF;">
-				<img id="muImg" src="/resources/image/${list.originName}" />
+				<img id="famImg" src="/resources/image/${list.originName}" />
 			</button><br>
 	</div>
 	</c:forEach>

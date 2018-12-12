@@ -79,5 +79,6 @@ public interface UserDao {
 	 */
 	public void updateUserGrade(@Param("currUser") int currUser, @Param("currUserGrade") int currUserGrade);
 	
+	
 
 }

@@ -34,6 +34,43 @@ $(document).ready(function() {
 	        
 	        }
 	    });
+	 $("#agreement1").change(function(){
+		  if($("#agreement1").is(":checked")){
+			  if($("#agreement2").is(":checked")){
+				  if($("#agreement3").is(":checked")){
+					  $("#btnAgree").attr('disabled',false);
+				  }
+			  }
+		  }else {
+	        	$("#btnAgree").attr('disabled',true);
+
+		  }
+	 });
+	 $("#agreement2").change(function(){
+		  if($("#agreement2").is(":checked")){
+			  if($("#agreement1").is(":checked")){
+				  if($("#agreement3").is(":checked")){
+					  $("#btnAgree").attr('disabled',false);
+				  }
+			  }
+		  }else {
+	        	$("#btnAgree").attr('disabled',true);
+
+		  }
+	 });
+	 $("#agreement3").change(function(){
+		  if($("#agreement3").is(":checked")){
+			  if($("#agreement1").is(":checked")){
+				  if($("#agreement2").is(":checked")){
+					  $("#btnAgree").attr('disabled',false);
+				  }
+			  }
+		  }else {
+	        	$("#btnAgree").attr('disabled',true);
+
+		  }
+	 });
+	 
 	
 	// 약관 확인 하고 정보 입력창 넘어가기 
 	$("#btnAgree").click(function() {

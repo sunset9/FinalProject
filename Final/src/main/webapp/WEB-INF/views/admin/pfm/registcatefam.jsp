@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+	
 <script>
 $(document).ready(function() {
 	var cnt = ${cnt};
@@ -10,7 +10,7 @@ $(document).ready(function() {
   		//console.log('${list}');
   		$('#myModal').modal('show'); //모달창 보여주기 
   		ajax();
-  		console.log(cnt);
+  		
    });
 	$('ul.pagination').on('click','a',function(){
 		console.log("눌렸습니다.");
@@ -197,7 +197,7 @@ $(document).ready(function() {
 </script>
 카테고리 뮤지컬 배너 관리
 <hr>
-<form action="/admin/registcatemu" method="post">
+<form action="/admin/registcatefam" method="post">
 <button>최종저장</button>
 	<div id="hide"></div>
 	<div class="row">
@@ -208,7 +208,7 @@ $(document).ready(function() {
 					<div class="caption">
 						<div class="pfmIdx" id="${item.pfmIdx }">
 							<img src="/resources/image/${item.storedName }"> <a
-								href="<c:url value='/admin/deletecatemu/${ item.pfmIdx }' />"
+								href="<c:url value='/admin/deletecatefam/${ item.pfmIdx }' />"
 								
 								class="btn btn-lg btn-danger">삭제</a>
 								<h3>${item.name }</h3>

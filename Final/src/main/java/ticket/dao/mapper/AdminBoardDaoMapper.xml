@@ -46,13 +46,14 @@
   </insert>
 
 	
-
-<!-- 	<update id="updateNoti" parameterType="ticket.dto.Notice">	 -->
-<!-- 	</update> -->
+	<update id="updateNoti" parameterType="ticket.dto.Notice">
+		UPDATE notice set notice_title =#{noticeTitle}, notice_content = #{noticeContent} 
+		where notice_idx = #{noticeIdx};
+	</update>
 
 
 	<delete id="deleteNoti" parameterType="ticket.dto.Notice">
-		delete from notice where notice_idx = #{noticeIdx}
+		delete notice where notice_idx = #{noticeIdx}
 	</delete>
 
 

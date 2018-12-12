@@ -94,12 +94,19 @@ public class AdminUserController {
 	 * @Method설명: 리스트에서 선택한 회원의 상세 정보와 예매 현황을 보여주기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/user/detail", method=RequestMethod.GET)
-	public void userDetail(User user) {
+	@RequestMapping(value = "/admin/userdetail", method=RequestMethod.GET)
+	public String userDetail(int userIdx) {
+		//회원 목록에서 선택한 회원 정보 가져오기
+		User user = new User();
+		user.setUserIdx(userIdx);
+		user = userService.getUserByUserIdx(user);
+		
 		// 해당 회원의 예매 현황 목록 불러오기
 		// userService.getBookDetail(user)
 
 		// 예매 목록을 뷰에 전달
+		
+		return "/admin/user/detail";
 	}
 
 	/**

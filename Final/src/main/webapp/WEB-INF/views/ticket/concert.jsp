@@ -5,11 +5,12 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		// 상세페이지로 이동
-		$("#imgDetailInfo").click(function() {
-			// 주소 수정하기
-			$(location).attr("href", "/ticket/pfmdetail");
-		});
+// 		$("#imgDetailInfo").click(function() {
+// 			// 주소 수정하기
+// 			$(location).attr("href", "");
+// 		});
 	});
+	
 </script>
 
 <style>
@@ -47,21 +48,21 @@
 	<hr>
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능하도록 수정 -->
 	<div class="themeList">
-		<c:forEach items="${themeList }" var="list">
-<!-- 			<form action="/ticket/concert" method="get"> -->
-				<button id="${list.themeName }" name="${list.themeName }" style="border: none; background-color: #FFFFFF;">
-					${list.themeName }
-				</button>
-<!-- 			</form> -->
+		<c:forEach items="${themeList }" var="themeList">
+			<button class="themeBtn" name="${themeList.themeIdx }" style="border: none; background-color: #FFFFFF;">
+				${themeList.themeName }
+			</button>
 		</c:forEach>
 	</div>
 		
 	<!-- 포스터 전체 리스트 출력 -->
 	<c:forEach items="${posterList }" var="list">
 	<div class="concertList">
-			<button id="imgDetailInfo" type="submit" style="border: none; background-color: #FFFFFF;">
-				<img id="concertImg" src="/resources/image/${list.originName}" />
-			</button><br>
+		<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+		<button id="imgDetailInfo" style="border: none; background-color: #FFFFFF;">
+			<img id="concertImg" src="/resources/image/${list.originName}" />
+		</button>
+		</a>
 	</div>
 	</c:forEach>
 	

@@ -33,6 +33,6 @@
 		<li><a href="/ticket/familychild">가족&아동</a></li>
 		<li><a href="/ticket/ticketopen">티켓 오픈</a></li>
 		<li><a href="/ticket/ranking">예매 랭킹</a></li>
-		<li><a href="/mychoice/main">마이페이지</a></li>
+		<li><a href="/mypage/myticket">마이페이지</a></li>
 	</ul>
 </div>

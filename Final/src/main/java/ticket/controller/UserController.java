@@ -162,4 +162,29 @@ public class UserController {
 		userService.getUser(user);
 		
 	}
+	
+	@RequestMapping(value="/mypage/myticket", method= RequestMethod.GET)
+	public void mypageBook(Model model
+				,User user
+				,HttpSession session
+			) {
+		logger.info("마이페이지 메인");
+		user =(User)session.getAttribute("loginUser");
+		logger.info(""+user);
+		
+		
+	}
+	
+	@RequestMapping(value="/mypage/mychoice", method= RequestMethod.GET)
+	public void mypageChoice(Model model
+				,User user
+			) {
+		
+	}
+	@RequestMapping(value="/mypage/myinq", method= RequestMethod.GET)
+	public void mypageInq(Model model
+				,User user
+			) {
+		
+	}
 }

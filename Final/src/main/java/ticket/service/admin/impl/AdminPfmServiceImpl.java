@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
 import ticket.dao.face.CategoryMuDao;
+import ticket.dao.face.HallDao;
+import ticket.dao.face.HallFileDao;
 import ticket.dao.face.PfmDao;
 import ticket.dao.face.PosterDao;
 import ticket.dto.AgeGrade;
@@ -28,6 +30,7 @@ import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
 import ticket.dto.GenreEnum;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmBookinfo;
@@ -55,6 +58,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	CategoryFamDao famDao;
 	@Autowired
 	PosterDao infoDao;
+	@Autowired
+	HallDao hallDao;
+	@Autowired
+	HallFileDao hallFileDao;
 
 	@Override
 	public List getMBannerList() {
@@ -252,8 +259,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Poster> getListFam() {
-		// TODO Auto-generated method stub
-		return null;
+		return infoDao.selectBypfmIdxFam();
 	}
 
 	@Override
@@ -269,7 +275,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void addFam(CategoryFam fam) {
-		// TODO Auto-generated method stub
+		famDao.insert(fam);
 
 	}
 
@@ -286,8 +292,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void removeFam(CategoryFam fam) {
-		// TODO Auto-generated method stub
-
+		famDao.delete(fam);
 	}
 
 	@Override
@@ -335,7 +340,17 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Poster> getModalListCon(Paging paging) {
 
 		// 장르로 선택된(콘서트) 리스트 가져오기
-		return infoDao.selectBygenreIdx(1,paging);
+		return infoDao.selectBygenreIdx(1, paging);
+	}
+
+	@Override
+	public List<Poster> getModalListMu(Paging paging) {
+		return infoDao.selectBygenreIdx(2, paging);
+	}
+
+	@Override
+	public List<Poster> getModalListFam(Paging paging) {
+		return infoDao.selectBygenreIdx(3, paging);
 	}
 
 	@Override
@@ -388,6 +403,11 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
+	public List<Poster> getSearchListForFam(String searchPoster) {
+		return infoDao.selectPosterByNameFam(searchPoster);
+	}
+
+	@Override
 	public List<Poster> getModalListMu() {
 		return infoDao.selectBygenreIdx(2, null);
 	}
@@ -416,10 +436,36 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
+
+	public int getModalListMuCnt() {
+		return infoDao.selectCntBygenreIdx(2);
+	}
+
+	@Override
+	public int getModalListFamCnt() {
+		return infoDao.selectCntBygenreIdx(3);
+	}
+
+	@Override
+	public int getListAllCntCon() {
+		return conDao.selectAllCnt();
+	}
+
+	@Override
+	public int getListAllCntMu() {
+		return muDao.selectAllCnt();
+	}
+
+	@Override
+	public int getListAllCntFam() {
+		return famDao.selectAllCnt();
+	}
+
+	@Override
 	public int getPfmCntByGenre(String genre) {
 		// 검색하려는 장르 인덱스 
 		int genreIdx = GenreEnum.valueOf(genre).getIdx();
-		
+
 		return pDao.selectAllCntPfmByGenre(genreIdx);
 	}
 
@@ -427,7 +473,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Performance> getPfmListByGenre(String genre, Paging paging) {
 		// 검색하려는 장르 인덱스 
 		int genreIdx = GenreEnum.valueOf(genre).getIdx();
-		
+
 		return pDao.selectPfmByGenre(genreIdx, paging);
 	}
 
@@ -439,6 +485,54 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public List<Performance> getPfmSearchList(String keyword, Paging paging) {
 		return pDao.selectPfmSearch(keyword);
+
+	public void registHall(Hall hall, MultipartFile file) {
+		// TODO Auto-generated method stub
+		int hallIdx = 0;
+		hallDao.insert(hall);
+
+		hallIdx = hall.getHallIdx();
+		
+		if(file.getSize()!=0) {
+			HallFile hallFile = uploadHallPic(file);
+			hallFile.setHallIdx(hallIdx);
+			hallFileDao.insert(hallFile);
+		}
+	}
+
+	public HallFile uploadHallPic(MultipartFile file) {
+
+		// UUID, 고유 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		// 파일이 저장될 경로
+		String stored = context.getRealPath("resources/image");
+
+		// 저장될 파일의 이름
+		String oriName = file.getOriginalFilename();
+		String name = oriName + "_" + uId;
+
+		// 파일객체
+		File dest = new File(stored, name);
+
+		// 파일 저장(업로드)
+		try {
+			file.transferTo(dest);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// 반환할 공연장 사진파일 객체 생성
+		HallFile hallFile = new HallFile();
+
+		hallFile.setOriginName(oriName);
+		hallFile.setStoredName(name);
+
+		return hallFile;
+
 	}
 
 }
