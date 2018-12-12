@@ -82,7 +82,7 @@ public class AdminBoardController {
 	public String notiWriteProc(HttpSession session, Notice notice) {
 		
 //		logger.info("공지 글 쓰기 처리");
-//		logger.info(notice.toString());
+		logger.info(notice.toString());
 		
 		adminBoardService.writeNoti(notice);
 		
@@ -92,30 +92,34 @@ public class AdminBoardController {
 	
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.12
 	 * @Method설명: 공지사항 글 수정 처리
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.GET)
-	public String notiUpdate() {
+	public String notiUpdate(Notice notice, Model model) {
+		
 		logger.info("공지수정폼");
+		
+		
+		notice = adminBoardService.noticeUpdateView(notice);
+//		System.out.println("update"+notice);
+		model.addAttribute("update", notice);
+		
 		return "/admin/notice/update";
 		
 	}
 
 	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.POST)
-	public String notiUpdateProc(HttpSession session, Notice updateNotice, Model model) {
+	public String notiUpdateProc(Notice notice) {
 		logger.info("공지 수정 처리");
+		logger.info(notice.toString());
 		
-		Notice noticeUpdate = adminBoardService.upNoti(updateNotice);
-		
-		model.addAttribute("noticeUpdate", noticeUpdate);
-		
+		adminBoardService.upNoti(notice);
+	
 		return "redirect:/admin/noticelist";
 		
 	}
-	
-	
 	
 	
 	/**
