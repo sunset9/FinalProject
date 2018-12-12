@@ -415,4 +415,42 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return infoDao.selectCntBygenreIdx(1); // 장르 1번 콘서트
 	}
 
+	@Override
+	public int getPfmCntByGenre(String genre) {
+		int genreIdx = 0;
+		
+		switch (genre){
+		case "con":
+			genreIdx = 1;
+			break;
+		case "mu":
+			genreIdx = 2;
+			break;
+		case "fam":
+			genreIdx = 3;
+			break;
+		}
+		
+		return pDao.selectAllCntPfmByGenre(genreIdx);
+	}
+
+	@Override
+	public List<Performance> getPfmListByGenre(String genre, Paging paging) {
+		int genreIdx = 0;
+		
+		switch (genre){
+		case "con":
+			genreIdx = 1;
+			break;
+		case "mu":
+			genreIdx = 2;
+			break;
+		case "fam":
+			genreIdx = 3;
+			break;
+		}
+		
+		return pDao.selectPfmByGenre(genreIdx, paging);
+	}
+
 }

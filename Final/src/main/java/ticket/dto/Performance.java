@@ -21,13 +21,15 @@ public class Performance {
 	private int ageGradeIdx;
 	private int runningTime;
 	private Date createDate;
+	private String posterName; // 포스터 이름(서버에 저장된 이름)
 	 
+	
 	@Override
 	public String toString() {
 		return "Performance [pfmIdx=" + pfmIdx + ", name=" + name + ", genreIdx=" + genreIdx + ", pfmStart=" + pfmStart
 				+ ", pfmEnd=" + pfmEnd + ", ticketStart=" + ticketStart + ", ticketEnd=" + ticketEnd + ", hallIdx="
 				+ hallIdx + ", ageGradeIdx=" + ageGradeIdx + ", runningTime=" + runningTime + ", createDate="
-				+ createDate + "]";
+				+ createDate + ", posterName=" + posterName + "]";
 	}
 
 	public int getPfmIdx() {
@@ -116,6 +118,14 @@ public class Performance {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getPosterName() {
+		return posterName;
+	}
+
+	public void setPosterName(String posterName) {
+		this.posterName = posterName;
 	}
 	
 	 

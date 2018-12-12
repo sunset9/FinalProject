@@ -17,6 +17,21 @@
 		<result column="theme_name" property="themeName"/>
 		<result column="genre_idx" property="genreIdx"/>
 	</resultMap>
+	
+	<resultMap type="ticket.dto.Performance" id="Performance">
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="name" property="name"/>
+		<result column="genre_idx" property="genreIdx"/>
+		<result column="pfm_start" property="pfmStart"/>
+		<result column="pfm_end" property="pfmEnd"/>
+		<result column="ticket_start" property="ticketStart"/>
+		<result column="ticket_end" property="ticketEnd"/>
+		<result column="hall_idx" property="hallIdx"/>
+		<result column="age_grade_idx" property="ageGradeIdx"/>
+		<result column="running_time" property="runningTime"/>
+		<result column="create_date" property="createDate"/>
+		<result column="poster_name" property="posterName"/>
+	</resultMap>
 
 	<select id="selectAllGenre" resultMap="Genre">
 		SELECT genre_idx, genre
@@ -153,4 +168,27 @@
 		FROM artist
 		WHERE name LIKE '%${name }%'
 	</select>
+	
+	<select id="selectAllCntPfmByGenre" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM performance
+		WHERE genre_idx = #{genreIdx }
+	</select>
+	
+	<select id="selectPfmByGenre" resultMap="Performance">
+		SELECT 
+			po.stored_name poster_name ,pp.*
+		FROM (
+    		SELECT ROWNUM as rnum, p.* FROM (
+       			SELECT  * FROM performance
+                WHERE genre_idx = #{genreIdx }
+                ORDER BY pfm_idx
+    		) p
+		)pp
+        LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+		ORDER BY rnum
+	</select>
+	
 </mapper>

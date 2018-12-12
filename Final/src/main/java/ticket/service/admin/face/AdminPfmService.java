@@ -304,4 +304,19 @@ public interface AdminPfmService {
 	 */
 	public int getArtistSearchCnt(Artist artist);
 
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 장르로 필터링, 현재 등록된  공연 개수 가져오기
+	 * @작성자: 전해진
+	 */
+	public int getPfmCntByGenre(String genre);
+	
+	/**
+	 * @최종수정일: 2018.12.11
+	 * @Method설명: 장르로 필터링, 현재 등록된  공연 목록 가져오기(페이징)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> getPfmListByGenre(String genre, Paging paging);
+
+
 }
