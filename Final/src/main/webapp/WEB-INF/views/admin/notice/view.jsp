@@ -14,13 +14,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("btnDelete").click(function(){
-		$(location).attr("href", "/admin/noticedelete?noticeIdx=${noticeView.noticeIdx}")
+	$("#btnDelete").click(function(){
+		$(location).attr("href", "/admin/noticedelete?noticeIdx=${noticeView.noticeIdx}");
 	});
 });
+
 </script>
 
 </head>
@@ -66,12 +68,11 @@ $(document).ready(function(){
 	<td> 제목(제목에만 링크)</td> 
 	<td>작성일 </td></tr>
 </table>
-</div>
 
 
 <a href="/admin/noticelist"><button class="btnList">목록</button></a>
 <button id="btnDelete">삭제</button>
 
+</div>
 </body>
-
 </html>

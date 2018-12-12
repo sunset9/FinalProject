@@ -32,11 +32,16 @@ public interface AdminBoardService {
 	
 	
 	// 공지사항 글 수정
-	public void upNoti();
+	public Notice upNoti(Notice updateNotice);
 
 	// 공지사항 글 삭제
 	public void delNoti(Notice deleteNotice);
 
+	
+	
+	
+	
+	
 	// 파일 업로드
 	public void inNotiFile(NoticeFile noticeFile);
 	

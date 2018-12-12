@@ -61,9 +61,10 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public void upNoti() {
-		// TODO Auto-generated method stub
-		
+	public Notice upNoti(Notice updateNotice) {
+		adminBoardDao.updateNoti(updateNotice);
+		return updateNotice;
+
 	}
 
 	@Override
