@@ -139,7 +139,7 @@ public class AdminPfmController {
 
 		// 새 공연 등록
 		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
-		return "redirect:/admin/registpfm";
+		return "redirect:/admin/managerpfm";
 	}
 
 	/**
@@ -651,12 +651,14 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
 	public String viewPfmManager(Model model) {
-		String genre = "con"; //목록 불러오는 기본값: 콘서트 기준
-		
+		String genre = "CON"; //목록 불러오는 기본값: 콘서트 기준
+//		String order = "LATEST"; // 정렬기준 기본값: 등록순
+				
 		// 페이징 계산
 		int totalCnt = pService.getPfmCntByGenre(genre);
 		Paging paging = new Paging(totalCnt, 1, 8, 4);
 		
+		// 특정 장르에 해당하는 공연 리스트 가져오기
 		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
 		model.addAttribute("pfmList",pfmList);
 		
@@ -664,18 +666,56 @@ public class AdminPfmController {
 	}
 	
 	/**
-	 * @최종수정일: 2018.12.11
-	 * @Method설명: 장르에 맞는 공연 리스트 검색
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 장르에 맞는 공연 리스트 반환(장르 분류 탭 클릭시)
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/viewpfmlist", method = RequestMethod.GET)
-	public HashMap<String,Object> getPfmList() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	public @ResponseBody HashMap<String,Object> getPfmList(
+			String genre
+			,@RequestParam(defaultValue="1") int curPage
+			) {
 		
-		map.put("pfm", 1);
+		// 페이징 계산
+		int totalCnt = pService.getPfmCntByGenre(genre);
+		Paging paging = new Paging(totalCnt, curPage, 8, 4);
+				
+		// 장르가 일치하는 공연 리스트 가져오기
+		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
+		
+		// View 로 넘겨줄 값 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pfmList", pfmList);
+		map.put("paging", paging);
 		
 		return map;
 	}
+	
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 공연 검색 결과 반환
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/searchpfm", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String,Object> searchPfm(
+			String keyword
+			,@RequestParam(defaultValue="1") int curPage
+			){
+		// 페이징 계산
+		int totalCnt = pService.getPfmSearchCnt(keyword);
+		Paging paging = new Paging(totalCnt, curPage, 8, 4);
+				
+		// 검색어 일치하는 공연 리스트 가져오기
+		List<Performance> pfmList = pService.getPfmSearchList(keyword, paging);
+		
+		// View 로 넘겨줄 값 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pfmList", pfmList);
+		map.put("paging", paging);
+		
+		return map;
+	}
+
 	@RequestMapping(value = "/admin/registhall", method = RequestMethod.GET)
 	public String registHall() {
 		logger.info("GET registhall");
@@ -688,4 +728,5 @@ public class AdminPfmController {
 		pService.registHall(hall, file);
 		return "redirect:/admin/registhall";
 	}
+
 }

@@ -383,6 +383,20 @@ public interface AdminPfmService {
 	 */
 	public List<Performance> getPfmListByGenre(String genre, Paging paging);
 
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 검색어와 일치하는 공연의 총 개수 가져오기(장르 상관 없이)
+	 * @작성자: 전해진
+	 */
+	public int getPfmSearchCnt(String keyword);
+
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 검색어와 일치하는 공연 리스트 가져오기(페이징)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> getPfmSearchList(String keyword, Paging paging);
+
 
 	/**
 	 * @최종수정일: 2018.12.12

@@ -18,6 +18,10 @@ import ticket.dto.Poster;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
+/**
+ * @author hj
+ *
+ */
 public interface PfmDao {
 
 	/**
@@ -171,5 +175,19 @@ public interface PfmDao {
 	 */
 	public List<Performance> selectPfmByGenre(
 			@Param(value="genreIdx") int genreIdx, @Param(value="paging") Paging paging);
+
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 검색어와 일치하는 공연의 총 개수 가져오기
+	 * @작성자: 전해진
+	 */
+	public int selectCntPfmSearch(String keyword);
+
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 검색어와 일치하는 공연 리스트 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmSearch(String keyword);
 	
 }
