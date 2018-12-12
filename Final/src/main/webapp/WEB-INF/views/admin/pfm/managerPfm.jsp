@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
  /*TAB CSS*/
@@ -26,7 +27,7 @@ ul.tabs li {
     position: relative;
     background: #e0e0e0;
 }
-ul.tabs li a {
+ul.tabs li span {
     text-decoration: none;
     color: #000;
     display: block;
@@ -35,11 +36,12 @@ ul.tabs li a {
     /*--Gives the bevel look with a 1px white border inside the list item--*/
     border: 1px solid #fff; 
     outline: none;
+    cursor: pointer;
 }
 ul.tabs li a:hover {
     background: #ccc;
 }
-ul.tabs li.active, ul.tabs li.active a:hover  {
+ul.tabs li.active, ul.tabs li.active span:hover  {
     /*--Makes sure that the active tab does not listen to the hover properties--*/
     background: #fff;
     /*--Makes the active tab look like it's connected with its content--*/
@@ -54,74 +56,122 @@ ul.order li {
 	float: left;
 }
 
-ul.order li a{
+ul.order li span{
     padding: 0 20px 0 21px;
     vertical-align: middle;
+    cursor: pointer;
+}
+.orderDiv {
+	width:100%;
+	float: right;
 }
 
-/*Tab Conent CSS*/
-.tabContainer {
-    border: 1px solid #999;
-    border-top: none;
-    overflow: hidden;
-    clear: both;
-    float: left; 
-    width: 100%;
-    background: #fff;
+li.pfmInfo{
+	float:left;
+	list-style: none;	
+	padding-top: 30px;
 }
-.tabContent {
-    padding: 20px;
-    font-size: 1.2em;
+.pfmInfo a{
+ 	display:flex; 
+	padding: 24px 24px 21px;
+ 	
 }
+.pfmInfo img {
+	width: 180px;
+	height: 250px;
+} 
 </style>
 
 <script>
 $(document).ready(function(){
-	// 페이지 로드 시
-    $(".tabContent").hide(); // 모든 컨텐츠 요소 숨기기
-    $("ul.tabs li:first").addClass("active").show(); // 첫번째 탭메뉴 활성화
-    $(".tabContent:first").show(); // 첫번째 탭 컨텐츠 보여주기
+	var genre; // 조회 기준 (콘서트, 뮤지컬, 가족, 검색)
+	var keyword; // 검색 키워드
+	var order; // 정렬 기준
 	
+	// 페이지 로드 시
+    $("ul.tabs li:first").addClass("active").show(); // 첫번째 탭메뉴 활성화
+	
+    // 검색버튼 클릭 시
+    $('#searchPfmBtn').click(function(){
+    	// genre 변경
+    	genre = "search";
+    	keyword = $('#searchPfm').val();
+    	getPfmList();
+    });
+    
     // 탭 클릭 시
     $("ul.tabs li").click(function() {
         $("ul.tabs li").removeClass("active"); // "active" 클래스 삭제 
         $(this).addClass("active"); // 선택된 탭에 "active" 클래스 부여
-        $(".tabContent").hide(); // 모든 탭 컨텐츠 숨기기 
 
-        var activeTab = $(this).find("a").attr("href"); 
-        $(activeTab).fadeIn(); // 선택한 탭과 연관된 탭 컨텐츠 보여주기
+        // genre 변경
+        genre = $(this).find('span').attr('id');
+        getPfmList();
+        
     });
+    
+    function getPfmList(){
+    	$.ajax({
+    		url: '/admin/viewpfmlist'
+			, method : "GET"
+			, data: {
+				"genre": genre
+				, "keyword": keyword
+				, "order": order
+			}
+			, dataType: "json"
+			, success : function(d){
+				console.log("성공");
+				console.log(d);
+			}
+			, error: function(e){
+				console.log("공연 목록 불러오기 실패");
+			}
+    	});
+    }
     
 });
 </script>
 
 <h1>공연 관리 - 전체 목록 조회</h1>
-
+<!-- 검색창 -->
+<input type="text" id="searchPfm" placeholder="공연 제목 검색" onkeypress="if(event.keyCode==13){$('#searchPfmBtn').trigger('click'); return false;}"/> 
+<button type="button" id="searchPfmBtn">검색</button>
+<br>
+ 
 <!-- 탭 메뉴 -->
 <ul class="tabs">
-    <li><a href="#conTab">콘서트</a></li>
-    <li><a href="#muTab">뮤지컬&연극</a></li>
-    <li><a href="#famTab">가족&아동</a></li>
+    <li><span id="con">콘서트</span></li>
+    <li><span id="mu">뮤지컬&연극</span></li>
+    <li><span id="fam">가족&아동</span></li>
 </ul>
-<div>
+<!-- 정렬 메뉴 -->
+<div class="orderDiv">
 <ul class="order">
-    <li><a>등록순</a></li>
-    <li><a>조회순</a></li>
-    <li><a>예매순</a></li>
+    <li><span>등록순</span></li>
+    <li><span>조회순</span></li>
+    <li><span>예매순</span></li>
 </ul>
 </div>
 
-<!--탭 콘텐츠 영역 -->
-<div class="tab_container">
-	<div id="conTab" class="tabContent">
-	콘서트 탭
-	</div>
-	
-	<div id="muTab" class="tabContent">
-	뮤지컬 탭
-	</div>
-	
-	<div id="famTab" class="tabContent">
-	가족아동 탭
-	</div>
-</div>
+<!-- 리스트 뷰 영역 -->
+<ul id="pfmList">
+<c:forEach var="pfm" items="${pfmList }" varStatus="i">
+	<c:if test="${i.count %4 eq 1 }">
+		<li class="pfmInfo first">
+			<a href="/pfmDetail?pfmIdx=${pfm.pfmIdx }">
+				<img src="/resources/image/${pfm.posterName }">
+				<strong>${pfm.name }</strong>
+			</a>
+		</li>
+	</c:if>
+	<c:if test="${i.count %4 ne 1 }">
+		<li class="pfmInfo">
+			<a href="/pfmDetail?pfmIdx=${pfm.pfmIdx }">
+				<img src="/resources/image/${pfm.posterName }">
+				<strong>${pfm.name }</strong>
+			</a>
+		</li>
+	</c:if>
+</c:forEach>
+</ul>
