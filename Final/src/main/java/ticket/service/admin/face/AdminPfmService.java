@@ -384,5 +384,11 @@ public interface AdminPfmService {
 	public List<Performance> getPfmListByGenre(String genre, Paging paging);
 
 
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명:공연장과 공연장 사진 등록 
+	 * @작성자:박주희
+	 */
+	public void registHall(Hall hall, MultipartFile file);
 
 }

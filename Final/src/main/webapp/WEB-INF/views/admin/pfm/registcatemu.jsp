@@ -197,6 +197,8 @@ $(document).ready(function() {
 </script>
 카테고리 뮤지컬 배너 관리
 <hr>
+<form action="/admin/registcatemu" method="post">
+<button>최종저장</button>
 	<div id="hide"></div>
 	<div class="row">
 		<c:forEach var="item" items="${posterList }">
@@ -250,3 +252,4 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+</form>
