@@ -10,12 +10,8 @@
 	<result column="user_idx" property="userIdx"/>
 	<result column="addr_detail" property="addrDetail"/>
 	<result column="create_date" property="createDate"/>
+	<result column="m_grade_idx" property="mGradeIdx"/>
 </resultMap>
-  
-  <resultMap type="ticket.dto.User" id="AdminUserListMap">
-  	<result column=""/>
-  	
-  </resultMap>
   
   <sql id="selectCnt">
   	SELECT COUNT(*) FROM userinfo
@@ -33,7 +29,7 @@
 	 </select>
 	 
   <select id ="selectUser" parameterType="ticket.dto.User" resultMap="UserMap">
-  	select * from userinfo where email = #{email}
+  	select * from userinfo where user_idx = #{userIdx}
   </select>
   
   <select id ="selectUserByEmail" parameterType="String" resultType="int">

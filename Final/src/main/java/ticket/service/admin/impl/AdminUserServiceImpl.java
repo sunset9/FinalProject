@@ -37,10 +37,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public void changeUserGrade(int currUser, int currUserGrade) {
-		logger.info("-----------AdminUserServiceImpl------------");
-		logger.info("등급 변경할 유저 idx : "+currUser);
-		logger.info("변경할 등급 idx : "+currUserGrade);
-		logger.info("-------------------------------------------");
+		uDao.updateUserGrade(currUser, currUserGrade);
 	}
 
 	@Override
@@ -64,6 +61,11 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public List<User> getPagingListByPaging(Paging paging) {
 		return uDao.selectPagingUserListByPaging(paging);
+	}
+
+	@Override
+	public User getUserByUserIdx(User user) {
+		return uDao.selectUser(user);
 	}
 }
 	
