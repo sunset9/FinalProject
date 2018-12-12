@@ -66,6 +66,13 @@ public interface MainDao {
 	public List<Poster> selectMuPfmPosterInfo();
 
 	/**
+	 * 최종수정일: 2018.12.12
+	 * @Method설명: 장르가 가족&아동인 모든 포스터 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectFamPfmPosterInfo();
+
+	/**
 	 * 최종수정일: 2018.12.11
 	 * @Method설명: 콘서트 테마 종류 출력해주기
 	 * @작성자: 배수연

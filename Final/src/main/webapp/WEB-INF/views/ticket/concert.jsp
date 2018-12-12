@@ -4,11 +4,21 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		// 상세페이지로 이동
-// 		$("#imgDetailInfo").click(function() {
-// 			// 주소 수정하기
-// 			$(location).attr("href", "");
-// 		});
+		$("#rnb").click(function() {
+// 			 $.ajax({
+// 		         type: "get"
+// 		         , url: "/ticket/concert"
+// //		          , data: { }
+// 		         , dataType: "json"
+// 		         , success: function(res){
+// 		            console.log("성공!");
+// 		            console.log(res);
+// 		         }
+// 		         ,error: function() {
+// 		            console.log("실패!");
+// 		         }
+// 		      });
+		});
 	});
 	
 </script>
@@ -18,9 +28,10 @@
 	margin-bottom: 20px;
 }
 
-#concertImg {
+.concertImg {
 	width: 250px;
 	height: 300px;
+	margin: 5px;
 }
 
 .themeList {
@@ -41,7 +52,10 @@
 	<h3>콘서트</h3>
 	<div class="conTopBanner">
 		<c:forEach items="${topBanList }" var="topList">
-			<a href="#"><img id="concertImg" src="/resources/image/${topList.originName}" /></a>
+			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<img class="concertImg" src="/resources/image/${topList.originName}" />
+			</a>
+<%-- 			<strong>${topList.name }</strong> --%>
 		</c:forEach>
 	</div>
 	
@@ -51,7 +65,7 @@
 		<c:forEach items="${themeList }" var="themeList">
 			<button class="themeBtn" name="${themeList.themeIdx }" style="border: none; background-color: #FFFFFF;">
 				${themeList.themeName }
-			</button>
+			</button><br>
 		</c:forEach>
 	</div>
 		
@@ -59,10 +73,13 @@
 	<c:forEach items="${posterList }" var="list">
 	<div class="concertList">
 		<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-		<button id="imgDetailInfo" style="border: none; background-color: #FFFFFF;">
-			<img id="concertImg" src="/resources/image/${list.originName}" />
+		<button class="imgDetailInfo" style="border: none; background-color: #FFFFFF;">
+			<img class="concertImg" src="/resources/image/${list.originName}" /><br>
+			<strong>${list.name }</strong>
 		</button>
 		</a>
+		
+<%-- 		<c:if test="${countList % 4 == 0 }"><br></c:if> --%>
 	</div>
 	</c:forEach>
 	

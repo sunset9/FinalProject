@@ -43,7 +43,7 @@ public class MainController {
 			, Theme theme
 		) {
 		logger.info("콘서트 FORM");
-		// 관리자가 선택한 콘서트 상단 배너 15개
+		// 관리자가 선택한 콘서트 상단 배너 15개`
 		List<Poster> topBanList = mainService.adminChoiceBannerCon();
 		model.addAttribute("topBanList", topBanList);
 		
@@ -79,18 +79,9 @@ public class MainController {
 		List<Theme> themeList = mainService.getMuThemeKind();
 		model.addAttribute("themeList", themeList);
 		
+		// 모든 포스터 리스트 뿌려주기
 		List<Poster> posterList = mainService.getMuPfmPoster();
 		model.addAttribute("posterList", posterList);
-	}
-	
-	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 뮤지컬&콘서트 관련 띄우기
-	 * @작성자: 배수연
-	 */
-	@RequestMapping(value="/ticket/musicalplay", method=RequestMethod.POST)
-	public void musicalandplayProc() {
-		
 	}
 	
 	/**
@@ -111,16 +102,9 @@ public class MainController {
 		// 테마 리스트 뿌려주기
 		List<Theme> themeList = mainService.getFamThemeKind();
 		model.addAttribute("themeList", themeList);
-	}
-	
-	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 가족&아동 관련 띄우기
-	 * @작성자: 배수연
-	 */
-	@RequestMapping(value="/ticket/familychild", method=RequestMethod.POST)
-	public void familyandchildProc() {
 		
+		List<Poster> posterList = mainService.getFamPfmPoster();
+		model.addAttribute("posterList", posterList);
 	}
 	
 	/**
