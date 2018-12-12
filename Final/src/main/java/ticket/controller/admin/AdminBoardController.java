@@ -54,9 +54,7 @@ public class AdminBoardController {
 	 */
 	@RequestMapping(value="/admin/noticeview", method=RequestMethod.GET)
 	public String notiView(Model model, int noticeIdx) {
-		logger.info("공지 상세");
-		
-		 
+//		logger.info("공지 상세");
 		
 		Notice noticeView = adminBoardService.getViewNoti(noticeIdx);
 		
@@ -73,8 +71,8 @@ public class AdminBoardController {
 	 */
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.GET)
 	public String notiWrite() {
-		logger.info("공지 글 쓰기 폼");
-	
+		logger.info("공지 글쓰기 폼");
+		
 		return "/admin/notice/write";
 				
 	}
@@ -83,8 +81,8 @@ public class AdminBoardController {
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.POST)
 	public String notiWriteProc(HttpSession session, Notice notice) {
 		
-		logger.info("공지 글 쓰기 처리");
-		logger.info(notice.toString());
+//		logger.info("공지 글 쓰기 처리");
+//		logger.info(notice.toString());
 		
 		adminBoardService.writeNoti(notice);
 		
@@ -93,31 +91,33 @@ public class AdminBoardController {
 	}
 	
 	
-	
-	
-	
-	
-	/**
-	 * 2018.12.05
-	 * @Method설명: 공지사항 글 수정
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.GET)
-	public void notiUpdate() {
-		
-	}
-
-	
 	/**
 	 * 2018.12.05
 	 * @Method설명: 공지사항 글 수정 처리
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.POST)
-	public String notiUpdateProc() {
-		return null;
+	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.GET)
+	public String notiUpdate() {
+		logger.info("공지수정폼");
+		return "/admin/notice/update";
 		
 	}
+
+	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.POST)
+	public String notiUpdateProc(HttpSession session, Notice updateNotice, Model model) {
+		logger.info("공지 수정 처리");
+		
+		Notice noticeUpdate = adminBoardService.upNoti(updateNotice);
+		
+		model.addAttribute("noticeUpdate", noticeUpdate);
+		
+		return "redirect:/admin/noticelist";
+		
+	}
+	
+	
+	
+	
 	/**
 	 * 2018.12.11
 	 * @Method설명: 공지사항 글 삭제
@@ -125,7 +125,7 @@ public class AdminBoardController {
 	 */
 	@RequestMapping(value="/admin/noticedelete", method=RequestMethod.GET)
 	public String notiDelete(Notice deleteNotice) {
-		
+		logger.info("공지사항 글 삭제");
 		adminBoardService.delNoti(deleteNotice);
 		return "redirect:/admin/noticelist";
 		
