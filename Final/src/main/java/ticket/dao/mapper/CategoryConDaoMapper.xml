@@ -12,6 +12,10 @@
 
 	</insert>
 	<delete id="delete" parameterType="ticket.dto.CategoryCon">
-		DELETE FROM category_con WHERE pfm_idx=#{pfmIdx}
+		DELETE FROM category_con WHERE
+		pfm_idx=#{pfmIdx}
 	</delete>
+	<select id="selectAllCnt" resultType="int">
+		SELECT COUNT(*) FROM category_con
+	</select>
 </mapper>

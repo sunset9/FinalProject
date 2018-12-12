@@ -15,4 +15,8 @@
 		DELETE FROM category_fam WHERE
 		pfm_idx=#{pfmIdx}
 	</delete>
+	
+	<select id="selectAllCnt" resultType="int">
+		SELECT COUNT(*) FROM category_fam
+	</select>
 </mapper>

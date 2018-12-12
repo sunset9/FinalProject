@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
 <script>
 $(document).ready(function() {
 	var cnt = ${cnt};
@@ -10,7 +8,7 @@ $(document).ready(function() {
   		//console.log('${list}');
   		$('#myModal').modal('show'); //모달창 보여주기 
   		ajax();
-  		console.log(cnt);
+  		
    });
 	$('ul.pagination').on('click','a',function(){
 		console.log("눌렸습니다.");
@@ -206,7 +204,7 @@ $(document).ready(function() {
 					<div class="caption">
 						<div class="pfmIdx" id="${item.pfmIdx }">
 							<img src="/resources/image/${item.storedName }"> <a
-								href="<c:url value='/admin/deletecatemu/${ item.pfmIdx }' />"
+								href="<c:url value='/admin/deletecatefam/${ item.pfmIdx }' />"
 								
 								class="btn btn-lg btn-danger">삭제</a>
 								<h3>${item.name }</h3>

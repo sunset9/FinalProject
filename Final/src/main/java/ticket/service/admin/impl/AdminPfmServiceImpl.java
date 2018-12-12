@@ -252,8 +252,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Poster> getListFam() {
-		// TODO Auto-generated method stub
-		return null;
+		return infoDao.selectBypfmIdxFam();
 	}
 
 	@Override
@@ -269,7 +268,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void addFam(CategoryFam fam) {
-		// TODO Auto-generated method stub
+		famDao.insert(fam);
 
 	}
 
@@ -286,8 +285,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void removeFam(CategoryFam fam) {
-		// TODO Auto-generated method stub
-
+		famDao.delete(fam);
 	}
 
 	@Override
@@ -337,7 +335,14 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		// 장르로 선택된(콘서트) 리스트 가져오기
 		return infoDao.selectBygenreIdx(1,paging);
 	}
-
+	@Override
+	public List<Poster> getModalListMu(Paging paging){
+		return infoDao.selectBygenreIdx(2,paging);
+	}
+	@Override
+	public List<Poster> getModalListFam(Paging paging){
+		return infoDao.selectBygenreIdx(3, paging);
+	}
 	@Override
 	public int getUnanswered() {
 		// 1:1 문의 미답변수 가져오기
@@ -386,6 +391,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Poster> getSearchListForMu(String name) {
 		return infoDao.selectPosterByNameMu(name);
 	}
+	@Override
+	public List<Poster> getSearchListForFam(String searchPoster){
+		return infoDao.selectPosterByNameFam(searchPoster);
+	}
 
 	@Override
 	public List<Poster> getModalListMu() {
@@ -416,6 +425,30 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
+
+	public int getModalListMuCnt() {
+		return infoDao.selectCntBygenreIdx(2);
+	}
+	@Override
+	public int getModalListFamCnt() {
+		return infoDao.selectCntBygenreIdx(3);
+	}
+
+	@Override
+	public int getListAllCntCon() {
+		return conDao.selectAllCnt();
+	}
+
+	@Override
+	public int getListAllCntMu() {
+		return muDao.selectAllCnt();
+	}
+
+	@Override
+	public int getListAllCntFam() {
+		return famDao.selectAllCnt();
+	}
+  @Override 
 	public int getPfmCntByGenre(String genre) {
 		int genreIdx = 0;
 		
@@ -452,5 +485,6 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		
 		return pDao.selectPfmByGenre(genreIdx, paging);
 	}
+
 
 }
