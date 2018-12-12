@@ -117,4 +117,5 @@ public class AdminUserController {
 	@RequestMapping(value = "/admin/curpaypfm", method = RequestMethod.GET)
 	public void getList() {
 	}
+
 }

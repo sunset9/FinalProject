@@ -61,4 +61,11 @@ public class AdminHomeController {
 		model.addAttribute("todayFamily", todayFamily);
 		model.addAttribute("unansweredInq", unansweredInq);
 	}
+	
+	@RequestMapping(value="/admin/menu", method=RequestMethod.GET)
+	public String menu() {
+		
+		return "/admin/layout/menu";
+		
+	}
 }

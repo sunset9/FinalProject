@@ -13,6 +13,18 @@
 	<result column="m_grade_idx" property="mGradeIdx"/>
 </resultMap>
   
+  <resultMap type="ticket.dto.StateOfBook" id="SOBMap">
+  	<result column="create_date" property="createDate"/>
+  	<result column="pfm_idx" property="pfmIdx"/>
+  	<result column="pfm_start" property="pfmStart"/>
+  	<result column="pfm_end" property="pfmEnd"/>
+  	<result column="book_idx" property="bookIdx"/>
+  	<result column="seat_idx" property="seatIdx"/>
+  	<result column="cancel_date" property="cancelDate"/>
+  	<result column="book_cate_idx" property="bookCateIdx"/>
+  	
+  </resultMap>
+  
   <sql id="selectCnt">
   	SELECT COUNT(*) FROM userinfo
   </sql>
@@ -99,6 +111,7 @@
 		SET m_grade_idx = #{currUserGrade}
 		WHERE user_idx = #{currUser}
   </update>
+  
   </mapper>
   
   

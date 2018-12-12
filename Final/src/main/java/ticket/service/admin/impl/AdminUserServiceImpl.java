@@ -42,7 +42,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public List getBookDetail(User user) {
-		 
+		
 		return null;
 	}
 
