@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
 import ticket.dao.face.CategoryMuDao;
+import ticket.dao.face.HallDao;
+import ticket.dao.face.HallFileDao;
 import ticket.dao.face.PfmDao;
 import ticket.dao.face.PosterDao;
 import ticket.dto.AgeGrade;
@@ -27,6 +29,7 @@ import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmBookinfo;
@@ -54,6 +57,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	CategoryFamDao famDao;
 	@Autowired
 	PosterDao infoDao;
+	@Autowired
+	HallDao hallDao;
+	@Autowired
+	HallFileDao hallFileDao;
 
 	@Override
 	public List getMBannerList() {
@@ -333,16 +340,19 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Poster> getModalListCon(Paging paging) {
 
 		// 장르로 선택된(콘서트) 리스트 가져오기
-		return infoDao.selectBygenreIdx(1,paging);
+		return infoDao.selectBygenreIdx(1, paging);
 	}
+
 	@Override
-	public List<Poster> getModalListMu(Paging paging){
-		return infoDao.selectBygenreIdx(2,paging);
+	public List<Poster> getModalListMu(Paging paging) {
+		return infoDao.selectBygenreIdx(2, paging);
 	}
+
 	@Override
-	public List<Poster> getModalListFam(Paging paging){
+	public List<Poster> getModalListFam(Paging paging) {
 		return infoDao.selectBygenreIdx(3, paging);
 	}
+
 	@Override
 	public int getUnanswered() {
 		// 1:1 문의 미답변수 가져오기
@@ -391,8 +401,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Poster> getSearchListForMu(String name) {
 		return infoDao.selectPosterByNameMu(name);
 	}
+
 	@Override
-	public List<Poster> getSearchListForFam(String searchPoster){
+	public List<Poster> getSearchListForFam(String searchPoster) {
 		return infoDao.selectPosterByNameFam(searchPoster);
 	}
 
@@ -429,6 +440,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public int getModalListMuCnt() {
 		return infoDao.selectCntBygenreIdx(2);
 	}
+
 	@Override
 	public int getModalListFamCnt() {
 		return infoDao.selectCntBygenreIdx(3);
@@ -448,11 +460,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public int getListAllCntFam() {
 		return famDao.selectAllCnt();
 	}
-  @Override 
+
+	@Override
 	public int getPfmCntByGenre(String genre) {
 		int genreIdx = 0;
-		
-		switch (genre){
+
+		switch (genre) {
 		case "con":
 			genreIdx = 1;
 			break;
@@ -463,15 +476,15 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			genreIdx = 3;
 			break;
 		}
-		
+
 		return pDao.selectAllCntPfmByGenre(genreIdx);
 	}
 
 	@Override
 	public List<Performance> getPfmListByGenre(String genre, Paging paging) {
 		int genreIdx = 0;
-		
-		switch (genre){
+
+		switch (genre) {
 		case "con":
 			genreIdx = 1;
 			break;
@@ -482,9 +495,58 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			genreIdx = 3;
 			break;
 		}
-		
+
 		return pDao.selectPfmByGenre(genreIdx, paging);
 	}
 
+	@Override
+	public void registHall(Hall hall, MultipartFile file) {
+		// TODO Auto-generated method stub
+		int hallIdx = 0;
+		hallDao.insert(hall);
+
+		hallIdx = hall.getHallIdx();
+		
+		if(file.getSize()!=0) {
+			HallFile hallFile = uploadHallPic(file);
+			hallFile.setHallIdx(hallIdx);
+			hallFileDao.insert(hallFile);
+		}
+	}
+
+	public HallFile uploadHallPic(MultipartFile file) {
+
+		// UUID, 고유 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		// 파일이 저장될 경로
+		String stored = context.getRealPath("resources/image");
+
+		// 저장될 파일의 이름
+		String oriName = file.getOriginalFilename();
+		String name = oriName + "_" + uId;
+
+		// 파일객체
+		File dest = new File(stored, name);
+
+		// 파일 저장(업로드)
+		try {
+			file.transferTo(dest);
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// 반환할 공연장 사진파일 객체 생성
+		HallFile hallFile = new HallFile();
+
+		hallFile.setOriginName(oriName);
+		hallFile.setStoredName(name);
+
+		return hallFile;
+
+	}
 
 }

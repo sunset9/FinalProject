@@ -331,20 +331,16 @@ public class AdminPfmController {
 	 * @작성자: 박주희
 	 */
 	@RequestMapping(value = "/admin/registcatemu", method = RequestMethod.POST)
-	public @ResponseBody String registerCategoryMuProc(@RequestParam(value = "pfmIdx") List<String> pfmIdx,
+	public String registerCategoryMuProc(@RequestParam(value = "pfmIdx") List<String> pfmIdx,
 			Model model) {
 		logger.info(pfmIdx.toString());
 		logger.info("POST");
-
-		if (pfmIdx.size() == 0) {
-			return "0";
-		}
 		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
 			CategoryMu mu = new CategoryMu();
 			mu.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));
 			pService.addMu(mu);// 개수만큼 insert
 		}
-		return "1";
+		return "redirect:/admin/registcatemu";
 	}
 
 	/**
@@ -430,16 +426,13 @@ public class AdminPfmController {
 	}
 
 	@RequestMapping(value = "/admin/registcatefam", method = RequestMethod.POST)
-	public @ResponseBody String registerCategoryFam(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
-		if (pfmIdx.size() == 0) {
-			return "0";
-		}
+	public String registerCategoryFam(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
 		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
 			CategoryFam fam = new CategoryFam();
 			fam.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));
 			pService.addFam(fam);// 개수만큼 insert
 		}
-		return "1";
+		return "redirect:/admin/registcatefam";
 	}
 
 	@RequestMapping(value = "/admin/deletecatefam/{pfmIdx}", method = RequestMethod.GET)
@@ -683,5 +676,16 @@ public class AdminPfmController {
 		
 		return map;
 	}
-
+	@RequestMapping(value = "/admin/registhall", method = RequestMethod.GET)
+	public String registHall() {
+		logger.info("GET registhall");
+		return "admin/pfm/registhall";
+	}
+	@RequestMapping(value = "/admin/registhall", method = RequestMethod.POST)
+	public String registHallProc(Hall hall,@RequestParam MultipartFile file) {
+		logger.info("POST registhall");
+		//logger.info(hall.toString());
+		pService.registHall(hall, file);
+		return "redirect:/admin/registhall";
+	}
 }

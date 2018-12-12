@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <script>
 $(document).ready(function() {
 	var cnt = ${cnt};
@@ -195,6 +197,8 @@ $(document).ready(function() {
 </script>
 카테고리 뮤지컬 배너 관리
 <hr>
+<form action="/admin/registcatefam" method="post">
+<button>최종저장</button>
 	<div id="hide"></div>
 	<div class="row">
 		<c:forEach var="item" items="${posterList }">
@@ -248,3 +252,4 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+</form>

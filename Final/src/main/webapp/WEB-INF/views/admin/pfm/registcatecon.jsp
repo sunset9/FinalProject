@@ -202,8 +202,9 @@ $(document).ready(function() {
 카테고리 콘서트 배너 관리
 <hr>
 <!-- 카테고리 부분 FORM 시작  -->
-<button id="btn">최종저장</button>
-<form action="/admin/registcateCon" method="post">
+
+<form action="/admin/registcatecon" method="post">
+<button>최종저장</button>
 	<div id="hide"></div>
 	<div class="row">
 		<c:forEach var="item" items="${posterList }">
