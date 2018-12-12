@@ -21,6 +21,11 @@ $(document).ready(function(){
 	$("#btnDelete").click(function(){
 		$(location).attr("href", "/admin/noticedelete?noticeIdx=${noticeView.noticeIdx}");
 	});
+	
+	$("#btnUpdate").click(function(){
+		$(location).attr("href", "/admin/noticeupdate?noticeIdx=${noticeView.noticeIdx}");
+	});
+	
 });
 
 </script>
@@ -72,7 +77,7 @@ $(document).ready(function(){
 
 <a href="/admin/noticelist"><button class="btnList">목록</button></a>
 <button id="btnDelete">삭제</button>
-
+<button id="btnUpdate">수정</button>
 </div>
 </body>
 </html>

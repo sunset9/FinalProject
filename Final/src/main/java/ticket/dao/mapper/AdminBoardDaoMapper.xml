@@ -46,15 +46,20 @@
   </insert>
 
 	
-	<update id="updateNoti" parameterType="ticket.dto.Notice">
-		UPDATE notice set notice_title =#{noticeTitle}, notice_content = #{noticeContent} 
-		where notice_idx = #{noticeIdx};
-	</update>
+  <select id="selectNoticeBynoticeIdx" resultMap="notice">
+  	select * from notice
+  		where notice_idx = #{noticeIdx}
+  </select>
+	
+  <update id="updateNoti" parameterType="ticket.dto.Notice">
+	  UPDATE notice set notice_title =#{noticeTitle}, notice_content = #{noticeContent} 
+	  where notice_idx = #{noticeIdx}
+  </update>
 
 
-	<delete id="deleteNoti" parameterType="ticket.dto.Notice">
-		delete notice where notice_idx = #{noticeIdx}
-	</delete>
+  <delete id="deleteNoti" parameterType="ticket.dto.Notice">
+    	delete notice where notice_idx = #{noticeIdx}
+  </delete>
 
 
 

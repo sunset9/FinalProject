@@ -60,12 +60,21 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	
 	}
 
-	@Override
-	public Notice upNoti(Notice updateNotice) {
-		adminBoardDao.updateNoti(updateNotice);
-		return updateNotice;
 
+	@Override
+	public Notice noticeUpdateView(Notice notice) {
+		
+		return adminBoardDao.selectNoticeBynoticeIdx(notice);
 	}
+
+	
+	@Override
+	public Notice upNoti(Notice notice) {
+
+		adminBoardDao.updateNoti(notice);
+		return notice;
+	}
+	
 
 	@Override
 	public void delNoti(Notice deleteNotice) {
@@ -124,6 +133,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		// null이나 "" 이면 0으로 반환
 		return 0;
 	}
+
 
 
 

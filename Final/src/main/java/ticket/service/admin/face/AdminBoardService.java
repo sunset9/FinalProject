@@ -28,11 +28,11 @@ public interface AdminBoardService {
 	// 공지사항 글 쓰기
 	public void writeNoti(Notice notice);
 
+	// 수정 get
+	public Notice noticeUpdateView(Notice notice);
 	
-	
-	
-	// 공지사항 글 수정
-	public Notice upNoti(Notice updateNotice);
+	// 공지사항 글 수정 post
+	public Notice upNoti(Notice notice);
 
 	// 공지사항 글 삭제
 	public void delNoti(Notice deleteNotice);

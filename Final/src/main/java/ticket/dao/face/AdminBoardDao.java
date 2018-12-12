@@ -28,11 +28,11 @@ public interface AdminBoardDao {
 	// 공지사항 글 쓰기
 	public void insertNoti(Notice notice);
 	
-	// 글번호로 게시글 조회
-//	public Notice selectNoticeBynoticeIdx(Notice viewNotice);
+	// 글번호로 게시글 조회 (수정 get)
+	public Notice selectNoticeBynoticeIdx(Notice notice);
 	
-	// 공지사항 글 수정
-	public void updateNoti(Notice updateNotice);
+	// 공지사항 글 수정 (수정 post)
+	public void updateNoti(Notice notice);
 	
 	// 공지사항 글 삭제
 	public void deleteNoti(Notice deleteNotice);	
