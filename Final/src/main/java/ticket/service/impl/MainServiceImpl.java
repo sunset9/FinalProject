@@ -46,9 +46,14 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getPfmPoster() {
+	public List<Poster> getConPfmPoster() {
 //		logger.info(mainDao.selectPfmPosterInfo().toString());
-		return mainDao.selectPfmPosterInfo();
+		return mainDao.selectConPfmPosterInfo();
+	}
+
+	@Override
+	public List<Poster> getMuPfmPoster() {
+		return mainDao.selectMuPfmPosterInfo();
 	}
 
 	@Override

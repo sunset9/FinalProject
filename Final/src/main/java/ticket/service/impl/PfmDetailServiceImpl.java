@@ -9,6 +9,7 @@ import ticket.dao.face.PfmDetailDao;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
+import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
 import ticket.service.face.PfmDetailService;
@@ -19,7 +20,7 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Autowired PfmDetailDao mDetailDao;
 
 	@Override
-	public Performance getChoicePfmDetail(Performance pfm) {
+	public Poster getChoicePfmDetail(Performance pfm) {
 		return mDetailDao.selectChoiceDetail(pfm);
 	}
 
@@ -71,6 +72,11 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public boolean getDelReviewRecomm(ReviewRecomm reRecomm) {
 		return mDetailDao.deleteReviewRecomm(reRecomm);
+	}
+
+	@Override
+	public Performance getPfmInfo(Performance pfm) {
+		return mDetailDao.selectPfmInfo(pfm);
 	}
 	
 }

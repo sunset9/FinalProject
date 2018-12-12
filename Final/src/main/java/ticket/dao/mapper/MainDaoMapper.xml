@@ -7,6 +7,7 @@
 	
 	<resultMap type="ticket.dto.Theme" id="Theme">
 		<result column="theme_name" property="themeName"/>
+		<result column="theme_idx" property="themeIdx"/>
 	</resultMap>
 	
 	<resultMap type="ticket.dto.Poster" id="Poster">
@@ -50,8 +51,24 @@
 		)
 	</select>
 	
-	<!-- 원하는 선택결과에 맞는 포스터 이미지 출력 -->
-	<select id="selectPfmPosterInfo" resultType="ticket.dto.Poster">
+	<select id="selectAdminBanFam" resultMap="Poster">
+		SELECT
+			poster_idx
+			, pfm_idx
+			, origin_name
+			, stored_name
+			, create_date
+		FROM poster_info
+		WHERE pfm_idx IN (
+			SELECT pfm_idx as pfmIdx FROM performance
+			WHERE pfm_idx IN (
+				SELECT pfm_idx as pfmIdx FROM category_fam
+			)
+		)
+	</select>
+	
+	<!-- 콘서트 전체 출력 -->
+	<select id="selectConPfmPosterInfo" resultType="ticket.dto.Poster">
 		SELECT
 			poster_idx as posterIdx,
 			pfm_idx as pfmIdx,
@@ -62,6 +79,20 @@
 		WHERE pfm_idx IN (
 		    SELECT pfm_idx FROM performance
 		    WHERE genre_idx=1
+		)
+	</select>
+	
+	<select id="selectMuPfmPosterInfo" resultType="ticket.dto.Poster">
+		SELECT
+			poster_idx as posterIdx,
+			pfm_idx as pfmIdx,
+			origin_name as originName,
+			stored_name as storedName,
+			create_date as createDate
+		FROM poster_info
+		WHERE pfm_idx IN (
+		    SELECT pfm_idx FROM performance
+		    WHERE genre_idx=2
 		)
 	</select>
 	
@@ -88,7 +119,7 @@
 	<select id="ConThemeChoice" parameterType="ticket.dto.Theme" resultMap="Poster">
 		SELECT
 			origin_name
-		FROM poster_info p, theme t
+		FROM poster_info, theme
 		WHERE pfm_idx IN (
 		    SELECT pfm_idx as pfmIdx
 		    FROM pfm_theme
@@ -98,7 +129,7 @@
 		        WHERE genre_idx=1
 		    )
 		)
-		AND theme_name=#{theme_name}
+		AND theme_idx=#{themeIdx}
 	</select>
 
 </mapper>

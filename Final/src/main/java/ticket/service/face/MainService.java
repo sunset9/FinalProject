@@ -49,7 +49,14 @@ public interface MainService {
 	 * @Method설명: 장르가 콘서트인 모든 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getPfmPoster();
+	public List<Poster> getConPfmPoster();
+
+	/**
+	 * 최종수정일: 2018.12.11
+	 * @Method설명: 장르가 뮤지컬&공연인 모든 포스터 이미지 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getMuPfmPoster();
 	
 	/**
 	 * 최종수정일: 2018.12.11
