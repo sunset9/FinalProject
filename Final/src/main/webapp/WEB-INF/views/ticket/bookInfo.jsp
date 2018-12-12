@@ -54,14 +54,8 @@
 						console.log(e);
 					}
 				})
-				
-		    		  
-	    	  
 	       }
 	  });
-	  
-	
-
 	  });
   function overm(obj) {
 	  obj.css("border","2px solid cyan");
@@ -88,32 +82,110 @@
   
   
   $(document).ready(function () {
-  $('#bookBtn').click(function() {
 	  
-
-		  var date = new Date($('#datepicker').datepicker( "getDate" ));
-			var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
-		  $(this).attr("data-date",dateStr);
+	  $('#bookBtn').click(function() {
 		  
-		  var selectDate = $(this).data("date");
-		  var time = $('#timeList').find(".selected").html();
-		  
-		  
-		  $("#dates").text(selectDate+' '+time);
-
-		$.ajax({
-			type:"get",
-			url:"/ticket/seatSection",
-			data:{},
-			dataType:"html",
-			success:function(res){
-			$('#selectedSeats').html(res);
-// 			$('#legend').html('');
-			
-			}
-		});	
+			  var date = new Date($('#datepicker').datepicker( "getDate" ));
+			  var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
+			  $(this).attr("data-date",dateStr);
+			  
+			  var selectDate = $(this).data("date");
+			  var time = $('#timeList').find(".selected").html();
+			  
+			  if ((selectDate == undefined) || (time == undefined)){
+				  alert('공연날짜,공연시간을 제대로 선택해주세요');
+				  return;
+			  }
+			  
+			  $('#myModal').modal("show").on('hide', function() {
+				  $('#myModal').modal('show')
+			 });
+			  
+			  
+			  $("#dates").text(selectDate+' '+time);
+	
+			$.ajax({
+				type:"get",
+				url:"/ticket/seatSection",
+				data:{},
+				async: false,
+				dataType:"html",
+				success:function(res){
+				$('#selectedSeats').html(res);
+	// 			$('#legend').html('');
+				$('svg').css("width","650px");
+				$('svg').css("height","530px");
+				loadSectionData();
+				
+				}
+			});	
+		});
 	  
-	});
+	  function loadSectionData(){
+		  
+		  $.ajax({
+			  type:"POST",
+			  url:"/ticket/seatSection",
+			  data:{},
+			  dataType:"json",
+			  success:function(res){
+				  
+				  var color = ['blue','red','yellow','pink','syan','navy'];
+				  
+				  var json = { };
+				  var secName; 
+				  for(var i=0;i<res.hashMap.secName.length;i++){
+					  secName = res.hashMap.secName[i];
+					  json[secName]=color[i];
+				  }
+				  
+				  for(var i=0;i<res.hashMap.secName.length;i++){
+					  secName = res.hashMap.secName[i];
+					  console.log(json[secName]);
+					  
+				  }
+				  
+					for(var i=0;i<res.hashMap.secMap.length;i++){
+						
+						var str = 'path.'+res.hashMap.secMap[i].oriSecName;
+						var path = $('.seat_block').find(str); //seat_block 하위요소중 path중에 불러온 이름중 원본섹션이름을 가진걸 불러와라
+						
+						if(path.data("secIdx") == undefined){ // 만약 path를 찾을수 없다면 rect로 찾자
+							var str_rect='rect.'+res.hashMap.secMap[i].oriSecName;
+							path = $('.seat_block').find(str_rect);
+						}
+						
+						  for(var j=0;j<res.hashMap.secName.length;j++){
+							  
+							  if(res.hashMap.secName[j] ==res.hashMap.secMap[i].appSec ){
+								  var secName = secName = res.hashMap.secName[j];
+								  path.attr("fill",json[secName]);
+							  }
+						  
+						  }
+						
+						
+// 						switch (appsec) {
+// 						  case 'Nikon D40'  : path.attr("fill"); break;
+// 						  case 'Nikon D40X' : path.attr("fill"); break;
+// 						  case 'Canon PowerShot' : path.attr("fill"); break;
+// 						  default   : path.attr("fill"); break;
+// 						}
+					
+					}
+					
+					
+				  
+				  
+				  
+			  },
+			  error:function(e){
+				  console.log(e);
+			  }
+			  
+		  })
+		  
+	  }
 	
 });
   
@@ -140,7 +212,8 @@
 	
 	<div style="float: left;">
 		<!-- Button trigger modal -->
-		<button type="button" id ="bookBtn" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+<!-- 		<button type="button" id ="bookBtn" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> -->
+		<button type="button" id ="bookBtn" class="btn btn-primary btn-lg">
 		  예매하기
 		</button>
 		

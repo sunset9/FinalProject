@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import ticket.dao.face.TicketDao;
 import ticket.dto.Hall;
+import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
+import ticket.dto.SeatSection;
 import ticket.dto.User;
 import ticket.service.face.TicketService;
 
@@ -57,6 +59,22 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public List<PfmDateByTime> ticketTime(Performance pfm) {
 		return ticketDao.selectDateTime(pfm);
+	}
+
+	@Override
+	public List<OriginSection> loadOriginSection(Hall hall) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectOriSecByHallIdx(hall);
+	}
+
+	@Override
+	public List<SeatSection> loadSection(Performance pfm) {
+		return ticketDao.selectSeatSectionByPfmIdx(pfm);
+	}
+
+	@Override
+	public List<String> countSection(Performance pfm) {
+		return ticketDao.selectCntSectionByPfmIdx(pfm);
 	}
 	
 	
