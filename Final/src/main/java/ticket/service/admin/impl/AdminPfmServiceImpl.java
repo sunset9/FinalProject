@@ -536,4 +536,39 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	}
 
+	@Override
+	public Performance getPfm(Performance pfm) {
+		return pDao.selectPfmByIdx(pfm);
+	}
+
+	@Override
+	public List<Theme> getTheme(Performance pfm) {
+		return pDao.selectThemeByPfmIdx(pfm);
+	}
+
+	@Override
+	public List<Artist> getArtist(Performance pfm) {
+		return pDao.selectArtistByPfmIdx(pfm);
+	}
+
+	@Override
+	public List<PfmDateByTime> getPfmdbt(Performance pfm) {
+		return pDao.selectPfmdbtByPfmIdx(pfm);
+	}
+
+	@Override
+	public PfmDetail getPfmDetail(Performance pfm) {
+		return pDao.selectPfmDetailByPfmIdx(pfm);
+	}
+
+	@Override
+	public PfmBookinfo getPfmBookinfo(Performance pfm) {
+		return pDao.selectPfmBookinfoByPfmIdx(pfm);
+	}
+
+	@Override
+	public Poster getPoster(Performance pfm) {
+		return pDao.selectPosterByPfmIdx(pfm);
+	}
+
 }

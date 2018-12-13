@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- Datepicker -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
@@ -327,6 +328,9 @@ $(document).ready(function(){
 			alert('공연 분류를 먼저 선택해주세요.');
 			return;
 		}
+// 		var initSelectedTheme = ${thmAllListJson };
+// 		console.log(initSelectedTheme);
+		
 		// 장르에 맞는 테마 리스트 가져오기
 		$.ajax({
 			url: "/viewtheme"
@@ -991,7 +995,7 @@ function setComma(inNum){
 <div class='registPfmTab' id='registStep-1'>
 	<!-- 포스터 등록 -->
 	<div id="posterImg" style="float: right;width: 310px;">
-		<img src="/resources/image/poster_empty.png" accept="image/*" width="143" height="201">
+		<img src="/resources/image/${poster.storedName }" accept="image/*" width="143" height="201">
 		
 		<input class="posterName" value="파일선택" disabled="disabled">
 		<label for="posterBtn">포스터 등록</label>
@@ -1001,15 +1005,22 @@ function setComma(inNum){
 	<table>
 	<tr>
 		<th>공연 제목:</th> 
-		<td><input type="text" name="name"/></td>
+		<td><input type="text" name="name" value="${pfm.name }"/></td>
 	</tr>
 	<tr>
 		<th>공연 분류: </th> 
 		<td>
 			<select name="genreIdx">
-			<option value="0" selected="selected">분류 선택</option>
+			<option value="0" >분류 선택</option>
 			<c:forEach var="genre" items="${genreList }">
-				<option value="${genre.genreIdx }">${genre.genre }</option>
+				<c:choose>
+					<c:when test="${genre.genreIdx eq pfm.genreIdx }">
+						<option value="${genre.genreIdx }" selected="selected">${genre.genre }</option>
+					</c:when>
+					<c:when test="${genre.genreIdx ne pfm.genreIdx }">
+						<option value="${genre.genreIdx }">${genre.genre }</option>
+					</c:when>
+				</c:choose>
 			</c:forEach>
 			</select>
 		</td>
@@ -1018,32 +1029,45 @@ function setComma(inNum){
 		<th>테마: </th> 
 		<td>
 			<button type="button" id="themeSelBtn">테마 선택</button>
-			<p style="display:none;"></p>
+			<p>
+				<c:forEach var="theme" items="${thmList }">
+					<span>${theme.themeName }</span>
+				</c:forEach>
+			</p>
 		</td>
 	</tr>
 	<tr>
 		<th rowspan=2>티켓오픈: </th> 
 		<td>
-			<input type="text" name="ticketStart" class="form-control pfmDate" id="ticketStartDate" placeholder="시작일" >
+			<input type="text" name="ticketStart" class="form-control pfmDate" id="ticketStartDate" placeholder="시작일"
+			 value=<fmt:formatDate pattern = "yyyy-MM-dd" value = "${pfm.ticketStart }" />>
 		</td>
 		
 	</tr>
 	<tr>
 		<td>
-			<input type="text" name="ticketEnd" class="form-control pfmDate" id="ticketEndDate" placeholder="종료일">
+			<input type="text" name="ticketEnd" class="form-control pfmDate" id="ticketEndDate" placeholder="종료일"
+			 value=<fmt:formatDate pattern = "yyyy-MM-dd" value = "${pfm.ticketEnd }" />>
 		</td>
 	</tr>
 	<tr>
 		<th>런닝타임: </th> 
-		<td><input type="number" name="runningTime" min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
+		<td><input type="number" name="runningTime" value=${pfm.runningTime } min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
 	</tr>
 	<tr>
 		<th>관람등급: </th> 
 		<td>
 			<select name="ageGradeIdx">
-			<option value="0" selected="selected">관람등급 선택</option>
+			<option value="0">관람등급 선택</option>
 			<c:forEach var="ageGrade" items="${ageList }">
-				<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }</option>
+				<c:choose>
+					<c:when test="${ageGrade.ageGradeIdx eq pfm.ageGradeIdx }">
+						<option value="${ageGrade.ageGradeIdx }" selected="selected">${ageGrade.ageLimit }</option>
+					</c:when>
+					<c:when test="${ageGrade.ageGradeIdx ne pfm.ageGradeIdx }">
+						<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }</option>
+					</c:when>
+				</c:choose>
 			</c:forEach>
 			</select>
 		</td>
@@ -1052,16 +1076,34 @@ function setComma(inNum){
 		<th>출연진: </th> 
 		<td>
 			<button type="button" id="artistBtn">출연진 선택</button>
-			<p style="display:none;"></p>
+			<p>
+				<c:forEach var="artist" items="${artistList }">
+					<div style='float:left' aIdx="${artist.artistIdx }" aName="${artist.name }">
+						<span>${artist.name } </span>
+						<span class='glyphicon glyphicon-remove'></span>
+					</div>
+				</c:forEach>
+			</p>
+			<!-- 서버에 넘길 아티스트 인덱스값 -->
+			<c:forEach var="artist" items="${artistList }" varStatus="status">
+				<input type="hidden" name="castList[${status.index }].${artist.artistIdx }">
+			</c:forEach>			
 		</td>
 	</tr>
 	<tr>
 		<th>공연장: </th> 
 		<td>
 			<select name="hallIdx">
-			<option value="0" selected="selected">공연장 선택</option>
+			<option value="0">공연장 선택</option>
 			<c:forEach var="hall" items="${hallList }">
-				<option value="${hall.hallIdx }">${hall.hallName }</option>
+				<c:choose>
+					<c:when test="${hall.hallIdx eq pfm.hallIdx }">
+						<option value="${hall.hallIdx }" selected="selected">${hall.hallName }</option>
+					</c:when>
+					<c:when test="${hall.hallIdx eq pfm.hallIdx }">
+						<option value="${hall.hallIdx }">${hall.hallName }</option>
+					</c:when>
+				</c:choose>
 			</c:forEach>
 			</select>
 		</td>
@@ -1088,7 +1130,12 @@ function setComma(inNum){
         <h4 class="modal-title">테마 선택</h4>
       </div>
       <div class="modal-body">
-      <!-- 테마 선택 checkbox 란 -->
+	      <!-- 테마 선택 checkbox 란 -->
+		  <c:forEach var="theme" items="${thmAllList }" varStatus="status">
+				<input type='checkbox' id='thmList[${status.index }].themeIdx'
+					name='thmList[${status.index }].themeIdx' value='${theme.themeIdx }'>
+				<label for='thmList[${status.index }].themeIdx'>${theme.themeName }</label>
+		  </c:forEach>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">선택</button>

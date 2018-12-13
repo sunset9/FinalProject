@@ -17,7 +17,10 @@ import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
+import ticket.dto.PfmBookinfo;
+import ticket.dto.PfmDateByTime;
 import ticket.dto.PfmDateByTimeList;
+import ticket.dto.PfmDetail;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
@@ -404,5 +407,55 @@ public interface AdminPfmService {
 	 * @작성자:박주희
 	 */
 	public void registHall(Hall hall, MultipartFile file);
+
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 인덱스 일치하는 공연 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public Performance getPfm(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 테마들 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Theme> getTheme(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 아티스트 목록들 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Artist> getArtist(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 일정정보들 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<PfmDateByTime> getPfmdbt(Performance pfm);
+
+	/**
+	 * @param pfm 
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 상세 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public PfmDetail getPfmDetail(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 예약 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public PfmBookinfo getPfmBookinfo(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 포스터 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public Poster getPoster(Performance pfm);
 
 }
