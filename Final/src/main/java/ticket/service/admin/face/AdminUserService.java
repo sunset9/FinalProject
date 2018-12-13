@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.utils.Paging;
 
@@ -34,7 +35,7 @@ public interface AdminUserService {
 	 * @Method설명: 특정 회원의 예약 현황 리스트 가져오기  
 	 * @작성자: 김지은
 	 */
-	public List getBookDetail(User user);
+	public List<StateOfBook> getBookDetail(User user);
 	
 	/**
 	 * @최종수정일: 2018.12.05

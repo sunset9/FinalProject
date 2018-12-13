@@ -24,7 +24,7 @@ public class AdminHomeController {
 	 * @Method설명: 관리자 홈에 필요한 정보 불러오기 
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value="/admin/main", method=RequestMethod.GET)
+	@RequestMapping(value="admin/main", method=RequestMethod.GET)
 	public void adminMain(Model model) {
 		//오늘의 예매수 불러오기
 		int todayBook = pService.getTodayBook();
@@ -62,7 +62,7 @@ public class AdminHomeController {
 		model.addAttribute("unansweredInq", unansweredInq);
 	}
 	
-	@RequestMapping(value="/admin/menu", method=RequestMethod.GET)
+	@RequestMapping(value="admin/menu", method=RequestMethod.GET)
 	public String menu() {
 		
 		return "/admin/layout/menu";

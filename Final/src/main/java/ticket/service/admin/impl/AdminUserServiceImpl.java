@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import ticket.controller.admin.AdminUserController;
 import ticket.dao.face.UserDao;
+import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.service.admin.face.AdminUserService;
 import ticket.utils.Paging;
@@ -41,9 +42,8 @@ public class AdminUserServiceImpl implements AdminUserService{
 	}
 
 	@Override
-	public List getBookDetail(User user) {
-		
-		return null;
+	public List<StateOfBook> getBookDetail(User user) {
+		return uDao.selectSOB(user);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public User getUserByUserIdx(User user) {
-		return uDao.selectUser(user);
+		return uDao.selectUserGrade(user);
 	}
 }
 	
