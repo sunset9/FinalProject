@@ -77,7 +77,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getpfmThemeChoicePoster(Theme theme) {
+	public List<Poster> getpfmThemeChoicePoster(String theme) {
 		return mainDao.ConThemeChoice(theme);
 	}
 }

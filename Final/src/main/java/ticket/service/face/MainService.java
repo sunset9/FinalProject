@@ -91,6 +91,6 @@ public interface MainService {
 	 * @Method설명: 원하는 테마 선택 후 리스트 출력하기( 테스트중 )
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getpfmThemeChoicePoster(Theme theme);
+	public List<Poster> getpfmThemeChoicePoster(String theme);
 
 }

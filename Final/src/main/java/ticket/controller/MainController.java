@@ -1,5 +1,6 @@
 package ticket.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.Poster;
 import ticket.dto.Theme;
+import ticket.service.admin.face.AdminPfmService;
 import ticket.service.face.MainService;
 
 @Controller
@@ -19,6 +22,7 @@ public class MainController {
 	// 메인
 	
 	@Autowired MainService mainService;
+	@Autowired AdminPfmService pService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -43,6 +47,7 @@ public class MainController {
 			, Theme theme
 		) {
 		logger.info("콘서트 FORM");
+		
 		// 관리자가 선택한 콘서트 상단 배너 15개`
 		List<Poster> topBanList = mainService.adminChoiceBannerCon();
 		model.addAttribute("topBanList", topBanList);
@@ -51,13 +56,28 @@ public class MainController {
 		List<Poster> posterList = mainService.getConPfmPoster();
 		model.addAttribute("posterList", posterList);
 		
-		// 콘서트 - 테마 선택 후 리스트 출력( 테스트중 )
-//		List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
-//		model.addAttribute("posterList", posterList);
-		
 		// 테마 리스트 뿌려주기
 		List<Theme> themeList = mainService.getConThemeKind();
 		model.addAttribute("themeList", themeList);
+	}
+	
+	/**
+	 * 최종수정일: 2018.12.13
+	 * @Method설명: 선택한 테마에 대한 리스트 출력
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value="/ticket/themelist", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> themeList(
+			String theme
+		) {
+		
+		// 콘서트 - 테마 선택 후 리스트 출력
+		List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("posterList", posterList);
+		
+		return map;
 	}
 	
 	/**
