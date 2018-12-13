@@ -191,9 +191,90 @@
 		ORDER BY rnum
 	</select>
 	
-	<select id="getPfmSearchCnt" parameterType="String" resultType="int">
+	<select id="selectCntPfmSearch" parameterType="String" resultType="int">
 		SELECT count(*)
 		FROM performance
-		WHERE name LIKE '%${keyword }%'
+		WHERE name LIKE '%${value }%'
 	</select>
+	
+	<select id="selectPfmSearch" parameterType="String" resultMap="Performance">
+		SELECT *
+		FROM performance
+		WHERE name LIKE '%${value }%'
+		ORDER BY pfm_idx desc
+	</select>
+	
+	<sql id="ByPfmIdx">
+		WHERE pfm_idx = #{pfmIdx }
+	</sql>
+	
+	<select id="selectPfmByIdx" parameterType="ticket.dto.Performance" resultMap="Performance">
+		SELECT *
+		FROM performance
+		<include refid="ByPfmIdx" />
+	</select>
+	
+	<select id="selectThemeByPfmIdx" parameterType="ticket.dto.Performance" resultMap="Theme">
+		SELECT t.* 
+		FROM theme t
+        RIGHT JOIN pfm_theme pt
+        ON t.theme_idx = pt.theme_idx 
+   		WHERE pt.pfm_idx = #{pfmIdx }
+	</select>
+	
+	<select id="selectArtistByPfmIdx" parameterType="ticket.dto.Performance" resultType="ticket.dto.Artist">
+		SELECT 
+			a.artist_idx artistIdx
+			, a.theme_idx themeIdx
+			, a.name name 
+			, a.img_uri imgUri
+		FROM artist a
+		RIGHT JOIN cast c
+		ON a.artist_idx = c.artist_idx
+		WHERE c.pfm_idx = #{pfmIdx }
+	</select>
+	
+	<select id="selectPfmdbtByPfmIdx" parameterType="ticket.dto.Performance" resultType="ticket.dto.PfmDateByTime">
+		SELECT 
+			pfm_dbt_idx pfmDbtIdx
+			,pfm_idx pfmIdx
+			,pfm_date pfmDate
+			,pfm_time pfmTime
+			,create_date createDate 
+		FROM pfm_datebytime
+		<include refid="ByPfmIdx" />
+	</select>
+	
+	<select id="selectPfmDetailByPfmIdx" parameterType="ticket.dto.Performance" resultType="ticket.dto.PfmDetail">
+		SELECT 
+			pfm_detail_idx pfmDetailIdx
+			,pfm_idx pfmIdx
+			,contents contents
+			,create_date createDate 
+		FROM pfm_detail
+		<include refid="ByPfmIdx" />
+	</select>
+	
+	<select id="selectPfmBookinfoByPfmIdx" parameterType="ticket.dto.Performance" resultType="ticket.dto.PfmBookinfo">
+		SELECT 
+			pfm_bookinfo_idx pfmBookinfoIdx
+			,pfm_idx pfmIdx 
+			,contents contents
+			,create_date createDate  
+		FROM pfm_bookinfo
+		<include refid="ByPfmIdx" />
+	</select>
+	
+	<select id="selectPosterByPfmIdx" parameterType="ticket.dto.Performance" resultType="ticket.dto.Poster">
+		SELECT 
+			poster_idx posterIdx
+			,pfm_idx pfmIdx
+			,origin_name originName
+			,stored_name storedName
+			,create_date createDate  
+		FROM poster_info
+		<include refid="ByPfmIdx" />
+	</select>
+	
+	
 </mapper>

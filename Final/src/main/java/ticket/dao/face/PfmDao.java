@@ -189,5 +189,54 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public List<Performance> selectPfmSearch(String keyword);
+
+	/**
+	 * @최종수정일: 2018.12.12
+	 * @Method설명: 인덱스와 일치하는 공연 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public Performance selectPfmByIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 인덱스와 일치하는 테마들 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Theme> selectThemeByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명:특정 공연의 인덱스와 일치하는 아티스트 목록 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Artist> selectArtistByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명:특정 공연의 인덱스와 일치하는 일정 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<PfmDateByTime> selectPfmdbtByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 인덱스와 일치하는 공연 상세 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public PfmDetail selectPfmDetailByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 특정 공연의 인덱스와 일치하는 예매 상세 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public PfmBookinfo selectPfmBookinfoByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명:특정 공연의 인덱스와 일치하는 포스터 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public Poster selectPosterByPfmIdx(Performance pfm);
 	
 }

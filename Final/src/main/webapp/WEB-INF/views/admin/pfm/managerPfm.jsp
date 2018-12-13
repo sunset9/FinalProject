@@ -129,8 +129,11 @@ $(document).ready(function(){
     	isEnd = false; // 무한스크롤 동작 여부 초기화
     	
     	// genre 변경
-    	genre = "search";
+    	genre = "SEARCH";
     	keyword = $('#searchPfm').val();
+    	
+    	// ajax 통신 + 그리기
+    	getPfmListAjax();
     });
     
     // 장르탭 클릭 시
@@ -144,13 +147,15 @@ $(document).ready(function(){
         // genre값 변경(서버에 넘기는 값)
         genre = $(this).find('span').attr('id');
         
-        getPfmListAjax('/admin/viewpfmlist');
+        // ajax 통신 + 그리기
+        getPfmListAjax();
     });
     
 });
 
 //ajax 통신으로 공연 리스트 가져오는 메소드
-function getPfmListAjax(url){
+function getPfmListAjax(){
+	var url ="";
 	if(genre != 'SEARCH') url='/admin/viewpfmlist'; // 검색시 호출 url
 	else url = '/admin/searchpfm'; // 분류탭 클릭시 호출 url
 	
@@ -184,7 +189,7 @@ function viewPfmList(pfmList){
 	pfmList.forEach(function(pfm){
 		var li =$('<li class="pfmInfo">');
 		
-		var a = $('<a href="/pfmDetail?pfmIdx='+ pfm.pfmIdx + '">');
+		var a = $('<a href="/admin/editpfm?pfmIdx='+ pfm.pfmIdx + '">');
 		var span = $('<span class="thumb">');
 		var img ; 
 		if(!pfm.posterName) img = $('<img src="/resources/image/poster_empty.png">');
@@ -209,7 +214,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 		if (maxHeight <= currentScroll + 100){
 			curPage++;
 			
-	    	getPfmListAjax('/admin/viewpfmlist');
+	    	getPfmListAjax();
     	 }
      }
 
@@ -248,7 +253,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <ul id="pfmList">
 <c:forEach var="pfm" items="${pfmList }" varStatus="i">
 	<li class="pfmInfo">
-		<a href="/pfmDetail?pfmIdx=${pfm.pfmIdx }">
+		<a href="/admin/editpfm?pfmIdx=${pfm.pfmIdx }">
 			<span class="thumb">
 				<img src="/resources/image/${pfm.posterName }">
 			</span>

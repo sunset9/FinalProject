@@ -31,7 +31,10 @@ import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
 import ticket.dto.Performance;
+import ticket.dto.PfmBookinfo;
+import ticket.dto.PfmDateByTime;
 import ticket.dto.PfmDateByTimeList;
+import ticket.dto.PfmDetail;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.Theme;
@@ -143,12 +146,60 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.05
+	 * @최종수정일: 2018.12.12
 	 * @Method설명: 공연 정보 수정 폼 띄우기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value = "/admin/pfm/editpfm", method = RequestMethod.GET)
-	public void editForm(Performance pfm, Model model) {
+	@RequestMapping(value = "/admin/editpfm", method = RequestMethod.GET)
+	public String editForm(Performance pfmParam, Model model) {
+		// 공연 기본 정보 가져오기
+		Performance pfm = pService.getPfm(pfmParam);
+		model.addAttribute("pfm", pfm);
+		logger.info(pfm.toString());
+		
+		// 포스터 정보 가져오기
+		Poster poster = pService.getPoster(pfm);
+		model.addAttribute("poster", poster);
+		
+		// 공연 분류(장르) 가져오기
+		List<Genre> genreList = pService.getGenreList();
+		model.addAttribute("genreList", genreList);
+				
+		// 테마 정보들 가져오기
+		List<Theme> thmList = pService.getTheme(pfm);
+		model.addAttribute("thmList", thmList);
+		
+		// 공연 분류에 따른 테마 정보들 가져오기
+		Genre genre = new Genre();
+		genre.setGenreIdx(pfm.getGenreIdx());
+		List<Theme> thmAllList = pService.getThemeList(genre);
+//		Gson gson = new Gson();
+//		model.addAttribute("thmAllListJson", gson.toJson(thmAllList));
+		model.addAttribute("thmAllList", thmAllList);
+		
+		// 모든 관람 등급 가져오기
+		List<AgeGrade> ageList = pService.getAgeGradeList();
+		model.addAttribute("ageList", ageList);
+				
+		// 출연진 목록 가져오기
+		List<Artist> artistList = pService.getArtist(pfm);
+		model.addAttribute("artistList", artistList);
+		
+		// 좌석& 가격 정보 가져오기
+		
+		// 공연일정(날짜, 시간) 정보 가져오기
+		List<PfmDateByTime> pfmdbtList = pService.getPfmdbt(pfm);
+		model.addAttribute("pfmdbtList", pfmdbtList);
+		
+		// 공연 상세 정보 가져오기
+		PfmDetail detail = pService.getPfmDetail(pfm);
+		model.addAttribute("detail", detail);
+		
+		// 예매 상세 정보 가져오기
+		PfmBookinfo bookinfo = pService.getPfmBookinfo(pfm);
+		model.addAttribute("bookinfo", bookinfo);
+		 
+		return "admin/pfm/editPfm";
 	}
 
 	/**
