@@ -98,6 +98,6 @@ public interface MainDao {
 	 * @Method설명: 장르가 콘서트이면서 원하는 테마 선택시 해당하는 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> ConThemeChoice(Theme theme);
+	public List<Poster> ConThemeChoice(String theme);
 
 }

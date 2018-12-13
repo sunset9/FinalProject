@@ -69,20 +69,19 @@
 	
 	<!-- 콘서트 전체 출력 -->
 	<select id="selectConPfmPosterInfo" resultType="ticket.dto.Poster">
-	<!-- 언니꺼 참고-수정중 -->
 	SELECT 
-			po.origin_name originName
-			,po.pfm_idx pfmIdx
-			,po.stored_name poster_name ,pp.*
-		FROM (
-    		SELECT ROWNUM as rnum, p.* FROM (
-       			SELECT  * FROM performance
-                WHERE genre_idx = 1
-                ORDER BY pfm_idx
-    		) p
-		)pp
-        LEFT JOIN poster_info po
-        ON pp.pfm_idx = po.pfm_idx
+		po.origin_name originName
+		,po.pfm_idx pfmIdx
+		,po.stored_name poster_name ,pp.*
+	FROM (
+    	SELECT ROWNUM as rnum, p.* FROM (
+       		SELECT  * FROM performance
+               WHERE genre_idx = 1
+               ORDER BY pfm_idx
+    	) p
+	)pp
+       LEFT JOIN poster_info po
+       ON pp.pfm_idx = po.pfm_idx
 		
 <!-- 		SELECT -->
 <!-- 			poster_idx as posterIdx, -->
@@ -99,32 +98,34 @@
 	
 	<select id="selectMuPfmPosterInfo" resultType="ticket.dto.Poster">
 		SELECT 
-			po.origin_name originName
-			,po.pfm_idx pfmIdx
-			,po.stored_name poster_name ,pp.*
-		FROM (
-    		SELECT ROWNUM as rnum, p.* FROM (
-       			SELECT  * FROM performance
-                WHERE genre_idx = 2
-                ORDER BY pfm_idx
-    		) p
-		)pp
-        LEFT JOIN poster_info po
-        ON pp.pfm_idx = po.pfm_idx
+		po.origin_name originName
+		,po.pfm_idx pfmIdx
+		,po.stored_name poster_name ,pp.*
+	FROM (
+    	SELECT ROWNUM as rnum, p.* FROM (
+       		SELECT  * FROM performance
+               WHERE genre_idx = 2
+               ORDER BY pfm_idx
+    	) p
+	)pp
+       LEFT JOIN poster_info po
+       ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
 	<select id="selectFamPfmPosterInfo" resultType="ticket.dto.Poster">
-		SELECT
-			poster_idx as posterIdx,
-			pfm_idx as pfmIdx,
-			origin_name as originName,
-			stored_name as storedName,
-			create_date as createDate
-		FROM poster_info
-		WHERE pfm_idx IN (
-		    SELECT pfm_idx FROM performance
-		    WHERE genre_idx=3
-		)
+		SELECT 
+		po.origin_name originName
+		,po.pfm_idx pfmIdx
+		,po.stored_name poster_name ,pp.*
+	FROM (
+    	SELECT ROWNUM as rnum, p.* FROM (
+       		SELECT  * FROM performance
+               WHERE genre_idx = 3
+               ORDER BY pfm_idx
+    	) p
+	)pp
+       LEFT JOIN poster_info po
+       ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
 	
@@ -149,9 +150,10 @@
 	</select>
 	
 	<!-- 선택 테마 리스트 출력 -->	
-	<select id="ConThemeChoice" parameterType="ticket.dto.Theme" resultMap="Poster">
+	<select id="ConThemeChoice" parameterType="String" resultMap="Poster">
 		SELECT
 			origin_name
+<!-- 			, pfm_idx as pfmIdx -->
 		FROM poster_info, theme
 		WHERE pfm_idx IN (
 		    SELECT pfm_idx as pfmIdx
@@ -164,5 +166,14 @@
 		)
 		AND theme_idx=#{themeIdx}
 	</select>
+	
+<!-- 	<select id="selectEndPfm" resultMap="Poster"> -->
+<!-- 		SELECT -->
+<!-- 			ticket_end as ticketEnd -->
+<!-- 			, pi.origin_name  -->
+<!-- 		FROM performance p, poster_info pi -->
+<!-- 		WHERE genre_idx=1 -->
+<!-- 		ORDER BY ROUND(ABS(SYSDATE-ticket_end),0) -->
+<!-- 	</select> -->
 	
 </mapper>
