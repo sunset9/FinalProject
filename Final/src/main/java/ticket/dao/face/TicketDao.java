@@ -68,7 +68,7 @@ public interface TicketDao {
 	 * @Method설명:공연장의 좌석 정보불러오기
 	 * @작성자:이상지
 	 */
-	public void selectSeatsByHallIdx(Hall hall);
+	public List<Seat> selectSeatsByHallIdx(Hall hall);
 	
 	/**
 	 * @최종수정일: 2018.12.05
@@ -91,5 +91,19 @@ public interface TicketDao {
 	 * @작성자:이상지
 	 */
 	public List<String> selectCntSectionByPfmIdx(Performance pfm);
+	
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 좌석행의 최대값 불러오기
+	 * @작성자:이상지
+	 */
+	public int selectMaxRow(int oriSecIdx);
+	/**
+	 * @최종수정일: 2018.12.13
+	 * @Method설명: 좌석열의 최대값 불러오기
+	 * @작성자:이상지
+	 */
+	public int selectMaxCol(int oriSecIdx);
+	
 	
 }

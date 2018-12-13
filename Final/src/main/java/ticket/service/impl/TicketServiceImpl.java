@@ -45,7 +45,8 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public void loadSeatsByHallIdx(Hall hall) {
+	public List<Seat> loadSeatsByHallIdx(Hall hall) {
+		return ticketDao.selectSeatsByHallIdx(hall);
 		// TODO Auto-generated method stub
 		
 	}
@@ -75,6 +76,16 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public List<String> countSection(Performance pfm) {
 		return ticketDao.selectCntSectionByPfmIdx(pfm);
+	}
+
+	@Override
+	public int maxRow(int oriSecIdx) {
+		return ticketDao.selectMaxRow(oriSecIdx);
+	}
+
+	@Override
+	public int maxCol(int oriSecIdx) {
+		return ticketDao.selectMaxCol(oriSecIdx);
 	}
 	
 	

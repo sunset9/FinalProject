@@ -11,6 +11,7 @@
 		
 <!-- 		<definition name="ticket/bookInfo" template="/WEB-INF/views/ticket/bookInfo.jsp"/> -->
 	<definition name="hall/*" template="/WEB-INF/views/hall/{1}.jsp"/>	
+	<definition name="hall/*/*" template="/WEB-INF/views/hall/{1}/{2}.jsp"/>	
 	
 	<definition name="tilesbase"
 		template="/WEB-INF/layout/layout.jsp">
