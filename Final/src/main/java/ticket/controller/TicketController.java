@@ -20,6 +20,7 @@ import ticket.dto.Hall;
 import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
+import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.service.face.TicketService;
 
@@ -148,12 +149,49 @@ public class TicketController {
 	
 	/**
 	 * @최종수정일: 2018.12.05
+	 * @Method설명: DB에서 좌석 그려줄 좌석정보 가져오기
+	 * @작성자:이상지
+	 */
+	
+	@RequestMapping(value="/hall/hall_2_seats/seat", method=RequestMethod.GET)
+	public ModelAndView loadSeats(ModelAndView mav) {
+		Hall hall = new Hall();
+		
+		hall.setHallIdx(2);
+		
+		logger.info("1");
+		
+		int maxRow = ticketService.maxRow(1);
+		int maxCol = ticketService.maxCol(1);
+		
+		List<Seat> seatList = new ArrayList<Seat>();
+		
+		seatList = ticketService.loadSeatsByHallIdx(hall);
+		
+		//JSON 활용 키,값 형태면 JSON으로보내준다
+		mav.setViewName("hall/hall_2_seats/seat");
+		
+		Map seatMap = new HashMap();
+		seatMap.put("oriSecMap", seatList);
+		seatMap.put("maxRow", maxRow);
+		seatMap.put("maxCol", maxCol);
+		
+		mav.addObject("seatMap",seatMap);
+		
+		return mav;
+		
+		
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.13
 	 * @Method설명: 빈좌석 불러오기
 	 * @작성자:이상지
 	 */
-	public void loadSeats() {
-		
-	}
+//	@RequestMapping(value="/hall/hall_2_seats/seat", method=RequestMethod.GET)
+//	public void loadSeatView() {
+//		
+//	}
 	
 	/**
 	 * @최종수정일: 2018.12.12

@@ -80,9 +80,26 @@
 	  }
   }
   
-  
   $(document).ready(function () {
 	  
+	  //좌석 그리는 페이지띄어주기
+	  $('#selectedSeats').on('click','.section', function(){
+			$.ajax({
+				
+				type:"GET",
+				url:"/hall/hall_2_seats/seat",
+				data:{},
+				dataType:"html",
+				success:function(res){
+					$('#selectedSeats').html(res);
+				}
+				
+			});
+		  
+	  });
+	  
+	  
+	  //예매하기버튼 클릭
 	  $('#bookBtn').click(function() {
 		  
 			  var date = new Date($('#datepicker').datepicker( "getDate" ));
@@ -111,16 +128,17 @@
 				async: false,
 				dataType:"html",
 				success:function(res){
-				$('#selectedSeats').html(res);
-	// 			$('#legend').html('');
-				$('svg').css("width","650px");
-				$('svg').css("height","530px");
-				loadSectionData();
+					$('#selectedSeats').html(res);
+		// 			$('#legend').html('');
+					$('svg').css("width","650px");
+					$('svg').css("height","530px");
+					loadSectionData();
 				
 				}
 			});	
 		});
 	  
+	  //섹션 데이터 받아오기
 	  function loadSectionData(){
 		  
 		  $.ajax({
@@ -186,6 +204,10 @@
 		  })
 		  
 	  }
+	  
+	  
+
+	  
 	
 });
   

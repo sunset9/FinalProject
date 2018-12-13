@@ -29,6 +29,15 @@
 	<result column="create_date" property="createDate"/>
 </resultMap>
 
+<resultMap type="ticket.dto.Seat" id="seatMap">
+	<result column="seat_idx" property="seatIdx"/>
+	<result column="seat_row" property="seatRow"/>
+	<result column="seat_col" property="seatCol"/>
+	<result column="ori_sec_idx" property="oriSecIdx"/>
+	<result column="hall_idx" property="hallIdx"/>
+	<result column="seat_floor" property="seatFloor"/>
+</resultMap>
+
 
 <select id="selectDates" parameterType="ticket.dto.Performance" resultMap="dateTimeMap">
 	select pfm_date from pfm_dateBytime WHERE pfm_idx = #{pfmIdx} GROUP BY pfm_date
@@ -60,6 +69,18 @@
 
 <select id="selectCntSectionByPfmIdx" parameterType="ticket.dto.Performance" resultType="String">
 	Select DISTINCT app_sec from seatsection
+</select>
+
+<select id ="selectSeatsByHallIdx" parameterType="ticket.dto.Hall" resultMap="seatMap">
+	select * from seat where hall_idx = #{hallIdx}
+</select>
+
+<select id="selectMaxRow" parameterType="int" resultType="int">
+	select max(seat_row) from seat where ori_sec_idx =#{oriSecIdx}
+</select>
+
+<select id="selectMaxCol" parameterType="int" resultType="int">
+	select max(seat_col) from seat where ori_sec_idx =#{oriSecIdx}
 </select>
 
 </mapper>
