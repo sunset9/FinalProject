@@ -37,11 +37,14 @@ public interface AdminBoardDao {
 	// 공지사항 글 삭제
 	public void deleteNoti(Notice deleteNotice);	
 	
+	
+	
+	
 	// 파일 업로드
 	public void insertNotiFile(NoticeFile noticeFile);
 	
-
-	
+	// notiFileIdx를 이용한 조회
+	public NoticeFile selectBynotiFileIdx(int notiFileIdx);
 	
 	
 	

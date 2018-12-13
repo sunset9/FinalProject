@@ -127,9 +127,11 @@ public class AdminBoardController {
 	 * @Method설명: 공지사항 글 삭제
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/noticedelete", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/noticedelete")
 	public String notiDelete(Notice deleteNotice) {
 		logger.info("공지사항 글 삭제");
+		logger.info(deleteNotice.toString());
+		
 		adminBoardService.delNoti(deleteNotice);
 		return "redirect:/admin/noticelist";
 		
@@ -141,17 +143,18 @@ public class AdminBoardController {
 
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.13
 	 * @Method설명: 공지사항 파일 업로드
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.GET)
-	public void notiFileup() {
+	public String notiFileup() {
+		return null;
 		
 	}
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.13
 	 * @Method설명: 공지사항 파일 업로드 처리
 	 * @작성자: 조요한
 	 */
@@ -162,7 +165,7 @@ public class AdminBoardController {
 	}
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.13
 	 * @Method설명: 공지사항 파일 다운로드
 	 * @작성자: 조요한
 	 */
