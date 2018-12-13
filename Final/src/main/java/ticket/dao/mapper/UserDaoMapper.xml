@@ -11,18 +11,19 @@
 	<result column="addr_detail" property="addrDetail"/>
 	<result column="create_date" property="createDate"/>
 	<result column="m_grade_idx" property="mGradeIdx"/>
-</resultMap>
+	<result column="m_grade" property="mGrade"/>
+  </resultMap>
   
   <resultMap type="ticket.dto.StateOfBook" id="SOBMap">
   	<result column="create_date" property="createDate"/>
-  	<result column="pfm_idx" property="pfmIdx"/>
   	<result column="pfm_start" property="pfmStart"/>
   	<result column="pfm_end" property="pfmEnd"/>
   	<result column="book_idx" property="bookIdx"/>
-  	<result column="seat_idx" property="seatIdx"/>
   	<result column="cancel_date" property="cancelDate"/>
-  	<result column="book_cate_idx" property="bookCateIdx"/>
-  	
+  	<result column="stored_name" property="storedName"/>
+  	<result column="hall_name" property="hallName"/>
+  	<result column="pfm_date" property="pfmDate"/>
+  	<result column="pfm_time" property="pfmTime"/>
   </resultMap>
   
   <sql id="selectCnt">
@@ -127,6 +128,23 @@
 		WHERE user_idx = #{currUser}
   </update>
   
+   <select id="selectSOB" parameterType="ticket.dto.User" resultMap="SOBMap">
+	  	select b.create_date, p.name, p.pfm_start, p.pfm_end, b.book_idx, b.cancel_date, bc.state , pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
+		from book b join performance p
+		on b.pfm_idx = p.pfm_idx join poster_info pi
+		on p.pfm_idx = pi.pfm_idx join hall h
+		on p.hall_idx = h.hall_idx join pfm_datebytime pd
+		on b.pfm_dbt_idx = pd.pfm_dbt_idx join book_cate bc
+	    on b.book_cate_idx = bc.book_cate_idx
+		where b.user_idx = #{userIdx}
+  </select>
+  
+  <select id="selectUserGrade" parameterType="ticket.dto.User" resultMap="UserMap">
+  		SELECT * 
+		FROM USERINFO U JOIN MEMBER_GRADE G
+		ON U.M_GRADE_IDX = G.M_GRADE_IDX
+		WHERE U.USER_IDX = #{userIdx}
+  </select>
   </mapper>
   
   

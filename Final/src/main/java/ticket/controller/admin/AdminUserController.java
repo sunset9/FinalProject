@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.service.admin.face.AdminUserService;
@@ -31,7 +32,7 @@ public class AdminUserController {
 	 * @Method설명: 전체 회원 리스트 또는 검색된 회원의 리스트 불러오기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/userlist", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/userlist", method = RequestMethod.GET)
 	public String getUserList(
 			HttpServletRequest req, 
 			Model model,
@@ -78,7 +79,7 @@ public class AdminUserController {
 	 * @Method설명: 회원의 등급(일반회원, 관리자, 회원정지)을 변경하기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/userlist", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/userlist", method = RequestMethod.POST)
 	public String changeUserGrade(int currUser, int currUserGrade) {
 		System.out.println("changeUserGrade UserIdx : "+currUser);
 		System.out.println("changeUserGrade changed gradeIdx : "+currUserGrade);
@@ -94,17 +95,20 @@ public class AdminUserController {
 	 * @Method설명: 리스트에서 선택한 회원의 상세 정보와 예매 현황을 보여주기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/userdetail", method=RequestMethod.GET)
-	public String userDetail(int userIdx) {
+	@RequestMapping(value = "admin/userdetail", method=RequestMethod.GET)
+	public String userDetail(int userIdx, Model model) {
 		//회원 목록에서 선택한 회원 정보 가져오기
 		User user = new User();
 		user.setUserIdx(userIdx);
 		user = userService.getUserByUserIdx(user);
 		
 		// 해당 회원의 예매 현황 목록 불러오기
-		// userService.getBookDetail(user)
+		List<StateOfBook> sobList = userService.getBookDetail(user);
+		System.out.println("예매현황 출력! : "+sobList);
 
 		// 예매 목록을 뷰에 전달
+		model.addAttribute("sobList", sobList);
+		model.addAttribute("curUser",user);
 		
 		return "/admin/user/detail";
 	}
