@@ -59,9 +59,11 @@ public class PreferController {
 		
 		// 유저가 선택한 테마에 속하는 아티스트 불러오기
 		List<Artist> aList = preferAService.artistByTheme(ptList);
+		model.addAttribute("aList",aList);
 		
 		// 유저가 선택한 아티스트 리스트 얻기 
-//		List<Artist> paList = preferAService.choiceList(userIdx);
+		List<Artist> paList = preferAService.choiceList(userIdx);
+		model.addAttribute("paList", paList);
 		
 		String search= null;
 		// 검색 할 때 검색어로 리스트 얻기

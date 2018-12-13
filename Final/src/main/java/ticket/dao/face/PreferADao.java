@@ -12,7 +12,7 @@ public interface PreferADao {
 	 * @Method설명: 유저가 선택한 테마로 아티스트 조회
 	 * @작성자:홍나영
 	 */
-	public List<Artist> selectArtistByTheme(Map themeMap);
+	public List<Artist> selectArtistByTheme(Map map);
 	
 	/**
 	 * @최종수정일: 2018.12.05

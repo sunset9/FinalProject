@@ -31,16 +31,10 @@ public class PreferAServiceImpl implements PreferAService{
 
 	@Override
 	public List<Artist> artistByTheme(List<PreferTheme> ptList) {
-		
-		Map themeMap = new HashMap();
-		
-		for ( int i =0; i <ptList.size(); i++) {
-			themeMap.put("themeIdx"+i, ptList.get(i).getThemeIdx());
-		}
-		
-		preferADao.selectArtistByTheme(themeMap);
-		
-		return null;
+	 
+		Map map = new HashMap<>();
+		map.put("ptList", ptList);
+		return preferADao.selectArtistByTheme(map);
 	}
 
 }

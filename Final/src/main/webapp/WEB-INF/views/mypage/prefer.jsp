@@ -3,6 +3,48 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+});
+
+
+// 아티스트 리스트에서 아티스트 선택 시 반응할 메소드
+function artChoice(artistIdx, name){
+	
+	// 추가하기 위해 눌렀을 때
+	var isExist = false ;
+	var selectedList = $('#selectedArt').find('div');
+	selectedList.each(function(i) {
+		if($(selectedList[i]).data('paIdx')==artistIdx){
+			isExist = true;
+			return false ; // each 문 종료
+		}
+	});
+	if(isExist){
+		return; // 추가하는 메소드 종료
+	}
+	
+	// 선택한 결과 태그 추가하기
+	var  selected = $("<div>");
+	selected.data('paIdx',artistIdx );
+	selected.data('name', name);
+	
+	var aName =$('<span>');
+	aName.text(name);
+	selected.append(aName);
+	selected.append("<span class='glyphicon glyphicon-remove' ></span>")
+	
+	$('#selectedArt').append(selected);
+	
+}
+	
+
+
+
+</script>
+
 <style type="text/css">
 #userinfo{
 	background-color: #CCC;
@@ -21,6 +63,13 @@
 #preferTheme{
 
 	border: 1px solid #CCC;
+	
+	/*아티스트 리스트 뽑을 때 사용했던 float 해제  */
+	clear: left;
+}
+
+.thumbnail{
+	float: left;
 }
 </style>
     
@@ -39,8 +88,32 @@
 </div>
 
 <hr>
-<h3>선호 테마 선택</h3>
+<h3>선호 아티스트 선택</h3>
+<div id ="preferArtist">
+
+<c:forEach items="${aList }" var="a">
+    <div class="thumbnail" style="width: 15%;" onclick ="artChoice(${a.artistIdx},${a.name });">
+      <img style = "width: 80px;" src="${a.imgUri }" class="img-circle" >
+      <div class="caption">
+        <p style="text-align: center;">${a.name }</p>
+    </div>
+  </div>
+	
+</c:forEach>
+
+<div id = "selectedArt">
+	<c:forEach items="${paList }" var ="pa">
+	<div paIdx="${pa.preArtistIdx }">
+		<span>${pa.name }</span>
+		<span class='glyphicon glyphicon-remove' ></span>
+	</div>
+	</c:forEach>
+</div>
+</div>
+
 <div id ="preferTheme">
+<hr>
+<h3>선호 테마 선택</h3>
 
 <c:forEach items="${tList }" var="t">
 	<label class="checkbox-inline" style ="width:30%">

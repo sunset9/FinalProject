@@ -36,7 +36,7 @@
 		<li><a href="/mypage/myticket" id="current">마이페이지</a>
 			<ul>
 	        	<li><a href="#">예매 현황</a></li>
-	        	<li><a href="/mychoice/main">찜</a></li>
+	        	<li><a href="/mypage/prefer">찜</a></li>
 	        	<li><a href="#">내 문의</a></li>
 	        </ul>
         </li>
