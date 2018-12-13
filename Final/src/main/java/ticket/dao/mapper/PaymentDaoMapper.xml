@@ -4,5 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 매퍼 설정 -->
 <mapper namespace="ticket.dao.face.PaymentDao">
+	<insert id="insertPayment"
+		parameterType="ticket.dto.PaymentInfo">
+		INSERT INTO payment
+		(PAY_IDX,IMP_UID,
+		MERCHANT_UID,PAY_METHOD,
+		PFM_IDX,PAID_AMOUNT,BUYER_NAME,BUYER_EMAIL,USER_IDX)VALUES (
+		PAYMENT_SEQ.nextval,#{impUid},#{merchantUid},
+		#{payMethod},#{pfmIdx},#{paidAmount},#{buyerName},#{buyerEmail},#{userIdx})
+	</insert>
 
+	<delete id="deletePayment"
+		parameterType="ticket.dto.PaymentInfo">
+		DELETE FROM payment WHERE imp_uid=#{impUid};
+	</delete>
+	<select id="selectBypayIdx"
+		parameterType="ticket.dto.PaymentInfo"
+		resultType="ticket.dto.PaymentInfo">
+		SELECT *FROM payment WHERE pay_idx=#{payIdx}
+	</select>
 </mapper>
+
+
