@@ -31,18 +31,52 @@ div.seatCharts-seat.economy-class{
 div.seatCharts-seat.test-class{
 	background-color: yellow;
 }
+
 /*선택된좌석*/
 div.seatCharts-seat.selected {
-    background-color: navy;
+    background-color: #F2B134 !important;
 }
 
+div.seatCharts-row {
+        margin: -25px;
+    padding-top: 50px;
+}
+div.seatCharts-cell {
+    height: 22px;
+    width: 22px;
+    margin: 1px;
+    font-size: 12px;
+    line-height: 21px;
+ }   
+ 
+ div.seatCharts-seat {
+    background-color: green;
+    color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 2px;
+    cursor: default;
+    margin-right: 2px;
+}
+		
+.front-indicator{
+    height: 34px;
+    padding: -40px;
+    width: 452px;
+    border: 3px solid #CCC;
+    background: #DCDCDC;
+    text-align: center;
+    line-height: -3;
+    
+}
+           			
 </style>
 </head>
 <body>
    <div class="wrapper">
       <div class="container">
          <div id="seat-map">
-            <div class="front-indicator">Front</div>
+            <div class="front-indicator" >Screen</div>
 
          </div>
 <!--          <div class="booking-details"> -->
@@ -67,66 +101,18 @@ div.seatCharts-seat.selected {
    <script>
    
       var firstSeatLabel = 1;
-
-
       
       $(document).ready(function() {
-    	  
-// 				    var seats[${seatMap.maxRow}][${seatMap.maxCol}] ="_";
-				    
-// 				    for(var i=0;i<${seatMap.oriSecMap.size()};i++){
-// 				    	seats[${seatMap.oriSecMap[i].seatRow}][${seatMap.oriSecMap[i].seatCol}]="s";
-				    	
-// 				    }
-				    
-// 				    var seatsArr = new Array();
-// 				    var check=null;
-// 				  	for (var i=0;i<${seatMap.maxRow};i++){
-// 				  		seats = "";
-// 						for(var j=0;j<${seatMap.maxCol};j++){
-							
-// 							for(var m=0;m<${seatMap.oriSecMap.size()};m++){
-// 								if(${seatMap.oriSecMap[m].seatRow eq i}){
-// 									if(${seatMap.oriSecMap[m].seatCol eq j}){
-// 										check = true;
-// 									}else{
-// 										check = false;
-// 									}
-// 								}
-// 							};
-// 							if(check){
-// 								seats = seats+"s";
-// 							}else{
-// 								seats = seats+"_";
-// 							}
-							
-// 						};
-// 						seatsArr.push(seats);
-// 					};
-
-// 					console.log("${seatMap.oriSecMap.size()}");
-// 				  	console.log(seatsArr);
     	  				//cart  = 선택된 좌석 , counter = 선택된좌석의 갯수, total=총 좌석 갯수 sc = 좌석맵?
                      var $cart = $('#selected-seats'), $counter = $('#counter'), $total = $('#total'), sc = $('#seat-map')
                            .seatCharts(
                                  {
-                                    map : [ 
-                                    	  '__eeeee___eeeee__',
-                                          '_fffffffffffffff',
-                                          '__eeeeeeeeeeeee',
-                                          '___eeeeeeeeeee',
-                                          '___eeeeeeeeee', 
-                                          '____eeeeeeee__',
-                                          '_____eeeee____', 
-                                          '_____eeee____', 
-                                          '______dd______', 
-                                          ],
-// 									map : seats,
+									map : [${seatMap.seats}],
                                     seats : {
                                        s : {
-                                          price : 100, //좌석 가격
-                                          classes : 'first-class'+' '+'A', //your custom CSS class
-                                          category : 'First Class'
+                                          price : ${seatMap.pay}, //좌석 가격
+                                          classes : '${seatMap.appName}'+' '+'${seatMap.secName}', //your custom CSS class
+                                          category : '${seatMap.appName}'
                                        },
 //                                        e : {
 //                                           price : 40,
@@ -150,7 +136,7 @@ div.seatCharts-seat.selected {
 //    										rows: ['A', 'B', 'C', 'D', 'E','F','G','H','I'],
 //    										columns: ['A', 'B', 'C', 'D', 'E'], 로우, 컬럼 이름 지어주기
 										getId  : function(character, row, column) {
-											return row + '_' + column;
+											return row +'_'+column;
 										}
 										
                                     },
@@ -160,7 +146,7 @@ div.seatCharts-seat.selected {
 //                                              [ 'f', 'available','First Class' ],
 //                                              [ 'e', 'available','Economy Class' ],
 //                                              [ 'f', 'unavailable','Already Booked' ], 
-                                             [ 's', 'available','test Class' ] 
+                                             [ 's', 'available','${seatMap.appName}' ] 
                                              ]
                                     },
                                     click : function() {
@@ -169,11 +155,13 @@ div.seatCharts-seat.selected {
                                           $(
                                                 '<li>'
                                                       + this.data().category
-                                                      + ' Seat # '
+                                                      + ' 석 '
 //                                                       + this.settings.label 
                                                       + this.settings.id
-                                                      + ' : <b>$'
+                                                      + ' '
+                                                      + ' : '
                                                       + this.data().price
+                                                      + '<b> 원'
                                                       + '</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
                                                 .attr('id','cart-item-'+ this.settings.id)
                                                 .data('seatId',this.settings.id).appendTo($cart);
@@ -186,6 +174,7 @@ div.seatCharts-seat.selected {
                                            */
                                           $counter.text(sc.find('selected').length + 1);
                                           $total.text(recalculateTotal(sc)+ this.data().price);
+                                       
                                           return 'selected';
                                        } else if (this.status() == 'selected') {
                                           //update the counter
@@ -230,8 +219,11 @@ div.seatCharts-seat.selected {
            		  		seatSected.push(seatArr_2[4]);
            		  	}
            			 sc.get(seatSected).status('selected');
+           			
+                     $('div').find('.seatCharts-seat.${seatMap.appName}').css("background-color","${seatMap.color}");
+           			 
 
-                  });
+               });
 
       //총 가격 계산 
       function recalculateTotal(sc) {
@@ -255,12 +247,11 @@ div.seatCharts-seat.selected {
     		  var seatArr = new Array();
     		  seatArr= seat.split("_");
     		  
-    		  
     		  var str = $(this).attr('class');
     		  var array = new Array(); 
     		  array = str.split(" ");
     		  console.log(array[2]+" 석"); // 무슨좌석인지
-    		  console.log(array[3]+" 구역 "+" "+seatArr[0]+" 행 "+seatArr[1]+" 열");
+    		  console.log(array[3]+" 구역 "+" "+seatArr[0]+" 행 "+seatArr[1]+" 열"+" : "+${seatMap.pay}) ;
     	  });
     	  
     	  console.log("가격: "+$('#total').text());
