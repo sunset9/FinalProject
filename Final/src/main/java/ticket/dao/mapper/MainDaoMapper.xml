@@ -67,7 +67,7 @@
 		)
 	</select>
 	
-	<!-- 콘서트 전체 출력 -->
+	<!-- 전체 출력 -->
 	<select id="selectConPfmPosterInfo" resultType="ticket.dto.Poster">
 	SELECT 
 		po.origin_name originName
@@ -128,52 +128,56 @@
        ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
-	
-	
-	<!-- 테마 정보 출력 -->
-	<select id="selectConThemeKind" resultMap="Theme">
-		SELECT theme_name
-		FROM theme
-		where genre_idx=1
-	</select>
-	
-	<select id="selectMuThemeKind" resultMap="Theme">
-		SELECT theme_name
-		FROM theme
-		where genre_idx=2
-	</select>
-	
-	<select id="selectFamThemeKind" resultMap="Theme">
-		SELECT theme_name
-		FROM theme
-		where genre_idx=3
-	</select>
-	
 	<!-- 선택 테마 리스트 출력 -->	
 	<select id="ConThemeChoice" parameterType="String" resultMap="Poster">
 		SELECT
-			origin_name
-<!-- 			, pfm_idx as pfmIdx -->
-		FROM poster_info, theme
-		WHERE pfm_idx IN (
-		    SELECT pfm_idx as pfmIdx
-		    FROM pfm_theme
+		    p.pfm_idx
+		    , p.name
+		    , pi.origin_name
+		FROM(
+		    SELECT * FROM performance
 		    WHERE pfm_idx IN (
-		        SELECT pfm_idx as pfmIdx
-		        FROM performance
-		        WHERE genre_idx=1
-		    )
-		)
-		AND theme_idx=#{themeIdx}
+		        SELECT pfm_idx
+		        FROM pfm_theme
+		        WHERE theme_idx=#{themeIdx}
+		)) p
+		LEFT JOIN poster_info pi
+		ON p.pfm_idx = pi.pfm_idx
 	</select>
 	
-<!-- 	<select id="selectEndPfm" resultMap="Poster"> -->
-<!-- 		SELECT -->
-<!-- 			ticket_end as ticketEnd -->
-<!-- 			, pi.origin_name  -->
-<!-- 		FROM performance p, poster_info pi -->
-<!-- 		WHERE genre_idx=1 -->
-<!-- 		ORDER BY ROUND(ABS(SYSDATE-ticket_end),0) -->
-<!-- 	</select> -->
+	<!-- 콘서트 정렬기준 - 마감임박순( 출력해주면됨 ) -->
+	<select id="selectDeadlindListPfm" resultMap="Poster">
+		SELECT
+		    p.pfm_idx
+		    , p.name
+		    , po.origin_name
+		FROM (
+		    SELECT * FROM performance
+		    WHERE genre_idx=1
+		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
+		) p
+		LEFT JOIN poster_info po
+		    ON p.pfm_idx = po.pfm_idx
+	</select>
+	
+	<!-- 콘서트 정렬기준 - 최신순 -->
+	<select id="selectLatestListPfm" resultMap="Poster">
+		SELECT
+		    p.pfm_idx
+		    , p.name
+		    , po.origin_name
+		FROM(
+		    SELECT * FROM performance
+		    WHERE genre_idx=1
+		    ORDER BY ticket_start DESC
+		) p
+		LEFT JOIN poster_info po
+		    ON p.pfm_idx = po.pfm_idx
+	</select>
+	
+	<!-- 콘서트 정렬기준 - 인기순 -->
+	<select id="selectPopularityListPfm" resultMap="Poster">
+		
+	</select>
 	
 </mapper>

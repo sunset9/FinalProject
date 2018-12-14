@@ -31,13 +31,6 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.05
-	 * @Method설명: 장르-테마 선택 후 조회 결과
-	 * @작성자: 배수연
-	 */
-	public List selectGenreByTheme(Genre genre, Theme theme);
-
-	/**
-	 * 최종수정일: 2018.12.05
 	 * @Method설명: 선택한 공연이 상세 정보 출력
 	 * @작성자: 배수연
 	 */
@@ -74,30 +67,30 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.11
-	 * @Method설명: 콘서트 테마 종류 출력해주기
-	 * @작성자: 배수연
-	 */
-	public List<Theme> selectConThemeKind();
-
-	/**
-	 * 최종수정일: 2018.12.11
-	 * @Method설명: 뮤지컬&공연 테마 종류 출력해주기
-	 * @작성자: 배수연
-	 */
-	public List<Theme> selectMuThemeKind();
-
-	/**
-	 * 최종수정일: 2018.12.11
-	 * @Method설명: 가족&아동 테마 종류 출력해주기
-	 * @작성자: 배수연
-	 */
-	public List<Theme> selectFamThemeKind();
-
-	/**
-	 * 최종수정일: 2018.12.11
 	 * @Method설명: 장르가 콘서트이면서 원하는 테마 선택시 해당하는 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
 	public List<Poster> ConThemeChoice(String theme);
+
+	/**
+	 * 최종수정일: 2018.12.14
+	 * @Method설명: 콘서트 - 마감임박순 정렬 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectDeadlindListPfm();
+
+	/**
+	 * 최종수정일: 2018.12.14
+	 * @Method설명: 콘서트 - 최신순 정렬 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectLatestListPfm();
+
+	/**
+	 * 최종수정일: 2018.12.14
+	 * @Method설명: 콘서트 - 인기순 정렬 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectPopularityListPfm();
 
 }

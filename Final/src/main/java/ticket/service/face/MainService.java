@@ -29,14 +29,6 @@ public interface MainService {
 	 */
 	public List<Poster> adminChoiceBannerFam();
 	
-	
-	/**
-	 * 최종수정일: 2018.12.05
-	 * @Method설명: 장르-테마 선택 후 조회 결과
-	 * @작성자: 배수연
-	 */
-	public List getGenreByTheme(Genre genre, Theme theme);
-	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 공연 랭킹 출력 / 일간, 주간 / 예매율이 높은 TOP10
@@ -64,33 +56,32 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public List<Poster> getFamPfmPoster();
-	
 	/**
 	 * 최종수정일: 2018.12.11
-	 * @Method설명: 콘서트 테마 종류(GENRE) 가져오기
-	 * @작성자: 배수연
-	 */
-	public List<Theme> getConThemeKind();
-
-	/**
-	 * 최종수정일: 2018.12.11
-	 * @Method설명: 뮤지컬&연극 테마 종류(GENRE) 가져오기
-	 * @작성자: 배수연
-	 */
-	public List<Theme> getMuThemeKind();
-	
-	/**
-	 * 최종수정일: 2018.12.11
-	 * @Method설명: 가족&아동 테마 종류(GENRE) 가져오기
-	 * @작성자: 배수연
-	 */
-	public List<Theme> getFamThemeKind();
-
-	/**
-	 * 최종수정일: 2018.12.11
-	 * @Method설명: 원하는 테마 선택 후 리스트 출력하기( 테스트중 )
+	 * @Method설명: 원하는 테마 선택 후 리스트 출력하기
 	 * @작성자: 배수연
 	 */
 	public List<Poster> getpfmThemeChoicePoster(String theme);
+
+	/**
+	 * 최종수정일: 2018.12.14
+	 * @Method설명: 콘서트 - 마감임박순 정렬
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getDeadlineList();
+
+	/**
+	 * 최종수정일: 2018.12.14
+	 * @Method설명: 콘서트 - 최신순 정렬
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getLatestList();
+
+	/**
+	 * 최종수정일: 2018.12.14
+	 * @Method설명: 콘서트 - 인기순
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getPopularityList();
 
 }

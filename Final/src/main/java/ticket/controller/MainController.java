@@ -55,10 +55,6 @@ public class MainController {
 		// 전체 리스트
 		List<Poster> posterList = mainService.getConPfmPoster();
 		model.addAttribute("posterList", posterList);
-		
-		// 테마 리스트 뿌려주기
-		List<Theme> themeList = mainService.getConThemeKind();
-		model.addAttribute("themeList", themeList);
 	}
 	
 	/**
@@ -71,11 +67,48 @@ public class MainController {
 			String theme
 		) {
 		
+		HashMap<String, Object> map = new HashMap<>();
+		
 		// 콘서트 - 테마 선택 후 리스트 출력
-		List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
+		if( theme.equals("all") ) {
+			List<Poster> posterList = mainService.getConPfmPoster();
+			
+			map.put("posterList", posterList);
+			
+		} else {
+			List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
+			
+			map.put("posterList", posterList);
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/ticket/arraylist", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> arrayList(
+			String array
+		) {
 		
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("posterList", posterList);
+		
+		logger.info("선택값 : " + array);
+		
+		if(array.equals("popularity")) {
+			// 인기순
+			List<Poster> posterList = mainService.getPopularityList();
+			map.put("posterList", posterList);
+			
+		} else if(array.equals("Deadline")) {
+			// 마감 임박순
+			// 오늘 날짜 - 티켓마감일 순
+			List<Poster> posterList = mainService.getDeadlineList();
+			map.put("posterList", posterList);
+			
+		} else if (array.equals("Latest")) {
+			// 최신순
+			List<Poster> posterList = mainService.getLatestList();
+			map.put("posterList", posterList);
+		}
 		
 		return map;
 	}
@@ -94,10 +127,6 @@ public class MainController {
 		// 관리자가 선택한 뮤지컬&연극 상단배너 출력
 		List<Poster> topBanList = mainService.adminChoiceBannerMu();
 		model.addAttribute("topBanList", topBanList);
-		
-		// 테마 리스트 뿌려주기
-		List<Theme> themeList = mainService.getMuThemeKind();
-		model.addAttribute("themeList", themeList);
 		
 		// 모든 포스터 리스트 뿌려주기
 		List<Poster> posterList = mainService.getMuPfmPoster();
@@ -118,10 +147,6 @@ public class MainController {
 		// 관리자가 선택한 뮤지컬&연극 상단배너 출력
 		List<Poster> topBanList = mainService.adminChoiceBannerFam();
 		model.addAttribute("topBanList", topBanList);
-		
-		// 테마 리스트 뿌려주기
-		List<Theme> themeList = mainService.getFamThemeKind();
-		model.addAttribute("themeList", themeList);
 		
 		List<Poster> posterList = mainService.getFamPfmPoster();
 		model.addAttribute("posterList", posterList);

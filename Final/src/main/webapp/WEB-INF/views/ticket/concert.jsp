@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#1, #2, #3, #4, #5").click(function() {
+	$("#all, #1, #2, #3, #4, #5").click(function() {
 		// 각 버튼을 눌렀을 경우 해당 버튼에 대한 id 값을 가져옴
 		//  id 값을 넘겨 themeIdx로 사용하여 조회하기 테스트
 		var themeIdx = $(this).attr('id');
@@ -20,7 +20,7 @@ $(document).ready(function() {
 			, success: function(d) {
 				// 테마에 맞는 리스트 가져오기
 				console.log('성공');
-				console.log(d);
+// 				console.log(d);
 				
 				themeList(d.posterList);
 			}
@@ -28,7 +28,31 @@ $(document).ready(function() {
 				console.log('실패 !!!');
 			}
 		});
-	}); // #1 ~ #5 click
+	}); // 테마 선택 btn
+	
+	// 인기순, 임박순, 최신순 (테스트중)
+	$("#popularity, #Deadline, #Latest").click(function() {
+		var arrayList = $(this).attr('id');
+		console.log(arrayList);
+		
+		$.ajax({
+			url: '/ticket/arraylist'
+			, method: 'GET'
+			, data: {
+				"array" : arrayList
+			}
+			, dataType: 'json'
+			, success: function(d) {
+				console.log('성공');
+				console.log(d);
+				
+				themeList(d.posterList);
+			}
+			, error: function(e) {
+				console.log('실패');
+			}
+		});
+	}); // 정렬 선택 btn
 	
 	function themeList(posterList) {
 		
@@ -43,8 +67,7 @@ $(document).ready(function() {
 		var img = $('<img class="concertImg" src="/resources/image/'+ list.originName + '">');
 		
 		a.append(span.append(img));
-		// 쿼리 수정 후 서버에서 이름 가져와 출력해주기
-//			a.append($('<strong>'+ pfm.name +'</strong>'));
+		a.append($('<strong>'+ list.name +'</strong>'));
 		li.append(a);
 		
 		$('#posterList').append(li);
@@ -52,27 +75,6 @@ $(document).ready(function() {
 		});
 	}
 	
-	// 인기순, 임박순, 최신순 테스트중
-// 	$("#11, #22, #33").click(function() {
-// 		var arrayList = $(this).attr('id');
-// 		console.log(arrayList);
-		
-// 		$.ajax({
-// 			url: '/ticket/arraylist'
-// 			, method: 'GET'
-// 			, data: {
-// 				"array" : arrayList
-// 			}
-// 			, dataType: 'json'
-// 			, success: function(d) {
-// 				console.log('성공');
-// 				console.log(d);
-// 			}
-// 			, error: function(e) {
-// 				console.log('실패');
-// 			}
-// 		});
-// 	});
 });
 
 </script>
@@ -137,6 +139,7 @@ li.pfmInfo {
 .choiceDiv button {
 	margin: 5px;
 }
+
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
@@ -153,39 +156,31 @@ li.pfmInfo {
 	<hr>
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능하도록 수정 -->
 	<div class="choiceDiv">
-		<button id="1" value="1" style="border: none; background-color: #FFFFFF; color: black;">발라드/R&B</button>
-		<button id="2" value="2" style="border: none; background-color: #FFFFFF; color: black;">인디</button>
-		<button id="3" value="3" style="border: none; background-color: #FFFFFF; color: black;">Pop</button>
-		<button id="4" value="4" style="border: none; background-color: #FFFFFF; color: black;">토크콘서트</button>
-		<button id="5" value="5" style="border: none; background-color: #FFFFFF; color: black;">내한</button>
+		<button id="all" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
+		<button id="1" style="border: none; background-color: #FFFFFF; color: black;">발라드/R&B</button>
+		<button id="2" style="border: none; background-color: #FFFFFF; color: black;">인디</button>
+		<button id="3" style="border: none; background-color: #FFFFFF; color: black;">Pop</button>
+		<button id="4" style="border: none; background-color: #FFFFFF; color: black;">토크콘서트</button>
+		<button id="5" style="border: none; background-color: #FFFFFF; color: black;">내한</button>
 	</div>
 	
 	<div class="arrayDiv">
 		<ul class="array">
-			<li><span id="11">인기순</span></li>
-			<li><span id="22">공연임박순</span></li>
-			<li><span id="33">최신순</span></li>
+			<li><span id="popularity">인기순</span></li>
+			<li><span id="Deadline">공연임박순</span></li>
+			<li><span id="Latest">최신순</span></li>
 		</ul>
 	</div>
 	
-	<!-- 포스터 전체 리스트 출력 -->
-<%-- 	<c:forEach items="${posterList }" var="list"> --%>
-<!-- 	<button class="imgDetailInfo" style="border: none; background-color: #FFFFFF;"> -->
-<!-- 	<span class="thumImg"> -->
-<%-- 		<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}"> --%>
-<%-- 		<img class="concertImg" src="/resources/image/${list.originName}" /><br> --%>
-<%-- 		<strong>${list.name }</strong> --%>
-<!-- 		</a> -->
-<!-- 	</span> -->
-<%-- 	</c:forEach> --%>
+	<!-- 포스터 리스트 출력 -->
 	<ul id="posterList">
 		<c:forEach items="${posterList }" var="list">
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
 					<img class="concertImg" src="/resources/image/${list.originName}" /><br>
-					<strong>${list.name }</strong>
 				</span>
+				<strong>${list.name }</strong>
 				</a>
 			</li>
 		</c:forEach>
