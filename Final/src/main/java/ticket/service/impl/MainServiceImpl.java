@@ -36,11 +36,6 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List getGenreByTheme(Genre genre, Theme theme) {
-		return mainDao.selectGenreByTheme(genre, theme);
-	}
-
-	@Override
 	public List getPfmRanking(Performance pfm) {
 		return mainDao.selectPfmRanking(pfm);
 	}
@@ -62,22 +57,22 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Theme> getConThemeKind() {
-		return mainDao.selectConThemeKind();
-	}
-
-	@Override
-	public List<Theme> getMuThemeKind() {
-		return mainDao.selectMuThemeKind();
-	}
-
-	@Override
-	public List<Theme> getFamThemeKind() {
-		return mainDao.selectFamThemeKind();
-	}
-
-	@Override
 	public List<Poster> getpfmThemeChoicePoster(String theme) {
 		return mainDao.ConThemeChoice(theme);
+	}
+
+	@Override
+	public List<Poster> getDeadlineList() {
+		return mainDao.selectDeadlindListPfm();
+	}
+
+	@Override
+	public List<Poster> getLatestList() {
+		return mainDao.selectLatestListPfm();
+	}
+
+	@Override
+	public List<Poster> getPopularityList() {
+		return mainDao.selectPopularityListPfm();
 	}
 }
