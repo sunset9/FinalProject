@@ -27,7 +27,6 @@ $(document).ready(function(){
 	});
 	
 });
-
 </script>
 
 </head>
@@ -81,4 +80,3 @@ $(document).ready(function(){
 </div>
 </body>
 </html>
-

@@ -6,20 +6,44 @@
 
 <!--    - 스마트에디터 추가하기 -->
 <script type="text/javascript" src="/resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
- 
+
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 
 <script type="text/javascript">
 $(document).ready(function(){
-
-	$("#btnCancel").click(function(){
-		history.go(-1);
-	});
-
-
-});
-
+// 	$(#"#btnWrite").click(function(){
+		
+// 	});	
+		$("#btnCancel").click(function(){
+			history.go(-1);
+		});
+	
+        $("#list").on("click",function(e){
+            e.preventDefault();
+            fn_openBoardList();
+        })
+        $("#write").on("click",function(e){
+            e.preventDefault();
+            fn_writeBoard();
+        })
+    });
+     
+     
+    function fn_openBoardList(){
+        var comSubmit = new ComSubmit();
+        comSubmit.setUrl("<c:url value='/sample/openBoardList.do'/>");
+        comSubmit.submit();
+    }
+     
+    function fn_writeBoard(){
+        var comSubmit = new ComSubmit("frm");
+        comSubmit.setUrl("<c:url value='/sample/writeBoard.do'/>");
+        comSubmit.submit();
+    }
+	
+);
 </script>
 
 <head>
@@ -33,17 +57,15 @@ $(document).ready(function(){
 </head>
 <body>
 
-
 <h1> 공지 글쓰기 </h1>
 
 <div class="conta">
-<form action="/admin/noticewrite" method="post" enctype="multipart/form-data">
-<input type="hidden" name="noticeIdx" value="${noticeIdx }"/>
+<form action="/admin/noticewrite" method="post" enctype="multipart/form-data" id="frm">
 <table class="table table-striped table-hover">
 
 <tr> <td>작성자</td><td>${userIdx }</td> </tr>
 <tr> <td>분류</td><td><input type="text" name="NTypeIdx"></td> </tr>
-<tr> <td>제목</td> <td><input type="text" name="noticeTitle"></td> </tr>
+<tr> <td>제목</td><td><input type="text" name="noticeTitle"></td> </tr>
 <tr> <td>내용</td><td><textarea id="content" name="noticeContent"></textarea></td> </tr>
 <tr> <td>첨부파일 #1</td> <td><input type="file" id="file1"></td> </tr>
 <tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr>
@@ -52,13 +74,14 @@ $(document).ready(function(){
 <tr> <td>첨부파일 #5</td> <td><input type="file" id="file5"></td> </tr>
 </table>
 <button id="btnWrite">작성</button>
-<button id="btnCancel">취소</button>
-
-
+<button id="btnCancel">목록으로, 취소</button>
 </form>
 </div>
 
 <script type="text/javascript">
+
+
+
 //스마트에디터 스킨 적용
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
@@ -72,7 +95,6 @@ nhn.husky.EZCreator.createInIFrame({
 		bUseModeChanger: true //모드 탭
 	}
 });
-
 //<form>의 submit에 맞춰 스마트에디터 내용 적용
 function submitContents(elClickedObj) {
 	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -80,6 +102,8 @@ function submitContents(elClickedObj) {
 		elClickedObj.form.submit();
 	} catch(e) {}
 }
+
+
 </script>
 
 

@@ -16,16 +16,6 @@
   	<result column="create_date" property="createDate" />  
   </resultMap>
 
-   <resultMap type="ticket.dto.NoticeFile" id="noticeFile">
-   	<result column="nofile_idx" property="nofileIdx"/>
-   	<result column="stored_name" property="storedName"/>
-   	<result column="origin_name" property="originName"/>
-   	<result column="file_type" property="fileType"/>
-   	<result column="file_path" property="filePath"/>
-   	<result column="file_size" property="fileSize"/>
-   	<result column="notice_idx" property="noticeIdx"/>
-   </resultMap>
-	
 	
 	
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">

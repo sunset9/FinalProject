@@ -66,16 +66,16 @@ $(document).ready(function(){
 	</c:forEach>
 
 </table>
-</div>
 
 
-<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
+<!-- <a href="/admin/noticewrite"><button> 글쓰기 </button></a> -->
 <!-- <a href="/admin/noticedelete"> <button>글 삭제</button></a> -->
 <button id="btnDelete">삭제</button>
 </div>
 
 </form>
-
+</div>
+<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 
 <jsp:include page="../../utils/noticepaging.jsp"/>
 
