@@ -84,11 +84,21 @@
 	  
 	  //좌석 그리는 페이지띄어주기
 	  $('#selectedSeats').on('click','.section', function(){
+		  
+		  var color = $(this).css("fill");
+		  var secName = $(this).attr("class");
+		  var pay = $(this).data("pay");
+		  var appName = $(this).data("appName");
+		  
 			$.ajax({
 				
 				type:"GET",
 				url:"/hall/hall_2_seats/seat",
-				data:{},
+				data:{"color":color,
+					"secName":secName[0],
+					"pay":pay,
+					"appName":appName
+					},
 				dataType:"html",
 				success:function(res){
 					$('#selectedSeats').html(res);
@@ -148,7 +158,7 @@
 			  dataType:"json",
 			  success:function(res){
 				  
-				  var color = ['blue','red','yellow','pink','syan','navy'];
+				  var color = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D','navy'];
 				  
 				  var json = { };
 				  var secName; 
@@ -159,8 +169,7 @@
 				  
 				  for(var i=0;i<res.hashMap.secName.length;i++){
 					  secName = res.hashMap.secName[i];
-					  console.log(json[secName]);
-					  
+// 					  console.log(json[secName]);
 				  }
 				  
 					for(var i=0;i<res.hashMap.secMap.length;i++){
@@ -176,8 +185,11 @@
 						  for(var j=0;j<res.hashMap.secName.length;j++){
 							  
 							  if(res.hashMap.secName[j] ==res.hashMap.secMap[i].appSec ){
-								  var secName = secName = res.hashMap.secName[j];
+								  var secName = res.hashMap.secName[j];
 								  path.attr("fill",json[secName]);
+								  path.data("pay",res.hashMap.secMap[i].secPay);
+								  path.data("secName",res.hashMap.secMap[i].oriSecName);
+								  path.data("appName",res.hashMap.secMap[i].appSec);
 							  }
 						  
 						  }
@@ -242,7 +254,7 @@
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
-		    <div class="modal-content" style="    width: 900px; height: 700px;">
+		    <div class="modal-content" style=" width: 1000px;    height: 750px;">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">좌석선택  공연이름넣어주기</h4>

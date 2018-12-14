@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
 import ticket.dto.Performance;
@@ -154,7 +156,7 @@ public class TicketController {
 	 */
 	
 	@RequestMapping(value="/hall/hall_2_seats/seat", method=RequestMethod.GET)
-	public ModelAndView loadSeats(ModelAndView mav) {
+	public ModelAndView loadSeats(ModelAndView mav,String color, String secName, String pay, String appName) {
 		Hall hall = new Hall();
 		
 		hall.setHallIdx(2);
@@ -164,17 +166,52 @@ public class TicketController {
 		int maxRow = ticketService.maxRow(1);
 		int maxCol = ticketService.maxCol(1);
 		
+		String[][] seats = new String[maxRow+1][maxCol+1];
+		
 		List<Seat> seatList = new ArrayList<Seat>();
 		
 		seatList = ticketService.loadSeatsByHallIdx(hall);
+		
+		for(int i =1;i<=maxRow;i++) {
+			for(int j=1;j<=maxCol;j++) {
+				seats[i][j] = "_";
+			}
+		}
+	
+		for(int i =0;i<seatList.size();i++) {
+			int row = seatList.get(i).getSeatRow();
+			int col = seatList.get(i).getSeatCol();
+			seats[row][col] = "s";
+		}
 		
 		//JSON 활용 키,값 형태면 JSON으로보내준다
 		mav.setViewName("hall/hall_2_seats/seat");
 		
 		Map seatMap = new HashMap();
-		seatMap.put("oriSecMap", seatList);
-		seatMap.put("maxRow", maxRow);
-		seatMap.put("maxCol", maxCol);
+		
+		
+		String seatStr = "";
+		
+		for(int i =1;i<=maxRow;i++) {
+			seatStr += "'";
+			for(int j=1;j<=maxCol;j++) {
+				seatStr += seats[i][j];
+			}
+			
+			if(i == maxRow) {
+				seatStr += "'";
+			}else {
+				seatStr += "',";
+			}
+		}
+		
+		logger.info(seatStr);
+		
+		seatMap.put("seats", seatStr);
+		seatMap.put("color", color);
+		seatMap.put("secName", secName);
+		seatMap.put("pay", pay);
+		seatMap.put("appName", appName);
 		
 		mav.addObject("seatMap",seatMap);
 		
