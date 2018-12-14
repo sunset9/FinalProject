@@ -239,7 +239,7 @@ public class AdminPfmController {
 
 		List<Poster> posterList = pService.getListCon();// selectBypfmIdx();
 		int totalCnt = pService.getModalListConCnt();
-		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		Paging paging = new Paging(totalCnt, curPage, 4, 5);
 		List<Poster> modalList = pService.getModalListCon(paging);
 		Gson jsonParser = new Gson();
 		
@@ -264,7 +264,7 @@ public class AdminPfmController {
 	public @ResponseBody HashMap ajaxCategoryCon(@RequestParam(defaultValue = "1") int curPage) {
 		logger.info(curPage + "");
 		int totalCnt = pService.getModalListConCnt();
-		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		Paging paging = new Paging(totalCnt, curPage, 4, 5);
 		List<Poster> modalList = pService.getModalListCon(paging);
 //		Gson jsonParser = new Gson();
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -301,12 +301,12 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/admin/deletecatecon/{pfmIdx}", method = RequestMethod.GET)
 	public String deletecateCon(@PathVariable int pfmIdx) {
-
+		// pfmIdx 값을 파라미터로 넘겨 받아서 
 		logger.info("delete category banner consert GET");
 		logger.info(pfmIdx + "");
 		CategoryCon con = new CategoryCon();
-		con.setPfmIdx(pfmIdx);
-		pService.removeCon(con);
+		con.setPfmIdx(pfmIdx); // categorycon 에 넣어서 
+		pService.removeCon(con); //지워줌 
 		return "redirect:/admin/registcatecon";
 	}
 
@@ -363,7 +363,7 @@ public class AdminPfmController {
 	public @ResponseBody HashMap ajaxCategoryMu(@RequestParam(defaultValue = "1") int curPage) {
 		logger.info(curPage + "");
 		int totalCnt = pService.getModalListMuCnt();
-		Paging paging = new Paging(totalCnt, curPage, 8, 5);
+		Paging paging = new Paging(totalCnt, curPage, 4, 5);
 		List<Poster> modalList = pService.getModalListMu(paging);
 //		Gson jsonParser = new Gson();
 		HashMap<String, Object> map = new HashMap<String, Object>();

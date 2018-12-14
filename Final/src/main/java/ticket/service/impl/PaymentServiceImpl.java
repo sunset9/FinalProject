@@ -21,6 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public void cancle(PaymentInfo pay) {
+		
 		paymentDao.deletePayment(pay);
 	}
 

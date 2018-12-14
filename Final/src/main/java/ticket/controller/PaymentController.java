@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import ticket.dto.PaymentInfo;
 import ticket.service.face.PaymentService;
 import ticket.utils.com.siot.IamportRestClient.IamportClient;
@@ -45,14 +47,21 @@ public class PaymentController {
 	}
 	
 	/**
-	 * 2018.12.05
+	 * 2018.12.14
 	 * @Method설명:결제 취소
 	 * @작성자:박주희
 	 */
-	@RequestMapping(value = "/ticket/cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "/ticket/cancel", method = RequestMethod.POST,
+			 produces = "application/json; charset=utf8")
 	public @ResponseBody String cancel(PaymentInfo pay) {
+		Gson jsonParser = new Gson();
+
+	//	logger.info(pay.toString());
 		PaymentInfo rp = paymentService.searchPay(pay);
-		logger.info(rp.toString());
+		if(rp==null)
+			return jsonParser.toJson("fail");
+	//	logger.info(rp.toString());
+		
 		IamportClient client;
 		String api_key = "3927322193332266";
 		String api_secret = "YprBYXKjT13iigqeCLCQ2hxxeTOqHY4Fnvgls0Em2IEkZ4yBPasSr0pFTe6AcafzGwV9xAvzi9ThesT3";
@@ -65,10 +74,10 @@ public class PaymentController {
 			
 			switch(e.getHttpStatusCode()) {
 			case 401 :
-				return "401";
+				return jsonParser.toJson("인증에 실패하였습니다. API키와 secret을 확인하세요");
 //				break;
 			case 500 :
-				return "500";
+				return jsonParser.toJson("실패");
 //				break;
 			}
 		} catch (IOException e) {
@@ -77,8 +86,8 @@ public class PaymentController {
 		}
 		/////////////////////////
 		
-		String test_already_cancelled_imp_uid=rp.getImpUid();
-		CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소
+		String already_cancelled_imp_uid=rp.getImpUid();
+		CancelData cancel_data = new CancelData(already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소
 		try {
 			IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 			
@@ -87,17 +96,18 @@ public class PaymentController {
 			
 			switch(e.getHttpStatusCode()) {
 			case 401 :
-				return "401";
+				return jsonParser.toJson("Unauthorized");
 //				break;
 			case 500 :
-				return "500";
+				return jsonParser.toJson("실패");
 //				break;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "sucess";
+		paymentService.cancle(rp);
+		return jsonParser.toJson("결제가 취소 되었습니다.");
 	}
 	
 
