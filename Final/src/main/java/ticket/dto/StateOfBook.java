@@ -22,6 +22,8 @@ public class StateOfBook {
 //	private Date createDate;
 //	private String posterName; // 포스터 이름(서버에 저장된 이름)
 	
+	private String email; //유저 아이디 
+	private String nick; //유저 닉네임
 	private Date createDate; //예매일
 	private String storedName; //포스터 이름
 	private String name; //공연제목
@@ -37,17 +39,26 @@ public class StateOfBook {
 	private int ea; //매수
 	private Date cancelDate; //취소일
 	private String state; //예매상태
-	
-	
+	private int payIdx; //결제번호
 	@Override
 	public String toString() {
-		return "StateOfBook [createDate=" + createDate + ", storedName=" + storedName
-				+ ", name=" + name + ", pfmStart=" + pfmStart + ", pfmEnd=" + pfmEnd + ", hallName=" + hallName
-				+ ", bookIdx=" + bookIdx + ", pfmDate=" + pfmDate + ", pfmTime=" + pfmTime + ", ea=" + ea
-				+ ", cancelDate=" + cancelDate + ", state=" + state + "]";
+		return "StateOfBook [email=" + email + ", nick=" + nick + ", createDate=" + createDate + ", storedName="
+				+ storedName + ", name=" + name + ", pfmStart=" + pfmStart + ", pfmEnd=" + pfmEnd + ", hallName="
+				+ hallName + ", bookIdx=" + bookIdx + ", pfmDate=" + pfmDate + ", pfmTime=" + pfmTime + ", ea=" + ea
+				+ ", cancelDate=" + cancelDate + ", state=" + state + ", payIdx=" + payIdx + "]";
 	}
-	
-
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -120,7 +131,13 @@ public class StateOfBook {
 	public void setState(String state) {
 		this.state = state;
 	}
-
+	public int getPayIdx() {
+		return payIdx;
+	}
+	public void setPayIdx(int payIdx) {
+		this.payIdx = payIdx;
+	}
 	
 
+	
 }

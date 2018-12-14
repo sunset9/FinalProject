@@ -64,7 +64,6 @@ public class AdminUserController {
 		// 회원 목록을 뷰에 전달하기
 		List<User> userList = userService.getPagingListByPaging(paging);
 		logger.info("userList : "+userList);
-		List gradeList = new ArrayList();
 		
 		model.addAttribute("userList",userList);
 		model.addAttribute("paging", paging);
@@ -111,6 +110,41 @@ public class AdminUserController {
 		model.addAttribute("curUser",user);
 		
 		return "/admin/user/detail";
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 예매현황 리스트 가져오기(SOB = State Of Book)
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="admin/soblist", method=RequestMethod.GET)
+	public String getSOB(
+			HttpServletRequest req,
+			Model model,
+			@RequestParam(defaultValue="1") int curPage
+			) {
+		//현재 페이지 
+		//logger.info("curPage : "+curPage);
+		
+		//검색어 얻기
+		//String search = req.getParameter("sobSearch");
+		//logger.info("search값 : "+search);
+		
+		//전체 예매수 얻기
+		//int totalBook = userService.getTotalBook(search);
+		//logger.info("totalBook : "+totalBook);
+		
+		//페이징 객체 생성
+		//Paging paging = new Paging(totalBook, curPage);
+		
+		//페이징 객체에 검색어 적용 
+		//paging.setSearch(search);
+		//logger.info("페이징 : "+paging);
+		
+		//페이징한 예매현황 목록 얻기
+		//List<StateOfBook> sobList = userService.getSobListByPaging(paging);
+		
+		return "/admin/user/soblist";
 	}
 
 	/**

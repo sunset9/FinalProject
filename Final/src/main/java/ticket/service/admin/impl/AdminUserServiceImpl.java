@@ -67,5 +67,15 @@ public class AdminUserServiceImpl implements AdminUserService{
 	public User getUserByUserIdx(User user) {
 		return uDao.selectUserGrade(user);
 	}
+
+	@Override
+	public int getTotalBook(String search) {
+		return uDao.selectCntSobBySearch(search);
+	}
+
+	@Override
+	public List<StateOfBook> getSobListByPaging(Paging paging) {
+		return uDao.selectSobListByPaging(paging);
+	}
 }
 	

@@ -24,6 +24,7 @@
   	<result column="hall_name" property="hallName"/>
   	<result column="pfm_date" property="pfmDate"/>
   	<result column="pfm_time" property="pfmTime"/>
+  	<result column="pay_idx" property="payIdx"/>
   </resultMap>
   
   <sql id="selectCnt">
@@ -144,6 +145,14 @@
 		FROM USERINFO U JOIN MEMBER_GRADE G
 		ON U.M_GRADE_IDX = G.M_GRADE_IDX
 		WHERE U.USER_IDX = #{userIdx}
+  </select>
+  
+  <select id="selectCntSobBySearch" parameterType="String" resultType="int">
+  		
+  </select>
+  
+  <select id="selectSobListByPaging" parameterType="ticket.utils.Paging" resultMap="SOBMap">
+  
   </select>
   </mapper>
   
