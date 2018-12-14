@@ -1,6 +1,7 @@
 package ticket.dao.face;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -238,5 +239,12 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public Poster selectPosterByPfmIdx(Performance pfm);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 테마 idx로 공연 조회하기
+	 * @작성자:홍나영
+	 */
+	public List<Performance> selectPfmByPreferTheme(Map map);
 	
 }

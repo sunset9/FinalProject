@@ -6,4 +6,29 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="ticket.dao.face.MyChoiceDao">
+  
+  <resultMap type="ticket.dto.MyChoice" id="MyChoiceMap">
+  	<result column="choice_idx" property="choiceIdx"/>
+  	<result column="user_idx" property="userIdx"/>
+  	<result column="pfm_idx" property="pfmIdx"/>
+  	<result column="create_date" property="createDate"/>
+  </resultMap>
+  
+  <select id="selectChoiceList" parameterType="int" resultMap="MyChoiceMap">
+	SELECT  
+	    choice_idx
+	    , user_idx
+	    , M.pfm_idx
+	    , M.create_date
+	    , (SELECT stored_name FROM poster_info PI WHERE M.pfm_idx = PI.pfm_idx) posterImg
+	    ,  name pfmName
+	    , ticket_start ticketStart
+	    , ticket_end ticketEnd 
+	FROM my_choice M
+	INNER JOIN performance P
+	ON M.pfm_idx = P.pfm_idx
+	WHERE user_idx = #{userIdx }
+	ORDER BY ticket_start
+  </select>
+  
   </mapper>

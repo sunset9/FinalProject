@@ -7,12 +7,20 @@ public class PreferArtist {
 	private int preArtistIdx;
 	private int userIdx;
 	private int artistIdx;
+	private String artistName;
 	private Date createDate;
 
+
+	public String getArtistName() {
+		return artistName;
+	}
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
+	}
 	@Override
 	public String toString() {
 		return "PreferArtist [preArtistIdx=" + preArtistIdx + ", userIdx=" + userIdx + ", artistIdx=" + artistIdx
-				+ ", createDate=" + createDate + "]";
+				+ ", artistName=" + artistName + ", createDate=" + createDate + "]";
 	}
 	public int getPreArtistIdx() {
 		return preArtistIdx;

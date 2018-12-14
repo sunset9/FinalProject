@@ -17,6 +17,7 @@
   	<result column="pre_artist_idx" property="preArtistIdx"/>
   	<result column="artist_idx" property="artistIdx"/>
   	<result column="user_idx" property="userIdx"/>
+  	<result column="name" property="artistName"/>
   	<result column="create_date" property="createDate"/>
   </resultMap>
   
@@ -37,16 +38,48 @@
   	  		
   </select>
   
-  <select id ="selectArtistByUserIdx" parameterType="int" resultMap="PreferArtistMap">
-  	SELECT 
+  <select id ="selectPreferArtistByUserIdx" parameterType="int" resultMap="PreferArtistMap">
+ 	SELECT 
   		pre_artist_idx
   		, artist_idx
   		, user_idx
+  		, (SELECT name FROM artist A WHERE A.artist_idx = PA.artist_idx) name
   		, create_date
-  	FROM prefer_artist
+  	FROM prefer_artist PA
   	
   	WHERE user_idx= #{userIdx }
   
   </select>
   
+  <insert id="insertPreferArtist" parameterType="ticket.dto.PreferArtist">
+  
+  	<selectKey keyProperty="preArtistIdx" resultType="int" order="BEFORE">
+  		SELECT prefer_artist_seq.nextval FROM dual
+  	</selectKey>
+  	
+ 	INSERT INTO  prefer_artist (
+ 		pre_artist_idx
+  		, artist_idx
+  		, user_idx
+ 	) VALUES (
+ 		#{preArtistIdx }, #{artistIdx }, #{userIdx })
+  </insert>
+  
+  <delete id="deleteByUserIdx" parameterType="int">
+  	DELETE FROM prefer_artist
+  	WHERE user_idx = #{userIdx }
+  </delete>
+  
+  <select id="selectArtistByUserIdx" parameterType="int" resultMap="ArtistMap">
+    
+    SELECT * FROM artist A
+    INNER JOIN prefer_artist PA
+    ON A.artist_idx = PA.artist_idx
+    WHERE user_idx= #{userIdx }
+  
+  </select>
   </mapper>
+  
+  
+  
+  

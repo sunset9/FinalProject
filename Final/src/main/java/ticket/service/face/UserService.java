@@ -1,7 +1,12 @@
 package ticket.service.face;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import ticket.dto.MyChoice;
+import ticket.dto.Performance;
+import ticket.dto.PreferTheme;
 import ticket.dto.User;
 
 public interface UserService {
@@ -52,4 +57,18 @@ public interface UserService {
 	 * @작성자 : 홍나영
 	 */
 	public void update(User user);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 유저가 찜해놓은 공연 불러오기!
+	 * @작성자:홍나영
+	 */
+	public List<MyChoice> choicePfmList(int userIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 유저가 선택한 테마를 가지고 있는 공연 리스트 조회
+	 * @작성자:홍나영
+	 */
+	public List<Performance> recommendPfm(List<PreferTheme> ptList);
 }
