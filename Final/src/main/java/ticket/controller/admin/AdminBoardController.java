@@ -2,6 +2,7 @@ package ticket.controller.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -79,7 +80,7 @@ public class AdminBoardController {
 	
 	
 	@RequestMapping(value="/admin/noticewrite", method=RequestMethod.POST)
-	public String notiWriteProc(HttpSession session, Notice notice) {
+	public String notiWriteProc(HttpSession session, Notice notice, HttpServletRequest request) {
 		
 //		logger.info("공지 글 쓰기 처리");
 		logger.info(notice.toString());
