@@ -16,12 +16,15 @@
 
 	<delete id="deletePayment"
 		parameterType="ticket.dto.PaymentInfo">
-		DELETE FROM payment WHERE imp_uid=#{impUid};
+		DELETE FROM payment WHERE imp_uid=#{impUid}
 	</delete>
 	<select id="selectBypayIdx"
 		parameterType="ticket.dto.PaymentInfo"
 		resultType="ticket.dto.PaymentInfo">
-		SELECT *FROM payment WHERE pay_idx=#{payIdx}
+		SELECT pay_Idx payIdx,imp_uid impUid,merchant_uid
+		merchantUid, pay_method payMethod,pfm_idx pfmIdx, paid_amount
+		paidAmount ,buyer_name buyerName ,user_idx userIdx,create_date
+		createDate FROM payment WHERE pay_idx=#{payIdx}
 	</select>
 </mapper>
 
