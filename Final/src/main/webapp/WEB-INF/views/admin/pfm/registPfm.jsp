@@ -800,10 +800,12 @@ $(document).ready(function(){
 	
 	// 추가한 공연 일정 보여주는 메소드
 	function viewTimeList(list){
-		var target = $('#registTimeRes tbody');
-		// 초기화
-		target.html('');
+		var target = $('#registTimeRes tbody'); // 뷰 용
+		target.html(''); // 초기화
 		
+		var targetInput = $('#pfmDbtValue'); // 서버에 값 넘기는 용
+		targetInput.html(''); // 초기화
+
 		var isFirst = true;
 		var prevDate ="";
 		var rowspanCnt = 1; 
@@ -827,8 +829,8 @@ $(document).ready(function(){
 			var inputT = $('<input type="hidden">');
 			inputT.attr('name', 'pfmDbtList['+ i +'].pfmTime');
 			inputT.val(list[i].time);
-			$('#registTimeRes').append(inputD);
-			$('#registTimeRes').append(inputT);
+			targetInput.append(inputD);
+			targetInput.append(inputT);
 			
 			
 			// 같은 날인 경우 rowspan 설정을 위한 코드
@@ -864,13 +866,17 @@ $(document).ready(function(){
 			}
 		}
 		
-		// 오른쪽 뷰 - 기간 정보 보여주기
+		// 오른쪽 뷰 - 기간 정보 보여주기 & 서버에 넘길 값을 위한 태그 추가
 		var periodP = $('#registTimeRes').find('p:nth-child(2)');
 		periodP.show();
 		pfmStartDate = $('#registTimeRes tbody tr').first().find('td:first-child').text();
 		pfmEndDate = $('#registTimeRes tbody tr').last().find('td:first-child').text();
 		periodP.find('span:nth-child(1)').text(pfmStartDate);
 		periodP.find('span:nth-child(2)').text(pfmEndDate);
+		
+		targetInput.append('<input type="hidden" name="pfmEnd" value="'+pfmEndDate+'">');
+		targetInput.append('<input type="hidden" name="pfmStart" value="'+pfmStartDate+'">');
+		
 	}
 	
 	// Date  'yyyy-mm-dd' 포멧으로 변환
@@ -901,6 +907,7 @@ $(document).ready(function(){
 		viewTimeList(timeList);
 	});
 	
+	// 상세정보, 예매정보 스마트 에디터 적용
 	$('textarea').froalaEditor({
 		width: '760' // 너비
 		, heightMin : 400 // 초기화시 크기
@@ -1074,6 +1081,9 @@ function setComma(inNum){
 		<th>좌석정보: </th>
 		<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
 	</tr>
+	<tr>
+		<th>좌석구간: </th>
+	</tr>
 	</table>
 	</div>
 </div> <!-- registStep-1 Div-->
@@ -1139,10 +1149,10 @@ function setComma(inNum){
 	<tr>
 		<th>공연 날짜: </th>
 		<td>
-			<input type="text" name="pfmStart" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
+			<input type="text" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
 			<span id="onceRegForm" style="display:none;">
 			 ~ 
-			<input type="text" name="pfmEnd" class="form-control pfmDate" id="pfmEndDate" placeholder="종료일" >
+			<input type="text" class="form-control pfmDate" id="pfmEndDate" placeholder="종료일" >
 			</span>
 		</td>
 	</tr>
@@ -1180,6 +1190,8 @@ function setComma(inNum){
 			</tr>
 		</tbody>
 		</table>
+		<div id="pfmDbtValue" style="display:none">
+		</div>
 	</div>
 </div>
 
@@ -1200,6 +1212,7 @@ function setComma(inNum){
 </div>
 
 <br>
+<button type="button" id="cancelBtn" onclick="location.href='/admin/managerpfm'">취소</button>
 <button type="button" class="stepBtn" id="prevBtn" style="display:none">이전 단계</button>
 <button type="button" class="stepBtn" id="nextBtn">다음 단계</button>
 <button type="button" id="storeBtn" style="display:none">저장</button>

@@ -226,6 +226,25 @@ input[type="number"]::-webkit-inner-spin-button {
 
 <script>
 $(document).ready(function(){
+	var timeList = [];
+	
+	// 처음 수정모드 실행 시 공연일정 그려주기
+	var pfmDbtlist = ${pfmdbtList };
+	// 기존코드와 같게 json 형식 맞춰주기 
+	pfmDbtlist.forEach(function(dbt){
+		// json 만들기
+		var timeJson = {};
+		timeJson['pfmDate'] = formatDate(dbt.pfmDate);
+		timeJson['pfmTime'] = dbt.pfmTime;
+		
+		// list에 json 추가하기
+		timeList.push(timeJson);
+		
+		// 화면에 그려주기
+		viewTimeList(timeList);
+	});
+	
+		
 	// 단계 이동 버튼 클릭 시
 	$('.stepBtn').on('click', function(){
 		var lastCompletedTab = $('.completeStep').last().attr('id');
@@ -726,7 +745,6 @@ $(document).ready(function(){
 
 	
 	// '공연일 추가' 버튼 클릭 시
-	var timeList = [];
 	$('#addPfmTimeBtn').on('click', function(){
 		// 공연 시작일
 		var pfmStartDate = $('#pfmStartDate').val();
@@ -752,8 +770,8 @@ $(document).ready(function(){
 
 				// json 만들기
 				var timeJson = {};
-				timeJson['date'] = formatDate(pfmDate);
-				timeJson['time'] = pfmTime;
+				timeJson['pfmDate'] = formatDate(pfmDate);
+				timeJson['pfmTime'] = pfmTime;
 				
 				// list에 json 추가하기
 				timeList.push(timeJson);
@@ -804,19 +822,27 @@ $(document).ready(function(){
 	
 	// 추가한 공연 일정 보여주는 메소드
 	function viewTimeList(list){
-		var target = $('#registTimeRes tbody');
-		// 초기화
-		target.html('');
+		console.log(list);
+		console.log(list.length);
+		console.log(list[0].pfmDate);
+		
+		var target = $('#registTimeRes tbody'); // 뷰 용
+		target.html(''); // 초기화
+		
+		var targetInput = $('#pfmDbtValue'); // 서버에 값 넘기는 용
+		targetInput.html(''); // 초기화
 		
 		var isFirst = true;
 		var prevDate ="";
 		var rowspanCnt = 1; 
 		
 		for(var i=0; i<list.length ; i++){
+			date = formatDate(list[i].pfmDate);
+			time = list[i].pfmTime;
 			// td 삽입(보여주기 용)
 			var tr = $("<tr>");
-			var dateTd = $("<td>").text(list[i].date);
-			var timeTd = $("<td>").text(list[i].time);
+			var dateTd = $("<td>").text(date);
+			var timeTd = $("<td>").text(time);
 			var removeTd = $("<td>").append("<span class='glyphicon glyphicon-remove'></span>");
 			
 			tr.append(dateTd);
@@ -827,20 +853,20 @@ $(document).ready(function(){
 			// input 삽입(서버에 값 넘기기 위해)
 			var inputD = $('<input type="hidden">');
 			inputD.attr('name', 'pfmDbtList['+ i +'].pfmDate');
-			inputD.val(list[i].date);
+			inputD.val(date);
 			var inputT = $('<input type="hidden">');
 			inputT.attr('name', 'pfmDbtList['+ i +'].pfmTime');
-			inputT.val(list[i].time);
-			$('#registTimeRes').append(inputD);
-			$('#registTimeRes').append(inputT);
+			inputT.val(time);
+			targetInput.append(inputD);
+			targetInput.append(inputT);
 			
 			
 			// 같은 날인 경우 rowspan 설정을 위한 코드
 			// 첫 요소인 경우
 			if(i == 0){
-				prevDate = list[i].date; continue;
+				prevDate = date; continue;
 			}
-			if(prevDate == list[i].date){ // 이전날과 같은 날인경우
+			if(prevDate == date){ // 이전날과 같은 날인경우
 				rowspanCnt++;
 				// 이전 tr에 같은 날이 있다는 표시를 남김
 				target.find('tr:nth-child(' + i +')').addClass('existSameDate');
@@ -862,19 +888,22 @@ $(document).ready(function(){
 				// 같은 날이 있다는 표시는 모두 삭제
 				target.find('tr').removeClass('existSameDate');
 				// 비교에 쓰일 이전 날짜를 현재 날짜로 변경
-				prevDate = list[i].date;
+				prevDate = date;
 				// 초기화
 				rowspanCnt = 1;
 			}
 		}
 		
-		// 오른쪽 뷰 - 기간 정보 보여주기
+		// 오른쪽 뷰 - 기간 정보 보여주기 & 서버에 넘길 값을 위한 태그 추가
 		var periodP = $('#registTimeRes').find('p:nth-child(2)');
 		periodP.show();
 		pfmStartDate = $('#registTimeRes tbody tr').first().find('td:first-child').text();
 		pfmEndDate = $('#registTimeRes tbody tr').last().find('td:first-child').text();
 		periodP.find('span:nth-child(1)').text(pfmStartDate);
 		periodP.find('span:nth-child(2)').text(pfmEndDate);
+		
+		targetInput.append('<input type="hidden" name="pfmEnd" value="'+pfmEndDate+'">');
+		targetInput.append('<input type="hidden" name="pfmStart" value="'+pfmStartDate+'">');
 	}
 	
 	// Date  'yyyy-mm-dd' 포멧으로 변환
@@ -897,7 +926,7 @@ $(document).ready(function(){
 		var targetTime = $(this).parent().prev().text();
 		// json 리스트에서 해당 요소 삭제
 		for(var i=0; i<timeList.length; i++){
-			if(timeList[i].date == targetDate && timeList[i].time == targetTime ){
+			if(timeList[i].pfmDate == targetDate && timeList[i].pfmTime == targetTime ){
 				timeList.splice(i,1); break;
 			}
 		}
@@ -906,10 +935,10 @@ $(document).ready(function(){
 	});
 	
 	$('textarea').froalaEditor({
-		width: '760' // 너비
+		language: 'ko'
+		, width: '760' // 너비
 		, heightMin : 400 // 초기화시 크기
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
-		, language: 'ko'
 		// 툴바 버튼 목록
 		, toolbarButtons: ['fontFamily','bold', 'italic', 'underline','align','|','insertLink','insertImage','|', 'undo', 'redo']
 		 // Set the image upload URL.
@@ -991,13 +1020,14 @@ function setComma(inNum){
 </div>
 
 <form id="registForm" action="/admin/registpfm" method="post" enctype="multipart/form-data" style="width:80%">
+<input type="hidden" name="pfmIdx" value="${pfm.pfmIdx }">
 <!-- 공연등록 1st Tab : 공연 기본 정보 -->
 <div class='registPfmTab' id='registStep-1'>
 	<!-- 포스터 등록 -->
 	<div id="posterImg" style="float: right;width: 310px;">
 		<img src="/resources/image/${poster.storedName }" accept="image/*" width="143" height="201">
 		
-		<input class="posterName" value="파일선택" disabled="disabled">
+		<input class="posterName" value="${poster.originName }" disabled="disabled">
 		<label for="posterBtn">포스터 등록</label>
 		<input type="file" id="posterBtn" class="upload-hidden" name="poster"> 
 	</div>
@@ -1189,7 +1219,7 @@ function setComma(inNum){
 			<input type="text" name="pfmStart" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
 			<span id="onceRegForm" style="display:none;">
 			 ~ 
-			<input type="text" name="pfmEnd" class="form-control pfmDate" id="pfmEndDate" placeholder="종료일" >
+			<input type="text" name="pfmEnd" class="form-control pfmDate" id="pfmEndDate" placeholder="종료일">
 			</span>
 		</td>
 	</tr>
@@ -1211,7 +1241,8 @@ function setComma(inNum){
 	
 	<div id='registTimeRes'>
 		<p style='font-size: 13px; font-weight:bold;'>등록예정 공연일정</p>
-		<p style="display:none">(<span>시작일</span> ~ <span>종료일</span>)</p>
+		<p>(<span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${pfm.pfmStart }" /></span>
+		 ~ <span><fmt:formatDate pattern = "yyyy-MM-dd" value = "${pfm.pfmEnd }" /> </span>)</p>
 		<hr>
 		<table class='table' style="width: 70%;">
 		<thead>
@@ -1227,6 +1258,8 @@ function setComma(inNum){
 			</tr>
 		</tbody>
 		</table>
+		<div id="pfmDbtValue" style="display:none">
+		</div>
 	</div>
 </div>
 
@@ -1234,7 +1267,7 @@ function setComma(inNum){
 <div class='registPfmTab' id='registStep-3' style="display:none">
 <span>공연<br> 상세정보</span>
 <div>
-<textarea name="pfmDetailContents"></textarea>
+<textarea name="pfmDetailContents">${detail.contents }</textarea>
 </div>
 </div>
 
@@ -1242,11 +1275,12 @@ function setComma(inNum){
 <div class='registPfmTab' id='registStep-4' style="display:none">
 <span>공연<br> 예매정보</span>
 <div>
-<textarea name="pfmBookinfoContents"></textarea>
+<textarea name="pfmBookinfoContents">${bookinfo.contents }</textarea>
 </div>
 </div>
 
 <br>
+<button type="button" id="cancelBtn" onclick="location.href='/admin/managerpfm'">취소</button>
 <button type="button" class="stepBtn" id="prevBtn" style="display:none">이전 단계</button>
 <button type="button" class="stepBtn" id="nextBtn">다음 단계</button>
 <button type="button" id="storeBtn" style="display:none">저장</button>
