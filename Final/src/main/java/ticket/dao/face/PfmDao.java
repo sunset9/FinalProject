@@ -238,5 +238,19 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public Poster selectPosterByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 공연 기본 정보 수정하기
+	 * @작성자: 전해진
+	 */
+	public void updatePfm(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 포스터 정보 수정하기
+	 * @작성자: 전해진
+	 */
+	public void updatePoster(Poster poster);
 	
 }

@@ -458,4 +458,12 @@ public interface AdminPfmService {
 	 */
 	public Poster getPoster(Performance pfm);
 
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 공연 수정하기
+	 * @작성자: 전해진
+	 */
+	public void editPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
+			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents);
+
 }

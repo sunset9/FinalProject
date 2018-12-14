@@ -571,4 +571,20 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectPosterByPfmIdx(pfm);
 	}
 
+	@Override
+	public void editPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
+			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
+		int pfmIdx = pfm.getPfmIdx();
+		// 공연 기본 정보 수정
+		pDao.updatePfm(pfm);
+		
+		// 포스터 수정
+		if (posterUpload.getSize() != 0) {
+			Poster poster = uploadPoster(posterUpload);
+			poster.setPfmIdx(pfmIdx); // 공연 idx 지정
+			// 포스터 업로드 정보 DB 저장
+			pDao.updatePoster(poster);
+		}
+	}
+
 }

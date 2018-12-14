@@ -112,7 +112,8 @@ public class AdminPfmController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/registpfm", method = RequestMethod.POST)
-	public String registPfm(Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
+	public String registPfm(
+			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
 			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
@@ -185,11 +186,16 @@ public class AdminPfmController {
 		List<Artist> artistList = pService.getArtist(pfm);
 		model.addAttribute("artistList", artistList);
 		
+		// 모든 공연장 목록 가져오기
+		List<Hall> hallList = pService.getHallList();
+		model.addAttribute("hallList", hallList);
+		
 		// 좌석& 가격 정보 가져오기
 		
 		// 공연일정(날짜, 시간) 정보 가져오기
 		List<PfmDateByTime> pfmdbtList = pService.getPfmdbt(pfm);
-		model.addAttribute("pfmdbtList", pfmdbtList);
+//		model.addAttribute("pfmdbtList", pfmdbtList);
+		model.addAttribute("pfmdbtList", new Gson().toJson(pfmdbtList));
 		
 		// 공연 상세 정보 가져오기
 		PfmDetail detail = pService.getPfmDetail(pfm);
@@ -203,14 +209,44 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.05
+	 * @최종수정일: 2018.12.14
 	 * @Method설명: 공연 정보 수정하기
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/pfm/editpfm", method = RequestMethod.POST)
-	public void editPfm() {
+	public String editPfm(
+			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
+			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
+			, PfmThemeList themeList // 테마 리스트
+			, CastList castList // 출연진 리스트
+			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
+			, String pfmDetailContents // 예매상세 내용
+			, String pfmBookinfoContents // 예약 상태 내용
+			) {
+		// 공연 기본 정보
+		logger.info(pfm.toString());
 
-		//
+		// 테마 정보들 등록
+		logger.info(themeList.toString());
+
+		// 출연진 등록
+		logger.info(castList.toString());
+
+		// 좌석 정보 & 가격 등록
+
+		// 공연 날짜 & 시간 등록
+		logger.info(pfmDbtList.toString());
+
+		// 공연 상세 정보 등록
+		logger.info(pfmDetailContents);
+
+		// 예매 상세 정보 등록
+		logger.info(pfmBookinfoContents);
+		
+		// 공연 수정
+		pService.editPfm(pfm, posterUpload, themeList, castList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
+		
+		return "redirect:/admin/managerpfm";
 	}
 
 	/**
