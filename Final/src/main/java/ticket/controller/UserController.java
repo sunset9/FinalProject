@@ -16,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.Artist;
+import ticket.dto.MyChoice;
+import ticket.dto.Performance;
+import ticket.dto.PreferTheme;
 import ticket.dto.Theme;
 import ticket.dto.User;
+import ticket.service.face.PreferAService;
 import ticket.service.face.PreferTService;
 import ticket.service.face.UserService;
 import ticket.utils.ChangeDate;
@@ -31,6 +36,9 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private PreferTService preferTService;
+	@Autowired
+	private PreferAService preferAService;
+	
 	 
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
 	public void join(Model model) {
@@ -175,10 +183,30 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/mypage/mychoice", method= RequestMethod.GET)
-	public void mypageChoice(Model model
-				,User user
-			) {
+	@RequestMapping(value="/mypage/mychoice", method=RequestMethod.GET)
+	public void mychoice(
+			Model model, 
+			HttpSession session ) {
+		User user = (User)session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
+		
+		// 유저가 선택한 아티스트 불러오기 
+		List<Artist> aList = preferAService.choiceArtistList(userIdx);
+		model.addAttribute("aList",aList);
+		logger.info("유저가 선택한 아티스트"+aList);
+		
+		// 유저가 찜해논 공연 불러오기
+		List<MyChoice> pfmList = userService.choicePfmList(userIdx);
+		logger.info("유저가 찜 해놓은 공연 : " +pfmList );
+		model.addAttribute("pfmList",pfmList);
+		
+		// 유저가 선택한 테마 리스트 불러오기
+		List<PreferTheme> ptList = preferTService.choiceList(userIdx);
+		
+		// 테마에 맞는 추천공연 리스트 불러오기
+		List<Performance> recomList = userService.recommendPfm(ptList);
+		
+		// 유저가 선택한 테마 불러오기 -> 텍스트
 		
 	}
 	@RequestMapping(value="/mypage/myinq", method= RequestMethod.GET)

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ticket.dto.Artist;
+import ticket.dto.PreferArtist;
 import ticket.dto.PreferTheme;
 import ticket.dto.Theme;
 import ticket.dto.User;
@@ -30,9 +31,6 @@ public class PreferController {
 	private PreferTService preferTService;
 	@Autowired
 	private PreferAService preferAService;
-	
-	
-
 	
 	
 	
@@ -62,7 +60,7 @@ public class PreferController {
 		model.addAttribute("aList",aList);
 		
 		// 유저가 선택한 아티스트 리스트 얻기 
-		List<Artist> paList = preferAService.choiceList(userIdx);
+		List<PreferArtist> paList = preferAService.choiceList(userIdx);
 		model.addAttribute("paList", paList);
 		
 		String search= null;
@@ -70,8 +68,29 @@ public class PreferController {
 //		preferAService.search(search);
 	}
 	
+	@RequestMapping(value="/mypage/prefer", method=RequestMethod.POST)
+	public String choiceProc(HttpSession session
+				,@RequestParam(value="themeIdx[]") List<String> themeIdx
+				,@RequestParam(value="artistIdx[]") List<String> artistIdx
+			) {
+		logger.info("선호 선택 완료 처리");
+		logger.info("테마IDX:"+themeIdx);
+		logger.info("아티스트IDX"+artistIdx);
+		
+		User user = (User)session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
+		
+		// 선택한 테마 넣기
+		preferTService.choiceTheme(userIdx, themeIdx);
+		
+		// 선택한 아티스트 넣기
+		preferAService.choiceArtist(userIdx,artistIdx);
+		
+		return "redirect:/mypage/mychoice";
+	}
+	
 	@RequestMapping(value="/user/prefer", method=RequestMethod.POST)
-	public void choiceProc(
+	public void themeProc(
 			@RequestParam(value="themeIdx[]") List<String> themeIdx
 			, int userIdx
 			) {
@@ -82,6 +101,8 @@ public class PreferController {
 		preferTService.choiceTheme(userIdx, themeIdx);
 		// 선택한거 취소하고 다 넣기..ㅎ
 		
+		
 	}
+
 	
 }

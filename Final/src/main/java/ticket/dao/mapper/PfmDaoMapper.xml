@@ -275,5 +275,16 @@
 		<include refid="ByPfmIdx" />
 	</select>
 	
+	<select id="selectPfmByPreferTheme" resultMap="Performance" parameterType="hashmap">
+		SELECT * 
+		FORM performance
+		  <if test="ptList != null">
+  		WHERE theme_idx IN
+  			<foreach collection="ptList" item="theme" open="(" close=")" separator=",">
+  				#{theme.themeIdx}
+  			</foreach>
+  		</if>
+	</select>
+	
 	
 </mapper>
