@@ -64,4 +64,18 @@ public interface AdminUserService {
 	 * @작성자: 김지은
 	 */
 	public User getUserByUserIdx(User user);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 전체 예매수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int getTotalBook(String search);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 페이징한 예매현황 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<StateOfBook> getSobListByPaging(Paging paging);
 }

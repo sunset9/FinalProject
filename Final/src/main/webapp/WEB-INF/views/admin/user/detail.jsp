@@ -7,6 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function cancelBook(impUid) {
+// 	console.log(impUid);
+}
+
+</script>
+<style type="text/css">
+table, td, th, tr {border: 1px solid black;}
+</style>
 </head>
 <body>
 <div>
@@ -53,20 +62,25 @@ ${curUser.email }님의 예매현황<br>
 	<td>
 	예매번호   ${sob.bookIdx}<br>
 	 관람일    <fmt:formatDate value="${sob.pfmDate}" pattern="yyyy.MM.dd(E)" />  ${sob.pfmTime}<br>
-	 취소일    <fmt:formatDate value="${sob.cancelDate}" pattern="yyyy.MM.dd(E)" />
+	 매수 <br>
+	 <c:if test="${sob.state eq '취소중' }">
+	 	취소일    <fmt:formatDate value="${sob.cancelDate}" pattern="yyyy.MM.dd(E)" />
+	 </c:if>
+	 <c:if test="${sob.state eq '예매완료(결제완료)' }">
+	 	취소가능일    <fmt:formatDate value="${sob.createDate}" pattern="yyyy.MM.dd(E)" />
+	 </c:if>
 	</td>
 	<td>
 	${sob.state }<br>
 	</td>
 	<td>
 	<c:if test="${sob.state eq '취소중'}">
-		<button>환불하기</button>
+<%-- 		<button onclick="cancelBook(${sob.imp_uid});">환불하기</button> --%>
 	</c:if>
 	</td>
 </tr>
 </c:forEach>
 </tbody>
-
 </table>
 </div>
 

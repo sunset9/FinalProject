@@ -95,5 +95,19 @@ public interface UserDao {
 	 * @작성자: 김지은
 	 */
 	public User selectUserGrade(User user);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 전체 예매수 가져오기 
+	 * @작성자: 김지은
+	 */
+	public int selectCntSobBySearch(String search);
+	
+	/**
+	 * @최종수정일: 2018.12.14
+	 * @Method설명: 검색어 적용된 예매현황 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<StateOfBook> selectSobListByPaging(Paging paging);
 
 }
