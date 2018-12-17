@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class NoticeFile {
 
-	private int notiFileIdx;
+	private int noFileIdx;
 	private String storedName;
 	private String originName;
 	private int noticeIdx;
 	private Date createDate;
 	@Override
 	public String toString() {
-		return "NoticeFile [notiFileIdx=" + notiFileIdx + ", storedName=" + storedName + ", originName=" + originName
+		return "NoticeFile [noFileIdx=" + noFileIdx + ", storedName=" + storedName + ", originName=" + originName
 				+ ", noticeIdx=" + noticeIdx + ", createDate=" + createDate + "]";
 	}
-	public int getNotiFileIdx() {
-		return notiFileIdx;
+	public int getNoFileIdx() {
+		return noFileIdx;
 	}
-	public void setNotiFileIdx(int notiFileIdx) {
-		this.notiFileIdx = notiFileIdx;
+	public void setNoFileIdx(int noFileIdx) {
+		this.noFileIdx = noFileIdx;
 	}
 	public String getStoredName() {
 		return storedName;
@@ -44,7 +44,7 @@ public class NoticeFile {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
+
 	
 	
 }

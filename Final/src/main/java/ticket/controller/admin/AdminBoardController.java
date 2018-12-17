@@ -2,6 +2,7 @@ package ticket.controller.admin;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.Notice;
 import ticket.service.admin.face.AdminBoardService;
@@ -24,7 +26,7 @@ public class AdminBoardController {
 	static final Logger logger = LoggerFactory.getLogger(AdminBoardController.class);
 
 	@Autowired AdminBoardService adminBoardService;
-	
+	@Autowired ServletContext context;
 	/**
 	 * 2018.12.09
 	 * @Method설명: 공지사항 목록 페이징 리스트
@@ -141,39 +143,50 @@ public class AdminBoardController {
 	
 
 	
-
 	
 	/**
 	 * 2018.12.13
-	 * @Method설명: 공지사항 파일 업로드
+	 * @Method설명: 공지사항 파일 업로드 (합치기전 테스트)
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.GET)
 	public String notiFileup() {
-		return null;
+		return "/admin/notice/fileup";
 		
 	}
 	
-	/**
-	 * 2018.12.13
-	 * @Method설명: 공지사항 파일 업로드 처리
-	 * @작성자: 조요한
-	 */
+//@RequestParam(value="n") String name => n이란 값을 name에 저장
 	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.POST)
-	public String notiFileupProc() {
-		return null;
+	public String notiFileupProc(MultipartFile file, String fileTitle) {
+	
+		// 업로드 파일 정보 전달
+		adminBoardService.filesave(context, file, fileTitle); 
+		
+		return "redirect:/admin/noticelist";
+		
+	}
+
+	
+	
+	
+	
+	
+	@RequestMapping(value="/admin/noticefilelist")
+	public String filelist(Model model) {
+		return "/admin/notice/filelist";
 		
 	}
 	
-	/**
-	 * 2018.12.13
-	 * @Method설명: 공지사항 파일 다운로드
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/noticefiledownload", method=RequestMethod.GET)
-	public void notiFiledownload() {
-		
-	}
+	
+//	/**
+//	 * 2018.12.13
+//	 * @Method설명: 공지사항 파일 다운로드
+//	 * @작성자: 조요한
+//	 */
+//	@RequestMapping(value="/admin/noticefiledownload", method=RequestMethod.GET)
+//	public void notiFiledownload() {
+//		
+//	}
 	
 	
 	

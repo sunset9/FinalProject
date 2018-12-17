@@ -31,19 +31,19 @@ $(document).ready(function(){
     });
      
      
-    function fn_openBoardList(){
-        var comSubmit = new ComSubmit();
-        comSubmit.setUrl("<c:url value='/sample/openBoardList.do'/>");
-        comSubmit.submit();
-    }
+//     function fn_openBoardList(){
+//         var comSubmit = new ComSubmit();
+//         comSubmit.setUrl("<c:url value='/sample/openBoardList.do'/>");
+//         comSubmit.submit();
+//     }
      
-    function fn_writeBoard(){
-        var comSubmit = new ComSubmit("frm");
-        comSubmit.setUrl("<c:url value='/sample/writeBoard.do'/>");
-        comSubmit.submit();
-    }
+//     function fn_writeBoard(){
+//         var comSubmit = new ComSubmit("frm");
+//         comSubmit.setUrl("<c:url value='/sample/writeBoard.do'/>");
+//         comSubmit.submit();
+//     }
 	
-);
+// );
 </script>
 
 <head>
@@ -67,11 +67,11 @@ $(document).ready(function(){
 <tr> <td>분류</td><td><input type="text" name="NTypeIdx"></td> </tr>
 <tr> <td>제목</td><td><input type="text" name="noticeTitle"></td> </tr>
 <tr> <td>내용</td><td><textarea id="content" name="noticeContent"></textarea></td> </tr>
-<tr> <td>첨부파일 #1</td> <td><input type="file" id="file1"></td> </tr>
-<tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr>
-<tr> <td>첨부파일 #3</td> <td><input type="file" id="file3"></td> </tr>
-<tr> <td>첨부파일 #4</td> <td><input type="file" id="file4"></td> </tr>
-<tr> <td>첨부파일 #5</td> <td><input type="file" id="file5"></td> </tr>
+<!-- <tr> <td>첨부파일 #1</td> <td><input type="file" id="file1"></td> </tr> -->
+<!-- <tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr> -->
+<!-- <tr> <td>첨부파일 #3</td> <td><input type="file" id="file3"></td> </tr> -->
+<!-- <tr> <td>첨부파일 #4</td> <td><input type="file" id="file4"></td> </tr> -->
+<!-- <tr> <td>첨부파일 #5</td> <td><input type="file" id="file5"></td> </tr> -->
 </table>
 <button id="btnWrite">작성</button>
 <button id="btnCancel">목록으로, 취소</button>

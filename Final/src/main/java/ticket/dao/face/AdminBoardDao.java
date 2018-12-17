@@ -39,12 +39,17 @@ public interface AdminBoardDao {
 	
 	
 	
-	
 	// 파일 업로드
 	public void insertNotiFile(NoticeFile noticeFile);
 	
+	// 파일 전체 조회 (임시)
+	public List selectNotiFileAll();
+
 	// notiFileIdx를 이용한 조회
-	public NoticeFile selectBynotiFileIdx(int notiFileIdx);
+	public NoticeFile selectByNotiFileIdx(int notiFileIdx);
+	
+	
+	
 	
 	
 	
