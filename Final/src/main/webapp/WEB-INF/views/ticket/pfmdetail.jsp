@@ -104,7 +104,7 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="tab-2" class="tab-content">
-			222222
+			2
 		</div>
 		
 		<div id="tab-3" class="tab-content">

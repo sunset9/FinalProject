@@ -2,6 +2,7 @@ package ticket.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.MainBanner;
-import ticket.dto.PfmDetail;
+import ticket.dto.Performance;
 import ticket.dto.Poster;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.service.face.MainService;
@@ -181,18 +182,33 @@ public class MainController {
 	@RequestMapping(value="/ticket/ticketopen", method=RequestMethod.GET)
 	public void ticketopen(Model model) {
 		// 상단의 이미지 및 기본 정보들 출력
-		List<Poster> openList = mainService.ticketOpenList();
+		List<Performance> openList = mainService.ticketOpenList();
 		model.addAttribute("openList", openList);
+		
+		// 하단 오픈 리스트 출력
+		//	기본 : 등록일 순
+		List<Performance> openPfmList = mainService.ticketOpenPfmList();
+		model.addAttribute("openPfmList", openPfmList);
 	}
 	
-	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 티켓 오픈 관련 띄우기
-	 * @작성자: 배수연
-	 */
-	@RequestMapping(value="/ticket/ticketopen", method=RequestMethod.POST)
-	public void ticketopenProc() {
+	@RequestMapping(value="/ticket/openarray", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> openarray(
+			String array
+		) {
+		// 티켓 오픈에서 등록순, 오픈일순 정렬해주기
+		HashMap<String, Object> map = new HashMap<>();
 		
+		if(array.equals("registration")) {
+			// 등록순
+			List<Performance> openPfmList = mainService.ticketOpenPfmList();
+			map.put("openPfmList", openPfmList);
+			
+		} else if(array.equals("openday")) {
+			List<Performance> openPfmList = mainService.ticketOpenDayList();
+			map.put("openPfmList", openPfmList);
+		}
+		
+		return map;
 	}
 	
 	/**

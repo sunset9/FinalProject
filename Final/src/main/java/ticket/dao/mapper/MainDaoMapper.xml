@@ -253,20 +253,46 @@
 		
 	</select>
 	
-	<select id="selectTicketOpenList" resultMap="Poster">
-		SELECT
-		    pp.pfm_idx pfmIdx
-		    , pp.name
-		    , po.origin_name
+	<select id="selectTicketOpenList" resultMap="Performance">
+		SELECT 
+			po.origin_name poster_name ,pp.*
 		FROM (
-		    SELECT rownum, p.* FROM (
-		        SELECT * FROM performance
-		        ORDER BY create_date DESC
-		    ) p
-		    WHERE rownum BETWEEN 1 AND 5
-		) pp
-		LEFT JOIN poster_info po
-		    ON pp.pfm_idx = po.pfm_idx
+    		SELECT ROWNUM as rnum, p.* FROM (
+       			SELECT  * FROM performance
+                order by create_date desc
+    		) p
+		)pp
+        LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		WHERE rnum BETWEEN 1 AND 5
+		ORDER BY rnum
 	</select>
 	
+	<select id="selectTicketOpenPfmList" resultMap="Performance">
+		SELECT 
+			po.origin_name poster_name ,pp.*
+		FROM (
+    		SELECT ROWNUM as rnum, p.* FROM (
+       			SELECT  * FROM performance
+                order by create_date desc
+    		) p
+		)pp
+        LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		ORDER BY rnum
+	</select>
+	
+	<select id="selectOpenDayPfmList" resultMap="Performance">
+		SELECT 
+			po.origin_name poster_name ,pp.*
+		FROM (
+    		SELECT ROWNUM as rnum, p.* FROM (
+       			SELECT  * FROM performance
+                order by pfm_start desc
+    		) p
+		)pp
+        LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		ORDER BY rnum
+	</select>
 </mapper>
