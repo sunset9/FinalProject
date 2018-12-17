@@ -5,6 +5,7 @@ import java.util.List;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
@@ -89,5 +90,7 @@ public interface PfmDetailDao {
 	public boolean deleteReviewRecomm(ReviewRecomm reRecomm);
 
 	public Performance selectPfmInfo(Performance pfm);
+
+	public PfmDetail selectPfmDetailInfo(Performance pfm);
 	
 }

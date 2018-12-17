@@ -7,6 +7,13 @@
 	<resultMap type="ticket.dto.Performance" id="Performance">
 		<result column="pfm_idx" property="pfmIdx"/>
 	</resultMap>
+	
+	<resultMap type="ticket.dto.PfmDetail" id="PfmDetail">
+		<result column="pfm_detail_idx" property="pfmDetailIdx"/>
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="create_date" property="createDate"/>
+		<result column="contents" property="contents"/>
+	</resultMap>
 
 	<select id="selectChoiceDetail" parameterType="ticket.dto.Performance" resultType="ticket.dto.Poster">
 		SELECT
@@ -32,6 +39,11 @@
 			, age_grade_idx as ageGradeIdx
 			, running_time as runningTime
 		FROM performance
+		WHERE pfm_idx=#{pfmIdx}
+	</select>
+	
+	<select id="selectPfmDetailInfo" parameterType="ticket.dto.Performance" resultMap="PfmDetail">
+		SELECT * FROM pfm_detail
 		WHERE pfm_idx=#{pfmIdx}
 	</select>
 	

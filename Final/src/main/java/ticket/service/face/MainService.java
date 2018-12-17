@@ -2,10 +2,10 @@ package ticket.service.face;
 
 import java.util.List;
 
-import ticket.dto.Genre;
+import ticket.dto.MainBanner;
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
-import ticket.dto.Theme;
 
 public interface MainService {
 	/**
@@ -83,5 +83,32 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public List<Poster> getPopularityList();
+
+	/**
+	 * 최종수정일: 2018.12.15
+	 * @Method설명: 메인배너 리스트 가져오기
+	 * @작성자: 배수연
+	 */
+	public List<MainBanner> mainBannerList();
+
+	/**
+	 * 최종수정일: 2018.12.16
+	 * @Method설명: new ! 공연  리스트
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getnewPoster();
+
+	public List<Poster> getconPoster();
+
+	public List<Poster> getMuPoster();
+
+	public List<Poster> getTestList();
+
+	/**
+	 * 최종수정일: 2018.12.16
+	 * @Method설명: 오픈 티켓 배너 리스트 5개
+	 * @작성자: 배수연
+	 */
+	public List<Poster> ticketOpenList();
 
 }

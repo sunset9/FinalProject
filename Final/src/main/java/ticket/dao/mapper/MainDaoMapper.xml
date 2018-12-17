@@ -18,6 +18,91 @@
 		<result column="create_date" property="createDate"/>
 	</resultMap>
 	
+	<resultMap type="ticket.dto.Performance" id="Performance">
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="name" property="name"/>
+		<result column="genre_idx" property="genreIdx"/>
+		<result column="pfm_start" property="pfmStart"/>
+		<result column="pfm_end" property="pfmEnd"/>
+		<result column="ticket_start" property="ticketStart"/>
+		<result column="ticket_end" property="ticketEnd"/>
+		<result column="hall_idx" property="hallIdx"/>
+		<result column="age_grade_idx" property="ageGradeIdx"/>
+		<result column="running_time" property="runningTime"/>
+		<result column="create_date" property="createDate"/>
+		<result column="poster_name" property="posterName"/>
+	</resultMap>
+	
+	<!-- 메인 배너 -->
+	<select id="selectMainbannerList" resultType="ticket.dto.MainBanner">
+		SELECT
+		    pfm_idx as pfmIdx
+		    , banner_img_ori as bannerImgOri
+		FROM main_banner
+	</select>
+	
+	<!-- 탭 : NEW -->
+	<select id="selectNewPfmList" resultMap="Poster">
+		SELECT
+		    p.pfm_idx
+		    , p.name
+		    , po.origin_name
+		FROM( 
+		    SELECT
+		        rownum, p.*
+		    FROM performance p
+		    WHERE rownum BETWEEN 1 AND 5
+		    ORDER BY create_date DESC
+		) p
+		LEFT JOIN poster_info po
+		    ON po.pfm_idx = p.pfm_idx
+	</select>
+	
+	<!-- 탭 : CONCERT -->
+	<select id="selectConTabList" resultMap="Poster">
+		SELECT p.* FROM (
+		    SELECT * FROM TAB_BANNER
+		    WHERE pfm_idx IN (
+		        SELECT pfm_idx FROM performance
+		        WHERE genre_idx=1
+		    ) 
+		) p
+		LEFT JOIN poster_info po
+		     ON p.pfm_idx=po.pfm_idx
+	</select>
+	
+	<!-- 탭 : MUSICAL -->
+	<select id="selectMuTabList" resultMap="Poster">
+		SELECT p.* FROM (
+		    SELECT * FROM TAB_BANNER
+		    WHERE pfm_idx IN (
+		        SELECT pfm_idx FROM performance
+		        WHERE genre_idx=2
+		    ) 
+		) p
+		LEFT JOIN poster_info po
+		     ON p.pfm_idx=po.pfm_idx
+	</select>
+	
+	<select id="selectTestList"	resultMap="Poster">
+		select
+        po.origin_name originName
+		,po.pfm_idx pfmIdx
+		,po.stored_name poster_name ,pp.*
+        from (
+       select * from (
+           select ROWNUM as rnum, p.* from(
+               select * from performance
+               where genre_idx=1
+               order by pfm_idx
+           )p
+       ) where rnum between 1 and 5
+         order by rnum
+       ) pp
+       LEFT JOIN poster_info po
+       ON pp.pfm_idx = po.pfm_idx
+	</select>
+	
 	<!-- 상단 배너 -->
 	<select id="selectAdminBanCon" resultMap="Poster">
 			SELECT
@@ -82,18 +167,6 @@
 	)pp
        LEFT JOIN poster_info po
        ON pp.pfm_idx = po.pfm_idx
-		
-<!-- 		SELECT -->
-<!-- 			poster_idx as posterIdx, -->
-<!-- 			pfm_idx as pfmIdx, -->
-<!-- 			origin_name as originName, -->
-<!-- 			stored_name as storedName, -->
-<!-- 			create_date as createDate -->
-<!-- 		FROM poster_info -->
-<!-- 		WHERE pfm_idx IN ( -->
-<!-- 		    SELECT pfm_idx FROM performance -->
-<!-- 		    WHERE genre_idx=1 -->
-<!-- 		) -->
 	</select>
 	
 	<select id="selectMuPfmPosterInfo" resultType="ticket.dto.Poster">
@@ -178,6 +251,22 @@
 	<!-- 콘서트 정렬기준 - 인기순 -->
 	<select id="selectPopularityListPfm" resultMap="Poster">
 		
+	</select>
+	
+	<select id="selectTicketOpenList" resultMap="Poster">
+		SELECT
+		    pp.pfm_idx pfmIdx
+		    , pp.name
+		    , po.origin_name
+		FROM (
+		    SELECT rownum, p.* FROM (
+		        SELECT * FROM performance
+		        ORDER BY create_date DESC
+		    ) p
+		    WHERE rownum BETWEEN 1 AND 5
+		) pp
+		LEFT JOIN poster_info po
+		    ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
 </mapper>

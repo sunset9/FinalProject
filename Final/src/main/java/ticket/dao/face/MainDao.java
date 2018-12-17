@@ -2,10 +2,11 @@ package ticket.dao.face;
 
 import java.util.List;
 
-import ticket.dto.Genre;
+import ticket.dto.MainBanner;
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
-import ticket.dto.Theme;
+import ticket.dto.TabBanner;
 
 public interface MainDao {
 	/**
@@ -92,5 +93,32 @@ public interface MainDao {
 	 * @작성자: 배수연
 	 */
 	public List<Poster> selectPopularityListPfm();
+
+	/**
+	 * 최종수정일: 2018.12.15
+	 * @Method설명: 메인 배너 리스트 가져오기
+	 * @작성자: 배수연
+	 */
+	public List<MainBanner> selectMainbannerList();
+
+	/**
+	 * 최종수정일: 2018.12.16
+	 * @Method설명: 탭 - new 공연 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectNewPfmList();
+
+	/**
+	 * 최종수정일: 2018.12.16
+	 * @Method설명: 탭 - 콘서트 리스트 출력 : sql문 확인 후 고치기
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectConTabList();
+
+	public List<Poster> selectTestList();
+
+	public List<Poster> selectMuTabList();
+
+	public List<Poster> selectTicketOpenList();
 
 }

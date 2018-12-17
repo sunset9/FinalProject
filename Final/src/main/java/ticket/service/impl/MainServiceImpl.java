@@ -2,16 +2,15 @@ package ticket.service.impl;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ticket.dao.face.MainDao;
-import ticket.dto.Genre;
+import ticket.dto.MainBanner;
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
-import ticket.dto.Theme;
+import ticket.dto.TabBanner;
 import ticket.service.face.MainService;
 
 @Service
@@ -75,4 +74,35 @@ public class MainServiceImpl implements MainService {
 	public List<Poster> getPopularityList() {
 		return mainDao.selectPopularityListPfm();
 	}
+
+	@Override
+	public List<MainBanner> mainBannerList() {
+		return mainDao.selectMainbannerList();
+	}
+
+	@Override
+	public List<Poster> getnewPoster() {
+		return mainDao.selectNewPfmList();
+	}
+
+	@Override
+	public List<Poster> getTestList() {
+		return mainDao.selectTestList();
+	}
+
+	@Override
+	public List<Poster> getconPoster() {
+		return mainDao.selectConTabList();
+	}
+
+	@Override
+	public List<Poster> getMuPoster() {
+		return mainDao.selectMuTabList();
+	}
+
+	@Override
+	public List<Poster> ticketOpenList() {
+		return mainDao.selectTicketOpenList();
+	}
+
 }

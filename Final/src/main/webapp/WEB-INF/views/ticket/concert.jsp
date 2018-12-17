@@ -4,6 +4,11 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	// 상단배너 이미지 하나씩 자동 슬라이드 해주기
+	setInterval(function() {
+		$('.topbannerimg').append($('.bannerImg').first());
+	}, 2000);
+	
 	$("#all, #1, #2, #3, #4, #5").click(function() {
 		// 각 버튼을 눌렀을 경우 해당 버튼에 대한 id 값을 가져옴
 		//  id 값을 넘겨 themeIdx로 사용하여 조회하기 테스트
@@ -64,7 +69,7 @@ $(document).ready(function() {
 		
 		var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
 		var span = $('<span class="thumImg">');
-		var img = $('<img class="concertImg" src="/resources/image/'+ list.originName + '">');
+		var img = $('<img class="concertImg" src="/resources/image/'+ list.originName + '"><br>');
 		
 		a.append(span.append(img));
 		a.append($('<strong>'+ list.name +'</strong>'));
@@ -90,6 +95,12 @@ $(document).ready(function() {
 	margin: 5px;
 }
 
+.bannerImg {
+	width: 200px;
+	height: 250px;
+	margin: 5px;
+}
+
 .themeList {
 	margin: 5px;
 	text-align: center;
@@ -112,49 +123,36 @@ ul.array li span{
 	width:100%;
 	float: right;
 }
-
-ul.choice {
-	list-style: none;
-}
-ul.choice li {
-	float: left;
-}
-
-ul.choice li span{
-    padding: 0 20px 0 21px;
-    vertical-align: middle;
-    cursor: pointer;
-}
-.choiceDiv {
-	width:100%;
-	float: right;
-	text-align: center;
-}
-
 li.pfmInfo {
 	list-style: none;
 	float: left;
+	margin: 5px;
+	text-align: center;
 }
 
 .choiceDiv button {
 	margin: 5px;
 }
 
+.choiceDiv {
+	text-align: center;
+}
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
-	<!-- 슬라이드 추가하기 -->
 	<h3>콘서트</h3>
+	<div class="topbannerimg">
 	<c:forEach items="${topBanList }" var="topList">
 	<span class="thumImg">
-		<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-			<img class="concertImg" src="/resources/image/${topList.originName}" />
+		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
+			<img class="bannerImg" src="/resources/image/${topList.originName}" />
 		</a>
 	</span>
 	</c:forEach>
+	</div>
 	
 	<hr>
-	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능하도록 수정 -->
+	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="all" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
 		<button id="1" style="border: none; background-color: #FFFFFF; color: black;">발라드/R&B</button>
@@ -180,7 +178,7 @@ li.pfmInfo {
 				<span class="thumImg">
 					<img class="concertImg" src="/resources/image/${list.originName}" /><br>
 				</span>
-				<strong>${list.name }</strong>
+				<strong class="imgname">${list.name }</strong>
 				</a>
 			</li>
 		</c:forEach>

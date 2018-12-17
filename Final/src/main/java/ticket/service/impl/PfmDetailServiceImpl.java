@@ -9,6 +9,7 @@ import ticket.dao.face.PfmDetailDao;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
@@ -77,6 +78,13 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public Performance getPfmInfo(Performance pfm) {
 		return mDetailDao.selectPfmInfo(pfm);
+	}
+
+
+
+	@Override
+	public PfmDetail pfmDetailInfo(Performance pfm) {
+		return mDetailDao.selectPfmDetailInfo(pfm);
 	}
 	
 }

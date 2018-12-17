@@ -5,6 +5,7 @@ import java.util.List;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
@@ -17,9 +18,15 @@ public interface PfmDetailService {
 	 * @작성자: 배수연
 	 */
 	public Poster getChoicePfmDetail(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.17
+	 * @Method설명: 하단의 상세 정보 출력
+	 * @작성자: 배수연
+	 */
+	public PfmDetail pfmDetailInfo(Performance pfm);
 	
-	
-	/**0
+	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 기대평 목록
 	 * @작성자: 배수연
