@@ -11,7 +11,15 @@
 var i=0; 
 var cnt = ${cnt};
 $(document).ready(function() {
-$('.row').on('click', '#add_poster',function() {//포스터 추가하기 버튼 클릭시
+$('div[class^=row]').on('click','div[id^=remove]',function(){
+	//$('div[id^=position]').remove();
+	var parent=$(this).closest('div[id^=position]');
+	
+	parent.remove();
+	//position_36
+	console.log(this);
+});
+$('.row').on('click', 'div[id^=add_poster]',function() {//포스터 추가하기 버튼 클릭시
 		//console.log("떴다");
   		$('#myModal').modal('show'); //모달창 보여주기 
   		ajax(); //ajax로 모달창에 그려줌(포스터 리스트)
@@ -125,8 +133,90 @@ $('#searchbtn').click(function() {
 		});
 	$('ul.pagination').remove();
 	});
+
+$('#myModal').find('.btn').on('click',function() {
+	var check=0;
+	var Selected = $('input:radio[name^="radio_test"]:checked').val();
+	//선택된 값 받아오기 
+		console.log(Selected);//선택된값 test 출력
+	var start = $('div[id^="start"]');
+	var labelName = Selected; // 선택된 값 (이미지 이름임 stored_Name)
+	var selectedId = $('input[name^=radio_test]:checked').attr('id'); //pfmIdx가 ID로 설정되어있음 
+	console.log('selected:'+selectedId);
+	var list = ($('div[class^=pfmId]').attr('id') );
+	$(('div[class^=pfmId]')).each(function(){
+// 		console.log($(this).attr('id'));
+		if(	$(this).attr('id')==selectedId )
+		{
+			alert('이미 선택한 포스터 입니다.');
+			check=1;
+			return;
+		}
+			
+	});
+	if(check==1){
+		return;
+	}
+	if(cnt>15){
+		alert("포스터 최대 등록 개수는 15개입니다.");
+		return;
+	}
+	//console.log("찍히나/");
+	var div1 = $('<div class="col-md-2" id ="position_'+selectedId+'">');
+	var div2 = $('<div class="thumbnail">');
+	var div3 = $('<div class="caption">');
+	var div4 = $('<div class="pfmIdx" id='+selectedId+'>');
+	var image =$('<img>');
+	image.attr('src','/resources/image/'+ labelName);
+	var atag = $('<a>');
+	atag.attr('href','"/admin/deletecatecon/'+selectedId+'/>"');
+	var div5 = $('<div class="glyphicon glyphicon-remove" id="remove_"'+selectedId+'">');
+	var hideInput=$('<input type="hidden" name="pfmIdx" id ="pfmIdx" value='+ (selectedId)+ '>');
+	div4.append(hideInput);
+	div4.append(image);
+	div4.append(atag);
+	div4.append(div5);
+	div3.append(div4);
+	div2.append(div3);
+	div1.append(div2);
+	start.append(div1);
 	
+	$('div[id^=draw]').remove();
+	//'div[class^=pfmIdx]'
+	var adddiv1=$('<div class="col-md-2" id="draw_'+selectedId+'">');
+	var adddiv2=$('<div class="thumbnail" style=" width: 100%; height:220px; text-align: center;" id="thum_'+selectedId+'">');
+	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 -50px;">')
+	adddiv2.append(adddiv3);
+	adddiv1.append(adddiv2);
+	start.append(adddiv1);
 	
+});
+$('#btn').click(function() {
+	var lengthValue = $("input[name='pfmIdx']").length;
+  	console.log(lengthValue);
+    var listData = new Array(lengthValue);
+	for (var i = 0; i < lengthValue; i++) {
+	listData[i] = $("input[name='pfmIdx']")[i].value;
+	}
+//console.log(listData);
+	jQuery.ajaxSettings.traditional = true;
+	//form 데이터를 List로 보내기 위한 설정 
+	$.ajax({
+			type : "post",
+			url : "/admin/registcatecon",
+			dataType : "text",
+			data : {
+				'pfmIdx' : listData
+					},
+			success : function(data) {
+				console.log(data);
+			},
+			error : function() {
+			console.log("error");
+			}
+		}); //end of ajax 
+		
+}); //endof function 	
 }); // end ready
 </script>
 카테고리 콘서트 배너 관리
@@ -135,7 +225,7 @@ $('#searchbtn').click(function() {
 
 <form action="/admin/registcatecon" method="post">
 <button>최종저장</button>
-<div class="row">
+<div class="row" id ="start">
 <c:forEach var="item" items="${posterList }">
 <div class="col-md-2">
 	<div class="thumbnail">
