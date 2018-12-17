@@ -815,5 +815,4 @@ public class AdminPfmController {
 		pService.registHall(hall, file);
 		return "redirect:/admin/registhall";
 	}
-
 }

@@ -39,13 +39,16 @@ public class StateOfBook {
 	private int ea; //매수
 	private Date cancelDate; //취소일
 	private String state; //예매상태
-	private int payIdx; //결제번호
+	private String impUid; //결제번호
+	private String bookGroup; //예약번호(한 사람이 여러 좌석 예매했을때 같은 예약그룹으로 묶기위해)
+	
 	@Override
 	public String toString() {
 		return "StateOfBook [email=" + email + ", nick=" + nick + ", createDate=" + createDate + ", storedName="
 				+ storedName + ", name=" + name + ", pfmStart=" + pfmStart + ", pfmEnd=" + pfmEnd + ", hallName="
 				+ hallName + ", bookIdx=" + bookIdx + ", pfmDate=" + pfmDate + ", pfmTime=" + pfmTime + ", ea=" + ea
-				+ ", cancelDate=" + cancelDate + ", state=" + state + ", payIdx=" + payIdx + "]";
+				+ ", cancelDate=" + cancelDate + ", state=" + state + ", impUid=" + impUid + ", bookGroup=" + bookGroup
+				+ "]";
 	}
 	public String getEmail() {
 		return email;
@@ -131,13 +134,18 @@ public class StateOfBook {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public int getPayIdx() {
-		return payIdx;
+	public String getImpUid() {
+		return impUid;
 	}
-	public void setPayIdx(int payIdx) {
-		this.payIdx = payIdx;
+	public void setImpUid(String impUid) {
+		this.impUid = impUid;
+	}
+	public String getBookGroup() {
+		return bookGroup;
+	}
+	public void setBookGroup(String bookGroup) {
+		this.bookGroup = bookGroup;
 	}
 	
-
 	
 }
