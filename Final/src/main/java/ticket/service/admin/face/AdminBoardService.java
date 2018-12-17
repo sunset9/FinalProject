@@ -44,13 +44,13 @@ public interface AdminBoardService {
 	
 	
 	// 업로드된 파일 처리
-	public void filesave(ServletContext context, MultipartFile file, String fileTitle);
+	public void filesave(ServletContext context, MultipartFile file);
 	
 	// 업로드 파일 목록
 	public List fileList();
 	
-	// notiFileIdx로 NoticeFile(notice_file) 조회
-	public NoticeFile getFile(int notiFileIdx);
+	// noFileIdx로 NoticeFile(notice_file) 조회
+	public NoticeFile getFile(int noFileIdx);
 	
 	
 	
