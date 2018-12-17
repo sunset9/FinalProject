@@ -1,11 +1,16 @@
 package ticket.service.admin.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dao.face.AdminBoardDao;
 import ticket.dto.Faq;
@@ -83,11 +88,53 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		
 	}
 
+
+
 	@Override
-	public void inNotiFile(NoticeFile noticeFile) {
-		// TODO Auto-generated method stub
+	public void filesave(ServletContext context, MultipartFile file, String fileTitle) {
+		// UUID, 고유식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		// 파일이 저장될 경로
+		String stored = context.getRealPath("upload");
 		
+		// 저장될 파일의 이름
+		String name = file.getOriginalFilename()+"_"+uId;
+		
+		// 파일 객체
+		File dest = new File(stored, name);
+		
+		// 파일 저장(업로드)
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		NoticeFile noticeFile = new NoticeFile();
+		
+		noticeFile.setOriginName(file.getOriginalFilename());
+		noticeFile.setStoredName(dest.getName());
+
+		adminBoardDao.insertNotiFile(noticeFile);
 	}
+
+	@Override
+	public List fileList() {
+		return adminBoardDao.selectNotiFileAll();
+	}
+
+	@Override
+	public NoticeFile getFile(int notiFileIdx) {
+		return adminBoardDao.selectByNotiFileIdx(notiFileIdx);
+	}
+
+	
+	
+	
+	
 
 	@Override
 	public List getFaqList(Faq faq) {

@@ -2,7 +2,10 @@ package ticket.service.admin.face;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.Faq;
 import ticket.dto.Notice;
@@ -40,20 +43,21 @@ public interface AdminBoardService {
 	
 	
 	
+	// 업로드된 파일 처리
+	public void filesave(ServletContext context, MultipartFile file, String fileTitle);
+	
+	// 업로드 파일 목록
+	public List fileList();
+	
+	// notiFileIdx로 NoticeFile(notice_file) 조회
+	public NoticeFile getFile(int notiFileIdx);
 	
 	
-	// 파일 업로드
-	public void inNotiFile(NoticeFile noticeFile);
+	
 	
 	//현재 페이지 얻기
 	public int getCurPage(HttpServletRequest req);
 
-	
-	
-	
-	
-	
-	
 	
 	// FAQ 글 리스트
 	public List getFaqList(Faq faq);
