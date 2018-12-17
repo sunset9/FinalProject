@@ -43,7 +43,7 @@
 		  </if>
 	 </select>
 	 
-  <select id ="selectUser" parameterType="ticket.dto.User" resultMap="UserMap">
+  <select id ="selectUser" parameterType="int" resultMap="UserMap">
   	SELECT 
   		user_idx
 		,email
@@ -163,6 +163,14 @@
   <select id="selectSobListByPaging" parameterType="ticket.utils.Paging" resultMap="SOBMap">
   
   </select>
+  
+  <select id="selectPwByUserIdx" parameterType="ticket.dto.User" resultType="String"> 
+  	SELECT password 
+  	FROM userinfo 
+  	WHERE user_idx= #{userIdx }
+  </select>
+  
+
   </mapper>
   
   
