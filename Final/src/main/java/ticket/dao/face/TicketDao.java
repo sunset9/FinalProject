@@ -61,7 +61,7 @@ public interface TicketDao {
 	 * @Method설명:공연의 좌석 섹션 불러오기
 	 * @작성자:이상지
 	 */
-	public List<SeatSection> selectSection(Performance pfm);
+//	public List<SeatSection> selectSection(Performance pfm);
 	
 	/**
 	 * @최종수정일: 2018.12.05
@@ -83,6 +83,13 @@ public interface TicketDao {
 	 * @작성자:이상지
 	 */
 	public List<SeatSection> selectSeatSectionByPfmIdx(Performance pfm);
+	
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 구역받아오기 
+	 * @작성자:이상지
+	 */
+	public List<SeatSection> selectSection(Performance pfm);
 	
 	
 	/**

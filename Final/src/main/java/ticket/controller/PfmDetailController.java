@@ -1,7 +1,5 @@
 package ticket.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,11 @@ public class PfmDetailController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PfmDetailController.class);
 
+	@RequestMapping(value="/ticket/test")
+	public void test() {
+		logger.info("Test");
+	}
+	
 	/**
 	 * 최종수정일: 2018.12.04
 	 * @Method설명: 공연 상세 클릭시 첫 페이지

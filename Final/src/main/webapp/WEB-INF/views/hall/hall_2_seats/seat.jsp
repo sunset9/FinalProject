@@ -111,7 +111,7 @@ div.seatCharts-cell {
                                     seats : {
                                        s : {
                                           price : ${seatMap.pay}, //좌석 가격
-                                          classes : '${seatMap.appName}'+' '+'${seatMap.secName}', //your custom CSS class
+                                          classes : '${seatMap.appName}'+' '+'${seatMap.secName}' +' '+"${seatMap.pay}" , //your custom CSS class
                                           category : '${seatMap.appName}'
                                        },
 //                                        e : {
@@ -158,7 +158,6 @@ div.seatCharts-cell {
                                                       + ' 석 '
 //                                                       + this.settings.label 
                                                       + this.settings.id
-                                                      + ' '
                                                       + ' : '
                                                       + this.data().price
                                                       + '<b> 원'
@@ -232,6 +231,7 @@ div.seatCharts-cell {
          //basically find every selected seat and sum its price
          sc.find('selected').each(function() {
             total += this.data().price;
+            
          });
 
          return total;

@@ -152,19 +152,31 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="/user/pwcheck", method= RequestMethod.GET)
-	public void pwCheck(
-			User user
-			, HttpSession session
-			) {
+	public void pwCheck() {
 		logger.info("정보수정시 비밀번호 체크 폼");
 		
-		user = (User)session.getAttribute("loginUser");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value ="/user/pwcheck", method= RequestMethod.POST)
+	public boolean pwCheckProc(
+			User user
+			, HttpSession session
+			, String password
+			) {
+		logger.info("정보수정시 비밀번호 체크 처리");
 		
-		logger.info("비밀번호 들어갔는지 체크? : "+ user.getPassword());
+		user = (User)session.getAttribute("loginUser");
+		logger.info(password);
+		user.setPassword(password);
+		logger.info("비밀번호 들어갔는지 체크? : "+ user);
+
 		
 		// 비밀번호 체크
-//		userService.checkPw(user);
+		boolean check = userService.checkPw(user);
+		logger.info(""+check);
 		
+		return check;
 		
 	}
 	
@@ -172,13 +184,19 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/user/update", method = RequestMethod.GET)
-	public void update(User user) {
+	public void update(User user
+				, HttpSession session
+				, Model model) {
 		logger.info("정보 수정 폼 ");
+		user = (User)session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
 		
+		// 유저 인덱스로 유저 정보 얻어오기 
+		user = userService.getUser(userIdx);
+		model.addAttribute("user", user);
 	
 		
-		// 기본 유저정보 얻어오기
-		userService.getUser(user);
+	
 	}
 
 	@RequestMapping(value="/user/update", method = RequestMethod.POST)
@@ -189,7 +207,6 @@ public class UserController {
 		userService.update (user);
 		
 		// 유저 정보 얻어오기
-		userService.getUser(user);
 		
 	}
 	

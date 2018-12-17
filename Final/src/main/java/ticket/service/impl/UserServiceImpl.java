@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 		if(userIdx!= 0) { 
 			user.setUserIdx(userIdx);
 			session.setAttribute("login", true);
-			user = userDao.selectUser(user);
+			user = userDao.selectUser(userIdx);
 			session.setAttribute("loginUser", user);
 			
 		} else {
@@ -46,14 +46,21 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean checkPw(User user) {
-		userDao.selectPwByUserIdx(user);
-		return false;
+		boolean res = false;
+		String pass = userDao.selectPwByUserIdx(user);
+		
+		
+		if(pass.equals(user.getPassword())) {
+			res = true;
+		}
+		
+		return res;
 	}
 
 	@Override
-	public User getUser(User user) {
-		userDao.selectUser(user);
-		return null;
+	public User getUser(int userIdx) {
+		
+		return userDao.selectUser(userIdx);
 	}
 
 	@Override

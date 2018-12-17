@@ -285,11 +285,16 @@ public class TicketController {
 		
 		List<SeatSection> seatSection = new ArrayList<SeatSection>();
 		
+		//공연별 구역받아오기(GroupBY한값들)
+		List<SeatSection> pfmSeatSection = new ArrayList<SeatSection>();
+		
 		List<String> secName = new ArrayList<String>();
 		
 		seatSection = ticketService.loadSection(pfm);
 		
 		secName = ticketService.countSection(pfm);
+		
+		pfmSeatSection = ticketService.loadPfmSection(pfm);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -298,6 +303,7 @@ public class TicketController {
 		Map secMap = new HashMap();
 		secMap.put("secMap", seatSection);
 		secMap.put("secName", secName);
+		secMap.put("pfmSeatSection",pfmSeatSection);
 		
 		mav.addObject(secMap);
 		

@@ -14,6 +14,8 @@
 $(document).ready(function() {
 
 	// 체크박스 선택시 다음단계 버튼 활성화
+	
+	// 전체 체크 하는 체스 박스 선택시 
 	 $("#allAgreement").change(function(){
 	        if($("#allAgreement").is(":checked")){
 	        	console.log("동의 후 다음버튼 활성화");
@@ -34,6 +36,8 @@ $(document).ready(function() {
 	        
 	        }
 	    });
+	
+	// 필수 동의 3개 다 했을 때 버튼 활성화 
 	 $("#agreement1").change(function(){
 		  if($("#agreement1").is(":checked")){
 			  if($("#agreement2").is(":checked")){

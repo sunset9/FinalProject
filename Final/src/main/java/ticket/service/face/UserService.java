@@ -47,10 +47,10 @@ public interface UserService {
 	public boolean checkPw(User user);
 	
 	/**
-	 * @Method설명: 닉네임으로 유저 전체 정보 가져오기
+	 * @Method설명: 유저 인덱스로 유저 전체 정보 가져오기
 	 * @작성자 : 홍나영
 	 */
-	public User getUser(User user);
+	public User getUser(int userIdx);
 	
 	/**
 	 * @Method설명: 유저 정보 수정

@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.PaymentInfo;
 import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.service.admin.face.AdminBoardService;
@@ -112,11 +114,20 @@ public class AdminUserController {
 		return "/admin/user/detail";
 	}
 	
-	@RequestMapping(value="admin/userdetail", method=RequestMethod.POST)
-	public String getSeatsOfBookGroup(String bookGroup, int userIdx) {
-		System.out.println(userIdx);
-		System.out.println(bookGroup);
-		return "/admin/userdetail?userIdx="+userIdx;
+	
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: ajax 통신, bookGroup 중 예매상태가 취소중인 좌석의 impUid 가져오기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/getImpUid", method=RequestMethod.POST)
+	public @ResponseBody List<PaymentInfo> getImpUid(String bookGroup) {
+		//bookGroup 중 '취소중'인 좌석의 impUid 가져오기
+		List<PaymentInfo> impUidOfCancelSeat = userService.getImpUid(bookGroup);
+		
+		System.out.println("취소중인 좌석의 impUid"+impUidOfCancelSeat);
+		
+		return impUidOfCancelSeat;
 	}
 	
 	/**

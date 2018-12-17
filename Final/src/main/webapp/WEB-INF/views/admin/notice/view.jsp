@@ -42,12 +42,19 @@ $(document).ready(function(){
 		<td>${noticeView.noticeTitle }</td>	
 		<td><fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
 	</tr>
+	
+<!-- 	<tr> -->
+<%-- 		<td id="content" name="noticeContent">${noticeView.noticeContent }</td> --%>
+<!-- 	</tr> -->
+	
 </table>
 <hr>
 
 <table class="content">
 <tr>
 <td> ${noticeView.noticeContent }</td>
+
+
 </tr>
 </table>
 
