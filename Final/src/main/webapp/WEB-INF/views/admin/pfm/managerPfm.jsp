@@ -203,15 +203,14 @@ function viewPfmList(pfmList){
 }
 
 $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인식
-	 let $window = $(this);
-
-	var maxHeight = $(document).height();
-    var currentScroll = $(window).scrollTop() + $(window).height();
+	let $window = $(this);
+	let scrollTop = $window.scrollTop();
+	let windowHeight = $window.height();
+	let documentHeight = $(document).height();
 
    	 if(!isEnd){
 	     // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
-// 	     if( scrollTop + windowHeight + 30 > documentHeight ){
-		if (maxHeight <= currentScroll + 100){
+	     if( scrollTop + windowHeight + 30 > documentHeight ){
 			curPage++;
 			
 	    	getPfmListAjax();
@@ -253,12 +252,24 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <ul id="pfmList">
 <c:forEach var="pfm" items="${pfmList }" varStatus="i">
 	<li class="pfmInfo">
-		<a href="/admin/editpfm?pfmIdx=${pfm.pfmIdx }">
-			<span class="thumb">
-				<img src="/resources/image/${pfm.posterName }">
-			</span>
-			<strong>${pfm.name }</strong>
-		</a>
+	<c:choose>
+		<c:when test="${pfm.posterName eq '' || pfm.posterName eq null }">
+				<a href="/admin/editpfm?pfmIdx=${pfm.pfmIdx }">
+					<span class="thumb">
+						<img src="/resources/image/poster_empty.png">
+					</span>
+					<strong>${pfm.name }</strong>
+				</a>
+		</c:when>
+		<c:when test="${pfm.posterName ne ''  || pfm.posterName ne null }">
+				<a href="/admin/editpfm?pfmIdx=${pfm.pfmIdx }">
+					<span class="thumb">
+						<img src="/resources/image/${pfm.posterName }">
+					</span>
+					<strong>${pfm.name }</strong>
+				</a>
+		</c:when>
+	</c:choose>
 	</li>
 </c:forEach>
 </ul>

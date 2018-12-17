@@ -286,5 +286,57 @@
   		</if>
 	</select>
 	
+	<update id="updatePfm" parameterType="ticket.dto.Performance">
+		UPDATE performance
+		SET 
+			name=#{name }
+			, genre_idx=#{genreIdx }
+			, pfm_start=#{pfmStart }
+			, pfm_end=#{pfmEnd }
+			, ticket_start=#{ticketStart }
+			, ticket_end=#{ticketEnd }
+			, hall_idx=#{hallIdx }
+			, age_grade_idx=#{ageGradeIdx }
+			, running_time=#{runningTime }
+			, create_date=SYSDATE
+		<include refid="ByPfmIdx" />
+	</update>
+	
+	<update id="updatePoster" parameterType="ticket.dto.Poster">
+		UPDATE poster_info
+		SET 
+			origin_name=#{originName }
+			, stored_name=#{storedName }
+		<include refid="ByPfmIdx" />
+	</update>
+	
+	<delete id="deletePfmTheme" parameterType="int">
+		DELETE pfm_theme
+		<include refid="ByPfmIdx" />
+	</delete>
+
+	<delete id="deleteCast" parameterType="int">
+		DELETE cast
+		<include refid="ByPfmIdx" />
+	</delete>
+
+	<delete id="deletePfmDbt" parameterType="int">
+		DELETE pfm_datebytime
+		<include refid="ByPfmIdx" />
+	</delete>
+	
+	<update id="updatePfmDetail" parameterType="ticket.dto.PfmDetail">
+		UPDATE pfm_detail
+		SET 
+			contents=#{contents }
+		<include refid="ByPfmIdx" />
+	</update>
+	
+	<update id="updatePfmBookinfo" parameterType="ticket.dto.PfmBookinfo">
+		UPDATE pfm_bookinfo
+		SET 
+			contents=#{contents }
+		<include refid="ByPfmIdx" />
+	</update>
 	
 </mapper>

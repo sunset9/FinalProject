@@ -4,12 +4,12 @@
 
 $(document).ready(function () {
 	
-// 	$('.14').attr("fill","#FFF");
+	// 	$('.14').attr("fill","#FFF");
+	
+	$('path').attr("fill","#CCC");
+	$('rect').attr("fill","#CCC");
 
-$('path').attr("fill","#CCC");
-$('rect').attr("fill","#CCC");
-
-//섹션에 idx를 넣어주기위해 ajax로 DB에 저장된 원본 구역정보를 불러온다 
+	//섹션에 idx를 넣어주기위해 ajax로 DB에 저장된 원본 구역정보를 불러온다 
 	$.ajax({
 		type:"GET",
 		url:"/ticket/oriSec",

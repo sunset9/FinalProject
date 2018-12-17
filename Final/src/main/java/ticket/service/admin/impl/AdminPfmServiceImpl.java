@@ -585,6 +585,58 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			// 포스터 업로드 정보 DB 저장
 			pDao.updatePoster(poster);
 		}
+		
+		// 테마들 수정
+		if (themeList.getThmList() != null) {
+			pDao.deletePfmTheme(pfmIdx); // 이전 테마 정보 모두 삭제하고 다시 등록
+			for (PfmTheme thm : themeList.getThmList()) {
+				if (thm.getThemeIdx() != 0) { // theme가 존재하는 경우에 insert
+					// 공연 idx 지정
+					thm.setPfmIdx(pfmIdx);
+					pDao.insertPfmTheme(thm);
+				}
+			}
+		}
+		
+		// 출연진들 수정
+		if (castList.getCastList() != null) {
+			pDao.deleteCast(pfmIdx); // 이전 출연진 정보 모두 삭제
+			for (Cast cast : castList.getCastList()) {
+				if (cast.getArtistIdx() != 0) { // artist 정보가 존재하는 경우에 insert
+					// 공연 idx 지정
+					cast.setPfmIdx(pfmIdx);
+					pDao.insertCast(cast);
+				}
+			}
+		}
+		// 공연 일정들(날짜, 시간) 등록
+		if (pfmDbtList.getPfmDbtList() != null) {
+			pDao.deletePfmDbt(pfmIdx);
+			for (PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
+				if (pfmDbt.getPfmDate() != null && pfmDbt.getPfmTime() != null) { // 일정 정보가 존재하는 경우에 insert
+					// 공연 idx 지정
+					pfmDbt.setPfmIdx(pfmIdx);
+					pDao.insertPfmDbt(pfmDbt);
+				}
+			}
+		}
+
+		// 공연 상세정보 수정
+		if (!"".equals(pfmDetailContents)) {
+			PfmDetail pfmDetail = new PfmDetail();
+			pfmDetail.setPfmIdx(pfmIdx);
+			pfmDetail.setContents(pfmDetailContents);
+			pDao.updatePfmDetail(pfmDetail);
+		}
+
+		// 공연 예약정보 수정
+		if (!"".equals(pfmBookinfoContents)) {
+			PfmBookinfo pfmBookinfo = new PfmBookinfo();
+			pfmBookinfo.setPfmIdx(pfmIdx);
+			pfmBookinfo.setContents(pfmBookinfoContents);
+			pDao.updatePfmBookinfo(pfmBookinfo);
+		}
+		
 	}
 
 }

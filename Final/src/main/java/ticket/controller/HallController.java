@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ticket.dto.Hall;
 import ticket.dto.Performance;
 
 @Controller
@@ -16,10 +17,10 @@ public class HallController {
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value="/ticket/seatSection", method=RequestMethod.GET)
-	public String loadhallSection() {
+	public String loadhallSection(Hall hall) {
 		
 		Performance pfm = new Performance();
-		pfm.setHallIdx(2);
+		pfm.setHallIdx(hall.getHallIdx());
 		
 		
 		String rtn = "hall/hall_"+pfm.getHallIdx();

@@ -118,6 +118,10 @@
 	cursor:pointer
 }
 
+#seatHall td{
+    overflow: hidden;
+}
+
 #registStep{
 	width: 700px;
     height: 100px;
@@ -318,6 +322,8 @@ $(document).ready(function(){
 	$("select[name='genreIdx']").on("change",function(){
 		// 테마 체크 박스 창 초기화
 		$('#themeModal').find('.modal-body').html('');
+		// 선택한 테마목록들도 함께 초기화
+		$('#themeSelBtn').next().themeTextList.html('');
 	});
 	
 	// 테마 선택 버튼 클릭시
@@ -574,8 +580,8 @@ $(document).ready(function(){
 		artistTextList.html(''); // 초기화
 		
 		// 서버에 값 넘기기위한 input 태그들(기존에 존재하던)
-		$('#artistBtn').parent().find('input[name="artistIdx"]').remove();
-		
+		$('#artistBtn').parent().find('input[name^="castList"]').remove();
+			
 		
 		// 선택된 출연진 목록을 가져와서
 		var idx = 0;
@@ -600,6 +606,8 @@ $(document).ready(function(){
 		if($('select[name="hallIdx"]').val() > 0){
 			$('#seatDiv').slideDown(250);
 			addSeatInput();
+			// '좌석 구간'란 초기화
+			viewSeatSec();
 		}else{
 			$('#seatDiv').slideUp(250);
 		}
@@ -608,24 +616,26 @@ $(document).ready(function(){
 	// 좌석 정보 추가 하는 경우(석, 가격)
 	$('#seatDiv').on('click', '.glyphicon-plus-sign', function(){
 		addSeatInput();
+		// '좌석 구간'란 초기화
+		viewSeatSec();
 	});
 	// 좌석 정보 추가 input 태그 생성 메소드
 	function addSeatInput(){
-		var td = $('<td class="seatInfo">')
-		var inputSec = $('<input type="text" name="app_sec" placeholder="(VIP)">석</input>');
-		var inputPay = $('<input type="text" name="sec_pay" placeholder="0">원</input>');
+		var td = $('<td class="seatInfoName">')
+		var inputSec = $('<input type="text" class="tempSecName" placeholder="(VIP)">석</input>');
+		var inputPay = $('<input type="text" class="tempSecPrice" placeholder="0">원</input>');
 		var plus = $('<span class="glyphicon glyphicon-plus-sign"></span>');
 		var minus = $('<span class="glyphicon glyphicon-minus-sign"></span>');
 			
 		td.append(inputSec);
 		td.append(inputPay);
 		
-		var existTd = $('#seatDiv tr').find('td');
+		var existTd = $('#seatDiv .seatInfo').find('td');
 		
 		// 입력창이 0개인 경우 - 처음 만들어지는 경우
 		if(existTd.length == 0){
 			td.append(plus);
-			$('#seatDiv tr').append(td);
+			$('#seatDiv .seatInfo:first').append(td);
 		}else{ // 이미 만들어져있는게 있는 경우
 			// 입력창이 6개 미만인 경우 - 추가 
 			if(existTd.length < 6){
@@ -639,13 +649,14 @@ $(document).ready(function(){
 					td.append(plus);
 				}
 				
-				var tr = $('<tr>');
+				// tr 추가
+				var tr = $('<tr class="seatInfo">');
 				tr.append(td);
-				$('#seatDiv table').append(tr);
-				$('#seatDiv tr').find('th').attr('rowspan', existTd.length +1);
+				$('#seatDiv .seatInfo:last').after(tr);
+				// rowspan 변경
+				$('#seatDiv .seatInfo:first').find('th').attr('rowspan', existTd.length +1);
 			}
 		}
-		
 	}
 	
 	// 좌석 정보 삭제 하는 경우(석, 가격)
@@ -663,15 +674,100 @@ $(document).ready(function(){
 		thisTr.remove();
 		
 		// rowspan 변경
-		var th = thisTr.parents('table').find('th:first-child');
+		var th = $('#seatDiv .seatInfo:first').find('th');
 		th.attr('rowspan', th.attr('rowspan') -1)
 		
+		// '좌석 구간'란 초기화
+		viewSeatSec();
 	});
 	
 	// 좌석 가격입력창 - 화폐 포멧으로 콤마 찍어주기
 	$('#seatDiv table').on('change keyup','input[name="sec_pay"]', function(){
 		getNumber(this);
 	});
+	
+	// 좌석 정보 - 구역명 입력시 
+	$('#seatDiv').on('change','.tempSecName', function(){
+		// '좌석 구간'란 초기화
+		viewSeatSec();
+	});
+	
+	var setSetJson = {}; // 구역 지정한 정보 담고 있음 
+	// 좌석구간 그려주기
+	function viewSeatSec(){
+		// 처음에는 셀렉 박스 숨김
+		$('#seatSecSelect').hide();
+		
+		// 홀 좌석도 가져오기
+		$.ajax({
+            method: "GET",
+            url: "/ticket/seatSection", 
+            data: {
+              hallIdx: $('select[name="hallIdx"]').val()
+            }
+			, dataType: "html"
+			, success: function(d){
+				// 홀 jsp 삽입
+				$('#seatHall td').html(d);
+				// 사이즈 조절
+				$('#seatHall .stage_img').height('240px');
+				$('#seatHall .stage_img').width('350px');
+				$('#seatHall svg').width('350px');
+				// 구역 선택 시
+				$('#seatHall svg').on('click','path, rect',function(){
+					// 클릭안된 상태
+					if(!$(this).hasClass('clicked')){
+						// 다른 요소들의 테두리 모두 초기화
+						$('path, rect').attr('stroke', '#ffffff');
+						$('path, rect').attr('stroke-width', 0);
+						$('path, rect').removeClass('clicked');
+						// 클릭한 요소만 테두리 적용
+						$(this).attr('stroke', '#222');
+						$(this).attr('stroke-width', 25);
+						$(this).addClass('clicked');
+						// 셀렉 박스 보여주기
+						$('#seatSecSelect').show();
+						$('#seatSecSelect').find('option:first').prop('selected', 'selected');
+					// 클릭된 상태	
+					}else {
+						$(this).attr('stroke', '#ffffff');
+						$(this).attr('stroke-width', 0);
+						$(this).removeClass('clicked');
+						// 셀렉 박스 숨김
+						$('#seatSecSelect').hide();
+					}
+				});
+			}
+			, error: function(){
+				console.log("좌석 배치도 로드 실패");
+			}
+        }); // end ajax
+		
+		// 셀렉트 박스 그려주기
+		var select = $('<select name="selectedSecName">')
+		select.append('<option selected="selected">구역 선택</option>');
+		$('.seatInfoName').each(function(){
+			var secName = $(this).find('.tempSecName').val(); // 좌석정보란에서 입력한 구역명
+			var secPrice = $(this).find('.tempSecPrice').val(); // 가격정보
+			
+			if(secName){
+				select.append($('<option>'+secName+'석</option>'));
+			}
+		});
+		$('#seatSecSelect td').html('');
+		$('#seatSecSelect td').append(select);
+		$('#seatSecSelect td').append($('<button type="button" class="setSecBtn">구역 설정</button>'));
+	}
+	
+	//' 구역 설정' 버튼 클릭 시
+	$('#seatSecSelect').on('click','#setSecBtn', function(){
+			var clickedSec = $('#seatHall').find('clicked');
+			var oriSec = clickedSec.removeClass('clicked').attr('class');
+			console.log(originSec);
+			var appSec = $('input[name="selectedSecName"]').val();
+			
+	});
+	
 	
 	// 공연 시간 '일괄등록' 버튼 클릭 시
 	$('#registTimeForm input[type="checkbox"]').on('click', function(){
@@ -682,7 +778,6 @@ $(document).ready(function(){
 		}}
 	});
 	 
-
 	$('#pfmTimeSelect').timepicker();
 	$('#pfmTimeSelect').timepicker('option', { useSelect: true });
 	$('.ui-timepicker-select').prepend('<option value="0" selected="selected">시간 선택</option>');
@@ -874,8 +969,8 @@ $(document).ready(function(){
 		periodP.find('span:nth-child(1)').text(pfmStartDate);
 		periodP.find('span:nth-child(2)').text(pfmEndDate);
 		
-		targetInput.append('<input type="hidden" name="pfmEnd" value="'+pfmEndDate+'">');
 		targetInput.append('<input type="hidden" name="pfmStart" value="'+pfmStartDate+'">');
+		targetInput.append('<input type="hidden" name="pfmEnd" value="'+pfmEndDate+'">');
 		
 	}
 	
@@ -1077,12 +1172,18 @@ function setComma(inNum){
 	<!-- 좌석 관련 div -->
 	<div id="seatDiv" style="display:none;"> 
 	<table>
-	<tr>
+	<tr class="seatInfo">
 		<th>좌석정보: </th>
 		<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
 	</tr>
-	<tr>
-		<th>좌석구간: </th>
+	<tr id="seatHall">
+		<th rowspan=2 valign="top">좌석구간: </th>
+		<td>
+		</td>
+	</tr>
+	<tr id="seatSecSelect" style="display:none">
+		<td>
+		</td>
 	</tr>
 	</table>
 	</div>
