@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import ticket.controller.admin.AdminUserController;
 import ticket.dao.face.UserDao;
+import ticket.dto.PaymentInfo;
 import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.service.admin.face.AdminUserService;
@@ -76,6 +77,11 @@ public class AdminUserServiceImpl implements AdminUserService{
 	@Override
 	public List<StateOfBook> getSobListByPaging(Paging paging) {
 		return uDao.selectSobListByPaging(paging);
+	}
+
+	@Override
+	public List<PaymentInfo> getImpUid(String bookGroup) {
+		return uDao.selectImpUidByBookGroup(bookGroup);
 	}
 }
 	
