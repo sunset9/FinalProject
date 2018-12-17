@@ -79,18 +79,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	@Override
-	public List<MyChoice> choicePfmList(int userIdx) {
-		return myChoiceDao.selectChoiceList(userIdx);
-	}
-
 
 	@Override
 	public List<Performance> recommendPfm(List<PreferTheme> ptList) {
 		Map map = new HashMap<>();
 		map.put("ptList", ptList);
-		pfmDao.selectPfmByPreferTheme(map);
-		return null;
+		
+		return pfmDao.selectPfmByPreferTheme(map);
 	}
 
 

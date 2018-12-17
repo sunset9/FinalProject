@@ -16,18 +16,23 @@ public class MyChoiceServiceImpl implements MyChoiceService{
 	private MyChoiceDao myChoiceDao;
 	
 	@Override
-	public List<MyChoice> choiceList(int userIdx) {
+	public List<MyChoice> choicePfmList(int userIdx) {
 		return myChoiceDao.selectChoiceList(userIdx);
 	}
 
 	@Override
-	public void choice() {
-		myChoiceDao.insert();
+	public void choice(int userIdx, int pfmIdx) {
+		MyChoice myChoice = new MyChoice();
+		myChoice.setPfmIdx(pfmIdx);
+		myChoice.setUserIdx(userIdx);
+		
+		myChoiceDao.insert(myChoice);
 	}
 
 	@Override
 	public void cancel(MyChoice myChoice) {
 		myChoiceDao.delete(myChoice);
 	}
+
 
 }

@@ -58,12 +58,7 @@ public interface UserService {
 	 */
 	public void update(User user);
 	
-	/**
-	 * @최종수정일: 2018.12.14
-	 * @Method설명: 유저가 찜해놓은 공연 불러오기!
-	 * @작성자:홍나영
-	 */
-	public List<MyChoice> choicePfmList(int userIdx);
+
 	
 	/**
 	 * @최종수정일: 2018.12.14

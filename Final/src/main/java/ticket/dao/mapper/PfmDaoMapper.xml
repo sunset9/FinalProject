@@ -276,8 +276,14 @@
 	</select>
 	
 	<select id="selectPfmByPreferTheme" resultMap="Performance" parameterType="hashmap">
-		SELECT * 
-		FORM performance
+		SELECT 
+		    P.pfm_idx
+		    , (SELECT stored_name FROM poster_info PI WHERE PI.pfm_idx = P.pfm_idx) poster_name 
+		    , theme_idx
+		FROM performance P
+		INNER JOIN pfm_theme PT
+		ON P.pfm_idx = PT.pfm_idx
+		
 		  <if test="ptList != null">
   		WHERE theme_idx IN
   			<foreach collection="ptList" item="theme" open="(" close=")" separator=",">

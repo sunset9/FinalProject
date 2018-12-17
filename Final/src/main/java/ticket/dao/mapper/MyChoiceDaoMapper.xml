@@ -31,4 +31,14 @@
 	ORDER BY ticket_start
   </select>
   
+  <insert id="insert" parameterType="ticket.dto.MyChoice">
+  	<selectKey keyProperty="choiceIdx" resultType="int">
+  		SELECT my_choice_seq.nextval FROM dual
+  	</selectKey>
+  	
+  	INSERT INTO my_choice( choice_idx, user_idx, pfm_idx)
+  	VALUES (#{choiceIdx ], #{userIdx ], #{pfmIdx ])
+  
+  </insert>
+  
   </mapper>
