@@ -213,7 +213,7 @@ public class AdminPfmController {
 	 * @Method설명: 공연 정보 수정하기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value = "/admin/pfm/editpfm", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/editpfm", method = RequestMethod.POST)
 	public String editPfm(
 			Performance pfm // 공연 기본 정보 (공연명, 장르, 티켓일정, 런닝타임, 관람등급, 공연장)
 			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일

@@ -226,7 +226,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 <script>
 $(document).ready(function(){
-	var timeList = [];
+	var timeList = []; // 공연 일정 담겨있는 list 
 	
 	// 처음 수정모드 실행 시 공연일정 그려주기
 	var pfmDbtlist = ${pfmdbtList };
@@ -234,17 +234,18 @@ $(document).ready(function(){
 	pfmDbtlist.forEach(function(dbt){
 		// json 만들기
 		var timeJson = {};
-		timeJson['pfmDate'] = formatDate(dbt.pfmDate);
-		timeJson['pfmTime'] = dbt.pfmTime;
+		timeJson['date'] = formatDate(dbt.pfmDate);
+		timeJson['time'] = dbt.pfmTime;
 		
 		// list에 json 추가하기
 		timeList.push(timeJson);
-		
-		// 화면에 그려주기
-		viewTimeList(timeList);
 	});
-	
+	// 일정 - 날짜, 시간 순으로 오름차순 정렬
+	timeList = sortJsonList(timeList);
+	// 화면에 그려주기
+	viewTimeList(timeList);
 		
+	
 	// 단계 이동 버튼 클릭 시
 	$('.stepBtn').on('click', function(){
 		var lastCompletedTab = $('.completeStep').last().attr('id');
@@ -337,7 +338,11 @@ $(document).ready(function(){
 	// 장르 변경 시
 	$("select[name='genreIdx']").on("change",function(){
 		// 테마 체크 박스 창 초기화
-		$('#themeModal').find('.modal-body').html('');
+		$('#themeModal').fi
+		nd('.modal-body').html('');
+		// 선택한 테마목록들도 함께 초기화
+		$('#themeSelBtn').next().themeTextList.html('');
+		
 	});
 	
 	// 테마 선택 버튼 클릭시
@@ -597,7 +602,7 @@ $(document).ready(function(){
 		artistTextList.html(''); // 초기화
 		
 		// 서버에 값 넘기기위한 input 태그들(기존에 존재하던)
-		$('#artistBtn').parent().find('input[name="artistIdx"]').remove();
+		$('#artistBtn').parent().find('input[name^="castList"]').remove();
 		
 		
 		// 선택된 출연진 목록을 가져와서
@@ -760,18 +765,18 @@ $(document).ready(function(){
 		diffDay = Math.round (diffDay / one_day);
 		
 		for(var day=0; day<=diffDay; day++){
-			var pfmDate = new Date(pfmStartDate);
-			pfmDate.setDate(pfmDate.getDate() + day);
+			var date = new Date(pfmStartDate);
+			date.setDate(date.getDate() + day);
 			
 			// json list 만들기
 			$('#pfmTimeTarget div').each(function(){
 				// 공연 시간
-				var pfmTime = $(this).find('span').first().text();
+				var time = $(this).find('span').first().text();
 
 				// json 만들기
 				var timeJson = {};
-				timeJson['pfmDate'] = formatDate(pfmDate);
-				timeJson['pfmTime'] = pfmTime;
+				timeJson['date'] = formatDate(date);
+				timeJson['time'] = time;
 				
 				// list에 json 추가하기
 				timeList.push(timeJson);
@@ -822,10 +827,6 @@ $(document).ready(function(){
 	
 	// 추가한 공연 일정 보여주는 메소드
 	function viewTimeList(list){
-		console.log(list);
-		console.log(list.length);
-		console.log(list[0].pfmDate);
-		
 		var target = $('#registTimeRes tbody'); // 뷰 용
 		target.html(''); // 초기화
 		
@@ -837,8 +838,8 @@ $(document).ready(function(){
 		var rowspanCnt = 1; 
 		
 		for(var i=0; i<list.length ; i++){
-			date = formatDate(list[i].pfmDate);
-			time = list[i].pfmTime;
+			date = formatDate(list[i].date);
+			time = list[i].time;
 			// td 삽입(보여주기 용)
 			var tr = $("<tr>");
 			var dateTd = $("<td>").text(date);
@@ -902,8 +903,8 @@ $(document).ready(function(){
 		periodP.find('span:nth-child(1)').text(pfmStartDate);
 		periodP.find('span:nth-child(2)').text(pfmEndDate);
 		
-		targetInput.append('<input type="hidden" name="pfmEnd" value="'+pfmEndDate+'">');
 		targetInput.append('<input type="hidden" name="pfmStart" value="'+pfmStartDate+'">');
+		targetInput.append('<input type="hidden" name="pfmEnd" value="'+pfmEndDate+'">');
 	}
 	
 	// Date  'yyyy-mm-dd' 포멧으로 변환
@@ -926,7 +927,7 @@ $(document).ready(function(){
 		var targetTime = $(this).parent().prev().text();
 		// json 리스트에서 해당 요소 삭제
 		for(var i=0; i<timeList.length; i++){
-			if(timeList[i].pfmDate == targetDate && timeList[i].pfmTime == targetTime ){
+			if(timeList[i].date == targetDate && timeList[i].time == targetTime ){
 				timeList.splice(i,1); break;
 			}
 		}
@@ -1019,7 +1020,7 @@ function setComma(inNum){
 </ul>
 </div>
 
-<form id="registForm" action="/admin/registpfm" method="post" enctype="multipart/form-data" style="width:80%">
+<form id="registForm" action="/admin/editpfm" method="post" enctype="multipart/form-data" style="width:80%">
 <input type="hidden" name="pfmIdx" value="${pfm.pfmIdx }">
 <!-- 공연등록 1st Tab : 공연 기본 정보 -->
 <div class='registPfmTab' id='registStep-1'>
@@ -1108,15 +1109,13 @@ function setComma(inNum){
 			<button type="button" id="artistBtn">출연진 선택</button>
 			<p>
 				<c:forEach var="artist" items="${artistList }">
-					<div style='float:left' aIdx="${artist.artistIdx }" aName="${artist.name }">
-						<span>${artist.name } </span>
-						<span class='glyphicon glyphicon-remove'></span>
-					</div>
+					<span style='margin-right:10px;'>${artist.name } </span>
 				</c:forEach>
 			</p>
 			<!-- 서버에 넘길 아티스트 인덱스값 -->
 			<c:forEach var="artist" items="${artistList }" varStatus="status">
-				<input type="hidden" name="castList[${status.index }].${artist.artistIdx }">
+				<input type="hidden" name="castList[${status.index }].artistIdx"
+					value="${artist.artistIdx }" aName="${artist.name }">
 			</c:forEach>			
 		</td>
 	</tr>
@@ -1130,7 +1129,7 @@ function setComma(inNum){
 					<c:when test="${hall.hallIdx eq pfm.hallIdx }">
 						<option value="${hall.hallIdx }" selected="selected">${hall.hallName }</option>
 					</c:when>
-					<c:when test="${hall.hallIdx eq pfm.hallIdx }">
+					<c:when test="${hall.hallIdx ne pfm.hallIdx }">
 						<option value="${hall.hallIdx }">${hall.hallName }</option>
 					</c:when>
 				</c:choose>
@@ -1216,10 +1215,10 @@ function setComma(inNum){
 	<tr>
 		<th>공연 날짜: </th>
 		<td>
-			<input type="text" name="pfmStart" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
+			<input type="text" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
 			<span id="onceRegForm" style="display:none;">
 			 ~ 
-			<input type="text" name="pfmEnd" class="form-control pfmDate" id="pfmEndDate" placeholder="종료일">
+			<input type="text" class="forml pfmDate" id="pfmEndDate" placeholder="종료일">
 			</span>
 		</td>
 	</tr>

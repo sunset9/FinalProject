@@ -260,5 +260,40 @@ public interface PfmDao {
 	 * @작성자:홍나영
 	 */
 	public List<Performance> selectPfmByPreferTheme(Map map);
+
+	/**
+	 * @최종수정일: 2018.12.15
+	 * @Method설명: 특정 공연에 포함되어있는 모든 테마 정보들 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePfmTheme(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.15
+	 * @Method설명: 특정 공연의 출연진 정보 모두 삭제
+	 * @작성자: 전해진
+	 */
+	public void deleteCast(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.15
+	 * @Method설명: 특정 공연의 공연 일정 모두 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePfmDbt(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.15
+	 * @Method설명: 공연 상세정보 수정
+	 * @작성자: 전해진
+	 */
+	public void updatePfmDetail(PfmDetail pfmDetail);
+
+	/**
+	 * @최종수정일: 2018.12.15
+	 * @Method설명: 공연 예약정보 수정
+	 * @작성자: 전해진
+	 */
+	public void updatePfmBookinfo(PfmBookinfo pfmBookinfo);
 	
 }
