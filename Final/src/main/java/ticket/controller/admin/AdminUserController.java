@@ -112,6 +112,13 @@ public class AdminUserController {
 		return "/admin/user/detail";
 	}
 	
+	@RequestMapping(value="admin/userdetail", method=RequestMethod.POST)
+	public String getSeatsOfBookGroup(String bookGroup, int userIdx) {
+		System.out.println(userIdx);
+		System.out.println(bookGroup);
+		return "/admin/userdetail?userIdx="+userIdx;
+	}
+	
 	/**
 	 * @최종수정일: 2018.12.14
 	 * @Method설명: 예매현황 리스트 가져오기(SOB = State Of Book)
@@ -155,5 +162,4 @@ public class AdminUserController {
 	@RequestMapping(value = "/admin/curpaypfm", method = RequestMethod.GET)
 	public void getList() {
 	}
-
 }

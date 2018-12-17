@@ -24,7 +24,8 @@
   	<result column="hall_name" property="hallName"/>
   	<result column="pfm_date" property="pfmDate"/>
   	<result column="pfm_time" property="pfmTime"/>
-  	<result column="pay_idx" property="payIdx"/>
+  	<result column="imp_uid" property="impUid"/>
+  	<result column="book_group" property="bookGroup"/>
   </resultMap>
   
   <sql id="selectCnt">
@@ -130,14 +131,22 @@
   </update>
   
    <select id="selectSOB" parameterType="ticket.dto.User" resultMap="SOBMap">
-	  	select b.create_date, p.name, p.pfm_start, p.pfm_end, b.book_idx, b.cancel_date, bc.state , pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
-		from book b join performance p
-		on b.pfm_idx = p.pfm_idx join poster_info pi
-		on p.pfm_idx = pi.pfm_idx join hall h
-		on p.hall_idx = h.hall_idx join pfm_datebytime pd
-		on b.pfm_dbt_idx = pd.pfm_dbt_idx join book_cate bc
-	    on b.book_cate_idx = bc.book_cate_idx
-		where b.user_idx = #{userIdx}
+	  	SELECT
+		    b.create_date, p.name, p.pfm_start, p.pfm_end, b.book_group, b.cancel_date,
+		    bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time, COUNT(b.book_group) as ea
+		FROM
+		    book b
+		    JOIN performance p ON b.pfm_idx = p.pfm_idx
+		    JOIN poster_info pi ON p.pfm_idx = pi.pfm_idx
+		    JOIN hall h ON p.hall_idx = h.hall_idx
+		    JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
+		    JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
+		WHERE
+		    b.user_idx = #{userIdx}
+		GROUP BY
+		    b.create_date, p.name, p.pfm_start, p.pfm_end, b.book_group, b.cancel_date,
+		    bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
+		ORDER BY b.create_date
   </select>
   
   <select id="selectUserGrade" parameterType="ticket.dto.User" resultMap="UserMap">
