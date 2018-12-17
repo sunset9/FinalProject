@@ -40,6 +40,7 @@ import ticket.dto.PfmDetail;
 import ticket.dto.PfmTheme;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
+import ticket.dto.SeatSectionList;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.utils.Paging;
@@ -154,8 +155,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
-			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
+			, CastList castList, SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList
+			, String pfmDetailContents, String pfmBookinfoContents) {
 		int pfmIdx = 0;
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
@@ -192,6 +194,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			}
 		}
 
+		// 좌석 정보 등록
+		
+		
 		// 공연 일정들(날짜, 시간) 등록
 		if (pfmDbtList.getPfmDbtList() != null) {
 			for (PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {

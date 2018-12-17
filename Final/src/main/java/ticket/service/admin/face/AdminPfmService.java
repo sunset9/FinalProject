@@ -23,6 +23,7 @@ import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmDetail;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
+import ticket.dto.SeatSectionList;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
@@ -170,13 +171,12 @@ public interface AdminPfmService {
 	public List<Hall> getHallList();
 
 	/**
-	 * @param pfmBookinfoContents 
-	 * @최종수정일: 2018.12.07
+	 * @최종수정일: 2018.12.17
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList
+			, CastList castList, SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList
 			, String pfmDetailContents, String pfmBookinfoContents);
 
 	/**
