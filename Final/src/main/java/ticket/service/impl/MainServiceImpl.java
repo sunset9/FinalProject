@@ -101,8 +101,18 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> ticketOpenList() {
+	public List<Performance> ticketOpenList() {
 		return mainDao.selectTicketOpenList();
+	}
+
+	@Override
+	public List<Performance> ticketOpenPfmList() {
+		return mainDao.selectTicketOpenPfmList();
+	}
+
+	@Override
+	public List<Performance> ticketOpenDayList() {
+		return mainDao.selectOpenDayPfmList();
 	}
 
 }
