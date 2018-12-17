@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ticket.dto.PaymentInfo;
 import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.utils.Paging;
@@ -78,4 +79,11 @@ public interface AdminUserService {
 	 * @작성자: 김지은
 	 */
 	public List<StateOfBook> getSobListByPaging(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: bookGroup 중 예매상태가 '취소중'인 좌석의 impUid 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<PaymentInfo> getImpUid(String bookGroup);
 }

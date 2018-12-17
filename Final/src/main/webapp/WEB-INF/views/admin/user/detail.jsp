@@ -9,16 +9,20 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
-function cancelBook(impUid) {
-	console.log(impUid);
+function cancelBook(bookGroup) {
+	var bookGroup = bookGroup;
+	console.log("bookgroup ::: "+bookGroup);
+	$.ajax({
+		type : 'POST',
+		url : '/admin/getImpUid',
+		data : { bookGroup : bookGroup },
+		success : function(res) {
+			for(i=0; i<res.length; i++){
+				console.log(res[i].payIdx);
+			}
+		}
+	});
 };
-
-$( document ).ready( function() {
-    $("#partCancelModalBtn").click(function(){
-		console.log($("#userIdx").attr('value'));
-		console.log($("#bookGroup").attr('value'));
-    });
-});
 </script>
 
 
@@ -123,7 +127,7 @@ ${curUser.email }님의 예매현황<br>
 	</td>
 	<td>
 	<c:if test="${sob.state eq '취소중'}">
-		<button onclick="cancelBook('${sob.impUid}');">환불하기</button>
+		<button onclick="cancelBook('${sob.bookGroup}');">환불하기</button>
 	</c:if>
 	<c:if test="${sob.state eq '예매완료(부분취소)'}">
 		<!-- 부분취소 모달 open btn-->
@@ -160,9 +164,11 @@ var partCancelModalBtn = document.getElementById("partCancelModalBtn");
 // Get the <span> element that closes the modal
 var partCancelModalClose = document.getElementsByClassName("partCancelModalClose")[0];
 
-// When the user clicks on the button, open the modal 
-partCancelModalBtn.onclick = function() {
-	partCancelModal.style.display = "block";
+if(partCancelModalBtn != null){
+	// When the user clicks on the button, open the modal 
+	partCancelModalBtn.onclick = function() {
+		partCancelModal.style.display = "block";
+	}
 }
 
 // When the user clicks on <span> (x), close the modal
