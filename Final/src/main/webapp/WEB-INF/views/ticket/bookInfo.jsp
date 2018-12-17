@@ -82,31 +82,7 @@
   
   $(document).ready(function () {
 	  
-	  //좌석 그리는 페이지띄어주기
-	  $('#selectedSeats').on('click','.section', function(){
-		  
-		  var color = $(this).css("fill");
-		  var secName = $(this).attr("class");
-		  var pay = $(this).data("pay");
-		  var appName = $(this).data("appName");
-		  
-			$.ajax({
-				
-				type:"GET",
-				url:"/hall/hall_2_seats/seat",
-				data:{"color":color,
-					"secName":secName[0],
-					"pay":pay,
-					"appName":appName
-					},
-				dataType:"html",
-				success:function(res){
-					$('#selectedSeats').html(res);
-				}
-				
-			});
-		  
-	  });
+	
 	  
 	  
 	  //예매하기버튼 클릭
@@ -124,98 +100,22 @@
 				  return;
 			  }
 			  
-			  $('#myModal').modal("show").on('hide', function() {
-				  $('#myModal').modal('show')
-			 });
+// 			  var bookWindow = window.open("about:_blank");
+			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time;
+			  window.open(path, "_blank", "width=900,height=700");
+// 			  bookWindow.location.href = path;
+			  
+// 			  $('#myModal').modal("show").on('hide', function() {
+// 				  $('#myModal').modal('show')
+// 			 });
 			  
 			  
-			  $("#dates").text(selectDate+' '+time);
+// 			  $("#dates").text(selectDate+' '+time);
 	
-			$.ajax({
-				type:"get",
-				url:"/ticket/seatSection",
-				data:{},
-				async: false,
-				dataType:"html",
-				success:function(res){
-					$('#selectedSeats').html(res);
-		// 			$('#legend').html('');
-					$('svg').css("width","650px");
-					$('svg').css("height","530px");
-					loadSectionData();
-				
-				}
-			});	
+	
 		});
-	  
-	  //섹션 데이터 받아오기
-	  function loadSectionData(){
-		  
-		  $.ajax({
-			  type:"POST",
-			  url:"/ticket/seatSection",
-			  data:{},
-			  dataType:"json",
-			  success:function(res){
-				  
-				  var color = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D','navy'];
-				  
-				  var json = { };
-				  var secName; 
-				  for(var i=0;i<res.hashMap.secName.length;i++){
-					  secName = res.hashMap.secName[i];
-					  json[secName]=color[i];
-				  }
-				  
-				  for(var i=0;i<res.hashMap.secName.length;i++){
-					  secName = res.hashMap.secName[i];
-// 					  console.log(json[secName]);
-				  }
-				  
-					for(var i=0;i<res.hashMap.secMap.length;i++){
-						
-						var str = 'path.'+res.hashMap.secMap[i].oriSecName;
-						var path = $('.seat_block').find(str); //seat_block 하위요소중 path중에 불러온 이름중 원본섹션이름을 가진걸 불러와라
-						
-						if(path.data("secIdx") == undefined){ // 만약 path를 찾을수 없다면 rect로 찾자
-							var str_rect='rect.'+res.hashMap.secMap[i].oriSecName;
-							path = $('.seat_block').find(str_rect);
-						}
-						
-						  for(var j=0;j<res.hashMap.secName.length;j++){
-							  
-							  if(res.hashMap.secName[j] ==res.hashMap.secMap[i].appSec ){
-								  var secName = res.hashMap.secName[j];
-								  path.attr("fill",json[secName]);
-								  path.data("pay",res.hashMap.secMap[i].secPay);
-								  path.data("secName",res.hashMap.secMap[i].oriSecName);
-								  path.data("appName",res.hashMap.secMap[i].appSec);
-							  }
-						  
-						  }
-						
-						
-// 						switch (appsec) {
-// 						  case 'Nikon D40'  : path.attr("fill"); break;
-// 						  case 'Nikon D40X' : path.attr("fill"); break;
-// 						  case 'Canon PowerShot' : path.attr("fill"); break;
-// 						  default   : path.attr("fill"); break;
-// 						}
-					
-					}
-					
-					
-				  
-				  
-				  
-			  },
-			  error:function(e){
-				  console.log(e);
-			  }
-			  
-		  })
-		  
-	  }
+
+
 	  
 	  
 
@@ -250,42 +150,10 @@
 		<button type="button" id ="bookBtn" class="btn btn-primary btn-lg">
 		  예매하기
 		</button>
-		
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content" style=" width: 1000px;    height: 750px;">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">좌석선택  공연이름넣어주기</h4>
-		        <span id= "dates"></span>
-		      </div>
-		      <div class="modal-body" style="height: 560px;">
-		        <div id = "selectedSeats" style="float: left; width: 650px; " ></div>
-				<div class="booking-details"style="float: right">
-		            <h2>Booking Details</h2>
-		            <h3>
-		               Selected Seats (<span id="counter">0</span>):
-		            </h3>
-		            <div class="allScreen"></div>
-		            <ul id="selected-seats"></ul>
-		
-		            Total: <b>$<span id="total">0</span></b>
-		
-		            <button class="checkout-button">Checkout &raquo;</button>
-		
-		            <div id="legend"></div>
-				</div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
-		      </div>
-		    </div>
-		  </div>
 		</div>
 	</div>
 </div>
+<!-- <a href="" target="_blank"></a> -->
 
 
 </body>

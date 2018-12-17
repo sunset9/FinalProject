@@ -69,6 +69,13 @@ public class TicketController {
 	}
 	
 	
+	@RequestMapping(value="/ticket/book", method=RequestMethod.GET)
+	public void book (String Date, String time) {
+		
+		
+	}
+	
+	
 	/**
 	 * @최종수정일: 2018.12.12
 	 * @Method설명: 해당공연의 공연시작시간 정보 불러오기
