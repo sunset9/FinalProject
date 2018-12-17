@@ -40,6 +40,23 @@ $(document).ready(function(){
 <!-- conta = container -->
 <div class="con">
 
+<div class="form-inline">
+	<select id="searchTypeSel" name="searchType">
+		<option value="">검색조건</option>
+		<option value="t">제목</option>
+		<option value="c">내용</option>
+		<option value="tc">제목+내용</option>		
+	</select>
+
+	<input class="form-control" type="text" id="keyword" name="keyword"
+		value="${cri.keyword }" placeholder="검색어를 입력하세요"/>
+	<button id="searchBtn" class="btn btn-primary">Search</button>
+
+	</div>
+
+
+
+
 <form action="/admin/noticedelete" method="post">
 
 <div>

@@ -91,7 +91,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 
 	@Override
-	public void filesave(ServletContext context, MultipartFile file, String fileTitle) {
+	public void filesave(ServletContext context, MultipartFile file) {
 		// UUID, 고유식별자
 		String uId = UUID.randomUUID().toString().split("-")[0];
 
@@ -127,8 +127,8 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public NoticeFile getFile(int notiFileIdx) {
-		return adminBoardDao.selectByNotiFileIdx(notiFileIdx);
+	public NoticeFile getFile(int noFileIdx) {
+		return adminBoardDao.selectByNoFileIdx(noFileIdx);
 	}
 
 	

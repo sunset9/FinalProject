@@ -23,7 +23,7 @@
 		<result column="notice_idx" property="noticeIdx"/>
 		<result column="create_date" property="createDate"/>  	
 	</resultMap>
-	
+
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
   	select * from ( 
   		select rownum rnum, B.* from (
@@ -72,7 +72,7 @@
 
 	<insert id="insertNotiFile" parameterType="ticket.dto.NoticeFile">	
 		insert into notice_file (nofile_idx, stored_name, origin_name, notice_idx) 
-		values (notice_file_seq.nextval, #{storedName }, #{originName }, #{noticeIdx });
+		values (notice_file_seq.nextval, #{storedName }, #{originName }, #{noticeIdx })
 	</insert>
 
 
@@ -80,16 +80,9 @@
 		select * from notice_file order by nofile_idx
 	</select>
 
-	<select id="selectByNotiFileIdx" parameterType="int" resultMap="noticeFile">
+	<select id="selectByNoFileIdx" parameterType="int" resultMap="noticeFile">
 		select * from notice_file where nofile_idx = #{noFileIdx}
 	</select>
-
-<!-- <sql id="aa"> -->
-<!-- select * from notice -->
-<!-- </sql> -->
-<!-- <select id="bb"> -->
-<!-- <include refid="aain"/> where notice_idx = #{noticeIdx} -->
-<!-- </select> -->
 
   </mapper>
   

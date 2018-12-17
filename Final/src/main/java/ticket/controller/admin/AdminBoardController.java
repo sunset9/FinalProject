@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import ticket.dto.Notice;
+import ticket.dto.NoticeFile;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.utils.Paging;
 
@@ -36,7 +38,8 @@ public class AdminBoardController {
 	public String notiList(Model model,
 			@RequestParam(required=false, defaultValue="0")int curPage,
 			@RequestParam(required=false, defaultValue="10")int listCount,
-			@RequestParam(required=false, defaultValue="10")int pageCount			
+			@RequestParam(required=false, defaultValue="10")int pageCount
+			
 			) {
 	
 		Paging paging = adminBoardService.getPaging(curPage, listCount, pageCount);
@@ -151,42 +154,50 @@ public class AdminBoardController {
 	 */
 	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.GET)
 	public String notiFileup() {
+		logger.info("업로드폼");
 		return "/admin/notice/fileup";
 		
 	}
 	
 //@RequestParam(value="n") String name => n이란 값을 name에 저장
 	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.POST)
-	public String notiFileupProc(MultipartFile file, String fileTitle) {
-	
+	public String notiFileupProc(
+			@RequestParam(value="file") MultipartFile fileupload) {
 		// 업로드 파일 정보 전달
-		adminBoardService.filesave(context, file, fileTitle); 
+		adminBoardService.filesave(context, fileupload); 
 		
 		return "redirect:/admin/noticelist";
 		
 	}
 
 	
-	
-	
-	
-	
 	@RequestMapping(value="/admin/noticefilelist")
 	public String filelist(Model model) {
+		
+		List<NoticeFile> filelist = adminBoardService.fileList();
+		
+		model.addAttribute("filelist", filelist);
+		
 		return "/admin/notice/filelist";
 		
 	}
 	
 	
-//	/**
-//	 * 2018.12.13
-//	 * @Method설명: 공지사항 파일 다운로드
-//	 * @작성자: 조요한
-//	 */
-//	@RequestMapping(value="/admin/noticefiledownload", method=RequestMethod.GET)
-//	public void notiFiledownload() {
-//		
-//	}
+	/**
+	 * 2018.12.13
+	 * @Method설명: 공지사항 파일 다운로드
+	 * @작성자: 조요한
+	 */
+	@RequestMapping(value="/admin/noticefiledownload", method=RequestMethod.GET)
+	public ModelAndView notiFiledownload(ModelAndView mav, int noFileIdx) {
+		
+		NoticeFile file = adminBoardService.getFile(noFileIdx);
+		logger.info(file.toString());
+		mav.setViewName("down"); // 뷰이름
+		mav.addObject("downFile", file);
+		return mav;
+		
+	}
 	
 	
 	
