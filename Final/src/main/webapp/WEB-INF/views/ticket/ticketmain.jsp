@@ -33,76 +33,66 @@
 		
 		// 메인배너 아래 탭
 		$('ul.tabs li').click(function(){
-		   var tab_id = $(this).attr('data-tab');
+		    var tab_id = $(this).attr('data-tab');
 		 
-		   $('ul.tabs li').removeClass('current');
-		   $('.tab-content').removeClass('current');
+		    $('ul.tabs li').removeClass('current');
+		    $('.tab-content').removeClass('current');
 		 
-		   $(this).addClass('current');
-		   $("#"+tab_id).addClass('current');
-		 })
+		    $(this).addClass('current');
+		    $("#"+tab_id).addClass('current');
+		});
 	});
 </script>
  
 <style type="text/css">
-
+/* 메인 배너 */
 #mainbannerbox {
 	position: relative;
-	width: 100%;
+	max-width: 100%;
 	height: 350px;
  	border: 1px solid black; 
-	/* div 영역을 벗어난 내용물 숨기기 */
 	overflow: hidden;
-	/* 옆으로 넘어가는거 확인시 주석 후 확인 */
-	/* div 박스를 화면 가운데로 정렬 */
 	margin: 0 auto;
 /* 	z-index: 2; */
 }
 
-/* ul의 기본 스타일 없애기 */
 #mainbanner {
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 
- 
-
-#mainbanner li { /* 한 곳으로 모임 */
+#mainbanner li {
 	position: absolute;
 }
-
- 
 
 #mainbanner li img {
 	max-width: 100%;
 	height: 350px;
 }
 
-/* 탭 */
-.main_tabs {
-	margin-top: 15px;
-	width: 70%;
- 	padding-left: 15%;
-	text-align: center;
+/* 탭 메뉴 */
+.main_tab{
+	width: 800px;
+	margin: 20px auto 10px auto;
 }
-
+ 
 ul.tabs{
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
 }
 ul.tabs li{
-  background: none;
-  color: #222;
-  display: inline-block;
-  padding: 10px 15px;
-  cursor: pointer;
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
 }
  
 ul.tabs li.current{
-  background: #ededed;
-  color: #222;
+	background: #ededed;
+	color: #222;
 }
  
 .tab-content{
@@ -110,107 +100,148 @@ ul.tabs li.current{
 	background: #ededed;
 	padding: 15px;
 }
-
-.tab-content img {
-	text-align: center;
-	width: 10%%;
-	height: 150px;
-}
  
 .tab-content.current{
-  display: inherit;
+	display: inherit;
 }
 
-/* 메인 하단 () */
-.mainranking {
-	margin: 5px;
-	width: 400px;
+/* 랭킹 */
+ul.kind {
+	float: right;
+	list-style: none;
+}
+ul.kind li {
 	float: left;
-	text-align: center;
 }
 
-.recommendpfm {
-	width: 300px;
-	margin: 5px;
+ul.kind li span{
+    padding: 0 20px 0 21px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.kindDiv {
+	width:100%;
+	float: right;
+}
+
+li.pfmInfo {
+	list-style: none;
+	float: left;
+}
+
+.tapImg {
+	width: 100px;
+	height: 100px;
+}
+
+/* 메인 하단 */
+.mainbottom {
+	width: 100%;
+/* 	display: inline; */
+}
+
+.ranking {
+	width: 50%;
+	height: 400px;
+	margin: 10px 0 20px 10%;
+	border: 1px solid silver;
+	float: left;
+}
+
+.alignPfm {
+	width: 30%;
+	height: 400px;
+	margin: 10px 10% 20px 0;
+	border: 1px solid silver;
+	float: left;
+}
+
+div>h4 {
+	text-align: center;
 }
 </style>
 
 <!-- 메인 배너 -->
 <div id="mainbannerbox">
 	<ul id="mainbanner">
-		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test.PNG" /></a></li>
-		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test5.PNG" /></a></li>
-		<li><a href="#"><img src="${pageContext.request.contextPath}/resources/image/test2.PNG" /></a></li>
+		<c:forEach items="${bannerList }" var="list">
+			<li><a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<img src="/resources/image/${list.bannerImgOri}" />
+			</a></li>
+		</c:forEach>
 	</ul>
 </div>
 
-<!-- 썸네일 배너 -->
-<!-- <div id="thumbannerbox"> -->
-<!-- 	<ul id="thumbanner"> -->
-<!-- 		<li><img src="http://i.imgur.com/RstXW7v.jpg"></li> -->
-<!-- 	</ul> -->
-<!-- </div> -->
-
-<!-- 탭 (new, 콘서트, 뮤지컬&연극) -->
-<div class="main_tabs">
+<!-- 탭 배너 -->
+<div class="main_tab">
 	<ul class="tabs">
-		<li class="tab-link current" data-tab="tab-1">new</li>
-		<li class="tab-link" data-tab="tab-2">콘서트</li>
-		<li class="tab-link" data-tab="tab-3">뮤지컬&공연</li>
+		<li class="tab-link current" data-tab="tab-1">NEW! 공연</li>
+	    <li class="tab-link" data-tab="tab-2">콘서트</li>
+	    <li class="tab-link" data-tab="tab-3">뮤지컬&연극</li>
 	</ul>
-	 
+
 	<div id="tab-1" class="tab-content current">
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<c:forEach items="${newList }" var="list">
+			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<img src="/resources/image/${list.originName}"
+					style="width: 150px; height: 200px;"/>
+			</a>
+		</c:forEach>
 	</div>
 	
 	<div id="tab-2" class="tab-content">
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<c:forEach items="${conList }" var="list">
+			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<img src="/resources/image/${list.originName}"
+					style="width: 150px; height: 200px;"/>
+			</a>
+		</c:forEach>
 	</div>
 	
 	<div id="tab-3" class="tab-content">
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
-		<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" /></a>
+		<c:forEach items="${muList }" var="list">
+			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<img src="/resources/image/${list.originName}"
+					style="width: 150px; height: 200px;"/>
+			</a>
+		</c:forEach>
 	</div>
 </div>
 
-<!-- 메인 하단 (장르별 랭킹, 추천공연) -->
-<!-- <div class="mainbottom"> -->
-	<div class="mainranking">
-<!-- 		<div class="toponeimg"> -->
-<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
-<!-- 			style="float: left; width: 100px; height: 200px;" /></a> -->
-<!-- 		</div> -->
-<!-- 		<div class="topotherimg"> -->
-<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
-<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
-<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
-<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
-<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
-<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
-<%-- 			<a href="#"><img src="${pageContext.request.contextPath}/resources/image/poster_empty.png" --%>
-<!-- 			style="float: left; width: 40px; height: 80px;" /></a> -->
-<!-- 		</div> -->
-	</div>
-	
-	<div class="recommendpfm">
-<%-- 		<c:if test="${not login }"> --%>
-<!-- 			<h4>로그인시 취향에 맞는 공연 확인이 가능합니다.</h4> -->
-<%-- 		</c:if> --%>
+<div class="mainbottom">
+<div class="ranking">
+	<h4>랭킹</h4>
+	<div class="kindDiv">
+		<ul class="kind">
+			<li><span id="con">콘서트</span></li>
+			<li><span id="mu">뮤지컬&연극</span></li>
+			<li><span id="fam">가족&아동</span></li>
+		</ul><br><br>
 		
-<%-- 		<c:if test="${login }"> --%>
-			
-<%-- 		</c:if> --%>
+		<ul id="posterList">
+		<c:forEach items="${testList }" var="list">
+			<li class="pfmInfo">
+				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<span class="thumImg">
+					<img class="tapImg" src="/resources/image/${list.originName}" /><br>
+				</span>
+				</a>
+			</li>
+		</c:forEach>
+		</ul>
 	</div>
-<!-- </div> -->
-	
+</div>
+
+<div class="alignPfm">
+	<h4>맞춤 공연</h4>
+	<div>
+		<c:if test="${login }">
+			맞춤공연 추가(슬라이드!)
+		</c:if>
+		
+		<c:if test="${not login }">
+			<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
+		</c:if>
+	</div>
+</div>
+</div>

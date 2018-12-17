@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ticket.dto.Performance;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.service.face.PfmDetailService;
 
@@ -38,16 +39,11 @@ public class PfmDetailController {
 		// 공연 정보 불러오기
 		Performance pfmInfoList = detailService.getPfmInfo(pfm);
 		model.addAttribute("pfmInfoList", pfmInfoList);
-	}
-	
-	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 상세 내용 관련 띄우기
-	 * @작성자: 배수연
-	 */
-	@RequestMapping(value="/ticket/pfmdetail", method=RequestMethod.POST)
-	public void pfmdetailProc() {
 		
+		// 하단
+		//	상세 정보
+		PfmDetail detailList = detailService.pfmDetailInfo(pfm);
+		model.addAttribute("detailList", detailList);
 	}
 	
 	/**

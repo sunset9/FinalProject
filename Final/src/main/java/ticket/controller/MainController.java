@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.MainBanner;
+import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
-import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.service.face.MainService;
 
@@ -32,8 +33,29 @@ public class MainController {
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/ticketmain", method=RequestMethod.GET)
-	public void ticketmain() {
+	public void ticketmain(Model model) {
 		logger.info("MAIN");
+		
+		// 메인 top 배너
+		List<MainBanner> bannerList = mainService.mainBannerList();
+		model.addAttribute("bannerList", bannerList);
+		
+		// 탭 배너
+		// tab-1 : NEW
+		List<Poster> newList = mainService.getnewPoster();
+		model.addAttribute("newList", newList);
+		
+		// tab-2 : 콘서트
+		List<Poster> conList = mainService.getconPoster();
+		model.addAttribute("conList", conList);
+		
+		// tab-3 : 뮤지컬&공연
+		List<Poster> muList = mainService.getMuPoster();
+		model.addAttribute("muList", muList);
+		
+		// 랭킹 - sql문 작성해야함, 테스트리스트로 출력만 해둔 상태임
+		List<Poster> testList = mainService.getTestList();
+		model.addAttribute("testList", testList);
 	}
 	
 	/**
@@ -44,7 +66,6 @@ public class MainController {
 	@RequestMapping(value="/ticket/concert", method=RequestMethod.GET)
 	public void concert(
 			Model model
-			, Theme theme
 		) {
 		logger.info("콘서트 FORM");
 		
@@ -158,8 +179,10 @@ public class MainController {
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/ticketopen", method=RequestMethod.GET)
-	public void ticketopen() {
-		
+	public void ticketopen(Model model) {
+		// 상단의 이미지 및 기본 정보들 출력
+		List<Poster> openList = mainService.ticketOpenList();
+		model.addAttribute("openList", openList);
 	}
 	
 	/**
