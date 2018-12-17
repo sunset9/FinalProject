@@ -83,4 +83,8 @@
 	select max(seat_col) from seat where ori_sec_idx =#{oriSecIdx}
 </select>
 
+<select id = "selectSection" parameterType="ticket.dto.Performance" resultMap="seatSectionMap">
+	select app_sec from SEATSECTION where pfm_idx =${pfmIdx} group by app_sec
+</select>
+
 </mapper>

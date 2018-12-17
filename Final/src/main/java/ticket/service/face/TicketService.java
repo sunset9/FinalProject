@@ -100,5 +100,7 @@ public interface TicketService {
 	 * @작성자:이상지
 	 */
 	public int maxCol(int oriSecIdx);
+	
+	public List<SeatSection> loadPfmSection(Performance pfm);
 }
 
