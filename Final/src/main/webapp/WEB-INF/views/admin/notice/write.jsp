@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!--    - 스마트에디터 추가하기 -->
-<script type="text/javascript" src="/resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="/resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script> -->
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -16,9 +16,6 @@ $(document).ready(function(){
 // 	$(#"#btnWrite").click(function(){
 		
 // 	});	
-		$("#btnCancel").click(function(){
-			history.go(-1);
-		});
 	
         $("#list").on("click",function(e){
             e.preventDefault();
@@ -67,21 +64,20 @@ $(document).ready(function(){
 <tr> <td>분류</td><td><input type="text" name="NTypeIdx"></td> </tr>
 <tr> <td>제목</td><td><input type="text" name="noticeTitle"></td> </tr>
 <tr> <td>내용</td><td><textarea id="content" name="noticeContent"></textarea></td> </tr>
-<!-- <tr> <td>첨부파일 #1</td> <td><input type="file" id="file1"></td> </tr> -->
-<!-- <tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr> -->
-<!-- <tr> <td>첨부파일 #3</td> <td><input type="file" id="file3"></td> </tr> -->
-<!-- <tr> <td>첨부파일 #4</td> <td><input type="file" id="file4"></td> </tr> -->
-<!-- <tr> <td>첨부파일 #5</td> <td><input type="file" id="file5"></td> </tr> -->
+<tr> <td>첨부파일 #1</td> <td><input type="file" id="file1"></td> </tr>
+<tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr>
+<tr> <td>첨부파일 #3</td> <td><input type="file" id="file3"></td> </tr>
+<tr> <td>첨부파일 #4</td> <td><input type="file" id="file4"></td> </tr>
+<tr> <td>첨부파일 #5</td> <td><input type="file" id="file5"></td> </tr>
 </table>
 <button id="btnWrite">작성</button>
-<button id="btnCancel">목록으로, 취소</button>
 </form>
+<a href="/admin/noticelist"><button id="btnCancel">취소</button></a>
 </div>
 
+
+
 <script type="text/javascript">
-
-
-
 //스마트에디터 스킨 적용
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({

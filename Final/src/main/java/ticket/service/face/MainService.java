@@ -109,6 +109,20 @@ public interface MainService {
 	 * @Method설명: 오픈 티켓 배너 리스트 5개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> ticketOpenList();
+	public List<Performance> ticketOpenList();
+
+	/**
+	 * 최종수정일: 2018.12.17
+	 * @Method설명: 오픈 티켓 등록순
+	 * @작성자: 배수연
+	 */
+	public List<Performance> ticketOpenPfmList();
+
+	/**
+	 * 최종수정일: 2018.12.17
+	 * @Method설명: 오픈 티켓 오픈일순
+	 * @작성자: 배수연
+	 */
+	public List<Performance> ticketOpenDayList();
 
 }

@@ -119,6 +119,10 @@ public interface MainDao {
 
 	public List<Poster> selectMuTabList();
 
-	public List<Poster> selectTicketOpenList();
+	public List<Performance> selectTicketOpenList();
+
+	public List<Performance> selectTicketOpenPfmList();
+
+	public List<Performance> selectOpenDayPfmList();
 
 }

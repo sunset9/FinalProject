@@ -87,6 +87,12 @@ public class TicketServiceImpl implements TicketService {
 	public int maxCol(int oriSecIdx) {
 		return ticketDao.selectMaxCol(oriSecIdx);
 	}
+
+	@Override
+	public List<SeatSection> loadPfmSection(Performance pfm) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectSection(pfm);
+	}
 	
 	
 

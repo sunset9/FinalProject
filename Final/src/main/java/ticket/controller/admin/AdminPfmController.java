@@ -37,6 +37,7 @@ import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmDetail;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
+import ticket.dto.SeatSection;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.utils.Paging;
@@ -117,6 +118,7 @@ public class AdminPfmController {
 			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
+			, List<SeatSection> seatSecList
 			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
 			, String pfmDetailContents // 예매상세 내용
 			, String pfmBookinfoContents // 예약 상태 내용
@@ -131,7 +133,8 @@ public class AdminPfmController {
 		logger.info(castList.toString());
 
 		// 좌석 정보 & 가격 등록
-
+		logger.info(seatSecList.toString());
+		
 		// 공연 날짜 & 시간 등록
 		logger.info(pfmDbtList.toString());
 
