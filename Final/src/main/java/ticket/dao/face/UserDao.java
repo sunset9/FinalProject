@@ -21,13 +21,13 @@ public interface UserDao {
 	 * @Method설명: 정보 수정시 비밀번호 확인하기
 	 * @작성자 : 홍나영
 	 */
-	public int selectPwByUserIdx(User user);
+	public String selectPwByUserIdx(User user);
 	
 	/**
 	 * @Method설명: idx로 user 전체 정보 조회하기 
 	 * @작성자 : 홍나영
 	 */
-	public User selectUser(User user);
+	public User selectUser(int userIdx);
 	
 	/**
 	 * @Method설명: 유저 정보 수정하기
