@@ -323,7 +323,7 @@ $(document).ready(function(){
 		// 테마 체크 박스 창 초기화
 		$('#themeModal').find('.modal-body').html('');
 		// 선택한 테마목록들도 함께 초기화
-		$('#themeSelBtn').next().themeTextList.html('');
+		$('#themeSelBtn').next().html('');
 	});
 	
 	// 테마 선택 버튼 클릭시
@@ -605,6 +605,10 @@ $(document).ready(function(){
 	$('select[name="hallIdx"]').on('change', function(){
 		if($('select[name="hallIdx"]').val() > 0){
 			$('#seatDiv').slideDown(250);
+			// 이전 좌석 정보 입력 칸 초기화
+			$('.seatInfo:not(:first)').remove();
+			$('.seatInfoInput').remove();
+			// 좌석 정보 입력 칸(input태그) 생성
 			addSeatInput();
 			// '좌석 구간'란 초기화
 			viewSeatSec();
@@ -621,21 +625,22 @@ $(document).ready(function(){
 	});
 	// 좌석 정보 추가 input 태그 생성 메소드
 	function addSeatInput(){
-		var td = $('<td class="seatInfoName">')
+		var td = $('<td class="seatInfoInput">')
 		var inputSec = $('<input type="text" class="tempSecName" placeholder="(VIP)">석</input>');
-		var inputPay = $('<input type="text" class="tempSecPrice" placeholder="0">원</input>');
+		var inputPay = $('<input type="text" class="tempSecPay" placeholder="0">원</input>');
 		var plus = $('<span class="glyphicon glyphicon-plus-sign"></span>');
 		var minus = $('<span class="glyphicon glyphicon-minus-sign"></span>');
 			
 		td.append(inputSec);
 		td.append(inputPay);
 		
-		var existTd = $('#seatDiv .seatInfo').find('td');
-		
+		var existTd = $('#seatDiv .seatInfoInput');
 		// 입력창이 0개인 경우 - 처음 만들어지는 경우
 		if(existTd.length == 0){
 			td.append(plus);
 			$('#seatDiv .seatInfo:first').append(td);
+			// rowspan 변경
+			$('#seatDiv .seatInfo:first').find('th').attr('rowspan', 1);
 		}else{ // 이미 만들어져있는게 있는 경우
 			// 입력창이 6개 미만인 경우 - 추가 
 			if(existTd.length < 6){
@@ -678,11 +683,11 @@ $(document).ready(function(){
 		th.attr('rowspan', th.attr('rowspan') -1)
 		
 		// '좌석 구간'란 초기화
-		viewSeatSec();
+// 		viewSeatSec();
 	});
 	
 	// 좌석 가격입력창 - 화폐 포멧으로 콤마 찍어주기
-	$('#seatDiv table').on('change keyup','input[name="sec_pay"]', function(){
+	$('#seatDiv table').on('change keyup','.tempSecPay', function(){
 		getNumber(this);
 	});
 	
@@ -691,12 +696,53 @@ $(document).ready(function(){
 		// '좌석 구간'란 초기화
 		viewSeatSec();
 	});
+
+	var secNamePay = []; // 좌석정보: 구역명-가격 정보 담고 있음
+	var completeSetSec = []; // 구역 지정 완료한 정보 담고 있음 
+
+	// 좌석 정보 - 가격정보 입력시
+	$('#seatDiv').on('change','.tempSecPay', function(){
+		// 구역명 , 좌석정보 담고 있는 리스트의 값 변경
+		var targetSecName = $(this).parent().find('.tempSecName').val();
+		console.log(targetSecName);
+		var changePay = $(this).val();
+		if(changePay == ''){
+			changePay = 0;
+		}
+		// 화폐단위 (,) 로 구분되어 있는 경우 콤마 제거
+		if(changePay != 0) changePay = changePay.split(',').join('');
+		console.log(changePay);
+		
+		if( targetSecName != ''){ // 구역명을 입력한 경우에만
+			// 구역명, 가격 정보 담고 있는 배열 변경
+			secNamePay.forEach(function(secInfo){
+				if (secInfo.secName == targetSecName){ // 변경한 가격의 구역명인 경우
+					secInfo.secPay = changePay;
+				} 
+			});
+		
+			// 지정 완료된 구역 정보 담은 배열에서도 가격 정보 바꿔줌
+			completeSetSec.forEach(function(setSec){
+				if(setSec.appSec == targetSecName){
+					setSec.secPay = changePay;				
+				}
+			});
+		}
+		console.log("------최종 배열")
+		console.log(completeSetSec);
+		
+		// 서버에 넘길 좌석 정보 세팅
+		addSetSecInput();
+	});
 	
-	var setSetJson = {}; // 구역 지정한 정보 담고 있음 
 	// 좌석구간 그려주기
 	function viewSeatSec(){
 		// 처음에는 셀렉 박스 숨김
 		$('#seatSecSelect').hide();
+		// 좌석명, 가격 정보 담는 리스트 초기화 
+		secNamePay = []; 
+		// 구역 지정 완료한 정보 초기화
+		completeSetSec = [];
 		
 		// 홀 좌석도 가져오기
 		$.ajax({
@@ -725,9 +771,30 @@ $(document).ready(function(){
 						$(this).attr('stroke', '#222');
 						$(this).attr('stroke-width', 25);
 						$(this).addClass('clicked');
+						
 						// 셀렉 박스 보여주기
 						$('#seatSecSelect').show();
-						$('#seatSecSelect').find('option:first').prop('selected', 'selected');
+						// 이미 구역 설정한 요소이면 선택한 석 띄워주기
+						if($(this).hasClass('completeSet')){
+							var selectedOriSec = $(this).attr('class').split(' ')[0];
+							var selectedAppSec;
+							// 선택한 요소의 좌석명 구하기
+							completeSetSec.forEach(function(setSec){
+								if(setSec.oriSec == selectedOriSec){
+									selectedAppSec = setSec.appSec;
+								}
+							});
+							// 선택한 요소의 좌석명과 일치하는 option태그 찾아서 selected 속성 부여
+							$('#seatSecSelect').find('option').each(function(){
+								if($(this).text() == selectedAppSec+"석" ){
+									$(this).prop('selected', 'selected');
+								}
+							});
+							
+						// 구역 설정 미완료 요소이면 첫번째 option 띄워주기
+						}else{
+							$('#seatSecSelect').find('option:first').prop('selected', 'selected');
+						}
 					// 클릭된 상태	
 					}else {
 						$(this).attr('stroke', '#ffffff');
@@ -745,29 +812,122 @@ $(document).ready(function(){
 		
 		// 셀렉트 박스 그려주기
 		var select = $('<select name="selectedSecName">')
-		select.append('<option selected="selected">구역 선택</option>');
-		$('.seatInfoName').each(function(){
+		var isFirstOption = true;
+		$('.seatInfoInput').each(function(){
 			var secName = $(this).find('.tempSecName').val(); // 좌석정보란에서 입력한 구역명
-			var secPrice = $(this).find('.tempSecPrice').val(); // 가격정보
+			var secPay = $(this).find('.tempSecPay').val(); // 가격정보
 			
 			if(secName){
-				select.append($('<option>'+secName+'석</option>'));
+				var option = $('<option>'+secName+'석</option>');
+				// 첫 option 태그 추가인 경우
+				if(isFirstOption){
+					// selected 속성 추가
+					option.prop('selected', 'selected');
+					isFirstOption = false;
+				}
+				// option 추가
+				select.append(option);
+				
+				if(secPay == ''){
+					secPay = 0;
+				}
+				// 구역명 - 좌석 정보 리스트에 넣어주기
+				secNamePay.push({"secName":secName, "secPay":secPay});
 			}
 		});
+		if(select.find('option').length == 0) {// 아무 <option>도 추가되지 않았을 때
+			select.append('<option selected="selected">구역을 입력하세요</option>');
+		}
+		
+		console.log("초기 json");
+		console.log(secNamePay);
+		console.log("--------");
 		$('#seatSecSelect td').html('');
 		$('#seatSecSelect td').append(select);
-		$('#seatSecSelect td').append($('<button type="button" class="setSecBtn">구역 설정</button>'));
+		$('#seatSecSelect td').append($('<button type="button" id="setSecBtn">구역 설정</button>'));
 	}
 	
 	//' 구역 설정' 버튼 클릭 시
 	$('#seatSecSelect').on('click','#setSecBtn', function(){
-			var clickedSec = $('#seatHall').find('clicked');
-			var oriSec = clickedSec.removeClass('clicked').attr('class');
-			console.log(originSec);
-			var appSec = $('input[name="selectedSecName"]').val();
+			// 선택한 섹션 정보
+			var clickedSec = $('#seatHall').find('.clicked');
+			console.log(clickedSec);
+			var oriSec = clickedSec.attr('class').split(' ')[0];
+			console.log(oriSec);
 			
+			// 부여할 이름
+			var appSec = $('select[name="selectedSecName"]').val();
+			appSec = appSec.split('석')[0];
+			console.log(appSec);
+			
+			// 구역 가격
+			var secPay = 0;
+			// 선택한 구역명에 해당하는 가격 찾기
+			secNamePay.forEach(function(secInfo){
+				if (secInfo.secName == appSec){ 
+					secPay = secInfo.secPay;
+				} 
+			});
+			// 화폐단위 (,) 로 구분되어 있는 경우 콤마 제거
+			if(secPay != 0) secPay = secPay.split(',').join('');
+			console.log(secPay);
+			
+			if(!clickedSec.hasClass('completeSet')){
+				// 구역 설정이 완료된 것들 모아두는 배열에 추가
+				var setSec = {"oriSec" : oriSec, "appSec": appSec, "secPay":secPay}
+				completeSetSec.push(setSec);
+				
+				// 선택한 섹션 태그에 완료되었다는 class 명 추가
+				clickedSec.addClass('completeSet');
+			}else{
+				// 기존 배열에서 원본 구역 이름과 일치하는 요소 찾아서 값 바꿔주기
+				completeSetSec.forEach(function(setSec){
+					if(setSec.oriSec == oriSec){
+						setSec.appSec = appSec;
+						setSec.secPay = secPay;
+					}
+				});
+			}
+			
+			// 구역 지정 완료하였으므로 색상 변경
+			clickedSec.attr('fill', '#1e88e5');
+			// 테두리 모두 초기화
+			clickedSec.attr('stroke', '#ffffff');
+			clickedSec.attr('stroke-width', 0);
+			clickedSec.removeClass('clicked');
+			// 셀렉 박스 숨김
+			$('#seatSecSelect').hide();
+			
+			console.log(clickedSec);
+			console.log(completeSetSec);
+			
+			// 서버에 넘길 좌석 정보 세팅
+			addSetSecInput();
 	});
 	
+	// 서버에 넘길 좌석 정보 
+	function addSetSecInput(){
+		// 초기화
+		$('#seatDiv').find('input[name^=seatSecList]').remove();
+		
+		for(var i=0; i<completeSetSec.length; i++){
+			var inputOriSec = $('<input type="hidden">');
+			inputOriSec.attr('name', 'seatSecList['+i+'].oriSecName');
+			inputOriSec.attr('value', completeSetSec[i].oriSec);
+			
+			var inputAppSec = $('<input type="hidden">');
+			inputAppSec.attr('name', 'seatSecList['+i+'].appSec');
+			inputAppSec.attr('value', completeSetSec[i].appSec);
+			
+			var inputSecPay = $('<input type="hidden">');
+			inputSecPay.attr('name', 'seatSecList['+i+'].secPay');
+			inputSecPay.attr('value', completeSetSec[i].secPay);
+			
+			$('#seatDiv').append(inputOriSec);
+			$('#seatDiv').append(inputAppSec);
+			$('#seatDiv').append(inputSecPay);
+		}
+	}
 	
 	// 공연 시간 '일괄등록' 버튼 클릭 시
 	$('#registTimeForm input[type="checkbox"]').on('click', function(){
@@ -1175,6 +1335,10 @@ function setComma(inNum){
 	<tr class="seatInfo">
 		<th>좌석정보: </th>
 		<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
+	</tr>
+	<tr>
+		<td colspan="2">* 좌석정보를 추가, 삭제하거나 좌석명을 변경하는 경우, <br>
+			&nbsp;좌석 구간 설정이 초기화 됩니다.</td>
 	</tr>
 	<tr id="seatHall">
 		<th rowspan=2 valign="top">좌석구간: </th>

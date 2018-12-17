@@ -341,7 +341,7 @@ $(document).ready(function(){
 		$('#themeModal').fi
 		nd('.modal-body').html('');
 		// 선택한 테마목록들도 함께 초기화
-		$('#themeSelBtn').next().themeTextList.html('');
+		$('#themeSelBtn').next().html('');
 		
 	});
 	
