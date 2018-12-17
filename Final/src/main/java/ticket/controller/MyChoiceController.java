@@ -21,28 +21,7 @@ public class MyChoiceController {
 	
 	@Autowired
 	private PreferTService preferGService;
-	
-	@RequestMapping(value="/mychoice/main" , method = RequestMethod.GET)
-	public void list(int userIdx) {
-		
-		myChoiceService.choiceList(userIdx);
-		
-//		preferAService.preferAList(userIdx);
-		
-//		preferGService.preferGList(userIdx);
-		
-		// 전체 공연에서 추천 공연 리스트 뽑기.....
-		
-	}
-	
 
-	@RequestMapping(value="/mychoice/choice" , method = RequestMethod.POST)
-	public void choice(
-//			공연
-			) {
-		
-		myChoiceService.choice();
-	}
 	
 
 	@RequestMapping(value="/mychoice/cancel", method = RequestMethod.GET)

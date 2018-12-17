@@ -16,7 +16,7 @@ public interface MyChoiceDao {
 	 * @Method설명: 찜 추가하기
 	 * @작성자 : 홍나영
 	 */
-	public void insert();
+	public void insert(MyChoice myChoice);
 	
 	/**
 	 * @Method설명: 찜 지우기

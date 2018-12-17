@@ -8,6 +8,14 @@ public class PreferTheme {
 	private int userIdx;
 	private int themeIdx;
 	private Date createDate;
+	private String themeName; // DB다르게 추가 !
+	
+	public String getThemeName() {
+		return themeName;
+	}
+	public void setThemeName(String themeName) {
+		this.themeName = themeName;
+	}
 	public int getPreThemeIdx() {
 		return preThemeIdx;
 	}
@@ -35,7 +43,7 @@ public class PreferTheme {
 	@Override
 	public String toString() {
 		return "PreferTheme [preThemeIdx=" + preThemeIdx + ", userIdx=" + userIdx + ", themeIdx=" + themeIdx
-				+ ", createDate=" + createDate + "]";
+				+ ", createDate=" + createDate + ", themeName=" + themeName + "]";
 	}
 	
 	

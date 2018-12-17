@@ -22,6 +22,7 @@ import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
 import ticket.dto.Theme;
 import ticket.dto.User;
+import ticket.service.face.MyChoiceService;
 import ticket.service.face.PreferAService;
 import ticket.service.face.PreferTService;
 import ticket.service.face.UserService;
@@ -38,6 +39,8 @@ public class UserController {
 	private PreferTService preferTService;
 	@Autowired
 	private PreferAService preferAService;
+	@Autowired
+	private MyChoiceService myChoiceService;
 	
 	 
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
@@ -135,7 +138,7 @@ public class UserController {
 		userService.loginCheck(user, session) ;
 			
 		
-		return "/ticket/ticketmain";
+		return "redirect:/ticket/ticketmain";
 	}
 
 
@@ -145,15 +148,34 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return null; //메인으로가게끔 처리
+		return "redirect:/ticket/ticketmain";
 	}
+	
+	@RequestMapping(value ="/user/pwcheck", method= RequestMethod.GET)
+	public void pwCheck(
+			User user
+			, HttpSession session
+			) {
+		logger.info("정보수정시 비밀번호 체크 폼");
+		
+		user = (User)session.getAttribute("loginUser");
+		
+		logger.info("비밀번호 들어갔는지 체크? : "+ user.getPassword());
+		
+		// 비밀번호 체크
+//		userService.checkPw(user);
+		
+		
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/user/update", method = RequestMethod.GET)
 	public void update(User user) {
 		logger.info("정보 수정 폼 ");
 		
-		// 비밀번호 체크
-		userService.checkPw(user);
+	
 		
 		// 기본 유저정보 얻어오기
 		userService.getUser(user);
@@ -171,24 +193,41 @@ public class UserController {
 		
 	}
 	
+	
+	
+	
+	
+	
 	@RequestMapping(value="/mypage/myticket", method= RequestMethod.GET)
-	public void mypageBook(Model model
+	public String mypageBook(Model model
 				,User user
 				,HttpSession session
 			) {
 		logger.info("마이페이지 메인");
 		user =(User)session.getAttribute("loginUser");
 		logger.info(""+user);
-		
+
+		// 세션 존재 확인
+		if(user.getEmail() ==null) {
+			// 세션 없으면 로그인 페이지로 보내기
+			return "redirect:/user/login";
+		}
+		return null;
 		
 	}
 	
 	@RequestMapping(value="/mypage/mychoice", method=RequestMethod.GET)
-	public void mychoice(
+	public String mychoice(
 			Model model, 
 			HttpSession session ) {
 		User user = (User)session.getAttribute("loginUser");
 		int userIdx = user.getUserIdx();
+		
+		// 세션 존재 확인
+		if(user.getEmail() ==null) {
+			// 세션 없으면 로그인 페이지로 보내기
+			return "redirect:/user/login";
+		}
 		
 		// 유저가 선택한 아티스트 불러오기 
 		List<Artist> aList = preferAService.choiceArtistList(userIdx);
@@ -196,17 +235,34 @@ public class UserController {
 		logger.info("유저가 선택한 아티스트"+aList);
 		
 		// 유저가 찜해논 공연 불러오기
-		List<MyChoice> pfmList = userService.choicePfmList(userIdx);
+		List<MyChoice> pfmList = myChoiceService.choicePfmList(userIdx);
 		logger.info("유저가 찜 해놓은 공연 : " +pfmList );
 		model.addAttribute("pfmList",pfmList);
 		
 		// 유저가 선택한 테마 리스트 불러오기
 		List<PreferTheme> ptList = preferTService.choiceList(userIdx);
+		model.addAttribute("ptList", ptList);
+		
 		
 		// 테마에 맞는 추천공연 리스트 불러오기
 		List<Performance> recomList = userService.recommendPfm(ptList);
+		logger.info("선호 테마에 대한 공연추천"+recomList);
+		model.addAttribute("recomList", recomList);
 		
-		// 유저가 선택한 테마 불러오기 -> 텍스트
+		return null;
+		
+	}
+	
+	@RequestMapping(value ="/mypage/pfmchoice", method=RequestMethod.POST)
+	public String pfmchoice(
+			int pfmIdx 
+			, HttpSession session 
+			) {
+		User user = (User)session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
+		
+		myChoiceService.choice(userIdx, pfmIdx);
+		return "redirect:/mypage/mychoice";
 		
 	}
 	@RequestMapping(value="/mypage/myinq", method= RequestMethod.GET)
