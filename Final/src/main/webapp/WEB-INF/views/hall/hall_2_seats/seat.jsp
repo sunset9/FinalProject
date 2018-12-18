@@ -107,7 +107,7 @@ div.seatCharts-cell {
                      var $cart = $('#selected-seats'), $counter = $('#counter'), $total = $('#total'), sc = $('#seat-map')
                            .seatCharts(
                                  {
-									map : [${seatMap.seats}],
+									map : [${seatMap.seats }],
                                     seats : {
                                        s : {
                                           price : ${seatMap.pay}, //좌석 가격

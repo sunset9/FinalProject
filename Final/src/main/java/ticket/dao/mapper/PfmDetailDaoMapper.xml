@@ -38,7 +38,9 @@
 	
 	<select id="selectPfmInfo" parameterType="ticket.dto.Performance" resultType="ticket.dto.Performance">
 		SELECT
-			name
+			pfm_idx as pfmIdx
+			, hall_idx as hallIdx
+			, name
 			, genre_idx as genreIdx
 			, pfm_start as pfmStart
 			, pfm_end as pfmEnd

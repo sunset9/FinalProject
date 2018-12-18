@@ -23,12 +23,17 @@ $(document).ready(function() {
 	$('#stepInfo').hide();
 	$('#prevBtn').hide();
 	
+	console.log(${param.pfmIdx });
+	console.log(${param.hallIdx });
 	var pfmSeatSection = new Array();
 	//창띄울때 섹션 정보 가져오기
 	$.ajax({
 		type:"get",
 		url:"/ticket/seatSection",
-		data:{},
+		data:{
+			"pfmIdx":${param.pfmIdx },
+			  "hallIdx":${param.hallIdx }
+			  },
 		async: false,
 		dataType:"html",
 		success:function(res){
@@ -48,6 +53,7 @@ $(document).ready(function() {
 		  var secName = $(this).attr("class");
 		  var pay = $(this).data("pay");
 		  var appName = $(this).data("appName");
+		  var oriSecIdx = $(this).data("secIdx");
 		  
 			$.ajax({
 				
@@ -56,7 +62,9 @@ $(document).ready(function() {
 				data:{"color":color,
 					"secName":secName[0],
 					"pay":pay,
-					"appName":appName
+					"appName":appName,
+					"hallIdx":${param.hallIdx},
+					"oriSecIdx":oriSecIdx
 					},
 				dataType:"html",
 				success:function(res){
@@ -150,13 +158,16 @@ $(document).ready(function() {
 		  $.ajax({
 			  type:"POST",
 			  url:"/ticket/seatSection",
-			  data:{},
+			  data:{
+				  "hallIdx":${param.hallIdx},
+				  "pfmIdx":${param.pfmIdx}
+		  },
 			  dataType:"json",
 			  success:function(res){
 				  pfmSeatSection = res.hashMap.pfmSeatSection;
 				  
 				  //정해진 구역 랜덤으로 색 칠해주기 위해 선언한 color 배열
-				  var color = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D','navy'];
+				  var color = ['#1E88E5','#3E4982','#DEB069','#FFE561','#A0B7E3','#7EB2B3'];
 				  
 				  var json = { };
 				  var secName; 

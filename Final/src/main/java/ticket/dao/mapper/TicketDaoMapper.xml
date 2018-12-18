@@ -67,12 +67,13 @@
 	    pfm_idx = #{pfmIdx}
 </select>
 
+
 <select id="selectCntSectionByPfmIdx" parameterType="ticket.dto.Performance" resultType="String">
 	Select DISTINCT app_sec from seatsection
 </select>
 
-<select id ="selectSeatsByHallIdx" parameterType="ticket.dto.Hall" resultMap="seatMap">
-	select * from seat where hall_idx = #{hallIdx}
+<select id ="selectSeatsByHallIdx" parameterType="java.util.Map" resultMap="seatMap">
+	select * from seat where hall_idx = #{hall.hallIdx} AND ori_sec_idx = #{oriSecIdx} 
 </select>
 
 <select id="selectMaxRow" parameterType="int" resultType="int">
