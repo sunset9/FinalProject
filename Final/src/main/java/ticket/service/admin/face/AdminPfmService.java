@@ -43,7 +43,7 @@ public interface AdminPfmService {
 	 * @Method설명: 메인 배너 리스트 불러오기
 	 * @작성자: 김지은
 	 */
-	public List getMBannerList();
+	public List<MainBanner> getMBannerList();
 
 	/**
 	 * @최종수정일: 2018.12.05

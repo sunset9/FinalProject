@@ -30,6 +30,7 @@ import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
+import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmBookinfo;
 import ticket.dto.PfmDateByTime;
@@ -607,10 +608,16 @@ public class AdminPfmController {
 	 * @Method설명: 메인 배너 리스트 불러오기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/mBannerList", method = RequestMethod.GET)
-	public void mBannerList() {
-		// logger.info("PfmController의 mainBannerList() 호출됨");
+	@RequestMapping(value = "/admin/mainbannerlist", method = RequestMethod.GET)
+	public String mBannerList(Model model) {
+		logger.info("PfmController의 mainBannerList() 호출됨");
 		// List mBannerList = pService.getMBannerList
+		List<MainBanner> mBannerList = pService.getMBannerList();
+		logger.info("메인 배너 리스트 확인 : "+mBannerList.toString());
+		
+		model.addAttribute("mBannerList", mBannerList);
+		
+		return "admin/pfm/mainbannerlist";
 	}
 
 	/**
@@ -667,8 +674,8 @@ public class AdminPfmController {
 	 * @Method설명: 탭 배너 목록 불러오기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/tBannerList", method = RequestMethod.GET)
-	public void tBannerList() {
+	@RequestMapping(value = "/admin/tabBannerList", method = RequestMethod.GET)
+	public String tBannerList() {
 
 		// 장르가 New 인 탭 배너 리스트 불러오기
 		// **그러면 장르에 New 넣어도 되는지??
@@ -681,6 +688,8 @@ public class AdminPfmController {
 		// List muTabBanner = pService.getMuTabBanner()
 
 		// 뷰에 전달
+		
+		return "admin/pfm/tabBannerList";
 	}
 
 	/**
