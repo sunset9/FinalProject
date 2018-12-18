@@ -136,7 +136,6 @@ public class UserController {
 	
 		// 아이디와 비밀번호 확인, 세션 처리
 		userService.loginCheck(user, session) ;
-			
 		
 		return "redirect:/ticket/ticketmain";
 	}

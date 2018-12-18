@@ -34,25 +34,31 @@
 	</select>
 
 	<select id="selectBypfmIdx" resultType="ticket.dto.Poster">
-		SELECT c.pfm_idx pfmIdx,
+		SELECT c.pfm_idx pfmIdx,f.name name,
 		p.origin_name originName ,p.stored_name storedName
 		FROM category_con c
-		,poster_info p
+		,poster_info p,
+		performance f
 		WHERE p.pfm_idx=c.pfm_idx
+		 AND p.pfm_idx=f.pfm_idx
 	</select>
 	<select id="selectBypfmIdxMu" resultType="ticket.dto.Poster">
-		SELECT c.pfm_idx pfmIdx,
+		SELECT c.pfm_idx pfmIdx,f.name name,
 		p.origin_name originName ,p.stored_name storedName
 		FROM category_mu c
-		,poster_info p
-		WHERE p.pfm_idx=c.pfm_idx		
+		,poster_info p,
+		performance f
+		WHERE p.pfm_idx=c.pfm_idx
+		 AND p.pfm_idx=f.pfm_idx		
 	</select>
 	<select id="selectBypfmIdxFam" resultType="ticket.dto.Poster">
-		SELECT c.pfm_idx pfmIdx,
+		SELECT c.pfm_idx pfmIdx,f.name name,
 		p.origin_name originName ,p.stored_name storedName
 		FROM category_fam c
-		,poster_info p
-		WHERE p.pfm_idx=c.pfm_idx		
+		,poster_info p,
+		performance f
+		WHERE p.pfm_idx=c.pfm_idx
+		 AND p.pfm_idx=f.pfm_idx		
 	</select>
 
 	<select id="selectPosterByName" parameterType="String"

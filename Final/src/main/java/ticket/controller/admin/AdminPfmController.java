@@ -278,7 +278,7 @@ public class AdminPfmController {
 
 		List<Poster> posterList = pService.getListCon();// selectBypfmIdx();
 		int totalCnt = pService.getModalListConCnt();
-		Paging paging = new Paging(totalCnt, curPage, 4, 5);
+		Paging paging = new Paging(totalCnt, curPage, 6, 5);
 		List<Poster> modalList = pService.getModalListCon(paging);
 		Gson jsonParser = new Gson();
 		
@@ -303,7 +303,7 @@ public class AdminPfmController {
 	public @ResponseBody HashMap ajaxCategoryCon(@RequestParam(defaultValue = "1") int curPage) {
 		logger.info(curPage + "");
 		int totalCnt = pService.getModalListConCnt();
-		Paging paging = new Paging(totalCnt, curPage, 4, 5);
+		Paging paging = new Paging(totalCnt, curPage, 6, 5);
 		List<Poster> modalList = pService.getModalListCon(paging);
 //		Gson jsonParser = new Gson();
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -369,8 +369,7 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * 2018.12.10
-	 * 
+	 * @최종수정일:2018.12.10
 	 * @Method설명: 카테고리 배너 - 뮤지컬&공연 배너 등록 하기
 	 * @작성자: 박주희
 	 */
@@ -395,7 +394,7 @@ public class AdminPfmController {
 
 	/**
 	 * @최종수정일: 2018.12.11
-	 * @Method설명: ajax 통신용 뮤지컬 배너 (카테고리)
+	 * @Method설명: ajax 통신용(페이징) 뮤지컬 배너 (카테고리)
 	 * @작성자:박주희
 	 */
 	@RequestMapping(value = "/pagingcatemu", method = RequestMethod.GET)
@@ -449,6 +448,11 @@ public class AdminPfmController {
 		return "redirect:/admin/registcatemu";
 	}
 
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명:카테고리 배너중 뮤지컬 배너 검색
+	 * @작성자:박주희
+	 */
 	@RequestMapping(value = "/searchpostermu", method = RequestMethod.GET)
 	public @ResponseBody List<Poster> searchPosterMu(@RequestParam String searchPoster) {
 		return pService.getSearchListForMu(searchPoster);
@@ -474,7 +478,7 @@ public class AdminPfmController {
 	 * @Method설명: 카테고리 배너 - 가족&아동 배너 등록 하기
 	 * @작성자: 박주희
 	 */
-	@RequestMapping(value = "/admin/registcateFam", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/registcatefam", method = RequestMethod.GET)
 	public String registerCategoryFam(Model model, @RequestParam(defaultValue = "1") int curPage) {
 		List<Poster> posterList = pService.getListFam();// selectBypfmIdx();
 		int totalCnt = pService.getModalListFamCnt();
@@ -496,7 +500,7 @@ public class AdminPfmController {
 
 	/**
 	 * @최종수정일: 2018.12.11
-	 * @Method설명:Ajax 통신 카테고리 가족
+	 * @Method설명:Ajax 통신(페이징) 카테고리 가족
 	 * @작성자:박주희
 	 */
 	@RequestMapping(value = "/pagingcatefam", method = RequestMethod.GET)
@@ -515,6 +519,11 @@ public class AdminPfmController {
 		return map;
 	}
 
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명:카테고리 배너 중 가족&아동 배너 등록
+	 * @작성자:박주희
+	 */
 	@RequestMapping(value = "/admin/registcatefam", method = RequestMethod.POST)
 	public String registerCategoryFam(@RequestParam(value = "pfmIdx") List<String> pfmIdx, Model model) {
 		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
@@ -525,6 +534,11 @@ public class AdminPfmController {
 		return "redirect:/admin/registcatefam";
 	}
 
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명:카테고리 배너 중 가족&아동 배너 삭제 
+	 * @작성자:박주희
+	 */
 	@RequestMapping(value = "/admin/deletecatefam/{pfmIdx}", method = RequestMethod.GET)
 	public String deletecateFam(@PathVariable int pfmIdx) {
 
@@ -536,6 +550,11 @@ public class AdminPfmController {
 		return "redirect:/admin/registcatemu";
 	}
 
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 카테고리 배너 중 가족&아동 배너 검색 결과 
+	 * @작성자:박주희
+	 */
 	@RequestMapping(value = "/searchposterfam", method = RequestMethod.GET)
 	public @ResponseBody List<Poster> searchPosterFam(@RequestParam String searchPoster) {
 		return pService.getSearchListForFam(searchPoster);
