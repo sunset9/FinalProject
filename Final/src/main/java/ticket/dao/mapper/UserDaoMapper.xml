@@ -188,7 +188,36 @@
   	WHERE user_idx= #{userIdx }
   </select>
   
+ <update id="updateNick" parameterType="ticket.dto.User">
+ 	UPDATE  userinfo 
+	SET nick = #{nick }
+	WHERE user_idx= #{userIdx }
+ </update>
+  
 
+ <update id="updatePass" parameterType="ticket.dto.User">
+ 	UPDATE  userinfo 
+	SET password = #{password }
+	WHERE user_idx= #{userIdx }
+ </update>
+ 
+  <update id="updatePhone" parameterType="ticket.dto.User">
+ 	UPDATE  userinfo 
+	SET phone = #{phone }
+	WHERE user_idx= #{userIdx }
+ </update>
+ 
+  <update id="updateAddr" parameterType="ticket.dto.User">
+ 	UPDATE  userinfo 
+	SET 
+		postcode = #{postcode }
+		,addr = #{addr }
+		
+		<if test="addrDetail != null">
+		,addr_detail = #{addrDetail }
+		</if>
+	WHERE user_idx= #{userIdx }
+ </update>
 
   </mapper>
   

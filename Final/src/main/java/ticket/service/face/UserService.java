@@ -53,12 +53,32 @@ public interface UserService {
 	public User getUser(int userIdx);
 	
 	/**
-	 * @Method설명: 유저 정보 수정
+	 * @Method설명: 유저 닉네임 정보 수정
 	 * @작성자 : 홍나영
 	 */
-	public void update(User user);
+	public void updateNick(User user);
 	
-
+	
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 유저 비밀번호 정보 수정
+	 * @작성자:홍나영
+	 */
+	public void updatePass(User user);
+	
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 유저 비밀번호 정보 수정
+	 * @작성자:홍나영
+	 */
+	public void updatePhone(User user);
+	
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 유저 비밀번호 정보 수정
+	 * @작성자:홍나영
+	 */
+	public void updateAddr (User user);
 	
 	/**
 	 * @최종수정일: 2018.12.14
