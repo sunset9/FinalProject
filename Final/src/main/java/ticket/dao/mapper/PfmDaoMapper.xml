@@ -345,4 +345,58 @@
 		<include refid="ByPfmIdx" />
 	</update>
 	
+	<insert id="insertSeatSection" parameterType="ticket.dto.SeatSection">
+		<selectKey keyProperty="oriSecIdx" resultType="int" order="BEFORE">
+			SELECT ori_sec_idx 
+			FROM originsection
+			WHERE sec_name = #{oriSecName }
+		</selectKey>
+		
+		INSERT INTO seatsection(sec_idx, hall_idx, pfm_idx, ori_sec_idx, app_sec, sec_pay)
+		VALUES(seatsection_seq.nextval, #{hallIdx }, #{pfmIdx }, #{oriSecIdx }, #{appSec }, #{secPay })
+	</insert>
+	
+	<select id="selectSeatSectionByPfmIdx" parameterType="ticket.dto.Performance"
+		resultType="ticket.dto.SeatSection">
+		SELECT 
+			ss.sec_idx secIdx
+			, ss.hall_idx hallIdx
+			, ss.pfm_idx pfmIdx
+			, ss.ori_sec_idx oriSecIdx
+			, ss.app_sec appSec
+			, ss.sec_pay secPay
+			, ss.create_date createDate
+            , os.sec_name oriSecName
+		FROM seatsection ss
+        LEFT JOIN originsection os
+        ON ss.ori_sec_idx = os.ori_sec_idx
+		<include refid="ByPfmIdx" />	
+	</select>
+	
+	<delete id="deleteSeatSec" parameterType="int">
+		DELETE seatsection 
+		<include refid="ByPfmIdx" />
+	</delete>
+	
+	<delete id="deletePoster" parameterType="int">
+		DELETE poster_info 
+		<include refid="ByPfmIdx" />
+	</delete>
+	
+	<delete id="deletePfmBookinfo" parameterType="int">
+		DELETE pfm_bookinfo 
+		<include refid="ByPfmIdx" />
+	</delete>
+	
+	<delete id="deletePfmDetail" parameterType="int">
+		DELETE pfm_detail 
+		<include refid="ByPfmIdx" />
+	</delete>
+	
+	<delete id="deletePfm" parameterType="int">
+		DELETE performance 
+		<include refid="ByPfmIdx" />
+	</delete>
+	
+	
 </mapper>

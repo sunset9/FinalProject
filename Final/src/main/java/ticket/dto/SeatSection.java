@@ -11,6 +11,7 @@ public class SeatSection {
 	private String appSec;
 	private int secPay;
 	private String oriSecName; //원본 구역이름 
+	private Date createDate;
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -21,7 +22,6 @@ public class SeatSection {
 				+ oriSecIdx + ", appSec=" + appSec + ", secPay=" + secPay + ", oriSecName=" + oriSecName
 				+ ", createDate=" + createDate + "]";
 	}
-	private Date createDate;
 	
 	/**
 	 * @return the oriSecName
