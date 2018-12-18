@@ -40,6 +40,8 @@ import ticket.dto.PfmDetail;
 import ticket.dto.PfmTheme;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
+import ticket.dto.SeatSection;
+import ticket.dto.SeatSectionList;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.utils.Paging;
@@ -154,8 +156,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
-			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
+			, CastList castList, SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList
+			, String pfmDetailContents, String pfmBookinfoContents) {
 		int pfmIdx = 0;
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
@@ -192,6 +195,18 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			}
 		}
 
+		// 좌석 정보 등록
+		if(seatSecList.getSeatSecList() != null) {
+			for(SeatSection seatSec : seatSecList.getSeatSecList()) {
+				if(seatSec.getOriSecName() != "") {
+					// 공연 idx 지정
+					seatSec.setPfmIdx(pfmIdx);
+					seatSec.setHallIdx(pfm.getHallIdx());
+					pDao.insertSeatSection(seatSec);
+				}
+			}
+		}
+		
 		// 공연 일정들(날짜, 시간) 등록
 		if (pfmDbtList.getPfmDbtList() != null) {
 			for (PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
@@ -573,7 +588,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void editPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
-			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
+			SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
 		int pfmIdx = pfm.getPfmIdx();
 		// 공연 기본 정보 수정
 		pDao.updatePfm(pfm);
@@ -609,6 +624,20 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
+		
+		// 좌석 정보 수정
+		if(seatSecList.getSeatSecList() != null) {
+			pDao.deleteSeatSec(pfmIdx); // 이전 좌석 정보 모두 삭제
+			for(SeatSection seatSec : seatSecList.getSeatSecList()) {
+				if(seatSec.getOriSecName() != "") {
+					// 공연 idx 지정
+					seatSec.setPfmIdx(pfmIdx);
+					seatSec.setHallIdx(pfm.getHallIdx());
+					pDao.insertSeatSection(seatSec);
+				}
+			}
+		}
+		
 		// 공연 일정들(날짜, 시간) 등록
 		if (pfmDbtList.getPfmDbtList() != null) {
 			pDao.deletePfmDbt(pfmIdx);
@@ -637,6 +666,40 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			pDao.updatePfmBookinfo(pfmBookinfo);
 		}
 		
+	}
+
+	@Override
+	public List<SeatSection> getSeatSectionList(Performance pfm) {
+		return pDao.selectSeatSectionByPfmIdx(pfm);
+	}
+
+	@Override
+	public void deletePfm(Performance pfm) {
+		int pfmIdx = pfm.getPfmIdx();
+		
+		// 공연 예약정보 삭제
+		pDao.deletePfmBookinfo(pfmIdx);
+		
+		// 공연 상제정보 삭제
+		pDao.deletePfmDetail(pfmIdx);
+		
+		// 공연 일정 삭제
+		pDao.deletePfmDbt(pfmIdx);
+		
+		// 좌석 정보 삭제
+		pDao.deleteSeatSec(pfmIdx);
+		
+		// 출연진 목록 삭제
+		pDao.deleteCast(pfmIdx);
+		
+		// 테마 삭제
+		pDao.deletePfmTheme(pfmIdx);
+		
+		// 포스터 삭제
+		pDao.deletePoster(pfmIdx);
+		
+		// 공연 기본 정보 삭제
+		pDao.deletePfm(pfmIdx);
 	}
 
 }

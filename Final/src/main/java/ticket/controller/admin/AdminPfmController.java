@@ -38,6 +38,7 @@ import ticket.dto.PfmDetail;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.SeatSection;
+import ticket.dto.SeatSectionList;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.utils.Paging;
@@ -108,7 +109,7 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.09
+	 * @최종수정일: 2018.12.17
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
@@ -118,7 +119,7 @@ public class AdminPfmController {
 			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
-			, List<SeatSection> seatSecList
+			, SeatSectionList seatSecList // 좌석정보
 			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
 			, String pfmDetailContents // 예매상세 내용
 			, String pfmBookinfoContents // 예약 상태 내용
@@ -145,7 +146,7 @@ public class AdminPfmController {
 		logger.info(pfmBookinfoContents);
 
 		// 새 공연 등록
-		pService.registPfm(pfm, posterUpload, themeList, castList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
+		pService.registPfm(pfm, posterUpload, themeList, castList, seatSecList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
 		return "redirect:/admin/managerpfm";
 	}
 
@@ -194,6 +195,8 @@ public class AdminPfmController {
 		model.addAttribute("hallList", hallList);
 		
 		// 좌석& 가격 정보 가져오기
+		List<SeatSection> seatSecList = pService.getSeatSectionList(pfm);
+		model.addAttribute("seatSecList", new Gson().toJson(seatSecList));
 		
 		// 공연일정(날짜, 시간) 정보 가져오기
 		List<PfmDateByTime> pfmdbtList = pService.getPfmdbt(pfm);
@@ -212,7 +215,7 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.14
+	 * @최종수정일: 2018.12.17
 	 * @Method설명: 공연 정보 수정하기
 	 * @작성자: 전해진
 	 */
@@ -222,6 +225,7 @@ public class AdminPfmController {
 			, @RequestParam(name = "poster") MultipartFile posterUpload // 포스터 업로드 파일
 			, PfmThemeList themeList // 테마 리스트
 			, CastList castList // 출연진 리스트
+			, SeatSectionList seatSecList // 좌석정보
 			, PfmDateByTimeList pfmDbtList // 공연 일정 리스트
 			, String pfmDetailContents // 예매상세 내용
 			, String pfmBookinfoContents // 예약 상태 내용
@@ -236,7 +240,8 @@ public class AdminPfmController {
 		logger.info(castList.toString());
 
 		// 좌석 정보 & 가격 등록
-
+		logger.info(seatSecList.toString());
+		
 		// 공연 날짜 & 시간 등록
 		logger.info(pfmDbtList.toString());
 
@@ -247,7 +252,7 @@ public class AdminPfmController {
 		logger.info(pfmBookinfoContents);
 		
 		// 공연 수정
-		pService.editPfm(pfm, posterUpload, themeList, castList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
+		pService.editPfm(pfm, posterUpload, themeList, castList, seatSecList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
 		
 		return "redirect:/admin/managerpfm";
 	}
@@ -561,14 +566,14 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.05
+	 * @최종수정일: 2018.12.18
 	 * @Method설명: 공연 정보 삭제하기
 	 * @작성자: 전해진
 	 */
-	@RequestMapping(value = "/admin/pfm/deletePfm", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/deletePfm", method = RequestMethod.GET)
 	public String deletePfm(Performance pfm) {
-
-		return "redirect:/";
+		pService.deletePfm(pfm);
+		return "redirect:/admin/managerpfm";
 	}
 
 	/**

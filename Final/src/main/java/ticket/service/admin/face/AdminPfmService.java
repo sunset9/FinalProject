@@ -23,6 +23,8 @@ import ticket.dto.PfmDateByTimeList;
 import ticket.dto.PfmDetail;
 import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
+import ticket.dto.SeatSection;
+import ticket.dto.SeatSectionList;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
@@ -170,13 +172,12 @@ public interface AdminPfmService {
 	public List<Hall> getHallList();
 
 	/**
-	 * @param pfmBookinfoContents 
-	 * @최종수정일: 2018.12.07
+	 * @최종수정일: 2018.12.17
 	 * @Method설명: 새 공연 등록하기
 	 * @작성자: 전해진
 	 */
 	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, PfmDateByTimeList pfmDbtList
+			, CastList castList, SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList
 			, String pfmDetailContents, String pfmBookinfoContents);
 
 	/**
@@ -459,11 +460,27 @@ public interface AdminPfmService {
 	public Poster getPoster(Performance pfm);
 
 	/**
-	 * @최종수정일: 2018.12.14
+	 * @param seatSecList 
+	 * @최종수정일: 2018.12.17
 	 * @Method설명: 공연 수정하기
 	 * @작성자: 전해진
 	 */
 	public void editPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
-			PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents);
+			SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents);
+
+	/**
+	 * @param pfm 
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 특정 공연의 좌석 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<SeatSection> getSeatSectionList(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 공연 삭제하기
+	 * @작성자: 전해진
+	 */
+	public void deletePfm(Performance pfm);
 
 }

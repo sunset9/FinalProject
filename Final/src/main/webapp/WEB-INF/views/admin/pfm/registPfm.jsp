@@ -122,6 +122,16 @@
     overflow: hidden;
 }
 
+/* 구역 선택 시 */
+.clicked {
+	stroke: #222;
+	stroke-width: 25;
+}
+/* 구역 선택 완료 시 */
+.completeSet {
+	fill: #1e88e5;
+}
+
 #registStep{
 	width: 700px;
     height: 100px;
@@ -763,13 +773,9 @@ $(document).ready(function(){
 				$('#seatHall svg').on('click','path, rect',function(){
 					// 클릭안된 상태
 					if(!$(this).hasClass('clicked')){
-						// 다른 요소들의 테두리 모두 초기화
-						$('path, rect').attr('stroke', '#ffffff');
-						$('path, rect').attr('stroke-width', 0);
+						// 다른 요소들 모두 클릭 상태 해제
 						$('path, rect').removeClass('clicked');
-						// 클릭한 요소만 테두리 적용
-						$(this).attr('stroke', '#222');
-						$(this).attr('stroke-width', 25);
+						// 클릭한 요소만 clicked 클래스 부여
 						$(this).addClass('clicked');
 						
 						// 셀렉 박스 보여주기
@@ -797,8 +803,7 @@ $(document).ready(function(){
 						}
 					// 클릭된 상태	
 					}else {
-						$(this).attr('stroke', '#ffffff');
-						$(this).attr('stroke-width', 0);
+						// 클릭 상태 헤제
 						$(this).removeClass('clicked');
 						// 셀렉 박스 숨김
 						$('#seatSecSelect').hide();
@@ -889,11 +894,7 @@ $(document).ready(function(){
 				});
 			}
 			
-			// 구역 지정 완료하였으므로 색상 변경
-			clickedSec.attr('fill', '#1e88e5');
-			// 테두리 모두 초기화
-			clickedSec.attr('stroke', '#ffffff');
-			clickedSec.attr('stroke-width', 0);
+			// 클릭 상태 해제
 			clickedSec.removeClass('clicked');
 			// 셀렉 박스 숨김
 			$('#seatSecSelect').hide();

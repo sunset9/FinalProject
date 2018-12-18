@@ -16,6 +16,7 @@ import ticket.dto.PfmDateByTime;
 import ticket.dto.PfmDetail;
 import ticket.dto.PfmTheme;
 import ticket.dto.Poster;
+import ticket.dto.SeatSection;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
@@ -295,5 +296,54 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public void updatePfmBookinfo(PfmBookinfo pfmBookinfo);
+
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 구역(구역명, 가격)정보 삽입
+	 * @작성자: 전해진
+	 */
+	public void insertSeatSection(SeatSection seatSec);
+
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 특정 공연 idx 에 해당하는 구역 정보 조회
+	 * @작성자: 전해진
+	 */
+	public List<SeatSection> selectSeatSectionByPfmIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.17
+	 * @Method설명: 특정 공연 idx에 해당하는 모든 구역정보 삭제
+	 * @작성자: 전해진
+	 */
+	public void deleteSeatSec(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 특정 공연 idx에 해당하는 포스터 정보 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePoster(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 공연 예약정보 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePfmBookinfo(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 공연 상제정보 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePfmDetail(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 공연 기본 정보 삭제
+	 * @작성자: 전해진
+	 */
+	public void deletePfm(int pfmIdx);
 	
 }

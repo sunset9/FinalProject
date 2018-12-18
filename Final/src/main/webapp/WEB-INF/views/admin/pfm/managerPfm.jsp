@@ -108,6 +108,33 @@ li.pfmInfo{
 	width: 180px;
 	height: 250px;
 } 
+
+.pfmInfo .glyphicon-remove{
+	float: right;
+    position: relative;
+    display: inline;
+    left: 11px;
+    top: -18px;
+    z-index: 10	;
+}
+.cover {
+	z-index: 10;
+    background-color: #33333352;
+    height: 358px;
+    width: 230px;
+    position: absolute;
+}
+.editPfmBtn {
+    height: 35px;
+    display: block;
+    margin: 50% auto;
+    margin-bottom: 0;
+}
+.deletePfmBtn {
+    height: 35px;
+    display: block;
+    margin: 20px auto;
+}
 </style>
 
 <script>
@@ -150,6 +177,25 @@ $(document).ready(function(){
         // ajax 통신 + 그리기
         getPfmListAjax();
     });
+    
+    // 공연에 마우스 over 시 삭제 버튼 
+    $('#pfmList').on('mouseover','.pfmInfo a', function(){
+		if($(this).parent().find('.cover').length == 0){
+			var pfmIdx = $(this).attr('href').split("=")[1];
+			var cover = $('<div class="cover">');
+			var editBtn = $('<button class="editPfmBtn" onclick="location.href=\'/admin/editpfm?pfmIdx='+pfmIdx+'\'">공연 수정</button>');
+			var delBtn = $('<button class="deletePfmBtn" onclick="location.href=\'/admin/deletePfm?pfmIdx='+pfmIdx+'\'">공연 삭제</button>');
+			cover.append(editBtn);
+			cover.append(delBtn);
+			$(this).parent('.pfmInfo').prepend(cover);
+			
+		}
+    });
+    // 마우스 leave시
+    $('#pfmList').on('mouseleave','.cover', function(){
+   		$(this).remove();
+    });
+    
     
 });
 
@@ -202,6 +248,7 @@ function viewPfmList(pfmList){
 	});
 }
 
+// 무한 스크롤
 $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인식
 	let $window = $(this);
 	let scrollTop = $window.scrollTop();
@@ -216,9 +263,6 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 	    	getPfmListAjax();
     	 }
      }
-
-
-
 });
 
 </script>
