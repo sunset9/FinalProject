@@ -32,6 +32,15 @@
 		<result column="create_date" property="createDate"/>
 		<result column="poster_name" property="posterName"/>
 	</resultMap>
+	
+	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
+		<result column="pfm_start" property="pfmStart"/>
+		<result column="pfm_end" property="pfmEnd"/>
+		<result column="stored_name" property="storedName"/>
+		<result column="banner_img_str" property="bannerImgStr"/>
+		<result column="thumb_img_str" property="thumbImgStr"/>
+		<result column="hall_name" property="hallName"/>
+	</resultMap>
 
 	<select id="selectAllGenre" resultMap="Genre">
 		SELECT genre_idx, genre
@@ -309,11 +318,15 @@
 	</update>
 	
 	<update id="updatePoster" parameterType="ticket.dto.Poster">
-		UPDATE poster_info
-		SET 
-			origin_name=#{originName }
-			, stored_name=#{storedName }
-		<include refid="ByPfmIdx" />
+		MERGE INTO poster_info
+		USING DUAL ON (pfm_idx = #{pfmIdx })
+		WHEN MATCHED THEN
+			UPDATE SET 
+				origin_name=#{originName }
+				, stored_name=#{storedName }
+		WHEN NOT MATCHED THEN
+			INSERT (poster_idx , pfm_idx , origin_name , stored_name )
+			VALUES (poster_info_seq.nextval, #{pfmIdx }, #{originName }, #{storedName })
 	</update>
 	
 	<delete id="deletePfmTheme" parameterType="int">
@@ -332,17 +345,23 @@
 	</delete>
 	
 	<update id="updatePfmDetail" parameterType="ticket.dto.PfmDetail">
-		UPDATE pfm_detail
-		SET 
-			contents=#{contents }
-		<include refid="ByPfmIdx" />
+		MERGE INTO pfm_detail
+		USING DUAL ON (pfm_idx = #{pfmIdx })
+		WHEN MATCHED THEN
+			UPDATE SET contents = #{contents }
+		WHEN NOT MATCHED THEN
+			INSERT (pfm_detail_idx ,pfm_idx ,contents)
+	 		VALUES (pfm_detail_seq.nextval, #{pfmIdx }, #{contents })	
 	</update>
 	
 	<update id="updatePfmBookinfo" parameterType="ticket.dto.PfmBookinfo">
-		UPDATE pfm_bookinfo
-		SET 
-			contents=#{contents }
-		<include refid="ByPfmIdx" />
+		MERGE INTO pfm_bookinfo
+		USING DUAL ON (pfm_idx = #{pfmIdx })
+		WHEN MATCHED THEN
+			UPDATE SET contents = #{contents }
+		WHEN NOT MATCHED THEN
+			INSERT INTO (pfm_bookinfo_idx ,pfm_idx ,contents)
+		 	VALUES (pfm_bookinfo_seq.nextval, #{pfmIdx }, #{contents })
 	</update>
 	
 	<insert id="insertSeatSection" parameterType="ticket.dto.SeatSection">
@@ -398,5 +417,11 @@
 		<include refid="ByPfmIdx" />
 	</delete>
 	
-	
+	<select id="selectMainBanner" resultMap="MainBannerMap">
+		SELECT P.NAME, P.PFM_START, P.PFM_END, PI.STORED_NAME, MB.banner_img_str, MB.thumb_img_str, H.hall_name
+		FROM MAIN_BANNER MB JOIN PERFORMANCE P
+		ON MB.PFM_IDX = P.PFM_IDX JOIN POSTER_INFO PI
+		ON MB.PFM_IDX = PI.PFM_IDX JOIN HALL H
+		ON P.HALL_IDX = H.HALL_IDX
+	</select>
 </mapper>

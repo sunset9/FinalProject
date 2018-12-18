@@ -19,13 +19,13 @@
 <div class="top_menu">
 	<ul>
 		<li><a href="/admin/main">관리자</a></li>
-		<c:if test="${not login }">
-			<li><a href="/user/login">로그인</a></li>
-			<li><a href="/user/join">회원가입</a></li>
-		</c:if>
 		<c:if test="${login }">
-			<li><a href="/user/logout">로그아웃</a></li>
+		<li><a href="/user/logout">로그아웃</a></li>
 		</c:if>
+		<c:if test="${!login }">
+		<li><a href="/user/login">로그인</a></li>
+		</c:if>
+		<li><a href="/user/join">회원가입</a></li>
 		<li>고객센터</li>
 		<li>이용안내</li>
 	</ul>

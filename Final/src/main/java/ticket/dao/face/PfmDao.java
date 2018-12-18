@@ -10,6 +10,7 @@ import ticket.dto.Artist;
 import ticket.dto.Cast;
 import ticket.dto.Genre;
 import ticket.dto.Hall;
+import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmBookinfo;
 import ticket.dto.PfmDateByTime;
@@ -345,5 +346,12 @@ public interface PfmDao {
 	 * @작성자: 전해진
 	 */
 	public void deletePfm(int pfmIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 등록된 메인배너 리스트 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<MainBanner> selectMainBanner();
 	
 }

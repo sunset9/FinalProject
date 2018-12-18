@@ -86,4 +86,12 @@ public interface UserService {
 	 * @작성자:홍나영
 	 */
 	public List<Performance> recommendPfm(List<PreferTheme> ptList);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 이름이랑 연락처로 이메일 조회 하기 , 이메일만 String으로 받기
+	 * @작성자:홍나영
+	 */
+	public String findEmail(User user);
 }

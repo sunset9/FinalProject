@@ -116,6 +116,47 @@ $("#nickCheck").click(function() {
 			
 	});
 	
+	// 주소 변경 모달에서 변경 버튼 누르면 반응할 메소드
+	$('#Aconfirm').click(function() {
+		console.log('함수 실행은 되냐')
+		
+			// 서버로 넘겨서 DB 처리하기
+			$.ajax({
+				type : "POST"
+				, url : "/user/updateaddr"
+				, data : {
+					"postcode":$('#postcode').val()
+					,"addr":$('#addr').val()
+					,"addrDetail":$('#addrDetail').val()
+				} 
+				, success: function(data){
+					console.log("w주소 변경 성공");
+					$('#oriAddr').html($('#addr').val());
+					$('#addrModal').find('form')[0].reset();
+					close();
+				}
+			}); // end ajax
+			
+			
+	});
+	
+	// 우편번호 입력창 클릭하면 주소찾는 팝업창 띄움
+	$('#postcode').focus(function() {
+		DaumPostcode();
+	});
+	
+	$('#addr').focus(function() {
+		DaumPostcode();
+	});
+	
+	$('#addr').change(function() {
+		console.log($('#addr').length );
+		// 입력시 버튼 비활성화
+		if($('#addr').length <1 ){
+			$('#Aconfirm').attr("disabled", false);
+		}
+	});
+	
 	// 첫번째 비밀번호입력칸 포커스 잃을때  정규식 확인
 	$("#password").blur(function() {
 			console.log ("포커스 잃음");
@@ -217,6 +258,9 @@ function DaumPostcode() {
                document.getElementById('addr').value = fullAddr;
                 // 커서를 상세주소 필드로 이동한다.
                document.getElementById('addrDetail').focus();
+                
+                //변경 버튼 활성화
+               $('#Aconfirm').attr("disabled", false);
            }
        }).open();
 })
@@ -234,7 +278,7 @@ function DaumPostcode() {
 닉네임 :<span id="oriNick"> ${user.nick }</span> <span id ="nickCh" class = "change" data-toggle="modal" data-target="#nickModal">변경</span> <br>
 비밀번호 <span id ="passCh" class = "change" data-toggle="modal" data-target="#passModal" >변경</span><br>
 연락처 : <span id="oriPhone">${user.phone }</span><span id ="phoneCh" class = "change" data-toggle="modal" data-target="#phoneModal">변경</span><br>
-주소  : ${user.addr }<span id ="addrCh" class = "change" data-toggle="modal" data-target="#addrModal">변경</span><br>
+주소  :  <span id="oriAddr">${user.addr }</span><span id ="addrCh" class = "change" data-toggle="modal" data-target="#addrModal">변경</span><br>
 </div>
 
 </div>
@@ -333,18 +377,18 @@ function DaumPostcode() {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="addrModalLabel">닉네임 변경</h4>
+        <h4 class="modal-title" id="addrModalLabel">주소 변경</h4>
       </div>
       <div class="modal-body">
       	<form id="addrForm">
       	우편번호 : <input type="text" id ="postcode" name ="postcode"/> <button type ="button" class ="btn btn-default" onclick="DaumPostcode();">우편번호검색</button>
-      	주소 : <input type="text" id ="addr" name ="addr"/>
+      	주소 : <input type="text" id ="addr" name ="addr" />
       	상세주소 : <input type="text" id ="addrDetail" name ="addrDetail"/>
       	</form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-        <div data-toggle="tooltip" data-placement="left" title="닉네임 중복확인을 해주세요.">
+        <div data-toggle="tooltip" data-placement="left" title="주소를 입력 해주세요.">
         <button type="button" id = "Aconfirm" class="btn btn-primary"  data-dismiss="modal" disabled="disabled" >변경하기</button></div>
       </div>
     </div>
