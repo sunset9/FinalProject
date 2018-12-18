@@ -178,8 +178,6 @@ public class AdminPfmController {
 		Genre genre = new Genre();
 		genre.setGenreIdx(pfm.getGenreIdx());
 		List<Theme> thmAllList = pService.getThemeList(genre);
-//		Gson gson = new Gson();
-//		model.addAttribute("thmAllListJson", gson.toJson(thmAllList));
 		model.addAttribute("thmAllList", thmAllList);
 		
 		// 모든 관람 등급 가져오기
