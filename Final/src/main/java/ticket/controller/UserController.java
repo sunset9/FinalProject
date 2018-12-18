@@ -105,7 +105,6 @@ public class UserController {
 		user.setBirth(birth);
 		logger.info(""+ user);
 		
-		
 		// 회원 가입
 		userService.join(user);
 		int userIdx = user.getUserIdx();
@@ -149,6 +148,36 @@ public class UserController {
 		
 		return "redirect:/ticket/ticketmain";
 	}
+	
+	@RequestMapping(value = "/user/findinfo", method = RequestMethod.GET)
+	public void findEmail(HttpSession session) {
+		logger.info("이메일 , 비밀번호 찾기 폼");
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/user/findemail", method = RequestMethod.POST)
+	public String findEmailProc(User user) {
+		logger.info("이메일 찾기 처리");
+		logger.info(""+user);
+		
+		String email = userService.findEmail(user);
+		
+		logger.info(email);
+		
+		return email;
+		
+	}
+	
+	
+	@RequestMapping(value = "/user/findpass", method = RequestMethod.POST)
+	public void findPassProc(HttpSession session) {
+		logger.info("비밀번호 찾기 처리");
+		
+	}
+	
+	
 	
 	@RequestMapping(value ="/user/pwcheck", method= RequestMethod.GET)
 	public void pwCheck() {
@@ -242,7 +271,7 @@ public class UserController {
 		
 	}
 	@ResponseBody
-	@RequestMapping(value="/user/updateAddr", method = RequestMethod.POST)
+	@RequestMapping(value="/user/updateaddr", method = RequestMethod.POST)
 	public void updateAddrProc(String addr
 				,String postcode
 				,String addrDetail
@@ -255,13 +284,10 @@ public class UserController {
 		user.setAddrDetail(addrDetail);
 		
 		// 유저 정보 수정
-		userService.updatePass (user);
+		userService.updateAddr(user);
 		
 		
 	}
-	
-	
-	
 	
 	
 	@RequestMapping(value="/mypage/myticket", method= RequestMethod.GET)
