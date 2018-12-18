@@ -212,12 +212,12 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.04
+	 * 최종수정일: 2018.12.18
 	 * @Method설명: 메인 상단에서 예매 랭킹 탭 선택시 이동하는 페이지
-	 * @작성자: 배수연
+	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/ticket/ranking", method=RequestMethod.GET)
-	public void reservationranking() {
+	public void viewranking() {
 		
 	}
 	

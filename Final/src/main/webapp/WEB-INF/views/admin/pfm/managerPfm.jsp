@@ -178,7 +178,7 @@ $(document).ready(function(){
         getPfmListAjax();
     });
     
-    // 공연에 마우스 over 시 삭제 버튼 
+    // 공연에 마우스 over 시 수정,삭제 버튼 
     $('#pfmList').on('mouseover','.pfmInfo a', function(){
 		if($(this).parent().find('.cover').length == 0){
 			var pfmIdx = $(this).attr('href').split("=")[1];
