@@ -17,7 +17,7 @@
   </resultMap>
 
 	<resultMap type="ticket.dto.NoticeFile" id="noticeFile">
-		<result column="nofile_idx" property="noFileIdx"/>
+		<result column="notifile_idx" property="notiFileIdx"/>
 		<result column="stored_name" property="storedName"/>
 		<result column="origin_name" property="originName"/>
 		<result column="notice_idx" property="noticeIdx"/>
@@ -71,17 +71,17 @@
 
 
 	<insert id="insertNotiFile" parameterType="ticket.dto.NoticeFile">	
-		insert into notice_file (nofile_idx, stored_name, origin_name, notice_idx) 
+		insert into notice_file (notifile_idx, stored_name, origin_name, notice_idx) 
 		values (notice_file_seq.nextval, #{storedName }, #{originName }, #{noticeIdx })
 	</insert>
 
 
 	<select id="selectNotiFileAll" resultMap="noticeFile">
-		select * from notice_file order by nofile_idx
+		select * from notice_file order by notifile_idx
 	</select>
 
-	<select id="selectByNoFileIdx" parameterType="int" resultMap="noticeFile">
-		select * from notice_file where nofile_idx = #{noFileIdx}
+	<select id="selectByNotiFileIdx" parameterType="int" resultMap="noticeFile">
+		select * from notice_file where notifile_idx = #{notiFileIdx}
 	</select>
 
   </mapper>

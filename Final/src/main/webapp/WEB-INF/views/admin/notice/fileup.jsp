@@ -8,20 +8,15 @@
 </head>
 <body>
 
-<h1> 파일업 테스트</h1>
-
+<h1>파일업 테스트</h1>
+<hr>
 <form action="/admin/noticefileupload" method="post" enctype="multipart/form-data">
-<table>
 
-	<tr> <td>첨부파일 #1</td> <td><input type="file" id="file"></td> </tr>
-<!-- 	<tr> <td>첨부파일 #2</td> <td><input type="file" id="file2"></td> </tr> -->
-<!-- 	<tr> <td>첨부파일 #3</td> <td><input type="file" id="file3"></td> </tr> -->
-<!-- 	<tr> <td>첨부파일 #4</td> <td><input type="file" id="file4"></td> </tr> -->
-<!-- 	<tr> <td>첨부파일 #5</td> <td><input type="file" id="file5"></td> </tr> -->
-</table>
-<button>전송</button>
-
+	<label for="file">첨부파일</label>
+	<input type="file" name="file" id="file" /><br><br>
+	<button>전송</button>
 </form>
+
 
 </body>
 </html>

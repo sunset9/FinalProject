@@ -14,9 +14,10 @@
 
 <tr><th>파일</th></tr>
 
-<c:forEach items="{filelist }" var="file">
+<c:forEach items="${filelist }" var="file">
 <tr>
-	<td><a href="/file/download?noFileIdx=${file.noFileIdx }"> ${file.originName }</a></td>
+	
+	<td><a href="/admin/noticefiledownload?notiFileIdx=${file.notiFileIdx }"> ${file.originName }</a></td>
 </tr>
 
 
