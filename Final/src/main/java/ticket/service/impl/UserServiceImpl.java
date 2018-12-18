@@ -64,8 +64,24 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void update(User user) {
-		userDao.updateUser(user);
+	public void updateNick(User user) {
+		userDao.updateNick(user);
+	}
+
+	@Override
+	public void updatePass(User user) {
+		userDao.updatePass(user);
+	}
+
+	@Override
+	public void updatePhone(User user) {
+		userDao.updatePhone(user);
+	}
+	
+	
+	@Override
+	public void updateAddr(User user) {
+		userDao.updateAddr(user);
 	}
 
 	@Override
@@ -94,6 +110,10 @@ public class UserServiceImpl implements UserService{
 		
 		return pfmDao.selectPfmByPreferTheme(map);
 	}
+
+
+
+
 
 
 

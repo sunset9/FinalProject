@@ -198,18 +198,68 @@ public class UserController {
 		
 	
 	}
-
-	@RequestMapping(value="/user/update", method = RequestMethod.POST)
-	public void updateProc(User user) {
-		logger.info("정보 수정 처리 ");
+	@ResponseBody
+	@RequestMapping(value="/user/updatenick", method = RequestMethod.POST)
+	public void updateNickProc(String nick
+				, HttpSession session) {
+		logger.info("닉네임 수정 처리 ");
+		
+		User user = (User)session.getAttribute("loginUser");
+		user.setNick(nick);
 		
 		// 유저 정보 수정
-		userService.update (user);
+		userService.updateNick (user);
 		
-		// 유저 정보 얻어오기
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/user/updatepass", method = RequestMethod.POST)
+	public void updatePassProc(String password
+				, HttpSession session) {
+		logger.info("비밀번호 수정 처리 ");
+		
+		User user = (User)session.getAttribute("loginUser");
+		user.setPassword(password);
+		
+		// 유저 정보 수정
+		userService.updatePass (user);
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/user/updatephone", method = RequestMethod.POST)
+	public void updatePhoneProc(String phone
+				, HttpSession session) {
+		logger.info("전화번호 수정 처리 ");
+		
+		User user = (User)session.getAttribute("loginUser");
+		user.setPhone(phone);
+		logger.info(phone);
+		// 유저 정보 수정
+		userService.updatePhone (user);
+		
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="/user/updateAddr", method = RequestMethod.POST)
+	public void updateAddrProc(String addr
+				,String postcode
+				,String addrDetail
+				, HttpSession session) {
+		logger.info("주소 수정 처리 ");
+		
+		User user = (User)session.getAttribute("loginUser");
+		user.setAddr(addr);
+		user.setPostcode(postcode);
+		user.setAddrDetail(addrDetail);
+		
+		// 유저 정보 수정
+		userService.updatePass (user);
+		
+		
+	}
 	
 	
 	
