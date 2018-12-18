@@ -28,7 +28,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	<!-- 현재 접속자수 COUNT 18.12.17 추가 -->
+	<listener>
+    	<listener-class>ticket.utils.CountManager</listener-class>
+	</listener>
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
