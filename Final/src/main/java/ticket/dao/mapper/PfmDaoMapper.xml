@@ -32,6 +32,15 @@
 		<result column="create_date" property="createDate"/>
 		<result column="poster_name" property="posterName"/>
 	</resultMap>
+	
+	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
+		<result column="pfm_start" property="pfmStart"/>
+		<result column="pfm_end" property="pfmEnd"/>
+		<result column="stored_name" property="storedName"/>
+		<result column="banner_img_str" property="bannerImgStr"/>
+		<result column="thumb_img_str" property="thumbImgStr"/>
+		<result column="hall_name" property="hallName"/>
+	</resultMap>
 
 	<select id="selectAllGenre" resultMap="Genre">
 		SELECT genre_idx, genre
@@ -408,5 +417,11 @@
 		<include refid="ByPfmIdx" />
 	</delete>
 	
-	
+	<select id="selectMainBanner" resultMap="MainBannerMap">
+		SELECT P.NAME, P.PFM_START, P.PFM_END, PI.STORED_NAME, MB.banner_img_str, MB.thumb_img_str, H.hall_name
+		FROM MAIN_BANNER MB JOIN PERFORMANCE P
+		ON MB.PFM_IDX = P.PFM_IDX JOIN POSTER_INFO PI
+		ON MB.PFM_IDX = PI.PFM_IDX JOIN HALL H
+		ON P.HALL_IDX = H.HALL_IDX
+	</select>
 </mapper>

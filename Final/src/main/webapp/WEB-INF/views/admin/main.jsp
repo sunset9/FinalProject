@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<jsp:include page="../admin/layout/menu.jsp" />
+<div>
 <h1>관리자 홈</h1>
 <hr>
 
@@ -19,6 +14,9 @@
 
 1:1 문의 미답변 : ${unansweredInq}건<br>
 
+	
+</div>
 
+</div>
 </body>
 </html>
