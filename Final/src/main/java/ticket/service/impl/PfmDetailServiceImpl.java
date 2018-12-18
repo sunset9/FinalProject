@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ticket.dao.face.PfmDetailDao;
+import ticket.dto.Artist;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
@@ -13,6 +14,7 @@ import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
+import ticket.dto.User;
 import ticket.service.face.PfmDetailService;
 
 @Service
@@ -26,13 +28,13 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
-	public List getExpectationList(Performance pfm) {
+	public List<Expectation> getExpectationList(Performance pfm) {
 		return mDetailDao.selectExpectationList(pfm);
 	}
 
 	@Override
-	public void getInExpectation(Expectation exp) {
-		mDetailDao.insertExpectation(exp);
+	public Expectation getExpectationInsert(String exp) {
+		return mDetailDao.insertExpectation(exp);
 	}
 
 	@Override
@@ -80,11 +82,14 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 		return mDetailDao.selectPfmInfo(pfm);
 	}
 
-
-
 	@Override
 	public PfmDetail pfmDetailInfo(Performance pfm) {
 		return mDetailDao.selectPfmDetailInfo(pfm);
+	}
+
+	@Override
+	public List<Artist> getCastInfo(Performance pfm) {
+		return mDetailDao.selectCastInfo(pfm);
 	}
 	
 }

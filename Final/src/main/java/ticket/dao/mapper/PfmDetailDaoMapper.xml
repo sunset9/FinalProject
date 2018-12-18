@@ -8,13 +8,19 @@
 		<result column="pfm_idx" property="pfmIdx"/>
 	</resultMap>
 	
+	<resultMap type="ticket.dto.Artist" id="Artist">
+		<result column="artist_idx" property="artistIdx"/>
+		<result column="theme_idx" property="themeIdx"/>
+		<result column="img_uri" property="imgUri"/>	
+	</resultMap>
+	
 	<resultMap type="ticket.dto.PfmDetail" id="PfmDetail">
 		<result column="pfm_detail_idx" property="pfmDetailIdx"/>
 		<result column="pfm_idx" property="pfmIdx"/>
 		<result column="create_date" property="createDate"/>
 		<result column="contents" property="contents"/>
 	</resultMap>
-
+		
 	<select id="selectChoiceDetail" parameterType="ticket.dto.Performance" resultType="ticket.dto.Poster">
 		SELECT
 			poster_idx as posterIdx
@@ -45,6 +51,36 @@
 	<select id="selectPfmDetailInfo" parameterType="ticket.dto.Performance" resultMap="PfmDetail">
 		SELECT * FROM pfm_detail
 		WHERE pfm_idx=#{pfmIdx}
+	</select>
+	
+	<select id="selectCastInfo" parameterType="ticket.dto.Performance" resultMap="Artist">
+		SELECT
+			a.artist_idx
+		    , name
+		    , img_uri
+		FROM (
+		    SELECT artist_idx
+		    FROM cast
+		    WHERE pfm_idx=#{pfmIdx}
+		) c
+		LEFT JOIN artist a
+		    ON c.artist_idx = a.artist_idx
+	</select>
+	
+	<select id="selectExpectationList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Expectation">
+		SELECT
+		    e.exp_content as expContent
+		    , e.create_date as createDate
+		    , u.profile
+		    , u.name
+		FROM (
+		    SELECT
+		    	*
+		    FROM expectation
+		    WHERE pfm_idx=#{pfmIdx}
+		) e
+		LEFT JOIN userinfo u
+		    ON u.user_idx = e.user_idx
 	</select>
 	
 </mapper>

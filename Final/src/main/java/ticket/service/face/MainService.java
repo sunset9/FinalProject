@@ -6,6 +6,7 @@ import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.utils.Paging;
 
 public interface MainService {
 	/**
@@ -93,15 +94,30 @@ public interface MainService {
 
 	/**
 	 * 최종수정일: 2018.12.16
-	 * @Method설명: new ! 공연  리스트
+	 * @Method설명: 메인 - new 탭 공연  리스트
 	 * @작성자: 배수연
 	 */
 	public List<Poster> getnewPoster();
 
+	/**
+	 * 최종수정일: 2018.12.16
+	 * @Method설명: 메인 - 콘서트 탭 공연 리스트
+	 * @작성자: 배수연
+	 */
 	public List<Poster> getconPoster();
 
+	/**
+	 * 최종수정일: 2018.12.16
+	 * @Method설명: 메인 - 뮤지컬&공연 탭 공연 리스트
+	 * @작성자: 배수연
+	 */
 	public List<Poster> getMuPoster();
 
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 테스트 데이터
+	 * @작성자: 배수연
+	 */
 	public List<Poster> getTestList();
 
 	/**

@@ -2,6 +2,7 @@ package ticket.service.face;
 
 import java.util.List;
 
+import ticket.dto.Artist;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Performance;
@@ -9,6 +10,7 @@ import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
+import ticket.dto.User;
 
 public interface PfmDetailService {
 
@@ -31,14 +33,14 @@ public interface PfmDetailService {
 	 * @Method설명: 기대평 목록
 	 * @작성자: 배수연
 	 */
-	public List getExpectationList(Performance pfm);
+	public List<Expectation> getExpectationList(Performance pfm);
 	
 	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 기대평 작성
 	 * @작성자: 배수연
 	 */
-	public void getInExpectation(Expectation exp);
+	public Expectation getExpectationInsert(String exp);
 	
 	/**
 	 * 최종수정일: 2018.12.05
@@ -96,7 +98,18 @@ public interface PfmDetailService {
 	 */
 	public boolean getDelReviewRecomm(ReviewRecomm reRecom);
 
-
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 상세 정보 출력
+	 * @작성자: 배수연
+	 */
 	public Performance getPfmInfo(Performance pfm);
+	
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 출연진 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Artist> getCastInfo(Performance pfm);
 	
 }
