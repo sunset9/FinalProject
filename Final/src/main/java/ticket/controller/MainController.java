@@ -28,6 +28,13 @@ public class MainController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
+	@RequestMapping(value="/ticket/test")
+	public void test(Model model) {
+		logger.info("Test");
+		List<Poster> topBanList = mainService.adminChoiceBannerCon();
+		model.addAttribute("topBanList", topBanList);
+	}
+	
 	/**
 	 * 최종수정일: 2018.12.04
 	 * @Method설명: 홈페이지 접속시 첫 페이지
@@ -206,6 +213,25 @@ public class MainController {
 		} else if(array.equals("openday")) {
 			List<Performance> openPfmList = mainService.ticketOpenDayList();
 			map.put("openPfmList", openPfmList);
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/ticket/opensearch", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> openSearch(
+			String opentext
+			, String searchKind
+		) {
+		// 티켓 오픈에서 등록순, 오픈일순 정렬해주기
+		HashMap<String, Object> map = new HashMap<>();
+		
+		if(searchKind.equals("all")) {
+			// 전체 선택할 경우
+			
+		} else {
+			// 콘서트, 뮤지컬&연극, 가족&아동 선택할 경우 / 숫자 선택할 경우
+			
 		}
 		
 		return map;

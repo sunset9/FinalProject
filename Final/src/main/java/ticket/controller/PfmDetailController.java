@@ -1,5 +1,8 @@
 package ticket.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.Artist;
+import ticket.dto.Expectation;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.dto.User;
 import ticket.service.face.PfmDetailService;
 
 @Controller
@@ -19,11 +26,6 @@ public class PfmDetailController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PfmDetailController.class);
 
-	@RequestMapping(value="/ticket/test")
-	public void test() {
-		logger.info("Test");
-	}
-	
 	/**
 	 * 최종수정일: 2018.12.04
 	 * @Method설명: 공연 상세 클릭시 첫 페이지
@@ -43,10 +45,31 @@ public class PfmDetailController {
 		Performance pfmInfoList = detailService.getPfmInfo(pfm);
 		model.addAttribute("pfmInfoList", pfmInfoList);
 		
-		// 하단
+		// 상세 하단
+		//	출연진 정보 불러오기
+		List<Artist> castList = detailService.getCastInfo(pfm);
+		model.addAttribute("castList", castList);
+		
 		//	상세 정보
 		PfmDetail detailList = detailService.pfmDetailInfo(pfm);
 		model.addAttribute("detailList", detailList);
+		
+		// 기대평 리스트 출력해주기
+//		List<Expectation> expecList = detailService.getExpectationList(pfm);
+//		model.addAttribute("expecList", expecList);
+	}
+	
+	@RequestMapping(value="/pfmdetail/expectation", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> expectation(
+			String expectation
+			, Performance pfm
+		) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		// 기대평 작성
+		
+		return map;
 	}
 	
 	/**

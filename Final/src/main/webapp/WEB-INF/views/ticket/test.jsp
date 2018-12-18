@@ -1,125 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <style>
-* {
-	margin: 0;
-	padding: 0;
+.wrapper {
+	width: 100%;
+	margin: 0 auto;
 }
 
-ul, li {
+.slider {
+	list-style: none;
+	width: 100%;
+/* 	position: relative; */
+}
+
+.slider li {
+	float: left;
+	margin: 5px;
+}
+
+.controller {
 	list-style: none;
 }
 
-#slide {
-	height: 300px;
-	position: relative;
-	overflow: hidden;
-}
-
-#slide ul {
-	width: 400%;
-	height: 100%;
-	transition: 1s;
-}
-
-#slide ul:after {
-	content: "";
-	display: block;
-	clear: both;
-}
-
-#slide li {
+.controller li {
 	float: left;
-	width: 25%;
-	height: 100%;
-}
-
-#slide li:nth-child(1) {
-	background: #faa;
-}
-
-#slide li:nth-child(2) {
-	background: #ffa;
-}
-
-#slide li:nth-child(3) {
-	background: #faF;
-}
-
-#slide li:nth-child(4) {
-	background: #aaf;
-}
-
-#slide input {
-	display: none;
-}
-
-#slide label {
-	display: inline-block;
-	vertical-align: middle;
-	width: 10px;
-	height: 10px;
-	border: 2px solid #666;
-	background: #fff;
-	transition: 0.3s;
-	border-radius: 50%;
+	padding: 10px;
 	cursor: pointer;
 }
 
-#slide .pos {
-	text-align: center;
-	position: absolute;
-	bottom: 10px;
-	left: 0;
-	width: 100%;
-	text-align: center;
-}
-
-#pos1:checked ~ul{
-	margin-left: 0%;
-}
-
-#pos2:checked ~ul{
-	margin-left: -100%;
-}
-
-#pos3:checked ~ul{
-	margin-left: -200%;
-}
-
-#pos4:checked ~ul{
-	margin-left: -300%;
-}
-
-#pos1:checked ~.pos>label:nth-child(1) {
-	background: #666;
-}
-
-#pos2:checked ~.pos>label:nth-child(2) {
-	background: #666;
-}
-
-#pos3:checked ~.pos>label:nth-child(3) {
-	background: #666;
-}
-
-#pos4:checked ~.pos>label:nth-child(4) {
-	background: #666;
+.concertImg {
+	width: 200px;
+	height: 250px;
 }
 </style>
 
-<div id="slide">
-	<input type="radio" name="pos" id="pos1" checked> <input
-		type="radio" name="pos" id="pos2"> <input type="radio"
-		name="pos" id="pos3"> <input type="radio" name="pos" id="pos4">
-	<ul>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//하나의 li의 width값을 구해 놓는다.
+		var item_width = $('.slider li').outerWidth(true);
+		//맨 마지막 item을 맨 앞으로 이동시켜 놓는다.
+		$('.slider li:first').before($('.slider li:last'));
+		//늘어난 만큰 -로 위치를 설정해 준다.
+		$('.slider').css('left', -item_width + 'px');
+
+		//이전버튼 클릭시 
+		$('.prevBtn').click(function() {
+			var left_indent = parseInt($('.slider').css('left')) + item_width;
+			$('.slider').animate({
+				'left' : left_indent + 'px'
+			}, 600, function() {
+				$('.slider li:first').before($('.slider li:last'));
+				$('.slider').css('left', -item_width + 'px');
+			});
+		});
+
+		//Next Button
+		$('.nextBtn').click(function() {
+			var left_indent = parseInt($('.slider').css('left')) - item_width; //
+			$('.slider').animate({
+				'left' : left_indent + 'px'
+			}, 300, function() {
+				$('.slider li:last').after($('.slider li:first'));
+				$('.slider').css('left', -item_width + 'px');
+			});
+		});
+	});
+</script>
+
+<div class="wrapper">
+	<div class="viewport">
+		<ul class="slider">
+		<c:forEach items="${topBanList }" var="list">
+			<li>
+				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<span class="thumImg">
+					<img class="concertImg" src="/resources/image/${list.originName}" /><br>
+				</span>
+				</a>
+			</li>
+		</c:forEach>
+		</ul>
+	</div>
+	<ul class="controller">
+		<li class="prevBtn">Prev</li>
+		<li class="nextBtn">Next</li>
 	</ul>
-	<p class="pos">
-		<label for="pos1"></label> <label for="pos2"></label> <label
-			for="pos3"></label> <label for="pos4"></label>
-	</p>
 </div>

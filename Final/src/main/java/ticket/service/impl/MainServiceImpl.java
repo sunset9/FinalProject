@@ -12,6 +12,7 @@ import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.TabBanner;
 import ticket.service.face.MainService;
+import ticket.utils.Paging;
 
 @Service
 public class MainServiceImpl implements MainService {
