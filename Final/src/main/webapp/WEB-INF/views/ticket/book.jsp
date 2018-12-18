@@ -22,6 +22,7 @@
 $(document).ready(function() {
 	$('#stepInfo').hide();
 	$('#prevBtn').hide();
+	
 	var pfmSeatSection = new Array();
 	//창띄울때 섹션 정보 가져오기
 	$.ajax({
@@ -38,6 +39,7 @@ $(document).ready(function() {
 		
 		}
 	});	
+
 	
 	  //좌석 그리는 페이지띄어주기
 	  $('#selectedSeats').on('click','.section', function(){
@@ -96,7 +98,7 @@ $(document).ready(function() {
 			  if(curStep == 1){
 				  //이전단계 버튼 활성화
 				  $('#prevBtn').show();
-				  
+				  $('#bookStep_2_tb').html("");
 				  getSeatInfo();
 				  
 			  } 
@@ -123,6 +125,7 @@ $(document).ready(function() {
 				} else if(curStep == 3){ // 현재 STEP4 단계라면 ( =전환될 화면이 3단계)
 					// '다음 단계' 버튼 활성화
 					$('#nextBtn').show();
+					$('#bookStep_2_tb').html("");
 					getSeatInfo();
 				}
 		  
@@ -338,6 +341,8 @@ function getSeatInfo(){
 	<button class="checkout-button">Checkout &raquo;</button>
 	
 	<div id="legend"></div>
+	
+	<div onclick="loadseatSection()">좌석도 전체보기</div>
 </div>
 
 <!-- STEP 2. 가격/수령방법 -->

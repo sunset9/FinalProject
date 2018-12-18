@@ -82,9 +82,6 @@
   
   $(document).ready(function () {
 	  
-	
-	  
-	  
 	  //예매하기버튼 클릭
 	  $('#bookBtn').click(function() {
 		  
@@ -99,20 +96,8 @@
 				  alert('공연날짜,공연시간을 제대로 선택해주세요');
 				  return;
 			  }
-			  
-// 			  var bookWindow = window.open("about:_blank");
-			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time;
+			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+2;
 			  window.open(path, "_blank", "width=900,height=700");
-// 			  bookWindow.location.href = path;
-			  
-// 			  $('#myModal').modal("show").on('hide', function() {
-// 				  $('#myModal').modal('show')
-// 			 });
-			  
-			  
-// 			  $("#dates").text(selectDate+' '+time);
-	
-	
 		});
 
 
