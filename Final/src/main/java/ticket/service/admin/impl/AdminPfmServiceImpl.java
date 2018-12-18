@@ -66,8 +66,8 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	HallFileDao hallFileDao;
 
 	@Override
-	public List getMBannerList() {
-		return null;
+	public List<MainBanner> getMBannerList() {
+		return pDao.selectMainBanner();
 	}
 
 	@Override

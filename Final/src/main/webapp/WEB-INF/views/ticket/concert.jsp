@@ -7,6 +7,7 @@ $(document).ready(function() {
 	// 상단배너 이미지 하나씩 자동 슬라이드 해주기
 	setInterval(function() {
 		$('.topbannerimg').append($('.bannerImg').first());
+		
 	}, 2000);
 	
 	$("#all, #1, #2, #3, #4, #5").click(function() {
@@ -85,6 +86,10 @@ $(document).ready(function() {
 </script>
 
 <style>
+.topbannerimg {
+	text-align: center;
+}
+
 .container {
 	margin: 0 5% 10px 5%;
 }
@@ -98,7 +103,7 @@ $(document).ready(function() {
 .bannerImg {
 	width: 200px;
 	height: 250px;
-	margin: 5px;
+	margin: 3px;
 }
 
 .themeList {

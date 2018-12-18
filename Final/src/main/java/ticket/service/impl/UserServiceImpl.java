@@ -112,6 +112,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public String findEmail(User user) {
+		return userDao.selectEmailByNameAndPhone(user);
+	}
+
+
 
 
 

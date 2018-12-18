@@ -15,6 +15,7 @@
 		    $("#"+tab_id).addClass('current');
 		});
 		
+
 		
 		$.ajax({
 			type:"get",
@@ -31,6 +32,33 @@
 		});	
 		
 		
+
+		// 기대평 작성 버튼 클릭 시
+		$('#expecBtn').click(function() {
+			
+			
+			var expectation = $('#expectation').val();;
+			console.log(expectation);
+			
+			$.ajax({
+				url: '/pfmdetail/expectation'
+				, method: 'GET'
+				, data: {
+					"expectation": expectation
+				}
+				,dataType: 'json'
+				, success: function(d){
+					console.log("성공");
+					
+					// 성공할 경우 리스트에 출력해주기
+// 					insertExpectation(d.expectationList);
+				}
+				, error: function(e) {
+					console.log("실패");
+				}
+			});
+		});
+
 	});
 </script>
 
@@ -93,6 +121,26 @@ ul.tabs li.current{
 	display: inline-block;
 	width: 100%;
 }
+
+#castimg {
+	width: 100px;
+	height: 100px;
+	text-align: center;
+}
+
+.imgli {
+	list-style: none;
+	float: left;
+	margin: 5px;
+}
+
+.castInfo {
+	margin-bottom: 20px;
+}
+
+.tabarray {
+	display: inline-block;
+}
 </style>
 
 <div class="container">
@@ -120,11 +168,38 @@ ul.tabs li.current{
 		</ul>
 
 		<div id="tab-1" class="tab-content current">
-			${detailList.contents }
+			<h3 style="float: left;">출연진</h3><br>
+			<div class="castInfo tabarray">
+			<ul>
+			<c:forEach items="${castList }" var="list">
+				<li class="imgli">
+					<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
+					${list.name }
+				</li>
+			</c:forEach>
+			</ul>
+			</div>
+			
+			<div class="pfmInfo tabarray">
+				${detailList.contents }
+			</div>
 		</div>
 		
 		<div id="tab-2" class="tab-content">
-			2
+			<div class="expecUserInfo">
+				유저 프로필, 이름 출력해서 보여주기
+			</div>
+			
+			<div class="expectation">
+				<textarea cols="100" rows="5" id="expectation"></textarea>
+				<button type="submit" id="expecBtn">작성</button>
+			</div>
+			
+			<div class="expectationList">
+				<c:forEach items="${expecList }" var="list">
+					${list.expContent }
+				</c:forEach>
+			</div>
 		</div>
 		
 		<div id="tab-3" class="tab-content">

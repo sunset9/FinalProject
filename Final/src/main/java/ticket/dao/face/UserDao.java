@@ -140,4 +140,13 @@ public interface UserDao {
 	 */
 	public List<PaymentInfo> selectImpUidByBookGroup(String bookGroup);
 
+	
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 연락처와 이름으로 email 조회
+	 * @작성자:홍나영
+	 */
+	public String selectEmailByNameAndPhone(User user);
+
+	
 }

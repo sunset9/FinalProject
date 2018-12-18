@@ -54,9 +54,9 @@
 		        <label>
 		          <input type="checkbox"> 아이디 저장
 		        </label>
-			      <label style="float: right">회원 가입</label>
-			      <label style="float: right">비밀번호 찾기</label>
-			      <label style="float: right">아이디 찾기</label>
+			      <a href ='/user/join'><label style="float: right">회원 가입</label></a>
+			      <a href ='/user/findinfo'><label style="float: right">비밀번호 찾기</label></a>
+			      <a href ='/user/findinfo'><label style="float: right">아이디 찾기</label></a>
 		      </div>
 		    </div>
 		  </div>

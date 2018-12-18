@@ -2,12 +2,27 @@ package ticket.dao.face;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
 import ticket.dto.TabBanner;
+import ticket.utils.Paging;
 
+/**
+ * @author suyeo
+ *
+ */
+/**
+ * @author suyeo
+ *
+ */
+/**
+ * @author suyeo
+ *
+ */
 public interface MainDao {
 	/**
 	 * 최종수정일: 2018.12.06
@@ -110,19 +125,44 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.16
-	 * @Method설명: 탭 - 콘서트 리스트 출력 : sql문 확인 후 고치기
+	 * @Method설명: 메인 - 콘서트 탭 공연 리스트 출력 : sql문 확인 후 고치기
 	 * @작성자: 배수연
 	 */
 	public List<Poster> selectConTabList();
 
-	public List<Poster> selectTestList();
-
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 메인 - 뮤지컬&연극 탭 공연 리스트 출력
+	 * @작성자: 배수연
+	 */
 	public List<Poster> selectMuTabList();
 
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 테스트 데이터
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectTestList();
+
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 티켓오픈 상단 배너 5개 출력하기 - 최신순으로 5개 리스트 뽑음
+	 * @작성자: 배수연
+	 */
 	public List<Performance> selectTicketOpenList();
 
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 티켓 오픈 등록순 리스트 출력
+	 * @작성자: 배수연
+	 */
 	public List<Performance> selectTicketOpenPfmList();
 
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 티켓 오픈 최신순 리스트 출력
+	 * @작성자: 배수연
+	 */
 	public List<Performance> selectOpenDayPfmList();
 
 }

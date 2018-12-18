@@ -218,6 +218,11 @@
 		</if>
 	WHERE user_idx= #{userIdx }
  </update>
+ 
+ 
+ <select id="selectEmailByNameAndPhone" parameterType="ticket.dto.User" resultType="String">
+ 	SELECT email FROM userinfo WHERE name = #{name } AND phone = #{phone }
+ </select>
 
   </mapper>
   
