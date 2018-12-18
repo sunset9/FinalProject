@@ -37,12 +37,13 @@
 				$.ajax({
 					type:"GET",
 					url:"/ticket/bookTimeInfo",
-					data:{},
+					data:{
+						"pfmIdx":${pfm.pfmIdx}
+						},
 					dataType:"json",
 					success:function(res){
 						for(var i =0;i<res.hashMap.timeslist.length;i++){
 							var date= new Date(res.hashMap.timeslist[i].pfmDate);
-					
 							var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
 							if(dateStr==dateText){
 								var time = res.hashMap.timeslist[i].pfmTime;
@@ -96,7 +97,7 @@
 				  alert('공연날짜,공연시간을 제대로 선택해주세요');
 				  return;
 			  }
-			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+2;
+			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx};
 			  window.open(path, "_blank", "width=900,height=700");
 		});
 

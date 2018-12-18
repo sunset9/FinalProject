@@ -42,16 +42,14 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value="/ticket/bookInfo", method=RequestMethod.GET)
-	public void ticketpicker(Model model) {
-		
-		Performance pfm = new Performance();
-		pfm.setPfmIdx(1);
-		
+	public void ticketpicker(Model model, Performance pfm) {
 		
 		// 해당공연의 공연날짜 불러오기
+		logger.info(""+pfm.toString());
 		List<PfmDateByTime> dates = new ArrayList<PfmDateByTime>();
 		dates = ticketService.ticketDatePicker(pfm);
 		
+//		System.out.println(dates);
 		
 		List<String> dateStr = new ArrayList<String>();
 		
@@ -61,6 +59,8 @@ public class TicketController {
 			dateStr.add("'"+ trans.format(dates.get(i).getPfmDate()) + "'");
 		}
 		
+		System.out.println(""+pfm);
+		model.addAttribute("pfm",pfm);
 		model.addAttribute("dates", dateStr);
 		
 		//-------------------
@@ -82,12 +82,8 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value= "/ticket/bookTimeInfo", method=RequestMethod.GET)
-	public ModelAndView loadsTimes() {
+	public ModelAndView loadsTimes(Performance pfm) {
 		
-		
-		Performance pfm = new Performance();
-		pfm.setPfmIdx(1);
-
 		//해당 공연의 공연시간 불러오기 	
 		List<PfmDateByTime> times = new ArrayList<PfmDateByTime>();
 		
@@ -163,21 +159,20 @@ public class TicketController {
 	 */
 	
 	@RequestMapping(value="/hall/hall_2_seats/seat", method=RequestMethod.GET)
-	public ModelAndView loadSeats(ModelAndView mav,String color, String secName, String pay, String appName) {
-		Hall hall = new Hall();
+	public ModelAndView loadSeats(ModelAndView mav,String color, String secName, String pay, String appName, Hall hall, int oriSecIdx) {
 		
-		hall.setHallIdx(2);
-		
-		logger.info("1");
-		
-		int maxRow = ticketService.maxRow(1);
-		int maxCol = ticketService.maxCol(1);
+		int maxRow = ticketService.maxRow(oriSecIdx);
+		int maxCol = ticketService.maxCol(oriSecIdx);
 		
 		String[][] seats = new String[maxRow+1][maxCol+1];
 		
 		List<Seat> seatList = new ArrayList<Seat>();
+		Map SectionInfo = new HashMap();
 		
-		seatList = ticketService.loadSeatsByHallIdx(hall);
+		SectionInfo.put("hall", hall);
+		SectionInfo.put("oriSecIdx", oriSecIdx);
+		
+		seatList = ticketService.loadSeatsByHallIdx(SectionInfo);
 		
 		for(int i =1;i<=maxRow;i++) {
 			for(int j=1;j<=maxCol;j++) {
@@ -185,6 +180,9 @@ public class TicketController {
 			}
 		}
 	
+		
+		System.out.println(seatList.size());
+		
 		for(int i =0;i<seatList.size();i++) {
 			int row = seatList.get(i).getSeatRow();
 			int col = seatList.get(i).getSeatCol();
@@ -275,13 +273,7 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value="/ticket/seatSection", method=RequestMethod.POST)
-	public ModelAndView loadSectionData() {
-		
-	
-		
-		Performance pfm = new Performance();
-		
-		pfm.setPfmIdx(1);
+	public ModelAndView loadSectionData(Performance pfm) {
 		
 		List<SeatSection> seatSection = new ArrayList<SeatSection>();
 		

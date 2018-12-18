@@ -1,6 +1,7 @@
 package ticket.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,8 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public List<Seat> loadSeatsByHallIdx(Hall hall) {
-		return ticketDao.selectSeatsByHallIdx(hall);
+	public List<Seat> loadSeatsByHallIdx(Map sectionInfo) {
+		return ticketDao.selectSeatsByHallIdx(sectionInfo);
 		// TODO Auto-generated method stub
 		
 	}

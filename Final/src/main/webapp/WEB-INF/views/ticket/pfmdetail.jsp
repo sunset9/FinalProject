@@ -4,6 +4,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		console.log(${pfmInfoList.pfmIdx });
 		$('ul.tabs li').click(function(){
 			var tab_id = $(this).attr('data-tab');
 		 
@@ -13,6 +14,23 @@
 		    $(this).addClass('current');
 		    $("#"+tab_id).addClass('current');
 		});
+		
+		
+		$.ajax({
+			type:"get",
+			url:"/ticket/bookInfo",
+			data:{
+				"pfmIdx" : ${pfmInfoList.pfmIdx},
+				"hallIdx" : ${pfmInfoList.hallIdx}
+			},
+			async: false,
+			dataType:"html",
+			success:function(res){
+				$('#bookInfo').html(res);
+			}
+		});	
+		
+		
 	});
 </script>
 
@@ -89,6 +107,8 @@ ul.tabs li.current{
 		</div>
 	</div>
 	
+	<div id = "bookInfo">
+	</div>
 	<div class="bottomDiv ddiv">
 		<ul class="tabs">
 			<li class="tab-link current" data-tab="tab-1">상세정보	</li>

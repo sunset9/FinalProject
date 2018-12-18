@@ -1,6 +1,7 @@
 package ticket.service.face;
 
 import java.util.List;
+import java.util.Map;
 
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
@@ -58,7 +59,7 @@ public interface TicketService {
 	 * @Method설명:공연장의 좌석정보불러오기
 	 * @작성자:이상지
 	 */
-	public List<Seat> loadSeatsByHallIdx(Hall hall);
+	public List<Seat> loadSeatsByHallIdx(Map SectionInfo);
 	
 	/**
 	 * @최종수정일: 2018.12.05
