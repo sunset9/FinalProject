@@ -1,6 +1,11 @@
 package ticket.controller.admin;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -166,7 +172,7 @@ public class AdminBoardController {
 		// 업로드 파일 정보 전달
 		adminBoardService.filesave(context, fileupload); 
 		
-		return "redirect:/admin/noticelist";
+		return "redirect:/admin/noticefilelist";
 		
 	}
 
@@ -189,15 +195,31 @@ public class AdminBoardController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticefiledownload", method=RequestMethod.GET)
-	public ModelAndView notiFiledownload(ModelAndView mav, int noFileIdx) {
+	public ModelAndView notiFiledownload(ModelAndView mav, int notiFileIdx) {
 		
-		NoticeFile file = adminBoardService.getFile(noFileIdx);
+		NoticeFile file = adminBoardService.getFile(notiFileIdx);
 		logger.info(file.toString());
 		mav.setViewName("down"); // 뷰이름
 		mav.addObject("downFile", file);
 		return mav;
 		
 	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

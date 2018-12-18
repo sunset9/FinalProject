@@ -34,7 +34,7 @@
 		in the /WEB-INF/views directory -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="prefix" value="/WEB-INF/views" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
 
@@ -67,8 +67,7 @@
 	</beans:bean>
 
 	<!-- 다운로드뷰 를 down 이라는 이름으로 빈 등록 -->
-
-	<!-- <beans:bean id="down" class="file.view.DownloadView" /> -->
+	<beans:bean id="down" class="ticket.view.DownloadView" />
 
 	<!-- MultipartResolver -->
 

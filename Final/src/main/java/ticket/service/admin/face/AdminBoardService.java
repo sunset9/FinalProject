@@ -49,8 +49,8 @@ public interface AdminBoardService {
 	// 업로드 파일 목록
 	public List fileList();
 	
-	// noFileIdx로 NoticeFile(notice_file) 조회
-	public NoticeFile getFile(int noFileIdx);
+	// notiFileIdx로 NoticeFile(notice_file) 조회
+	public NoticeFile getFile(int notiFileIdx);
 	
 	
 	

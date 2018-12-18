@@ -45,8 +45,8 @@ public interface AdminBoardDao {
 	// 파일 전체 조회 (임시)
 	public List selectNotiFileAll();
 
-	// noFileIdx를 이용한 조회
-	public NoticeFile selectByNoFileIdx(int noFileIdx);
+	// notiFileIdx를 이용한 조회
+	public NoticeFile selectByNotiFileIdx(int notiFileIdx);
 	
 	
 	

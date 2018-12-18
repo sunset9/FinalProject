@@ -127,8 +127,8 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	}
 
 	@Override
-	public NoticeFile getFile(int noFileIdx) {
-		return adminBoardDao.selectByNoFileIdx(noFileIdx);
+	public NoticeFile getFile(int notiFileIdx) {
+		return adminBoardDao.selectByNotiFileIdx(notiFileIdx);
 	}
 
 	
