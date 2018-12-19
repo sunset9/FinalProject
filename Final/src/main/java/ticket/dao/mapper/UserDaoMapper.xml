@@ -198,7 +198,7 @@
  <update id="updatePass" parameterType="ticket.dto.User">
  	UPDATE  userinfo 
 	SET password = #{password }
-	WHERE user_idx= #{userIdx }
+	WHERE email= #{email }
  </update>
  
   <update id="updatePhone" parameterType="ticket.dto.User">
@@ -223,6 +223,13 @@
  <select id="selectEmailByNameAndPhone" parameterType="ticket.dto.User" resultType="String">
  	SELECT email FROM userinfo WHERE name = #{name } AND phone = #{phone }
  </select>
+ 
+ 
+ <update id="updateProfile" parameterType="ticket.dto.User">
+ 	UPDATE userinfo 
+ 	SET profile =#{profile }
+ 	WHERE user_idx = #{userIdx }
+ </update>
 
   </mapper>
   

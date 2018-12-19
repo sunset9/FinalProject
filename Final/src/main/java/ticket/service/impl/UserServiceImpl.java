@@ -1,18 +1,22 @@
 package ticket.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dao.face.MyChoiceDao;
 import ticket.dao.face.PfmDao;
 import ticket.dao.face.UserDao;
-import ticket.dto.MyChoice;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
 import ticket.dto.User;
@@ -118,9 +122,66 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public void changePw(User user) {
+		userDao.updatePass(user);
+	}
+
+
+	@Override
+	public void updateProfile(ServletContext context, MultipartFile file, User user) {
+		
+		
+		// 파일이 저장될 경로 
+		String stored = context.getRealPath("profile");
+		
+		// 파일 객체 
+		File profile = new File (stored);
+		
+		// 원본이름과 저장이름 지정 
+		user.setProfile("/resoures/image/profile/"+file.getOriginalFilename());
+
+		try {
+			// 파일 저장 (업로드)
+			file.transferTo(profile);
+		
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// 프로필 저장
+		userDao.updateProfile(user);
+		
+	}
 
 
 
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

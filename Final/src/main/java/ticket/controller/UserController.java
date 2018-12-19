@@ -1,20 +1,29 @@
 package ticket.controller;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.Date;
 import java.util.List;
+import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.Artist;
 import ticket.dto.MyChoice;
@@ -41,6 +50,16 @@ public class UserController {
 	private PreferAService preferAService;
 	@Autowired
 	private MyChoiceService myChoiceService;
+	// 메일 보내는 객체
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	// 파일 업로드
+	@Autowired 
+	private ServletContext context;
+	
+	private String from = "1133acacac@gmail.com";  //보내는 사람 
+	private String subject = "비밀번호 찾기 안내 메일"; // 메일제목
 	
 	 
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
@@ -150,8 +169,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/user/findinfo", method = RequestMethod.GET)
-	public void findEmail(HttpSession session) {
+	public void findEmail(String step
+				, Model model) {
 		logger.info("이메일 , 비밀번호 찾기 폼");
+		logger.info("파라미터 :" +step);
+		
+		model.addAttribute("step", step);
 		
 		
 	}
@@ -170,11 +193,52 @@ public class UserController {
 		
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping(value = "/user/findpass", method = RequestMethod.POST)
-	public void findPassProc(HttpSession session) {
+	public String findPassProc(User user) {
 		logger.info("비밀번호 찾기 처리");
 		
+		logger.info(""+user);
+		MimeMessage message = mailSender.createMimeMessage();
+		
+		// 임시 비밀번호 생성할 때 필요한 애들 
+		Random random = new Random();
+		String chars[] = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9".split(",");
+
+		// 임시 비밀번호 저장할 변수
+		String temp = "TICKET";		
+		
+		// 메일 본문 
+		String pretext="변경된 비밀번호는 ";
+		
+		String subtext=" 입니다.";
+
+		for (int i = 0; i < 5; i++) {
+			temp +=chars[random.nextInt(chars.length)];
+		}
+
+		logger.info("임시비밀번호 :" +temp);
+		
+		user.setPassword(temp);
+		
+		userService.changePw(user);
+		
+		// 메일 보내기 처리
+		try {
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true,"UTF-8");
+			messageHelper.setTo(user.getEmail());// 메일 받는 사람
+			
+			messageHelper.setText(pretext+temp+subtext); // 메일 본문
+			
+			messageHelper.setFrom(from);  // 메일 보내는 사람
+			messageHelper.setSubject(subject); // 메일 제목
+			
+			mailSender.send(message);
+			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return temp;
 	}
 	
 	
@@ -289,6 +353,26 @@ public class UserController {
 		
 	}
 	
+	
+	@RequestMapping("/user/profile")
+	public @ResponseBody String profileChange(
+			MultipartFile profileFile
+			,HttpSession session
+			, Writer out
+			) {
+		
+		logger.info(profileFile.getOriginalFilename());
+		User user = new User();
+
+		user = (User)session.getAttribute("loginUser");
+		
+		// context, file 전달해 줘야함
+		// context -> servlet conext path 업로드 파일 정보 저장
+		userService.updateProfile(context, profileFile, user);
+
+		return "success";
+		
+	}
 	
 	@RequestMapping(value="/mypage/myticket", method= RequestMethod.GET)
 	public String mypageBook(Model model
