@@ -27,23 +27,25 @@ $(document).ready(function() {
 	console.log(${param.hallIdx });
 	var pfmSeatSection = new Array();
 	//창띄울때 섹션 정보 가져오기
-	$.ajax({
-		type:"get",
-		url:"/ticket/seatSection",
-		data:{
-			"pfmIdx":${param.pfmIdx },
-			  "hallIdx":${param.hallIdx }
-			  },
-		async: false,
-		dataType:"html",
-		success:function(res){
-			$('#selectedSeats').html(res);
-			$('svg').css("width","650px");
-			$('svg').css("height","530px");
-			loadSectionData();
-		
-		}
-	});	
+	
+		$.ajax({
+			type:"get",
+			url:"/ticket/seatSection",
+			data:{
+				"pfmIdx":${param.pfmIdx },
+				  "hallIdx":${param.hallIdx }
+				  },
+			async: false,
+			dataType:"html",
+			success:function(res){
+				$('#selectedSeats').html(res);
+				$('svg').css("width","650px");
+				$('svg').css("height","530px");
+				loadSectionData();
+			
+			}
+		});	
+
 
 	
 	  //좌석 그리는 페이지띄어주기
@@ -69,6 +71,7 @@ $(document).ready(function() {
 				dataType:"html",
 				success:function(res){
 					$('#selectedSeats').html(res);
+					
 				}
 				
 			});
@@ -149,8 +152,9 @@ $(document).ready(function() {
 				$('#bookStep_'+prevStep).show();
 		  }
 	})
+	
 	  
-})
+});
 
 	  
 	  //섹션 데이터 받아오기
@@ -256,7 +260,31 @@ function getSeatInfo(){
 		   }
 		}
 	 }
-	  
+	 
+	 function seatAllView() {
+			$.ajax({
+				type:"get",
+				url:"/ticket/seatSection",
+				data:{
+					"pfmIdx":${param.pfmIdx },
+					  "hallIdx":${param.hallIdx }
+					  },
+				async: false,
+				dataType:"html",
+				success:function(res){
+					$('#selectedSeats').html(res);
+					$('#selected-seats').html("");
+					$('#total').html("0");
+					$('#counter').html("0");
+					$('svg').css("width","650px");
+					$('svg').css("height","530px");
+					loadSectionData();
+				
+				}
+			});	
+	}
+	 
+
 </script>
 
 <style type="text/css">
@@ -351,11 +379,11 @@ function getSeatInfo(){
 	
 	<button class="checkout-button">Checkout &raquo;</button>
 	
-	<div id="legend"></div>
+<!-- 	<div id="legend"></div> -->
 	
-	<div onclick="loadseatSection()">좌석도 전체보기</div>
+	<button onclick="seatAllView()">좌석도 전체보기</button>
 </div>
-
+	
 <!-- STEP 2. 가격/수령방법 -->
 <div id ="bookStep_2" style=" display: none">
 
