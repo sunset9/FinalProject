@@ -136,6 +136,14 @@ public interface AdminPfmService {
 	 */
 	public int getUnanswered();
 	
+	
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: mainban_idx를 이용해서 메인 배너 삭제하기
+	 * @작성자: 김지은
+	 */
+	public void deleteMainBanner(int mainbanIdx);
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 모든 장르 리스트 가져오기

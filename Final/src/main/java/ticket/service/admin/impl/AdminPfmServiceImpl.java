@@ -702,4 +702,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		pDao.deletePfm(pfmIdx);
 	}
 
+	@Override
+	public void deleteMainBanner(int mainbanIdx) {
+		pDao.deleteMainBanner(mainbanIdx);
+		
+	}
+
 }

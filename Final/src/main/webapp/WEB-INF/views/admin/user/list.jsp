@@ -58,6 +58,10 @@ td {
 	height: 25px;
 }
 
+.container {
+    position: absolute;
+    left: 222px;	
+}
 </style>
 
 <div class="container">

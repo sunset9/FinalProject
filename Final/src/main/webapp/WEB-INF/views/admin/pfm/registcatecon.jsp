@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../layout/menu.jsp" />
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <style>
 
 #save {
@@ -236,6 +237,7 @@ $('#btn').click(function() {
 }); //endof function 	
 }); // end ready
 </script>
+
 카테고리 콘서트 배너 관리
 <hr>
 <!-- 카테고리 부분 FORM 시작  -->

@@ -354,4 +354,10 @@ public interface PfmDao {
 	 */
 	public List<MainBanner> selectMainBanner();
 	
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: mainban_idx를 이용해서 메인 배너 삭제하기
+	 * @작성자: 김지은
+	 */
+	public void deleteMainBanner(int mainbanIdx);
 }

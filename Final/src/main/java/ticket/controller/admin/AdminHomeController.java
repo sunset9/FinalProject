@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
+
+import ticket.dto.User;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.service.admin.face.AdminUserService;
 
@@ -66,6 +69,18 @@ public class AdminHomeController {
 	public String menu() {
 		
 		return "/admin/layout/menu";
-		
 	}
+	
+	
+//	@RequestMapping(value="admin/adminmain", method=RequestMethod.GET)
+//	public void test_jieun() {
+//		
+//		Gson jsonparser = new Gson();
+//		User user = new User();
+//		user.setEmail("nn@naver.com");
+//		user.setPassword("dddd");
+//		String json = jsonparser.toJson(user);
+//		
+//		System.out.println("json 확인 : "+json);
+//	}
 }
