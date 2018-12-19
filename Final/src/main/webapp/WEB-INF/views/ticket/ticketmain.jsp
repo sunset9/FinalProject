@@ -73,7 +73,7 @@
 
 /* 탭 메뉴 */
 .main_tab{
-	width: 800px;
+	width: 780px;
 	margin: 20px auto 10px auto;
 }
  
@@ -102,7 +102,8 @@ ul.tabs li.current{
 }
  
 .tab-content.current{
-	display: inherit;
+	display: inline-block;
+	text-align: center;
 }
 
 /* 랭킹 */
@@ -159,6 +160,14 @@ li.pfmInfo {
 div>h4 {
 	text-align: center;
 }
+
+#tabPfmList {
+	float: left;
+}
+
+.tab-content {
+	width: 100%;
+}
 </style>
 
 <!-- 메인 배너 -->
@@ -182,28 +191,37 @@ div>h4 {
 
 	<div id="tab-1" class="tab-content current">
 		<c:forEach items="${newList }" var="list">
+		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<img src="/resources/image/${list.originName}"
-					style="width: 150px; height: 200px;"/>
+					style="width: 150px; height: 200px;"/><br>
+					${list.name }
 			</a>
+		</span>
 		</c:forEach>
 	</div>
 	
 	<div id="tab-2" class="tab-content">
 		<c:forEach items="${conList }" var="list">
+		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<img src="/resources/image/${list.originName}"
-					style="width: 150px; height: 200px;"/>
+					style="width: 150px; height: 200px;"/><br>
+					${list.name }
 			</a>
+		</span>
 		</c:forEach>
 	</div>
 	
 	<div id="tab-3" class="tab-content">
 		<c:forEach items="${muList }" var="list">
+		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<img src="/resources/image/${list.originName}"
-					style="width: 150px; height: 200px;"/>
+					style="width: 150px; height: 200px;"/><br>
+					${list.name }
 			</a>
+		</span>
 		</c:forEach>
 	</div>
 </div>
@@ -218,12 +236,13 @@ div>h4 {
 			<li><span id="fam">가족&아동</span></li>
 		</ul><br><br>
 		
+		<!-- 랭킹 테스트 데이터 이용해서 출력 중 / 쿼리문 작성 후 ajax 해야함 -->
 		<ul id="posterList">
 		<c:forEach items="${testList }" var="list">
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-					<img class="tapImg" src="/resources/image/${list.originName}" /><br>
+<%-- 					<img class="tapImg" src="/resources/image/${list.originName}" /><br> --%>
 				</span>
 				</a>
 			</li>

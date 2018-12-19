@@ -71,18 +71,45 @@
 	
 	<select id="selectExpectationList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Expectation">
 		SELECT
-		    e.exp_content as expContent
-		    , e.create_date as createDate
-		    , u.profile
-		    , u.name
-		FROM (
+		    e.*
+		FROM(
 		    SELECT
-		    	*
+		        exp_idx as expIdx
+		        , pfm_idx as pfmIdx
+		        , user_idx as userIdx
+		        , exp_content as expContent
+		        , create_date as createDate
 		    FROM expectation
 		    WHERE pfm_idx=#{pfmIdx}
+		    ORDER BY create_date DESC
 		) e
 		LEFT JOIN userinfo u
-		    ON u.user_idx = e.user_idx
+		    ON u.user_idx = e.userIdx
 	</select>
+	
+	<select id="selectExpecUserList" parameterType="ticket.dto.Performance" resultType="ticket.dto.User">
+		SELECT
+		    u.profile
+		    , u.name
+		FROM(
+		    SELECT
+		        exp_idx as expIdx
+		        , pfm_idx as pfmIdx
+		        , user_idx as userIdx
+		        , exp_content as expContent
+		        , create_date as createDate
+		    FROM expectation
+		    WHERE pfm_idx=#{pfmIdx}
+		    ORDER BY create_date DESC
+		) e
+		LEFT JOIN userinfo u
+		    ON u.user_idx = e.userIdx
+	</select>
+	
+	<insert id="insertExpectation">
+		INSERT INTO expectation(exp_idx, pfm_idx, user_idx, exp_content)
+		VALUES (expectation_seq.nextval, #{pfm.pfmIdx}, 1, #{expContent})
+		<!-- 수정 중 -->
+	</insert>
 	
 </mapper>

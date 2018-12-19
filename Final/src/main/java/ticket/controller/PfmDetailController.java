@@ -3,6 +3,8 @@ package ticket.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,22 +57,39 @@ public class PfmDetailController {
 		model.addAttribute("detailList", detailList);
 		
 		// 기대평 리스트 출력해주기
-//		List<Expectation> expecList = detailService.getExpectationList(pfm);
-//		model.addAttribute("expecList", expecList);
+		List<Expectation> expecList = detailService.getExpectationList(pfm);
+		model.addAttribute("expecList", expecList);
+		//	작성자 리스트 출력
+		List<User> expecUserList = detailService.getExpectationUserList(pfm);
+		model.addAttribute("expecUserList", expecUserList);
 	}
 	
-	@RequestMapping(value="/pfmdetail/expectation", method=RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> expectation(
-			String expectation
+	@RequestMapping(value="/ticket/pfmdetail", method=RequestMethod.POST)
+	public void pfmdetailExpectation(
+			String expContent
+			, HttpServletRequest request
+			, User user
 			, Performance pfm
 		) {
 		
-		HashMap<String, Object> map = new HashMap<>();
-		
-		// 기대평 작성
-		
-		return map;
+//		detailService.getExpectationInsert(expContent, pfm);
 	}
+	
+	/**
+	 * 최종수정일: 2018.12.19
+	 * @Method설명: 기대평 작성시 출력
+	 * @작성자: 배수연
+	 */
+//	@RequestMapping(value="/pfmdetail/expectation", method=RequestMethod.GET)
+//	public @ResponseBody HashMap<String, Object> expectation(
+//			String expContent
+//			, Expectation exp
+//		) {
+//		
+//		HashMap<String, Object> map = new HashMap<>();
+//		
+//		return map;
+//	}
 	
 	/**
 	 * 최종수정일: 2018.12.05
