@@ -136,7 +136,7 @@ div.seatCharts-cell {
 //    										rows: ['A', 'B', 'C', 'D', 'E','F','G','H','I'],
 //    										columns: ['A', 'B', 'C', 'D', 'E'], 로우, 컬럼 이름 지어주기
 										getId  : function(character, row, column) {
-											return '${seatMap.secName}'+'_'+row +'_'+column;
+											return  '${seatMap.secName}'+'_'+row +'_'+column;
 										}
 										
                                     },
