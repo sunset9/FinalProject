@@ -267,8 +267,9 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 });
 
 </script>
-
+<div class="managerPfmBox">
 <h1>공연 관리 - 전체 목록 조회</h1>
+<hr>
 
 <button id="registBtn" onclick="location.href='/admin/registpfm'">공연 등록</button>
 
@@ -319,7 +320,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 </c:forEach>
 </ul>
 <!-- </div> -->
-
+</div>
 </div>
 
 </div>

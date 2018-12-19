@@ -8,6 +8,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style type="text/css">
 .wrapper {
 	display : -webkit-flex;
@@ -32,6 +40,14 @@
 	width: 200px;
 }
 
+* {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+h1, h2, h3 {
+	display: inline-block;
+}
 </style>
 </head>
 <body>

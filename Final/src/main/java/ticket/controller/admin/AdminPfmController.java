@@ -615,21 +615,56 @@ public class AdminPfmController {
 		
 		model.addAttribute("mBannerList", mBannerList);
 		
-		return "admin/pfm/mainbannerlist";
+		return "admin/pfm/mainBannerList"; 
 	}
 
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 메인 배너 삭제하기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/mainbannerdelete", method=RequestMethod.GET)
+	public String mBannerDelete(int mainbanIdx) {
+		
+		System.out.println("mainbanIdx : "+mainbanIdx);
+		
+		//mainbanIdx를 이용해서 메인 배너 삭제하기
+		pService.deleteMainBanner(mainbanIdx);
+		
+		return "redirect:/admin/mainbannerlist";
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 새 메인 배너 등록하기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.GET)
+	public String registMBanner() {
+	
+		return "admin/pfm/registMBanner";
+	}
+	
+	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.POST)
+	public String registMBannerProc() {
+	
+		return "admin/pfm/registMBanner";
+	}
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 메인 배너 등록/수정 폼 띄우기(배너 수정 또는 등록 클릭시 여기로)
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/editMainBanner", method = RequestMethod.GET)
-	public void editMBanner() {
+	@RequestMapping(value = "/admin/editmainbanner", method = RequestMethod.GET)
+	public String editMBanner(Model model) {
 		// 공연 정보 받기(null이면 빈칸표시, 등록된 값이 있으면 값 띄워주기)
 		// null(배너 등록)일 경우 빈값 뷰에 전달, 값이 있을 경우(배너 수정)에는 그 값 뷰에 전달
 
 		// 썸네일, 배너 정보 받기(null이면 빈칸표시, 등록된 값이 있으면 값 띄워주기)
 		// null(배너 등록)일 경우 빈값 뷰에 전달, 값이 있을 경우(배너 수정)에는 그 값 뷰에 전달
+		
+		return "admin/pfm/editMainBanner";
 	}
 
 	/**
@@ -637,8 +672,8 @@ public class AdminPfmController {
 	 * @Method설명: 메인 배너 최종등록하기(최종저장 버튼 활성화는 jsp에서...??)
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/registMBanner", method = RequestMethod.POST)
-	public void registMBanner() {
+	@RequestMapping(value = "/admin/pfm/mainbannerfs", method = RequestMethod.POST)
+	public void mbFinalSave() {
 		// 공연 정보 받기
 		// Performance pfm = pService.getPfmInfo()
 

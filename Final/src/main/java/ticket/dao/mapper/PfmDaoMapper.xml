@@ -34,6 +34,7 @@
 	</resultMap>
 	
 	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
+		<result column="mainban_idx" property="mainbanIdx"/>
 		<result column="pfm_start" property="pfmStart"/>
 		<result column="pfm_end" property="pfmEnd"/>
 		<result column="stored_name" property="storedName"/>
@@ -418,11 +419,16 @@
 	</delete>
 	
 	<select id="selectMainBanner" resultMap="MainBannerMap">
-		SELECT P.NAME, P.PFM_START, P.PFM_END, PI.STORED_NAME, MB.banner_img_str, MB.thumb_img_str, H.hall_name
+		SELECT MB.MAINBAN_IDX, P.NAME, P.PFM_START, P.PFM_END, PI.STORED_NAME, MB.banner_img_str, MB.thumb_img_str, H.hall_name
 		FROM MAIN_BANNER MB JOIN PERFORMANCE P
 		ON MB.PFM_IDX = P.PFM_IDX JOIN POSTER_INFO PI
 		ON MB.PFM_IDX = PI.PFM_IDX JOIN HALL H
 		ON P.HALL_IDX = H.HALL_IDX
 	</select>
 	
+	<delete id="deleteMainBanner" parameterType="int">
+		DELETE main_banner
+		WHERE mainban_idx = #{value}
+	</delete>
+
 </mapper>
