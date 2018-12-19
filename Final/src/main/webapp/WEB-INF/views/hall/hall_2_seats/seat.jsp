@@ -136,7 +136,7 @@ div.seatCharts-cell {
 //    										rows: ['A', 'B', 'C', 'D', 'E','F','G','H','I'],
 //    										columns: ['A', 'B', 'C', 'D', 'E'], 로우, 컬럼 이름 지어주기
 										getId  : function(character, row, column) {
-											return row +'_'+column;
+											return  '${seatMap.secName}'+'_'+row +'_'+column;
 										}
 										
                                     },
@@ -152,12 +152,20 @@ div.seatCharts-cell {
                                     click : function() {
                                        if (this.status() == 'available') {
                                           //let's create a new <li> which we'll add to the cart items
+                                            var seatArr = new Array();
+                                            var id= this.settings.id;
+    		  								seatArr= id.split("_");
+                                         	var area = seatArr[0];
+                                          	var row = seatArr[1];
+                                          	var col = seatArr[2];
+                                          
                                           $(
                                                 '<li>'
                                                       + this.data().category
                                                       + ' 석 '
 //                                                       + this.settings.label 
-                                                      + this.settings.id
+//                                                       + this.settings.id
+                                                      + area + "구역 " +row+"행 "+col+"열"
                                                       + ' : '
                                                       + this.data().price
                                                       + '<b> 원'
@@ -181,7 +189,6 @@ div.seatCharts-cell {
                                           //and total
                                           $total.text(recalculateTotal(sc) - this.data().price);
                                           //remove the item from our cart
-                                          //이거보기
                                           $('#cart-item-' + this.settings.id).remove();
                                           //seat has been vacated
                                           return 'available';
@@ -197,6 +204,7 @@ div.seatCharts-cell {
                      //this will handle "[cancel]" link clicks
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                              console.log(sc.get($(this).parents('li:first').data('seatId')));
                               sc.get($(this).parents('li:first').data('seatId')).click();
 //                               console.log(sc.get($(this).parents('li:first').data('seatId')));
 //                               $('#cart-item-' + this.settings.id).remove();
@@ -251,7 +259,7 @@ div.seatCharts-cell {
     		  var array = new Array(); 
     		  array = str.split(" ");
     		  console.log(array[2]+" 석"); // 무슨좌석인지
-    		  console.log(array[3]+" 구역 "+" "+seatArr[0]+" 행 "+seatArr[1]+" 열"+" : "+${seatMap.pay}) ;
+    		  console.log(array[3]+" 구역 "+" "+seatArr[1]+" 행 "+seatArr[2]+" 열"+" : "+${seatMap.pay}) ;
     	  });
     	  
     	  console.log("가격: "+$('#total').text());

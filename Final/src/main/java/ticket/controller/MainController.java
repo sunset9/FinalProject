@@ -1,8 +1,8 @@
 package ticket.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
-import ticket.service.admin.face.AdminPfmService;
 import ticket.service.face.MainService;
 
 @Controller
@@ -24,7 +23,6 @@ public class MainController {
 	// 메인
 	
 	@Autowired MainService mainService;
-	@Autowired AdminPfmService pService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -238,7 +236,7 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.18
+	 * 최종수정일: 2018.12.19
 	 * @Method설명: 메인 상단에서 예매 랭킹 탭 선택시 이동하는 페이지
 	 * @작성자: 전해진
 	 */
@@ -248,13 +246,13 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 예매 랭킹 관련 띄우기
-	 * @작성자: 배수연
+	 * 최종수정일: 2018.12.19
+	 * @Method설명: 예매순 랭킹 반환
+	 * @작성자: 전해진
 	 */
-	@RequestMapping(value="/ticket/ranking", method=RequestMethod.POST)
-	public void reservationrankingProc() {
-		
+	@RequestMapping(value="/ticket/getrank", method=RequestMethod.GET)
+	public @ResponseBody List<Performance> getRank(String sort, Date today) {
+		return mainService.getRank(sort, today);
 	}
 	
 	/**

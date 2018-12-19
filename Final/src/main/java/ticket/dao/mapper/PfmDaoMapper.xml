@@ -430,4 +430,5 @@
 		DELETE main_banner
 		WHERE mainban_idx = #{value}
 	</delete>
+
 </mapper>

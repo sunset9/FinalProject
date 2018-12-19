@@ -5,8 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!--    - 스마트에디터 추가하기 -->
-<!-- <script type="text/javascript" src="/resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script> -->
+<script type="text/javascript" src="/resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
+ 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
@@ -79,26 +80,31 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 //스마트에디터 스킨 적용
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors,
-	elPlaceHolder: "content", //<textarea>의 id 입력
-	sSkinURI: "/resources/smarteditor2/SmartEditor2Skin.html",
-	fCreator: "createSEditor2",
-	htParams: {
-		bUseToolbar: true, //툴바 사용여부
-		bUseVerticalResizer: false, //입력창 크기 조절 바
-		bUseModeChanger: true //모드 탭
-	}
-});
-//<form>의 submit에 맞춰 스마트에디터 내용 적용
-function submitContents(elClickedObj) {
-	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-	try {
-		elClickedObj.form.submit();
-	} catch(e) {}
-}
-
+$(function(){
+     //전역변수
+     var obj = [];              
+     //스마트에디터 프레임생성
+     nhn.husky.EZCreator.createInIFrame({
+         oAppRef: obj,
+         elPlaceHolder: "editor",
+         sSkinURI: "./resources/editor/SmartEditor2Skin.html",
+         htParams : {
+             // 툴바 사용 여부
+             bUseToolbar : true,            
+             // 입력창 크기 조절바 사용 여부
+             bUseVerticalResizer : true,    
+             // 모드 탭(Editor | HTML | TEXT) 사용 여부
+             bUseModeChanger : true,
+         }
+     });
+     //전송버튼
+     $("#insertBoard").click(function(){
+         //id가 smarteditor인 textarea에 에디터에서 대입
+         obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
+         //폼 submit
+         $("#insertBoardFrm").submit();
+     });
+ });
 
 </script>
 
