@@ -307,7 +307,10 @@
 		WHERE hall_idx = #{hallIdx }
 	</select>
 	
-	<select id="selectCntBookSeatBypfmIdx" parameterType = "ticket.dto.Performance" resultType="int">
-		
+	<select id="selectCntBookSeatBypfmIdx" resultType="int">
+		SELECT COUNT(*) FROM book
+		WHERE pfm_idx = #{pfm.pfmIdx }
+			AND book_cate_idx = 2
+			AND trunc(create_date,'dd') BETWEEN #{startDate } AND #{endDate }
 	</select>
 </mapper>

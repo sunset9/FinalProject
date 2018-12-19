@@ -187,6 +187,7 @@ public interface MainDao {
 	 * @Method설명: 예매 기간 내에 예매한 좌석 수 조회
 	 * @작성자: 전해진
 	 */
-	public int selectCntBookSeatBypfmIdx(Performance pfm);
+	public int selectCntBookSeatBypfmIdx(@Param(value="pfm") Performance pfm
+			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
 
 }

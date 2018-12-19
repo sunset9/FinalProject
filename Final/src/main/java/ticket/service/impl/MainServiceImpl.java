@@ -131,18 +131,18 @@ public class MainServiceImpl implements MainService {
 				
 				// Date -> String 변환
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String start = dateFormat.format(periodS);
-				String end = dateFormat.format(periodE);
+				String startStr = dateFormat.format(periodS);
+				String endStr = dateFormat.format(periodE);
 
 				// 1. 예매율 구하려는 공연 목록 가져옴
-				List<Performance> pfmList = mainDao.selectPfmListByPeriod(start, end);
+				List<Performance> pfmList = mainDao.selectPfmListByPeriod(startStr, endStr);
 				System.out.println(pfmList);
 				
 				// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
 				for(Performance pfm : pfmList) {
 					try {
-						Date startDate = dateFormat.parse(start);
-						Date endDate =  dateFormat.parse(end);
+						Date startDate = dateFormat.parse(startStr);
+						Date endDate =  dateFormat.parse(endStr);
 						
 						// '티켓' 시작일이 '조회 구간' 시작일 보다 느린 경우, '계산 구간' 시작일 = '티켓' 시작일
 						if(pfm.getTicketStart().getTime() - startDate.getTime() >= 0) {
@@ -155,12 +155,14 @@ public class MainServiceImpl implements MainService {
 						
 						// 3.1 해당 공연의 총 좌석 수 구하기
 						int totalSeatCnt = mainDao.selectCntAllSeatByHallIdx(pfm);
+						System.out.println(totalSeatCnt);
 						
 						// 3.2 계산 구간에 예매한 좌석 수 구하기
-						int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm);
+						int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
+						System.out.println(bookSeatCnt);
 						
 						// 3.3 예매율 계산
-						
+						float bookRate = (float) (bookSeatCnt/totalSeatCnt) * 100;
 						
 						
 						
