@@ -110,12 +110,15 @@ $(document).ready(function() {
 				  //이전단계 버튼 활성화
 				  $('#prevBtn').show();
 				  $('#bookStep_2_tb').html("");
+				  $('.wrap_ticket_info').show();
+				  $('#step2and3').show();
 				  getSeatInfo();
 				  
 			  } 
 			  else if(curStep == 2){ // 현재 STEP 3 단계라면(=다음이 4단계)
 					// '다음 단계' 버튼 비활성화
 					$('#nextBtn').hide();
+					$('#step2and3').show();
 			  }
 			  
 			// 현재 단계 탭 완료 상태 전환
@@ -133,10 +136,13 @@ $(document).ready(function() {
 					// '이전 단계' 버튼 비활성화
 					$('#stepInfo').hide();
 					$('#prevBtn').hide();
+					$('.wrap_ticket_info').hide();
+					$('#step2and3').hide();
 				} else if(curStep == 3){ // 현재 STEP4 단계라면 ( =전환될 화면이 3단계)
 					// '다음 단계' 버튼 활성화
 					$('#nextBtn').show();
 					$('#bookStep_2_tb').html("");
+					$('#step2and3').show();
 					getSeatInfo();
 				}
 		  
@@ -256,7 +262,7 @@ function getSeatInfo(){
 		  
 	   for (var i=0;i<pfmSeatSection.length; i++){
 		   if (cnt[i] != 0){
-    		$('#bookStep_2_tb').append("<tr><td>"+pfmSeatSection[i].appSec+"석 </td><td> "+cnt[i]+"매 </td></tr>");
+    		$('#bookStep_2_tb').append("<tr><td>"+pfmSeatSection[i].appSec+"석 </td><td style='text-align:right'> "+cnt[i]+"매 </td></tr>");
 		   }
 		}
 	 }
@@ -356,6 +362,7 @@ function getSeatInfo(){
 </style>
 </head>
 <body>
+
 <div id ="stepInfo">
 <ul class="progressbar">
 	<li id="step-1" class='inProgress'>좌석선택</li>
@@ -367,7 +374,6 @@ function getSeatInfo(){
 <div id ="bookStep_1">
 	<div id = "selectedSeats" style="float: left; width: 650px; " ></div>
 	<div class="booking-details"style="float: right"></div>
-	
 	<h2>예매정보</h2>
 	<h3>
 	   선택된 좌석 (<span id="counter">0</span>):
@@ -383,20 +389,90 @@ function getSeatInfo(){
 	
 	<button onclick="seatAllView()">좌석도 전체보기</button>
 </div>
+<!-- STEP 1. 좌석선택 -->
+
+<!-- 전체 묶음 DIV -->
+<div id = "step2and3" style="display:none;">
+<!-- 티켓 정보 -->
+<div class="wrap_ticket_info" style="display: none; float: right">
+		<h2 class="logo_onestop">
+			<a href="#none"><img src="https://cdnticket.melon.co.kr/resource/image/web/onestop/logo_onestop.png" alt="바나나 티켓"></a>
+		</h2>
+		<div class="box_info">
+		<h3 class="select_tit select_t txt_prod_name" title="공연제목">공연제목들어가는자리</h3>
+			<div class="box_ticket">
+				<ul class="box_ticket_list" style="list-style: none;">
+					<li class="nth nth1 txt_prod_schedule">공연 날짜 및 시간 넣는 곳 </li>
+					<li class="nth nth2 txt_ticket_info">공연 좌석 선택수(몇석)<br>VIP석 1층 Q열 038번</li>
+				</ul>
+			</div> <!-- box_ticket -->
+		</div><!-- box_info -->
+		<div class="box_info">
+		<h3 class="select_tit">결제금액</h3>
+		<div class="box_ticket">
+				<div class="box_total_inner">
+					<p class="tk_b">
+						<span class="tk_tit">티켓금액</span><span class="pay pay_comp">
+						<span id="ticketPriceTotal">88,000</span>원</span>
+					</p>
+					<ul class="list_tkpay" style="list-style: none;x">
+						<li>
+							<span class="tk_tit">기본가</span><span class="pay">
+							<span id="basePriceTotal">88,000</span>원</span>
+						</li>
+					</ul>
+				</div>
+				<div class="box_total_inner">
+					<p class="tk_b">
+						<span class="tk_tit tk_tit_b">예매수수료</span>
+						<span class="pay pay_comp"><span id="reservationFee">1,000</span>원</span>
+					</p>
+				</div>
+				<div class="box_total_inner lst">
+					<p class="tk_b">
+						<span class="tk_tit tk_tit_b">배송료</span><span class="pay pay_comp">
+						<span id="deliveryCost">0</span>원</span>
+					</p>
+				</div>
+				<div class="box_total_inner box_result">
+					<span class="tk_tit tot_tit">총 결제금액</span>
+					<strong class="pay tot_pay"><span id="paymentAmount">89,000</span>원</strong>
+				</div>
+		</div>
+		</div><!-- box_info -->
+		<div class="box_info_bm">
+<!-- 티켓 정보 -->
+	<div class="btn_onestop">
+				<span class="button btWhite frt">
+					<a href="javascript: goPrevPage();" class="btnOne">이전</a></span> <span class="button btNext">
+					<a href="#" class="btnOne" id="payment">결제하기</a>
+				</span>
+			</div>
+</div>
+</div>
+
+
+<div id="detailStep" style="float: left">
+
+	<!-- STEP 2. 가격/수령방법 -->
+	<div id ="bookStep_2" style=" display: none; width: 630px; padding: 50px; padding-left: 70px;">
+		<table id ="bookStep_2_tb" class="table">
+		</table>
+	</div>
+	<!-- STEP 2. 가격/수령방법 -->
 	
-<!-- STEP 2. 가격/수령방법 -->
-<div id ="bookStep_2" style=" display: none">
-
-<table id ="bookStep_2_tb" class="table">
-
-</table>
+	<!-- STEP 3. 결제방법 -->
+	<div id ="bookStep_3"style=" display: none;">
+		<%@ include file="payment.jsp" %>	
+	</div>
+	<!-- STEP 3. 결제방법 -->
 
 </div>
 
-<!-- STEP 3. 결제방법 -->
-<div id ="bookStep_3"style=" display: none">
-<%@ include file="payment.jsp" %>
+
 </div>
+
+
 
 <button id = "nextBtn" class="stepBtn">다음단계</button>
 <button id = "prevBtn" class="stepBtn">이전단계</button>
