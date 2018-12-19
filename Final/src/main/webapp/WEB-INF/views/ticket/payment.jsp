@@ -1,15 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <script type="text/javascript"
+
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<!-- 아임포트 스크립트 이게 없으면 실행이 안됨.. -->
  <link rel="stylesheet" href="/resources/css/onestop.css" type="text/css" /> 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
+<!-- 다음 주소 API  -->
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<!-- jQueyr 모달창 script -->
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+<style>
+.wrap_ticket_info {
+    width: 260px;
+ 
+}
+.txt_gray {
+text-align: center;
+}
+#agreementPopup{
+	  z-index: 0 !important;
+	  background-color:white;  
+}
+
+</style>
 <script>
-function openZipSearch() {
+
+jQuery.fn.center = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    return this;
+}
+function popupAgreement(e)
+{
+	if(e=='03'){
+		 $('#agreementPopup').show();
+		 $("#agreementPopup").center();
+	}
+	
+}
+function openZipSearch() { //다음 우편번호 API 
 	new daum.Postcode({
 		oncomplete: function(data) {
 			$('[name=delvyAddr]').val(data.address+data.buildingName);
@@ -55,21 +88,34 @@ function openZipSearch() {
 				});
 			});
 
-	function setDeliveryType(e){
+	function setDeliveryType(e){ // 배송 방법
 		//console.log(e);
-		if(e=='DV03'){
+		var flag = false; 
+		$('#paymentAmout').html('');
+		if(e=='DV03' && !flag){ // 배송으로 선택시 
+			var resultPay=0;
 			$('#part_delivery_info').show();
-		}else{
+			$('#deliveryCost').html('2,500');
+			var pay=$('#paymentAmount').text();
+			pay=pay.replace(/,/g, '');
+			//console.log(pay);
+			resultPay=(+pay+2500);
+			resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			//$('#paymentAmount').text('');
+			$('#paymentAmount').text(resultPay);
+			   flag = true; 
+		}else{ //현장 수령시 
 			$('#part_delivery_info').hide();
 		}
+		
 	}
 	function requestPayment() {
-		console.log("무슨방법?:"+$('input[name="payMethodCode"]:checked').val());
+		//console.log("무슨방법?:"+$('input[name="payMethodCode"]:checked').val());
 		IMP.request_pay({
 			pg : 'uplus', //PG사 - 'kakao':카카오페이, 'html5_inicis':이니시스(웹표준결제), 'nice':나이스페이, 'jtnet':제이티넷, 'uplus':LG유플러스, 'danal':다날, 'payco':페이코, 'syrup':시럽페이, 'paypal':페이팔
 			pay_method : $('input[name="payMethodCode"]:checked').val(), //결제방식 - 'samsung':삼성페이, 'card':신용카드, 'trans':실시간계좌이체, 'vbank':가상계좌, 'phone':휴대폰소액결제
 			merchant_uid : $("#merchant_uid").val(), //고유주문번호 - random, unique 해야됨 중복되면 결제가 되지 않음 (없으면 안됨)
-			amount : $("#amount").val(), //결제금액 - 필수항목 ( 없으면 안됨.)
+			amount : $("#paymentAmount").html(), //결제금액 - 필수항목 ( 없으면 안됨.)
 			buyer_email : $("#buyer_email").val(), //주문자Email - 선택항목 해당 메일로 주문결제 내역을 보내줌 
 			buyer_name : $("#buyer_name").val(), //주문자명 - 선택항목
 			buyer_tel : $("#buyer_tel").val(), //주문자연락처 - 필수항목, 누락되면 PG사전송 시 오류 발생!!
@@ -139,8 +185,19 @@ function openZipSearch() {
 ${loginUser.userIdx };
 <div class="section_onestop">
 <div class="wrap_select">
-<!--  -->
-<div class="box_how">
+<div class="location_step">
+			<ul class="list_step">
+			<li class="step"><!-- step 1 -->
+			<a href="/reservation/popup/stepSeat.htm" class="btn_o_menu btn_o_menu01">좌석선택</a></li>
+			<li class="step"><!-- step 2 -->
+			<a href="/reservation/popup/stepTicket.htm" class="btn_o_menu btn_o_menu02">가격선택</a></li>
+			<li class="step"><!-- step 3 -->
+			<a href="javascript:;" class="btn_o_menu btn_o_menu03 on">배송/결제</a></li>
+			</ul>		
+</div><!-- end class="location_step" -->
+<div class="box_r">
+<!-- 수령방법  -->
+<div class="box_how"> 
 	<h3 class="select_tit">수령방법을 선택하세요</h3>
 	<ul class="list_receipt_how" id="partDeliveryType" style="">
 	<li id="delvyType02">
@@ -320,7 +377,7 @@ ${loginUser.userIdx };
 			</div>
 			<div class="box_ar_info">
 				<div class="tb_date">
-					<table class="tbl ">
+					<table class="tbl">
 						<caption class="hide"></caption>
 						<colgroup>
 							<col style="width: 226px;">
@@ -356,16 +413,19 @@ ${loginUser.userIdx };
 						<input type="checkbox" id="chkAgree04" name="chkAgree"
 							title="개인정보 제3자 제공 동의 및 주의사항"> <label for="chkAgree04"><span
 							class="txt_lab">개인정보 제3자 제공 동의</span></label>
+							<a href="javascript: popupAgreement('03');" class="btn_flexible btn_flexible_ico2 btn_detail">
+							<span>상세보기</span></a>
 						<!-- 레이어 보기 임시 onclick 이벤트 개발시 삭제 -->
 					</div>
 				</li>
 			</ul>
 		</li>
 	</ul>
-</div>
+</div><!-- end class="box_cont box_receipt" -->
 <!-- 결제 동의 -->
 
-</div>
+</div><!-- end class="box_r" -->
+</div><!-- end class="wrap_select" -->
 <!-- 티켓 정보 -->
 <div class="wrap_ticket_info">
 		<h2 class="logo_onestop">
@@ -388,14 +448,42 @@ ${loginUser.userIdx };
 						<span class="tk_tit">티켓금액</span><span class="pay pay_comp">
 						<span id="ticketPriceTotal">88,000</span>원</span>
 					</p>
+					<ul class="list_tkpay" style="list-style: none;x">
+						<li>
+							<span class="tk_tit">기본가</span><span class="pay">
+							<span id="basePriceTotal">88,000</span>원</span>
+						</li>
+					</ul>
+				</div>
+				<div class="box_total_inner">
+					<p class="tk_b">
+						<span class="tk_tit tk_tit_b">예매수수료</span>
+						<span class="pay pay_comp"><span id="reservationFee">1,000</span>원</span>
+					</p>
+				</div>
+				<div class="box_total_inner lst">
+					<p class="tk_b">
+						<span class="tk_tit tk_tit_b">배송료</span><span class="pay pay_comp">
+						<span id="deliveryCost">0</span>원</span>
+					</p>
+				</div>
+				<div class="box_total_inner box_result">
+					<span class="tk_tit tot_tit">총 결제금액</span>
+					<strong class="pay tot_pay"><span id="paymentAmount">89,000</span>원</strong>
 				</div>
 		</div>
 		</div><!-- box_info -->
-</div>
+		<div class="box_info_bm">
 <!-- 티켓 정보 -->
+	<div class="btn_onestop">
+				<span class="button btWhite frt">
+					<a href="javascript: goPrevPage();" class="btnOne">이전</a></span> <span class="button btNext">
+					<a href="#" class="btnOne" id="payment">결제하기</a>
+				</span>
+			</div>
 </div>
-
-
+</div>
+</div><!-- end class="section_onestop" -->
 <table id="pay" style="margin: 0 auto;">
 <!-- 	<tr> -->
 <!-- 		<th>결제수단</th> -->
@@ -438,7 +526,61 @@ ${loginUser.userIdx };
 <!-- 	</tr> -->
 </table>
 
-<button id="payment">결제하기</button>
+<!-- <button id="payment">결제하기</button> -->
 <button id="back">돌아가기</button>
 <button id="cancel">결제취소</button>
 
+
+<div class="layerPop layer_personal_info" id="agreementPopup" style="width: 590px; top: 50px; left: 25px; display: none;"><div class="la_header">
+    <div class="la_header1">
+        <h3>개인정보 제3자 제공</h3>
+    </div>
+    <div class="popClose">
+            <a href="javascript:;" class="btn_layerpopup_close" onclick="layerPopupClose('agreementPopup'); return false;">레이어팝업닫기</a><!-- 레이어 닫기 임시 onclick 이벤트 개발시 삭제 -->
+        </div>
+</div>
+<div class="la_middle">
+    <div class="la_middle1">
+        <div class="box_personal">
+
+            <div class="inner_default" data-contents="melon">
+                <p>(주)카카오이 제공하는 서비스를 통해 이용자간 거래관계가 이루어진 경우 고객응대 및 공연정보 안내 등을 위하여 관련한 정보는 필요한 범위내에서 거래 당사자에게 아래와 같이 제공됩니다.</p>
+                <ol class="list_personal">
+                    <li class="frt">1. 개인정보 제공 동의
+                        <span class="txt_per">(주)카카오는 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 따라 이용자의 개인정보에 있어 아래와 같이 안내하고 동의를 받아 상품 기획사 및 (주)카카오 고객센터에 제공합니다.</span>
+                    </li>
+                    <li>2. 개인정보 제공받는자<span class="txt_per"><span id="agreeAnotherThirdPartyName"></span>(주)카카오 고객센터, <strong id="agreeBpName">(주)창라이프</strong>, <strong id="agreePlaceName">인천종합문화예술회관</strong><strong id="agreeClipBpName">, 클립서비스(주)</strong></span></li>
+                    <li>3. 개인정보 이용목적
+                        <ul>
+                            <li class="li_per">- 고객센터 : 예매내역 확인 및 고객응대</li>
+                            <li class="li_per">- 기획사 : 티켓현장발권, 캐스팅변경, 공연취소 등에 대한 고객안내<span id="g7ExtraText"></span></li>
+                        </ul>
+                    </li>
+                    <li>4. 개인정보 제공항목<span class="txt_per">성명,아이디,휴대폰번호, 이메일주소,주문/배송 정보, 예매자가 입력한 추가 정보</span></li>
+                    <li>5. 개인정보 보유 및 이용기간
+                        <span class="txt_per">개인정보 이용목적 달성 시까지(단, 관계 법령의 규정에 의해 보존의 필요가 있는 경우 및 사전동의를 득한)</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- UX-1630 : 20181115 -->
+            <div class="inner_default" data-contents="charlotte" style="display:none;">
+                <p>(주)카카오가 제공하는 멜론티켓 서비스를 통해 이용자간 거래관계가 이루어진 경우 고객응대 및 공연정보 안내 등을 위하여 관련한 정보는 필요한 범위내에서 거래 당사자에게 아래와 같이 제공됩니다.</p>
+                <ol class="list_personal">
+                    <li class="frt">1. 제공항목
+                        <span class="txt_per">성명,아이디,휴대폰번호, 이메일주소,주문/배송 정보, 예매자가 입력한 추가 정보</span>
+                    </li>
+                    <li>2. 제공목적<span class="txt_per">티켓현장발권, 캐스팅변경, 공연취소 등에 대한 고객안내</span></li>
+                    <li>3. 제공받는 자<span class="txt_per">기획사, 공연장</span></li>
+                    <li>4. 보유 및 이용기간<span class="txt_per">재화 또는 서비스의 제공 완료일로부터 3개월(관련 법령에 의해 보존할 필요가 있는 경우 해당 보유기간 동안 보관)</span></li>
+                </ol>
+            </div>
+            <!-- //UX-1630 : 20181115 -->
+
+        </div>
+    </div>
+</div>
+<div class="la_footer">
+    <div class="la_footer1"></div>
+</div>
+</div>
