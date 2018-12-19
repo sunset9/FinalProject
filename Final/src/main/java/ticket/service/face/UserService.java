@@ -2,7 +2,10 @@ package ticket.service.face;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.MyChoice;
 import ticket.dto.Performance;
@@ -94,4 +97,19 @@ public interface UserService {
 	 * @작성자:홍나영
 	 */
 	public String findEmail(User user);
+	
+	/**
+	 * @최종수정일: 2018.12.18
+	 * @Method설명: 비밀번호 찾기 했을 때 임시 비밀번호 넣기
+	 * @작성자:홍나영
+	 */
+	public void changePw(User user);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 프로필 사진 업로드하기
+	 * @작성자:홍나영
+	 */
+	public void updateProfile(ServletContext context, MultipartFile file,User user );
 }

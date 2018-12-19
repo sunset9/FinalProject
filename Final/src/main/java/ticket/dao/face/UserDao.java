@@ -149,4 +149,11 @@ public interface UserDao {
 	public String selectEmailByNameAndPhone(User user);
 
 	
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 프로필 사진 바꾸기
+	 * @작성자:홍나영
+	 */
+	public void updateProfile(User user);
+	
 }

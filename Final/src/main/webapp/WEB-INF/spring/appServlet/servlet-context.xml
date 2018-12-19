@@ -28,6 +28,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/resources/image/**" location="/resources/image/" />
+	<resources mapping="/resources/image/profile/**" location="/resources/image/profile" />
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
@@ -78,15 +79,14 @@
 	<!-- spring-context-support -->
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com"/>
-		<beans:property name="port" value="465"/>
+		<beans:property name="port" value="587"/>
 		<beans:property name="username" value="1133acacac@gmail.com"/>
 		<beans:property name="password" value="aa515253.."/>
 		<beans:property name="javaMailProperties">
 			<beans:props>
 				<beans:prop key="mail.smtp.auth">true</beans:prop>
 				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
-				<beans:prop key="mail.smtp.timeout">8500</beans:prop>
-				<beans:prop key="mail.debug">true</beans:prop>
+				<beans:prop key="mail.smtp.timeout">60*60*10</beans:prop>
 			</beans:props>
 		</beans:property>
 	</beans:bean>
