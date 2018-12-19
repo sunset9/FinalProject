@@ -33,8 +33,8 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
-	public Expectation getExpectationInsert(String exp) {
-		return mDetailDao.insertExpectation(exp);
+	public void getExpectationInsert(String expContent, Performance pfm) {
+		mDetailDao.insertExpectation(expContent, pfm);
 	}
 
 	@Override
@@ -90,6 +90,11 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public List<Artist> getCastInfo(Performance pfm) {
 		return mDetailDao.selectCastInfo(pfm);
+	}
+
+	@Override
+	public List<User> getExpectationUserList(Performance pfm) {
+		return mDetailDao.selectExpecUserList(pfm);
 	}
 	
 }

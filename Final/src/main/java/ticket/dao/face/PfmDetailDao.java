@@ -2,6 +2,8 @@ package ticket.dao.face;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import ticket.dto.Artist;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
@@ -33,11 +35,29 @@ public interface PfmDetailDao {
 	public List<Expectation> selectExpectationList(Performance pfm);
 
 	/**
+	 * 최종수정일: 2018.12.19
+	 * @Method설명: 기대평 작성자 목록
+	 * @작성자: 배수연
+	 */
+	public List<User> selectExpecUserList(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 출연진 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Artist> selectCastInfo(Performance pfm);
+
+	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 기대평 작성
 	 * @작성자: 배수연
 	 */
-	public Expectation insertExpectation(String exp);
+	public void insertExpectation(
+			String expContent
+			, @Param(value="pfm") Performance pfm
+//			, @Param(value="user") User user
+		);
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -103,12 +123,5 @@ public interface PfmDetailDao {
 	 * @작성자: 배수연
 	 */
 	public PfmDetail selectPfmDetailInfo(Performance pfm);
-
-	/**
-	 * 최종수정일: 2018.12.18
-	 * @Method설명: 출연진 리스트 출력
-	 * @작성자: 배수연
-	 */
-	public List<Artist> selectCastInfo(Performance pfm);
 	
 }

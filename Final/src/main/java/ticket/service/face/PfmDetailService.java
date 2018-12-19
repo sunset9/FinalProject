@@ -34,13 +34,20 @@ public interface PfmDetailService {
 	 * @작성자: 배수연
 	 */
 	public List<Expectation> getExpectationList(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.19
+	 * @Method설명: 기대평 작성자 목록
+	 * @작성자: 배수연
+	 */
+	public List<User> getExpectationUserList(Performance pfm);
 	
 	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 기대평 작성
 	 * @작성자: 배수연
 	 */
-	public Expectation getExpectationInsert(String exp);
+	public void getExpectationInsert(String expContent, Performance pfm);
 	
 	/**
 	 * 최종수정일: 2018.12.05
