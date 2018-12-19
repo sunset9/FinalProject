@@ -302,12 +302,12 @@
 				OR (ticket_end between #{start } and #{end })
 	</select>
 	
-	<select id="selectCntAllSeatByHallIdx" parameterType = "ticket.dao.Performance" resultType="int">
+	<select id="selectCntAllSeatByHallIdx" parameterType = "ticket.dto.Performance" resultType="int">
 		SELECT COUNT(*) FROM seat
 		WHERE hall_idx = #{hallIdx }
 	</select>
 	
-	<select id="selectCntBookSeatBypfmIdx" parameterType = "ticket.dao.Performance" resultType="int">
+	<select id="selectCntBookSeatBypfmIdx" parameterType = "ticket.dto.Performance" resultType="int">
 		
 	</select>
 </mapper>
