@@ -1,5 +1,6 @@
 package ticket.service.face;
 
+import java.util.Date;
 import java.util.List;
 
 import ticket.dto.MainBanner;
@@ -140,5 +141,13 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public List<Performance> ticketOpenDayList();
+
+	/**
+	 * @return 
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 공연 예매율 구하기
+	 * @작성자: 전해진
+	 */
+	public List<Performance> getRank(String sort, Date today);
 
 }

@@ -296,4 +296,18 @@
 		ORDER BY rnum
 	</select>
 	
+	<select id="selectPfmListByPeriod" resultMap="Performance">
+		SELECT * FROM performance
+		WHERE (ticket_start between #{start } and #{end })  
+				OR (ticket_end between #{start } and #{end })
+	</select>
+	
+	<select id="selectCntAllSeatByHallIdx" parameterType = "ticket.dao.Performance" resultType="int">
+		SELECT COUNT(*) FROM seat
+		WHERE hall_idx = #{hallIdx }
+	</select>
+	
+	<select id="selectCntBookSeatBypfmIdx" parameterType = "ticket.dao.Performance" resultType="int">
+		
+	</select>
 </mapper>
