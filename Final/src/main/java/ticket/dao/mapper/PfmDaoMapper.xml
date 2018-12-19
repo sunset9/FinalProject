@@ -424,4 +424,5 @@
 		ON MB.PFM_IDX = PI.PFM_IDX JOIN HALL H
 		ON P.HALL_IDX = H.HALL_IDX
 	</select>
+	
 </mapper>

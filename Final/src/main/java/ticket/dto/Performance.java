@@ -22,14 +22,15 @@ public class Performance {
 	private int runningTime;
 	private Date createDate;
 	private String posterName; // 포스터 이름(서버에 저장된 이름)
-	 
+	private float bookingRate; // 예매율
+	
 	
 	@Override
 	public String toString() {
 		return "Performance [pfmIdx=" + pfmIdx + ", name=" + name + ", genreIdx=" + genreIdx + ", pfmStart=" + pfmStart
 				+ ", pfmEnd=" + pfmEnd + ", ticketStart=" + ticketStart + ", ticketEnd=" + ticketEnd + ", hallIdx="
 				+ hallIdx + ", ageGradeIdx=" + ageGradeIdx + ", runningTime=" + runningTime + ", createDate="
-				+ createDate + ", posterName=" + posterName + "]";
+				+ createDate + ", posterName=" + posterName + ", bookingRate=" + bookingRate + "]";
 	}
 
 	public int getPfmIdx() {
@@ -128,7 +129,14 @@ public class Performance {
 		this.posterName = posterName;
 	}
 	
-	 
+	public float getBookingRate() {
+		return bookingRate;
+	}
+
+	public void setBookingRate(float bookingRate) {
+		this.bookingRate = bookingRate;
+	}
+
 
 	 
 }

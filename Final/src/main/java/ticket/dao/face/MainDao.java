@@ -1,5 +1,6 @@
 package ticket.dao.face;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -164,5 +165,28 @@ public interface MainDao {
 	 * @작성자: 배수연
 	 */
 	public List<Performance> selectOpenDayPfmList();
+
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmListByPeriod(@Param(value="start") String start
+			, @Param(value="end") String end);
+
+	/**
+	 * @return 
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 해당 공연의 총 좌석 수 조회
+	 * @작성자: 전해진
+	 */
+	public int selectCntAllSeatByHallIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 예매 기간 내에 예매한 좌석 수 조회
+	 * @작성자: 전해진
+	 */
+	public int selectCntBookSeatBypfmIdx(Performance pfm);
 
 }
