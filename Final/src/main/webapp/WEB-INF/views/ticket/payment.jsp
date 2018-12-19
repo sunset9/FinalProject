@@ -98,7 +98,18 @@ function openZipSearch() { //다음 우편번호 API
 
 				$("#payment").click(function() { //payment 버튼 클릭시 
 // 					console.log("클릭됐습니다.");
-					requestPayment(); //결제 실행 함수
+					if($('input:checkbox[id="chkAgree01"]').is(":checked") == false){
+						 alert('수수료 및 취소기한에 대한  동의를 체크 해주세요');
+						return;
+					}else if($('input:checkbox[id="chkAgree04"]').is(":checked") == false){
+						 alert($('input:checkbox[id="chkAgree04"]').attr('title')+'를 동의해주세요');
+						return;
+					}else if($('input:checkbox[id="chkAgree05"]').is(":checked") == false){
+						 alert($('input:checkbox[id="chkAgree05"]').attr('title')+'를 동의해주세요');
+						return;
+					}else{
+						requestPayment();
+					}
 				});
 
 				$("#merchant_uid").val( //merchant_uid 설정법 공연명_book_idx_날짜
@@ -106,6 +117,15 @@ function openZipSearch() { //다음 우편번호 API
 								+ '_' + new Date().getTime());
 				$("#back").click(function() {
 					history.go(-1); //이전으로 
+				});
+				$('#chkAgreeAll').click(function(){
+					if($("#chkAgreeAll").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
+						$("input[type=checkbox]").prop("checked",true); 
+					// 전체선택 체크박스가 해제된 경우 
+					} else {
+						//해당화면에 모든 checkbox들의 체크를해제시킨다. 
+						$("input[type=checkbox]").prop("checked",false); 
+						}
 				});
 				$("#cancel").click(function(){ //결제취소 버튼 
 					$.ajax({
