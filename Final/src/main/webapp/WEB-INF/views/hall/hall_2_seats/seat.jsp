@@ -246,7 +246,28 @@ div.seatCharts-cell {
       }
       
       
-      //좌석정보 보내기
+      //좌석정보 보내기(좌석클릭시마다)
+      $('.seatCharts-cell').on('click',function(){
+    	  var seat = $(this).attr('id');	
+		  
+		  var seatArr = new Array();
+		  seatArr= seat.split("_");
+		  
+		  var str = $(this).attr('class');
+		  var array = new Array(); 
+		  array = str.split(" ");
+		  console.log(); // 무슨좌석인지
+		  console.log() ;
+		  $(".nth2").append(array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay});
+		  $(".nth2").append('<br>');
+		  
+		  var resultPay = $('#total').text();
+		  resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		  $('#ticketPriceTotal').text(resultPay);
+      
+      });
+      
+      
       function btnClick() {
     	  $('#seat-map').find('.selected').each(function() {
     		  
@@ -258,14 +279,23 @@ div.seatCharts-cell {
     		  var str = $(this).attr('class');
     		  var array = new Array(); 
     		  array = str.split(" ");
-    		  console.log(array[2]+" 석"); // 무슨좌석인지
-    		  console.log(array[3]+" 구역 "+" "+seatArr[1]+" 행 "+seatArr[2]+" 열"+" : "+${seatMap.pay}) ;
+    		  console.log(); // 무슨좌석인지
+    		  console.log() ;
+    		  $(".nth2").append(array[2]+" 석" +array[3]+" 구역 "+" "+seatArr[1]+" 행 "+seatArr[2]+" 열"+" : "+${seatMap.pay});
+    		  $(".nth2").append('<br>');
     	  });
     	  
-    	  console.log("가격: "+$('#total').text());
+//     	  console.log("가격: "+$('#total').text());
+		  
+		  var resultPay = $('#total').text();
+		  resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		  $('#ticketPriceTotal').text(resultPay);
+    	  
 	}
+      
+      
    </script>
    
-   <button onclick="btnClick()">좌석정보 보내기</button>
+<!--    <button onclick="btnClick()">좌석정보 보내기</button> -->
 </body>
 </html>
