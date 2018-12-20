@@ -70,7 +70,7 @@ public class TicketController {
 	
 	
 	@RequestMapping(value="/ticket/book", method=RequestMethod.GET)
-	public void book (String Date, String time) {
+	public void book (String Date, String time, String name) {
 		
 		
 	}

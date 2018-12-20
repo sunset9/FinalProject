@@ -168,7 +168,7 @@ public interface MainDao {
 
 	/**
 	 * @최종수정일: 2018.12.19
-	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회
+	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회 (좌석 수 많은 순으로 정렬)
 	 * @작성자: 전해진
 	 */
 	public List<Performance> selectPfmListByPeriod(@Param(value="start") String start

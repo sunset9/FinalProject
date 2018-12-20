@@ -18,6 +18,7 @@ import ticket.dto.PfmDetail;
 import ticket.dto.PfmTheme;
 import ticket.dto.Poster;
 import ticket.dto.SeatSection;
+import ticket.dto.TabBanner;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
@@ -360,4 +361,26 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public void deleteMainBanner(int mainbanIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.20
+	 * @Method설명: New 탭배너 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<TabBanner> selectNewTabBanner();
+	
+	/**
+	 * @최종수정일: 2018.12.20
+	 * @Method설명: 콘서트 탭배너 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<TabBanner> selectConTabBanner();
+	
+	/**
+	 * @최종수정일: 2018.12.20
+	 * @Method설명: 뮤지컬&연극 탭배너 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<TabBanner> selectMuTabBanner();
+	
 }

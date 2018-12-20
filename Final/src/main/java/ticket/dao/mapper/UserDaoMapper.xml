@@ -136,22 +136,24 @@
   </update>
   
    <select id="selectSOB" parameterType="ticket.dto.User" resultMap="SOBMap">
-	  	SELECT
-		    b.create_date, p.name, p.pfm_start, p.pfm_end, b.book_group, b.cancel_date,
-		    bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
-		FROM
-		    book b
-		    JOIN performance p ON b.pfm_idx = p.pfm_idx
-		    JOIN poster_info pi ON p.pfm_idx = pi.pfm_idx
-		    JOIN hall h ON p.hall_idx = h.hall_idx
-		    JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
-		    JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
-		WHERE
-		    b.user_idx = #{userIdx}
+        SELECT TEST.*, COUNT(state) as ea FROM (
+            SELECT
+                trunc(b.create_date, 'dd') create_date, p.name, p.pfm_start, p.pfm_end, b.book_group, trunc(b.cancel_date, 'dd') cancel_date,
+                bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
+            FROM
+                book b 
+                JOIN performance p ON b.pfm_idx = p.pfm_idx
+                JOIN poster_info pi ON p.pfm_idx = pi.pfm_idx
+                JOIN hall h ON p.hall_idx = h.hall_idx
+                JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
+                JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
+            WHERE
+                b.user_idx = #{userIdx}
+        ) TEST
 		GROUP BY
-		    b.create_date, p.name, p.pfm_start, p.pfm_end, b.book_group, b.cancel_date,
-		    bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
-		ORDER BY b.create_date
+		    create_date, name, pfm_start, pfm_end, book_group, cancel_date,
+		    state, stored_name, hall_name, pfm_date, pfm_time
+		ORDER BY create_date
   </select>
   
   <select id="selectUserGrade" parameterType="ticket.dto.User" resultMap="UserMap">

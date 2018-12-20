@@ -144,10 +144,10 @@ public interface MainService {
 
 	/**
 	 * @return 
-	 * @최종수정일: 2018.12.19
+	 * @최종수정일: 2018.12.20
 	 * @Method설명: 공연 예매율 구하기
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getRank(String sort, Date today);
+	public List<Performance> getTopRank(String sort, Date today);
 
 }

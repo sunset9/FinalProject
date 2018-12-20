@@ -3,6 +3,63 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+
+<script type="text/javascript">
+$(document).ready(function() {
+	console.log(${pfmInfoList.pfmIdx });
+	$('ul.tabs li').click(function(){
+		var tab_id = $(this).attr('data-tab');
+ 
+		$('ul.tabs li').removeClass('current');
+	    $('.tab-content').removeClass('current');
+		 
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	});
+		
+	$.ajax({
+		type:"get",
+		url:"/ticket/bookInfo",
+		data:{
+			"pfmIdx" : ${pfmInfoList.pfmIdx},
+			"hallIdx" : ${pfmInfoList.hallIdx},
+			"name" : "${pfmInfoList.name}"
+		},
+		async: false,
+		dataType:"html",
+		success:function(res){
+			$('#bookInfo').html(res);
+		}
+	});	
+		
+	// 기대평 작성 버튼 클릭 시
+	$('#expecBtn').click(function() {
+			
+		var expContent = $('#expectation').val();;
+		console.log(expContent);
+		
+		$.ajax({
+			url: '/ticket/pfmdetail'
+			, method: 'POST'
+			, data: {
+				"expContent": expContent
+			}
+			,dataType: 'json'
+			, success: function(d){
+				console.log("성공");
+					
+				// 성공할 경우 리스트에 출력해주기
+// 				insertExpectation(d.expectationList);
+			}
+			, error: function(e) {
+				console.log("실패");
+			}
+		});
+	});
+
+});
+</script>
+
 <style>
 .container {
 	margin: 0 5% 10px 5%;

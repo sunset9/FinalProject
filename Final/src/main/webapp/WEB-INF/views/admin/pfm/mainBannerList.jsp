@@ -45,16 +45,22 @@ function mbInsert() {
 	width: 1090px;  
 }
 
+.mbRegist {
+	margin-top: 110px;
+    margin-left: 55px;
+}
+
 * {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;		
 }
+
 </style>
 <body>
 <h3>배너관리 - 메인배너</h3>
 <hr>
 
-<p>최대 5개 까지만 등록이 가능합니다.</p>
+<p style="display: inline;">최대 5개 까지만 등록이 가능합니다.</p>
 <button class="finalSave">최종저장</button><br>
 
 <div class="mainBannerBox">
@@ -70,7 +76,7 @@ function mbInsert() {
 	</c:forEach>
 	<div class="plusBox"> 
 		<c:if test="${fn:length(mBannerList) < 5 }">
- 			<a href="/admin/registMainbanner"><button>추가하기</button></a>   
+ 			<a href="/admin/registMainbanner"><button class="mbRegist">추가하기</button></a>   
 		</c:if>
 	</div>
 </div>

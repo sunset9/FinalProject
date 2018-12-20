@@ -13,6 +13,7 @@ $(document).ready(function() {
 	}
 	
 	
+	// 이메일 찾기 버튼 눌럿을 때 반응
 	$('#emailBtn').click(function() {
 		$.ajax({
 			type : "POST"
@@ -23,7 +24,12 @@ $(document).ready(function() {
 			}
 			, success: function(data){
 				if(data!=null) {
-					alert("회원님으 아이디는 "+data+" 입니다.")
+					console.log(data);
+					// 모달 바디에 받아온 정보 추가하기 
+					$('#modalBody').html('등록된 이메일은 <span style="font-weight: bolder">'+data+'</span> 입니다.');
+					$('#ename').val("");
+					$('#ephone
+							').val("");
 				}
 			}
 		}); // end ajax
@@ -40,7 +46,10 @@ $(document).ready(function() {
 			}
 			, success: function(data){
 				if(data!=null) {
-					alert("입력하신 이메일로 임시 비밀번호를 보내드렸습니다." +data)
+					alert("입력하신 이메일로 임시 비밀번호를 보내드렸습니다." +data);
+					$('#ename').val("");
+					$('#phone').val("");
+					$('#email').val("");
 				}
 			}
 		}); // end ajax
@@ -79,7 +88,7 @@ function directInput(){
 	<form id="emailForm">
 		이름 : <input type="text" name="name" id ="ename"/><br>
 		연락처 : <input type="text" name="phone" id ="ephone"/><br>
-		<button type = "button" id="emailBtn">찾기</button>
+	<button type = "button" id="emailBtn" data-toggle="modal" data-target="#emailModal" >찾기</button>
 	</form>
 	</div>
 	
@@ -106,3 +115,23 @@ function directInput(){
   </div>
 
 </div>
+
+
+<!-- 찾은 아이디 보여줄 모달창 -->
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="emailModalLabel">이메일 찾기</h4>
+      </div>
+      <div id ="modalBody"class="modal-body">
+      
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+  </div>

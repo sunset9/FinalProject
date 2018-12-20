@@ -44,6 +44,9 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Override
 	public List<StateOfBook> getBookDetail(User user) {
+		System.out.println("파라미터 유저: "+user);
+		System.out.println("DAO결과:"+uDao.selectSOB(user));
+		
 		return uDao.selectSOB(user);
 	}
 

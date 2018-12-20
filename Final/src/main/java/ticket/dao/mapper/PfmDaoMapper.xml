@@ -42,6 +42,18 @@
 		<result column="thumb_img_str" property="thumbImgStr"/>
 		<result column="hall_name" property="hallName"/>
 	</resultMap>
+	
+	<resultMap type="ticket.dto.TabBanner" id="TabBannerMap">
+		<result column="tab_idx" property="tabIdx" />
+		<result column="pfm_idx" property="pfmIdx" />
+		<result column="tab_genre" property="tabGenre" />
+		<result column="banner_path" property="bannerPath" />
+		<result column="create_date" property="createDate" />
+		<result column="genre_idx" property="genreIdx" />
+		<result column="pfm_start" property="pfmStart" />
+		<result column="pfm_end" property="pfmEnd" />
+		<result column="hall_name" property="hallName" />
+	</resultMap>
 
 	<select id="selectAllGenre" resultMap="Genre">
 		SELECT genre_idx, genre
@@ -430,5 +442,62 @@
 		DELETE main_banner
 		WHERE mainban_idx = #{value}
 	</delete>
+	
+	<select id="selectNewTabBanner" resultMap="TabBannerMap">
+		SELECT
+		    tb.tab_idx,
+		    tb.pfm_idx,
+		    tb.tab_genre,
+		    tb.banner_path,
+		    tb.create_date,
+		    p.name,
+		    p.pfm_start,
+		    p.pfm_end,
+		    h.hall_name
+		FROM
+		    tab_banner tb
+		    JOIN performance p ON tb.pfm_idx = p.pfm_idx
+		    JOIN hall h ON p.hall_idx = h.hall_idx
+		WHERE
+		    tb.tab_genre = 3
+	</select>
+	
+	<select id="selectConTabBanner" resultMap="TabBannerMap">
+		SELECT
+		    tb.tab_idx,
+		    tb.pfm_idx,
+		    tb.tab_genre,
+		    tb.banner_path,
+		    tb.create_date,
+		    p.name,
+		    p.pfm_start,
+		    p.pfm_end,
+		    h.hall_name
+		FROM
+		    tab_banner tb
+		    JOIN performance p ON tb.pfm_idx = p.pfm_idx
+		    JOIN hall h ON p.hall_idx = h.hall_idx
+		WHERE
+		    tb.tab_genre = 1
+	</select>
+	
+	<select id="selectMuTabBanner" resultMap="TabBannerMap">
+		SELECT
+		    tb.tab_idx,
+		    tb.pfm_idx,
+		    tb.tab_genre,
+		    tb.banner_path,
+		    tb.create_date,
+		    p.name,
+		    p.pfm_start,
+		    p.pfm_end,
+		    h.hall_name
+		FROM
+		    tab_banner tb
+		    JOIN performance p ON tb.pfm_idx = p.pfm_idx
+		    JOIN hall h ON p.hall_idx = h.hall_idx
+		WHERE
+		    tb.tab_genre = 2
+	</select>
 
 </mapper>

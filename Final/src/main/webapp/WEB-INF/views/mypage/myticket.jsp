@@ -2,31 +2,38 @@
     pageEncoding="UTF-8"%>
     
 <style type="text/css">
-#userinfo{
-	background-color: #CCC;
-}
 
-#userProfile{
-	width: 150px;
-
-	
-}
 #userNick{
 	font-weight: bolder;
 	font-size: 2em;
 }
+
+.tabSec{
+	border: 1px solid #CCC;
+	width: 33%;
+	display: inline-block;	
+}
+
+
 </style>
+
+<script type="text/javascript">
+
+</script>
 
 <h1>마이페이지 예약 현황</h1>
 <hr>
-<div id = "userinfo">
-	<div class = "form-inline">
-	
-		<img id = "userProfile" src="/resources/image/profile.png"  class="img-circle"/>
-		<span id="userNick">${loginUser.nick }</span> <small>님 안녕하세요</small>
-		<button id="userInfoChange"  onclick ="location.href='/user/pwcheck'"class="btn btn-default">정보 변경</button>
-		<span>입금 대기</span><span>예매 완료</span><span>취소 현황</span>
-	</div>
-	
-	
+<div>
+<!-- 유저 정보 담고 있는 jsp -->
+<jsp:include page="userinfo.jsp" />
+</div>
+
+<div id ="tabSec" style="border: 1px solid #CCC; ">
+	<a href='/mypage/myticket'><div class = "tabSec" id ="ticket">예매현황</div></a>
+	<a href='/mypage/mychoice'><div class = "tabSec" id ="choice">찜</div></a>
+	<a href='/mypage/myinquery'><div class = "tabSec" id ="inquiry">내 문의사항</div></a>
+</div>
+
+<div class ="contain">
+
 </div>

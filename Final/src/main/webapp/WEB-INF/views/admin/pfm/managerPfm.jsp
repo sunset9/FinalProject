@@ -267,6 +267,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 });
 
 </script>
+
 <div class="managerPfmBox">
 <h1>공연 관리 - 전체 목록 조회</h1>
 <hr>
@@ -278,6 +279,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <input type="text" id="searchPfm" placeholder="공연 제목 검색" onkeypress="if(event.keyCode==13){$('#searchPfmBtn').trigger('click'); return false;}"/> 
 <button type="button" id="searchPfmBtn">검색</button>
  
+<div class="managerAllBox">
 <!-- 탭 메뉴 -->
 <ul class="tabs">
     <li><span id="CON">콘서트</span></li>
@@ -322,7 +324,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <!-- </div> -->
 </div>
 </div>
-
+</div>
 </div>
 </body>
 </html>
