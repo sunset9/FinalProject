@@ -97,8 +97,8 @@
 				  alert('공연날짜,공연시간을 제대로 선택해주세요');
 				  return;
 			  }
-			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx};
-			  window.open(path, "_blank", "width=900,height=700");
+			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx}+"&name="+"${pfm.name}";
+			  window.open(path, "_blank", "width=1100,height=700");
 		});
 
 

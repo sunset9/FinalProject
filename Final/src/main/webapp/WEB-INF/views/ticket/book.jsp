@@ -19,10 +19,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
 <script type="text/javascript">
+var basepay=0;
+var fee=0;
+var rp =0;
 $(document).ready(function() {
 	$('#stepInfo').hide();
 	$('#prevBtn').hide();
-	
 	console.log(${param.pfmIdx });
 	console.log(${param.hallIdx });
 	var pfmSeatSection = new Array();
@@ -45,8 +47,7 @@ $(document).ready(function() {
 			
 			}
 		});	
-
-
+	
 	
 	  //좌석 그리는 페이지띄어주기
 	  $('#selectedSeats').on('click','.section', function(){
@@ -78,7 +79,7 @@ $(document).ready(function() {
 		  
 	  });
 	  
-	  
+
 
 	 
 	
@@ -157,9 +158,28 @@ $(document).ready(function() {
 				// 다음 등록 양식 보여줌
 				$('#bookStep_'+prevStep).show();
 		  }
-	})
+		  
+		 $('#basePriceTotal').text( $('#ticketPriceTotal').text());
+		 $('#reservationFee').text("1,000");
 	
-	  
+		 basepay = $('#basePriceTotal').text();
+		 basepay=basepay.replace(/,/g, '');
+		 
+		 fee = $('#reservationFee').text();
+		 fee=fee.replace(/,/g,'');
+		 
+		 var deliverypay = $('#deliveryCost').text();
+		 deliverypay = deliverypay.replace(/,/g,'');
+		 
+		 
+		 rp=(+basepay+(+fee));
+		 var resultPay = parseInt(basepay)+parseInt(fee)+parseInt(deliverypay);
+		 resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		 
+		 $('#paymentAmount').text(resultPay);
+		 
+		 
+	})
 });
 
 	  
@@ -359,6 +379,16 @@ function getSeatInfo(){
 .progressbar li.completeStep + li:after {
      background-color: #55b776; 
 }
+
+
+/*결제버튼*/
+.btn_onestop {
+    margin-bottom: -50px;
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -393,17 +423,18 @@ function getSeatInfo(){
 
 <!-- 전체 묶음 DIV -->
 <div id = "step2and3" style="display:none;">
-<!-- 티켓 정보 -->
-<div class="wrap_ticket_info" style="display: none; float: right">
+<div class="wrap_ticket_info" style="float:right">
 		<h2 class="logo_onestop">
 			<a href="#none"><img src="https://cdnticket.melon.co.kr/resource/image/web/onestop/logo_onestop.png" alt="바나나 티켓"></a>
 		</h2>
 		<div class="box_info">
-		<h3 class="select_tit select_t txt_prod_name" title="공연제목">공연제목들어가는자리</h3>
+		<h3 class="select_tit select_t txt_prod_name" title="공연제목">${param.name}</h3>
 			<div class="box_ticket">
-				<ul class="box_ticket_list" style="list-style: none;">
-					<li class="nth nth1 txt_prod_schedule">공연 날짜 및 시간 넣는 곳 </li>
-					<li class="nth nth2 txt_ticket_info">공연 좌석 선택수(몇석)<br>VIP석 1층 Q열 038번</li>
+				<ul class="box_ticket_list" style="list-style: none;    margin: 16px -29px;
+    font-size: 13px;
+    line-height: 24px;">
+					<li class="nth nth1 txt_prod_schedule">${param.date} ${param.time}</li>
+					<li class="nth nth2 txt_ticket_info"></li>
 				</ul>
 			</div> <!-- box_ticket -->
 		</div><!-- box_info -->
@@ -458,7 +489,142 @@ function getSeatInfo(){
 	<div id ="bookStep_2" style=" display: none; width: 630px; padding: 50px; padding-left: 70px;">
 		<table id ="bookStep_2_tb" class="table">
 		</table>
+		<h3 class="select_tit">수령방법을 선택하세요</h3>
+		<ul class="list_receipt_how" id="partDeliveryType" style="">
+			<li id="delvyType02">
+			<label>
+			<input type="radio"id="delvyTypeCode02" name="delvyTypeCode" value="DV02" onclick="setDeliveryType(this.value);"
+						class="radio_delvy_type" title="현장수령">
+			<span class="txt_lab" id="delvyTypeNameDV0002"
+						style="">&nbsp;현장수령</span></label></li>
+			<li id="delvyType03">
+			<label><input type="radio"id="delvyTypeCode03" name="delvyTypeCode" value="DV03" class="radio_delvy_type" onclick="setDeliveryType(this.value);"
+						title="배송">
+						<span class="txt_lab" id="delvyTypeNameDV0003"
+						style="">&nbsp;배송(2,500원)</span></label></li>			
+		</ul>
+		<div class="txt" id="txtDeliveryInfo">
+			<span>예매완료(결제익일) 기준으로 4~5일 이내 배송됩니다.(주말/공휴일을 제외한 영업일 기준)</span>
+		</div>
+		
+		<div class="box_how"> 
+
+	<div class="box_info_use box_gray">
+	<!-- 현장수령 선택시-->
+		<h4 class="tit_receipt">주문자정보</h4>
+		<div class="box_inp_opt">
+			<table class="tbl">
+				<caption class="hide"></caption>
+				<colgroup>
+					<col style="width: 43px;">
+					<col style="width: 90px;">
+					<col style="width: 50px;">
+					<col style="width: 195px;">
+					<col style="width: 50px;">
+					<col style="width: 150px;">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th class="txt_gray" style="width: 70px;" id="labUserName">이름<span class="require">*</span></th>
+						<td>
+							<div class="wrap_form_input">
+								<input type="text" name="buyerName" id="buyer_name"
+									class="inputType inp_txt inp_w77" >
+							</div>
+						</td>
+						<th class="txt_gray" style="width: 80px;">연락처<span class="require">*</span></th>
+						<td>
+							<div class="wrap_form_input">
+							<input type="text" name="buyer_tel" id="buyer_tel"
+									class="inputType inp_txt inp_w150" value="">
+							</div>
+						</td>
+						<th class="txt_gray" style="width: 75px;">이메일<span class="require">*</span></th>
+						<td>
+							<div class="wrap_form_input">
+								<!-- form wrapper -->
+								<input type="text" name="email" id="buyer_email"
+									class="inputType inp_txt inp_w150" value=""> <label
+									for="email" class="place_holder"></label>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<p class="txt_more txt_gray">입력하신 이메일로 예매확인 내역을 보내드립니다.</p>
+		</div>
 	</div>
+	<div class="box_location box_gray" id="part_delivery_info" style="display: none;">
+	<!-- 일반배송 선택시-->
+	<h4 class="tit_receipt">
+			배송지 정보 <span class="box_check"> <label><input
+					type="checkbox" id="copyDelvyAddr"> 주문자정보와 동일</label>
+			</span>
+		</h4>
+		<div class="box_inp_opt">
+		<div class="box_inp_opt">
+				<table class="tbl ">
+					<caption class="hide"></caption>
+					<colgroup>
+						<col style="width: 72px;">
+						<col style="width: 240px;">
+						<col style="width: 60px;">
+						<col style="width: 198px;">
+					</colgroup>
+					<tbody>
+					<tr>
+					<th class="txt_gray">수령인<span class="require">*</span></th>
+					<td>
+					<div class="wrap_form_input">
+									<!-- form wrapper -->
+					<input type="text" name="buyerName" id="buyerName"
+					class="inputType inp_txt inp_w190" value=""> <label
+					for="delvyName" class="place_holder"></label>
+						</div>
+					</td>
+					<!--  -->
+					<th class="txt_gray">연락처<span class="require">*</span></th>
+							<td>
+								<div class="wrap_form_input">
+									<!-- form wrapper -->
+									<input type="hidden" name="delvyTel" id="delvyTel"
+										class="inputType inp_txt inp_w190" value=""> <input
+										type="text" name="delvyTel1" id="delvyTel1"
+										class="inputType inp_txt inp_w60" value="" maxlength="4">
+									<input type="text" name="delvyTel2" id="delvyTel2"
+										class="inputType inp_txt inp_w60" value="" maxlength="4">
+									<input type="text" name="delvyTel3" id="delvyTel3"
+										class="inputType inp_txt inp_w60" value="" maxlength="4">
+									<label for="delvyTel" class="place_holder"></label>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th class="txt_gray txt_top" rowspan="3">주소<span
+								class="require">*</span></th>
+							<td colspan="3">
+								<button type="button" class="box_inp_btn" id="btnSearchAddress" onclick="openZipSearch()">우편번호</button></td>
+						</tr>
+						<tr>
+							<td colspan="3" class="td_pd"><span class="wrap_form_input">
+									<!-- form wrapper -->
+									<input type="text" name="delvyAddr"
+									id="buyer_addr" class="inputType inp_txt inp_l2" value=""
+									> <label for="delvyAddr"
+									class="place_holder"></label>
+							</span> 
+							</td>
+						</tr>
+						</tbody>
+						</table>
+						</div>
+						
+		</div>
+	</div>
+</div>
+		</div>
+		
+		
 	<!-- STEP 2. 가격/수령방법 -->
 	
 	<!-- STEP 3. 결제방법 -->

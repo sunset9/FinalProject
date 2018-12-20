@@ -21,7 +21,8 @@ $(document).ready(function() {
 		url:"/ticket/bookInfo",
 		data:{
 			"pfmIdx" : ${pfmInfoList.pfmIdx},
-			"hallIdx" : ${pfmInfoList.hallIdx}
+			"hallIdx" : ${pfmInfoList.hallIdx},
+			"name" : "${pfmInfoList.name}"
 		},
 		async: false,
 		dataType:"html",
