@@ -10,6 +10,8 @@
 	<!-- <definition name="file/fileup" template="/WEB-INF/views/file/fileup.jsp"/> -->
 		<definition name="ticket/book" template="/WEB-INF/views/ticket/book.jsp"/>
 		<definition name="ticket/bookInfo" template="/WEB-INF/views/ticket/bookInfo.jsp"/>
+		
+		<definition name="mypage/userinfo" template="/WEB-INF/views/mypage/userinfo.jsp"/>
 
 		<definition name="admin/*" template="/WEB-INF/views/admin/{1}.jsp"/>
 		<definition name="admin/*/*" template="/WEB-INF/views/admin/{1}/{2}.jsp"/>

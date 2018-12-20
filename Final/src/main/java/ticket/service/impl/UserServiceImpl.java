@@ -118,7 +118,24 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String findEmail(User user) {
-		return userDao.selectEmailByNameAndPhone(user);
+		String email = userDao.selectEmailByNameAndPhone(user);
+		
+		// 이메일 앞 뒤 부분 나누기
+		String[] data =email.split("@");
+		
+		System.out.println("data0 :" +data[0]);
+		System.out.println("data1 :" +data[1]);
+		
+		//앞 4자리까지만 표시해주고 나머지는 *표시로 바꾸기
+		email = data[0].substring(0,4);
+		for(int i=4; i<data[0].length(); i++ ) {
+			email+= "*";
+		}
+		
+		email+= "@" +data[1];
+		
+		
+		return email;
 	}
 
 
