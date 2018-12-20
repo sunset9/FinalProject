@@ -40,6 +40,7 @@ import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.SeatSection;
 import ticket.dto.SeatSectionList;
+import ticket.dto.TabBanner;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.utils.Paging;
@@ -708,19 +709,21 @@ public class AdminPfmController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value = "/admin/tabBannerList", method = RequestMethod.GET)
-	public String tBannerList() {
+	public String tBannerList(Model model) {
 
 		// 장르가 New 인 탭 배너 리스트 불러오기
-		// **그러면 장르에 New 넣어도 되는지??
-		// List newTabBanner = pService.getNewTabBanner()
+		List<TabBanner> newTabBanner = pService.getNewTabBanner();
 
 		// 장르가 콘서트인 탭 배너 리스트 불러오기
-		// List conTabBanner = pService.getConTabBanner()
-
+		List<TabBanner> conTabBanner = pService.getConTabBanner();
+		
 		// 장르가 뮤지컬인 탭 배너 리스트 불러오기
-		// List muTabBanner = pService.getMuTabBanner()
-
+		List<TabBanner> muTabBanner = pService.getMuTabBanner();
+		
 		// 뷰에 전달
+		model.addAttribute("newTabBanner", newTabBanner);
+		model.addAttribute("conTabBanner", conTabBanner);
+		model.addAttribute("muTabBanner", muTabBanner);
 		
 		return "admin/pfm/tabBannerList";
 	}
