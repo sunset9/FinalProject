@@ -252,7 +252,7 @@ public class MainController {
 	 */
 	@RequestMapping(value="/ticket/getrank", method=RequestMethod.GET)
 	public @ResponseBody List<Performance> getRank(String sort, Date today) {
-		return mainService.getRank(sort, today);
+		return mainService.getTopRank(sort, today);
 	}
 	
 	/**

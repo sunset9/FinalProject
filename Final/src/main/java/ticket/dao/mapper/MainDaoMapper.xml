@@ -297,9 +297,14 @@
 	</select>
 	
 	<select id="selectPfmListByPeriod" resultMap="Performance">
-		SELECT * FROM performance
+		SELECT P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx, age_grade_idx, running_time, P.create_date, COUNT(S.seat_idx) cnt 
+		FROM PERFORMANCE P
+		LEFT JOIN seat S
+		ON P.hall_idx = S.hall_idx
 		WHERE (ticket_start between #{start } and #{end })  
 				OR (ticket_end between #{start } and #{end })
+		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx, age_grade_idx, running_time, P.create_date
+		ORDER BY cnt DESC
 	</select>
 	
 	<select id="selectCntAllSeatByHallIdx" parameterType = "ticket.dto.Performance" resultType="int">
