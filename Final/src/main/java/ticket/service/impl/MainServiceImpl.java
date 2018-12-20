@@ -2,6 +2,7 @@ package ticket.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -117,7 +118,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Performance> getRank(String sort, Date today) {
+	public List<Performance> getTopRank(String sort, Date today) {
+		List<Performance> topTen = new ArrayList<Performance>();
+		
 		switch (sort) {
 			case "daily":
 				break;
@@ -136,9 +139,9 @@ public class MainServiceImpl implements MainService {
 
 				// 1. 예매율 구하려는 공연 목록 가져옴
 				List<Performance> pfmList = mainDao.selectPfmListByPeriod(startStr, endStr);
-				System.out.println(pfmList);
 				
 				// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
+				int ii = 1;
 				for(Performance pfm : pfmList) {
 					try {
 						Date startDate = dateFormat.parse(startStr);
@@ -162,23 +165,47 @@ public class MainServiceImpl implements MainService {
 						System.out.println(bookSeatCnt);
 						
 						// 3.3 예매율 계산
-						float bookRate = (float) (bookSeatCnt/totalSeatCnt) * 100;
+						float bookRate = 0;
+						if(bookSeatCnt != 0) {
+							bookRate = ((float)bookSeatCnt/totalSeatCnt) * 100;
+						}
+						System.out.println("예매율:" + bookRate);
 						
+						// 예매율 필드에 삽입
+						pfm.setBookingRate(bookRate);
 						
+
+						// top10 판단
+						for(int i = 0; i<topTen.size(); i++) {
+							// 기존 top10 후보보다 예매율이 크면 그 자리에 새로 후보로 삽입
+							if(pfm.getBookingRate() > topTen.get(i).getBookingRate()) {
+								topTen.add(i, pfm);
+								break;
+							}
+						}
 						
-						
-						
-						
+						System.out.println(ii++);
+						// 아직 10개 안채워진 경우 맨 뒤에 무조건 삽입
+						if(topTen.size() == 0 || topTen.size() < 10) {
+							topTen.add(pfm);
+						}
 						
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
-					
-					
-					
 				}
 				
-				break;
+				// 10개 이상인 경우 10번째까지 자름
+				if(topTen.size() > 10) {
+					topTen.subList(0, 10);
+				}
+				
+				for(Performance p: topTen) {
+					System.out.println(p);
+				}
+				
+				return topTen;
+				
 		}
 		return null;
 	}

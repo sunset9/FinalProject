@@ -63,7 +63,7 @@ function getDateString(date){
 	
 	return strDate;
 }
-// '일간' 포멧
+// 조회 범위 띄워주기: '일간' 포멧
 function getDateStringDaily(date) {
 	var strDate = getDateString(date);
 	var hours = date.getHours();
@@ -75,7 +75,7 @@ function getDateStringDaily(date) {
 	
 	return strDaily;
 };
-// '주간' 포멧
+//조회 범위 띄워주기: '주간' 포멧
 function getDateStringWeekly(date) {
 	var lastDay = new Date(); // 7일 전 일자
 	lastDay = new Date(lastDay.setDate(lastDay.getDate() - 6));
@@ -90,7 +90,6 @@ function getDateStringWeekly(date) {
 	
 	return strDaily;
 };
-
 
 </script>
 
