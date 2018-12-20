@@ -25,6 +25,7 @@ import ticket.dto.PfmThemeList;
 import ticket.dto.Poster;
 import ticket.dto.SeatSection;
 import ticket.dto.SeatSectionList;
+import ticket.dto.TabBanner;
 import ticket.dto.Theme;
 import ticket.utils.Paging;
 
@@ -71,21 +72,21 @@ public interface AdminPfmService {
 	 * @Method설명: 새로 등록된(New) 탭 배너 리스트 가져오기
 	 * @작성자: 김지은
 	 */
-	public List getNewTabBanner();
+	public List<TabBanner> getNewTabBanner();
 
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 장르가 콘서트인 탭 배너 리스트 가져오기
 	 * @작성자: 김지은
 	 */
-	public List getConTabBanner();
+	public List<TabBanner> getConTabBanner();
 
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 장르가 뮤지컬&연극인 탭 배너 리스트 가져오기
 	 * @작성자: 김지은
 	 */
-	public List getMuTabBanner();
+	public List<TabBanner> getMuTabBanner();
 
 	/**
 	 * @최종수정일: 2018.12.05

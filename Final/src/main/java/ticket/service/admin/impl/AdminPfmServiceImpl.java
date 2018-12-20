@@ -44,6 +44,7 @@ import ticket.dto.SeatSection;
 import ticket.dto.SeatSectionList;
 import ticket.dto.Theme;
 import ticket.service.admin.face.AdminPfmService;
+import ticket.dto.TabBanner;
 import ticket.utils.Paging;
 
 @Service
@@ -86,18 +87,20 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public List getNewTabBanner() {
-		return null;
+	public List<TabBanner> getNewTabBanner() {
+		return pDao.selectNewTabBanner();
 	}
 
 	@Override
-	public List getConTabBanner() {
-		return null;
+	public List<TabBanner> getConTabBanner() {
+		//콘서트 탭배너 목록 가져오기
+		return pDao.selectConTabBanner();
 	}
 
 	@Override
-	public List getMuTabBanner() {
-		return null;
+	public List<TabBanner> getMuTabBanner() {
+		//뮤지컬&연극 탭배너 목록 가져오기
+		return pDao.selectMuTabBanner();
 	}
 
 	@Override

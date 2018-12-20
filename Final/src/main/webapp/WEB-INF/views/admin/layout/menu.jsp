@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +55,7 @@ h1, h2, h3 {
 <body>
 <div class = "side">
 	<ul>
+		<li><a href="/ticket/ticketmain">메인으로</a></li>
 		<li><a href="/admin/main">관리자 홈</a></li>
 		<li><a href="/admin/userlist">회원 관리</a></li>
 		<li><a href="">예매 현황</a></li>
