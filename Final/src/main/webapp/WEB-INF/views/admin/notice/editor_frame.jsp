@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
 
-<!--?xml:namespace prefix = "jsp" /-->
-<%-- <jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include> --%>
-
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
 
 		<!-- 에디터 컨테이너 시작 -->
@@ -244,10 +234,8 @@
 							<div class="tx-menu-inner">
 							</div>
 							<div class="tx-menu-footer">
-								<img class="tx-menu-confirm"
-									 src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_confirm.gif?rv=1.0.1" alt=""/>
-								<img class="tx-menu-cancel" hspace="3"
-									 src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_cancel.gif?rv=1.0.1" alt=""/>
+								<IMG class=tx-menu-confirm alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_confirm.gif?rv=1.0.1">
+								<IMG class=tx-menu-cancel hspace=3 alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_cancel.gif?rv=1.0.1">
 							</div>
 						</div>
 					</li>
@@ -384,27 +372,29 @@
 			<!-- 편집영역 시작 -->
 				<!-- 에디터 Start -->
 	<div id="tx_canvas" class="tx-canvas">
-		<div id="tx_loading" class="tx-loading"><div><img src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/loading2.png" width="113" height="21" align="absmiddle"/></div></div>
+		<DIV id=tx_loading class=tx-loading><DIV><IMG src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/loading2.png" width=113 align=absMiddle height=21></DIV></DIV>				
 		<div id="tx_canvas_wysiwyg_holder" class="tx-holder" style="display:block;">
 			<iframe id="tx_canvas_wysiwyg" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0"></iframe>
 		</div>
 		<div class="tx-source-deco">
 			<div id="tx_canvas_source_holder" class="tx-holder">
-				<textarea id="tx_canvas_source" rows="30" cols="30"></textarea>
+				<textarea  id="tx_canvas_source" rows="30" cols="30"></textarea>
 			</div>
 		</div>
 		<div id="tx_canvas_text_holder" class="tx-holder">
-			<textarea id="tx_canvas_text" rows="30" cols="30"></textarea>
+			<textarea name="noticeContent" id="tx_canvas_text" rows="30" cols="30"></textarea>
 		</div>
 	</div>
 					<!-- 높이조절 Start -->
 	<div id="tx_resizer" class="tx-resize-bar">
 		<div class="tx-resize-bar-bg"></div>
-		<img id="tx_resize_holder" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/skin/01/btn_drag01.gif" width="58" height="12" unselectable="on" alt="" />
+		<IMG id=tx_resize_holder alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/skin/01/btn_drag01.gif" width=58 height=12 unselectable="on">
 	</div>
 					<div class="tx-side-bi" id="tx_side_bi">
 		<div style="text-align: right;">
-			<img hspace="4" height="14" width="78" align="absmiddle" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/editor_bi.png" />
+			
+			<IMG hspace=4 src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/editor_bi.png" width=78 align=absMiddle height=14>
+
 		</div>
 	</div>
 				<!-- 편집영역 끝 -->
@@ -434,6 +424,3 @@
 		</div>
 		<!-- 에디터 컨테이너 끝 -->
 	
-
-</body>
-</html>

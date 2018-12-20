@@ -95,12 +95,14 @@ public class AdminBoardController {
 		
 //		logger.info("공지 글 쓰기 처리");
 		logger.info(notice.toString());
-		
+		System.out.println("11111:::::"+notice.toString());
 		adminBoardService.writeNoti(notice);
 		
 		return "redirect:/admin/noticelist";
 		
 	}
+	
+	
 	
 	
 	/**
