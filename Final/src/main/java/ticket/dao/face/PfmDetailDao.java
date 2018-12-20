@@ -54,17 +54,17 @@ public interface PfmDetailDao {
 	 * @작성자: 배수연
 	 */
 	public void insertExpectation(
-			String expContent
-			, @Param(value="pfm") Performance pfm
-//			, @Param(value="user") User user
+			@Param(value="expContent") String expContent
+			, @Param(value="pfmIdx") String pfmIdx
+			, @Param(value="userIdx") String userIdx
 		);
 
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.20
 	 * @Method설명: 기대평 삭제
 	 * @작성자: 배수연
 	 */
-	public boolean deleteExpectation(Expectation exp);
+	public boolean deleteExpectation(String expIdx);
 
 	/**
 	 * 최종수정일: 2018.12.05

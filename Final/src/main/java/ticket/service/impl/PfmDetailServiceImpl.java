@@ -33,13 +33,13 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
-	public void getExpectationInsert(String expContent, Performance pfm) {
-		mDetailDao.insertExpectation(expContent, pfm);
+	public void getExpectationInsert(String expContent, String pfmIdx, String userIdx) {
+		mDetailDao.insertExpectation(expContent, pfmIdx, userIdx);
 	}
 
 	@Override
-	public boolean getDelExpectation(Expectation exp) {
-		return mDetailDao.deleteExpectation(exp);
+	public boolean getDelExpectation(String expIdx) {
+		return mDetailDao.deleteExpectation(expIdx);
 	}
 
 	@Override

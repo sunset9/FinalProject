@@ -29,7 +29,7 @@ public class PfmDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(PfmDetailController.class);
 
 	/**
-	 * 최종수정일: 2018.12.04
+	 * 최종수정일: 2018.12.19
 	 * @Method설명: 공연 상세 클릭시 첫 페이지
 	 * 				상세정보, 기대평, 관람후기, 공연장정보, 예매안내(TEXT)
 	 * @작성자: 배수연
@@ -47,7 +47,6 @@ public class PfmDetailController {
 		Performance pfmInfoList = detailService.getPfmInfo(pfm);
 		model.addAttribute("pfmInfoList", pfmInfoList);
 		
-		// 상세 하단
 		//	출연진 정보 불러오기
 		List<Artist> castList = detailService.getCastInfo(pfm);
 		model.addAttribute("castList", castList);
@@ -59,37 +58,47 @@ public class PfmDetailController {
 		// 기대평 리스트 출력해주기
 		List<Expectation> expecList = detailService.getExpectationList(pfm);
 		model.addAttribute("expecList", expecList);
+		
 		//	작성자 리스트 출력
 		List<User> expecUserList = detailService.getExpectationUserList(pfm);
 		model.addAttribute("expecUserList", expecUserList);
 	}
-	
-	@RequestMapping(value="/ticket/pfmdetail", method=RequestMethod.POST)
-	public void pfmdetailExpectation(
+
+	/**
+	 * 최종수정일: 2018.12.20
+	 * @Method설명: 기대평 작성 / 출력
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value="/pfmdetail/expectation", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> expectation(
 			String expContent
-			, HttpServletRequest request
-			, User user
+			, String pfmIdx
+			, String userIdx
 			, Performance pfm
 		) {
 		
-//		detailService.getExpectationInsert(expContent, pfm);
+		HashMap<String, Object> map = new HashMap<>();
+		
+		logger.info(expContent);
+		logger.info(pfmIdx);
+		logger.info(userIdx);
+		
+		// 기대평 작성
+		detailService.getExpectationInsert(expContent, pfmIdx, userIdx);
+		
+		// 기대평 리스트 출력해주기
+		List<Expectation> expecList = detailService.getExpectationList(pfm);
+		map.put("expecList", expecList);
+		
+		//	작성자 리스트 출력
+		List<User> expecUserList = detailService.getExpectationUserList(pfm);
+		map.put("expecUserList", expecUserList);
+		
+		// 기대평 삭제
+//		detailService.getDelExpectation(expIdx);
+		
+		return map;
 	}
-	
-	/**
-	 * 최종수정일: 2018.12.19
-	 * @Method설명: 기대평 작성시 출력
-	 * @작성자: 배수연
-	 */
-//	@RequestMapping(value="/pfmdetail/expectation", method=RequestMethod.GET)
-//	public @ResponseBody HashMap<String, Object> expectation(
-//			String expContent
-//			, Expectation exp
-//		) {
-//		
-//		HashMap<String, Object> map = new HashMap<>();
-//		
-//		return map;
-//	}
 	
 	/**
 	 * 최종수정일: 2018.12.05
