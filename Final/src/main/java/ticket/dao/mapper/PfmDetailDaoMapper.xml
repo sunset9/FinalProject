@@ -91,6 +91,7 @@
 		SELECT
 		    u.profile
 		    , u.name
+		    , u.email
 		FROM(
 		    SELECT
 		        exp_idx as expIdx
@@ -108,8 +109,12 @@
 	
 	<insert id="insertExpectation">
 		INSERT INTO expectation(exp_idx, pfm_idx, user_idx, exp_content)
-		VALUES (expectation_seq.nextval, #{pfm.pfmIdx}, 1, #{expContent})
-		<!-- 수정 중 -->
+		VALUES (expectation_seq.nextval, #{pfmIdx}, #{userIdx}, #{expContent})
 	</insert>
+	
+	<delete id="deleteExpectation">
+		DELETE FROM expectation
+		WHERE exp_idx = #{expIdx}
+	</delete>
 	
 </mapper>

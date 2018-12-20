@@ -29,7 +29,7 @@ public interface PfmDetailService {
 	public PfmDetail pfmDetailInfo(Performance pfm);
 	
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.20
 	 * @Method설명: 기대평 목록
 	 * @작성자: 배수연
 	 */
@@ -43,18 +43,18 @@ public interface PfmDetailService {
 	public List<User> getExpectationUserList(Performance pfm);
 	
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.20
 	 * @Method설명: 기대평 작성
 	 * @작성자: 배수연
 	 */
-	public void getExpectationInsert(String expContent, Performance pfm);
+	public void getExpectationInsert(String expContent, String pfmIdx, String userIdx);
 	
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.20
 	 * @Method설명: 기대평 삭제
 	 * @작성자: 배수연
 	 */
-	public boolean getDelExpectation(Expectation exp);
+	public boolean getDelExpectation(String expIdx);
 	
 	/**
 	 * 최종수정일: 2018.12.05
