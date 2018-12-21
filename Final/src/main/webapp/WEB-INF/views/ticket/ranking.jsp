@@ -1,42 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
-
+.pfmRanking img {
+	float: left;
+	width: 90px;
+} 
 </style>
 
 <script>
 
 $(document).ready(function(){
-	// 일간 버튼 클릭 시
-	$('#dailySort').click(function(){
-		$('.sorting button').removeClass('clicked');
-		$(this).addClass('clicked');
-		$('#datePeriod').text('');
-	});
 	
-	// 주간 버튼 클릭 시
-	$('#weeklySort').click(function(){
+	// 조회 타입 버튼 클릭 시 (일간, 주간)
+	$('.sorting button').click(function(){
 		$('.sorting button').removeClass('clicked');
 		$(this).addClass('clicked');
-		
+
 		var today = new Date(); // 오늘 일자
+		var type; // 타입 (일간, 주간)
 		
-		// 필터 기간 띄워주기
-		var strDate = getDateStringWeekly(today);
-		$('#datePeriod').text(strDate);
+		// 일간 버튼 클릭 시
+		if($(this).attr('id') == 'dailySort'){
+			// 필터 기간 띄워주기
+			var strDate = getDateStringDaily(today);
+			$('#datePeriod').text(strDate);
+			
+			type = 'daily';
+		
+		// 주간 버튼 클릭 시	
+		}else if($(this).attr('id') == 'weeklySort'){
+			// 필터 기간 띄워주기
+			var strDate = getDateStringWeekly(today);
+			$('#datePeriod').text(strDate);
+			
+			type = 'weekly';
+		}
 		
 		// 공연 랭킹 가져오기
 		$.ajax({
 			url: '/ticket/getrank'
 			, method : 'GET'
 			, data: {
-				sort: 'weekly'
+				type: type
 				, today: today
 			}
 			, dataType: 'json'
 			, success: function(d){
-				console.log('성공');
+				// 랭킹 순으로 그려주기
 				console.log(d);
+				viewRank(d);
 			}
 			, error: function(e){
 				console.log('에러');
@@ -45,11 +57,29 @@ $(document).ready(function(){
 		});
 	});
 	
+	
+	$('#weeklySort').click(function(){
+		$('.sorting button').removeClass('clicked');
+		$(this).addClass('clicked');
+		
+		var today = new Date(); // 오늘 일자
+		
+		
+	});
+	
 	// 처음 실행 시 '주간' default
 	$('#weeklySort').click();
 });
 
-
+// Date -> String: YYYY.MM.DD 형태로 반환
+function getDateSimpleString(date){
+	var date = new Date(date);
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+	return date.getFullYear() + "."
+		+ ((month < 10)? '0' + month : month) + "."
+		+ ((day < 10) ? '0' + day : day);
+}
 // Date -> String: YYYY년 MM월 DD일 (D) 형태로 반환
 function getDateString(date){
 	var month = date.getMonth() + 1;
@@ -91,6 +121,31 @@ function getDateStringWeekly(date) {
 	return strDaily;
 };
 
+// 공연 랭킹 그려주는 메소드
+function viewRank(pfmList){
+	// 기존 리스트 초기화
+	$('.pfmRanking .table tbody').html('');
+	
+	for(var i=0; i<pfmList.length; i++){
+		var pfm = pfmList[i];
+		var tr = $('<tr>');
+		tr.append('<td>'+ (i+1) +'</td>'); // 순위
+		var mainInfo = $('<div>'); // 주요 정보(포스터, 이름)
+		mainInfo.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
+		mainInfo.append($('<p>'+ pfm.name +'</p>'));
+		
+		tr.append('<td>'+mainInfo.html()+'</td>');
+		
+		tr.append('<td>'+getDateSimpleString(pfm.pfmStart)
+				+'<br>~ '+getDateSimpleString(pfm.pfmEnd)+'</td>'); // 공연 일정
+		tr.append('<td>'+pfm.hallName+'</td>'); // 공연장 이름
+		tr.append('<td>'+(pfm.bookingRate).toFixed(2)+'%</td>'); // 예매율
+		
+		$('.pfmRanking .table tbody').append(tr);
+	}
+	
+	
+}
 </script>
 
 <div class="sorting">
@@ -100,5 +155,17 @@ function getDateStringWeekly(date) {
 <div class="dateTitle"><p id="datePeriod"></p></div>
 
 <div class="pfmRanking">
-
+<table class="table">
+<thead>
+	<tr>
+		<th>랭킹</th>
+		<th>공연명</th>
+		<th>공연일시</th>
+		<th>공연장소</th>
+		<th>예매</th>
+	</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
 </div>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="../layout/menu.jsp" />
 
 <!-- Datepicker -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
@@ -1325,6 +1326,7 @@ function setComma(inNum){
 }
 </script>
 
+<div class="registBox">
 <h1>공연 등록 페이지</h1>
 <hr>
 
@@ -1617,5 +1619,7 @@ function setComma(inNum){
 
 </form>
 
-
-<hr>
+</div>
+</div>
+</body>
+</html>
