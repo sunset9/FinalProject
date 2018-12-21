@@ -247,12 +247,12 @@ public class MainController {
 	
 	/**
 	 * 최종수정일: 2018.12.19
-	 * @Method설명: 예매순 랭킹 반환
+	 * @Method설명: 예매순 랭킹 반환(ajax 통신 용)
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/ticket/getrank", method=RequestMethod.GET)
-	public @ResponseBody List<Performance> getRank(String sort, Date today) {
-		return mainService.getTopRank(sort, today);
+	public @ResponseBody List<Performance> getRank(String type, Date today) {
+		return mainService.getTopRank(type, today);
 	}
 	
 	/**

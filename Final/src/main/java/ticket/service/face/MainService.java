@@ -148,6 +148,6 @@ public interface MainService {
 	 * @Method설명: 공연 예매율 구하기
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getTopRank(String sort, Date today);
+	public List<Performance> getTopRank(String type, Date today);
 
 }

@@ -23,6 +23,7 @@ public class Performance {
 	private Date createDate;
 	private String posterName; // 포스터 이름(서버에 저장된 이름)
 	private float bookingRate; // 예매율
+	private String hallName; // 공연장 이름
 	
 	
 	@Override
@@ -30,7 +31,16 @@ public class Performance {
 		return "Performance [pfmIdx=" + pfmIdx + ", name=" + name + ", genreIdx=" + genreIdx + ", pfmStart=" + pfmStart
 				+ ", pfmEnd=" + pfmEnd + ", ticketStart=" + ticketStart + ", ticketEnd=" + ticketEnd + ", hallIdx="
 				+ hallIdx + ", ageGradeIdx=" + ageGradeIdx + ", runningTime=" + runningTime + ", createDate="
-				+ createDate + ", posterName=" + posterName + ", bookingRate=" + bookingRate + "]";
+				+ createDate + ", posterName=" + posterName + ", bookingRate=" + bookingRate + ", hallName=" + hallName
+				+ "]";
+	}
+
+	public String getHallName() {
+		return hallName;
+	}
+
+	public void setHallName(String hallName) {
+		this.hallName = hallName;
 	}
 
 	public int getPfmIdx() {
