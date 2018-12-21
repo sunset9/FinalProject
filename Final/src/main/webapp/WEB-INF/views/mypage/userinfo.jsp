@@ -32,6 +32,14 @@ $(document).ready(function() {
 		,dataType:"json"
 		,success: function (data){
 			console.log("프로필 변경 성공");
+			console.log("data="+data.profile);
+			
+			$('#userProfile').attr('src',data.profile);
+			
+		}
+		,error :function(e) {
+			console.log("실패");
+			console.log(e);	
 		}
 	}); // end ajax form
 
@@ -48,6 +56,7 @@ $(document).ready(function() {
 		
 		 // 파일 없는 경우 중단 
 		if ((file[0].files).length <1 ) {
+			
 			
 			console.log("첨부된 사진 없음");	
 			return

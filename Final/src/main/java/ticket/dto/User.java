@@ -8,7 +8,7 @@ public class User implements Serializable{
 	private int userIdx;
 	private String email;
 	private String nick;
-	private String password;
+	transient private String password;
 	private String name;
 	private String sex;
 	private Date birth;

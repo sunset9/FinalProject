@@ -108,6 +108,7 @@ public interface UserDao {
 	 * @최종수정일: 2018.12.12
 	 * @Method설명: 회원의 예매 현황 리스트 가져오기(SOB = State Of Book)
 	 * @작성자: 김지은
+	 * @사용자: 홍나영
 	 */
 	public List<StateOfBook> selectSOB(User user);
 	
