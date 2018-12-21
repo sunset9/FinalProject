@@ -124,8 +124,17 @@ public class AdminUserController {
 	public @ResponseBody List<PaymentInfo> getImpUid(String bookGroup) {
 		//bookGroup 중 '취소중'인 좌석의 impUid 가져오기
 		List<PaymentInfo> impUidOfCancelSeat = userService.getImpUid(bookGroup);
+		System.out.println("북그룹 확인 : "+impUidOfCancelSeat);
 		
-		System.out.println("취소중인 좌석의 impUid"+impUidOfCancelSeat);
+		
+//		System.out.println("취소중인 좌석의 impUid"+impUidOfCancelSeat);
+//		
+//		System.out.println("예매취소 확인~~ : "+impUidOfCancelSeat.size());
+//		System.out.println("예매취소 확인~~ : "+impUidOfCancelSeat.get(0).getPayIdx());
+//		System.out.println("예매취소 확인~~ : "+impUidOfCancelSeat.get(1).getPayIdx());
+		
+		String cancelCheck = userService.paymentCancel(impUidOfCancelSeat);
+		logger.info(cancelCheck);
 		
 		return impUidOfCancelSeat;
 	}

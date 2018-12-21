@@ -13,12 +13,14 @@ public class PaymentInfo {
 	private String buyerEmail;
 	private int userIdx;
 	private Date createDate;
-	
-	public String getBuyerEmail() {
-		return buyerEmail;
-	}
-	public void setBuyerEmail(String buyerEmail) {
-		this.buyerEmail = buyerEmail;
+	private int seatIdx; //좌석번호
+	private int secPay; //좌석가격
+	@Override
+	public String toString() {
+		return "PaymentInfo [payIdx=" + payIdx + ", impUid=" + impUid + ", merchantUid=" + merchantUid + ", payMethod="
+				+ payMethod + ", pfmIdx=" + pfmIdx + ", paidAmount=" + paidAmount + ", buyerName=" + buyerName
+				+ ", buyerEmail=" + buyerEmail + ", userIdx=" + userIdx + ", createDate=" + createDate + ", seatIdx="
+				+ seatIdx + ", secPay=" + secPay + "]";
 	}
 	public int getPayIdx() {
 		return payIdx;
@@ -62,6 +64,12 @@ public class PaymentInfo {
 	public void setBuyerName(String buyerName) {
 		this.buyerName = buyerName;
 	}
+	public String getBuyerEmail() {
+		return buyerEmail;
+	}
+	public void setBuyerEmail(String buyerEmail) {
+		this.buyerEmail = buyerEmail;
+	}
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -74,12 +82,16 @@ public class PaymentInfo {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	@Override
-	public String toString() {
-		return "Payment [payIdx=" + payIdx + ", impUid=" + impUid + ", merchantUid=" + merchantUid + ", payMethod="
-				+ payMethod + ", pfmIdx=" + pfmIdx + ", paidAmount=" + paidAmount + ", buyerName=" + buyerName
-				+ ", buyerEmail=" + buyerEmail + ", userIdx=" + userIdx + ", createDate=" + createDate + "]";
+	public int getSeatIdx() {
+		return seatIdx;
 	}
-	
-
+	public void setSeatIdx(int seatIdx) {
+		this.seatIdx = seatIdx;
+	}
+	public int getSecPay() {
+		return secPay;
+	}
+	public void setSecPay(int secPay) {
+		this.secPay = secPay;
+	}
 }

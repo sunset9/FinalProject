@@ -157,4 +157,17 @@ public interface UserDao {
 	 */
 	public void updateProfile(User user);
 	
+	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 환불된 예매 취소하기
+	 * @작성자: 김지은
+	 */
+	public void deleteBook(PaymentInfo pay);
+	
+	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 취소된 좌석 삭제하기
+	 * @작성자: 김지은
+	 */
+	public void deleteSeat(PaymentInfo seat);
 }
