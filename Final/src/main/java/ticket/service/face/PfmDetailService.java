@@ -57,6 +57,13 @@ public interface PfmDetailService {
 	public boolean getDelExpectation(String expIdx);
 	
 	/**
+	 * 최종수정일: 2018.12.20
+	 * @Method설명: 기대평 대댓글 리스트
+	 * @작성자: 배수연
+	 */
+	public List<ExpectRecomm> getExpRecommList(Performance pfm);
+	
+	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 기대평 대댓글 작성
 	 * @작성자: 배수연
@@ -71,18 +78,25 @@ public interface PfmDetailService {
 	public boolean getDelExpRecomm(ExpectRecomm expRecomm);
 	
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.21
 	 * @Method설명: 관람후기 목록
 	 * @작성자: 배수연
 	 */
-	public List getReviewList(Performance pfm);
+	public List<Review> getReviewList(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.21
+	 * @Method설명: 관람후기  작성자 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<User> getReviwUserList(Performance pfm);
 	
 	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 관람후기 작성
 	 * @작성자: 배수연
 	 */
-	public void getInReview(Review review);
+	public void getInReview(String reviewContent, String pfmIdx, String userIdx);
 	
 	/**
 	 * 최종수정일: 2018.12.05
@@ -118,5 +132,5 @@ public interface PfmDetailService {
 	 * @작성자: 배수연
 	 */
 	public List<Artist> getCastInfo(Performance pfm);
-	
+
 }

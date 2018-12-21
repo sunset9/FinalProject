@@ -226,7 +226,7 @@
 		    , po.origin_name
 		FROM (
 		    SELECT * FROM performance
-		    WHERE genre_idx=1
+		    WHERE genre_idx=#{genreIdx}
 		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
 		) p
 		LEFT JOIN poster_info po

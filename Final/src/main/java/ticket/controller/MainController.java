@@ -97,11 +97,19 @@ public class MainController {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		// 콘서트 - 테마 선택 후 리스트 출력
-		if( theme.equals("all") ) {
+		if( theme.equals("conall") ) {
 			List<Poster> posterList = mainService.getConPfmPoster();
 			
 			map.put("posterList", posterList);
 			
+		} else if( theme.equals("muall")) {
+			List<Poster> posterList = mainService.getMuPfmPoster();
+			
+			map.put("posterList", posterList);
+		} else if( theme.equals("famall") ) {
+			List<Poster> posterList = mainService.getFamPfmPoster();
+			
+			map.put("posterList", posterList);
 		} else {
 			List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
 			
