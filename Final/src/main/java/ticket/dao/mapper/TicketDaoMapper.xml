@@ -88,4 +88,8 @@
 	select app_sec from SEATSECTION where pfm_idx =${pfmIdx} group by app_sec
 </select>
 
+<select id ="selectDayByTimeIdx" resultType="int">
+	select pfm_dbt_idx from PFM_DATEBYTIME where pfm_idx=#{pfmIdx} and pfm_date=#{date} and pfm_time=#{time}
+</select>
+
 </mapper>

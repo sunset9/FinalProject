@@ -22,14 +22,16 @@
 var basepay=0;
 var fee=0;
 var rp =0;
+var delvyTypeCode = 1;
 $(document).ready(function() {
+	//위에 스탭단계 보여주는곳 숨기기
 	$('#stepInfo').hide();
+	//처음에 이전버튼 숨기기
 	$('#prevBtn').hide();
-	console.log(${param.pfmIdx });
-	console.log(${param.hallIdx });
+	//공연 섹션정보배열
 	var pfmSeatSection = new Array();
+	//배송유형코드 
 	//창띄울때 섹션 정보 가져오기
-	
 		$.ajax({
 			type:"get",
 			url:"/ticket/seatSection",
@@ -120,6 +122,7 @@ $(document).ready(function() {
 					// '다음 단계' 버튼 비활성화
 					$('#nextBtn').hide();
 					$('#step2and3').show();
+			
 			  }
 			  
 			// 현재 단계 탭 완료 상태 전환
@@ -434,7 +437,10 @@ function getSeatInfo(){
     font-size: 13px;
     line-height: 24px;">
 					<li class="nth nth1 txt_prod_schedule">${param.date} ${param.time}</li>
-					<li class="nth nth2 txt_ticket_info"></li>
+					<li class="nth nth2 txt_ticket_info">
+						<ul class ="nth nth2_1">
+						</ul>
+					</li>
 				</ul>
 			</div> <!-- box_ticket -->
 		</div><!-- box_info -->
@@ -494,7 +500,7 @@ function getSeatInfo(){
 			<li id="delvyType02">
 			<label>
 			<input type="radio"id="delvyTypeCode02" name="delvyTypeCode" value="DV02" onclick="setDeliveryType(this.value);"
-						class="radio_delvy_type" title="현장수령">
+						class="radio_delvy_type" title="현장수령" checked>
 			<span class="txt_lab" id="delvyTypeNameDV0002"
 						style="">&nbsp;현장수령</span></label></li>
 			<li id="delvyType03">

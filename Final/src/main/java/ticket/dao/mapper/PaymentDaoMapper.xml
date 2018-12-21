@@ -6,11 +6,15 @@
 <mapper namespace="ticket.dao.face.PaymentDao">
 	<insert id="insertPayment"
 		parameterType="ticket.dto.PaymentInfo">
+		<selectKey resultType="int" keyProperty="payIdx"
+		order="BEFORE">
+			SELECT PAYMENT_SEQ.nextval FROM DUAL
+		</selectKey>
 		INSERT INTO payment
 		(PAY_IDX,IMP_UID,
 		MERCHANT_UID,PAY_METHOD,
 		PFM_IDX,PAID_AMOUNT,BUYER_NAME,BUYER_EMAIL,USER_IDX)VALUES (
-		PAYMENT_SEQ.nextval,#{impUid},#{merchantUid},
+		#{payIdx},#{impUid},#{merchantUid},
 		#{payMethod},#{pfmIdx},#{paidAmount},#{buyerName},#{buyerEmail},#{userIdx})
 	</insert>
 

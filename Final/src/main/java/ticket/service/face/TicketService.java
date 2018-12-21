@@ -1,5 +1,6 @@
 package ticket.service.face;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -102,6 +103,18 @@ public interface TicketService {
 	 */
 	public int maxCol(int oriSecIdx);
 	
+	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 공연 섹션 불러오기 
+	 * @작성자:이상지
+	 */
 	public List<SeatSection> loadPfmSection(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 공연idx, 날짜, 시간으로 임의의 공연의 해당 날짜 DB의 idx가져오기
+	 * @작성자:이상지
+	 */
+	public int loadDayByTimeIdx(int pfmIdx, String date, String time);
 }
 

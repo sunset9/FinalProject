@@ -1,6 +1,8 @@
 package ticket.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
@@ -39,11 +42,22 @@ public class PaymentController {
 	}
 
 	@RequestMapping(value = "/ticket/payment", method = RequestMethod.POST)
-	public void payProc(PaymentInfo pay) {
+	public ModelAndView payProc(PaymentInfo pay) {
 
 		logger.info(pay.toString());
 		logger.info("POST");
-		paymentService.pay(pay);
+		int r=paymentService.pay(pay);
+		logger.info("무슨값?"+r);
+	
+//		Map map = new HashMap<>();
+//		map.put("success", "success");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("jsonView");
+		if(r==1)
+			mv.addObject("success", "success");
+		if(r==0)
+			mv.addObject("fail","fail");
+		return mv;
 	}
 	
 	/**

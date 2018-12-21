@@ -14,9 +14,16 @@ public class PaymentServiceImpl implements PaymentService {
 	PaymentDao paymentDao;
 
 	@Override
-	public void pay(PaymentInfo pay) {
+	public int pay(PaymentInfo pay) {
 		paymentDao.insertPayment(pay);
-
+		int r=pay.getPfmIdx();
+		PaymentInfo rp= new PaymentInfo();
+		rp.setPayIdx(r);
+		rp=paymentDao.selectBypayIdx(rp);
+		if(rp==null) {
+			return 0;
+		}
+		return 1;
 	}
 
 	@Override
