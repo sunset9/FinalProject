@@ -129,7 +129,7 @@ public class TicketController {
 		List<Integer> seatIdx = new ArrayList<Integer>();
 		
 		//날짜 인덱스 구하기(공연번호, 시간,날짜를 조건으로)
-		pfmDbtIdx = ticketService.loadDayByTimeIdx(pfmIdx,date,time,);
+		pfmDbtIdx = ticketService.loadDayByTimeIdx(pfmIdx,date,time);
 		
 	
 		//좌석 인덱스 구하기(seatInfo정보로 구역,좌석행렬,공연번호로 구하기)
