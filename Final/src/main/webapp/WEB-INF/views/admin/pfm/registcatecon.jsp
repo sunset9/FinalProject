@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../layout/menu.jsp" />
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <style>
 
 #save {
