@@ -69,9 +69,14 @@
 		    ON c.artist_idx = a.artist_idx
 	</select>
 	
+	<!-- 기대평 -->
 	<select id="selectExpectationList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Expectation">
 		SELECT
-		    e.*
+		    e.expIdx
+		    , e.pfmIdx
+		    , e.userIdx
+		    , e.expContent
+		    , e.createDate
 		FROM(
 		    SELECT
 		        exp_idx as expIdx
@@ -116,5 +121,56 @@
 		DELETE FROM expectation
 		WHERE exp_idx = #{expIdx}
 	</delete>
+	
+	<!-- 관람 후기 -->
+	<select id="selectReviewList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Review">
+		SELECT
+		    r.reviewIdx
+		    , r.pfmIdx
+		    , r.userIdx
+		    , r.reviewContent
+            , r.reviewStar
+		    , r.createDate
+		FROM(
+		    SELECT
+		        review_idx as reviewIdx
+                , pfm_idx as pfmIdx
+                , user_idx as userIdx
+                , review_content as reviewContent
+                , review_star as reviewStar
+                , create_date as createDate
+		    FROM review
+		    WHERE pfm_idx=#{pfmIdx}
+		    ORDER BY create_date DESC
+		) r
+		LEFT JOIN userinfo u
+		    ON u.user_idx = r.userIdx
+	</select>
+	
+	<select id="selectReviewUserList" parameterType="ticket.dto.Performance" resultType="ticket.dto.User">
+		SELECT
+		    u.profile
+		    , u.name
+		    , u.email
+		FROM(
+		    SELECT
+		        review_idx as reviewIdx
+		        , pfm_idx as pfmIdx
+		        , user_idx as userIdx
+		        , review_content as reviewContent
+                , review_star as reviewStar
+		        , create_date as createDate
+		    FROM review
+		    WHERE pfm_idx=#{pfmIdx}
+		    ORDER BY create_date DESC
+		) r
+		LEFT JOIN userinfo u
+		    ON u.user_idx = r.userIdx
+	</select>
+	
+	<insert id="insertReview">
+		INSERT INTO expectation(review_idx, pfm_idx, user_idx, review_content, review_star, create_date)
+		VALUES (expectation_seq.nextval, #{pfmIdx}, #{userIdx}, #{reviewContent}, sysdate)
+	</insert>
 	
 </mapper>

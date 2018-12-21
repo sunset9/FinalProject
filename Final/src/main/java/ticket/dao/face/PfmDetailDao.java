@@ -67,6 +67,13 @@ public interface PfmDetailDao {
 	public boolean deleteExpectation(String expIdx);
 
 	/**
+	 * 최종수정일: 2018.12.20
+	 * @Method설명: 기대평 대댓글 리스트
+	 * @작성자: 배수연
+	 */
+	public List<ExpectRecomm> selectExpRecommList(Performance pfm);
+
+	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 기대평 대댓글 작성
 	 * @작성자: 배수연
@@ -85,14 +92,25 @@ public interface PfmDetailDao {
 	 * @Method설명: 관람 후기 목록
 	 * @작성자: 배수연
 	 */
-	public List selectReviewList(Performance pfm);
+	public List<Review> selectReviewList(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.21
+	 * @Method설명: 관람후기 작성자 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<User> selectReviewUserList(Performance pfm);
 
 	/**
 	 * 최종수정일: 2018.12.05
 	 * @Method설명: 관람 후기 작성
 	 * @작성자: 배수연
 	 */
-	public void insertReview(Review review);
+	public void insertReview(
+			@Param(value="reviewContent") String reviewContent
+			, @Param(value="pfmIdx") String pfmIdx
+			, @Param(value="userIdx") String userIdx
+		);
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -114,7 +132,12 @@ public interface PfmDetailDao {
 	 * @작성자: 배수연
 	 */
 	public boolean deleteReviewRecomm(ReviewRecomm reRecomm);
-
+	
+	/**
+	 * 최종수정일: 2018.12.18
+	 * @Method설명: 상세 정보 출력
+	 * @작성자: 배수연
+	 */
 	public Performance selectPfmInfo(Performance pfm);
 
 	/**
