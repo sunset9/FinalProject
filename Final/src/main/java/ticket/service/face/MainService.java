@@ -67,6 +67,7 @@ public interface MainService {
 
 	/**
 	 * 최종수정일: 2018.12.14
+	 * @param genre 
 	 * @Method설명: 콘서트 - 마감임박순 정렬
 	 * @작성자: 배수연
 	 */
@@ -81,6 +82,7 @@ public interface MainService {
 
 	/**
 	 * 최종수정일: 2018.12.14
+	 * @param genre 
 	 * @Method설명: 콘서트 - 인기순
 	 * @작성자: 배수연
 	 */
@@ -148,6 +150,6 @@ public interface MainService {
 	 * @Method설명: 공연 예매율 구하기
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getTopRank(String sort, Date today);
+	public List<Performance> getTopRank(String type, Date today);
 
 }

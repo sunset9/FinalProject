@@ -42,34 +42,15 @@
 		 <tr> <td>분류</td><td><input type="text" name="NTypeIdx"></td> </tr>
 		 <tr> <td>제목</td><td><input type="text" name="noticeTitle"></td> </tr> 
 		 
+		 </table> 
 		 <jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include>
 		 <tr> <td><textarea name="noticeContent" id="noticeContent" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea></td></tr>
-		 </table> 
 		
 		 
 		 <input type="button" id="save_button" value="내용전송" />
 <!-- 		 onclick="formsubmit()" -->
 	</form> 
  </div>
-
-
-<!--  <div class="conta">  -->
-<!--  <form action="/admin/noticewrite" method="post" enctype="multipart/form-data" name="tx_editor_form" id="tx_editor_form">  -->
-<!--  <table class="table table-striped table-hover"> -->
-<%-- <tr> <td>작성자</td><td>${userIdx }</td> </tr> --%>
-<!--  <tr> <td>분류</td><td><input type="text" name="NTypeIdx"></td> </tr> -->
-<!--  <tr> <td>제목</td><td><input type="text" name="noticeTitle"></td> </tr>  -->
-<!--  <tr> <td>내용</td><td><textarea id="content" name="noticeContent"></textarea></td> </tr>  -->
-<%--  <jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include> --%>
-<!--  </table>  -->
-<!--  <button id="btnWrite">작성</button>  -->
-<!--  </form>  -->
-<!--  </div>  -->
-
-
-
-
-
 
 <script>
 
@@ -112,7 +93,14 @@ var config = {
 			attachbox: {
 				show: true,
 				confirmForDeleteAll: true
-			}
+			},
+// 		이미지첨부 관련 추가 config 
+			attacher:{
+			  image:{
+				  features:{left:250,top:65,width:400,height:190,scrollbars:0}, //팝업창 사이즈 
+				  popPageUrl:'${pageContext.request.contextPath}/admin/imagepopup' //팝업창 주소
+				  }
+		}
 		},
 		size: {
 			contentWidth: 700 /* 지정된 본문영역의 넓이가 있을 경우에 설정 */
@@ -149,6 +137,7 @@ function validForm(editor) {
 
 	return true;
 }
+ 
 
 	/**
 	 * Editor.save()를 호출한 경우 validForm callback 이 수행된 이후

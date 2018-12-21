@@ -31,6 +31,9 @@
   <resultMap type="ticket.dto.PaymentInfo" id="PaymentInfoMap">
   	<result column="imp_uid" property="impUid"/>
   	<result column="pay_idx" property="payIdx"/>
+  	<result column="seat_idx" property="seatIdx"/>
+  	<result column="sec_pay" property="secPay"/>
+  	<result column="paid_amount" property="paidAmount"/>
   </resultMap>
   
   <sql id="selectCnt">
@@ -99,7 +102,7 @@
 	)
 	VALUES ( 
 		#{userIdx },#{email } ,#{nick },#{password },#{name },#{sex },#{birth },#{phone }
-		,#{addr },#{addrDetail },#{postcode },#{mGradeIdx },#{profile }
+		,#{addr },#{addrDetail },#{postcode },1,#{profile }
 	)
   	
   </insert>
@@ -175,13 +178,20 @@
   <select id="selectImpUidByBookGroup" parameterType="String" resultMap="PaymentInfoMap">
 		SELECT
 		    b.imp_uid,
-		    p.pay_idx
+		    p.pay_idx,
+		    b.seat_idx,
+		    ss.sec_pay,
+		    p.paid_amount
 		FROM
 		    book b
 		    JOIN payment p ON b.imp_uid = p.imp_uid
+		    JOIN seat s ON b.seat_idx = s.seat_idx
+		    JOIN seatsection ss ON s.ori_sec_idx = ss.ori_sec_idx
 		WHERE
-		    book_group = #{value}
-		    AND book_cate_idx = 3
+		    b.book_group = #{value}
+		    AND b.book_cate_idx = 3
+		ORDER BY
+		    p.pay_idx
   </select>
 
   <select id="selectPwByUserIdx" parameterType="ticket.dto.User" resultType="String"> 
@@ -190,49 +200,58 @@
   	WHERE user_idx= #{userIdx }
   </select>
   
- <update id="updateNick" parameterType="ticket.dto.User">
- 	UPDATE  userinfo 
-	SET nick = #{nick }
-	WHERE user_idx= #{userIdx }
- </update>
-  
+	 <update id="updateNick" parameterType="ticket.dto.User">
+	 	UPDATE  userinfo 
+		SET nick = #{nick }
+		WHERE user_idx= #{userIdx }
+	 </update>
+	  
+	
+	 <update id="updatePass" parameterType="ticket.dto.User">
+	 	UPDATE  userinfo 
+		SET password = #{password }
+		WHERE email= #{email }
+	 </update>
+	 
+	  <update id="updatePhone" parameterType="ticket.dto.User">
+	 	UPDATE  userinfo 
+		SET phone = #{phone }
+		WHERE user_idx= #{userIdx }
+	 </update>
+	 
+	  <update id="updateAddr" parameterType="ticket.dto.User">
+	 	UPDATE  userinfo 
+		SET 
+			postcode = #{postcode }
+			,addr = #{addr }
+			
+			<if test="addrDetail != null">
+			,addr_detail = #{addrDetail }
+			</if>
+		WHERE user_idx= #{userIdx }
+	 </update>
+	 
+	 
+	 <select id="selectEmailByNameAndPhone" parameterType="ticket.dto.User" resultType="String">
+	 	SELECT email FROM userinfo WHERE name = #{name } AND phone = #{phone }
+	 </select>
+	 
+	 
+	 <update id="updateProfile" parameterType="ticket.dto.User">
+	 	UPDATE userinfo 
+	 	SET profile =#{profile }
+	 	WHERE user_idx = #{userIdx }
+	 </update>
 
- <update id="updatePass" parameterType="ticket.dto.User">
- 	UPDATE  userinfo 
-	SET password = #{password }
-	WHERE email= #{email }
- </update>
- 
-  <update id="updatePhone" parameterType="ticket.dto.User">
- 	UPDATE  userinfo 
-	SET phone = #{phone }
-	WHERE user_idx= #{userIdx }
- </update>
- 
-  <update id="updateAddr" parameterType="ticket.dto.User">
- 	UPDATE  userinfo 
-	SET 
-		postcode = #{postcode }
-		,addr = #{addr }
-		
-		<if test="addrDetail != null">
-		,addr_detail = #{addrDetail }
-		</if>
-	WHERE user_idx= #{userIdx }
- </update>
- 
- 
- <select id="selectEmailByNameAndPhone" parameterType="ticket.dto.User" resultType="String">
- 	SELECT email FROM userinfo WHERE name = #{name } AND phone = #{phone }
- </select>
- 
- 
- <update id="updateProfile" parameterType="ticket.dto.User">
- 	UPDATE userinfo 
- 	SET profile =#{profile }
- 	WHERE user_idx = #{userIdx }
- </update>
+	<delete id="deleteBook" parameterType="ticket.dto.PaymentInfo">
+		DELETE book
+		WHERE seat_idx = #{seatIdx}
+	</delete>
 
+	<delete id="deleteSeat" parameterType="ticket.dto.PaymentInfo">
+		DELETE seat
+		WHERE seat_idx = #{seatIdx}
+	</delete>
   </mapper>
   
   

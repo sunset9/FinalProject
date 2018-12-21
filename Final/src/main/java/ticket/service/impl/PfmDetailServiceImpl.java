@@ -33,6 +33,11 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
+	public List<User> getExpectationUserList(Performance pfm) {
+		return mDetailDao.selectExpecUserList(pfm);
+	}
+
+	@Override
 	public void getExpectationInsert(String expContent, String pfmIdx, String userIdx) {
 		mDetailDao.insertExpectation(expContent, pfmIdx, userIdx);
 	}
@@ -48,18 +53,28 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
+	public List<ExpectRecomm> getExpRecommList(Performance pfm) {
+		return mDetailDao.selectExpRecommList(pfm);
+	}
+
+	@Override
 	public boolean getDelExpRecomm(ExpectRecomm expRecomm) {
 		return mDetailDao.deleteExpRecomm(expRecomm);
 	}
 
 	@Override
-	public List getReviewList(Performance pfm) {
+	public List<Review> getReviewList(Performance pfm) {
 		return mDetailDao.selectReviewList(pfm);
 	}
 
 	@Override
-	public void getInReview(Review review) {
-		mDetailDao.insertReview(review);
+	public List<User> getReviwUserList(Performance pfm) {
+		return mDetailDao.selectReviewUserList(pfm);
+	}
+
+	@Override
+	public void getInReview(String reviewContent, String pfmIdx, String userIdx) {
+		mDetailDao.insertReview(reviewContent, pfmIdx, userIdx);
 	}
 
 	@Override
@@ -90,11 +105,6 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public List<Artist> getCastInfo(Performance pfm) {
 		return mDetailDao.selectCastInfo(pfm);
-	}
-
-	@Override
-	public List<User> getExpectationUserList(Performance pfm) {
-		return mDetailDao.selectExpecUserList(pfm);
 	}
 	
 }

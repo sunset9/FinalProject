@@ -156,6 +156,39 @@ function openZipSearch() { //다음 우편번호 API
 					  		
 				});
 			});
+	
+	
+	function ticketing() {
+
+		var seatInfoArr = new Array();
+		var time = "${param.time}";
+		var date = "${param.date}";
+		var pfmIdx = ${param.pfmIdx};
+		
+		$(".seatInfo").each(function() {
+			seatInfoArr.push($(this).text());
+		});
+		//ajax로 배열 전송하기 위한 방식
+		$.ajaxSettings.traditional = true
+		console.log("dd");
+		$.ajax({
+			type:"post",
+			url:"/ticket/ticketing",
+			data:{
+				  "time" : time
+				  , "date" : date
+				  , "pfmIdx": pfmIdx
+				  , "seatInfo" : seatInfoArr
+				  , "receiveIdx" : delvyTypeCode
+			     },
+			async: false,
+			dataType:"html",
+			success:function(res){
+			
+			}
+		});	
+	}
+		
 
 	function setDeliveryType(e){ // 배송 방법
 		//console.log(e);
@@ -164,7 +197,7 @@ function openZipSearch() { //다음 우편번호 API
 		//구현 전 값 후값 비교 후 .. 
 		
 		if(e=='DV03'){ // 배송으로 선택시 
-			
+			delvyTypeCode = 2;
 			$('#part_delivery_info').show();
 			$('#deliveryCost').html('2,500');
 			if(rp==(+basepay+(+fee)+2500))
@@ -179,6 +212,7 @@ function openZipSearch() { //다음 우편번호 API
 			}
 		
 		}else{ //현장 수령시 
+			delvyTypeCode = 1;
 			$('#part_delivery_info').hide();
 			$('#deliveryCost').html('0');
 			resultPay=rp;
@@ -215,6 +249,7 @@ function openZipSearch() { //다음 우편번호 API
 				msg += '결제 시간 : ' + rsp.paid_at;
 				msg += '[rsp.success]';
 
+				var pfmIdx = ${param.pfmIdx};
 				// 결제 완료 처리 로직
 				//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 				jQuery.ajax({
@@ -227,7 +262,7 @@ function openZipSearch() { //다음 우편번호 API
 						impUid : rsp.imp_uid,
 						merchantUid : rsp.merchant_uid,
 						payMethod : rsp.pay_method, //결제정보
-						pfmIdx : 14, //공연번호 
+						pfmIdx : pfmIdx, //공연번호 
 						paidAmount : rsp.paid_amount, //결제금액
 						buyerName : rsp.buyer_name, //구매자 이름 
 						buyerEmail : rsp.buyer_email, //구매자 메일 
@@ -237,14 +272,16 @@ function openZipSearch() { //다음 우편번호 API
 
 				}).done(function(data) {
 					//[2] 서버에서의 응답 처리
-					if (data == 'success') {
+					console.log(data);
+					if (data.success = 'success') {
 						var msg = '결제가 완료되었습니다.';
 // 						msg += '\n고유ID : ' + rsp.imp_uid;
 // 						msg += '\n상점 거래ID : ' + rsp.merchant_uid;
 // 						msg += '\n결제 금액 : ' + rsp.paid_amount;
 // 						msg += '\n카드 승인번호 : ' + rsp.apply_num;
 // 						msg += '\n[done]';
-
+						ticketing();
+						console.log(1);
 						alert(msg);
 
 					} else {
@@ -260,6 +297,7 @@ function openZipSearch() { //다음 우편번호 API
 			}
 			alert(msg);
 			//여기서 메인으로 돌아가는 코드 작성 
+	
 		});
 	}
 </script>

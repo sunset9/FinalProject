@@ -91,6 +91,7 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.14
+	 * @param genre 
 	 * @Method설명: 콘서트 - 마감임박순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
@@ -105,6 +106,7 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.14
+	 * @param genre 
 	 * @Method설명: 콘서트 - 인기순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
@@ -167,8 +169,15 @@ public interface MainDao {
 	public List<Performance> selectOpenDayPfmList();
 
 	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 주어진 날짜에 티켓을 판매하는 공연 리스트 조회 (좌석 수 오름차순으로 정렬)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmListByOneDay(String targetDate);
+	
+	/**
 	 * @최종수정일: 2018.12.19
-	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회 (좌석 수 많은 순으로 정렬)
+	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회 (좌석 수 오름차순으로 정렬)
 	 * @작성자: 전해진
 	 */
 	public List<Performance> selectPfmListByPeriod(@Param(value="start") String start
@@ -189,5 +198,6 @@ public interface MainDao {
 	 */
 	public int selectCntBookSeatBypfmIdx(@Param(value="pfm") Performance pfm
 			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
+
 
 }

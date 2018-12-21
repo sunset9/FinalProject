@@ -1,7 +1,10 @@
 package ticket.dao.face;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
@@ -112,6 +115,13 @@ public interface TicketDao {
 	 * @작성자:이상지
 	 */
 	public int selectMaxCol(int oriSecIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 공연idx, 날짜, 시간으로 임의의 공연의 해당 날짜 DB의 idx가져오기
+	 * @작성자:이상지
+	 */
+	public int selectDayByTimeIdx(@Param(value = "pfmIdx") int pfmIdx, @Param(value = "date") String date, @Param(value = "time") String time);
 	
 	
 }

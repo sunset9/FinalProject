@@ -28,8 +28,8 @@
 <tr> <td>작성자</td><td>${userIdx }</td> </tr>
 <tr> <td>분류</td><td><input type="text" name="NTypeIdx" value="${update.NTypeIdx }"></td> </tr>
 <tr> <td>제목</td><td><input type="text" name="noticeTitle" value="${update.noticeTitle }"></td></tr>
-<tr> <td>내용</td><td><textarea id="content" name="noticeContent"> ${update.noticeContent }</textarea> </td></tr>
-
+ <jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include>
+ <tr> <td><textarea name="noticeContent" id="noticeContent" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea></td></tr>
 </table>
 
 
@@ -45,7 +45,7 @@
 </div>
 
 
-<script type="text/javascript">
+<script>
 
 
 var config = {

@@ -1,9 +1,7 @@
-package ticket.controller;
+	package ticket.controller;
 
 import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +17,7 @@ import ticket.dto.Expectation;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.dto.Review;
 import ticket.dto.User;
 import ticket.service.face.PfmDetailService;
 
@@ -29,9 +28,8 @@ public class PfmDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(PfmDetailController.class);
 
 	/**
-	 * 최종수정일: 2018.12.19
+	 * 최종수정일: 2018.12.21
 	 * @Method설명: 공연 상세 클릭시 첫 페이지
-	 * 				상세정보, 기대평, 관람후기, 공연장정보, 예매안내(TEXT)
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/pfmdetail", method=RequestMethod.GET)
@@ -59,14 +57,28 @@ public class PfmDetailController {
 		List<Expectation> expecList = detailService.getExpectationList(pfm);
 		model.addAttribute("expecList", expecList);
 		
-		//	작성자 리스트 출력
+		// 기대평 작성자 리스트 출력
 		List<User> expecUserList = detailService.getExpectationUserList(pfm);
 		model.addAttribute("expecUserList", expecUserList);
+		
+		// 기대평 대댓글 리스트 출력하기
+//		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+//		model.addAttribute("expRecommList", expRecommList);
+		
+		
+		// 관람후기 리스트 출력해주기
+		List<Review> reviewList = detailService.getReviewList(pfm);
+		model.addAttribute("reviewList", reviewList);
+		
+		// 관람후기 작성자 리스트 출력
+		List<User> reviewUserList = detailService.getReviwUserList(pfm);
+		model.addAttribute("reviewUserList", reviewUserList);
+		
 	}
 
 	/**
 	 * 최종수정일: 2018.12.20
-	 * @Method설명: 기대평 작성 / 출력
+	 * @Method설명: 기대평 작성, 삭제
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/pfmdetail/expectation", method=RequestMethod.GET)
@@ -75,6 +87,8 @@ public class PfmDetailController {
 			, String pfmIdx
 			, String userIdx
 			, Performance pfm
+			, String expIdx
+			, String updel
 		) {
 		
 		HashMap<String, Object> map = new HashMap<>();
@@ -82,20 +96,65 @@ public class PfmDetailController {
 		logger.info(expContent);
 		logger.info(pfmIdx);
 		logger.info(userIdx);
+		logger.info(expIdx);
+		logger.info(updel);
 		
+		
+		if ( updel.equals("expecBtn") ) {
 		// 기대평 작성
 		detailService.getExpectationInsert(expContent, pfmIdx, userIdx);
 		
+		} else if ( updel.equals("expDeleteBtn") ) {
+			// 기대평 삭제
+			detailService.getDelExpectation(expIdx);
+			
+		}
+
 		// 기대평 리스트 출력해주기
 		List<Expectation> expecList = detailService.getExpectationList(pfm);
 		map.put("expecList", expecList);
 		
-		//	작성자 리스트 출력
+		// 작성자 리스트 출력
 		List<User> expecUserList = detailService.getExpectationUserList(pfm);
 		map.put("expecUserList", expecUserList);
 		
-		// 기대평 삭제
-//		detailService.getDelExpectation(expIdx);
+		return map;
+	}
+	
+	@RequestMapping(value="/pfmdetail/review", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> review(
+			String reviewContent
+			, String pfmIdx
+			, String userIdx
+			, Performance pfm
+			, String reviewIdx
+			, String updel
+		) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		logger.info(updel);
+		logger.info(reviewContent);
+		logger.info(pfmIdx);
+		logger.info(userIdx);
+		
+		if ( updel.equals("revBtn") ) {
+		// 관람후기 작성
+//		detailService.getInReview(reviewContent, pfmIdx, userIdx);
+		
+		} else if ( updel.equals("revDeleteBtn") ) {
+			// 관람후기 삭제
+//			detailService.getDelExpectation(reviewIdx);
+			
+		}
+
+		// 관람후기 리스트 출력해주기
+		List<Review> reviewList = detailService.getReviewList(pfm);
+		map.put("reviewList", reviewList);
+
+		// 관람후기 작성자 리스트 출력
+		List<User> reviewUserList = detailService.getReviwUserList(pfm);
+		map.put("reviewUserList", reviewUserList);
 		
 		return map;
 	}

@@ -31,7 +31,6 @@
 	<dependencies>
 		<!-- 사용자 라이브러리 -->
 		
-		
 		<!-- 메일보내는 기능 쓰기 위한 라이브러리 -->
 		<dependency>
 			<groupId>javax.mail</groupId>

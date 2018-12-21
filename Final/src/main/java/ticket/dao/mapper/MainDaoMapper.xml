@@ -31,6 +31,7 @@
 		<result column="running_time" property="runningTime"/>
 		<result column="create_date" property="createDate"/>
 		<result column="poster_name" property="posterName"/>
+		<result column="hall_name" property="hallName"/>
 	</resultMap>
 	
 	<!-- 메인 배너 -->
@@ -226,7 +227,7 @@
 		    , po.origin_name
 		FROM (
 		    SELECT * FROM performance
-		    WHERE genre_idx=1
+		    WHERE genre_idx=#{genreIdx}
 		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
 		) p
 		LEFT JOIN poster_info po
@@ -296,15 +297,39 @@
 		ORDER BY rnum
 	</select>
 	
-	<select id="selectPfmListByPeriod" resultMap="Performance">
-		SELECT P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx, age_grade_idx, running_time, P.create_date, COUNT(S.seat_idx) cnt 
-		FROM PERFORMANCE P
+	<select id="selectPfmListByOneDay" parameterType="String" resultMap="Performance">
+		SELECT P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name poster_name, H.hall_name, COUNT(S.seat_idx) cnt 
+		FROM performance P
 		LEFT JOIN seat S
 		ON P.hall_idx = S.hall_idx
+		LEFT JOIN hall H
+		ON P.hall_idx = H.hall_idx
+		LEFT JOIN poster_info Ps
+		ON P.pfm_idx = Ps.pfm_idx
+		WHERE #{value } between ticket_start and ticket_end
+		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name, H.hall_name
+		ORDER BY cnt
+	</select>
+	
+	<select id="selectPfmListByPeriod" resultMap="Performance">
+		SELECT P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name poster_name, H.hall_name, COUNT(S.seat_idx) cnt 
+		FROM performance P
+		LEFT JOIN seat S
+		ON P.hall_idx = S.hall_idx
+		LEFT JOIN hall H
+		ON P.hall_idx = H.hall_idx
+		LEFT JOIN poster_info Ps
+		ON P.pfm_idx = Ps.pfm_idx
 		WHERE (ticket_start between #{start } and #{end })  
 				OR (ticket_end between #{start } and #{end })
-		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx, age_grade_idx, running_time, P.create_date
-		ORDER BY cnt DESC
+				OR (#{start } between ticket_start and ticket_end)  
+				OR (#{end } between ticket_start and ticket_end)  
+		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name, H.hall_name
+		ORDER BY cnt
 	</select>
 	
 	<select id="selectCntAllSeatByHallIdx" parameterType = "ticket.dto.Performance" resultType="int">

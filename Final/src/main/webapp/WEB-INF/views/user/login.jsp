@@ -35,9 +35,29 @@
 
 </style>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// 아이디랑 비밀번호가 있을 때만 로그인 처리 
+	$('#loginBtn').click(function() {
+		console.log("로그인 유효성 실행?");
+		
+		if($('#inputEmail3').val()==""){
+			alert("아이디를 입력해 주세요.");
+		} else if($('#inputPassword3').val()=="" ){ 
+			alert("비밀번호를 입력해 주세요.");
+				
+		} else {
+				$('#loginForm').submit();
+		}
+	})
+});
+
+</script>
+
 <div id = "loginFrom">
 	<h1 id = "loginlogo">TICKET</h1>
-		<form action="/user/login" method="POST">
+		<form action="/user/login" method="POST" id="loginForm">
 		  <div class="form-group">
 		    <div class="col-sm-10">
 		      <input type="email" class="form-control login-input" id="inputEmail3" name="email" placeholder="아이디(이메일)">
@@ -62,7 +82,7 @@
 		  </div>
 		  <div class="form-group">
 		    <div class="col-sm-10" style="text-align: center;">
-		      <button type="submit" class="btn btn-default login-btn">로그인</button>
+		      <button type="button" id="loginBtn" class="btn btn-default login-btn">로그인</button>
 		    </div>
 		  </div>
 		</form>

@@ -4,10 +4,13 @@
 <jsp:include page="../layout/menu.jsp" />
 
 <style>
-#managePfm{
-	width: 1200px;
-	margin: 0 auto;
+.managerPfmBox {
+	float: left;
+    width: 80%;
+    position: absolute;
+    left: 230px;
 }
+
 #registBtn {
     float: right;
 }
@@ -78,6 +81,7 @@ ul.order li span{
 	overflow: hidden;
 	width: 1080px;
 	margin: 0 auto;
+    padding-left: 0;
 }
 li.pfmInfo{
 	float:left;
@@ -92,9 +96,10 @@ li.pfmInfo{
 .pfmInfo a{
  	display: block;
 /*     width: 180px; */
-    height: 358px;
-    padding: 24px 24px 21px;
+    height: 320px;
+    padding: 20px 15px 15px;
     border: 1px solid #eee;
+    
 }
 
 .thumb {
