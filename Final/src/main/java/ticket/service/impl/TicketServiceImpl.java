@@ -1,5 +1,6 @@
 package ticket.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -93,6 +94,14 @@ public class TicketServiceImpl implements TicketService {
 	public List<SeatSection> loadPfmSection(Performance pfm) {
 		// TODO Auto-generated method stub
 		return ticketDao.selectSection(pfm);
+	}
+
+	@Override
+	public int loadDayByTimeIdx(int pfmIdx, String date, String time) {
+		
+		
+		return ticketDao.selectDayByTimeIdx(pfmIdx, date, time);
+		
 	}
 	
 	

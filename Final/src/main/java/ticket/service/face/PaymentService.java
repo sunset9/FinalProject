@@ -5,10 +5,11 @@ import ticket.dto.PaymentInfo;
 public interface PaymentService {
 	/**
 	 * 2018.12.05
+	 * @return 
 	 * @Method설명: 구매 (결제시) 사용되는 메소드
 	 * @작성자: 박주희
 	 */
-	public void pay(PaymentInfo pay);
+	public int pay(PaymentInfo pay);
 
 	/**
 	 * 2018.12.05

@@ -3,6 +3,7 @@ package ticket.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.collect.Sets.SetView;
 import com.google.gson.Gson;
 
 import ticket.dto.Hall;
@@ -110,7 +112,33 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 
-	public void ticketing() {
+	@RequestMapping(value="/ticket/ticketing", method=RequestMethod.POST)
+	public ModelAndView ticketing(String time, String date, int pfmIdx, String[] seatInfo, int receiveIdx) {
+//		logger.info("date:"+date);
+//		logger.info("time:"+time);
+//		logger.info("pfmIdx:"+pfmIdx);
+//		logger.info("receiveIdx"+receiveIdx);
+		
+		
+		for(int i =0;i<seatInfo.length;i++) {
+			logger.info(seatInfo[i]);
+		}
+		
+		int pfmDbtIdx = 0;
+		
+		List<Integer> seatIdx = new ArrayList<Integer>();
+		
+		//날짜 인덱스 구하기(공연번호, 시간,날짜를 조건으로)
+		pfmDbtIdx = ticketService.loadDayByTimeIdx(pfmIdx,date,time,);
+		
+	
+		//좌석 인덱스 구하기(seatInfo정보로 구역,좌석행렬,공연번호로 구하기)
+//		seatIdx = ticketService.loadSeatIdx();
+		//예매정보 DB저장
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/ticket/ticketingComplete");
+		return mav;
 		
 	}
 	

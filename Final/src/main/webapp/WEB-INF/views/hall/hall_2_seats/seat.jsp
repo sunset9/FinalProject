@@ -258,8 +258,10 @@ div.seatCharts-cell {
 		  array = str.split(" ");
 		  console.log(); // 무슨좌석인지
 		  console.log() ;
-		  $(".nth2").append(array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay});
-		  $(".nth2").append('<br>');
+		  
+		  $(".nth2_1").append("<li class='seatInfo'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay}+"</li>")
+// 		  $(".nth2").append(array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay});
+// 		  $(".nth2").append('<br>');
 		  
 		  var resultPay = $('#total').text();
 		  resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
