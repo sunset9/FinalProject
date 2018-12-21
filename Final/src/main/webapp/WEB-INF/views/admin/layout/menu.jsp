@@ -50,6 +50,12 @@
 h1, h2, h3 {
 	display: inline-block;
 }
+.thumbnail a>img, .thumbnail>img {
+    height: 150px;
+}
+.pfmIdx>img{
+ height: 150px;
+}
 </style>
 </head>
 <body>

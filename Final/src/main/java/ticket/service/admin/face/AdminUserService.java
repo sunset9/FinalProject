@@ -86,4 +86,12 @@ public interface AdminUserService {
 	 * @작성자: 김지은
 	 */
 	public List<PaymentInfo> getImpUid(String bookGroup);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.21
+	 * @Method설명: 예매 취소하기
+	 * @작성자: 김지은
+	 */
+	public String paymentCancel(List<PaymentInfo> pay);
 }

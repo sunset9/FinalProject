@@ -18,6 +18,12 @@
 		parameterType="ticket.dto.PaymentInfo">
 		DELETE FROM payment WHERE imp_uid=#{impUid}
 	</delete>
+	
+	<update id="updatePayment" parameterType="ticket.dto.PaymentInfo">
+		UPDATE payment 
+		SET paid_amount = paid_amount - #{secPay}
+	</update>
+	
 	<select id="selectBypayIdx"
 		parameterType="ticket.dto.PaymentInfo"
 		resultType="ticket.dto.PaymentInfo">
