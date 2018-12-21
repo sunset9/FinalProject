@@ -410,7 +410,7 @@ ${loginUser.userIdx };
 <!-- 티켓 정보 -->
 
 </div><!-- end class="section_onestop" -->
-<table id="pay" style="margin: 0 auto;">
+<!-- <table id="pay" style="margin: 0 auto;"> -->
 <!-- 	<tr> -->
 <!-- 		<th>결제수단</th> -->
 <!-- 		<td><select id="pay_method"> -->
@@ -419,20 +419,22 @@ ${loginUser.userIdx };
 <!-- 				<option value="phone">휴대폰 소액결제</option> -->
 <!-- 		</select></td> -->
 <!-- 	</tr> -->
-	<tr>
-		<th>주문번호</th>
-		<td><input type="text" id="merchant_uid" /></td>
-	</tr>
-	<tr>
-		<th>금액</th>
-		<td><select id="amount">
-				<option value="100" selected>1만원</option>
-				<option value="20000">2만원</option>
-				<option value="30000">3만원</option>
-				<option value="50000">5만원</option>
-				<option value="100000">10만원</option>
-		</select></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<th>주문번호</th> -->
+<!-- 		<td> -->
+		<input type="hidden" id="merchant_uid" value="" />
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<th>금액</th> -->
+<!-- 		<td><select id="amount"> -->
+<!-- 				<option value="100" selected>1만원</option> -->
+<!-- 				<option value="20000">2만원</option> -->
+<!-- 				<option value="30000">3만원</option> -->
+<!-- 				<option value="50000">5만원</option> -->
+<!-- 				<option value="100000">10만원</option> -->
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
 <!-- 	<tr> -->
 <!-- 		<th>성함</th> -->
