@@ -99,7 +99,7 @@
 	)
 	VALUES ( 
 		#{userIdx },#{email } ,#{nick },#{password },#{name },#{sex },#{birth },#{phone }
-		,#{addr },#{addrDetail },#{postcode },#{mGradeIdx },#{profile }
+		,#{addr },#{addrDetail },#{postcode },1,#{profile }
 	)
   	
   </insert>

@@ -7,9 +7,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import ticket.dto.MyChoice;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.StateOfBook;
 import ticket.dto.User;
 
 public interface UserService {
@@ -112,4 +112,12 @@ public interface UserService {
 	 * @작성자:홍나영
 	 */
 	public void updateProfile(ServletContext context, MultipartFile file,User user );
+	
+	
+	/**
+	 * @최종수정일: 2018.12.20
+	 * @Method설명: 유저가 예매한 ticket 정보 불러오기
+	 * @작성자:홍나영
+	 */
+	public List<StateOfBook> userTicket(User user);
 }

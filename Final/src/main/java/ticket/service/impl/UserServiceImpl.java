@@ -19,6 +19,7 @@ import ticket.dao.face.PfmDao;
 import ticket.dao.face.UserDao;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.service.face.UserService;
 
@@ -156,7 +157,7 @@ public class UserServiceImpl implements UserService{
 		File profile = new File (stored);
 		
 		// 원본이름과 저장이름 지정 
-		user.setProfile("/resoures/image/profile/"+file.getOriginalFilename());
+		user.setProfile("/resources/image/profile/"+file.getOriginalFilename());
 
 		try {
 			// 파일 저장 (업로드)
@@ -171,6 +172,12 @@ public class UserServiceImpl implements UserService{
 		// 프로필 저장
 		userDao.updateProfile(user);
 		
+	}
+
+
+	@Override
+	public List<StateOfBook> userTicket(User user) {
+		return userDao.selectSOB(user);
 	}
 
 
