@@ -1,6 +1,7 @@
 package ticket.controller.admin;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -101,7 +102,7 @@ public class AdminBoardController {
 		return "redirect:/admin/noticelist";
 		
 	}
-	
+//	*********************************
 //	다음 에디터 이미지 첨부 팝업
 	@RequestMapping(value="/admin/imagepopup")
 	public String imagePopup() {
@@ -179,6 +180,91 @@ public class AdminBoardController {
 		
 		return fileInfo;	// @ResponseBody 어노테이션을 사용하여 Map을 JSON형태로 반환 
 	}
+	
+//	*********************************
+	
+//	파일 업로드 버튼 누를시 파일팝업
+	@RequestMapping(value="/admin/filepopup")
+	public String filePopup() {
+		return "/admin/notice/file";
+	}
+	
+	// 파일 업로드 Ajax
+	@RequestMapping(value="/admin/singleUploadFileAjax", method=RequestMethod.POST)
+	public @ResponseBody HashMap singleUploadFileAjax
+	(@RequestParam("Filedata") MultipartFile multipartFile, HttpSession httpSession) {
+		
+		HashMap fileInfo = new HashMap(); // 콜백할때 파일 정보를 담을 맵
+
+		// 업로드 파일이 존재하면
+		if(multipartFile!=null&&!(multipartFile.getOriginalFilename().equals(""))) {
+			
+			// 파일 크기 제한 (5MB)
+			long filesize = multipartFile.getSize();
+			long limitFileSize = 50*1024*1024;
+			if(limitFileSize<filesize) {
+				fileInfo.put("result", -1);
+				return fileInfo;
+			}
+			
+			// 저장경로
+			String defaultPath = httpSession.getServletContext().getRealPath("/"); // 서버기본 경로 (프로젝트폴더아님)
+			String path = defaultPath + File.separator + "upload" + File.separator + "board" + File.separator + "files" + File.separator + "";
+			
+			// 저장경로 처리
+			File file = new File(path);
+			if(!file.exists()) { // 디렉토리 존재하지 않을경우 생성
+				file.mkdirs();
+			}
+			
+			// 파일 저장명 처리 (수정된 이름 today+파일명)
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			String today = formatter.format(new Date());
+			String originalName = multipartFile.getOriginalFilename(); // 파일이름
+			String modifyName = today + "-" + originalName;
+			
+			
+			// Multipart 처리
+			try {
+				
+				// 서버에 파일 저장(쓰기)
+				multipartFile.transferTo(new File(path+modifyName));
+				
+				
+				// 로그
+				System.out.println("upload 정보");
+				System.out.println("path" + path);
+				System.out.println("originalName" + originalName);
+				System.out.println("modifyName" + modifyName);
+				
+				
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+				System.out.println("업로드 실패 IllegalState");
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("IOExep");
+			}
+			
+			String fileMime = multipartFile.getContentType();
+			
+			// 콜백 - 맵에 담기
+			String attachurl = httpSession.getServletContext().getContextPath() + "/upload/board/files/" + modifyName; // separator와 다름
+			fileInfo.put("attachurl", attachurl); // 상대 파일 경로
+			fileInfo.put("filemime", fileMime);
+			fileInfo.put("filename", modifyName);
+			fileInfo.put("filesize", filesize);
+			fileInfo.put("result", 1);
+			
+			
+		}
+		
+		
+		return fileInfo;
+		
+	}
+	
+	
 	
 	
 	

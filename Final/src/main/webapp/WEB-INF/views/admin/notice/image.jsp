@@ -9,8 +9,7 @@
 <!-- jQuery -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <!-- jquery.form.js - ajaxSubmit() 사용 -->
-<script type=text/javascript src="${pageContext.request.contextPath}/resources/daumOpenEditor/js/jquery.form.min.js"></script>
-
+<script type="text/javascript" src="jquery.form.js"></script>
 
 <head>
 	
@@ -21,6 +20,62 @@
 	<!-- 다음오픈에디터 라이브러리 -->
 	<link rel="stylesheet" href="../../css/popup.css" type="text/css"  charset="utf-8"/>
 	<script src="../../js/popup.js" type="text/javascript" charset="utf-8"></script>
+	
+<style>
+	
+/* 	css */
+	.header{
+	  background-image: none;
+	  background-color: #027dfc;
+	}
+	
+/* 	파일첨부 */
+	file{
+		display: inline-block;
+		margin-top: 8px;
+		overflow: hidden;
+	}
+	
+	.file .file-text{
+		 display: inline-block; 
+		 padding: 6px 10px 8px 10px; 
+		 border : 1px solid #c7c7c7; 
+		 width: 179px; 
+		 font-size: 14px; 
+		 color: #8a8a8a; 
+		 float: left;
+	 
+	 }
+	
+	 .file .file-text:FOCUS{
+		 border-color: #54c4e5; 
+		 outline: 0; 
+		 -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102,175,233,0.6); 
+		 box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102,175,233,0.6); 	 
+	 }
+	
+	
+	.file .file-btn{
+		margin-left: 2px; 
+		padding: 6px 8px 4px 8px; 
+		height: 20px; 
+		line-height: 20px; 
+		font-size: 12px; 
+		font-weight: bold; 
+		background-color: #fff; 
+		border: 1px solid #989898; 
+		color: #989898; 
+		cursor: pointer; 
+		float: left;	
+	}
+	
+	.file .file-btn:HOVER{
+		background-color: #edfbff; 
+		border: 1px solid #009bc8; 
+		color: #009bc8;
+	}
+	
+	</style>
 	
 	<script>
 		$(document).ready(function(){
@@ -34,7 +89,7 @@
 			});			
 			
 			// 첨부한 이미지를 에디터에 적용
-			function done(fileInfo){
+			function done(filelist){
 				if(typeof(execAttach)=='undefined'){
 					return;
 				}
@@ -96,61 +151,7 @@
 		});		
 	</script>
 	
-	<style>
-	
-/* 	css */
-	.header{
-	  background-image: none;
-	  background-color: #027dfc;
-	}
-	
-/* 	파일첨부 */
-	file{
-		display: inline-block;
-		margin-top: 8px;
-		overflow: hidden;
-	}
-	
-	.file .file-text{
-		 display: inline-block; 
-		 padding: 6px 10px 8px 10px; 
-		 border : 1px solid #c7c7c7; 
-		 width: 179px; 
-		 font-size: 14px; 
-		 color: #8a8a8a; 
-		 float: left;
-	 
-	 }
-	
-	 .file .file-text:FOCUS{
-		 border-color: #54c4e5; 
-		 outline: 0; 
-		 -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102,175,233,0.6); 
-		 box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102,175,233,0.6); 	 
-	 }
-	
-	
-	.file .file-btn{
-		margin-left: 2px; 
-		padding: 6px 8px 4px 8px; 
-		height: 20px; 
-		line-height: 20px; 
-		font-size: 12px; 
-		font-weight: bold; 
-		background-color: #fff; 
-		border: 1px solid #989898; 
-		color: #989898; 
-		cursor: pointer; 
-		float: left;	
-	}
-	
-	.file .file-btn:HOVER{
-		background-color: #edfbff; 
-		border: 1px solid #009bc8; 
-		color: #009bc8;
-	}
-	
-	</style>
+
 	
 </head>
 
@@ -182,7 +183,7 @@
 <!-- 				<a href="#" onclick="closeWindow();" title="닫기" class="close">닫기</a> -->
 <!-- 			</p> -->
 			<ul>
-				<li class="submit"><a href="#" title="등록" class="btnlink">등록</a> </li>
+				<li class="submit"><a href="#" onclick="done();" title="등록" class="btnlink">등록</a> </li>
 				<li class="cancel"><a href="#" onclick="closeWindow();" title="취소" class="btnlink">취소</a></li>
 			</ul>
 		</div>
