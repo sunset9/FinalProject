@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
 import ticket.dto.User;
 
@@ -120,4 +122,57 @@ public interface UserService {
 	 * @작성자:홍나영
 	 */
 	public List<StateOfBook> userTicket(User user);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 예약한 정보 상세 보기 할때 쓸 정보 불러오기
+	 * @작성자:홍나영
+	 */
+	public StateOfBook getDetailBook(User user, int pfmIdx);
+
+
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 예매 상세에서 사용할 배송 방법 조회하기
+	 * @작성자:홍나영
+	 */
+	public int getReceive (String bookGroup);
+
+
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 배송지 정보 가져오기
+	 * @작성자:홍나영
+	 */
+	public Shipment getShipment(String bookGroup);
+
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 구매 내역중 구역과 티켓가격 조회 ! 
+	 * @작성자:홍나영
+	 */
+	public SeatSection selectSeatSection(String bookGroup);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -12,7 +12,10 @@
 	background-color: #CCC;
 }
 
-
+#userNick{
+	font-weight: bolder;
+	font-size: 2em;
+}
 </style>
 
 <script type="text/javascript">
