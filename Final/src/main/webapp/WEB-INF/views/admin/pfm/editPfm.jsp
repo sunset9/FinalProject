@@ -29,6 +29,13 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/js/froala_editor.pkgd.min.js"></script>
 
 <style>
+.registBox {
+	float: left;
+    width: 1000px;
+    position: absolute;
+    left: 230px;
+}
+
 .registPfmTab {
 	width:100%;
 }
