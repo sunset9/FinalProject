@@ -31,6 +31,7 @@
 		<result column="running_time" property="runningTime"/>
 		<result column="create_date" property="createDate"/>
 		<result column="poster_name" property="posterName"/>
+		<result column="stored_name" property="storedName"/>
 		<result column="hall_name" property="hallName"/>
 	</resultMap>
 	

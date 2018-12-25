@@ -54,7 +54,6 @@ function mbInsert() {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;		
 }
-
 </style>
 <body>
 <h3>배너관리 - 메인배너</h3>
@@ -76,10 +75,12 @@ function mbInsert() {
 	</c:forEach>
 	<div class="plusBox"> 
 		<c:if test="${fn:length(mBannerList) < 5 }">
- 			<a href="/admin/registMainbanner"><button class="mbRegist">추가하기</button></a>   
+ 			<a href="/admin/registMainbanner"><button class="banRegistModalBtn">추가하기</button></a>   
 		</c:if>
 	</div>
 </div>
 
+
+</div>
 </body>
 </html> 

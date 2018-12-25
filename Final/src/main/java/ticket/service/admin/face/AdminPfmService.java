@@ -491,5 +491,19 @@ public interface AdminPfmService {
 	 * @작성자: 전해진
 	 */
 	public void deletePfm(Performance pfm);
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 최신순 공연 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> getNeweastPfm(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 전체 공연수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int getTotalPfm(String search);
 
 }

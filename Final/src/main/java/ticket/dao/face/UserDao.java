@@ -176,6 +176,13 @@ public interface UserDao {
 	public void deleteSeat(PaymentInfo seat);
 	
 	/**
+	 * @최종수정일: 2018.12.23
+	 * @Method설명: 예매현황 count 구하기
+	 * @작성자: 김지은
+	 */
+	public int selectTotalSob(String search);
+
+  /*
 	 * @최종수정일: 2018.12.24
 	 * @Method설명: 한 공연에 대한 예약 정보 얻어오기 userIdx, pfmIdx 매개변수로 사용
 	 * @작성자:홍나영
@@ -209,4 +216,5 @@ public interface UserDao {
 	
 	
 	
+
 }
