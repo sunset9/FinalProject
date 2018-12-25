@@ -75,6 +75,21 @@
 	padding-top: 30px;
 }
 </style>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+function ajax(url){
+	var paging = ${paging};
+	if(!url) url = "/pagingcatemu"
+		$.ajax({
+			url: url
+			, method : "GET"
+			, dataType: "json"
+			, data: {"curPa"}
+		})
+}
+});
+</script>
 <body>
 
 <h3>배너관리 - 메인배너</h3>
