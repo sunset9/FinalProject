@@ -31,6 +31,8 @@
 		<result column="running_time" property="runningTime"/>
 		<result column="create_date" property="createDate"/>
 		<result column="poster_name" property="posterName"/>
+		<result column="stored_name" property="storedName"/>
+		<result column="hall_name" property="hallName"/>
 	</resultMap>
 	
 	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
@@ -500,4 +502,21 @@
 		    tb.tab_genre = 2
 	</select>
 
+	<select id="selectTotalPfm" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM performance
+		WHERE name = #{value}
+	</select>
+	
+	<select id="selectNeweastPfm" parameterType="ticket.utils.Paging" resultMap="Performance">
+		SELECT * FROM (
+			SELECT ROWNUM no, p.*, pi.stored_name, h.hall_name
+			FROM performance p JOIN poster_info pi
+			ON p.pfm_idx = pi.pfm_idx JOIN hall h
+			ON p.hall_idx = h.hall_idx
+			<if test= "search != null">
+				WHERE p.name LIKE '%' || #{search} || '%'
+			</if>
+			ORDER BY p.create_date ) 
+		WHERE no BETWEEN #{startNo} AND #{endNo}
+	</select>
 </mapper>

@@ -170,4 +170,11 @@ public interface UserDao {
 	 * @작성자: 김지은
 	 */
 	public void deleteSeat(PaymentInfo seat);
+	
+	/**
+	 * @최종수정일: 2018.12.23
+	 * @Method설명: 예매현황 count 구하기
+	 * @작성자: 김지은
+	 */
+	public int selectTotalSob(String search);
 }

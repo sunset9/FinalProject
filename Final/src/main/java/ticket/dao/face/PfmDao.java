@@ -383,4 +383,17 @@ public interface PfmDao {
 	 */
 	public List<TabBanner> selectMuTabBanner();
 	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 최신순 공연목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectNeweastPfm(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 전체 공연수 가져오기
+	 * @작성자: 김지은
+	 */
+	public int selectTotalPfm(String search);
 }

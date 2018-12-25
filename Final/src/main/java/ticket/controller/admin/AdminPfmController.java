@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -641,8 +642,31 @@ public class AdminPfmController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.GET)
-	public String registMBanner() {
+	public String registMBanner(
+			HttpServletRequest req,
+			Model model,
+			@RequestParam(defaultValue="1") int curPage
+			) {
 	
+		String search = req.getParameter("mainBanSearch");
+		logger.info("메인 배너 검색 결과 : "+search);
+		
+		//공연수 얻기
+		int totalPfm = pService.getTotalPfm(search);
+		System.out.println("공연수 확인 : "+totalPfm);
+		
+		//페이징 객체 생성
+		Paging paging = new Paging(totalPfm, curPage, 9);
+		
+		//최신순 공연목록 가져오기
+		List<Performance> NewPfmList = pService.getNeweastPfm(paging);
+		logger.info("최신순 공연목록 : "+NewPfmList);
+		//가나다순 공연목록 가져오기
+		//List<Performance> orderedPfmList = pService.getOrderedPfmList();
+		
+		model.addAttribute("NewPfmList", NewPfmList);
+		model.addAttribute("paging", paging);
+		
 		return "admin/pfm/registMBanner";
 	}
 	

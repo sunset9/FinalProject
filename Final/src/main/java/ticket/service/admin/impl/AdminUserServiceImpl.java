@@ -173,5 +173,11 @@ public class AdminUserServiceImpl implements AdminUserService{
 		
 		return jsonParser.toJson("결제가 취소 되었습니다.");
 	}
+
+	@Override
+	public int getTotalSob(String search) {
+		// 예매현황 count 구하기
+		return uDao.selectTotalSob(search);
+	}
 }
 	

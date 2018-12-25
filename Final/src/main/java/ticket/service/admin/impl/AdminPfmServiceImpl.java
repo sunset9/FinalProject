@@ -711,4 +711,16 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		
 	}
 
+	@Override
+	public List<Performance> getNeweastPfm(Paging paging) {
+		// 최신순 공연 목록 가져오기
+		return pDao.selectNeweastPfm(paging);
+	}
+
+	@Override
+	public int getTotalPfm(String search) {
+		// 전체 공연수 가져오기
+		return pDao.selectCntPfmSearch(search);
+	}
+
 }
