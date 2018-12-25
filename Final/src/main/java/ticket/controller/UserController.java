@@ -1,6 +1,5 @@
 package ticket.controller;
 
-import java.io.Writer;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +28,8 @@ import ticket.dto.Artist;
 import ticket.dto.MyChoice;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
 import ticket.dto.Theme;
 import ticket.dto.User;
@@ -355,6 +356,54 @@ public class UserController {
 		
 		return "/mypage/myticket";
 	}
+	
+	@RequestMapping(value = "/mypage/detailicket", method = RequestMethod.GET)
+	public void myticket(Model model
+			, User user
+			, HttpSession session
+			, int pfmIdx
+			 ) {
+		logger.info("티켓 상세");
+		logger.info("공연IDX" +pfmIdx);
+		user = (User) session.getAttribute("loginUser");
+		logger.info("" + user);
+		
+		// 예매한 공연 상세 정보 가져오기
+		StateOfBook sob = userService.getDetailBook(user, pfmIdx);
+		logger.info("sob"+sob);
+		model.addAttribute("sob", sob);
+		
+		// 티켓수령 정보 가져오기(수령 방법, 배송지 정보)
+		String bookGroup = sob.getBookGroup();
+		// 수령 방법 먼저 조회 
+		// 1 : 직접 수령   2 : 택배 배송
+		int receive = userService.getReceive(bookGroup);
+		logger.info("배송 방법"+receive);
+		model.addAttribute("receive", receive);
+		
+		// 택배 배송일 때만 배송지 정보 조회해오기 
+		if(receive == 2) {
+			Shipment sm = new Shipment();  // 배송지 정보 저장할 객체 
+			sm = userService.getShipment(bookGroup); // 예매번호로 배송지 조회
+			logger.info("배송지"+sm);
+			model.addAttribute("shipment", sm);
+		}
+		
+		// 구매 내역 가져오기 (티켓 가격, 배송비, 수수료)
+		SeatSection ss = userService.selectSeatSection(bookGroup);
+		logger.info("좌석 구역과 가격"+ss);
+		model.addAttribute("ss", ss);
+		
+		// 결제 내역 (결제 방법, 결제 날짜) 
+		
+		// 좌석 정보 
+		
+		
+
+
+		
+	}
+	
 
 	@RequestMapping(value = "/mypage/mychoice", method = RequestMethod.GET)
 	public String mychoice(Model model, HttpSession session) {

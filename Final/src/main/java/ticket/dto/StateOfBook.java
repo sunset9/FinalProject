@@ -30,6 +30,7 @@ public class StateOfBook {
 	private Date createDate; //예매일
 	private String storedName; //포스터 이름
 	private String name; //공연제목
+	private int pfmIdx; // 공연 인덱스
 	@DateTimeFormat(pattern = "yyyy-MM-dd(E)")
 	private Date pfmStart; //공연시작일
 	@DateTimeFormat(pattern = "yyyy-MM-dd(E)")
@@ -45,6 +46,7 @@ public class StateOfBook {
 	private String state; //예매상태
 	private String impUid; //결제번호
 	private String bookGroup; //예약번호(한 사람이 여러 좌석 예매했을때 같은 예약그룹으로 묶기위해)
+
 	@Override
 	public String toString() {
 		return "StateOfBook [no=" + no + ", userIdx=" + userIdx + ", email=" + email + ", nick=" + nick
@@ -94,6 +96,12 @@ public class StateOfBook {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getPfmIdx() {
+		return pfmIdx;
+	}
+	public void setPfmIdx(int pfmIdx) {
+		this.pfmIdx = pfmIdx;
 	}
 	public Date getPfmStart() {
 		return pfmStart;
@@ -161,5 +169,5 @@ public class StateOfBook {
 	public void setBookGroup(String bookGroup) {
 		this.bookGroup = bookGroup;
 	}
-	
+
 }

@@ -4,10 +4,6 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <style type="text/css">
 
-#userNick{
-	font-weight: bolder;
-	font-size: 2em;
-}
 
 .tabSec{
 	border: 1px solid #CCC;
@@ -78,7 +74,7 @@
 		</div></td>
 
 		<td>${sob.state }
-		<button>예매 상세</button>
+		<button onclick="location.href='/mypage/detailicket?pfmIdx=${sob.pfmIdx}'">예매 상세</button>
 		</td>
 	</tr>
 </c:forEach>

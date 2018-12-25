@@ -2,6 +2,9 @@ package ticket.service.admin.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -488,11 +491,93 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public List<Performance> getPfmListByGenre(String genre, Paging paging) {
+	public List<Performance> getPfmListByGenre(String genre, String order, Paging paging) {
 		// 검색하려는 장르 인덱스 
 		int genreIdx = GenreEnum.valueOf(genre).getIdx();
 
-		return pDao.selectPfmByGenre(genreIdx, paging);
+		// 반환할 결과 리스트
+		List<Performance> resPfmList = new ArrayList<>();
+		
+		// 최신순으로 가져오는 경우
+		if("LATEST".equals(order)) {
+			// 장르 일치하는 공연 목록 가져옴(페이징만 신경써서 조회)
+			return resPfmList = pDao.selectPfmByGenre(genreIdx, paging);
+			
+		// 예매순으로 가져오는 경우
+		} else if("RANK".equals(order)){
+			// 오늘 날짜
+			Date today = new Date();
+			
+			// 0. '조회 구간' 설정
+			// 시작 구간: 6일 전
+			Date periodS = new Date(today.getTime()); 
+			periodS.setTime((long) (periodS.getTime() - (double)30 * 24 * 60 * 60 * 1000));
+			// 끝 구간: 오늘
+			Date periodE = today; 
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			// Date -> String 변환
+			String startStr = dateFormat.format(periodS);
+			String endStr = dateFormat.format(periodE);
+			
+			// 1. 예매율 구하려는 공연 목록 가져옴
+			List<Performance> pfmList = pDao.selectPfmListByPeriod(startStr, endStr, genreIdx);
+			
+			// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
+			for(Performance pfm : pfmList) {
+				// 최종 조회 범위
+				Date startDate = periodS;
+				Date endDate = periodE;
+				
+				// '티켓' 시작일이 '조회 구간' 시작일 보다 느린 경우, '계산 구간' 시작일 = '티켓' 시작일
+				if(pfm.getTicketStart().getTime() - startDate.getTime() >= 0) {
+					startDate = pfm.getTicketStart();
+				}
+				// '조회 구간' 마지막일이 '티켓' 종료일 보다 느린 경우, '계산 구간' 마지막일 = '조회 구간' 마지막일
+				if(endDate.getTime() - pfm.getTicketEnd().getTime() >= 0) {
+					endDate = pfm.getTicketEnd();
+				}
+				
+				// 3.1 해당 공연의 총 좌석 수 구하기
+				int totalSeatCnt = pDao.selectCntAllSeatByHallIdx(pfm);
+				System.out.println(totalSeatCnt);
+				
+				System.out.println(startDate);
+				System.out.println(endDate);
+				
+				// 3.2 계산 구간에 예매한 좌석 수 구하기
+				int bookSeatCnt = pDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
+				System.out.println(bookSeatCnt);
+				
+				// 3.3 예매율 계산
+				float bookRate = 0;
+				if(bookSeatCnt != 0) {
+					bookRate = ((float)bookSeatCnt/totalSeatCnt) * 100;
+				}
+				System.out.println("예매율:" + bookRate);
+				
+				// 예매율 필드에 삽입
+				pfm.setBookingRate(bookRate);
+				
+				// 예매순으로 결과 리스트에 삽입
+				for(int i = 0; i<resPfmList.size(); i++) {
+					if(pfm.getBookingRate() >= resPfmList.get(i).getBookingRate()) {
+						resPfmList.add(i, pfm);
+						break;
+					}
+				}
+				
+				// 첫 번째 요소인 경우 무조건 삽입
+				if(resPfmList.size() == 0) {
+					resPfmList.add(pfm);
+				}
+				
+			} // end for
+			return resPfmList;
+		}
+		
+		return null;
 	}
 
 	@Override
@@ -502,7 +587,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Performance> getPfmSearchList(String keyword, Paging paging) {
-		return pDao.selectPfmSearch(keyword);
+		return pDao.selectPfmSearch(keyword, paging);
 	}
 
 	public void registHall(Hall hall, MultipartFile file) {
@@ -632,7 +717,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		if(seatSecList.getSeatSecList() != null) {
 			pDao.deleteSeatSec(pfmIdx); // 이전 좌석 정보 모두 삭제
 			for(SeatSection seatSec : seatSecList.getSeatSecList()) {
-				if(seatSec.getOriSecName() != "") {
+				if(seatSec.getOriSecName() != null && !"".equals(seatSec.getOriSecName())) {
 					// 공연 idx 지정
 					seatSec.setPfmIdx(pfmIdx);
 					seatSec.setHallIdx(pfm.getHallIdx());

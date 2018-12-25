@@ -394,7 +394,7 @@ public interface AdminPfmService {
 	 * @Method설명: 장르로 필터링, 현재 등록된  공연 목록 가져오기(페이징)
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getPfmListByGenre(String genre, Paging paging);
+	public List<Performance> getPfmListByGenre(String genre, String order, Paging paging);
 
 	/**
 	 * @최종수정일: 2018.12.12

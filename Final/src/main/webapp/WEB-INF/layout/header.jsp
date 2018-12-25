@@ -49,9 +49,9 @@
 		<li><a href="/ticket/ranking">예매 랭킹</a></li>
 		<li><a href="/mypage/myticket" id="current">마이페이지</a>
 			<ul>
-	        	<li><a href="#">예매 현황</a></li>
+	        	<li><a href="/mypage/myticket"">예매 현황</a></li>
 	        	<li><a href="/mypage/mychoice">찜</a></li>
-	        	<li><a href="#">내 문의</a></li>
+	        	<li><a href="/mypage/myinquiry">내 문의</a></li>
 	        </ul>
         </li>
 	</ul>

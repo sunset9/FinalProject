@@ -19,18 +19,18 @@ Trex.module("attachbox.updateCapacity on Trex.Ev.__ATTACHBOX_SHOW",
 TrexConfig.addSidebar('capacity',
 	{
 		show: _TRUE,
-		maximum: 3145728, //3M <= 1024
+		maximum: 31457280, //3M <= 1024 (맨뒤 0추가 12/24)
         filemaximum: _NULL,
 		filter: {
 			use: '', //sound,movie
 			sound: {
 				title: 'sound file',
-				maximum: 3145728,
+				maximum: 31457280,	// 0추가
 				extensions: ",mp3,wav,ogg,wma,mp4,ape,wmv,asf,ra,ram,"
 			},
 			movie: {
 				title: 'movie file',
-				maximum: 3145728,
+				maximum: 31457280,	// 0추가
 				extensions: ",wmv,mpg,avi,"
 			}
 		}

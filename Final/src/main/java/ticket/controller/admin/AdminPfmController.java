@@ -835,14 +835,14 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
 	public String viewPfmManager(Model model) {
 		String genre = "CON"; //목록 불러오는 기본값: 콘서트 기준
-//		String order = "LATEST"; // 정렬기준 기본값: 등록순
+		String order = "LATEST"; // 정렬기준 기본값: 등록순
 				
 		// 페이징 계산
 		int totalCnt = pService.getPfmCntByGenre(genre);
 		Paging paging = new Paging(totalCnt, 1, 8, 4);
 		
 		// 특정 장르에 해당하는 공연 리스트 가져오기
-		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
+		List<Performance> pfmList = pService.getPfmListByGenre(genre, order, paging);
 		model.addAttribute("pfmList",pfmList);
 		
 		return "admin/pfm/managerPfm";
@@ -856,7 +856,8 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/viewpfmlist", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String,Object> getPfmList(
 			String genre
-			,@RequestParam(defaultValue="1") int curPage
+			, String order
+			, @RequestParam(defaultValue="1") int curPage
 			) {
 		
 		// 페이징 계산
@@ -864,7 +865,7 @@ public class AdminPfmController {
 		Paging paging = new Paging(totalCnt, curPage, 8, 4);
 				
 		// 장르가 일치하는 공연 리스트 가져오기
-		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
+		List<Performance> pfmList = pService.getPfmListByGenre(genre, order, paging);
 		
 		// View 로 넘겨줄 값 
 		HashMap<String, Object> map = new HashMap<String, Object>();

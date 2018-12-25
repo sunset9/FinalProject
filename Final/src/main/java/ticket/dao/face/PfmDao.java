@@ -1,5 +1,6 @@
 package ticket.dao.face;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -192,7 +193,8 @@ public interface PfmDao {
 	 * @Method설명: 검색어와 일치하는 공연 리스트 가져오기
 	 * @작성자: 전해진
 	 */
-	public List<Performance> selectPfmSearch(String keyword);
+	public List<Performance> selectPfmSearch(@Param(value="keyword") String keyword
+			, @Param(value = "paging") Paging paging);
 
 	/**
 	 * @최종수정일: 2018.12.12
@@ -382,6 +384,30 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public List<TabBanner> selectMuTabBanner();
+
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회, 장르 구분 (좌석 수 오름차순으로 정렬)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmListByPeriod(@Param(value="start") String start
+			, @Param(value="end") String end
+			, @Param(value="genreIdx") int genreIdx);
+
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 해당 공연의 총 좌석 수 조회
+	 * @작성자: 전해진
+	 */
+	public int selectCntAllSeatByHallIdx(Performance pfm);
+
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 예매 기간 내에 예매한 좌석 수 조회
+	 * @작성자: 전해진
+	 */
+	public int selectCntBookSeatBypfmIdx(@Param(value="pfm") Performance pfm
+			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
 	
 	/**
 	 * @최종수정일: 2018.12.24

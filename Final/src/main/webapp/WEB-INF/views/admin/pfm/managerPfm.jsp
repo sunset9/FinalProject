@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <jsp:include page="../layout/menu.jsp" />
 
 <style>
@@ -141,6 +143,11 @@ li.pfmInfo{
     display: block;
     margin: 20px auto;
 }
+
+.popover-content {
+	width: 200px;
+	padding: 9px 0px 9px 14px;
+}
 </style>
 
 <script>
@@ -165,14 +172,23 @@ $(document).ready(function(){
     	genre = "SEARCH";
     	keyword = $('#searchPfm').val();
     	
+    	// 정렬 버튼 숨기기
+    	$('.orderDiv').hide();
+		// 장르 탭 활성화 클래스 제거
+		$("ul.tabs li").removeClass("active");
+		
     	// ajax 통신 + 그리기
     	getPfmListAjax();
     });
+    
+    // 예매순 글자에 mouse over 하면 안내 문구 뜨도록
+    $('#RANK a').popover();
     
     // 장르탭 클릭 시
     $("ul.tabs li").click(function() {
     	curPage = 1; // 현재 페이지 초기화
     	isEnd = false; // 무한스크롤 동작 여부 초기화
+    	order = ''; // 정렬 기준 초기화
     	
         $("ul.tabs li").removeClass("active"); // "active" 클래스 삭제 
         $(this).addClass("active"); // 선택된 탭에 "active" 클래스 부여
@@ -180,12 +196,28 @@ $(document).ready(function(){
         // genre값 변경(서버에 넘기는 값)
         genre = $(this).find('span').attr('id');
         
+    	// 정렬 버튼 나타내기
+    	$('.orderDiv').show();
+    	// 검색어 입력 박스 초기화
+    	$('#searchPfm').val('');
+     
         // ajax 통신 + 그리기
         getPfmListAjax();
     });
     
+    // 정렬 기준 클릭 시
+    $('.order').on('click', 'span', function(){
+   		curPage = 1; // 현재 페이지 초기화
+   		isEnd = false; // 무한스크롤 동작 여부 초기화
+   		order = $(this).attr('id'); // 정렬 기준 설정
+   		getPfmListAjax();
+    });
+    
     // 공연에 마우스 over 시 수정,삭제 버튼 
     $('#pfmList').on('mouseover','.pfmInfo a', function(){
+    	// 초기화
+    	$('.cover').remove();
+    	// 자신에게 cover 없으면, cover 생성
 		if($(this).parent().find('.cover').length == 0){
 			var pfmIdx = $(this).attr('href').split("=")[1];
 			var cover = $('<div class="cover">');
@@ -211,6 +243,8 @@ function getPfmListAjax(){
 	if(genre != 'SEARCH') url='/admin/viewpfmlist'; // 검색시 호출 url
 	else url = '/admin/searchpfm'; // 분류탭 클릭시 호출 url
 	
+	if(!order) order = 'LATEST'; 
+	
 	$.ajax({
 		url: url
 		, method : "GET"
@@ -223,9 +257,10 @@ function getPfmListAjax(){
 		}
 		, dataType: "json"
 		, success : function(d){
+			console.log(d);
 			viewPfmList(d.pfmList);
-			// 8개 미만이면 더 불러올 데이터 없는 것. 무한스크롤 중단
-			if(d.pfmList.length < 8){ isEnd = true; }
+			// 끝까지 다 부른 경우. 무한스크롤 중단
+			if(d.paging.totalPage <= curPage){ isEnd = true; }
 		}
 		, error: function(e){
 			console.log("공연 목록 불러오기 실패");
@@ -240,18 +275,31 @@ function viewPfmList(pfmList){
 	var i = 1;
 	pfmList.forEach(function(pfm){
 		var li =$('<li class="pfmInfo">');
-		
 		var a = $('<a href="/admin/editpfm?pfmIdx='+ pfm.pfmIdx + '">');
 		var span = $('<span class="thumb">');
 		var img ; 
+		
 		if(!pfm.posterName) img = $('<img src="/resources/image/poster_empty.png">');
 		else img = $('<img src="/resources/image/'+ pfm.posterName + '">');
 		a.append(span.append(img));
 		a.append($('<strong>'+ pfm.name +'</strong>'));
+		a.append($('<p>'+getDateSimpleString(pfm.pfmStart) 
+				+' ~ '+getDateSimpleString(pfm.pfmEnd)+'</p>'));
+		if(pfm.hallName) a.append($('<p>'+pfm.hallName+'</p>'));
 		li.append(a);
 		
 		$('#pfmList').append(li);
 	});
+}
+
+//Date -> String: YYYY.MM.DD 형태로 반환
+function getDateSimpleString(date){
+	var date = new Date(date);
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+	return date.getFullYear() + "."
+		+ ((month < 10)? '0' + month : month) + "."
+		+ ((day < 10) ? '0' + day : day);
 }
 
 // 무한 스크롤
@@ -278,7 +326,6 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <hr>
 
 <button id="registBtn" onclick="location.href='/admin/registpfm'">공연 등록</button>
-
 <div id="managePfm">
 <!-- 검색창 -->
 <input type="text" id="searchPfm" placeholder="공연 제목 검색" onkeypress="if(event.keyCode==13){$('#searchPfmBtn').trigger('click'); return false;}"/> 
@@ -296,7 +343,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <div class="orderDiv">
 <ul class="order">
     <li><span id="LATEST">등록순</span></li>
-    <li><span id="RANK">예매순</span></li>
+    <li><span id="RANK"><a id="popover" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="최근 30일 간의  예매순입니다.">예매순</a></span></li>
 </ul>
 </div>
 
@@ -312,6 +359,9 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 						<img src="/resources/image/poster_empty.png">
 					</span>
 					<strong>${pfm.name }</strong>
+					<p><fmt:formatDate value="${pfm.pfmStart }" pattern="yyyy.MM.dd"/>
+						~ <fmt:formatDate value="${pfm.pfmEnd }" pattern="yyyy.MM.dd"/></p>
+					<p>${pfm.hallName }</p>
 				</a>
 		</c:when>
 		<c:when test="${pfm.posterName ne ''  || pfm.posterName ne null }">
@@ -320,6 +370,9 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 						<img src="/resources/image/${pfm.posterName }">
 					</span>
 					<strong>${pfm.name }</strong>
+					<p><fmt:formatDate value="${pfm.pfmStart }" pattern="yyyy.MM.dd"/>
+						~ <fmt:formatDate value="${pfm.pfmEnd }" pattern="yyyy.MM.dd"/></p>
+					<p>${pfm.hallName }</p>
 				</a>
 		</c:when>
 	</c:choose>

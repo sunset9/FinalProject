@@ -50,10 +50,10 @@
 	width: 200px;
 }
 
-* {
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-}
+/* * { */
+/*     -webkit-box-sizing: content-box; */
+/*     box-sizing: content-box; */
+/* } */
 
 h1, h2, h3 {
 	display: inline-block;

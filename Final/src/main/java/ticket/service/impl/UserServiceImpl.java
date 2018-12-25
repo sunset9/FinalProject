@@ -19,6 +19,8 @@ import ticket.dao.face.PfmDao;
 import ticket.dao.face.UserDao;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.service.face.UserService;
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService{
 			session.setAttribute("login", true);
 			user = userDao.selectUser(userIdx);
 			session.setAttribute("loginUser", user);
+			session.setMaxInactiveInterval(60*60);
 			
 		} else {
 			session.setAttribute("login", false);
@@ -178,6 +181,35 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<StateOfBook> userTicket(User user) {
 		return userDao.selectSOB(user);
+	}
+
+
+	@Override
+	public StateOfBook getDetailBook(User user, int pfmIdx) {
+		Map map = new HashMap<>();
+		System.out.println("getDetailBook함수 안에 유저인덱스 검사"+user.getUserIdx());
+		map.put("userIdx", user.getUserIdx());
+		map.put("pfmIdx", pfmIdx);
+		
+		return userDao.selectBook(map);
+	}
+
+
+	@Override
+	public int getReceive(String bookGroup) {
+		return userDao.selectReceive(bookGroup);
+	}
+
+
+	@Override
+	public Shipment getShipment(String bookGroup) {
+		return userDao.selectShipmet(bookGroup);
+	}
+
+
+	@Override
+	public SeatSection selectSeatSection(String bookGroup) {
+		return userDao.selectSeat(bookGroup);
 	}
 
 

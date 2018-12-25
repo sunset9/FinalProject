@@ -1,4 +1,4 @@
-<%@page import="ticket.utils.CountManager"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -9,16 +9,28 @@
 #save {
     display: inline-block;
     position: absolute;
-    top: 166px;
-    right: 10px;
+    top: 9px;
+    right: 210px;
 }
 .img-thumbnail, .thumbnail {
-    display: inline-block;
+    display: block;
     margin-left: 10px;
+    text-align: center;
 }
 .h3, h3 {
     font-size: 15px;
     text-align: center;
+}
+.glyphicon{
+	display: block;
+}
+.cover {
+	z-index: 10;
+    background-color: #33333352;
+    height:150px;
+    width: 103px;
+    right: 49px;
+    position: absolute;
 }
 </style>
 
@@ -202,13 +214,14 @@ $('#myModal').find('.btn').on('click',function() {
 	//'div[class^=pfmIdx]'
 	var adddiv1=$('<div class="col-md-2" id="draw_'+selectedId+'">');
 	var adddiv2=$('<div class="thumbnail" style=" width: 100%; height:220px; text-align: center;" id="thum_'+selectedId+'">');
-	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 -30px;">')
+	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 81px;">')
 	adddiv2.append(adddiv3);
 	adddiv1.append(adddiv2);
 	start.append(adddiv1);
 	
 });
 $('#btn').click(function() {
+	//console.log("클릭됨?");
 	var lengthValue = $("input[name='pfmIdx']").length;
   	console.log(lengthValue);
     var listData = new Array(lengthValue);
@@ -233,16 +246,40 @@ $('#btn').click(function() {
 			}
 		}); //end of ajax 
 		
-}); //endof function 	
+}); //endof function
+
+$('.caption').on('mouseover','.pfmIdx',function(){
+// 	console.log("test중입니다 찍힙니까?");
+	var pfmIdx = $(this).children('div[class^=pfmIdx]').attr('id');
+	var cover = $('<div class="cover">');
+
+// 	var img =$('<img style="background-color: red; position: absolute;" width="103px;" height="150px;"/>');
+	//cover.append(img);	
+	$(this).prepend(cover);
+	
+});
+
+// 마우스 leave시
+$('.caption').on('mouseleave','.cover',function(){
+	//console.log("리브리브리브");
+	//console.log($(this));
+		$('div[class^=cover]').remove();
+});
 }); // end ready
 </script>
 
+<div style="position: absolute; float: left; left: 230px;">
+<div>
+<h1>
 카테고리 콘서트 배너 관리
+</h1>
+</div>
 <hr>
+
 <!-- 카테고리 부분 FORM 시작  -->
 <%-- <%= CountManager.getCount() %> --%>
 <form action="/admin/registcatecon" method="post">
-<input type="button" id="save" value="최종저장">
+<button id="save">최종저장</button>
 <div class="row" id ="start">
 <c:forEach var="item" items="${posterList }">
 <div class="col-md-2">
@@ -260,7 +297,7 @@ $('#btn').click(function() {
 		<div class="col-md-2" id="draw">
 			<div class="thumbnail" style=" width: 100%; height:220px; text-align: center;" id="thum">
 				<div class="glyphicon glyphicon-plus-sign" id="add_poster"
-				style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 -30px;">
+				style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 81px;">
 			</div>
 		</div>
 		</div>		
@@ -299,8 +336,4 @@ $('#btn').click(function() {
 		</div>
 	</div>
 </form>
-
-
 </div>
-</body>
-</html>

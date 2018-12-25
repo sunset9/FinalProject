@@ -1,10 +1,13 @@
 package ticket.dao.face;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import ticket.dto.PaymentInfo;
+import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
 import ticket.dto.User;
 import ticket.utils.Paging;
@@ -105,8 +108,9 @@ public interface UserDao {
 	
 	
 	/**
-	 * @최종수정일: 2018.12.12
+	 * @최종수정일: 2018.12.24
 	 * @Method설명: 회원의 예매 현황 리스트 가져오기(SOB = State Of Book)
+	 *				수정 했어요 ! SELECT 해오는 컬럼에 pfm_idx 추가 했습니다.
 	 * @작성자: 김지은
 	 * @사용자: 홍나영
 	 */
@@ -177,4 +181,40 @@ public interface UserDao {
 	 * @작성자: 김지은
 	 */
 	public int selectTotalSob(String search);
+
+  /*
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 한 공연에 대한 예약 정보 얻어오기 userIdx, pfmIdx 매개변수로 사용
+	 * @작성자:홍나영
+	 */
+	public StateOfBook selectBook(Map map);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 티켓 수령방법 조회하기
+	 * @작성자:홍나영
+	 */
+	public int selectReceive(String bookGroup);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 배송지 조회하기
+	 * @작성자:홍나영
+	 */
+	public Shipment selectShipmet(String bookGroup);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.24
+	 * @Method설명: 예매한 좌석 구역과 가격 불러오기
+	 * @작성자:홍나영
+	 */
+	public SeatSection selectSeat(String bookGroup);
+	
+	
+	
+	
+
 }
