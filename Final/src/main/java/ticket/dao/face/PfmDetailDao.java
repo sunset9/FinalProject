@@ -117,7 +117,7 @@ public interface PfmDetailDao {
 	 * @Method설명: 관람 후기 삭제
 	 * @작성자: 배수연
 	 */
-	public boolean deleteReview(Review review);
+	public boolean deleteReview(String reviewIdx);
 
 	/**
 	 * 최종수정일: 2018.12.05

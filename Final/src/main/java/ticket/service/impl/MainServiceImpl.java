@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ticket.dao.face.MainDao;
+import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
@@ -257,4 +258,9 @@ public class MainServiceImpl implements MainService {
 		return topTen;
 	}
 
+	@Override
+	public List<Poster> getSearchAllList(String searchKey) {
+		return mainDao.selectSearchAllList(searchKey);
+	}
+	
 }

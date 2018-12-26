@@ -78,8 +78,8 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
-	public boolean getDelReview(Review review) {
-		return mDetailDao.deleteReview(review);
+	public boolean getDelReview(String reviewIdx) {
+		return mDetailDao.deleteReview(reviewIdx);
 	}
 
 	@Override

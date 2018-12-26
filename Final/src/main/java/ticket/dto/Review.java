@@ -8,13 +8,12 @@ public class Review {
 	private int pfmIdx;
 	private int userIdx;
 	private String reviewContent;
-	private int reviewStar;
 	private DATE createDate;
 
 	@Override
 	public String toString() {
 		return "Review [reviewIdx=" + reviewIdx + ", pfmIdx=" + pfmIdx + ", userIdx=" + userIdx + ", reviewContent="
-				+ reviewContent + ", reviewStar=" + reviewStar + ", createDate=" + createDate + "]";
+				+ reviewContent + ", createDate=" + createDate + "]";
 	}
 
 	public int getReviewIdx() {
@@ -47,14 +46,6 @@ public class Review {
 
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
-	}
-
-	public int getReviewStar() {
-		return reviewStar;
-	}
-
-	public void setReviewStar(int reviewStar) {
-		this.reviewStar = reviewStar;
 	}
 
 	public DATE getCreateDate() {

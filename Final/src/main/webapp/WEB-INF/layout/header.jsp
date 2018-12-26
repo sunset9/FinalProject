@@ -35,8 +35,10 @@
 <div class="srch_set">
                     <fieldset>
                         <legend>통합검색영역</legend>
-                        <input type="text" title="검색 입력 편집창" name="" id="top_searchh" class="placeholder">
-                        <button type="button" class="btn_icon search_m" id="btn_top_search" title="검색" ><span class="btn_comm">검색</span></button>
+                        <form action="/ticket/ticketsearch" method="get">
+                        <input type="text" title="검색 입력 편집창" name="top_searchh" id="top_searchh" class="placeholder">
+                        <button type="submit" class="btn_icon search_m" id="btn_top_search" title="검색" ><span class="btn_comm">검색</span></button>
+                        </form>
                     </fieldset>
 </div><!-- end of class="srch_set -->
 
