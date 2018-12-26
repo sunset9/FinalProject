@@ -289,7 +289,7 @@
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
-                order by pfm_start desc
+                ORDER BY pfm_start desc
     		) p
 		)pp
         LEFT JOIN poster_info po
@@ -361,5 +361,22 @@
 		) p
 		LEFT JOIN poster_info po
 		    ON p.pfm_idx = po.pfm_idx
+	</select>
+	
+	<select id="selectOpenSearchList" parameterType="String" resultMap="Performance">
+		SELECT 
+			po.origin_name poster_name ,pp.*
+		FROM (
+    		SELECT ROWNUM as rnum, p.* FROM (
+       			SELECT  * FROM performance
+                <if test='value!=null and value!=""'>
+				    WHERE NAME LIKE '%${value }%'
+			    </if>
+                ORDER BY pfm_start desc
+    		) p
+		)pp
+        LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		ORDER BY rnum
 	</select>
 </mapper>

@@ -262,5 +262,10 @@ public class MainServiceImpl implements MainService {
 	public List<Poster> getSearchAllList(String searchKey) {
 		return mainDao.selectSearchAllList(searchKey);
 	}
+
+	@Override
+	public List<Performance> getopenSerchList(String opentext) {
+		return mainDao.selectOpenSearchList(opentext);
+	}
 	
 }

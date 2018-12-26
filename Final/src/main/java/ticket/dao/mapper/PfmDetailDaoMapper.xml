@@ -178,4 +178,15 @@
 		WHERE review_idx = #{reviewIdx}
 	</delete>
 	
+	<select id="selectHallInfoList" parameterType="ticket.dto.Performance"  resultType="ticket.dto.Hall">
+		SELECT
+		    h.hall_idx as hallIdx
+		    , hall_name as hallName
+		    , hall_loc as hallLoc
+		    , hall_phone as hallPhone
+		FROM performance p, hall h
+		WHERE pfm_idx=${pfmIdx}
+		    AND p.hall_idx = h.hall_idx
+	</select>
+	
 </mapper>
