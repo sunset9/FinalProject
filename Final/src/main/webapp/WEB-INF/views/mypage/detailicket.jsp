@@ -33,8 +33,54 @@ dt{
 	float: left;
 	margin-right: 10px;
 }
+
+td{
+	border: 1px solid black;
+	width: 400px;
+}
 </style>
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	// 숫자 금액 포멧으로 변환할 변수 
+	 var regexp = /\B(?=(\d{3})+(?!\d))/g;
+	  
+	  
+	// 총 티켓 가격 
+	var totalTicket= ${ss.secPay * sob.ea };
+	console.log (totalTicket);
+	
+	$('#ticketPrice').text(totalTicket.toString().replace(regexp, ','));
+	
+	// 배송비 
+	var delivery =0;
+	
+	if (${receive } == 2){
+		delivery =2500 ;
+	}
+	$('#delivery').text(delivery.toString().replace(regexp, ','));
+	
+	// 추가 금액(수수료)
+	var fee =${sob.ea * 1000 };
+// 		fee *= 1;
+		
+	console.log(fee);
+	console.log(typeof(fee));
+// 	console.log( parseInt(fee) );
+	
+	// 총 추가비용
+	var extraFee = fee + delivery;
+	$('#extraFee').text(extraFee.toString().replace(regexp, ','));
+	
+	var totalFee = fee + parseInt(delivery)+ parseInt(totalTicket) ;
+	console.log("총 결제 금액 : " +totalFee);
+	
+	$('#totalFee').text(totalFee.toString().replace(regexp, ','));
+	
+});
+</script>
 
 <h1>예약 상세</h1>
 <hr>
@@ -88,7 +134,6 @@ dt{
 	<h2>티켓 수령 방법</h2>
 	<div>
 	<table>
-	${receive}
 	<c:if test="${receive eq 1 }">
 	<tr>
 		<td>수량 방법</td>
@@ -102,17 +147,17 @@ dt{
 	</tr>
 	<tr>
 		<td>받으시는 분</td>
-		<td>${sm.name }</td>
+		<td>${shipment.name }</td>
 	</tr>
 	<tr>
 		<td>연락처</td>
-		<td>${sm.phone }</td>
+		<td>${shipment.phone }</td>
 	</tr>
 	<tr>
 		<td>주소</td>
-		<td>${sm.addr }
-			${sm.addrDetail }
-			${sm.postcode }
+		<td>${shipment.addr }
+			${shipment.addrDetail }
+		<br> 우편번호 :	${shipment.postcode }
 		</td>
 	</tr>
 	</c:if>
@@ -122,10 +167,55 @@ dt{
 <!-- //티켓 수령 방법 -->
 
 
+
 <!-- 구매내역 -->
+<h2>구매 내역</h2>
+<div id = "buy">
+<table>
+<tr>
+	<td>
+<!-- 		티켓 금액 -->
+		<dl>
+			<dt>총 티켓 가격</dt>
+			<dd id = "ticketPrice"></dd>
+			<dt>좌석 가격</dt>
+			<dd>${ss.appSec } : 
+			<fmt:formatNumber value="${ss.secPay }" pattern="##,###"/> * ${sob.ea }</dd>
+		</dl>
+	</td>	
+<!-- 		예매 수수료, 배송료 -->
+	<td>	
+		<dl>
+			<dt>추가 비용</dt>
+			<dd id="extraFee"> </dd>
+			
+			<dt>예매 수수료</dt>
+			<dd id ="bookFee">1,000 * ${sob.ea } = 
+			<fmt:formatNumber value="${sob.ea * 1000 }" pattern="#,###"/></dd>
+			
+			<dt>배송료</dt>
+			<dd id="delivery">	</dd>
+		</dl>
+	</td>	
+		
+	<td>	
+		<dl>
+			<dt>총 금액</dt>
+			<dd id="totalFee"></dd>
+		</dl>
+	</td>
+
+
+</tr>
+</table>
+
+</div>
+
 <!-- //구매내역 -->
 
 <!-- 결제내역 -->
+
+
 <!-- //결제내역 -->
 
 <!-- 좌석정보  -->

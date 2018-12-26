@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.Artist;
 import ticket.dto.MyChoice;
+import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
 import ticket.dto.SeatSection;
@@ -394,7 +395,9 @@ public class UserController {
 		logger.info("좌석 구역과 가격"+ss);
 		model.addAttribute("ss", ss);
 		
-		// 결제 내역 (결제 방법, 결제 날짜) 
+		// 결제 내역 (결제 방법, 결제 날짜, 거래자, 금액) 
+		PaymentInfo payment = new PaymentInfo();
+		payment = userService.getPayment(sob.getImpUid());
 		
 		// 좌석 정보 
 		

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dao.face.MyChoiceDao;
 import ticket.dao.face.PfmDao;
 import ticket.dao.face.UserDao;
+import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
 import ticket.dto.SeatSection;
@@ -210,6 +211,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public SeatSection selectSeatSection(String bookGroup) {
 		return userDao.selectSeat(bookGroup);
+	}
+
+
+	@Override
+	public PaymentInfo getPayment(String impUid) {
+		return userDao.selectPaymentByimpUid(impUid);
 	}
 
 
