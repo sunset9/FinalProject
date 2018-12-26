@@ -103,7 +103,7 @@ public interface PfmDetailService {
 	 * @Method설명: 관람후기 삭제
 	 * @작성자: 배수연
 	 */
-	public boolean getDelReview(Review review);
+	public boolean getDelReview(String reviewIdx);
 	
 	/**
 	 * 최종수정일: 2018.12.05

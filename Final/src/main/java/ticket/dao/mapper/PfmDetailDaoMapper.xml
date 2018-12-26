@@ -129,7 +129,7 @@
 		    , r.pfmIdx
 		    , r.userIdx
 		    , r.reviewContent
-            , r.reviewStar
+<!--             , r.reviewStar -->
 		    , r.createDate
 		FROM(
 		    SELECT
@@ -137,7 +137,7 @@
                 , pfm_idx as pfmIdx
                 , user_idx as userIdx
                 , review_content as reviewContent
-                , review_star as reviewStar
+<!--                 , review_star as reviewStar -->
                 , create_date as createDate
 		    FROM review
 		    WHERE pfm_idx=#{pfmIdx}
@@ -158,7 +158,7 @@
 		        , pfm_idx as pfmIdx
 		        , user_idx as userIdx
 		        , review_content as reviewContent
-                , review_star as reviewStar
+<!--                 , review_star as reviewStar -->
 		        , create_date as createDate
 		    FROM review
 		    WHERE pfm_idx=#{pfmIdx}
@@ -169,8 +169,13 @@
 	</select>
 	
 	<insert id="insertReview">
-		INSERT INTO expectation(review_idx, pfm_idx, user_idx, review_content, review_star, create_date)
-		VALUES (expectation_seq.nextval, #{pfmIdx}, #{userIdx}, #{reviewContent}, sysdate)
+		INSERT INTO review(review_idx, pfm_idx, user_idx, review_content)
+		VALUES (review_seq.nextval, #{pfmIdx}, #{userIdx}, #{reviewContent})
 	</insert>
+	
+	<delete id="deleteReview">
+		DELETE FROM review
+		WHERE review_idx = #{reviewIdx}
+	</delete>
 	
 </mapper>

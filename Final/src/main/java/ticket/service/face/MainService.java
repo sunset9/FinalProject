@@ -3,6 +3,7 @@ package ticket.service.face;
 import java.util.Date;
 import java.util.List;
 
+import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
@@ -151,5 +152,12 @@ public interface MainService {
 	 * @작성자: 전해진
 	 */
 	public List<Performance> getTopRank(String type, Date today);
+
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 검색 - 통합검색
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getSearchAllList(String searchKey);
 
 }

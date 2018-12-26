@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
@@ -264,22 +267,23 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.04
+	 * 최종수정일: 2018.12.25
 	 * @Method설명: 검색시 보여질 페이지
 	 * @작성자: 배수연
 	 */
-	@RequestMapping(value="/ticket/search", method=RequestMethod.GET)
-	public void search() {
+	@RequestMapping(value="/ticket/ticketsearch", method=RequestMethod.GET)
+	public void search(
+			String top_searchh
+			, HttpServletRequest req
+			, Model model
+		) {
+		top_searchh = req.getParameter("top_searchh");
+		logger.info("top_searchh : " + top_searchh);
 		
-	}
-	
-	/**
-	 * 최종수정일: 2018.12.04
-	 * @Method설명: 검색 결과 띄우기
-	 * @작성자: 배수연
-	 */
-	@RequestMapping(value="/ticket/search", method=RequestMethod.POST)
-	public void searchPorc() {
+		// 통합검색
+		//	name 검색만 일단 가능함 / 아티스트, 공연장으로 검색가능하게 변경하기
+		List<Poster> allList = mainService.getSearchAllList(top_searchh);
+		model.addAttribute("allList", allList);
 		
 	}
 	

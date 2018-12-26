@@ -129,7 +129,12 @@ text-align:left;
 	/* 모든 페이지에 적용되는 자바스크립트 */
 	$(document).ready(function() {
 		// 검색
-		$("#main_searchbtn").click(function() {
+		$("#btn_top_search").click(function() {
+			var top_searchh = $('#top_searchh').val();
+			console.log("검색어 확인 : " + top_searchh);
+			
+// 			$("#btn_top_search").submit();
+			
 			$(location).attr("href", "/ticket/ticketsearch");
 		});
 	});

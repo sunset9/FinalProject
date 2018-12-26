@@ -343,4 +343,23 @@
 			AND book_cate_idx = 2
 			AND trunc(create_date,'dd') BETWEEN #{startDate } AND #{endDate }
 	</select>
+	
+	<select id="selectSearchAllList" parameterType="String" resultType="ticket.dto.Poster">
+		SELECT
+		    po.pfm_idx pfmIdx
+		    , po.origin_name originName
+		    , po.stored_name storedName
+		    , p.name
+		    , p.pfm_start pfmStart
+		    , p.pfm_end pfmEnd
+		FROM (
+		    SELECT * FROM performance
+		    <if test='value!=null and value!=""'>
+			    WHERE NAME LIKE '%${value }%'
+		    </if>
+		    ORDER BY create_date DESC
+		) p
+		LEFT JOIN poster_info po
+		    ON p.pfm_idx = po.pfm_idx
+	</select>
 </mapper>

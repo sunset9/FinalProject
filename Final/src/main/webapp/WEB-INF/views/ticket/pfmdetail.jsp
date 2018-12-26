@@ -7,6 +7,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	console.log(${pfmInfoList.pfmIdx });
+	
+	// 탭
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
  
@@ -128,6 +130,9 @@ $(document).ready(function() {
 		// 작성, 삭제 여부 확인
 		var updel = $(this).attr('id');
 		
+// 		var star = $('#20, #40, #60, #80, #100').attr('id');
+// 		console.log(star);
+		
 		// 현재 공연 번호
 		var pfmIdx = ${pfmInfoList.pfmIdx };
 		
@@ -135,9 +140,9 @@ $(document).ready(function() {
 		var revContent = $('#review').val();
 		var userIdx = ${loginUser.userIdx }
 		
-// 		console.log(updel);
-// 		console.log(expContent);
-// 		console.log(userIdx);
+		console.log(updel);
+		console.log(revContent);
+		console.log(userIdx);
 		
 		// 삭제할 관람후기 idx
 		var reviewIdx = $('#revDeleteBtn').val();
@@ -146,7 +151,7 @@ $(document).ready(function() {
 			url: '/pfmdetail/review'
 			, method: 'GET'
 			, data: {
-				"reviewContent" : reviewContent
+				"reviewContent" : revContent
 				, "pfmIdx" : pfmIdx
 				, "userIdx" : userIdx
 				, "updel" : updel
@@ -170,37 +175,10 @@ $(document).ready(function() {
 	});
 
 	// 별점
-	$('.starRev span').click(function(){
-		$(this).parent().children('span').removeClass('on');
-		$(this).addClass('on').prevAll('span').addClass('on');
-		return false;
-	});
-	
-	// 별점 값 넘겨주기
-// 	$('#20, #40, #60, #80, #100').click(function() {
-		// 선택한 별점의 점수 가져오기
-		//	한 별당 20점으로 처리하기 위해 id값 지정
-// 		var reivewStar = $(this).attr('id');
-		
-// 		console.log('별점 : ' + reivewStar);
-		
-		// 댓글 작성하려면 별점, 내용, 유저idx, 공연 idx 필요함
-// 		$.ajax({
-// 				url: '/pfmdetail/review'
-// 				, method: 'GET'
-// 				, data: {
-// 					"reivewStar" : reivewStar
-// 				}
-// 				, dataType: 'json'
-// 				, success: function(d){
-// 					console.log("+ + + 성공 + + +");
-					
-// 				}
-// 				, error: function(e) {
-// 					console.log("실패");
-// 				}
-// 		});
-		
+// 	$('.starRev span').click(function(){
+// 		$(this).parent().children('span').removeClass('on');
+// 		$(this).addClass('on').prevAll('span').addClass('on');
+// 		return false;
 // 	});
 	
 	// 관람후기 작성자 리스트
@@ -483,16 +461,7 @@ ul.tabs li.current{
 		</div> <!-- tab2 -->
 		
 		<div id="tab-3" class="tab-content">
-			<!-- 별점 -->
-			<div class="starRev">
-				<span class="starR on" id="20">별1</span>
-				<span class="starR" id="40">별2</span>
-				<span class="starR" id="60">별3</span>
-				<span class="starR" id="80">별4</span>
-				<span class="starR" id="100">별5</span>
-			</div>
-			: 별점 구현 전
-			
+						
 			<!-- 관람후기 등록 부분, 나중에 이미지 경로 변경해주기 -->
 			<ul>
 			<li class="revContainer">

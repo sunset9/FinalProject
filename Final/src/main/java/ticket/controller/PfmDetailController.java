@@ -127,6 +127,7 @@ public class PfmDetailController {
 			, String pfmIdx
 			, String userIdx
 			, Performance pfm
+			, String reviewStar
 			, String reviewIdx
 			, String updel
 		) {
@@ -137,14 +138,15 @@ public class PfmDetailController {
 		logger.info(reviewContent);
 		logger.info(pfmIdx);
 		logger.info(userIdx);
+		logger.info(reviewStar);
 		
 		if ( updel.equals("revBtn") ) {
 		// 관람후기 작성
-//		detailService.getInReview(reviewContent, pfmIdx, userIdx);
+		detailService.getInReview(reviewContent, pfmIdx, userIdx);
 		
 		} else if ( updel.equals("revDeleteBtn") ) {
 			// 관람후기 삭제
-//			detailService.getDelExpectation(reviewIdx);
+			detailService.getDelReview(reviewIdx);
 			
 		}
 
