@@ -16,14 +16,6 @@
   	<result column="create_date" property="createDate" />  
   </resultMap>
 
-	<resultMap type="ticket.dto.NoticeFile" id="noticeFile">
-		<result column="notifile_idx" property="notiFileIdx"/>
-		<result column="stored_name" property="storedName"/>
-		<result column="origin_name" property="originName"/>
-		<result column="notice_idx" property="noticeIdx"/>
-		<result column="create_date" property="createDate"/>  	
-	</resultMap>
-
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
   	select * from ( 
   		select rownum rnum, B.* from (
@@ -37,7 +29,8 @@
   
   <select id="selectCntAll" resultType="int">
   	select count(*) cut from(
-  		select * from notice
+  		select * from notice 
+  		order by notice_idx desc
   	) cnt
   </select>
   
@@ -70,19 +63,9 @@
 
 
 
-	<insert id="insertNotiFile" parameterType="ticket.dto.NoticeFile">	
-		insert into notice_file (notifile_idx, stored_name, origin_name, notice_idx) 
-		values (notice_file_seq.nextval, #{storedName }, #{originName }, #{noticeIdx })
-	</insert>
 
 
-	<select id="selectNotiFileAll" resultMap="noticeFile">
-		select * from notice_file order by notifile_idx
-	</select>
 
-	<select id="selectByNotiFileIdx" parameterType="int" resultMap="noticeFile">
-		select * from notice_file where notifile_idx = #{notiFileIdx}
-	</select>
 
   </mapper>
   

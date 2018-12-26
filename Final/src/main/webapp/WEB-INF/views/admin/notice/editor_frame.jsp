@@ -26,11 +26,11 @@
 								<a href="javascript:;" title="파일" class="tx-text">파일</a>
 							</div>
 						</li>
-						<li class="tx-list">
-							<div unselectable="on" id="tx_media" class="tx-media tx-btn-trans">
-								<a href="javascript:;" title="외부컨텐츠" class="tx-text">외부컨텐츠</a>
-							</div>
-						</li>
+<!-- 						<li class="tx-list"> -->
+<!-- 							<div unselectable="on" id="tx_media" class="tx-media tx-btn-trans"> -->
+<!-- 								<a href="javascript:;" title="외부컨텐츠" class="tx-text">외부컨텐츠</a> -->
+<!-- 							</div> -->
+<!-- 						</li> -->
 						<li class="tx-list tx-list-extra">
 							<div unselectable="on" class="tx-btn-nlrbg tx-extra">
 								<a href="javascript:;" class="tx-icon" title="버튼 더보기">버튼 더보기</a>

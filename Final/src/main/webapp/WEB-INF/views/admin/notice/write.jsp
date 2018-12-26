@@ -6,7 +6,7 @@
 
 
 <link rel=stylesheet type=text/css
-	href="${pageContext.request.contextPath}/resources/daumOpenEditor/css/editor.css"
+href="${pageContext.request.contextPath}/resources/daumOpenEditor/css/editor.css"
 	charset=utf-8 />
 <script type=text/javascript charset=utf-8
 	src="${pageContext.request.contextPath}/resources/daumOpenEditor/js/editor_loader.js"></script>
@@ -68,7 +68,7 @@
 
 
 			<input type="button" id="save_button" value="내용전송" />
-			<!-- 		 onclick="formsubmit()" -->
+			<a href="http://localhost:8088/admin/noticelist"><button type="button" id="btnCancel">취소</button></a>
 		</form>
 	</div>
 
@@ -199,8 +199,7 @@
 				// existStage는 현재 본문에 존재하는지 여부
 				if (images[i].existStage) {
 					// data는 팝업에서 execAttach 등을 통해 넘긴 데이터
-					alert('attachment information - image[' + i + '] \r\n'
-							+ JSON.stringify(images[i].data));
+// 					alert('attachment information - image[' + i + '] \r\n'	+ JSON.stringify(images[i].data));
 					input = document.createElement('input');
 					input.type = 'hidden';
 					input.name = 'attach_image';
