@@ -46,9 +46,6 @@ text-align: center;
 }
 </style>
 <script>
-// var rp=0;
-// var basepay=0;
-// var fee=0;
 function tabSet(param,btn){
 	$(btn).click(function(){
 		var i = $(btn).index(this);
@@ -90,6 +87,7 @@ function openZipSearch() { //다음 우편번호 API
 	new daum.Postcode({
 		oncomplete: function(data) {
 			$('[name=delvyAddr]').val(data.address+data.buildingName);
+			$('[name=postCode]').val(data.zonecode);
 		}
 	}).open();
 }
@@ -158,16 +156,24 @@ function openZipSearch() { //다음 우편번호 API
 			});
 	
 	
-	function ticketing() {
+	function ticketing(impUid) {
 
 		var seatInfoArr = new Array();
 		var time = "${param.time}";
 		var date = "${param.date}";
 		var pfmIdx = ${param.pfmIdx};
-		
+		var hallIdx = ${param.hallIdx };
 		$(".seatInfo").each(function() {
 			seatInfoArr.push($(this).text());
 		});
+		var phone = $('#delvyTel1').val()
+					+$('#delvyTel2').val()
+					+$('#delvyTel3').val();
+		var addr = $('#buyer_addr').val();
+		var addrDetail = $('#buyer_addr_detail').val();
+		var name = $('#buyerName').val();
+		var postCode = $("#postCode").val();
+		
 		//ajax로 배열 전송하기 위한 방식
 		$.ajaxSettings.traditional = true
 		console.log("dd");
@@ -180,6 +186,13 @@ function openZipSearch() { //다음 우편번호 API
 				  , "pfmIdx": pfmIdx
 				  , "seatInfo" : seatInfoArr
 				  , "receiveIdx" : delvyTypeCode
+				  ,  "hallIdx": hallIdx 
+				  ,  "impUid" : impUid
+				  , "phone" :phone
+				  , "addr" : addr
+				  , "addrDetail" :addrDetail
+				  , "name" : name
+				  , "postCode" : postCode
 			     },
 			async: false,
 			dataType:"html",
@@ -280,7 +293,7 @@ function openZipSearch() { //다음 우편번호 API
 // 						msg += '\n결제 금액 : ' + rsp.paid_amount;
 // 						msg += '\n카드 승인번호 : ' + rsp.apply_num;
 // 						msg += '\n[done]';
-						ticketing();
+						ticketing(rsp.imp_uid);
 						console.log(1);
 						alert(msg);
 
@@ -301,7 +314,7 @@ function openZipSearch() { //다음 우편번호 API
 		});
 	}
 </script>
-${loginUser.userIdx };
+<%-- ${loginUser.userIdx }; --%>
 <div class="section_onestop">
 <div class="wrap_select">
 
@@ -409,7 +422,8 @@ ${loginUser.userIdx };
 </div><!-- end class="wrap_select" -->
 <!-- 티켓 정보 -->
 
-</div><!-- end class="section_onestop" -->
+</div>
+<!-- end class="section_onestop" -->
 <!-- <table id="pay" style="margin: 0 auto;"> -->
 <!-- 	<tr> -->
 <!-- 		<th>결제수단</th> -->
@@ -452,11 +466,11 @@ ${loginUser.userIdx };
 <!-- 	<th>이메일 주소</th> -->
 <%-- 		<td><input type="text" id="buyer_email" value="${loginUser.email }" ></td> --%>
 <!-- 	</tr> -->
-</table>
+<!-- </table> -->
 
 <!-- <button id="payment">결제하기</button> -->
-<button id="back">돌아가기</button>
-<button id="cancel">결제취소</button>
+<!-- <button id="back">돌아가기</button> -->
+<!-- <button id="cancel">결제취소</button> -->
 
 
 <div class="layerPop layer_personal_info" id="agreementPopup" style="width: 590px; top: 50px; left: 25px; display: none;"><div class="la_header">

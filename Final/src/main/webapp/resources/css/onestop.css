@@ -44,7 +44,7 @@
 .btn_onestop .button{display: inline-block;position:relative;line-height:48px;font-size: 14px;}
 .btn_onestop .buttonOne{width:243px;padding:0;text-align:center;}
 .btn_onestop .button.frt{ margin-right:-3px;}
-.btn_onestop .button.btNext .btnOne{color:#fff;}
+.btn_onestop .button.btNext .btnOne{color:#000;}
 .btn_onestop .button.btWhite a{border: 1px solid #cccccc;background: #fff;}
 .btn_onestop .button.btWhite a:hover{border: 1px solid #666;border-right:1px solid #fff;color:#000;background: #fff;}
 .btn_onestop .button.btNext{border: 1px solid #888888;background:#888888;}
