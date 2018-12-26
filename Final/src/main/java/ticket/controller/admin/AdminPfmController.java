@@ -344,8 +344,8 @@ public class AdminPfmController {
 	 * @Method설명: 카테고리 콘서트 배너 정보 삭제하기
 	 * @작성자: 박주희
 	 */
-	@RequestMapping(value = "/admin/deletecatecon/{pfmIdx}", method = RequestMethod.GET)
-	public String deletecateCon(@PathVariable int pfmIdx) {
+	@RequestMapping(value = "/admin/deletecatecon", method = RequestMethod.GET)
+	public String deletecateCon(int pfmIdx) {
 		// pfmIdx 값을 파라미터로 넘겨 받아서 
 		logger.info("delete category banner consert GET");
 		logger.info(pfmIdx + "");
