@@ -247,7 +247,7 @@ $('#btn').click(function() {
 		<div class="caption">
 			<div class="pfmIdx" id="${item.pfmIdx }">
 					<img src="/resources/image/${item.storedName }"> 
-					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a>
+					<a href="<c:url value='/admin/deletecatemu/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a>
 								<h3>${item.name }, ${item.pfmIdx }</h3>
 						</div>
 			</div>

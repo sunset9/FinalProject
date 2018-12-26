@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +23,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.common.collect.Sets.SetView;
 import com.google.gson.Gson;
 
+import ticket.dto.Book;
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
+import ticket.dto.User;
 import ticket.service.face.TicketService;
 
 
@@ -113,28 +119,102 @@ public class TicketController {
 	 */
 
 	@RequestMapping(value="/ticket/ticketing", method=RequestMethod.POST)
-	public ModelAndView ticketing(String time, String date, int pfmIdx, String[] seatInfo, int receiveIdx) {
-//		logger.info("date:"+date);
-//		logger.info("time:"+time);
-//		logger.info("pfmIdx:"+pfmIdx);
-//		logger.info("receiveIdx"+receiveIdx);
-		
-		
-		for(int i =0;i<seatInfo.length;i++) {
-			logger.info(seatInfo[i]);
-		}
+	public ModelAndView ticketing(
+			String time, //시간
+			String date, //날짜
+			int pfmIdx, //공연idx
+			String[] seatInfo, //좌석정보
+			int receiveIdx, //수령idx
+			int hallIdx, //공연장idx
+			String impUid, //결제고유ID
+			HttpSession session, //세션
+			String phone, //배송연락처
+			String addrDetail, //자세한주소
+			String addr, //주소
+			String name, //이름
+			String postCode //우편번호
+			) {
 		
 		int pfmDbtIdx = 0;
-		
-		List<Integer> seatIdx = new ArrayList<Integer>();
 		
 		//날짜 인덱스 구하기(공연번호, 시간,날짜를 조건으로)
 		pfmDbtIdx = ticketService.loadDayByTimeIdx(pfmIdx,date,time);
 		
-	
-		//좌석 인덱스 구하기(seatInfo정보로 구역,좌석행렬,공연번호로 구하기)
-//		seatIdx = ticketService.loadSeatIdx();
-		//예매정보 DB저장
+		//좌석idx들와 구역인덱스들을 담을 리스트변수
+		List<Integer> seatIdx = new ArrayList<Integer>();
+		List<Integer> oriSecIdx = new ArrayList<Integer>();
+		
+		//uuid로 예매번호 생성
+		UUID uuid = UUID.randomUUID();
+		String bookGroup = uuid.toString().split("-")[4];
+		
+		//좌석 인덱스 구하기(seatInfo정보로 공연장번호,구역,좌석행렬,공연번호로 구하기)
+		for(int i = 0;i<seatInfo.length;i++) {
+			String[] seatInfoStr; 
+			seatInfoStr = seatInfo[i].split(" ");
+			
+//			System.out.println(seatInfoStr[0]); //석
+//			System.out.println(seatInfoStr[1]); //구역
+//			System.out.println(seatInfoStr[2]); //빈값
+//			System.out.println(seatInfoStr[3]); //행
+//			System.out.println(seatInfoStr[4]); //열
+//			System.out.println(seatInfoStr[5]); // :
+//			System.out.println(seatInfoStr[6]); // 가격
+			
+			//공연장 Idx와 구역이름으로 구역 idx 조회
+			oriSecIdx.add(ticketService.loadOriginSecIdx(hallIdx,seatInfoStr[1].substring(0, 1)));
+			int seatRow = 0;
+			int seatCol = 0;
+			//좌석 행, 열 값 구하기
+			
+			if(seatInfoStr[3].length() == 2) {
+				seatRow = Integer.parseInt(seatInfoStr[3].substring(0, 1)); 
+			}else if(seatInfoStr[3].length() == 3) {
+				seatRow = Integer.parseInt(seatInfoStr[3].substring(0, 2)); 
+			}
+			if(seatInfoStr[4].length() == 2) {
+				seatCol = Integer.parseInt(seatInfoStr[4].substring(0, 1)); 
+				
+			}else if(seatInfoStr[4].length() == 3) {
+				seatCol = Integer.parseInt(seatInfoStr[4].substring(0, 2)); 
+			}
+			
+			
+//			//공연장Idx, 구역idx, 좌석 행렬로 좌석 idx조회
+			seatIdx.add(ticketService.loadSeatIdx(hallIdx,oriSecIdx.get(i),seatRow, seatCol));
+		
+			//세션에서 유저정보 받아오기
+			User loginUser = (User) session.getAttribute("loginUser");
+			
+			Book book = new Book();
+			book.setBookGroup(bookGroup);
+			book.setPfmIdx(pfmIdx);
+			book.setUserIdx(loginUser.getUserIdx());
+			book.setBookCateIdx(2);
+			book.setPfmDbtIdx(pfmDbtIdx);
+			book.setSeatIdx(seatIdx.get(i));
+			book.setImpUid(impUid);
+			book.setReceiveIdx(receiveIdx);
+			
+			//예매정보 저장하기
+			ticketService.storedBook(book);
+		}
+		
+		
+		if(receiveIdx == 2) { //배송 수령일경우
+		
+			Shipment shipment = new Shipment();
+			
+			shipment.setAddr(addr);
+			shipment.setAddrDetail(addrDetail);
+			shipment.setBookGroup(bookGroup);
+			shipment.setName(name);
+			shipment.setPhone(phone);
+			shipment.setPostcode(postCode);
+			
+			ticketService.storedShipment(shipment);
+			
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/ticket/ticketingComplete");
@@ -187,7 +267,16 @@ public class TicketController {
 	 */
 	
 	@RequestMapping(value="/hall/hall_2_seats/seat", method=RequestMethod.GET)
-	public ModelAndView loadSeats(ModelAndView mav,String color, String secName, String pay, String appName, Hall hall, int oriSecIdx) {
+	public ModelAndView loadSeats(
+				ModelAndView mav
+				,String color
+				, String secName
+				, String pay
+				, String appName
+				, Hall hall
+				, int oriSecIdx
+				, int pfmIdx) 
+	{
 		
 		int maxRow = ticketService.maxRow(oriSecIdx);
 		int maxCol = ticketService.maxCol(oriSecIdx);
@@ -207,9 +296,7 @@ public class TicketController {
 				seats[i][j] = "_";
 			}
 		}
-	
 		
-		System.out.println(seatList.size());
 		
 		for(int i =0;i<seatList.size();i++) {
 			int row = seatList.get(i).getSeatRow();
@@ -238,7 +325,13 @@ public class TicketController {
 			}
 		}
 		
-		logger.info(seatStr);
+		//예매된 좌석 불러오기
+		List<Seat> bookedSeat = new ArrayList<Seat>();
+		
+		Performance pfm = new Performance();
+		pfm.setPfmIdx(pfmIdx);
+		
+		bookedSeat = ticketService.loadBookedSeats(pfm, secName);
 		
 		seatMap.put("seats", seatStr);
 		seatMap.put("color", color);

@@ -50,10 +50,10 @@
 	width: 200px;
 }
 
-* {
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-}
+/* * { */
+/*     -webkit-box-sizing: content-box; */
+/*     box-sizing: content-box; */
+/* } */
 
 h1, h2, h3 {
 	display: inline-block;
@@ -72,7 +72,7 @@ h1, h2, h3 {
 		<li><a href="/ticket/ticketmain">메인으로</a></li>
 		<li><a href="/admin/main">관리자 홈</a></li>
 		<li><a href="/admin/userlist">회원 관리</a></li>
-		<li><a href="">예매 현황</a></li>
+		<li><a href="/admin/soblist">예매 현황</a></li>
 		<li><a href="/admin/managerpfm">공연 관리</a></li>
 		<li>메인 배너 관리
 			<ul>

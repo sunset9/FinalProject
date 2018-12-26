@@ -31,6 +31,8 @@
 		<result column="running_time" property="runningTime"/>
 		<result column="create_date" property="createDate"/>
 		<result column="poster_name" property="posterName"/>
+		<result column="stored_name" property="storedName"/>
+		<result column="hall_name" property="hallName"/>
 	</resultMap>
 	
 	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
@@ -198,7 +200,7 @@
 	
 	<select id="selectPfmByGenre" resultMap="Performance">
 		SELECT 
-			po.stored_name poster_name ,pp.*
+			po.stored_name poster_name , h.hall_name ,pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
@@ -208,6 +210,8 @@
 		)pp
         LEFT JOIN poster_info po
         ON pp.pfm_idx = po.pfm_idx
+        LEFT JOIN hall h
+		ON pp.hall_idx = h.hall_idx
 		WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
 		ORDER BY rnum
 	</select>
@@ -218,11 +222,21 @@
 		WHERE name LIKE '%${value }%'
 	</select>
 	
-	<select id="selectPfmSearch" parameterType="String" resultMap="Performance">
-		SELECT *
-		FROM performance
-		WHERE name LIKE '%${value }%'
-		ORDER BY pfm_idx desc
+	<select id="selectPfmSearch" resultMap="Performance">
+		SELECT 
+			po.stored_name poster_name ,pp.*
+		FROM (
+			SELECT ROWNUM as rnum, p.* FROM (
+				SELECT *
+				FROM performance
+				WHERE name LIKE '%${keyword }%'
+				ORDER BY pfm_idx desc
+			) p
+		)pp
+		LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+		ORDER BY rnum
 	</select>
 	
 	<sql id="ByPfmIdx">
@@ -373,7 +387,7 @@
 		WHEN MATCHED THEN
 			UPDATE SET contents = #{contents }
 		WHEN NOT MATCHED THEN
-			INSERT INTO (pfm_bookinfo_idx ,pfm_idx ,contents)
+			INSERT (pfm_bookinfo_idx ,pfm_idx ,contents)
 		 	VALUES (pfm_bookinfo_seq.nextval, #{pfmIdx }, #{contents })
 	</update>
 	
@@ -499,5 +513,39 @@
 		WHERE
 		    tb.tab_genre = 2
 	</select>
+	
+	<select id="selectPfmListByPeriod" resultMap="Performance">
+		SELECT P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name poster_name, H.hall_name, COUNT(S.seat_idx) cnt 
+		FROM performance P
+		LEFT JOIN seat S
+		ON P.hall_idx = S.hall_idx
+		LEFT JOIN hall H
+		ON P.hall_idx = H.hall_idx
+		LEFT JOIN poster_info Ps
+		ON P.pfm_idx = Ps.pfm_idx
+		WHERE ( p.genre_idx = #{genreIdx }
+				AND (
+					(ticket_start between #{start } and #{end })  
+					OR (ticket_end between #{start } and #{end })
+					OR (#{start } between ticket_start and ticket_end)  
+					OR (#{end } between ticket_start and ticket_end)
+				)
+			)
+		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name, H.hall_name
+		ORDER BY cnt
+	</select>
 
+	<select id="selectCntAllSeatByHallIdx" parameterType = "ticket.dto.Performance" resultType="int">
+		SELECT COUNT(*) FROM seat
+		WHERE hall_idx = #{hallIdx }
+	</select>
+	
+	<select id="selectCntBookSeatBypfmIdx" resultType="int">
+		SELECT COUNT(*) FROM book
+		WHERE pfm_idx = #{pfm.pfmIdx }
+			AND book_cate_idx = 2
+			AND trunc(create_date,'dd') BETWEEN #{startDate } AND #{endDate }
+	</select>
 </mapper>

@@ -44,7 +44,7 @@
 }
 .pfmDate{
 	display: inline;
-    width: 110px;
+/*     width: 110px; */
 }
 
 #posterImg input[type="file"] { 
@@ -1285,12 +1285,12 @@ function setComma(inNum){
 	<table>
 	<tr>
 		<th>공연 제목:</th> 
-		<td><input type="text" name="name"/></td>
+		<td><input type="text" name="name" class="form-control"/></td>
 	</tr>
 	<tr>
 		<th>공연 분류: </th> 
 		<td>
-			<select name="genreIdx">
+			<select name="genreIdx" class="form-control">
 			<option value="0" selected="selected">분류 선택</option>
 			<c:forEach var="genre" items="${genreList }">
 				<option value="${genre.genreIdx }">${genre.genre }</option>

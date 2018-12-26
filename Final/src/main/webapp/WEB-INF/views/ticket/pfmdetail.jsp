@@ -9,8 +9,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	console.log(${pfmInfoList.pfmIdx });
-	
+	console.log(1);	
 	// 탭
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
@@ -50,7 +49,7 @@ $(document).ready(function() {
 		var userIdx = ${loginUser.userIdx }
 		
 		// 삭제할 기대평 idx
-		var expIdx = $('#expDeleteBtn').val();
+// 		var expIdx = $('#expDeleteBtn').val();
 		
 		console.log('선택 기대평 idx : ' + expIdx);
 // 		console.log('게시글 번호 : ' + pfmIdx);

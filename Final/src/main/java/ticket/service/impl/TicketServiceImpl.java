@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ticket.dao.face.TicketDao;
+import ticket.dto.Book;
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.User;
 import ticket.service.face.TicketService;
 
@@ -35,9 +37,9 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public List<Seat> loadBookedSeats(Performance prm) {
+	public List<Seat> loadBookedSeats(Performance prm, String secName) {
 		// TODO Auto-generated method stub
-		return null;
+		return ticketDao.selectBookedseats(prm,secName);
 	}
 
 	@Override
@@ -101,6 +103,31 @@ public class TicketServiceImpl implements TicketService {
 		
 		
 		return ticketDao.selectDayByTimeIdx(pfmIdx, date, time);
+		
+	}
+
+	@Override
+	public int loadOriginSecIdx(int hallIdx, String secName) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectOriSecIdx(hallIdx,secName);
+	}
+
+	@Override
+	public int loadSeatIdx(int hallIdx, int oriSecIdx, int seatRow, int seatCol) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectSeatIdx(hallIdx, oriSecIdx, seatRow, seatCol);
+	}
+
+	@Override
+	public void storedBook(Book book) {
+		// TODO Auto-generated method stub
+		ticketDao.insertBook(book);
+	}
+
+	@Override
+	public void storedShipment(Shipment shipment) {
+		
+		ticketDao.insertShipment(shipment);
 		
 	}
 	

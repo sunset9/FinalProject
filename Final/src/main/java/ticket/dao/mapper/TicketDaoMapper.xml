@@ -38,6 +38,20 @@
 	<result column="seat_floor" property="seatFloor"/>
 </resultMap>
 
+<resultMap type="ticket.dto.Book" id="bookMap">
+	<result column="book_idx" property="bookIdx"/>
+	<result column="book_group" property="bookGroup"/>
+	<result column="pfm_idx" property="pfmIdx"/>
+	<result column="user_idx" property="userIdx"/>
+	<result column="book_cate_idx" property="bookCateIdx"/>
+	<result column="pfm_dbt_idx" property="pfmDbtIdx"/>
+	<result column="seat_idx" property="seatIdx"/>
+	<result column="receive_idx" property="receiveIdx"/>
+	<result column="imp_uid" property="impUid"/>
+	<result column="create_date" property="createDate"/>
+	<result column="cancel_date" property="cancelDate"/>
+</resultMap>
+
 
 <select id="selectDates" parameterType="ticket.dto.Performance" resultMap="dateTimeMap">
 	select pfm_date from pfm_dateBytime WHERE pfm_idx = #{pfmIdx} GROUP BY pfm_date
@@ -92,4 +106,62 @@
 	select pfm_dbt_idx from PFM_DATEBYTIME where pfm_idx=#{pfmIdx} and pfm_date=#{date} and pfm_time=#{time}
 </select>
 
+<select id ="selectOriSecIdx" resultType="int">
+	select ori_sec_idx from originSection where hall_idx=#{hallIdx} AND sec_name=#{secName}
+</select>
+
+<select id = "selectSeatIdx" resultType="int">
+	select seat_idx from seat where hall_idx = #{hallIdx} and ori_sec_idx = #{oriSecIdx} and seat_row = #{seatRow} and seat_col = #{seatCol}
+</select>
+
+<insert id="insertBook" parameterType="ticket.dto.Book">
+ 	<selectKey  resultType="int" keyProperty="bookIdx" order="BEFORE">
+  		SELECT BOOK_SEQ.nextval FROM dual
+  	</selectKey>
+
+	INSERT INTO book(
+	    book_idx, 
+	    book_group, 
+	    pfm_idx, 
+	    user_idx, 
+	    book_cate_idx, 
+	    pfm_dbt_idx, 
+	    seat_idx, 
+	    receive_idx, 
+	    imp_uid
+	) VALUES(#{bookIdx},#{bookGroup},#{pfmIdx},#{userIdx},#{bookCateIdx},#{pfmDbtIdx},#{seatIdx},#{receiveIdx},#{impUid})
+</insert>
+
+<insert id="insertShipment" parameterType="ticket.dto.Shipment">
+<selectKey  resultType="int" keyProperty="shipIdx" order="BEFORE">
+  		SELECT Shipment_SEQ.nextval FROM dual
+  	</selectKey>
+
+	INSERT INTO shipment(
+	    ship_idx, 
+	    book_group, 
+	    name, 
+	    phone, 
+	    postcode, 
+	    addr, 
+	    addr_detail
+	) VALUES(#{shipIdx},#{bookGroup},#{name},#{phone},#{postcode},#{addr},#{addrDetail})
+
+</insert>
+
+<!-- 예매한 좌석 불러오기 -->
+<!-- <select id=""> -->
+<!-- 	SELECT -->
+<!-- 	    -->
+<!-- 	    seat.seat_row, -->
+<!-- 	    seat.seat_col -->
+<!-- 	FROM -->
+<!-- 	    book  -->
+<!-- 	    LEFT JOIN seat ON book.seat_idx = seat.seat_idx -->
+<!-- 	    LEFT JOIN originsection ON seat.ori_sec_idx = originsection.ori_sec_idx -->
+<!-- 	WHERE -->
+<!-- 	    book.pfm_idx = 1  -->
+<!-- 	    AND -->
+<!-- 	    originsection.sec_name = 'A' -->
+<!-- </select> -->
 </mapper>

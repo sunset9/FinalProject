@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -641,8 +642,31 @@ public class AdminPfmController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.GET)
-	public String registMBanner() {
+	public String registMBanner(
+			HttpServletRequest req,
+			Model model,
+			@RequestParam(defaultValue="1") int curPage
+			) {
 	
+		String search = req.getParameter("mainBanSearch");
+		logger.info("메인 배너 검색 결과 : "+search);
+		
+		//공연수 얻기
+		int totalPfm = pService.getTotalPfm(search);
+		System.out.println("공연수 확인 : "+totalPfm);
+		
+		//페이징 객체 생성
+		Paging paging = new Paging(totalPfm, curPage, 9);
+		
+		//최신순 공연목록 가져오기
+		List<Performance> NewPfmList = pService.getNeweastPfm(paging);
+		logger.info("최신순 공연목록 : "+NewPfmList);
+		//가나다순 공연목록 가져오기
+		//List<Performance> orderedPfmList = pService.getOrderedPfmList();
+		
+		model.addAttribute("NewPfmList", NewPfmList);
+		model.addAttribute("paging", paging);
+		
 		return "admin/pfm/registMBanner";
 	}
 	
@@ -811,14 +835,14 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
 	public String viewPfmManager(Model model) {
 		String genre = "CON"; //목록 불러오는 기본값: 콘서트 기준
-//		String order = "LATEST"; // 정렬기준 기본값: 등록순
+		String order = "LATEST"; // 정렬기준 기본값: 등록순
 				
 		// 페이징 계산
 		int totalCnt = pService.getPfmCntByGenre(genre);
 		Paging paging = new Paging(totalCnt, 1, 8, 4);
 		
 		// 특정 장르에 해당하는 공연 리스트 가져오기
-		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
+		List<Performance> pfmList = pService.getPfmListByGenre(genre, order, paging);
 		model.addAttribute("pfmList",pfmList);
 		
 		return "admin/pfm/managerPfm";
@@ -832,7 +856,8 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/viewpfmlist", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String,Object> getPfmList(
 			String genre
-			,@RequestParam(defaultValue="1") int curPage
+			, String order
+			, @RequestParam(defaultValue="1") int curPage
 			) {
 		
 		// 페이징 계산
@@ -840,7 +865,7 @@ public class AdminPfmController {
 		Paging paging = new Paging(totalCnt, curPage, 8, 4);
 				
 		// 장르가 일치하는 공연 리스트 가져오기
-		List<Performance> pfmList = pService.getPfmListByGenre(genre, paging);
+		List<Performance> pfmList = pService.getPfmListByGenre(genre, order, paging);
 		
 		// View 로 넘겨줄 값 
 		HashMap<String, Object> map = new HashMap<String, Object>();

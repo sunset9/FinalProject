@@ -151,25 +151,29 @@ public class AdminUserController {
 			@RequestParam(defaultValue="1") int curPage
 			) {
 		//현재 페이지 
-		//logger.info("curPage : "+curPage);
+		logger.info("curPage : "+curPage);
 		
 		//검색어 얻기
-		//String search = req.getParameter("sobSearch");
-		//logger.info("search값 : "+search);
+		String search = req.getParameter("sobSearch");
+		logger.info("search값 : "+search); //OK
 		
-		//전체 예매수 얻기
-		//int totalBook = userService.getTotalBook(search);
-		//logger.info("totalBook : "+totalBook);
+		//예매현황 count하기
+		int totalSob = userService.getTotalSob(search);
+		logger.info("totalBook : "+totalSob); //OK
 		
 		//페이징 객체 생성
-		//Paging paging = new Paging(totalBook, curPage);
+		Paging paging = new Paging(totalSob, curPage);
 		
 		//페이징 객체에 검색어 적용 
-		//paging.setSearch(search);
-		//logger.info("페이징 : "+paging);
+		paging.setSearch(search);
+		logger.info("페이징 : "+paging);
 		
 		//페이징한 예매현황 목록 얻기
-		//List<StateOfBook> sobList = userService.getSobListByPaging(paging);
+		List<StateOfBook> sobList = userService.getSobListByPaging(paging);
+		logger.info("sobList 확인 : "+sobList);
+		
+		model.addAttribute("sobList", sobList);
+		model.addAttribute("paging", paging);
 		
 		return "/admin/user/soblist";
 	}

@@ -31,7 +31,7 @@
 	<resources mapping="/resources/image/profile/**" location="/resources/image/profile" />
 	
 	<!-- 다음오픈에디터저장소 -->
-	<resources location="/upload/" mapping="/upload/**"/>
+	<resources mapping="/upload/**" location="/upload/" />
 	
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 

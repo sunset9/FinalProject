@@ -94,4 +94,11 @@ public interface AdminUserService {
 	 * @작성자: 김지은
 	 */
 	public String paymentCancel(List<PaymentInfo> pay);
+	
+	/**
+	 * @최종수정일: 2018.12.23
+	 * @Method설명: 예매현황 count 구하기
+	 * @작성자: 김지은
+	 */
+	public int getTotalSob(String search);
 }

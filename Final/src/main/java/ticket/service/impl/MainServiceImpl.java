@@ -142,15 +142,15 @@ public class MainServiceImpl implements MainService {
 
 		switch (type) {
 			case "daily":
-				try {
-					// 0. '조회 구간' 설정
-					Calendar todayCal = Calendar.getInstance();
-					todayCal.setTime(today);
-					
-					// 오전 10시 30분 이전인 경우, 전날 24시간을 범위로 함
-					// yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59
-					if(todayCal.get(Calendar.HOUR_OF_DAY) <= 10 
-							|| (todayCal.get(Calendar.HOUR_OF_DAY) == 10 && todayCal.get(Calendar.MINUTE) < 30)){
+				// 0. '조회 구간' 설정
+				Calendar todayCal = Calendar.getInstance();
+				todayCal.setTime(today);
+				
+				// 오전 10시 30분 이전인 경우, 전날 24시간을 범위로 함
+				// yyyy-mm-dd 00:00:00 ~ yyyy-mm-dd 23:59:59
+				if(todayCal.get(Calendar.HOUR_OF_DAY) <= 10 
+						|| (todayCal.get(Calendar.HOUR_OF_DAY) == 10 && todayCal.get(Calendar.MINUTE) < 30)){
+					try {
 						// 오늘 00시 00분
 						Date tempTodayStart = dateFormat.parse(dateFormat.format(today));
 						// 어제 23시 59분 59초 999
@@ -160,64 +160,50 @@ public class MainServiceImpl implements MainService {
 						
 						// 1. 예매율 구하려는 공연 목록 가져옴
 						pfmList = mainDao.selectPfmListByOneDay(dateFormat.format(periodS));
-						
-					// 오전 10시 30분 이후인 경우, 현재-24시간 ~ 현재를 범위로 함
-					}else {
-						periodS = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-						periodE = today;
-						
-						// Date -> String 변환
-						startStr = dateFormat.format(periodS);
-						endStr = dateFormat.format(periodE);
-						
-						// 1. 예매율 구하려는 공연 목록 가져옴
-						pfmList = mainDao.selectPfmListByPeriod(startStr, endStr);
+					
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
-					
-					
-					// 조회 시작일
-					startDate = periodS;
-					// 조회 마지막일
-					endDate =  periodE;
-					
-					System.out.println("--------------");
-					System.out.println(startDate);
-					System.out.println(endDate);
-					
-					break;
-					
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-			case "weekly":
-				try {
-					// 0. '조회 구간' 설정
-					// 시작 구간: 6일 전
-					periodS = new Date(today.getTime()); 
-					periodS.setTime(periodS.getTime() - 6 * 24 * 60 * 60 * 1000);
-					// 끝 구간: 오늘
-					periodE = today; 
+				// 오전 10시 30분 이후인 경우, 현재-24시간 ~ 현재를 범위로 함
+				}else {
+					periodS = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+					periodE = today;
 					
 					// Date -> String 변환
 					startStr = dateFormat.format(periodS);
 					endStr = dateFormat.format(periodE);
 					
-					// yyyy-mm-dd 형태
-					startDate = dateFormat.parse(startStr);
-					endDate =  dateFormat.parse(endStr);
-					
 					// 1. 예매율 구하려는 공연 목록 가져옴
 					pfmList = mainDao.selectPfmListByPeriod(startStr, endStr);
-					
-					break;
-					
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
+				
+				break;
+					
+			case "weekly":
+				// 0. '조회 구간' 설정
+				// 시작 구간: 6일 전
+				periodS = new Date(today.getTime()); 
+				periodS.setTime(periodS.getTime() - 6 * 24 * 60 * 60 * 1000);
+				// 끝 구간: 오늘
+				periodE = today; 
+				
+				// Date -> String 변환
+				startStr = dateFormat.format(periodS);
+				endStr = dateFormat.format(periodE);
+				
+				// 1. 예매율 구하려는 공연 목록 가져옴
+				pfmList = mainDao.selectPfmListByPeriod(startStr, endStr);
+				
+				break;
+					
 		}// end switch
 		
 		// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
 		for(Performance pfm : pfmList) {
+			// 조회 범위 초기화
+			startDate = periodS;
+			endDate =  periodE;
+			
 			// '티켓' 시작일이 '조회 구간' 시작일 보다 느린 경우, '계산 구간' 시작일 = '티켓' 시작일
 			if(pfm.getTicketStart().getTime() - startDate.getTime() >= 0) {
 				startDate = pfm.getTicketStart();
@@ -261,6 +247,7 @@ public class MainServiceImpl implements MainService {
 			if(topTen.size() == 0) {
 				topTen.add(pfm);
 			}
+			
 		}
 		
 		// 10개 이상인 경우 10번째까지 자름
