@@ -102,87 +102,91 @@ public class AdminBoardController {
 		return "redirect:/admin/noticelist";
 		
 	}
-//	*********************************
 //	다음 에디터 이미지 첨부 팝업
 	@RequestMapping(value="/admin/imagepopup")
 	public String imagePopup() {
 		return "/admin/notice/image";
 	}
 	
-	// 다음 에디터 단일 파일 업로드 Ajax
-	@RequestMapping(value="/admin/sigleuploadimageajax", method=RequestMethod.POST)
-	public @ResponseBody HashMap sigleUploadImageAjax
-		(@RequestParam("Filedata") MultipartFile multipartFile, HttpSession httpSession) {
-
-		HashMap fileInfo = new HashMap(); // CallBack할 때 이미지 정보를 담을 Map
-		
-		// 업로드 파일이 존재하면
-		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) {
-
-			// 확장자 제한
-			String originalName = multipartFile.getOriginalFilename(); // 실제 파일 명
-			String originalNameExtension = originalName.substring(originalName.lastIndexOf(".") + 1).toLowerCase(); // 실제파일 확장자 (소문자변경) 
-
-			if( !( (originalNameExtension.equals("jpg")) || (originalNameExtension.equals("gif")) || (originalNameExtension.equals("png")) || (originalNameExtension.equals("bmp")) ) ){
-				 fileInfo.put("result",-1); // 허용 확장자가 아닐 경우
-				 return fileInfo;			
-			}
-			
-			// 파일크기제한 (1MB) 
-			long filesize = multipartFile.getSize(); // 파일크기 
-			long limitFileSize = 1*1024*1024; // 1MB 
-			if(limitFileSize < filesize){ // 제한보다 파일크기가 클 경우
-			 fileInfo.put("result",-2);
-			 return fileInfo; 
-			}
-			
-			// 저장경로 
-			String defaultPath = httpSession.getServletContext().getRealPath("/"); // 서버기본경로 (프로젝트 폴더 아님) 
-			String path = defaultPath + File.separator + "upload" + File.separator + "board" + File.separator + "images" + File.separator + ""; 
-			
-			// 저장경로 처리 
-			File file = new File(path); 
-			if(!file.exists()) { // 디렉토리 존재하지 않을경우 디렉토리 생성 
-			file.mkdirs(); 
-			}
-		
-			// 파일 저장명 처리 (20150702091941-fd8-db619e6040d5.확장자) 
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss"); 
-			String today= formatter.format(new Date()); 
-			String modifyName = today + "-" + UUID.randomUUID().toString().substring(20) + "." + originalNameExtension; 
-
-			// Multipart 처리 
-			try { 
-			// 서버에 파일 저장 (쓰기)
-			 multipartFile.transferTo(new File(path + modifyName));
-
-			 // 로그
-			 System.out.println("** upload 정보 **");
-			 System.out.println("** path : " + path + " **");
-			 System.out.println("** originalName : " + originalName + " **");
-			 System.out.println("** modifyName : " + modifyName + " **"); 
-		 } catch (Exception e) { 
-			e.printStackTrace();
-			 System.out.println("이미지파일업로드 실패 - singleUploadImageAjax");
-			}
-
-			 // CallBack - Map에 담기
-			 String imageurl = httpSession.getServletContext().getContextPath() + "/upload/board/images/" + modifyName; // separator와는 다름!
-			 fileInfo.put("imageurl", imageurl); // 상대파일경로(사이즈변환이나 변형된 파일) 
-			 fileInfo.put("filename", modifyName); // 파일명
-			 fileInfo.put("filesize", filesize); // 파일사이즈
-			 fileInfo.put("imagealign", "C"); // 이미지정렬(C:center)
-			 fileInfo.put("originalurl", imageurl); // 실제파일경로
-			 fileInfo.put("thumburl", imageurl); // 썸네일파일경로(사이즈변환이나 변형된 파일) 
-			 
-			 fileInfo.put("result", 1); // -1, -2를 제외한 아무거나 싣어도 됨 }			 
-			}
-		
-		return fileInfo;	// @ResponseBody 어노테이션을 사용하여 Map을 JSON형태로 반환 
-	}
-	
 //	*********************************
 	
+	// Image 업로드(Image) Ajax
+	@RequestMapping(value="/admin/singleUploadImageAjax", method=RequestMethod.POST)
+	public @ResponseBody HashMap singleUploadImageAjax(@RequestParam("Filedata")MultipartFile multipartFile, HttpSession httpSession) {
+		
+		HashMap fileInfo = new HashMap(); // 콜백할때 파일 정보를 담을 맵
+		
+		// 업로드 파일 존재시
+		if(multipartFile != null && !(multipartFile.getOriginalFilename().equals(""))) {
+			
+			// 확장자 제한
+			String originalName = multipartFile.getOriginalFilename(); // 실제 파일명
+			String originalNameExtension = originalName.substring(originalName.lastIndexOf(".")+1).toLowerCase(); // 실제 파일 확장자(소문자로 변경)
+			
+			if(!((originalNameExtension.equals("jpg")) || (originalNameExtension.equals("gif")) || (originalNameExtension.equals("png")) || (originalNameExtension.equals("bmp")) )){
+				fileInfo.put("result", -1); // 허용 확장자가 아닐 경우
+				return fileInfo;
+			}
+		
+			// 파일 크기 제한(1MB)
+			long filesize = multipartFile.getSize();
+			long limitFileSize = 1*1024*1024;
+			if(limitFileSize < filesize){
+				fileInfo.put("result", -2);
+				return fileInfo;
+			}
+			
+			// 저장경로
+			String defaultPath = httpSession.getServletContext().getRealPath("/"); // 서버 기본 경로
+			String path = defaultPath + File.separator + "upload" + File.separator + "board" + File.separator + "images" + File.separator +"";
+
+			// 저장경로 처리
+			File file = new File(path);
+			if(!file.exists()) { // 파일없을시 생성 (디렉토리)
+				file.mkdirs();
+			}
+			
+			// 파일 저장명 처리
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			String today = formatter.format(new Date());
+			String modifyName = today + "-" + UUID.randomUUID().toString().substring(20) + "." + originalNameExtension;
+
+			// Multipart 처리			
+			try {
+				// 서버에 파일 저장(쓰기)				
+				multipartFile.transferTo(new File(path + modifyName));
+			
+				// 로그
+				System.out.println("image upload 정보");
+				System.out.println("path" + path);
+				System.out.println("originalName " + originalName );
+				System.out.println("modifyName " + modifyName );
+				
+			} catch (IllegalStateException e) {				
+				e.printStackTrace();
+				System.out.println("IllegalStateException");
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("IOException");
+			}
+			
+			// 콜백 - 맵에 담기			
+			String imageurl = httpSession.getServletContext().getContextPath()+ "/upload/board/images/" + modifyName; // separtor 경로와 다름
+			fileInfo.put("imageurl", imageurl);
+			fileInfo.put("filename", modifyName);
+			fileInfo.put("filesize", filesize);
+			fileInfo.put("imagealign", "C");
+			fileInfo.put("originalurl", imageurl);
+			fileInfo.put("thumburl", imageurl);
+			
+			fileInfo.put("result", 1);
+		}
+		
+		return fileInfo;
+		
+	}
+						
 //	파일 업로드 버튼 누를시 파일팝업
 	@RequestMapping(value="/admin/filepopup")
 	public String filePopup() {
@@ -232,7 +236,7 @@ public class AdminBoardController {
 				
 				
 				// 로그
-				System.out.println("upload 정보");
+				System.out.println("file upload 정보");
 				System.out.println("path" + path);
 				System.out.println("originalName" + originalName);
 				System.out.println("modifyName" + modifyName);
@@ -254,22 +258,11 @@ public class AdminBoardController {
 			fileInfo.put("filemime", fileMime);
 			fileInfo.put("filename", modifyName);
 			fileInfo.put("filesize", filesize);
-			fileInfo.put("result", 1);
-			
-			
-		}
-		
-		
-		return fileInfo;
-		
+			fileInfo.put("result", 1);						
+		}				
+		return fileInfo;		
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * 2018.12.12
 	 * @Method설명: 공지사항 글 수정 처리
@@ -278,15 +271,13 @@ public class AdminBoardController {
 	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.GET)
 	public String notiUpdate(Notice notice, Model model) {
 		
-		logger.info("공지수정폼");
-		
+		logger.info("공지수정폼");		
 		
 		notice = adminBoardService.noticeUpdateView(notice);
 //		System.out.println("update"+notice);
 		model.addAttribute("update", notice);
 		
-		return "/admin/notice/update";
-		
+		return "/admin/notice/update";		
 	}
 
 	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.POST)
@@ -296,11 +287,9 @@ public class AdminBoardController {
 		
 		adminBoardService.upNoti(notice);
 	
-		return "redirect:/admin/noticelist";
-		
+		return "redirect:/admin/noticelist";		
 	}
-	
-	
+		
 	/**
 	 * 2018.12.11
 	 * @Method설명: 공지사항 글 삭제
@@ -316,73 +305,11 @@ public class AdminBoardController {
 		
 	}
 	
-	
-
-	
-	
-	/**
-	 * 2018.12.13
-	 * @Method설명: 공지사항 파일 업로드 (합치기전 테스트)
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.GET)
-	public String notiFileup() {
-		logger.info("업로드폼");
-		return "/admin/notice/fileup";
-		
-	}
-	
-//@RequestParam(value="n") String name => n이란 값을 name에 저장
-	@RequestMapping(value="/admin/noticefileupload", method=RequestMethod.POST)
-	public String notiFileupProc(
-			@RequestParam(value="file") MultipartFile fileupload) {
-		// 업로드 파일 정보 전달
-		adminBoardService.filesave(context, fileupload); 
-		
-		return "redirect:/admin/noticefilelist";
-		
-	}
-
-	
-	@RequestMapping(value="/admin/noticefilelist")
-	public String filelist(Model model) {
-		
-		List<NoticeFile> filelist = adminBoardService.fileList();
-		
-		model.addAttribute("filelist", filelist);
-		
-		return "/admin/notice/filelist";
-		
-	}
-	
-	
-	/**
-	 * 2018.12.13
-	 * @Method설명: 공지사항 파일 다운로드
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/noticefiledownload", method=RequestMethod.GET)
-	public ModelAndView notiFiledownload(ModelAndView mav, int notiFileIdx) {
-		
-		NoticeFile file = adminBoardService.getFile(notiFileIdx);
-		logger.info(file.toString());
-		mav.setViewName("down"); // 뷰이름
-		mav.addObject("downFile", file);
-		return mav;
-		
-	}
-	
-	
-	
 
 	
 	
 	
-	
-	
-	
-	
-	
+	// FAQ
 	
 	
 	
