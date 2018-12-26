@@ -204,8 +204,11 @@ div.seatCharts-cell {
                      //this will handle "[cancel]" link clicks
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-                              console.log(sc.get($(this).parents('li:first').data('seatId')));
                               sc.get($(this).parents('li:first').data('seatId')).click();
+                              var id = $(this).parents('li:first').attr("id");
+                              var ids = new Array();
+                              ids = id.split("-");
+                              $("li."+ids[2]).remove()
 //                               console.log(sc.get($(this).parents('li:first').data('seatId')));
 //                               $('#cart-item-' + this.settings.id).remove();
                            });
@@ -248,24 +251,40 @@ div.seatCharts-cell {
       
       //좌석정보 보내기(좌석클릭시마다)
       $('.seatCharts-cell').on('click',function(){
-    	  var seat = $(this).attr('id');	
-		  
-		  var seatArr = new Array();
-		  seatArr= seat.split("_");
-		  
-		  var str = $(this).attr('class');
-		  var array = new Array(); 
-		  array = str.split(" ");
-		  console.log(); // 무슨좌석인지
-		  console.log() ;
-		  
-		  $(".nth2_1").append("<li class='seatInfo'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay}+"</li>")
-// 		  $(".nth2").append(array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay});
-// 		  $(".nth2").append('<br>');
+    	  
+    	  if($(this).hasClass('selected')){
+        	  var seat = $(this).attr('id');	
+    		  
+        	  
+    		  var seatArr = new Array();
+    		  seatArr= seat.split("_");
+    		  
+    		  var str = $(this).attr('class');
+    		  var array = new Array(); 
+    		  array = str.split(" ");
+    		  
+    		  $(".nth2_1").append("<li class='seatInfo "+seat+"'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay}+"</li>")
+
+    		  
+    	  }else{
+  			  var seat = $(this).attr('id');	
+	   		  var seatArr = new Array();
+	   		  seatArr= seat.split("_");
+	   		  
+	   		  var str = $(this).attr('class');
+	   		  var array = new Array(); 
+	   		  array = str.split(" ");
+	   		  
+	   		  $("li."+seat).remove()
+    		  
+    	  } 
+    	  
 		  
 		  var resultPay = $('#total').text();
 		  resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		  $('#ticketPriceTotal').text(resultPay);
+    	  
+
       
       });
       

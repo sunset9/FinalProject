@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import ticket.dto.Book;
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
 import ticket.dto.Performance;
@@ -13,6 +14,7 @@ import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.User;
 
 public interface TicketDao {
@@ -49,7 +51,7 @@ public interface TicketDao {
 	 * @Method설명: 해당 공연의 예매한 좌석불러오기
 	 * @작성자:이상지
 	 */
-	public List<Seat> selectBookedseats(Performance prm);
+	public List<Seat> selectBookedseats(@Param(value="pfm")Performance pfm, @Param(value="secName")String secName);
 	
 	
 	/**
@@ -123,5 +125,32 @@ public interface TicketDao {
 	 */
 	public int selectDayByTimeIdx(@Param(value = "pfmIdx") int pfmIdx, @Param(value = "date") String date, @Param(value = "time") String time);
 	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 공연장 idx와 구역이름으로 구역번호 구하기
+	 * @작성자:이상지
+	 */
+	public int selectOriSecIdx(@Param(value = "hallIdx") int hallIdx, @Param(value = "secName") String secName);
 	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: seatIdx 구하기
+	 * @작성자:이상지
+	 */
+	public int selectSeatIdx(@Param(value = "hallIdx") int hallIdx, @Param(value = "oriSecIdx") int oriSecIdx, @Param(value = "seatRow") int seatRow, @Param(value = "seatCol") int seatCol);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 예매정보 저장
+	 * @작성자:이상지
+	 */
+	public void insertBook(Book book);
+	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 배송지 정보저장
+	 * @작성자:이상지
+	 */
+	public void insertShipment(Shipment shipment);
 }

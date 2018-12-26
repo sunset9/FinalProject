@@ -24,6 +24,11 @@ var fee=0;
 var rp =0;
 var delvyTypeCode = 1;
 $(document).ready(function() {
+	
+	$('#buyer_name').val("${sessionScope.loginUser.name}");
+	$('#buyer_tel').val("${sessionScope.loginUser.phone}");
+	$('#buyer_email').val("${sessionScope.loginUser.email}");
+	
 	//위에 스탭단계 보여주는곳 숨기기
 	$('#stepInfo').hide();
 	//처음에 이전버튼 숨기기
@@ -69,7 +74,8 @@ $(document).ready(function() {
 					"pay":pay,
 					"appName":appName,
 					"hallIdx":${param.hallIdx},
-					"oriSecIdx":oriSecIdx
+					"oriSecIdx":oriSecIdx,
+					"pfmIdx" :${param.pfmIdx}
 					},
 				dataType:"html",
 				success:function(res){
@@ -88,6 +94,16 @@ $(document).ready(function() {
 	//다음단계 혹은 이전단계 
 	  $('.stepBtn').on('click', function () {
 		  
+		  //선택된 좌석들
+		  var IsSeatSelect = $('#seat-map').find('.selected');
+		  
+		 
+		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
+		  if (IsSeatSelect.size() == 0){
+			  alert("좌석 선택이 되지 않았습니다");
+			  return;
+		  }
+		  
 		  var lastCompletedTab = $('.completeStep').last().attr('id');
 		  var curStep = 0;
 		  //현재 단계구하기
@@ -104,10 +120,11 @@ $(document).ready(function() {
 			  $('#stepInfo').hide();
 		  }else{
 			  $('#stepInfo').show();
+			  $('#seatBtn').hide();
 			  
 		  }
 		  
-		  if($(this).is($('#nextBtn'))){
+		  if($(this).is($('.nextBtn'))){
 			  
 			  if(curStep == 1){
 				  //이전단계 버튼 활성화
@@ -120,8 +137,9 @@ $(document).ready(function() {
 			  } 
 			  else if(curStep == 2){ // 현재 STEP 3 단계라면(=다음이 4단계)
 					// '다음 단계' 버튼 비활성화
-					$('#nextBtn').hide();
+					$('.nextBtn').hide();
 					$('#step2and3').show();
+					$('#payment').show();
 			
 			  }
 			  
@@ -136,15 +154,18 @@ $(document).ready(function() {
 			// 다음 등록 양식 보여줌
 			$('#bookStep_'+nextStep).show();
 		  } else {//이전단계 클릭 시
+			  $('#payment').hide();
 			  if(curStep == 2){ // 현재 STEP2 단계라면 ( =전환될 화면이 1단계)
 					// '이전 단계' 버튼 비활성화
 					$('#stepInfo').hide();
 					$('#prevBtn').hide();
 					$('.wrap_ticket_info').hide();
 					$('#step2and3').hide();
+					$('#seatBtn').show();
 				} else if(curStep == 3){ // 현재 STEP4 단계라면 ( =전환될 화면이 3단계)
 					// '다음 단계' 버튼 활성화
-					$('#nextBtn').show();
+					$('.nextBtn').show();
+					$('#seatBtn').hide();
 					$('#bookStep_2_tb').html("");
 					$('#step2and3').show();
 					getSeatInfo();
@@ -183,6 +204,46 @@ $(document).ready(function() {
 		 
 		 
 	})
+	
+	
+	$('#copyDelvyAddr').change(function() {
+		
+	
+		if($('#copyDelvyAddr').is(":checked")){
+			//체크박스 체크
+			$('#buyerName').val("${sessionScope.loginUser.name}");
+			var phone = "${sessionScope.loginUser.phone}";
+			var phone01;
+			var phone02;
+			var phone03;
+			if(phone.length == 11){
+				phone01 = phone.substring(0,3);	//전화번호1
+				phone02 = phone.substring(3,7); //전화번호2
+				phone03 = phone.substring(7,11);	//전화번호3
+			} else if(phone.length == 10){
+				phone01 = phone.substring(0,3);	//전화번호1
+				phone02 = phone.substring(3,6); //전화번호2
+				phone03 = phone.substring(6,10);	//전화번호3
+			}
+			$('#delvyTel1').val(phone01);
+			$('#delvyTel2').val(phone02);
+			$('#delvyTel3').val(phone03);
+			$('#buyer_addr').val("${sessionScope.loginUser.addr}");
+			$('#buyer_addr_detail').val("${sessionScope.loginUser.addrDetail}");
+			$('#postCode').val("${sessionScope.loginUser.postcode}");
+		}else{
+			//체크박스 체크해제
+			$('#buyerName').val("");
+			$('#delvyTel1').val("");
+			$('#delvyTel2').val("");
+			$('#delvyTel3').val("");
+			$('#buyer_addr').val("");
+			$('#buyer_addr_detail').val("");
+			$('#postCode').val("");
+		}
+		
+	})
+	
 });
 
 	  
@@ -246,7 +307,8 @@ $(document).ready(function() {
 		  })
 		  
 	  }
-	  
+	 
+// 좌석정보 2스탭 테이블에 뿌려주기
 function getSeatInfo(){
 	var cnt = new Array();
 	  $('#seat-map').find('.selected').each(function() {
@@ -259,16 +321,19 @@ function getSeatInfo(){
   		  var str = $(this).attr('class');
   		  var array = new Array(); 
   		  array = str.split(" ");
-//   		  console.log(array[2]+" 석"); // 무슨좌석인지
-  		  //array[3] : 구역이름, seatArr[0] : 좌석행, seatArr[1] : 좌석열 , array[4] : 좌석 가격
-//   		  console.log(array[3]+" 구역 "+" "+seatArr[0]+" 행 "+seatArr[1]+" 열"+" : "+array[4]) ;
+//   		array[2] : 석 (R석 VIP 석 등등),
+//			array[3] : 구역이름, 
+//		    seatArr[0] : 좌석행, 
+//          seatArr[1] : 좌석열, 
+//          array[4] : 좌석 가격
   		  
   		  var seatInfo = new Array();
-  		  seatInfo = $('#selected-seats').find("li").text().split("[cancel]");
+  		  seatInfo = $('#selected-seats').find("li").text().split("[cancel]"); //li에 저장된 좌석정보 가져오기
   		  
-  		
+  		  
+  		 //각 가격구역 마다 좌석 갯수 구하기
   		for (var j = 0 ; j<pfmSeatSection.length; j++){
-				cnt[j] = 0;
+				cnt[j] = 0; //0으로 초기화
 		}	
 	  		
   		  for(var i =0; i<seatInfo.length-1;i++){
@@ -291,6 +356,18 @@ function getSeatInfo(){
 	 }
 	 
 	 function seatAllView() {
+		 
+		  //선택된 좌석들
+		  var IsSeatSelect = $('#seat-map').find('.selected');
+		  
+		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
+		  if (IsSeatSelect.size() != 0){
+			  if(confirm("선택한 좌석 정보를 삭제하고 이동하시겠습니까?")){
+			  }else{
+				  return;
+			  }
+		  }
+		  
 			$.ajax({
 				type:"get",
 				url:"/ticket/seatSection",
@@ -311,6 +388,7 @@ function getSeatInfo(){
 				
 				}
 			});	
+	
 	}
 	 
 
@@ -481,10 +559,17 @@ function getSeatInfo(){
 <!-- 티켓 정보 -->
 	<div class="btn_onestop">
 				<span class="button btWhite frt">
-					<a href="javascript: goPrevPage();" class="btnOne">이전</a></span> <span class="button btNext">
-					<a href="#" class="btnOne" id="payment">결제하기</a>
+<!-- 					<a href="javascript: goPrevPage();" class="btnOne">이전</a> -->
+					<button id = "prevBtn" class="btnOne stepBtn">이전단계</button>
+				</span> 
+				<span class="button btNext">
+					<button class="nextBtn btnOne stepBtn">다음단계</button>
+					<button class="btnOne" id="payment" style="display: none">결제하기</button>
 				</span>
-			</div>
+	
+
+	
+	</div>
 </div>
 </div>
 
@@ -609,7 +694,10 @@ function getSeatInfo(){
 							<th class="txt_gray txt_top" rowspan="3">주소<span
 								class="require">*</span></th>
 							<td colspan="3">
-								<button type="button" class="box_inp_btn" id="btnSearchAddress" onclick="openZipSearch()">우편번호</button></td>
+									<input type="text" name="postCode"
+									id="postCode" class="inputType inp_txt inp_l2" value=""> 
+								<button type="button" class="box_inp_btn" id="btnSearchAddress" onclick="openZipSearch()">우편번호</button>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="3" class="td_pd"><span class="wrap_form_input">
@@ -617,6 +705,16 @@ function getSeatInfo(){
 									<input type="text" name="delvyAddr"
 									id="buyer_addr" class="inputType inp_txt inp_l2" value=""
 									> <label for="delvyAddr"
+									class="place_holder"></label>
+							</span> 
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" class="td_pd"><span class="wrap_form_input">
+									<!-- form wrapper -->
+									<input type="text" name="delvyAddrDetail"
+									id="buyer_addr_detail" class="inputType inp_txt inp_l2" value=""
+									> <label for="delvyAddrDetail"
 									class="place_holder"></label>
 							</span> 
 							</td>
@@ -644,10 +742,7 @@ function getSeatInfo(){
 
 </div>
 
-
-
-<button id = "nextBtn" class="stepBtn">다음단계</button>
-<button id = "prevBtn" class="stepBtn">이전단계</button>
+	<button id = "seatBtn" class="stepBtn nextBtn">다음단계</button>
 
 </body>
 </html>

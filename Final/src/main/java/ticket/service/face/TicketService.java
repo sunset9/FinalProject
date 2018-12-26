@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import ticket.dto.Book;
 import ticket.dto.Hall;
 import ticket.dto.OriginSection;
 import ticket.dto.Performance;
@@ -11,6 +12,7 @@ import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
+import ticket.dto.Shipment;
 import ticket.dto.User;
 
 public interface TicketService {
@@ -45,7 +47,7 @@ public interface TicketService {
 	 * @Method설명:해당 공연의 예매한 좌석불러오기
 	 * @작성자:이상지
 	 */
-	public List<Seat> loadBookedSeats(Performance prm);
+	public List<Seat> loadBookedSeats(Performance prm, String secName);
 
 	/**
 	 * @최종수정일: 2018.12.05
@@ -116,5 +118,33 @@ public interface TicketService {
 	 * @작성자:이상지
 	 */
 	public int loadDayByTimeIdx(int pfmIdx, String date, String time);
+	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 홀인덱스, 섹션이름으로 해당 섹션의 idx가져오기
+	 * @작성자:이상지
+	 */
+	public int loadOriginSecIdx(int hallIdx, String secName);
+	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 공연장Idx, 구역idx, 좌석 행렬로 좌석 idx조회
+	 * @작성자:이상지
+	 */
+	public int loadSeatIdx(int hallIdx, int oriSecIdx, int seatRow, int seatCol);
+	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 결제완료시 book에 예매정보 저장
+	 * @작성자:이상지
+	 */
+	public void storedBook(Book book);
+	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명: 배송 수령시 배송지 정보 저장
+	 * @작성자:이상지
+	 */
+	public void storedShipment(Shipment shipment);
 }
 
