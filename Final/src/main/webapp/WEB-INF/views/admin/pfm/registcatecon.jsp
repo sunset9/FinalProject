@@ -16,6 +16,7 @@
     display: block;
     margin-left: 10px;
     text-align: center;
+   	position: relative;
 }
 .h3, h3 {
     font-size: 15px;
@@ -29,7 +30,7 @@
     background-color: #33333352;
     height:150px;
     width: 103px;
-    right: 49px;
+    right: 9px;
     position: absolute;
 }
 </style>
@@ -220,41 +221,43 @@ $('#myModal').find('.btn').on('click',function() {
 	start.append(adddiv1);
 	
 });
-$('#btn').click(function() {
-	//console.log("클릭됨?");
-	var lengthValue = $("input[name='pfmIdx']").length;
-  	console.log(lengthValue);
-    var listData = new Array(lengthValue);
-	for (var i = 0; i < lengthValue; i++) {
-	listData[i] = $("input[name='pfmIdx']")[i].value;
-	}
-//console.log(listData);
-	jQuery.ajaxSettings.traditional = true;
-	//form 데이터를 List로 보내기 위한 설정 
-	$.ajax({
-			type : "post",
-			url : "/admin/registcatecon",
-			dataType : "text",
-			data : {
-				'pfmIdx' : listData
-					},
-			success : function(data) {
-				console.log(data);
-			},
-			error : function() {
-			console.log("error");
-			}
-		}); //end of ajax 
+// $('#btn').click(function() {
+// 	//console.log("클릭됨?");
+// 	var lengthValue = $("input[name='pfmIdx']").length;
+//   	console.log(lengthValue);
+//     var listData = new Array(lengthValue);
+// 	for (var i = 0; i < lengthValue; i++) {
+// 	listData[i] = $("input[name='pfmIdx']")[i].value;
+// 	}
+// //console.log(listData);
+// 	jQuery.ajaxSettings.traditional = true;
+// 	//form 데이터를 List로 보내기 위한 설정 
+// 	$.ajax({
+// 			type : "post",
+// 			url : "/admin/registcatecon",
+// 			dataType : "text",
+// 			data : {
+// 				'pfmIdx' : listData
+// 					},
+// 			success : function(data) {
+// 				console.log(data);
+// 			},
+// 			error : function() {
+// 			console.log("error");
+// 			}
+// 		}); //end of ajax 
 		
-}); //endof function
+// }); //endof function
 
 $('.caption').on('mouseover','.pfmIdx',function(){
 // 	console.log("test중입니다 찍힙니까?");
-	var pfmIdx = $(this).children('div[class^=pfmIdx]').attr('id');
+	var pfmIdx =$(this).attr('id');
 	var cover = $('<div class="cover">');
+	console.log(pfmIdx+"ddddddddddddd");
+	var delBtn = $('<button type="button" class="deletePfmBtn" onclick="location.href=\'/admin/deletecatecon?pfmIdx='+pfmIdx+'\'">공연 삭제</button>');
 
 // 	var img =$('<img style="background-color: red; position: absolute;" width="103px;" height="150px;"/>');
-	//cover.append(img);	
+	cover.append(delBtn);	
 	$(this).prepend(cover);
 	
 });
