@@ -214,7 +214,12 @@ public interface UserDao {
 	public SeatSection selectSeat(String bookGroup);
 	
 	
-	
+	/**
+	 * @최종수정일: 2018.12.26
+	 * @Method설명:
+	 * @작성자:홍나영
+	 */
+	public PaymentInfo selectPaymentByimpUid(String impUid);
 	
 
 }
