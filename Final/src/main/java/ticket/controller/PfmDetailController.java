@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.Artist;
 import ticket.dto.Expectation;
+import ticket.dto.Hall;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
@@ -73,6 +74,10 @@ public class PfmDetailController {
 		// 관람후기 작성자 리스트 출력
 		List<User> reviewUserList = detailService.getReviwUserList(pfm);
 		model.addAttribute("reviewUserList", reviewUserList);
+		
+		// 해당 공연에 대한 공연장 정보 출력
+		Hall hallInfoList = detailService.getHallInfoList(pfm);
+		model.addAttribute("hallInfoList", hallInfoList);
 		
 	}
 

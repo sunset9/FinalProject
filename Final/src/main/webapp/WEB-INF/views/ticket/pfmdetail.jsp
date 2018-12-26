@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfQ1Ll1MjoD573_TufnboXLa93NqnHtU&callback=initMap">
+</script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -223,8 +226,23 @@ $(document).ready(function() {
 		
 		});
 	}
-
+	
 });
+
+// 구글 맵
+function initMap() {
+	var uluru = {lat: 37.515046, lng: 127.073121};
+	
+	var map = new google.maps.Map(document.getElementById('map'), {
+	zoom: 15,
+	center: uluru
+	});
+	
+	var marker = new google.maps.Marker({
+	position: uluru,
+	map: map
+	});
+}
 </script>
 
 <style>
@@ -242,8 +260,16 @@ $(document).ready(function() {
 	height: 300px;
 }
 
+.posterImgDiv {
+	width: 400px;
+	float: left;
+	text-align: center;
+}
+
 .posterInfoDiv {
 	float: left;
+	margin-left: 20px;
+	height: auto;
 /* 	margin: 10px 0 10px 20px; */
 }
 
@@ -348,17 +374,23 @@ ul.tabs li.current{
 }
 
 /* 별점 */
-.starR{
-  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
-  background-size: auto 100%;
-  width: 15px;
-  height: 15px;
-  display: inline-block;
-  text-indent: -9999px;
-  cursor: pointer;
-}
-.starR.on{
-	background-position:0 0;
+/* .starR{ */
+/*   background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0; */
+/*   background-size: auto 100%; */
+/*   width: 15px; */
+/*   height: 15px; */
+/*   display: inline-block; */
+/*   text-indent: -9999px; */
+/*   cursor: pointer; */
+/* } */
+/* .starR.on{ */
+/* 	background-position:0 0; */
+/* } */
+
+/* 구글 맵 */
+#map {
+	height: 400px;
+	width: 100%;
 }
 </style>
 
@@ -368,9 +400,39 @@ ul.tabs li.current{
 			<img class="choicePosterImg" src="/resources/image/${posterList.originName}" />
 		</div>
 	
-		<div class="posterInfoDiv">
-			<h1>${pfmInfoList.name }</h1>
-			<h5>관람시간 : ${pfmInfoList.runningTime }시간</h5>
+		<div class="posterInfoDiv" style="font-size: 15px;">
+			<strong style="font-size: 50px;">${pfmInfoList.name }</strong><br><br><br>
+			관람시간 : ${pfmInfoList.runningTime }시간<br>
+			공연장 : ${hallInfoList.hallName }<br>
+			연령제한 : 
+			<c:choose>
+				<c:when test="${pfmInfoList.ageGradeIdx eq 1}">
+					전체 관람<br>
+				</c:when>
+				<c:when test="${pfmInfoList.ageGradeIdx eq 2 }">
+					7세 이상<br>
+				</c:when>
+				<c:when test="${pfmInfoList.ageGradeIdx eq 3 }">
+					15세 이상<br>
+				</c:when>
+				<c:when test="${pfmInfoList.ageGradeIdx eq 4 }">
+					청소년 관람 불가<br>
+				</c:when>
+			</c:choose>
+			공연기간 : <fmt:formatDate value="${pfmInfoList.pfmStart }" pattern="yyyy.MM.dd"/> ~ 
+			<fmt:formatDate value="${pfmInfoList.pfmEnd }" pattern="yyyy.MM.dd"/><br>
+			장르 : 
+			<c:choose>
+				<c:when test="${pfmInfoList.genreIdx eq 1 }">
+					콘서트<br>
+				</c:when>
+				<c:when test="${pfmInfoList.genreIdx eq 2 }">
+					뮤지컬&연극<br>
+				</c:when>
+				<c:when test="${pfmInfoList.genreIdx eq 3 }">
+					가족&아동<br>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 	
@@ -504,7 +566,6 @@ ul.tabs li.current{
 				<c:forEach items="${reviewList }" var="list">
 				<div id="reviewContent">
 					${list.reviewContent }<br>
-					<small>평점 : ${list.reviewStar } / 별로 출력바꾸기</small>
 					
 					<div id="revdelnup">
 <%-- 					<c:if test="${sessionScope.email eq loginUser.email }"> --%>
@@ -523,11 +584,38 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="tab-5" class="tab-content">
-			455
+			 
+			 공연장 이름 및 구역 : ${hallInfoList.hallName }, ${hallInfoList.hallLoc }<br>
+			 전화번호 : ${hallInfoList.hallPhone }<br><br>
+			 
+			 <!-- GoogleMap API 연동 -->
+			 <!-- 지도가 붙을 위치 -->
+			 해당 공연장에 대한 주소로 나오게 변경해줘야함 / 임의로 잠실 종합운동장 위도, 경도 기재 후 테스트 중<br>
+			 <strong>공연장 위치</strong><br>
+       		 <div id="map"></div>
 		</div>
 		
 		<div id="tab-6" class="tab-content">
-			66666
+			<strong style="font-size: 20px;">티켓 수령 방법 안내</strong><br><br>
+
+			<strong>현장수령</strong><br>
+			- 예매번호가 포함되어 있는 예매확인서와 예매자의 실물 신분증(복사본 및 사진 불가) 을 매표소에 제출하시면 편리하게 티켓을 수령하실 수 있습니다.<br>
+			※ 공연별 정책이 상이하니 자세한 내용은 예매페이지 내 상세정보 확인 부탁드립니다.<br><br>
+			
+			<strong>배송</strong><br>
+			- 배송을 선택하신 경우 예매완료(결제익일) 기준 4~5일 이내에 예매 시 입력하신 주소로 배송됩니다. (주말/공휴일 제외한 영업일 기준)<br>
+			- 일괄배송의 경우 공연 별로 배송일자가 상이하며 지정된 배송일자 기준으로 배송이 시작됩니다. (지정된 배송일자는 상세정보 및 예매공지사항에서 확인할 수 있습니다.)<br>
+			- 지역 및 배송서비스 사정에 따라 배송사가 변경될 수 있으며, 배송일이 추가적으로 소요될 수 있습니다. (CJ대한통운, 우체국 외 1개 업체)<br><br>
+			
+			<strong>취소/환불 안내</strong><br>
+			- 취소마감시간 이후 또는 관람일 당일 예매하신 건에 대해서는 취소/변경/환불이 불가합니다.<br>
+			- 예매수수료는 예매 당일 밤 12시 이전까지 취소 시 환불 가능합니다.<br>
+			- 배송이 시작된 경우 취소마감시간 이전까지 멜론티켓 고객센터로 티켓을 반환해주셔야 환불이 가능하며, 도착한 일자 기준으로 취소수수료가 부과됩니다. <br>
+			(* 단, 반환된 티켓의 배송료는 환불되지 않으며 일괄배송 상품의 경우 취소에 대한 자세한 문의는 고객센터로 문의해 주시기 바랍니다.)<br>
+			- 예매취소 시점과 결제 시 사용하신 신용카드사의 환불 처리기준에 따라 취소금액의 환급방법과 환급일은 다소 차이가 있을 수 있습니다.<br>
+			- 티켓 부분 취소 시 신용카드 할부 결제는 티켓 예매 시점으로 적용됩니다. (무이자할부 행사기간이 지날 경우 혜택 받지 못하실 수 있으니 유의하시기 바랍니다. )<br>
+			- 취소일자에 따라 아래와 같이 취소수수료가 부과됩니다.<br>
+			(예매 후 7일 이내라도 취소시점이 관람일로부터 10일 이내라면 관람일 기준의 취소수수료가 부과됩니다.)<br>
 		</div>
 	</div>
 </div>

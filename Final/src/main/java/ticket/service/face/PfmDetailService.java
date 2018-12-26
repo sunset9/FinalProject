@@ -5,6 +5,7 @@ import java.util.List;
 import ticket.dto.Artist;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
+import ticket.dto.Hall;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
@@ -132,5 +133,12 @@ public interface PfmDetailService {
 	 * @작성자: 배수연
 	 */
 	public List<Artist> getCastInfo(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 공연장 정보 출력
+	 * @작성자: 배수연
+	 */
+	public Hall getHallInfoList(Performance pfm);
 
 }

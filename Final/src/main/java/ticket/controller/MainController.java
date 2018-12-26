@@ -227,21 +227,23 @@ public class MainController {
 		return map;
 	}
 	
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 티켓 오픈 검색 기능, 포스터 이름으로 검색 가능
+	 * @작성자: 배수연
+	 */
 	@RequestMapping(value="/ticket/opensearch", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> openSearch(
 			String opentext
-			, String searchKind
+			, HttpServletRequest req
 		) {
-		// 티켓 오픈에서 등록순, 오픈일순 정렬해주기
+		opentext = req.getParameter("opentext");
+		logger.info("opentext : " + opentext);
+
 		HashMap<String, Object> map = new HashMap<>();
 		
-		if(searchKind.equals("all")) {
-			// 전체 선택할 경우
-			
-		} else {
-			// 콘서트, 뮤지컬&연극, 가족&아동 선택할 경우 / 숫자 선택할 경우
-			
-		}
+		List<Performance> openPfmList = mainService.getopenSerchList(opentext);
+		map.put("openPfmList", openPfmList);
 		
 		return map;
 	}
