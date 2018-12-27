@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -21,6 +20,7 @@
 .h3, h3 {
     font-size: 15px;
     text-align: center;
+    display: block;
 }
 .glyphicon{
 	display: block;
@@ -33,29 +33,27 @@
     right: 9px;
     position: absolute;
 }
+.deleteBtn {
+	margin-top: 60px;
+}
 </style>
 
 <script>
 var i=0; 
-var cnt = ${cnt};
-$(document).ready(function() {
-$('div[class^=row]').on('click','div[id^=remove]',function(){
-	//$('div[id^=position]').remove();
-	var parent=$(this).closest('div[id^=position]');
-	parent.remove();
-	//position_36
-	//console.log(this);
+var cnt = ${cnt}; //DB에 저장된 포스터 갯수 (15개가 최대면 더이상 등록 안됨 )
+$(document).ready(function() { // jquery 시작  
+$('div[class^=row]').on('click','div[id^=remove]',function(){ //삭제 버튼을  누를때 
+	var parent=$(this).closest('div[id^=position]'); //해당 클릭된 포스터의 부모를 찾아서
+	//console.log("찍혀요?");
+	parent.remove(); //부모까지 삭제 
 });
 $('.row').on('click', 'div[id^=add_poster]',function() {//포스터 추가하기 버튼 클릭시
-		//console.log("떴다");
-  		$('#myModal').modal('show'); //모달창 보여주기 
+		$('#myModal').modal('show'); //모달창 보여주기 
   		ajax(); //ajax로 모달창에 그려줌(포스터 리스트)
-  		//console.log(cnt);
    });
 $('ul.pagination').on('click','a',function(){
-	console.log("눌렸습니다.");
-	console.log($(this).attr('url'));
-	ajax($(this).attr('url'));
+	console.log($(this).attr('url')); 
+	ajax($(this).attr('url'));//해당 URL(해당 페이지)로 이동되면 다시 ajax로 호출되서 그려줌
 });
 function ajax(url){
 	var paging=${paging};
@@ -70,13 +68,10 @@ function ajax(url){
 				var paging = d.paging;
 				$('#resultposter').html('');
 		  		list.forEach(function(item){
-		  			//console.log(item);
 				  	var input = $('<input type="radio" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
 				    var div =  $('<div class="thumbnail">');
 				  	var img = $('<img src="/resources/image/'+item.storedName+'">');
 				  	var h3 = $('<h3 style="text-align :center;">'+item.name+'</h3>');
-				  	
-				  	//$('#resultposter').append(input);
 				  	div.append(input);
 				  	div.append(img);
 				  	div.append(h3);	
@@ -86,7 +81,7 @@ function ajax(url){
 				
 		  		// 페이징 처리
 				var pagination = $('ul.pagination');
-				pagination.html('');
+				pagination.html(''); // 해당 페이지 초기화 
 
 				// 이전 페이지
 				var prePage = $('<li>');
@@ -103,7 +98,6 @@ function ajax(url){
 						li.addClass('active');
 					}
 					var a = $('<a url="/pagingcatecon?curPage='+i+'">'+i+'</a>');
-					
 					pagination.append(li.append(a));
 				}
 				
@@ -112,37 +106,35 @@ function ajax(url){
 				if(paging.curPage == paging.totalPage) nextPage.addClass('disabled');
 				var a = $('<a url="/pagingcatecon?curPage=' + (paging.curPage+1) + '" aria-label="Next">');
 				var span = $('<span aria-hidden="true">&raquo;</span>');
-				pagination.append(nextPage.append(a.append(span)));
-					
+				pagination.append(nextPage.append(a.append(span)));		
 			}
 			, error: function(){
 				console.log("검색 실패");
 			}
 		});
 }
-$('#searchbtn').click(function() {
-	console.log($('#searchposter').val());
+$('#searchbtn').click(function() { //검색버튼 클릭시
 	$.ajax({
 	type : "get",
-	url : "/searchposter",
+	url : "/searchposter", 
 	dataType : "json",
 	data : {
-	'searchPoster' : $('#searchposter').val()
+	'searchPoster' : $('#searchposter').val() //검색값을 ajax로 넘겨주고 받음 
 	},
 	success : function(data) {
-	$('#resultposter').html('');
-	data.forEach(function(poster) {
+	$('#resultposter').html(''); //결과값 초기화 
+	data.forEach(function(poster) { // 결과값 출력 
 	var resDiv = $('<div style="width: fit-content; float:left">');
 		resDiv.data('aIdx',poster.pfmIdx); // 커스텀 태그로 포스터 정보 삽입
 		resDiv.data('aName',poster.name); // 커스텀 태그로 포스터 정보 삽입
 		// 포스터 이미지 띄울 태그
-	var img = $('<img>');
-	var div=$('<div class="thumbnail">')
-	console.log(poster.storedName);
-	img.attr('src','/resources/image/'+ poster.storedName);
+	var img = $('<img>'); 
+	var div=$('<div class="thumbnail">') // 포스터 이미지 틀 
+// 	console.log(poster.storedName);
+	img.attr('src','/resources/image/'+ poster.storedName); //이미지 속성 
 		///resources/image/${item.storedName}
 		// 포스터 정보 띄울 태그 
-		var name = $('<p>');
+		var name = $('<p>'); //포스터 이름 
 		name.text(poster.name);
 		resDiv.append(div);
 		div.append(img);
@@ -151,8 +143,7 @@ $('#searchbtn').click(function() {
 						+ poster.pfmIdx
 						+ " name='radio_test' value="
 						+ poster.storedName+">");
-															
-																// 모달의 검색 결과 창에 결과 태그들 추가
+							// 모달의 검색 결과 창에 결과 태그들 추가
 						$('#resultposter').append(resDiv);
 
 						});
@@ -168,7 +159,7 @@ $('#myModal').find('.btn').on('click',function() {
 	var check=0;
 	var Selected = $('input:radio[name^="radio_test"]:checked').val();
 	//선택된 값 받아오기 
-		console.log(Selected);//선택된값 test 출력
+// 		console.log(Selected);//선택된값 test 출력
 	var start = $('div[id^="start"]');
 	var labelName = Selected; // 선택된 값 (이미지 이름임 stored_Name)
 	var selectedId = $('input[name^=radio_test]:checked').attr('id'); //pfmIdx가 ID로 설정되어있음 
@@ -191,8 +182,8 @@ $('#myModal').find('.btn').on('click',function() {
 		alert("포스터 최대 등록 개수는 15개입니다.");
 		return;
 	}
-	//console.log("찍히나/");
-	var div1 = $('<div class="col-md-2" id ="position_'+selectedId+'">');
+
+	var div1 = $('<div class="" style="width: 100%; height: 320px;" id ="position_'+selectedId+'">');
 	var div2 = $('<div class="thumbnail">');
 	var div3 = $('<div class="caption">');
 	var div4 = $('<div class="pfmIdx" id='+selectedId+'>');
@@ -210,12 +201,13 @@ $('#myModal').find('.btn').on('click',function() {
 	div2.append(div3);
 	div1.append(div2);
 	start.append(div1);
-	
+	//이전에 그렸던것들을 지움 
 	$('div[id^=draw]').remove();
-	//'div[class^=pfmIdx]'
-	var adddiv1=$('<div class="col-md-2" id="draw_'+selectedId+'">');
-	var adddiv2=$('<div class="thumbnail" style=" width: 100%; height:220px; text-align: center;" id="thum_'+selectedId+'">');
-	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 81px;">')
+	var adddiv1=$('<div class="" style="width: 100%; height: 320px;" id="draw_'+selectedId+'">');
+	//해당 이미지 
+	var adddiv2=$('<div class="thumbnail"style="width: 100%; height: 320px; text-align: center;" id="thum_'+selectedId+'">');
+	//포스터 추가 버튼 (div형태 )
+	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 0px;">')
 	adddiv2.append(adddiv3);
 	adddiv1.append(adddiv2);
 	start.append(adddiv1);
@@ -249,24 +241,19 @@ $('#myModal').find('.btn').on('click',function() {
 		
 // }); //endof function
 
-$('.caption').on('mouseover','.pfmIdx',function(){
-// 	console.log("test중입니다 찍힙니까?");
-	var pfmIdx =$(this).attr('id');
-	var cover = $('<div class="cover">');
-	console.log(pfmIdx+"ddddddddddddd");
-	var delBtn = $('<button type="button" class="deletePfmBtn" onclick="location.href=\'/admin/deletecatecon?pfmIdx='+pfmIdx+'\'">공연 삭제</button>');
-
-// 	var img =$('<img style="background-color: red; position: absolute;" width="103px;" height="150px;"/>');
-	cover.append(delBtn);	
-	$(this).prepend(cover);
+$('.caption').on('mouseover','.pfmIdx',function(){ //이미지 위에 마우스를 가져다 놓을때
+	var pfmIdx =$(this).attr('id'); // 해당 이미지의 (포스터) id 값 
+	var cover = $('<div class="cover">'); // 이미지 위에 올릴 DIV 
+	var delBtn = $('<button type="button" class="deleteBtn" onclick="location.href=\'/admin/deletecatecon?pfmIdx='+pfmIdx+'\'">공연 삭제</button>');
+	cover.append(delBtn);	//해당 DIV 에 버튼을 추가 
+	$(this).prepend(cover); // 마우스 올려둔 DIV 요소 앞에 cover div 추가 
 	
 });
 
 // 마우스 leave시
-$('.caption').on('mouseleave','.cover',function(){
-	//console.log("리브리브리브");
-	//console.log($(this));
-		$('div[class^=cover]').remove();
+$('.caption').on('mouseleave','.cover',function(){ 
+ 
+		$('div[class^=cover]').remove(); //cover div 를 찾아서 삭제 
 });
 }); // end ready
 </script>
@@ -283,24 +270,24 @@ $('.caption').on('mouseleave','.cover',function(){
 <%-- <%= CountManager.getCount() %> --%>
 <form action="/admin/registcatecon" method="post">
 <button id="save">최종저장</button>
-<div class="row" id ="start">
+<div class="row" id ="start" style="display: flex;">
 <c:forEach var="item" items="${posterList }">
-<div class="col-md-2">
+<div class="" style="width: 100%; height: 320px;">
 	<div class="thumbnail">
 		<div class="caption">
 			<div class="pfmIdx" id="${item.pfmIdx }">
 					<img src="/resources/image/${item.storedName }"> 
-					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a>
-								<h3>${item.name }, ${item.pfmIdx }</h3>
+<%-- 					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a> --%>
+								<h3>${item.name }, <!--  ${item.pfmIdx }--></h3>
 						</div>
 			</div>
 		</div>
 	</div>
 </c:forEach>
-		<div class="col-md-2" id="draw">
-			<div class="thumbnail" style=" width: 100%; height:220px; text-align: center;" id="thum">
+		<div class="" id="draw" style="width: 100%; height: 320px;">
+			<div class="thumbnail" style=" width: 100%; height: 320px; text-align: center;" id="thum">
 				<div class="glyphicon glyphicon-plus-sign" id="add_poster"
-				style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 81px;">
+				style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 0px;">
 			</div>
 		</div>
 		</div>		

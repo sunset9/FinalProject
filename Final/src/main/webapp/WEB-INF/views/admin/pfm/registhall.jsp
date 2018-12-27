@@ -1,9 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<jsp:include page="../layout/menu.jsp" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+
+<style>
+td{
+padding: 5px;
+}
+/* button div */
+#buttons {
+  padding-top: 50px;
+  text-align: center;
+}
+
+/* start da css for da buttons */
+.btn {
+  border-radius: 5px;
+  padding: 0px 13px;
+  font-size: 18px;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+
+.btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+.yellow {
+  background-color: #f1c40f;
+  box-shadow: 0px 5px 0px 0px #D8AB00;
+}
+
+.yellow:hover {
+  background-color: #FFDE29;
+}
+</style>
 
 <script>
 function openZipSearch() {
@@ -25,29 +62,35 @@ function openZipSearch() {
        reader.readAsDataURL(file[0]); // 파일을 읽는다, 배열이기 때문에 0 으로 접근
      }
 </script>
+<div>
+	<h1>공연장등록</h1>
+	<hr>
+</div>
+<div style="border: 1px solid black; display: inline-block; width:700px;">
 <form action="/admin/registhall" method="post" enctype="multipart/form-data">
-	<table>
+	<table style="margin: 30px;">
 		<tr>
-			<th>공연장이름</th>
-			<td><input type="text" name="hallName" id="hallName" /></td>
+			<th style="width: 10%;"><label>공연장이름</label></th>
+			<td><input style="width: 57%;" class="form-control" type="text" name="hallName" id="hallName" /></td>
 		</tr>
 		<tr>
-			<th>공연장 전화번호</th>
-			<td><input type="text" name="hallPhone" id="hallPhone" /></td>
+			<th style="width: 10%;"><label>공연장 전화번호</label></th>
+			<td><input style="width: 57%;" class="form-control" type="text" name="hallPhone" id="hallPhone" /></td>
 		</tr>
 		<tr>
-			<th>공연장사진</th>
-			<td><input type="file" name="file" id="file" accept="image/*"
+			<th style="width: 20%;"><label for="InputFile">공연장사진</label></th>
+			<td><input style="width: 70%;" class="form-control" type="file" name="file" id="file" accept="image/*"
 				onchange="fileInfo(this)" /> <div id="img_box">
-				<img src="/resources/image/poster_empty.png" width="143" height="201">
+				<img src="/resources/image/poster_empty.png" width="200px" height="101px">
 				</div></td>
 		</tr>
 		<tr>
-			<th>공연장주소</th>
-			<td><input type="text" name="hallLoc" id="hallLoc" /></td>
-			<td><button type="button" style="width:60px; height:32px;" onclick="openZipSearch()">검색</button><br>
+			<th style="width: 30%;"><label>공연장주소</label></th>
+			<td><input style="width: 90%;" class="form-control" type="text" name="hallLoc" id="hallLoc" />
+			<div style="text-align:center; display:inline-block; width:60px; height:32px;" onclick="openZipSearch()"><span class="glyphicon glyphicon-search"></span></div>
 			</td>
 		</tr>
 	</table>
-	<button>전송</button>
+	<button class="buttons btn yellow" style="margin-left: 500px; margin-bottom: 30px;">공연장등록</button>
 </form>
+</div>
