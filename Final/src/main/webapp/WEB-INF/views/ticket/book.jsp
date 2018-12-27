@@ -37,6 +37,7 @@ $(document).ready(function() {
 	var pfmSeatSection = new Array();
 	//배송유형코드 
 	//창띄울때 섹션 정보 가져오기
+	//오른쪽 큰 좌석 구역
 		$.ajax({
 			type:"get",
 			url:"/ticket/seatSection",
@@ -51,6 +52,45 @@ $(document).ready(function() {
 				$('svg').css("width","650px");
 				$('svg').css("height","530px");
 				loadSectionData();
+			
+			}
+		});	
+	
+	//왼쪽 작은 좌석 구역
+		$.ajax({
+			type:"get",
+			url:"/ticket/seatSection",
+			data:{
+				"pfmIdx":${param.pfmIdx },
+				  "hallIdx":${param.hallIdx }
+				  },
+			async: false,
+			dataType:"html",
+			success:function(res){
+				$('#selectedSeats_small').html(res);
+				
+				//사이즈조절
+				$('#selectedSeats_small #ez_canvas_zone').css("width","100px");
+				$('#selectedSeats_small #ez_canvas_zone').css("height","100px");
+				$('#selectedSeats_small #scroller').css("width","100px");
+				$('#selectedSeats_small #scroller').css("height","100px");
+				$('#selectedSeats_small svg').width('300px');
+				
+				loadSectionData();
+				$('#selectedSeats_small svg').on('click','path,rect',function(){
+					console.log($(this));
+					if(!$(this).hasClass('clicked')){
+						$(this).addClass('clicked');
+					}else {
+						$(this).removeClass('clicked');
+					}
+					
+					
+					
+					
+					
+				
+				});
 			
 			}
 		});	
@@ -75,7 +115,9 @@ $(document).ready(function() {
 					"appName":appName,
 					"hallIdx":${param.hallIdx},
 					"oriSecIdx":oriSecIdx,
-					"pfmIdx" :${param.pfmIdx}
+					"pfmIdx" :${param.pfmIdx},
+					"date" : "${param.date }",
+					"time" : "${param.time }"
 					},
 				dataType:"html",
 				success:function(res){
@@ -484,7 +526,8 @@ function getSeatInfo(){
 <!-- STEP 1. 좌석선택 -->
 <div id ="bookStep_1">
 	<div id = "selectedSeats" style="float: left; width: 650px; " ></div>
-	<div class="booking-details"style="float: right"></div>
+	<div id="booking-detail"style="float: right">
+	<div id="selectedSeats_small"></div> 
 	<h2>예매정보</h2>
 	<h3>
 	   선택된 좌석 (<span id="counter">0</span>):
@@ -499,6 +542,9 @@ function getSeatInfo(){
 <!-- 	<div id="legend"></div> -->
 	
 	<button onclick="seatAllView()">좌석도 전체보기</button>
+	
+	</div>
+	
 </div>
 <!-- STEP 1. 좌석선택 -->
 
