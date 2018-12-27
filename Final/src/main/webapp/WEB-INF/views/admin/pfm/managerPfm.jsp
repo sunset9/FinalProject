@@ -98,7 +98,7 @@ li.pfmInfo{
 .pfmInfo a{
  	display: block;
 /*     width: 180px; */
-    height: 320px;
+    height: 355px;
     padding: 20px 15px 15px;
     border: 1px solid #eee;
     
