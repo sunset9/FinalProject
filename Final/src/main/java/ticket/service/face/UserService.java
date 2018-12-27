@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
@@ -165,8 +166,12 @@ public interface UserService {
 	public PaymentInfo getPayment(String impUid);
 
 
-
-
+	/**
+	 * @최종수정일: 2018.12.27
+	 * @Method설명:예매 번호로 예매한 좌석 리스트 불러오기 
+	 * @작성자:홍나영
+	 */
+	public List<Seat> getSeat(String bookGroup);
 
 
 

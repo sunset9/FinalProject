@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import ticket.dto.PaymentInfo;
+import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
@@ -182,7 +183,7 @@ public interface UserDao {
 	 */
 	public int selectTotalSob(String search);
 
-  /*
+    /**
 	 * @최종수정일: 2018.12.24
 	 * @Method설명: 한 공연에 대한 예약 정보 얻어오기 userIdx, pfmIdx 매개변수로 사용
 	 * @작성자:홍나영
@@ -216,10 +217,17 @@ public interface UserDao {
 	
 	/**
 	 * @최종수정일: 2018.12.26
-	 * @Method설명:
+	 * @Method설명:마이페이지 공연 예매 상세에서 사용할 결제 정보 얻어오기 
 	 * @작성자:홍나영
 	 */
 	public PaymentInfo selectPaymentByimpUid(String impUid);
 	
+	
+	/**
+	 * @최종수정일: 2018.12.27
+	 * @Method설명: 예매 번호로 예매한 좌석 조회 
+	 * @작성자:홍나영
+	 */
+	public List<Seat> selectSeatByBookGroup(String bookGroup);
 
 }

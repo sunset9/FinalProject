@@ -20,6 +20,7 @@ import ticket.dao.face.UserDao;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
@@ -217,6 +218,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public PaymentInfo getPayment(String impUid) {
 		return userDao.selectPaymentByimpUid(impUid);
+	}
+
+
+	@Override
+	public List<Seat> getSeat(String bookGroup) {
+		
+		return userDao.selectSeatByBookGroup(bookGroup);
 	}
 
 
