@@ -414,10 +414,10 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping
-	public void bookCancel() {
-		
-	}
+//	@RequestMapping
+//	public void bookCancel() {
+//		
+//	}
 	
 	
 
