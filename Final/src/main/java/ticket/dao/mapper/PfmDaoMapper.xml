@@ -548,4 +548,25 @@
 			AND book_cate_idx = 2
 			AND trunc(create_date,'dd') BETWEEN #{startDate } AND #{endDate }
 	</select>
+	
+	<select id="selectTotalPfm" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM performance
+		WHERE name = #{value}
+	</select>
+	
+	<select id="selectNeweastPfm" parameterType="ticket.utils.Paging" resultMap="Performance">
+		SELECT * FROM (
+			SELECT ROWNUM no, PP.* FROM 
+			(SELECT p.*, pi.stored_name, h.hall_name
+			FROM performance p JOIN poster_info pi
+			ON p.pfm_idx = pi.pfm_idx JOIN hall h
+			ON p.hall_idx = h.hall_idx
+			<if test= "search != null">
+				WHERE p.name LIKE '%' || #{search} || '%'
+			</if>
+			ORDER BY p.create_date DESC) PP
+			)
+		WHERE no BETWEEN #{startNo} AND #{endNo}
+	</select>
+	
 </mapper>
