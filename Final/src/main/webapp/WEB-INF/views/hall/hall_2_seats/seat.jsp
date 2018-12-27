@@ -14,8 +14,8 @@
 <style type="text/css">
 /*예약좌석*/
 div.seatCharts-seat.unavailable {
-    background-color: #aaa3a3;
-    cursor: not-allowed;
+    background-color: #aaa3a3 !important;
+    cursor: not-allowed !important;
 }
 /*first-class*/
 div.seatCharts-seat.first-class{
@@ -77,7 +77,6 @@ div.seatCharts-cell {
       <div class="container">
          <div id="seat-map">
             <div class="front-indicator" >Screen</div>
-
          </div>
 <!--          <div class="booking-details"> -->
 <!--             <h2>Booking Details</h2> -->
@@ -201,22 +200,21 @@ div.seatCharts-cell {
                                     }
                                  });
 
-                     //this will handle "[cancel]" link clicks
+                     //[cancel] 클릭시 작동
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-                              sc.get($(this).parents('li:first').data('seatId')).click();
-                              var id = $(this).parents('li:first').attr("id");
-                              var ids = new Array();
-                              ids = id.split("-");
-                              $("li."+ids[2]).remove()
-//                               console.log(sc.get($(this).parents('li:first').data('seatId')));
-//                               $('#cart-item-' + this.settings.id).remove();
+                              sc.get($(this).parents('li:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
+                              var id = $(this).parents('li:first').attr("id"); //클릭된 li의 id 구하기
+                              var ids = new Array(); 
+                              ids = id.split("-"); 
+                              $("li."+ids[2]).remove() //클릭된 li삭제
                            });
 
                      //예약된 좌석 목록 
-                     //let's pretend some seats have already been booked
                      //div 아이디
-                     sc.get([ 'e_1_2', '4_1', '7_1', '7_2' ]).status('unavailable');
+//                      sc.get([ 'e_1_2', '4_1', '7_1', '7_2' ]).status('unavailable');
+      
+                     sc.get(${seatMap.bookedSeats }).status('unavailable');
                      
                   	var seatArr = new Array();
            		  	seatArr= $cart.text().split("[cancel]");
@@ -239,7 +237,7 @@ div.seatCharts-cell {
       function recalculateTotal(sc) {
          var total = 0;
 
-         //basically find every selected seat and sum its price
+         //현재 클릭된 좌석가격 총액 구하기
          sc.find('selected').each(function() {
             total += this.data().price;
             
@@ -251,11 +249,8 @@ div.seatCharts-cell {
       
       //좌석정보 보내기(좌석클릭시마다)
       $('.seatCharts-cell').on('click',function(){
-    	  
     	  if($(this).hasClass('selected')){
         	  var seat = $(this).attr('id');	
-    		  
-        	  
     		  var seatArr = new Array();
     		  seatArr= seat.split("_");
     		  
@@ -279,44 +274,12 @@ div.seatCharts-cell {
     		  
     	  } 
     	  
-		  
 		  var resultPay = $('#total').text();
 		  resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		  $('#ticketPriceTotal').text(resultPay);
-    	  
-
       
       });
-      
-      
-      function btnClick() {
-    	  $('#seat-map').find('.selected').each(function() {
-    		  
-    		  var seat = $(this).attr('id');
-    		  
-    		  var seatArr = new Array();
-    		  seatArr= seat.split("_");
-    		  
-    		  var str = $(this).attr('class');
-    		  var array = new Array(); 
-    		  array = str.split(" ");
-    		  console.log(); // 무슨좌석인지
-    		  console.log() ;
-    		  $(".nth2").append(array[2]+" 석" +array[3]+" 구역 "+" "+seatArr[1]+" 행 "+seatArr[2]+" 열"+" : "+${seatMap.pay});
-    		  $(".nth2").append('<br>');
-    	  });
-    	  
-//     	  console.log("가격: "+$('#total').text());
-		  
-		  var resultPay = $('#total').text();
-		  resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		  $('#ticketPriceTotal').text(resultPay);
-    	  
-	}
-      
-      
    </script>
    
-<!--    <button onclick="btnClick()">좌석정보 보내기</button> -->
 </body>
 </html>

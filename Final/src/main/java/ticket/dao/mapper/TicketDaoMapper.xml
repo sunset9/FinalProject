@@ -150,18 +150,21 @@
 </insert>
 
 <!-- 예매한 좌석 불러오기 -->
-<!-- <select id=""> -->
-<!-- 	SELECT -->
-<!-- 	    -->
-<!-- 	    seat.seat_row, -->
-<!-- 	    seat.seat_col -->
-<!-- 	FROM -->
-<!-- 	    book  -->
-<!-- 	    LEFT JOIN seat ON book.seat_idx = seat.seat_idx -->
-<!-- 	    LEFT JOIN originsection ON seat.ori_sec_idx = originsection.ori_sec_idx -->
-<!-- 	WHERE -->
-<!-- 	    book.pfm_idx = 1  -->
-<!-- 	    AND -->
-<!-- 	    originsection.sec_name = 'A' -->
-<!-- </select> -->
+<select id="selectBookedseats" resultMap="seatMap">
+	SELECT
+	    seat.seat_row,
+	    seat.seat_col
+	FROM
+	    book 
+	    LEFT JOIN seat ON book.seat_idx = seat.seat_idx
+	    LEFT JOIN originsection ON seat.ori_sec_idx = originsection.ori_sec_idx
+	WHERE
+	    book.pfm_idx = #{pfm.pfmIdx} 
+	    AND
+	    originsection.sec_name = #{secName}
+	    AND
+	    book.pfm_dbt_idx = #{dateByTimeIdx}
+</select>
+
+
 </mapper>

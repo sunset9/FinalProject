@@ -47,11 +47,12 @@ public interface TicketDao {
 	public void insertTicket(User user, Seat seat, Performance pfm);
 	
 	/**
+	 * @param dateByTimeIdx 
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 해당 공연의 예매한 좌석불러오기
 	 * @작성자:이상지
 	 */
-	public List<Seat> selectBookedseats(@Param(value="pfm")Performance pfm, @Param(value="secName")String secName);
+	public List<Seat> selectBookedseats(@Param(value="pfm")Performance pfm, @Param(value="secName")String secName, @Param(value="dateByTimeIdx") int dateByTimeIdx);
 	
 	
 	/**

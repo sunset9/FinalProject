@@ -275,12 +275,17 @@ public class TicketController {
 				, String appName
 				, Hall hall
 				, int oriSecIdx
-				, int pfmIdx) 
+				, int pfmIdx
+				, String date
+				, String time
+				) 
 	{
 		
+		//최대 행값과 열값 구하기
 		int maxRow = ticketService.maxRow(oriSecIdx);
 		int maxCol = ticketService.maxCol(oriSecIdx);
 		
+		//DB에 저장된 좌석모양 그대로 그려줄 좌석 리스트
 		String[][] seats = new String[maxRow+1][maxCol+1];
 		
 		List<Seat> seatList = new ArrayList<Seat>();
@@ -289,15 +294,17 @@ public class TicketController {
 		SectionInfo.put("hall", hall);
 		SectionInfo.put("oriSecIdx", oriSecIdx);
 		
+		//좌석 조회
 		seatList = ticketService.loadSeatsByHallIdx(SectionInfo);
 		
+		//좌석 모양 초기화
 		for(int i =1;i<=maxRow;i++) {
 			for(int j=1;j<=maxCol;j++) {
 				seats[i][j] = "_";
 			}
 		}
 		
-		
+		//읽어온 그대로 좌석 모양 그려주기
 		for(int i =0;i<seatList.size();i++) {
 			int row = seatList.get(i).getSeatRow();
 			int col = seatList.get(i).getSeatCol();
@@ -308,7 +315,6 @@ public class TicketController {
 		mav.setViewName("hall/hall_2_seats/seat");
 		
 		Map seatMap = new HashMap();
-		
 		
 		String seatStr = "";
 		
@@ -324,15 +330,46 @@ public class TicketController {
 				seatStr += "',";
 			}
 		}
-		
-		//예매된 좌석 불러오기
+
+		//예매된 좌석 담을 list
 		List<Seat> bookedSeat = new ArrayList<Seat>();
 		
 		Performance pfm = new Performance();
 		pfm.setPfmIdx(pfmIdx);
 		
-		bookedSeat = ticketService.loadBookedSeats(pfm, secName);
+		//pfm_dbt_idx 구하기
+		int dateByTimeIdx = ticketService.loadDayByTimeIdx(pfmIdx, date, time); 
+
+		//예약된 좌석 불러오기
+		bookedSeat = ticketService.loadBookedSeats(pfm, secName, dateByTimeIdx); //예약된좌석 불러오기
 		
+		//seatMap에 뿌려줄 형태로 바꿈 ['구역_행_열','구역_행_열'...]
+		String bookedSeatArr[] = new String[bookedSeat.size()];
+		String bookedstr = null;
+		
+		if(bookedSeat.size() != 0) {
+			for(int i=0;i<bookedSeat.size();i++) {
+				
+				bookedSeatArr[i] = secName+"_"+bookedSeat.get(i).getSeatRow() + "_"+ bookedSeat.get(i).getSeatCol();
+				
+				if(i == 0) {
+					bookedstr = "['"+bookedSeatArr[i]+"'"+","; 
+				}
+				else if(i != bookedSeat.size()-1) {
+					bookedstr += "'"+bookedSeatArr[i]+"'"+","; 
+					
+				}else {
+					bookedstr += "'"+bookedSeatArr[i]+"']"; 
+				}
+			}
+		}else {
+			bookedstr = "['f_f_f']";
+		}
+		
+		//------------------------------------------------
+	
+		
+		seatMap.put("bookedSeats", bookedstr); //-> 예약된 좌석 
 		seatMap.put("seats", seatStr);
 		seatMap.put("color", color);
 		seatMap.put("secName", secName);
@@ -345,16 +382,6 @@ public class TicketController {
 		
 		
 	}
-	
-	/**
-	 * @최종수정일: 2018.12.13
-	 * @Method설명: 빈좌석 불러오기
-	 * @작성자:이상지
-	 */
-//	@RequestMapping(value="/hall/hall_2_seats/seat", method=RequestMethod.GET)
-//	public void loadSeatView() {
-//		
-//	}
 	
 	/**
 	 * @최종수정일: 2018.12.12

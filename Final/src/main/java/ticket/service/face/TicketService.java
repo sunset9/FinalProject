@@ -43,11 +43,12 @@ public interface TicketService {
 	
 	
 	/**
+	 * @param dateByTimeIdx 
 	 * @최종수정일: 2018.12.05
 	 * @Method설명:해당 공연의 예매한 좌석불러오기
 	 * @작성자:이상지
 	 */
-	public List<Seat> loadBookedSeats(Performance prm, String secName);
+	public List<Seat> loadBookedSeats(Performance prm, String secName, int dateByTimeIdx);
 
 	/**
 	 * @최종수정일: 2018.12.05

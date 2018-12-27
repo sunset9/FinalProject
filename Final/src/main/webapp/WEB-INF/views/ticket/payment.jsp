@@ -5,12 +5,12 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<!-- 아임포트 스크립트 이게 없으면 실행이 안됨.. -->
  <link rel="stylesheet" href="/resources/css/onestop.css" type="text/css" /> 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>    
+<!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+<!-- <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>     -->
 <!-- 다음 주소 API  -->
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <!-- jQueyr 모달창 script -->
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
 <style>
 .wrap_ticket_info {

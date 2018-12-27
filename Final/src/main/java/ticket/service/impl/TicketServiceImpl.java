@@ -37,9 +37,9 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public List<Seat> loadBookedSeats(Performance prm, String secName) {
+	public List<Seat> loadBookedSeats(Performance prm, String secName, int dateByTimeIdx) {
 		// TODO Auto-generated method stub
-		return ticketDao.selectBookedseats(prm,secName);
+		return ticketDao.selectBookedseats(prm,secName, dateByTimeIdx);
 	}
 
 	@Override
