@@ -76,19 +76,16 @@
 }
 </style>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-function ajax(url){
-	var paging = ${paging};
-	if(!url) url = "/pagingcatemu"
-		$.ajax({
-			url: url
-			, method : "GET"
-			, dataType: "json"
-			, data: {"curPa"}
-		})
-}
-});
+function enterkey() {
+	if (window.event.keyCode == 13) {
+		console.log('엔터키 클릭');
+		
+   }
+};
+
+function clickPfm(np){
+	console.log('dd'+np);
+};
 </script>
 <body>
 
@@ -100,7 +97,7 @@ function ajax(url){
 <div class="mainbannerRG">
 	<form action="">
 	<div>
-		공연 <input type="search" id="mainBanModalBtn">
+		공연 <a data-toggle="modal" href="#myModal"><input type="search" id="mainBanModalBtn"></a>
 		<div id="mbdiv mbPfmInfo">
 		[ 여기에 공연 이름, 시작일~종료일, 경기장이름 표시됨 ]		
 		</div>
@@ -121,129 +118,42 @@ function ajax(url){
 	</form>
 </div>
 
-<!-- The Modal -->
-<div id="mainBanModal" class="mainBanModal">
-  <!-- Modal content -->
-  <div class="mainBanModalContent">
-    <div class="mainBanModalClose">&times;</div>
-    <div class="mainBanSearch">
-	    	<input type="search" name="mainBanSearch">
-	    	<hr>
-	    	<div class="sp1">최신순</div> <div class="sp2">가나다순</div><br>
-	    	<div class="newpfmListBox">
-		    	<c:forEach items="${NewPfmList}" var="np">
-		    		<div class="np">
-		    			<div><img src="/resources/image/${np.storedName}" style="width: 140px; height: 198px;"></div>
-		    			<div>${np.name }</div>
-		    			<div><fmt:formatDate value="${np.pfmStart }" pattern="yyyy.MM.dd" />
-		    			 ~ <fmt:formatDate value="${np.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-		    			<div>${np.hallName }</div>
-		    		</div>
-		    	</c:forEach>
-	    	</div>
-	    	<button>확인</button>
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">메인 배너 공연 검색</h4>
+        </div>
+        <div class="modal-body">
+          <div class="ordering">
+          	<p>최신순</p> <p>가나다순</p>
+          </div>
+          <div class="forEach">
+          <c:forEach items="${NewPfmList }" var="np">
+          	<div class="np">
+			    <input type="radio" name="pfmCheck" onclick="clickPfm('${np}');">   
+			    <div><img src="/resources/image/${np.storedName}" style="width: 140px; height: 198px;"></div>
+			    <div>${np.name }</div>
+			    <div><fmt:formatDate value="${np.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${np.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${np.hallName }</div>
+		    </div>
+          </c:forEach>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
     </div>
-    <div id="pagingBox" class="text-center">
-  <ul class="pagination pagination-sm">
-  	<!-- 처음으로 가기 -->
-  	<c:if test="${paging.curPage ne 1 }">
-    <li>
-      <a href="/admin/userlist?userSearchData=${paging.search }" aria-label="First">
-        <span aria-hidden="true">&larr;처음</span>
-      </a>
-    </li>
-	</c:if>
-	
-	
-	
-	  
-  
-  	<!-- 이전 페이지 -->
-  	<!-- 첫 페이지라면 버튼 동작 안 되게 만들기 -->
-  	<c:if test="${paging.curPage eq 1 }">
-    <li class="disabled">
-        <span aria-hidden="true">&laquo;</span>
-    </li>
-    </c:if>
-    
-  	<c:if test="${paging.curPage ne 1 }">
-    <li>
-      <a href="/admin/userlist?curPage=${paging.curPage-1 }&userSearchData=${paging.search }" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    </c:if>
-    
-    
-    
-    
-    
-    <!-- 페이징 리스트 -->
-    <c:forEach
-     begin="${paging.startPage }"
-     end="${paging.endPage }"
-     var="i">
-
-		<!-- 현재 보고 있는 페이지번호만 강조해주기 -->
-		<c:if test="${paging.curPage eq i}">          
-    	  <li class="active"><a href="/admin/userlist?curPage=${i }&userSearchData=${paging.search }">${i }</a></li>
-    	</c:if>
-		<c:if test="${paging.curPage ne i}">          
-    	  <li><a href="/admin/userlist?curPage=${i }&userSearchData=${paging.search }">${i }</a></li>
-    	</c:if>
-    </c:forEach>
-
-
-
-
-    
-    <!-- 다음 페이지 -->
-  	<c:if test="${paging.curPage eq paging.totalPage }">
-    <li class="disabled">
-        <span aria-hidden="true">&raquo;</span>
-    </li>
-	</c:if>
-	
-  	<c:if test="${paging.curPage ne paging.totalPage }">
-    <li>
-      <a href="/admin/userlist?curPage=${paging.curPage+1 }&userSearchData=${paging.search }" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-    </c:if>
-  </ul>
- </div><br><br>
-  
-  
   </div>
+
+
 </div>
-
-<script>
-// Get the modal
-var mainBanModal = document.getElementById('mainBanModal');
-
-// Get the button that opens the modal
-var mainBanModalBtn = document.getElementById("mainBanModalBtn");
-
-// Get the <span> element that closes the modal
-var mainBanModalClose = document.getElementsByClassName("mainBanModalClose")[0];
-
-// When the user clicks the button, open the modal 
-mainBanModalBtn.onclick = function() {
-	mainBanModal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-mainBanModalClose.onclick = function() {
-	mainBanModal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == mainBanModal) {
-	  mainBanModal.style.display = "none";
-  }
-}
-</script>
 </body>
 </html>

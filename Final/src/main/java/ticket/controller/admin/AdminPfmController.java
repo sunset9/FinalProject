@@ -664,6 +664,8 @@ public class AdminPfmController {
 		//가나다순 공연목록 가져오기
 		//List<Performance> orderedPfmList = pService.getOrderedPfmList();
 		
+		//
+		
 		model.addAttribute("NewPfmList", NewPfmList);
 		model.addAttribute("paging", paging);
 		
@@ -674,6 +676,12 @@ public class AdminPfmController {
 	public String registMBannerProc() {
 	
 		return "admin/pfm/registMBanner";
+	}
+	
+	@RequestMapping(value="/admin/testJ", method=RequestMethod.GET)
+	public String testJiEun() {
+		
+		return "admin/pfm/testModal_JiEun";
 	}
 	
 	/**

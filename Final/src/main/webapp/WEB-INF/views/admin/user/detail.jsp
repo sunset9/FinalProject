@@ -2,11 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<jsp:include page="../layout/menu.jsp" />
+
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 function cancelBook(bookGroup) {
@@ -69,7 +66,7 @@ table, td, th, tr {border: 1px solid black;}
 </style>
 </head>
 <body>
-<div>
+<div style="display: flow-root;">
 <h3>회원 상세</h3>
 <hr>
 
@@ -87,7 +84,7 @@ ${curUser.email }님의 예매현황<br>
 
 </div>
 <hr>
-<div>
+<div style="width: 1100px;">
 예매현황칸<br><br>
 <table class="table table-hover table-striped table-condensed">
 <thead>
@@ -183,5 +180,7 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+</div> 
 </body>
 </html>
