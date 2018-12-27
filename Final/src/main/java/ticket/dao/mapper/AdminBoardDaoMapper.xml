@@ -19,7 +19,7 @@
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
   	select * from ( 
   		select rownum rnum, B.* from (
-  			select * from notice
+  			select * from notice order by notice_idx desc
   		) B
   		order by notice_idx desc
   	) R
@@ -30,7 +30,7 @@
   <select id="selectCntAll" resultType="int">
   	select count(*) cut from(
   		select * from notice 
-  		order by notice_idx desc
+  		
   	) cnt
   </select>
   

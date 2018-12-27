@@ -56,7 +56,7 @@ $(document).ready(function(){
 <tr>   
 	<td>이전글</td>   
 	<td>분류(서비스 점검)</td> 
-	<td> 제목(제목에만 링크)</td> 
+	<td> 제목(제목에만 링크)</td> 	
 	<td>작성일 </td>
 </tr>
 </table>
