@@ -36,6 +36,10 @@
   	<result column="seat_idx" property="seatIdx"/>
   	<result column="sec_pay" property="secPay"/>
   	<result column="paid_amount" property="paidAmount"/>
+  	<result column="pay_method" property="payMethod"/>
+  	<result column="create_date" property="createDate"/>
+  	<result column="user_idx" property="userIdx"/>
+  	<result column="buyer_name" property="buyerName"/>
   </resultMap>
   
   <resultMap type="ticket.dto.Shipment" id="Shipment">
@@ -54,6 +58,15 @@
   	<result column="ori_sec_name" property="oriSecName"/>
   	<result column="create_date" property="createDate"/>
   	
+  </resultMap>
+  
+  <resultMap type="ticket.dto.Seat" id="Seat">
+  	<result column="seat_idx" property="seatIdx"/>
+  	<result column="seat_row" property="seatRow"/>
+  	<result column="seat_col" property="seatCol"/>
+  	<result column="ori_sec_idx" property="oriSecIdx"/>
+  	<result column="hall_idx" property="hallIdx"/>
+  	<result column="seat_floor" property="seatFloor"/>
   </resultMap>
   
   <sql id="selectCnt">
@@ -339,7 +352,7 @@
     SELECT TEST.*, COUNT(state) as ea FROM (
             SELECT
                 trunc(b.create_date, 'dd') create_date, p.pfm_idx, p.name, p.pfm_start, p.pfm_end, b.book_group, trunc(b.cancel_date, 'dd') cancel_date,
-                bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time
+                bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time, b.imp_uid
             FROM
                 book b 
                 JOIN performance p ON b.pfm_idx = p.pfm_idx
@@ -352,7 +365,7 @@
         ) TEST
 		GROUP BY
 		    create_date, name, pfm_start, pfm_end, book_group, cancel_date,
-		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx
+		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx, imp_uid
 		ORDER BY create_date
 
 	</select>
@@ -366,18 +379,49 @@
 	</select>
 	
 	<select id="selectSeat" parameterType="String" resultMap="SeatSection">
-		SELECT DISTINCT sec_pay, app_sec 
-		FROM seatsection
-		WHERE ori_sec_idx = (
-		    SELECT ori_sec_idx 
-		    FROM seat 
-		    WHERE seat_idx =(
-		        SELECT DISTINCT seat_idx 
-		        FROM book
-		        WHERE book_group= #{bookGroup }
-		        )
-        )
+		SELECT
+		distinct app_sec, sec_pay
+		from seatsection A
+		JOIN originsection B
+		 ON A.ori_sec_idx = B.ori_sec_idx
+		JOIN SEAT C
+		 ON b.ori_sec_idx = c.ori_sec_idx
+		JOIN BOOK D
+		 ON D.seat_idx = C.seat_idx
+		WHERE d.book_group = #{bookGroup} 
+		
 	</select>
+	
+	<select id="selectPaymentByimpUid" parameterType="String" resultMap="PaymentInfoMap">
+		SELECT * 
+		FROM payment 
+		WHERE imp_uid = #{impUid }
+	
+	</select>
+	
+	
+	<select id="selectSeatByBookGroup" parameterType="String" resultMap="Seat">
+		SELECT * 
+		FROM seat 
+		WHERE seat_idx 
+		IN( ( SELECT seat_idx 
+				FROM book 
+				WHERE book_group= #{bookGroup} ) )
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
   </mapper>
   
   

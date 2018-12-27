@@ -79,7 +79,39 @@ $(document).ready(function() {
 	
 	$('#totalFee').text(totalFee.toString().replace(regexp, ','));
 	
-});
+	
+	// 예매좌석중에 취소하고싶은 좌석 체크박스에 체크하고 삭제요청 버튼 누를 때 메소드
+	$('#bookCancel').click(function() {
+		var $checkboxes = $("input:checkbox[name='cancelCheck']:checked");
+		
+		// 체크된 대상들 map으로 만들고 map을 문자열로 만들기
+		var map = $checkboxes.map(function() {
+			return $(this).val();
+		}); // map end
+		
+		var names = map.get().join(",");
+		
+		console.log( "map:" + map );	// 맵
+		console.log( "map->array : " + map.get() );	// 맵->배열
+		console.log( "array tostring : " + map.get().join(",") ); // toString
+
+		// 전송폼 
+		var $form = $("<form>")
+			.attr("action", "/user/bookcancel")
+			.attr("method", "post")
+			.append(
+				$("<input>")
+					.attr("type", "hidden")
+					.attr("name", "names")
+					.attr("value", names)
+			);
+		$(document.body).append($form);
+		$form.submit();
+		
+	}); // end click 
+	
+}); // end ready
+
 </script>
 
 <h1>예약 상세</h1>
@@ -213,12 +245,80 @@ $(document).ready(function() {
 
 <!-- //구매내역 -->
 
-<!-- 결제내역 -->
 
+<!-- 결제내역 -->
+<h2>결제내역</h2>
+<div>
+<table>
+	<tr>
+		<td>
+		<dl>
+			<dt>결제방법</dt>
+			<dd>카드</dd>
+		</dl>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<dl>
+			<dt>거래자명</dt>
+			<dd>${payment.buyerName }</dd>
+		</dl>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<dl>
+			<dt>결제 금액</dt>
+			<dd>${payment.paidAmount }</dd>
+		</dl>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<dl>
+			<dt>결제 날짜</dt>
+			<dd>
+			<fmt:formatDate value="${payment.createDate }" pattern="yyyy-MM-dd"/>
+			(<fmt:formatDate value="${payment.createDate }" pattern="E"/>)
+			</dd>
+		</dl>
+		</td>
+	</tr>
+
+</table>
+</div>
 
 <!-- //결제내역 -->
 
 <!-- 좌석정보  -->
+<h2>좌석정보</h2>
+<div><table>
+<tr>
+<th>좌석등급</th>
+<th>좌석번호</th>
+<th>좌석 구매 가격</th>
+<th>예매/취소</th>
+</tr>
+<c:forEach items="${seatList }" var="s">
+<tr>
+	<td>${ss.appSec }</td>
+	<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
+	<td>${ss.secPay }</td>
+	<td>${sob.state }
+		<input type="checkbox" value="취소 가능" name="cancelCheck"/>
+	</td>
+</tr>
+</c:forEach>
+
+</table>
+
+	<div>
+		<button id = "bookCancel">취소 요청</button>
+	</div>
+
+</div>
+
 <!-- //좌석정보 -->
 
 

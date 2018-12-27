@@ -29,6 +29,7 @@ import ticket.dto.MyChoice;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
+import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
@@ -397,15 +398,27 @@ public class UserController {
 		
 		// 결제 내역 (결제 방법, 결제 날짜, 거래자, 금액) 
 		PaymentInfo payment = new PaymentInfo();
+		logger.info("impuid : "+sob.getImpUid());
 		payment = userService.getPayment(sob.getImpUid());
+		logger.info("결제정보:"+payment);
+		model.addAttribute("payment", payment);
 		
 		// 좌석 정보 
-		
-		
-
-
+		// 1. 좌석 등급 -- 구매 내역(ss)에서 보낸값 사용
+		// 2. 좌석 번호 
+		List<Seat> seatList = userService.getSeat(bookGroup);
+		logger.info("좌석정보:" +seatList);
+		model.addAttribute("seatList", seatList);
+		// 3. 좌석 구매 가격 -- 구매 내역(ss)에서 보낸값 사용
+		// 4. 취소버튼 예매 상태 -- 예매한 공연 상세(sob)에서 보낸값 사용
 		
 	}
+	
+	@RequestMapping
+	public void bookCancel() {
+		
+	}
+	
 	
 
 	@RequestMapping(value = "/mypage/mychoice", method = RequestMethod.GET)
