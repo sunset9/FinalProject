@@ -8,6 +8,7 @@ import ticket.dto.Artist;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
@@ -154,5 +155,12 @@ public interface PfmDetailDao {
 	 * @작성자: 배수연
 	 */
 	public Hall selectHallInfoList(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 해당 공연장에 대한 공연장 이미지 출력
+	 * @작성자: 배수연
+	 */
+	public HallFile selectHallImg(Performance pfm);
 	
 }

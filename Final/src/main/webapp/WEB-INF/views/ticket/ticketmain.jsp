@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -41,6 +48,50 @@
 		    $(this).addClass('current');
 		    $("#"+tab_id).addClass('current');
 		});
+		
+		// 맞춤 공연
+		var userIdx = ${loginUser.userIdx };
+		console.log("loginUserIdx : " + userIdx);
+		
+		$.ajax({
+			type:"get",
+			url:"/ticket/fit",
+			data:{
+				"userIdx" : userIdx
+			},
+			dataType:"json",
+			success:function(d){
+				console.log('성공');
+				
+				insertFitPfm(d.fitPfmList);
+			}
+			, error:function(e) {
+				console.log('실패');
+			}
+		});
+		
+		// 맞춤 공연
+		$('.bxslider').bxSlider({
+		  infiniteLoop: false,
+		  hideControlOnEnd: true
+		});
+		
+		function insertFitPfm(fitPfmList) {
+			
+			$('.fitPfmbox').html('');
+			fitPfmList.forEach(function(list) {
+
+// 				var ul = $('<ul class="bxslider">');
+				
+// 				var li = $('<li>');
+				var img = $('<img id="fitImg" src="/resources/image/' + list.originName + '" />');
+
+// 				li.append(img);
+// 				ul.append(li);
+				
+				$('.fitPfmbox').append(img);
+			});
+		}
 	});
 </script>
  
@@ -69,6 +120,11 @@
 #mainbanner li img {
 	max-width: 100%;
 	height: 350px;
+}
+
+#fitImg {
+	width: 50px;
+	height: 100px;
 }
 
 /* 탭 메뉴 */
@@ -174,9 +230,11 @@ div>h4 {
 <div id="mainbannerbox">
 	<ul id="mainbanner">
 		<c:forEach items="${bannerList }" var="list">
-			<li><a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+			<li>
+			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<img src="/resources/image/${list.bannerImgOri}" />
-			</a></li>
+			</a>
+			</li>
 		</c:forEach>
 	</ul>
 </div>
@@ -255,7 +313,11 @@ div>h4 {
 	<h4>맞춤 공연</h4>
 	<div>
 		<c:if test="${login }">
-			맞춤공연 추가(슬라이드!)
+			<div class="fitPfmbox">
+				<ul class="bxslider">
+				 <li class=""></li>
+				</ul>
+			</div>
 		</c:if>
 		
 		<c:if test="${not login }">

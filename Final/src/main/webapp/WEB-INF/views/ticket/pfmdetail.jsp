@@ -3,10 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfQ1Ll1MjoD573_TufnboXLa93NqnHtU&callback=initMap">
-</script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11b0d7e1cbaf8eb3510561bbddb85ae9&libraries=services"></script>
+				
 <script type="text/javascript">
 $(document).ready(function() {
 	console.log(1);	
@@ -49,7 +47,7 @@ $(document).ready(function() {
 		var userIdx = ${loginUser.userIdx }
 		
 		// 삭제할 기대평 idx
-// 		var expIdx = $('#expDeleteBtn').val();
+		var expIdx = $('#expDeleteBtn').val();
 		
 		console.log('선택 기대평 idx : ' + expIdx);
 // 		console.log('게시글 번호 : ' + pfmIdx);
@@ -228,20 +226,6 @@ $(document).ready(function() {
 	
 });
 
-// 구글 맵
-function initMap() {
-	var uluru = {lat: 37.515046, lng: 127.073121};
-	
-	var map = new google.maps.Map(document.getElementById('map'), {
-	zoom: 15,
-	center: uluru
-	});
-	
-	var marker = new google.maps.Marker({
-	position: uluru,
-	map: map
-	});
-}
 </script>
 
 <style>
@@ -390,6 +374,29 @@ ul.tabs li.current{
 #map {
 	height: 400px;
 	width: 100%;
+}
+
+#hallImg {
+/* 	background-color: red;  */
+	float: left;
+	text-align: center;
+	margin-left: 40px;
+	position: static;
+}
+
+#hallInfo {
+/*  	background-color: blue;  */
+	width: auto;
+	height: 200px;
+	padding-top: 50px;
+	padding-left: 10px;
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+#hallmap {
+	margin-top: 20px;
+/* 	background-color: yellow; */
 }
 </style>
 
@@ -583,15 +590,72 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="tab-5" class="tab-content">
-			 
+		<div>
+			<div id="hallImg">
+				 <img style="width: 200px; height: 200px;" src="/resources/image/${hallImg.storedName }">
+			</div>
+			<div id="hallInfo">
 			 공연장 이름 및 구역 : ${hallInfoList.hallName }, ${hallInfoList.hallLoc }<br>
-			 전화번호 : ${hallInfoList.hallPhone }<br><br>
+			 전화번호 : ${hallInfoList.hallPhone }
+			</div>
 			 
 			 <!-- GoogleMap API 연동 -->
 			 <!-- 지도가 붙을 위치 -->
-			 해당 공연장에 대한 주소로 나오게 변경해줘야함 / 임의로 잠실 종합운동장 위도, 경도 기재 후 테스트 중<br>
-			 <strong>공연장 위치</strong><br>
-       		 <div id="map"></div>
+			 <div id="hallmap">
+				<strong>공연장 위치</strong><br>
+	       		<div id="map"></div>
+	       		
+	       		<!-- 위에 설정 시 지도 확인되지 않아 여기에 설정 -->
+	       		<script>
+	       		// 현재 등록되어있는 공연장의 주소지를 불러옴
+	       		var hallAddress = '${hallInfoList.hallLoc}';
+	       		console.log('등록된 공연장 주소지 : ' + hallAddress);
+	       		
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				    mapOption = {
+				        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				        // 잠실 종합 운동장 좌표  : 37.515890, 127.072669
+				        //	설정해도 중심으로 오지않음..
+				        
+				        level: 3 // 지도의 확대 레벨
+				    };  
+				
+				// 지도를 생성합니다    
+				var map = new daum.maps.Map(mapContainer, mapOption); 
+				
+				// 주소-좌표 변환 객체를 생성합니다
+				var geocoder = new daum.maps.services.Geocoder();
+				
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch(hallAddress, function(result, status) {
+				
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === daum.maps.services.Status.OK) {
+				
+				        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+				
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new daum.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+				        
+				        var hallName = '${hallInfoList.hallName}';
+				        console.log('등록된 공연장 이름 : ' + hallName);
+				
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new daum.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + hallName + '</div>'
+				        });
+				        infowindow.open(map, marker);
+				
+				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+				    } 
+				});    
+				</script>
+       		 </div>
+        </div>
 		</div>
 		
 		<div id="tab-6" class="tab-content">

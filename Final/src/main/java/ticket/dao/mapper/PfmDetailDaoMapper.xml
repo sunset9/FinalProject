@@ -129,7 +129,6 @@
 		    , r.pfmIdx
 		    , r.userIdx
 		    , r.reviewContent
-<!--             , r.reviewStar -->
 		    , r.createDate
 		FROM(
 		    SELECT
@@ -187,6 +186,18 @@
 		FROM performance p, hall h
 		WHERE pfm_idx=${pfmIdx}
 		    AND p.hall_idx = h.hall_idx
+	</select>
+	
+	<select id="selectHallImg" parameterType="ticket.dto.Performance"  resultType="ticket.dto.HallFile">
+		SELECT
+		    hf.stored_name storedName
+		FROM hall h, hall_file hf, (
+		    SELECT * FROM performance
+		    WHERE pfm_idx=#{pfmIdx}
+		) p
+		WHERE h.hall_idx = hf.hall_idx
+		AND hf.hall_idx = p.hall_idx
+		AND p.hall_idx = h.hall_idx
 	</select>
 	
 </mapper>

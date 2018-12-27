@@ -3,12 +3,12 @@ package ticket.service.face;
 import java.util.Date;
 import java.util.List;
 
+import ticket.dto.Artist;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
-import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
-import ticket.utils.Paging;
 
 public interface MainService {
 	/**
@@ -155,10 +155,10 @@ public interface MainService {
 
 	/**
 	 * 최종수정일: 2018.12.26
-	 * @Method설명: 검색 - 통합검색
+	 * @Method설명: 맞춤 공연 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getSearchAllList(String searchKey);
+	public List<Poster> getFitPfmList(String userIdx);
 
 	/**
 	 * 최종수정일: 2018.12.26
@@ -166,5 +166,54 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public List<Performance> getopenSerchList(String opentext);
+
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 검색 - 공연 검색
+	 * @작성자: 배수연
+	 */
+	public List<Poster> getSearchPfmList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 검색 - 아티스트 검색
+	 * @작성자: 배수연
+	 */
+	public List<Artist> getSearchArtList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 검색 - 공연장 검색
+	 * @작성자: 배수연
+	 */
+	public List<HallFile> getSearchHallList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 검색 - 공연장 이름 출력
+	 * @작성자: 배수연
+	 */
+	public List<Hall> getSearchHallNameList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 조회된 총 공연 수 출력
+	 * @작성자: 배수연
+	 */
+	public int getPfmCount(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 조회된 총 아티스트 수 출력
+	 * @작성자: 배수연
+	 */
+	public int getArtCount(String top_searchh);
+	
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 조회된 총 공연장 수 출력
+	 * @작성자: 배수연
+	 */
+	public int getHallCount(String top_searchh);
 
 }

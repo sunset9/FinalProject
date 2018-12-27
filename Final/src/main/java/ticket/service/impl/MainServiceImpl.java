@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ticket.dao.face.MainDao;
+import ticket.dto.Artist;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
@@ -259,13 +261,54 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getSearchAllList(String searchKey) {
-		return mainDao.selectSearchAllList(searchKey);
+	public List<Performance> getopenSerchList(String opentext) {
+		return mainDao.selectOpenSearchList(opentext);
 	}
 
 	@Override
-	public List<Performance> getopenSerchList(String opentext) {
-		return mainDao.selectOpenSearchList(opentext);
+	public List<Poster> getFitPfmList(String userIdx) {
+		return mainDao.selectFitPfmList(userIdx);
+	}
+
+	@Override
+	public List<Poster> getSearchPfmList(String top_searchh) {
+		return mainDao.selectSearchPfmList(top_searchh);
+	}
+
+	@Override
+	public List<Artist> getSearchArtList(String top_searchh) {
+		return mainDao.selectSearchArtList(top_searchh);
+	}
+
+	@Override
+	public List<HallFile> getSearchHallList(String top_searchh) {
+		return mainDao.selectSearchHallList(top_searchh);
+	}
+
+	@Override
+	public List<Hall> getSearchHallNameList(String top_searchh) {
+		return mainDao.selectSearchHallNameList(top_searchh);
+	}
+
+	@Override
+	public int getPfmCount(String top_searchh) {
+		int cnt = mainDao.selectPfmCount(top_searchh);
+		
+		return cnt;
+	}
+
+	@Override
+	public int getArtCount(String top_searchh) {
+		int cnt = mainDao.selectArtCount(top_searchh);
+		
+		return cnt;
+	}
+
+	@Override
+	public int getHallCount(String top_searchh) {
+		int cnt = mainDao.selectHallCount(top_searchh);
+		
+		return cnt;
 	}
 	
 }

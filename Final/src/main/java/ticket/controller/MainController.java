@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ticket.dto.Artist;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
@@ -65,6 +67,21 @@ public class MainController {
 		// 랭킹 - sql문 작성해야함, 테스트리스트로 출력만 해둔 상태임
 		List<Poster> testList = mainService.getTestList();
 		model.addAttribute("testList", testList);
+	}
+	
+	@RequestMapping(value="/ticket/fit", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> fitPfm(
+			String userIdx
+		) {
+		HashMap<String, Object> map = new HashMap<>();
+		
+		logger.info("맞춤 공연");
+		logger.info(userIdx);
+		
+		List<Poster> fitPfmList = mainService.getFitPfmList(userIdx);
+		map.put("fitPfmList", fitPfmList);
+		
+		return map;
 	}
 	
 	/**
@@ -133,6 +150,7 @@ public class MainController {
 		
 		if(array.equals("popularity")) {
 			// 인기순
+			//	sql문 작성하기
 			List<Poster> posterList = mainService.getPopularityList();
 			map.put("posterList", posterList);
 			
@@ -282,10 +300,29 @@ public class MainController {
 		top_searchh = req.getParameter("top_searchh");
 		logger.info("top_searchh : " + top_searchh);
 		
-		// 통합검색
-		//	name 검색만 일단 가능함 / 아티스트, 공연장으로 검색가능하게 변경하기
-		List<Poster> allList = mainService.getSearchAllList(top_searchh);
-		model.addAttribute("allList", allList);
+		// 공연 검색
+		List<Poster> pfmSearchList = mainService.getSearchPfmList(top_searchh);
+		model.addAttribute("pfmSearchList", pfmSearchList);
+		
+		int pfmCount = mainService.getPfmCount(top_searchh);
+		model.addAttribute("pfmCount", pfmCount);
+		
+		// 아티스트 검색
+		List<Artist> artSearchList = mainService.getSearchArtList(top_searchh);
+		model.addAttribute("artSearchList", artSearchList);
+		
+		int artCount = mainService.getArtCount(top_searchh);
+		model.addAttribute("artCount", artCount);
+		
+		// 공연장 검색
+		List<HallFile> hallSearchList = mainService.getSearchHallList(top_searchh);
+		model.addAttribute("hallSearchList", hallSearchList);
+		
+		List<Hall> hallNameList = mainService.getSearchHallNameList(top_searchh);
+		model.addAttribute("hallNameList", hallNameList);
+		
+		int hallCount = mainService.getHallCount(top_searchh);
+		model.addAttribute("hallCount", hallCount);
 		
 	}
 	

@@ -5,13 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import ticket.dto.Artist;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
-import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
-import ticket.dto.TabBanner;
-import ticket.utils.Paging;
 
 /**
  * @author suyeo
@@ -202,16 +201,65 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.26
-	 * @Method설명: 검색 - 통합검색
-	 * @작성자: 배수연
-	 */
-	public List<Poster> selectSearchAllList(String searchKey);
-
-	/**
-	 * 최종수정일: 2018.12.26
 	 * @Method설명: 티켓오픈 - 이름 검색
 	 * @작성자: 배수연
 	 */
 	public List<Performance> selectOpenSearchList(String opentext);
+
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 맞춤 공연 리스트 출력
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectFitPfmList(String userIdx);
+
+	/**
+	 * 최종수정일: 2018.12.26
+	 * @Method설명: 검색 - 공연 검색
+	 * @작성자: 배수연
+	 */
+	public List<Poster> selectSearchPfmList(String searchKey);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 검색 - 아티스트 검색
+	 * @작성자: 배수연
+	 */
+	public List<Artist> selectSearchArtList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 검색 - 공연장 검색
+	 * @작성자: 배수연
+	 */
+	public List<HallFile> selectSearchHallList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 검색 - 공연장 이름 출력
+	 * @작성자: 배수연
+	 */
+	public List<Hall> selectSearchHallNameList(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 조회된 공연의 총 수
+	 * @작성자: 배수연
+	 */
+	public int selectPfmCount(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 조회된 아티스트의 총 수
+	 * @작성자: 배수연
+	 */
+	public int selectArtCount(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: 조회된 공연장의 총 수
+	 * @작성자: 배수연
+	 */
+	public int selectHallCount(String top_searchh);
 
 }
