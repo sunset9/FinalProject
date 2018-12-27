@@ -219,7 +219,7 @@
 		ON p.pfm_idx = pi.pfm_idx
 	</select>
 	
-	<!-- 콘서트 정렬기준 - 마감임박순( 출력해주면됨 ) -->
+	<!-- 콘서트 정렬기준 - 마감임박순 -->
 	<select id="selectDeadlindListPfm" resultMap="Poster">
 		SELECT
 		    p.pfm_idx
@@ -227,7 +227,7 @@
 		    , po.origin_name
 		FROM (
 		    SELECT * FROM performance
-		    WHERE genre_idx=#{genreIdx}
+		    WHERE genre_idx=1
 		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
 		) p
 		LEFT JOIN poster_info po
@@ -344,31 +344,12 @@
 			AND trunc(create_date,'dd') BETWEEN #{startDate } AND #{endDate }
 	</select>
 	
-	<select id="selectSearchAllList" parameterType="String" resultType="ticket.dto.Poster">
-		SELECT
-		    po.pfm_idx pfmIdx
-		    , po.origin_name originName
-		    , po.stored_name storedName
-		    , p.name
-		    , p.pfm_start pfmStart
-		    , p.pfm_end pfmEnd
-		FROM (
-		    SELECT * FROM performance
-		    <if test='value!=null and value!=""'>
-			    WHERE NAME LIKE '%${value }%'
-		    </if>
-		    ORDER BY create_date DESC
-		) p
-		LEFT JOIN poster_info po
-		    ON p.pfm_idx = po.pfm_idx
-	</select>
-	
 	<select id="selectOpenSearchList" parameterType="String" resultMap="Performance">
 		SELECT 
 			po.origin_name poster_name ,pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
-       			SELECT  * FROM performance
+       			SELECT * FROM performance
                 <if test='value!=null and value!=""'>
 				    WHERE NAME LIKE '%${value }%'
 			    </if>
@@ -379,4 +360,116 @@
         ON pp.pfm_idx = po.pfm_idx
 		ORDER BY rnum
 	</select>
+	
+	<select id="selectFitPfmList" parameterType="String" resultType="ticket.dto.Poster">
+		SELECT
+			po.origin_name originName
+			, po.stored_name storedName
+			, po.pfm_idx pfmIdx
+		FROM(
+		    SELECT * FROM pfm_theme
+		    WHERE theme_idx IN (
+		        SELECT
+		            pt.theme_idx
+		        FROM prefer_theme pt, prefer_artist pa
+		        WHERE pt.user_idx = pa.user_idx
+		            AND pt.user_idx=${value}
+		))th
+		LEFT JOIN poster_info po
+		ON th.pfm_idx = po.pfm_idx
+	</select>
+	
+	<select id="selectSearchPfmList" parameterType="String" resultType="ticket.dto.Poster">
+		SELECT
+		    po.pfm_idx pfmIdx
+		    , po.origin_name originName
+		    , po.stored_name storedName
+		    , p.name
+		    , p.pfm_start pfmStart
+		    , p.pfm_end pfmEnd
+		FROM (
+		    SELECT * FROM performance
+		    <if test='value!=null and value!=""'>
+			    WHERE name LIKE '%${value }%'
+		    </if>
+		    ORDER BY create_date DESC
+		) p
+		LEFT JOIN poster_info po
+		    ON p.pfm_idx = po.pfm_idx
+	</select>
+	
+	<select id="selectPfmCount" parameterType="String" resultType="int">
+		SELECT
+		     count(*)
+		FROM (
+		    SELECT * FROM performance
+		    <if test='value!=null and value!=""'>
+			    WHERE name LIKE '%${value }%'
+		    </if>
+		    ORDER BY create_date DESC
+		)
+	</select>
+	
+	<select id="selectSearchArtList" parameterType="String" resultType="ticket.dto.Artist">
+		SELECT
+		    artist_idx as artistIdx
+		    , theme_idx as themeIdx
+		    , name
+		    , img_uri as imgUri
+		FROM artist
+		<if test='value!=null and value!=""'>
+			WHERE name LIKE '%${value }%'
+		</if>
+	</select>
+	
+	<select id="selectArtCount" parameterType="String" resultType="int">
+		SELECT
+		     count(*)
+		FROM (
+		    SELECT * FROM artist
+		    <if test='value!=null and value!=""'>
+			    WHERE name LIKE '%${value }%'
+		    </if>
+		)
+	</select>
+	
+	<select id="selectSearchHallList" parameterType="String" resultType="ticket.dto.HallFile">
+		SELECT
+		    hf.origin_name as originName
+		    , hf.stored_name as storedName
+		FROM (
+		SELECT * FROM hall
+		<if test='value!=null and value!=""'>
+			WHERE hall_name LIKE '%${value }%'
+		</if>
+		) h
+		LEFT JOIN hall_file hf
+		ON h.hall_idx = hf.hall_idx
+	</select>
+	
+	<select id="selectHallCount" parameterType="String" resultType="int">
+		SELECT
+		     count(*)
+		FROM (
+		    SELECT * FROM hall
+		    <if test='value!=null and value!=""'>
+			    WHERE hall_name LIKE '%${value }%'
+		    </if>
+		)
+	</select>
+	
+	<select id="selectSearchHallNameList" parameterType="String" resultType="ticket.dto.Hall">
+		SELECT
+		    h.hall_name as hallName
+    		, h.hall_phone as hallPhone
+		FROM (
+		SELECT * FROM hall
+		<if test='value!=null and value!=""'>
+			WHERE hall_name LIKE '%${value }%'
+		</if>
+		) h
+		LEFT JOIN hall_file hf
+		ON h.hall_idx = hf.hall_idx
+	</select>
+	
 </mapper>

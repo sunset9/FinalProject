@@ -2,13 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	// 상단배너 이미지 하나씩 자동 슬라이드 해주기
-	setInterval(function() {
+// 	setInterval(function() {
 // 		$('.topbannerimg').append($('.bannerImg').first());
 		
-	}, 2000);
+// 	}, 2000);
 	
 	$("#conall, #1, #2, #3, #4, #5").click(function() {
 		// 각 버튼을 눌렀을 경우 해당 버튼에 대한 id 값을 가져옴
@@ -81,6 +89,15 @@ $(document).ready(function() {
 		});
 	}
 	
+	$('.bxslider').bxSlider({
+		minSlides : 5,
+		maxSlides : 5,
+		slideWidth : 350,
+		slideMargin : 20,
+		ticker : true,
+		speed : 50000
+	});
+	
 });
 
 </script>
@@ -145,15 +162,17 @@ li.pfmInfo {
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
-	<h3>콘서트</h3>
+	<h3 style="font-size: 30px;">콘서트</h3><br>
 	<div class="topbannerimg">
+	<ul class="bxslider">
 	<c:forEach items="${topBanList }" var="topList">
-	<span class="thumImg">
+	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
 			<img class="bannerImg" src="/resources/image/${topList.originName}" />
 		</a>
-	</span>
+	</li>
 	</c:forEach>
+	</ul>
 	</div>
 	
 	<hr>

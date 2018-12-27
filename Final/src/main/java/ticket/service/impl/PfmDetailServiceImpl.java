@@ -10,6 +10,7 @@ import ticket.dto.Artist;
 import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Hall;
+import ticket.dto.HallFile;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
@@ -111,6 +112,11 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public Hall getHallInfoList(Performance pfm) {
 		return mDetailDao.selectHallInfoList(pfm);
+	}
+
+	@Override
+	public HallFile getHallImg(Performance pfm) {
+		return mDetailDao.selectHallImg(pfm);
 	}
 	
 }
