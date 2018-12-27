@@ -36,16 +36,38 @@
     left: 230px;
 }
 
+#registForm {
+	margin: 0 auto;
+}
+
 .registPfmTab {
 	width:100%;
+}
+
+th {
+    padding-right: 50px;
+}
+
+tr:not(.not_space){
+	border-bottom: 10px solid #fff;
+}
+
+table button {
+	color: #555;
+    background-color: #fdfdfd;
+    border: 1px solid #7e7e7e;
+    border-radius: .25em;
+    height: 34px;
+    width: 135px;
 }
 
 #registStep-2 {
 	display: flex;
 }
-.pfmDate{
+.ticketDate{
 	display: inline;
-    width: 110px;
+/*     width: 110px; */
+	float: left;
 }
 
 #posterImg input[type="file"] { 
@@ -91,11 +113,11 @@
 	/* 네이티브 외형 감추기 */ 
 	-moz-appearance: none; 
 	appearance: none; 
- }
+}
 
-#ticketStartDate, #ticketEndDate{
-	width:70%;
-	float: left;
+#posterImg img{
+	left: 29px;
+    position: relative;
 }
 
 #resultArtist{
@@ -112,6 +134,11 @@
 	width: 120px;
 }
  
+#searchArtist {
+    width: 230px;
+    display: inline;
+}
+
 #selectedArtist{
 	display: flex; /* 자식이 float 인 경우 높이 자동 조절 */
     border-top: 1px solid;
@@ -127,6 +154,12 @@
 	cursor:pointer
 }
 
+.tempSecName, .tempSecPay {
+	text-align: right;
+    width: 49%;
+    display: inline;
+}
+
 #seatHall td{
     overflow: hidden;
 }
@@ -139,6 +172,11 @@
 /* 구역 선택 완료 시 */
 .completeSet {
 /* 	fill: #1e88e5; */
+}
+
+.pfmDate{
+	display: inline;
+	width: 140px;
 }
 
 #registStep{
@@ -482,7 +520,7 @@ $(document).ready(function(){
 	// 티켓 오픈 일정, 공연 일정 지정
 	var startDate = new Date(); 
 	var endDate = new Date(); 
-	$('.pfmDate').datepicker({
+	$('.date').datepicker({
 		startDate: startDate, // 오늘 이후로 선택 가능
 	    todayHighlight: true,
 	    autoclose: true,
@@ -837,7 +875,7 @@ $(document).ready(function(){
 		$('#seatDiv').find('input[name^=seatSecList]').remove();
 		
 		// 셀렉트 박스 그려주기
-		var select = $('<select name="selectedSecName">')
+		var select = $('<select name="selectedSecName"> class="form-control"')
 		var isFirstOption = true;
 		$('.seatInfoInput').each(function(){
 			var secName = $(this).find('.tempSecName').val(); // 좌석정보란에서 입력한 구역명
@@ -1167,7 +1205,7 @@ $(document).ready(function(){
 			date = formatDate(list[i].date);
 			time = list[i].time;
 			// td 삽입(보여주기 용)
-			var tr = $("<tr>");
+			var tr = $("<tr class='not_space'>");
 			var dateTd = $("<td>").text(date);
 			var timeTd = $("<td>").text(time);
 			var removeTd = $("<td>").append("<span class='glyphicon glyphicon-remove'></span>");
@@ -1362,13 +1400,13 @@ function setComma(inNum){
 	<!-- 기본 정보 입력 -->
 	<table>
 	<tr>
-		<th>공연 제목:</th> 
-		<td><input type="text" name="name" value="${pfm.name }"/></td>
+		<th>공연 제목</th> 
+		<td><input type="text" name="name" value="${pfm.name }" class="form-control"/></td>
 	</tr>
 	<tr>
-		<th>공연 분류: </th> 
+		<th>공연 분류</th> 
 		<td>
-			<select name="genreIdx">
+			<select name="genreIdx" class="form-control">
 			<option value="0" >분류 선택</option>
 			<c:forEach var="genre" items="${genreList }">
 				<c:choose>
@@ -1384,7 +1422,7 @@ function setComma(inNum){
 		</td>
 	</tr>
 	<tr>
-		<th>테마: </th> 
+		<th>테마</th> 
 		<td>
 			<button type="button" id="themeSelBtn">테마 선택</button>
 			<p>
@@ -1395,27 +1433,27 @@ function setComma(inNum){
 		</td>
 	</tr>
 	<tr>
-		<th rowspan=2>티켓오픈: </th> 
+		<th rowspan=2>티켓오픈</th> 
 		<td>
-			<input type="text" name="ticketStart" class="form-control pfmDate" id="ticketStartDate" placeholder="시작일"
+			<input type="text" name="ticketStart" class="form-control date ticketDate" id="ticketStartDate" placeholder="시작일"
 			 value=<fmt:formatDate pattern = "yyyy-MM-dd" value = "${pfm.ticketStart }" />>
 		</td>
 		
 	</tr>
 	<tr>
 		<td>
-			<input type="text" name="ticketEnd" class="form-control pfmDate" id="ticketEndDate" placeholder="종료일"
+			<input type="text" name="ticketEnd" class="form-control date ticketDate" id="ticketEndDate" placeholder="종료일"
 			 value=<fmt:formatDate pattern = "yyyy-MM-dd" value = "${pfm.ticketEnd }" />>
 		</td>
 	</tr>
 	<tr>
-		<th>런닝타임: </th> 
+		<th>런닝타임</th> 
 		<td><input type="number" name="runningTime" value=${pfm.runningTime } min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
 	</tr>
 	<tr>
-		<th>관람등급: </th> 
+		<th>관람등급</th> 
 		<td>
-			<select name="ageGradeIdx">
+			<select name="ageGradeIdx" class="form-control">
 			<option value="0">관람등급 선택</option>
 			<c:forEach var="ageGrade" items="${ageList }">
 				<c:choose>
@@ -1431,7 +1469,7 @@ function setComma(inNum){
 		</td>
 	</tr>
 	<tr>
-		<th>출연진: </th> 
+		<th>출연진</th> 
 		<td>
 			<button type="button" id="artistBtn">출연진 선택</button>
 			<p>
@@ -1447,9 +1485,9 @@ function setComma(inNum){
 		</td>
 	</tr>
 	<tr>
-		<th>공연장: </th> 
+		<th>공연장</th> 
 		<td>
-			<select name="hallIdx">
+			<select name="hallIdx" class="form-control">
 			<option value="0">공연장 선택</option>
 			<c:forEach var="hall" items="${hallList }">
 				<c:choose>
@@ -1464,12 +1502,10 @@ function setComma(inNum){
 			</select>
 		</td>
 	</tr>
-	</table>
-	<!-- 좌석 관련 div -->
-	<div id="seatDiv"> 
-	<table>
+	<!-- 좌석 관련 tbody -->
+	<tbody id="seatDiv" style="display:none;">
 	<tr class="seatInfo">
-		<th>좌석정보: </th>
+		<th>좌석정보</th>
 		<!-- 아래에 td로 석,가격 input 태그 동적으로 추가됨 -->
 	</tr>
 	<tr>
@@ -1485,8 +1521,8 @@ function setComma(inNum){
 		<td>
 		</td>
 	</tr>
+	</tbody>
 	</table>
-	</div>
 </div> <!-- registStep-1 Div-->
 
 <!-- 모달창 -->
@@ -1524,7 +1560,7 @@ function setComma(inNum){
       <div class="modal-body">
       	<!-- 검색 & 결과 뷰-->
       	<div id="viewArtist" class="text-center">
-      		<input type="text" id="searchArtist" placeholder="출연진 검색" onkeypress="if(event.keyCode==13){$('#searchArtistBtn').trigger('click'); return false;}"/> 
+      		<input type="text" id="searchArtist" class="form-control" placeholder="출연진 검색" onkeypress="if(event.keyCode==13){$('#searchArtistBtn').trigger('click'); return false;}"/> 
       		<button type="button" id="searchArtistBtn">검색</button> 
       		<div id="resultArtist">
       		</div>
@@ -1553,17 +1589,17 @@ function setComma(inNum){
 	<input type="checkbox"><label for='onceRegist'>날짜/시간 일괄등록 하기</label> 
 	<table>
 	<tr>
-		<th>공연 날짜: </th>
+		<th>공연 날짜</th>
 		<td>
-			<input type="text" class="form-control pfmDate" id="pfmStartDate" placeholder="시작일" >
+			<input type="text" class="form-control date pfmDate" id="pfmStartDate" placeholder="시작일" >
 			<span id="onceRegForm" style="display:none;">
 			 ~ 
-			<input type="text" class="forml pfmDate" id="pfmEndDate" placeholder="종료일">
+			<input type="text" class="form-control date pfmDate" id="pfmEndDate" placeholder="종료일">
 			</span>
 		</td>
 	</tr>
 	<tr>
-		<th>공연 시간: </th>
+		<th>공연 시간</th>
 		<td>
 			<div id="pfmTimeSelect"></div>
 		</td>
