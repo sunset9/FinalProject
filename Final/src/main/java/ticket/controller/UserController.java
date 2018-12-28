@@ -414,10 +414,11 @@ public class UserController {
 		
 	}
 	
-//	@RequestMapping
-//	public void bookCancel() {
-//		
-//	}
+	@RequestMapping(value ="mypage/bookcancel", method=RequestMethod.POST)
+	public void bookCancel( String names) {
+		logger.info("예매 삭제");
+		logger.info(names);
+	}
 	
 	
 
