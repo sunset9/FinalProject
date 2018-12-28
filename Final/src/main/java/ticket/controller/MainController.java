@@ -98,7 +98,7 @@ public class MainController {
 		model.addAttribute("topBanList", topBanList);
 		
 		// 전체 리스트
-		List<Poster> posterList = mainService.getConPfmPoster();
+		List<Performance> posterList = mainService.getConPfmPoster();
 		model.addAttribute("posterList", posterList);
 	}
 	
@@ -117,7 +117,7 @@ public class MainController {
 		// 콘서트 - 테마 선택 후 리스트 출력
 		if( theme.equals("conall") ) {
 			// 콘서트 전체
-			List<Poster> posterList = mainService.getConPfmPoster();
+			List<Performance> posterList = mainService.getConPfmPoster();
 			
 			map.put("posterList", posterList);
 			
