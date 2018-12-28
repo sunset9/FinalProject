@@ -93,11 +93,12 @@ $(document).ready(function() {
 		
 		console.log( "map:" + map );	// 맵
 		console.log( "map->array : " + map.get() );	// 맵->배열
-		console.log( "array tostring : " + map.get().join(",") ); // toString
-
+		console.log( "array tostring : " + map.get().join("_qxq	x") ); // toString
+		console.log(typeof(names));
+		
 		// 전송폼 
 		var $form = $("<form>")
-			.attr("action", "/user/bookcancel")
+			.attr("action", "/mypage/bookcancel")
 			.attr("method", "post")
 			.append(
 				$("<input>")
@@ -306,7 +307,7 @@ $(document).ready(function() {
 	<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
 	<td>${ss.secPay }</td>
 	<td>${sob.state }
-		<input type="checkbox" value="취소 가능" name="cancelCheck"/>
+		<input type="checkbox" value="${s.seatIdx},${sob.bookGroup}" name="cancelCheck"/>취소 가능
 	</td>
 </tr>
 </c:forEach>
