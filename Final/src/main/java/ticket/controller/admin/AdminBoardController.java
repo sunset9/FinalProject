@@ -45,9 +45,7 @@ public class AdminBoardController {
 	public String notiList(Model model,
 			@RequestParam(required=false, defaultValue="0")int curPage,
 			@RequestParam(required=false, defaultValue="10")int listCount,
-			@RequestParam(required=false, defaultValue="10")int pageCount,
-			@RequestParam(defaultValue="title") String searchOption,
-			@RequestParam(defaultValue="") String keyword
+			@RequestParam(required=false, defaultValue="10")int pageCount
 			) {
 	
 		Paging paging = adminBoardService.getPaging(curPage, listCount, pageCount);
@@ -56,10 +54,7 @@ public class AdminBoardController {
 		List<Notice> list = adminBoardService.getNotiList(paging);
 		model.addAttribute("noticelist", list);
 		
-		model.addAttribute("searchOption", searchOption);
-		model.addAttribute("keyword", keyword);
-		
-		
+
 		
 		return "/admin/notice/list";
 	}
