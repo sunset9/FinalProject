@@ -67,6 +67,7 @@
   	<result column="ori_sec_idx" property="oriSecIdx"/>
   	<result column="hall_idx" property="hallIdx"/>
   	<result column="seat_floor" property="seatFloor"/>
+  	<result column="book_idx" property="bookIdx"/>
   </resultMap>
   
   <sql id="selectCnt">
@@ -380,17 +381,16 @@
 	</select>
 	
 	<select id="selectSeat" parameterType="String" resultMap="SeatSection">
-		SELECT
-		distinct app_sec, sec_pay
-		from seatsection A
-		JOIN originsection B
-		 ON A.ori_sec_idx = B.ori_sec_idx
-		JOIN SEAT C
-		 ON b.ori_sec_idx = c.ori_sec_idx
-		JOIN BOOK D
-		 ON D.seat_idx = C.seat_idx
-		WHERE d.book_group = #{bookGroup} 
-		
+		SELECT 
+			DISTINCT app_sec, sec_pay, A.pfm_idx
+			from seatsection A
+			JOIN originsection B
+			 ON A.ori_sec_idx = B.ori_sec_idx
+			JOIN SEAT C
+			 ON b.ori_sec_idx = c.ori_sec_idx
+			JOIN BOOK D
+			 ON D.seat_idx = C.seat_idx AND A.pfm_idx = D.pfm_idx
+		WHERE d.book_group = #{bookGroup }
 	</select>
 	
 	<select id="selectPaymentByimpUid" parameterType="String" resultMap="PaymentInfoMap">
@@ -402,12 +402,14 @@
 	
 	
 	<select id="selectSeatByBookGroup" parameterType="String" resultMap="Seat">
-		SELECT * 
-		FROM seat 
-		WHERE seat_idx 
-		IN( ( SELECT seat_idx 
-				FROM book 
-				WHERE book_group= #{bookGroup} ) )
+		 SELECT S.seat_idx,S.seat_row,S.seat_col,S.ori_sec_idx,S.seat_floor,S.hall_idx, B.book_idx ,PD.pfm_dbt_idx
+        FROM seat S
+        INNER JOIN book B
+            ON S.seat_idx = B.seat_idx
+        INNER JOIN PFM_DATEBYTIME PD
+            ON PD.pfm_dbt_idx = B.pfm_dbt_idx
+                AND b.pfm_idx = pd.pfm_idx
+        WHERE S.seat_idx IN( ( SELECT seat_idx FROM book WHERE book_group=#{bookGroup }) )
 	</select>
 	
 	

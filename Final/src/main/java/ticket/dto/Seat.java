@@ -8,13 +8,17 @@ public class Seat {
 	private int oriSecIdx;
 	private int hallIdx;
 	private int seatFloor;
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	private int bookIdx; // 예매후 좌석 확인할 때 사용하려고 추가
 	@Override
 	public String toString() {
 		return "Seat [seatIdx=" + seatIdx + ", seatRow=" + seatRow + ", seatCol=" + seatCol + ", oriSecIdx=" + oriSecIdx
-				+ ", hallIdx=" + hallIdx + ", seatFloor=" + seatFloor + "]";
+				+ ", hallIdx=" + hallIdx + ", seatFloor=" + seatFloor + ", bookIdx=" + bookIdx + "]";
+	}
+	public int getBookIdx() {
+		return bookIdx;
+	}
+	public void setBookIdx(int bookIdx) {
+		this.bookIdx = bookIdx;
 	}
 	/**
 	 * @return the seatIdx
