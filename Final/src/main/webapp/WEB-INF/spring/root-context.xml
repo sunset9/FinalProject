@@ -16,6 +16,7 @@
 			value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="username" value="scott" />
 		<property name="password" value="tiger" />
+		<property name="connectionProperties" value="oracle.jdbc.timezoneAsRegion=false"/>
 	</bean>
 
 	<!-- JDBC Logger -->
