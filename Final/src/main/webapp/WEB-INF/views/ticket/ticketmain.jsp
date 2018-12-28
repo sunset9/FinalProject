@@ -39,25 +39,27 @@
 		});
 		
 		// 맞춤 공연
-		var userIdx = '${loginUser.userIdx }';
-		console.log("loginUserIdx : " + userIdx);
-		
-		$.ajax({
-			type:"get",
-			url:"/ticket/fit",
-			data:{
-				"userIdx" : userIdx
-			},
-			dataType:"json",
-			success:function(d){
-				console.log('성공');
-				
-				insertFitPfm(d.fitPfmList);
-			}
-			, error:function(e) {
-				console.log('실패');
-			}
-		});
+		function loginFitPfm() {
+			var userIdx = '${loginUser.userIdx }';
+			console.log("loginUserIdx : " + userIdx);
+			
+			$.ajax({
+				type:"get",
+				url:"/ticket/fit",
+				data:{
+					"userIdx" : userIdx
+				},
+				dataType:"json",
+				success:function(d){
+					console.log('성공');
+					
+					insertFitPfm(d.fitPfmList);
+				}
+				, error:function(e) {
+					console.log('로그인 되어있지 않음 - 맞춤 공연 x');
+				}
+			});
+		}
 		
 		// 맞춤 공연
 // 		$('.bxslider').bxSlider({
@@ -119,7 +121,7 @@
 
 /* 탭 메뉴 */
 .main_tab{
-	width: 780px;
+	width: 850px;
 	margin: 20px auto 10px auto;
 }
  
@@ -311,8 +313,9 @@ div>h4 {
 <div class="alignPfm">
 	<h4>맞춤 공연</h4>
 	<div>
-		<c:if test="${login }">
-			<ul class="fitPfmbox">
+		<c:if test="${login }" >
+<!--  		<script>loginFitPfm();</script> -->
+			<ul class="fitPfmbox" onload="loginFitPfm();">
 				<li>
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 					<img src="/resources/image/${list.bannerImgOri}" />
