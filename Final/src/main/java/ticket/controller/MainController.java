@@ -342,5 +342,18 @@ public class MainController {
 		model.addAttribute("hallCount", hallCount);
 		
 	}
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명:footer 부분 전자금융약관
+	 * @작성자:박주희
+	 */
+	@RequestMapping(value="/ticket/billing", method=RequestMethod.GET)
+	public void footerBilling() {
+		logger.info("billing-GET");
+	}
 	
+	@RequestMapping(value="/ticket/agreement", method=RequestMethod.GET)
+	public void footerAgreementPop() {
+		logger.info("AgreementPop-GET");
+	}
 }
