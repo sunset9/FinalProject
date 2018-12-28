@@ -118,5 +118,12 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	public HallFile getHallImg(Performance pfm) {
 		return mDetailDao.selectHallImg(pfm);
 	}
+
+	@Override
+	public boolean mychoiceInsert(String userIdx, String pfmIdx) {
+		mDetailDao.InsertMychoice(userIdx, pfmIdx);
+
+		return true;
+	}
 	
 }

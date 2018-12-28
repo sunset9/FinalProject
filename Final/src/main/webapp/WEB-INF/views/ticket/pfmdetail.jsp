@@ -408,7 +408,7 @@ ul.tabs li.current{
 	
 		<div class="posterInfoDiv" style="font-size: 15px;">
 			<strong style="font-size: 20px;">${pfmInfoList.name }</strong><br><br><br>
-			관람시간 : ${pfmInfoList.runningTime }시간<br>
+			관람시간 : ${pfmInfoList.runningTime }분<br>
 			공연장 : ${hallInfoList.hallName }<br>
 			연령제한 : 
 			<c:choose>
