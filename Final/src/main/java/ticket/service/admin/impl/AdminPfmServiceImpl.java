@@ -887,4 +887,24 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 	}
 
+	@Override
+	public List<Performance> getAllPfmList(Paging paging) {
+		// 페이징 처리한 전체 목록 가져오기
+		
+		return pDao.selectAllPfmList(paging);
+	}
+
+	@Override
+	public List<Performance> getAllConPfmList(Paging paging) {
+		// 페이징된 콘서트 목록 가져오기
+		
+		return pDao.selectAllConPfm(paging);
+	}
+
+	@Override
+	public List<Performance> getAllMuPfmList(Paging paging) {
+		// 페이징된 뮤지컬 목록 가져오기
+		return pDao.selectAllMuPfm(paging);
+	}
+
 }

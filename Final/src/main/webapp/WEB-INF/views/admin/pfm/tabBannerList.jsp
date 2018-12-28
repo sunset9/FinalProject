@@ -44,9 +44,6 @@ function submitWithTitle() {
 }
 
 
-function searchAjax() {
-
-}
 </script>
 <style type="text/css">
 p {
@@ -267,7 +264,6 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
 					<div><img src="${ntb.bannerPath }" style="width: 180px; height: 254px;"></div>
 					<div style="height: 38px;">${ntb.name}</div> 
 					<div class="upDelBtn">
-						<button id="ntbUpdate" onclick="Edit('${ntb}');">수정</button>
 						<button id="ntbDelete" onclick="Delete('${ntb.tabIdx}');">삭제</button>
 					</div>
 				</div>
@@ -289,7 +285,6 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
 					<div><img src="${mtb.bannerPath }" style="width: 180px; height: 254px;"></div>
 					<div style="height: 38px;">${mtb.name}</div> 
 					<div class="upDelBtn">
-						<button id="mtbUpdate" onclick="mtbEdit('${mtb}');">수정</button>
 						<button id="mtbDelete" onclick="mtbDelete('${mtb.tabIdx}');">삭제</button>
 					</div>
 				</div>
@@ -310,7 +305,6 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
 					<div><img src="${ctb.bannerPath }" style="width: 180px; height: 254px;"></div>
 					<div style="height: 38px;">${ctb.name}</div> 
 					<div class="upDelBtn">
-						<button id="ctbUpdate" onclick="ctbEdit('${ctb}');">수정</button>
 						<button id="ctbDelete" onclick="ctbDelete('${ctb.tabIdx}');">삭제</button>
 					</div>
 				</div>
@@ -340,20 +334,20 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
         </div>
         <div class="modal-body">
           <div> 
-          	<input type="search" name="newSearch" onkeypress="searchAjax();"/>
+          	<input type="search" name="newSearch"/>
           </div> 
           <hr>
           <div class="ordering">
           	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
           </div>
           <div class="forEach"> 
-          <c:forEach items="${newTabBanner }" var="ntb">
+          <c:forEach items="${allPfmList }" var="apl">
           	<div class="ntb" data-dismiss="modal">  
-			    <div><img src="${ntb.bannerPath}" style="width: 140px; height: 198px;"></div>
-			    <div>${ntb.name }</div>
-			    <div><fmt:formatDate value="${ntb.pfmStart }" pattern="yyyy.MM.dd" />
-			     ~ <fmt:formatDate value="${ntb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-			    <div>${ntb.hallName }</div>
+			    <div><img src="/resources/image/${apl.storedName}" style="width: 140px; height: 198px;"></div>
+			    <div>${apl.name }</div>
+			    <div><fmt:formatDate value="${apl.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${apl.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${apl.hallName }</div>
 		    </div>
           </c:forEach>
           </div>
@@ -388,13 +382,13 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
           	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
           </div>
           <div class="forEach"> 
-          <c:forEach items="${conTabBanner }" var="ctb">
+          <c:forEach items="${allConPfmList }" var="acpl">
           	<div class="ctb" data-dismiss="modal">  
-			    <div><img src="${ctb.bannerPath}" style="width: 140px; height: 198px;"></div>
-			    <div>${ctb.name }</div>
-			    <div><fmt:formatDate value="${ctb.pfmStart }" pattern="yyyy.MM.dd" />
-			     ~ <fmt:formatDate value="${ctb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-			    <div>${ctb.hallName }</div>
+			    <div><img src="/resources/image/${acpl.storedName}" style="width: 140px; height: 198px;"></div>
+			    <div>${acpl.name }</div>
+			    <div><fmt:formatDate value="${acpl.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${acpl.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${acpl.hallName }</div>
 		    </div>
           </c:forEach>
           </div>
@@ -428,13 +422,13 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
           	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
           </div>
           <div class="forEach"> 
-          <c:forEach items="${muTabBanner }" var="mtb">
+          <c:forEach items="${allMuPfmList }" var="ampl">
           	<div class="mtb" data-dismiss="modal">  
-			    <div><img src="${mtb.bannerPath}" style="width: 140px; height: 198px;"></div>
-			    <div>${mtb.name }</div>
-			    <div><fmt:formatDate value="${mtb.pfmStart }" pattern="yyyy.MM.dd" />
-			     ~ <fmt:formatDate value="${mtb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-			    <div>${mtb.hallName }</div>
+			    <div><img src="/resources/image/${ampl.storedName}" style="width: 140px; height: 198px;"></div>
+			    <div>${ampl.name }</div>
+			    <div><fmt:formatDate value="${ampl.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${ampl.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${ampl.hallName }</div>
 		    </div>
           </c:forEach>
           </div>
