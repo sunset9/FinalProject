@@ -66,7 +66,7 @@ public interface MainDao {
 	 * @Method설명: 장르가 콘서트인 모든 포스터 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectConPfmPosterInfo();
+	public List<Performance> selectConPfmPosterInfo();
 
 	/**
 	 * 최종수정일: 2018.12.11

@@ -164,7 +164,8 @@ ul.tabs li.current{
 				</ul>
 				</div>
 				
-				<div class="pfmInfo tabarray">
+				<div class="pfmInfo tabarray" style="border: 1px solid black;">
+					<strong>공연 정보</strong>
 					${detailList.contents }
 				</div>
 			</div>

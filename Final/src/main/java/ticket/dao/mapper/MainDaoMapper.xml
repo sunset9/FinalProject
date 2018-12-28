@@ -158,11 +158,10 @@
 	</select>
 	
 	<!-- 전체 출력 -->
-	<select id="selectConPfmPosterInfo" resultType="ticket.dto.Poster">
-	SELECT 
-		po.origin_name originName
-		,po.pfm_idx pfmIdx
-		,po.stored_name storedName ,pp.*
+	<select id="selectConPfmPosterInfo" resultMap="Performance">
+	SELECT
+		pp.*
+		,po.stored_name as storedName
 	FROM (
     	SELECT ROWNUM as rnum, p.* FROM (
        		SELECT  * FROM performance
@@ -174,36 +173,34 @@
        ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
-	<select id="selectMuPfmPosterInfo" resultType="ticket.dto.Poster">
+	<select id="selectMuPfmPosterInfo" resultMap="Performance">
 		SELECT 
-		po.origin_name originName
-		,po.pfm_idx pfmIdx
-		,po.stored_name storedName ,pp.*
-	FROM (
-    	SELECT ROWNUM as rnum, p.* FROM (
-       		SELECT  * FROM performance
-               WHERE genre_idx = 2
-               ORDER BY pfm_idx
-    	) p
-	)pp
-       LEFT JOIN poster_info po
-       ON pp.pfm_idx = po.pfm_idx
+			pp.*
+			,po.stored_name as storedName
+		FROM (
+	    	SELECT ROWNUM as rnum, p.* FROM (
+	       		SELECT  * FROM performance
+	               WHERE genre_idx = 2
+	               ORDER BY pfm_idx
+	    	) p
+		)pp
+	       LEFT JOIN poster_info po
+	       ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
-	<select id="selectFamPfmPosterInfo" resultType="ticket.dto.Poster">
+	<select id="selectFamPfmPosterInfo" resultMap="Performance">
 		SELECT 
-		po.origin_name originName
-		,po.pfm_idx pfmIdx
-		,po.stored_name storedName ,pp.*
-	FROM (
-    	SELECT ROWNUM as rnum, p.* FROM (
-       		SELECT  * FROM performance
-               WHERE genre_idx = 3
-               ORDER BY pfm_idx
-    	) p
-	)pp
-       LEFT JOIN poster_info po
-       ON pp.pfm_idx = po.pfm_idx
+			pp.*
+			,po.stored_name as storedName
+		FROM (
+	    	SELECT ROWNUM as rnum, p.* FROM (
+	       		SELECT  * FROM performance
+	               WHERE genre_idx = 3
+	               ORDER BY pfm_idx
+	    	) p
+		)pp
+	       LEFT JOIN poster_info po
+	       ON pp.pfm_idx = po.pfm_idx
 	</select>
 	
 	<!-- 선택 테마 리스트 출력 -->	
