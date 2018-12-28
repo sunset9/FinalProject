@@ -9,7 +9,7 @@
     display: inline-block;
     position: absolute;
     top: 9px;
-    right: 210px;
+    right: -120px;
 }
 .img-thumbnail, .thumbnail {
     display: block;
@@ -33,6 +33,17 @@
     right: 9px;
     position: absolute;
 }
+.cover2 {
+	z-index: 10;
+    background-color: #33333352;
+    height:150px;
+    width: 103px;
+    right: 9px;
+    position: absolute;
+}
+.removeBtn {
+	margin-top: 60px;
+}
 .deleteBtn {
 	margin-top: 60px;
 }
@@ -42,16 +53,35 @@
 var i=0; 
 var cnt = ${cnt}; //DB에 저장된 포스터 갯수 (15개가 최대면 더이상 등록 안됨 )
 $(document).ready(function() { // jquery 시작  
+//저장된 포스터 삭제
 $('div[class^=row]').on('click','div[id^=remove]',function(){ //삭제 버튼을  누를때 
 	var parent=$(this).closest('div[id^=position]'); //해당 클릭된 포스터의 부모를 찾아서
-	//console.log("찍혀요?");
 	parent.remove(); //부모까지 삭제 
+});
+
+//추가된 포스터 삭제 
+$('div[class^=row]').on('click','.removeBtn',function(){
+	var parent=$(this).closest('div[id^=position]'); //해당 클릭된 포스터의 부모를 찾아서
+	parent.remove(); //부모까지 삭제 
+})
+$('div[class^=row]').on('mouseover','div[id^=pfmIdx]',function(){
+	var cover = $('<div class="cover2">'); // 이미지 위에 올릴 DIV 
+	var delBtn = $('<button type="button" class="removeBtn">공연삭제</button>');
+	cover.append(delBtn); 
+	$(this).prepend(cover); // div 위에 삭제 div 를 올림
+});
+
+//추가된 포스터를 다시 지울때 이용 
+$('div[class^=row]').on('mouseleave','div[id^=pfmIdx]',function(){
+	$('div[class^=cover2]').remove();
+
 });
 $('.row').on('click', 'div[id^=add_poster]',function() {//포스터 추가하기 버튼 클릭시
 		$('#myModal').modal('show'); //모달창 보여주기 
   		ajax(); //ajax로 모달창에 그려줌(포스터 리스트)
    });
 $('ul.pagination').on('click','a',function(){
+	
 	console.log($(this).attr('url')); 
 	ajax($(this).attr('url'));//해당 URL(해당 페이지)로 이동되면 다시 ajax로 호출되서 그려줌
 });
@@ -123,6 +153,7 @@ $('#searchbtn').click(function() { //검색버튼 클릭시
 	},
 	success : function(data) {
 	$('#resultposter').html(''); //결과값 초기화 
+
 	data.forEach(function(poster) { // 결과값 출력 
 	var resDiv = $('<div style="width: fit-content; float:left">');
 		resDiv.data('aIdx',poster.pfmIdx); // 커스텀 태그로 포스터 정보 삽입
@@ -163,7 +194,8 @@ $('#myModal').find('.btn').on('click',function() {
 	var start = $('div[id^="start"]');
 	var labelName = Selected; // 선택된 값 (이미지 이름임 stored_Name)
 	var selectedId = $('input[name^=radio_test]:checked').attr('id'); //pfmIdx가 ID로 설정되어있음 
-	console.log('selected:'+selectedId);
+	var name =$('input[name^=radio_test]:checked').siblings().text();
+// 	console.log('selected:'+selectedId);
 	var list = ($('div[class^=pfmId]').attr('id') );
 	$(('div[class^=pfmId]')).each(function(){
 // 		console.log($(this).attr('id'));
@@ -183,29 +215,34 @@ $('#myModal').find('.btn').on('click',function() {
 		return;
 	}
 
-	var div1 = $('<div class="" style="width: 100%; height: 320px;" id ="position_'+selectedId+'">');
+	var div1 = $('<div class="" style="height: 100%;" id ="position_'+selectedId+'">');
 	var div2 = $('<div class="thumbnail">');
-	var div3 = $('<div class="caption">');
+	var div3 = $('<div class="caption" id="pfmIdx_"'+selectedId+'>');
 	var div4 = $('<div class="pfmIdx" id='+selectedId+'>');
 	var image =$('<img>');
 	image.attr('src','/resources/image/'+ labelName);
 	var atag = $('<a>');
+	var htag= $('<h3>'+name+'</h3>');
+	//htag.text(name);
 	atag.attr('href','"/admin/deletecatecon/'+selectedId+'/>"');
-	var div5 = $('<div class="glyphicon glyphicon-remove" id="remove_"'+selectedId+'">');
+	//삭제 버튼 (div5) 현재는 바뀐 removeBtn으로 쓰고 있어서 주석처리
+// 	var div5 = $('<div class="glyphicon glyphicon-remove" id="remove_"'+selectedId+'">');
 	var hideInput=$('<input type="hidden" name="pfmIdx" id ="pfmIdx" value='+ (selectedId)+ '>');
+	
 	div4.append(hideInput);
 	div4.append(image);
 	div4.append(atag);
-	div4.append(div5);
+	div4.append(htag);
+// 	div4.append(div5);
 	div3.append(div4);
 	div2.append(div3);
 	div1.append(div2);
 	start.append(div1);
 	//이전에 그렸던것들을 지움 
 	$('div[id^=draw]').remove();
-	var adddiv1=$('<div class="" style="width: 100%; height: 320px;" id="draw_'+selectedId+'">');
+	var adddiv1=$('<div class="" style=" width:137px; height: 224px;" id="draw_'+selectedId+'">');
 	//해당 이미지 
-	var adddiv2=$('<div class="thumbnail"style="width: 100%; height: 320px; text-align: center;" id="thum_'+selectedId+'">');
+	var adddiv2=$('<div class="thumbnail"style=" text-align: center;" id="thum_'+selectedId+'">');
 	//포스터 추가 버튼 (div형태 )
 	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 0px;">')
 	adddiv2.append(adddiv3);
@@ -270,22 +307,23 @@ $('.caption').on('mouseleave','.cover',function(){
 <%-- <%= CountManager.getCount() %> --%>
 <form action="/admin/registcatecon" method="post">
 <button id="save">최종저장</button>
-<div class="row" id ="start" style="display: flex;">
-<c:forEach var="item" items="${posterList }">
-<div class="" style="width: 100%; height: 320px;">
+<div class="row" id ="start" style="display: flex; flex-wrap: wrap;">
+<c:forEach var="item" items="${posterList }" varStatus="status">
+<div class="" style=" height: 100%;">
 	<div class="thumbnail">
 		<div class="caption">
 			<div class="pfmIdx" id="${item.pfmIdx }">
 					<img src="/resources/image/${item.storedName }"> 
 <%-- 					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a> --%>
-								<h3>${item.name }, <!--  ${item.pfmIdx }--></h3>
+								<h3>${item.name } <!--,  ${item.pfmIdx }--></h3>
 						</div>
 			</div>
 		</div>
 	</div>
+
 </c:forEach>
-		<div class="" id="draw" style="width: 100%; height: 320px;">
-			<div class="thumbnail" style=" width: 100%; height: 320px; text-align: center;" id="thum">
+		<div class="" id="draw" style="width:137px; height: 224px;">
+			<div class="thumbnail" style=" text-align: center;" id="thum">
 				<div class="glyphicon glyphicon-plus-sign" id="add_poster"
 				style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 0px;">
 			</div>
