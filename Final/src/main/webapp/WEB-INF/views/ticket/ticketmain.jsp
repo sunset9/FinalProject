@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 
@@ -11,32 +20,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		// 모든 이미지 리스트
-		var $mainbanner_list = $("#mainbanner li");
 
-		$mainbanner_list.css("left", "100%");
-
-		// 첫번째 이미지를 div 안쪽으로 보내기(첫 이미지 보이기)
-		$("#mainbanner li:first-child").css("left", 0);
-
-		var curSlide = 0; // 현재 이미지 인덱스
-
-		setInterval(function() { // 시간 이용하여 슬라이드
-			var nextSlide = (curSlide + 1) % $mainbanner_list.length; // 다음 이미지 인덱스
-
-			// 보여져야 할 이미지 오른쪽으로 이동시키기
-			$mainbanner_list.eq(nextSlide).css("left", "100%");
-
-			// 현재 이미지 숨기기
-			$mainbanner_list.eq(curSlide).animate({ "left" : "-=100%" });
-
-			// 다음 이미지 보여주기
-			$mainbanner_list.eq(nextSlide).animate({ "left" : "-=100%" });
-
-			// 순환구조 만들기
-			curSlide++;
-			curSlide = curSlide % $mainbanner_list.length;
-		}, 2000);
+		// 메인 배너 슬라이드
+		$('.mainbanner').bxSlider({
+			minSlides: 1,
+			maxSlides: 1
+		});
 		
 		// 메인배너 아래 탭
 		$('ul.tabs li').click(function(){
@@ -50,7 +39,7 @@
 		});
 		
 		// 맞춤 공연
-		var userIdx = ${loginUser.userIdx };
+		var userIdx = '${loginUser.userIdx }';
 		console.log("loginUserIdx : " + userIdx);
 		
 		$.ajax({
@@ -71,10 +60,10 @@
 		});
 		
 		// 맞춤 공연
-		$('.bxslider').bxSlider({
-		  infiniteLoop: false,
-		  hideControlOnEnd: true
-		});
+// 		$('.bxslider').bxSlider({
+// 		  infiniteLoop: false,
+// 		  hideControlOnEnd: true
+// 		});
 		
 		function insertFitPfm(fitPfmList) {
 			
@@ -100,24 +89,25 @@
 #mainbannerbox {
 	position: relative;
 	max-width: 100%;
-	height: 350px;
- 	border: 1px solid black; 
-	overflow: hidden;
+	height: auto;
+/* 	border: 1px solid black;   */
+/* 	overflow: hidden; */
 	margin: 0 auto;
 /* 	z-index: 2; */
 }
 
-#mainbanner {
+.mainbanner {
 	padding: 0;
 	margin: 0;
+/* 	height: 500px; */
 	list-style: none;
 }
 
-#mainbanner li {
+.mainbanner li {
 	position: absolute;
 }
 
-#mainbanner li img {
+.mainbanner li img {
 	max-width: 100%;
 	height: 350px;
 }
@@ -228,7 +218,7 @@ div>h4 {
 
 <!-- 메인 배너 -->
 <div id="mainbannerbox">
-	<ul id="mainbanner">
+	<ul class="mainbanner">
 		<c:forEach items="${bannerList }" var="list">
 			<li>
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
@@ -237,6 +227,15 @@ div>h4 {
 			</li>
 		</c:forEach>
 	</ul>
+	
+	<!-- 슬라이드 CSS 추가 시 변경 예정 -->
+<!-- 	<ul class="mainThumb"> -->
+<%-- 		<c:forEach items="${bannerList }" var="list"> --%>
+<!-- 			<li> -->
+<%-- 				<img src="/resources/image/${list.thumbImgOri}" /> --%>
+<!-- 			</li> -->
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
 </div>
 
 <!-- 탭 배너 -->
@@ -313,11 +312,13 @@ div>h4 {
 	<h4>맞춤 공연</h4>
 	<div>
 		<c:if test="${login }">
-			<div class="fitPfmbox">
-				<ul class="bxslider">
-				 <li class=""></li>
-				</ul>
-			</div>
+			<ul class="fitPfmbox">
+				<li>
+				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+					<img src="/resources/image/${list.bannerImgOri}" />
+				</a>
+				</li>
+			</ul>
 		</c:if>
 		
 		<c:if test="${not login }">

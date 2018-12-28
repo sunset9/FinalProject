@@ -46,6 +46,7 @@
 			, pfm_end as pfmEnd
 			, age_grade_idx as ageGradeIdx
 			, running_time as runningTime
+			, ticket_start as ticketStart
 		FROM performance
 		WHERE pfm_idx=#{pfmIdx}
 	</select>

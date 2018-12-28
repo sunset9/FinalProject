@@ -12,11 +12,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	// 상단배너 이미지 하나씩 자동 슬라이드 해주기
-// 	setInterval(function() {
-// 		$('.topbannerimg').append($('.bannerImg').first());
-		
-// 	}, 2000);
 	
 	$("#conall, #1, #2, #3, #4, #5").click(function() {
 		// 각 버튼을 눌렀을 경우 해당 버튼에 대한 id 값을 가져옴
@@ -44,16 +39,21 @@ $(document).ready(function() {
 		});
 	}); // 테마 선택 btn
 	
-	// 인기순, 임박순, 최신순 (테스트중)
+	// 인기순, 임박순, 최신순
 	$("#popularity, #Deadline, #Latest").click(function() {
 		var arrayList = $(this).attr('id');
 		console.log(arrayList);
+		
+		// 콘서트 장르 IDX 전달해주기
+		var genreIdx = 1;
+		console.log(genreIdx);
 		
 		$.ajax({
 			url: '/ticket/arraylist'
 			, method: 'GET'
 			, data: {
 				"array" : arrayList
+				, "genreIdx": genreIdx
 			}
 			, dataType: 'json'
 			, success: function(d) {
@@ -93,9 +93,9 @@ $(document).ready(function() {
 		minSlides : 5,
 		maxSlides : 5,
 		slideWidth : 350,
-		slideMargin : 20,
-		ticker : true,
-		speed : 50000
+		slideMargin : 20
+// 		ticker : true,
+// 		speed : 50000
 	});
 	
 });
@@ -132,6 +132,7 @@ ul.array {
 	float: right;
 	list-style: none;
 }
+
 ul.array li {
 	float: left;
 }
@@ -141,10 +142,12 @@ ul.array li span{
     vertical-align: middle;
     cursor: pointer;
 }
+
 .arrayDiv {
 	width:100%;
 	float: right;
 }
+
 li.pfmInfo {
 	list-style: none;
 	float: left;
@@ -158,6 +161,7 @@ li.pfmInfo {
 
 .choiceDiv {
 	text-align: center;
+	margin-top: 20px;
 }
 </style>
 <div class="container">

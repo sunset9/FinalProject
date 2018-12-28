@@ -30,7 +30,7 @@ ul.tabs li.current{
 .tab-content{
 	display: none;
 	background: #ededed;
-	padding: 15px;
+	padding: 20px;
 	width: 1000px;
 }
  
@@ -66,13 +66,20 @@ ul.tabs li.current{
 	text-align: center;
 }
 
-/* .basicSize { */
-/* 	padding: 20px; */
-/* 	margin: 10px; */
-/* 	width: 100%; */
-/* 	height: 200px; */
-/* 	border: 1px solid black; */
-/* } */
+.basicSize {
+	border-bottom: 1px solid black;
+	margin: 10px;
+}
+
+.imgli {
+	float: left;
+}
+
+#artistImg {
+	width: 130px;
+	height: 130px;
+	margin: 10px;
+}
 </style>
 
 <script type="text/javascript">
@@ -92,6 +99,9 @@ ul.tabs li.current{
 
 <!-- 탭 배너 -->
 <div class="main_tab">
+
+	<strong style="font-size: 20px; color: red;">'${top_searchh }'</strong><small style="font-size: 20px;">에 대한 검색 결과</small><br><br>
+		
 	<ul class="tabs">
 		<!-- 테이블 명을 넘겨주어 조회 -->
 		<li class="tab-link current" data-tab="tab-1" id="all">통합검색</li>
@@ -101,7 +111,7 @@ ul.tabs li.current{
 	</ul>
 
 	<div id="tab-1" class="tab-content current">
-		<strong style="font-size: 20px">공연 ( ${pfmCount }건 )</strong><br>
+		<strong style="font-size: 20px;">공연 ( ${pfmCount }건 )</strong><br>
 		<div class="basicSize">
 		<ul>
 		<c:forEach items="${pfmSearchList }" var="list">
@@ -112,6 +122,10 @@ ul.tabs li.current{
 				<strong style="text-align: center; height: 200px;">${list.name }</strong>
 			</a>
 			</li>
+			
+<%-- 			<c:if test="${empty list }"> --%>
+<!-- 				검색 결과가 없습니다.  -->
+<%-- 			</c:if> --%>
 		</c:forEach>
 		</ul>
 		</div>
@@ -119,7 +133,7 @@ ul.tabs li.current{
 		<strong style="font-size: 20px">아티스트( ${artCount }건 )</strong><br>
 		<div class="basicSize">
 		<c:forEach items="${artSearchList }" var="list">
-			<div class="imgli">
+			<div class="artimg">
 				<img id="artistImg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
 				${list.name }
 			</div>
@@ -149,6 +163,7 @@ ul.tabs li.current{
 	<!-- 공연 : 공연 이름에 따른 검색 조회 -->
 	<div id="tab-2" class="tab-content">
 		<strong style="font-size: 20px">검색 결과 ( ${pfmCount }건 )</strong><br>
+		<div class="basicSize">
 		<ul>
 		<c:forEach items="${pfmSearchList }" var="list">
 			<li id="tabPfmList">
@@ -160,20 +175,28 @@ ul.tabs li.current{
 			</li>
 		</c:forEach>
 		</ul>
+		</div>
 	</div>
 	
 	<div id="tab-3" class="tab-content">
 		<strong style="font-size: 20px">검색 결과 ( ${artCount }건 )</strong><br>
-		<c:forEach items="${artSearchList }" var="list">
-			<div class="imgli">
-				<img id="artistImg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
-				${list.name }
-			</div>
-		</c:forEach>
+		<div class="basicSize">
+		<ul id="posterList" style="text-align: center;">
+			<c:forEach items="${artSearchList }" var="list">
+				<li class="imgli" style="text-align: center;">
+					<span class="thumImg">
+						<img id="artistImg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
+						<small>${list.name }</small>
+					</span>
+				</li>
+			</c:forEach>
+		</ul>
+		</div>
 	</div>
 	
 	<div id="tab-4" class="tab-content">
 		<strong style="font-size: 20px">검색 결과 ( ${hallCount }건 )</strong><br>
+		<div class="basicSize">
 		<div id="hallImgDiv">
 			<c:forEach items="${hallSearchList }" var="list">
 				<div id="reviewUser">
@@ -188,6 +211,7 @@ ul.tabs li.current{
 					${list.hallName }<br>
 				</div>
 			</c:forEach>
+		</div>
 		</div>
 	</div>
 </div>
