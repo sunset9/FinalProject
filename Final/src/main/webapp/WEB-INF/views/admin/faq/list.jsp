@@ -1,79 +1,133 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<head>
+
+ 
+<!-- 부트스트랩 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+
+<style>
+    *{padding:0;margin: 0;}
+    ul li{list-style: none;}
+    .clearfix:after{content: "";display: block;clear: both;}
+    h1{text-align: center;padding: 20px 0;}
+    .f_question1>ul>li,.f_answer1>ul>li{float: left;}
+    .fnq{width: 70%;line-height:300%;margin: 0 auto;}
+    .f_question1{position: relative}
+    .f_answer1{background: #eee;display: none;}
+    .f_answer1.on{display: block;}
+    .f_question1>ul>li:nth-child(1){width: 7%;text-align: center;}
+    .f_answer1>ul>li:nth-child(1){width: 7%;text-align: center;}
+    .f_question1>ul>li:nth-child(2){width: 13%;text-align: center;}
+    .f_question1>ul>li:nth-child(3){width:75%; }
+    .f_question1>ul>li:nth-child(4){width:5%; }
+    .f_q_link{width: 100%;height: 100%;position:absolute;top: 0;left: 0;}
+</style>
+
+
 <body>
-<h1>FAQ 리스트</h1>
 
-<div id="accodian">
+<h1> FAQ 임시 </h1>
 
-	<ul>
-		<li>
-			<h1>1 타이틀입니다<span class="ico_ar">▼</span></h1>
-			<ul>
-				<li>1 내용이 들어가겠졍</li>
-			</ul>
-		</li>
-		<li class="active">
-			<h1>2 타이틀입니다<span class="ico_ar">▼</span></h1>
-			<ul>
-				<li>2 내용이 들어가겠졍</li>
-			</ul>
-		</li>
-		<li>
-			<h1>3 타이틀입니다<span class="ico_ar">▼</span></h1>
-			<ul>
-				<li>3 내용이 들어가겠졍</li>
-			</ul>
-		</li>
-		<li>
-			<h1>4 타이틀입니다<span class="ico_ar">▼</span></h1>
-			<ul>
-				<li>4 내용이 들어가겠졍</li>
-			</ul>
-		</li>
-	</ul>
+<hr>
+<!-- conta = container -->
+<div class="con">
+
+
+<div class="form-inline">
+	<select id="searchTypeSel" name="searchType">
+		<option value="">검색조건</option>
+		<option value="all"><c:out value="${map.searchOption == 'all'?'selected':'' }"/> 제목+내용 </option>		
+		<option value="title"><c:out value="${map.searchOption == 'title'?'selected':'' }"/>제목</option>
+		<option value="content"><c:out value="${map.searchOption == 'content'?'selected':'' }"/>내용</option>
+	</select>
+
+	<input class="form-control" type="text" id="keyword" name="keyword"
+		value="${cri.keyword }" placeholder="검색어를 입력하세요"/>
+		
+	<button id="searchBtn" class="btn btn-primary">Search</button>
+
+	</div>
+
+
+<div>
+  
+	<c:forEach items="${noticelist }" var="noli">
+	
+	    <ul class="fnq">
+        <li class="f_question1">
+            <ul class="clearfix">
+                <li>${noli.noticeIdx }</li>
+                <li>${noli.NTypeIdx }</li>
+                <li>${noli.noticeTitle }</li>
+                <li><i class="fa fa-angle-double-up"></i></li>
+            </ul>
+            
+            <a href="#" class="f_q_link"></a>
+        </li>
+        <li class="f_answer1">
+            <ul class="clearfix">
+                <li>번호 : 20 </li>
+                <li>${noli.noticeContent }</li>             
+            </ul>
+			<button class="btnUpdate" data-idx='${noli.noticeIdx }'>수정</button>
+			<button class="btnDelete" data-idx='${noli.noticeIdx }'>삭제</button>
+        </li>
+    </ul>
+	</c:forEach>
+
 
 </div>
 
+</div>
+<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 
+<jsp:include page="../../utils/noticepaging.jsp"/>
+
+<!-- 아코디언 테스트 -->
 <script type="text/javascript">
 
-$("#accordian h1").click(function(){
-	$("#accordian ul ul").slideUp();
-	$('.ico_ar').css('transform','none');
-	if(!$(this).next().is(":visible"))
-	{
-		$(this).next().slideDown();
-		$(this).find('.ico_ar:eq(0)').css('transform','rotate(180deg)');
-	}
-})
-})
-
-</script>
-
-<script type="text/javascript">
 
 $(function(){
-	$("#accordian h1").click(function(){
-		$("#accordian ul ul").slideUp();
-		if(!$(this).next().is(":visible"))
-		{
-			$(this).next().slideDown();
-		}
-	})
-})
+	  var className =""  //변수를 선언한다.
+	     
+	   $('.f_q_link').on({    //버튼을
+	 
+	       click: function(){  //클릭했을때 
+	 
+	            className=$(this).parent().next().attr('class').slice(-2); 
+	            //보여줄 li의 class이름을 뒤에서 두자리(on)를 변수에 담는다.
+	 
+	           if(className=='on'){  //만약 클래스명이 'on'이면
+	 
+	               $(this).parent().next().removeClass('on'); //class'on' 삭제
+	          
+	           }
+	           else if(className!='on'){  //만약 클래스명이 'on'이 아니면
+	               $(this).parent().next().addClass('on');  //class'on' 추가
+          
+	           }	             
+	        }        
+	    });
+	  
+		$(".btnUpdate").click(function(){
+			$(location).attr("href", "/admin/noticeupdate?noticeIdx="+$(this).attr("data-idx"));
+		});
+		$(".btnDelete").click(function(){
+			$(location).attr("href", "/admin/noticedelete?noticeIdx="+$(this).attr("data-idx"));
+		});
+		
+	     
+	});
+
 </script>
-
-
 
 
 </body>
-</html>

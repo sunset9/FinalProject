@@ -88,8 +88,8 @@ h1, h2, h3 {
 			</ul>
 		</li>
 		<li><a href="">1:1 문의</a></li>
-		<li><a href="">공지사항</a></li>
-		<li><a href="">FAQ</a></li>
+		<li><a href="/admin/noticelist">공지사항</a></li>
+		<li><a href="/admin/faqlist">FAQ</a></li>
 		<li><a href="/admin/registhall">공연장등록</a></li>
 	</ul>
 </div>

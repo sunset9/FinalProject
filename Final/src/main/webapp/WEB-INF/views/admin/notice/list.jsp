@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<jsp:include page="../layout/menu.jsp" />
 
  
 <!-- 부트스트랩 -->
@@ -12,6 +12,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<style>
+
+.con{width:50%; }
+
+</style>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#btnDelete").click(function(){
@@ -29,11 +36,10 @@ $(document).ready(function(){
 				// 그렇지 않으면 false로 (체크off)
 		};
 	});
+	
 });
 </script>
 
-</head>
-<body>
 
 <h1>공지 리스트</h1>
 <hr>
@@ -65,8 +71,8 @@ $(document).ready(function(){
 <table class="table table-striped table-hover">
 	
 	<tr>
-		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th> 전체 박스 
-		<th>NO.</th>
+		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th>
+		<th>글번호</th>
 		<th>분류</th>
 		<th>제목</th>
 		<th>등록일</th>	
@@ -86,19 +92,13 @@ $(document).ready(function(){
 
 </table>
 
-
-<!-- <a href="/admin/noticewrite"><button> 글쓰기 </button></a> -->
-<!-- <a href="/admin/noticedelete"> <button>글 삭제</button></a> -->
-<button id="btnDelete">삭제</button>
-</div>
+<a href="/admin/noticedelete"> <button>글삭제</button></a>
 
 </form>
 </div>
 <a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 
 <jsp:include page="../../utils/noticepaging.jsp"/>
-
-
-
+</div>
 </body>
 </html>
