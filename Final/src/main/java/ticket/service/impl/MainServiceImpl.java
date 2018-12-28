@@ -77,7 +77,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getPopularityList(String genreIdx) {
+	public List<Performance> getPopularityList(String genreIdx) {
 		return mainDao.selectPopularityListPfm(genreIdx);
 	}
 

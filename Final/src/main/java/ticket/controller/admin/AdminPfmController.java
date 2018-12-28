@@ -893,7 +893,7 @@ public class AdminPfmController {
 		Paging paging = new Paging(totalCnt, 1, 12, 4);
 		
 		// 특정 장르에 해당하는 공연 리스트 가져오기
-		List<Performance> pfmList = pService.getPfmListByGenre(genre, order, paging);
+		List<Performance> pfmList = pService.getPfmListByGenreNOrder(genre, order, paging);
 		model.addAttribute("pfmList",pfmList);
 		
 		return "admin/pfm/managerPfm";
@@ -916,7 +916,7 @@ public class AdminPfmController {
 		Paging paging = new Paging(totalCnt, curPage, 8, 4);
 				
 		// 장르가 일치하는 공연 리스트 가져오기
-		List<Performance> pfmList = pService.getPfmListByGenre(genre, order, paging);
+		List<Performance> pfmList = pService.getPfmListByGenreNOrder(genre, order, paging);
 		
 		// View 로 넘겨줄 값 
 		HashMap<String, Object> map = new HashMap<String, Object>();

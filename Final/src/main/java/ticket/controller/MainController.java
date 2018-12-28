@@ -195,7 +195,7 @@ public class MainController {
 		if(array.equals("popularity")) {
 			// 인기순
 			//	sql문 작성하기
-			List<Poster> posterList = mainService.getPopularityList(genreIdx);
+			List<Performance> posterList = mainService.getPopularityList(genreIdx);
 			map.put("posterList", posterList);
 			
 		} else if(array.equals("Deadline")) {

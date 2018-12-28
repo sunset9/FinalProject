@@ -335,6 +335,16 @@ $(document).ready(function(){
 		
 		// 다음 단계 클릭 시
 		if($(this).is($('#nextBtn'))){
+			// 유효성 검사
+			if(curStep == 1){
+				console.log($('#posterBtn').val().length);
+				if($('#posterBtn').val().length == 0 ){
+					alert("포스터를 선택해주세요.");
+					return;
+				} 
+			}
+			
+			// 다음,이전 버튼 활성화 조정
 			if(curStep == 1){ // 현재 STEP1 단계라면
 				// '이전 단계' 버튼 활성화
 				$('#prevBtn').show();

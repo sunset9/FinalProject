@@ -83,11 +83,10 @@ public interface MainService {
 
 	/**
 	 * 최종수정일: 2018.12.14
-	 * @param genre 
 	 * @Method설명: 콘서트 - 인기순
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getPopularityList(String genreIdx);
+	public List<Performance> getPopularityList(String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.15
