@@ -144,6 +144,22 @@ function ajax(url){
 		});
 }
 $('#searchbtn').click(function() { //검색버튼 클릭시
+	var textLength= $('#searchposter').val().length;
+	var byteCnt = 0;
+	for (i = 0; i < textLength; i++) {
+		   var charTemp = $('#searchposter').val().charAt(i);
+		   if (escape(charTemp).length > 4) {
+		    byteCnt += 2;
+		  
+		   } else {
+		    byteCnt += 1;
+		  
+		   }
+	}
+	if(byteCnt<2){
+		alert("최소 두글자 이상 검색해주세요");
+		return;
+	}
 	$.ajax({
 	type : "get",
 	url : "/searchpostermu", 
@@ -183,7 +199,7 @@ $('#searchbtn').click(function() { //검색버튼 클릭시
 			console.log("error");
 			}
 		});
-	$('ul.pagination').remove();
+	$('ul.pagination').html('');
 	});
 
 $('#myModal').find('.btn').on('click',function() {
@@ -244,7 +260,7 @@ $('#myModal').find('.btn').on('click',function() {
 	//해당 이미지 
 	var adddiv2=$('<div class="thumbnail"style=" text-align: center;" id="thum_'+selectedId+'">');
 	//포스터 추가 버튼 (div형태 )
-	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 0px;">')
+	var adddiv3=$('<div class="glyphicon glyphicon-plus-sign" id="add_poster_'+selectedId+'"style="position:initial; left:50%; height:118px; margin:96px 0 0 0px;">')
 	adddiv2.append(adddiv3);
 	adddiv1.append(adddiv2);
 	start.append(adddiv1);
@@ -295,7 +311,7 @@ $('.caption').on('mouseleave','.cover',function(){
 }); // end ready
 </script>
 
-<div style="position: absolute; float: left; left: 230px;">
+<div style="position: absolute; float: left; left: 230px; width: 70%;">
 <div>
 <h1>
 카테고리 뮤지컬 배너 관리
@@ -324,7 +340,7 @@ $('.caption').on('mouseleave','.cover',function(){
 		<div class="" id="draw" style="width:137px; height: 224px;">
 			<div class="thumbnail" style=" text-align: center;" id="thum">
 				<div class="glyphicon glyphicon-plus-sign" id="add_poster"
-				style="position:initial; left:50%; width:100px; height:100px; margin:96px 0 0 0px;">
+				style="position:initial; left:50%; height:118px; margin:96px 0 0 0px;">
 			</div>
 		</div>
 		</div>		
