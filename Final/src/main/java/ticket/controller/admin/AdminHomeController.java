@@ -52,8 +52,8 @@ public class AdminHomeController {
 		int todayFamily = pService.getTodayFam();
 		
 		//현재 접속자수 불러오기 uService.getConnectUser()
-		CountManager cm = new CountManager();
-		int countConnector = cm.getCount();
+		//CountManager cm = new CountManager();
+		//int countConnector = cm.getCount();
 		
 		//1:1 문의 미답변수 불러오기 uService.getUnanswered()
 		int unansweredInq = pService.getUnanswered();
@@ -66,7 +66,7 @@ public class AdminHomeController {
 		model.addAttribute("todayMusical", todayMusical);
 		model.addAttribute("todayFamily", todayFamily);
 		model.addAttribute("unansweredInq", unansweredInq);
-		model.addAttribute("countConnector", countConnector);
+		//model.addAttribute("countConnector", countConnector);
 	}
 	
 	@RequestMapping(value="admin/adminmain", method=RequestMethod.GET)
