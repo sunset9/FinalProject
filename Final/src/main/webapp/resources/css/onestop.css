@@ -9,9 +9,9 @@
 .wrap_sel .btn_sel .sel_cate{padding-left:5px;line-height:24px;text-align:left;border: 1px solid #ddd;}	
 .txt_gray{font-weight:normal;color:#888;}
 .txt_og{color:#f28e47;}
-.txt_gr{color:#00b523;}
+.txt_gr{color:#fcd306;}
 .txt_bd{font-weight:bold;}
-.tit_gr{padding-bottom:10px;font-size:30px;color:#00b523;}
+.tit_gr{padding-bottom:10px;font-size:30px;color:#fcd306;}
 .txt_frt{font-size:17px;color:#333;padding-bottom:3px;letter-spacing:-2px}
 .txt_sm{font-size:13px;}
 .txt_mid{font-size:17px;color:#333;}
@@ -50,10 +50,10 @@
 .btn_onestop .button.btNext{border: 1px solid #888888;background:#888888;}
 .btn_onestop .button.btNext.on{border: none;background: #41d26b;}
 .btn_onestop .button.btNext.on a{border: 1px solid #41d26b;background: #41d26b;}
-.btn_onestop .button.btNext.on a:hover{border: 1px solid #00b523;background: #00b523;}
+.btn_onestop .button.btNext.on a:hover{border: 1px solid #fcd306;background: #fcd306;}
 .btn_onestop .button .btnOne{display:block;width:118px;height:48px;text-decoration:none;}
 .btn_onestop .button .btnOne.btnOneB{width:243px;}
-.btn_onestop .button.btchange .btnOne.btnOneB:hover{background-color:#00b523}
+.btn_onestop .button.btchange .btnOne.btnOneB:hover{background-color:#fcd306}
 .btn_onestop .button .btnOne.btnOneCen{width:243px;padding:0;text-align:center;}
 .btn_onestop .button .btnOne .one_arr{display: inline-block;overflow:hidden;width:6px;height:17px;background: url(https://cdnticket.melon.co.kr/resource/image/web/onestop/btn_onestop.png) no-repeat;background-size:100px auto;text-indent: -9999px;}
 .btn_onestop .button .btnOne .one_arr.prav_ar{position:absolute;top:17px;left:20px; background-position:-30px 0;}
@@ -81,7 +81,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .box_select .box_ticket h4 {display:block;overflow:hidden;position:relative;height: 40px;border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;background-color: #fafafa;}
 .box_select .box_ticket h4 .tit_ticket {display:block;font-size:14px;line-height: 38px;margin: 0 8px;color:#333;}
 .box_select .box_ticket h4 .txt {display:block;position:absolute;top:0;right: 20px;font-weight:normal;font-size:14px;line-height: 38px;letter-spacing: 0;color:#333}
-.box_select .box_ticket h4 .txt em {font-weight:bold;color:#00b523;}
+.box_select .box_ticket h4 .txt em {font-weight:bold;color:#fcd306;}
 
 .box_select .list_ticket {display:block;background-color:#fff;border-bottom:1px solid #eee;font-size:13px;line-height: 38px;}
 .box_select .list_ticket .box_ticket_t {display:block;overflow:hidden;margin: 0 8px;}
@@ -123,7 +123,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .list_ticket .box_ticket_t .ticket_btn .tit_tk .arr.more{background-position:0 -42px;}
 .list_ticket .box_ticket_t.on .ticket_btn .tit_tk, 
 .list_ticket .box_ticket_t.on .ticket_btn .price, 
-.list_ticket .box_ticket_t.on .ticket_btn .sel_cate{color: #00b523;}/*선택시 on 생성*/
+.list_ticket .box_ticket_t.on .ticket_btn .sel_cate{color: #fcd306;}/*선택시 on 생성*/
 .box_ticket_more, .box_coupon_more{display:none;}
 .box_ticket_more.open, .open .box_coupon_more{display:block;}
 .box_ticket_more .tit_more_info{padding-bottom:15px;color:#888;line-height:23px;}
@@ -146,7 +146,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .seat_box.open .seat_choice{display:block;}
 .seat_box .seat_btn{height: 35px;padding: 0 10px 0 30px;font-family:'맑은 고딕','Malgun Gothic',sans-serif;font-size: 16px;color:#fff;background:url(https://cdnticket.melon.co.kr/resource/image/web/onestop/bg_onestop_bigarr.png) right -34px no-repeat;background-size:40px auto;line-height: 35px; cursor:pointer}
 .seat_box.open .seat_btn {background-position:right 0;}
-.seat_box .seat_btn .txt_seat{margin-left:5px;color:#00b523;}
+.seat_box .seat_btn .txt_seat{margin-left:5px;color:#fcd306;}
 .seat_box .seat_btn .txt_seat_s{margin-left:5px;font-size:14px;color:#cccccc;}
 
 .seat_box.open .seat_btn .txt_seat{text-decoration:underline;}
@@ -337,7 +337,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .wrap_ticket_info .box_info .box_ticket .box_total_inner .pay{float: right;letter-spacing: 0;}
 .wrap_ticket_info .box_info .box_ticket .box_result{ margin:0;padding:15px;border-top:1px solid #eeeeee;font-weight: bold;}
 .wrap_ticket_info .box_info .box_ticket .box_result .tot_tit{font-size:14px;color:#333}
-.wrap_ticket_info .box_info .box_ticket .box_result .tot_pay{font-size: 22px;color:#00b523;}
+.wrap_ticket_info .box_info .box_ticket .box_result .tot_pay{font-size: 22px;color:#fcd822;}
 .wrap_ticket_info .box_info .box_ticket .box_ticket_inner{padding:10px 15px;}
 .wrap_ticket_info .box_info .box_ticket .box_ticket_inner th{text-align:left; }
 .wrap_ticket_info .box_info .box_ticket .box_ticket_inner td{padding:8px 0;}
@@ -383,7 +383,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .wrap_ticket_info .wrap_seat_list .box_seat_inner th.seat_color.seat_color.seat_s{background-color:#f9d02c;}
 .wrap_ticket_info .wrap_seat_list .box_seat_inner th.seat_color.seat_color.seat_a{background-color:#a2d747;}
 .wrap_ticket_info .wrap_seat_list .box_seat_inner th.seat_color.seat_color.seat_b{background-color:#d15496;}
-.wrap_ticket_info .wrap_seat_list .box_seat_inner td.seat_remain{color:#00b523;padding-right:3px}
+.wrap_ticket_info .wrap_seat_list .box_seat_inner td.seat_remain{color:#fcd306;padding-right:3px}
 .wrap_ticket_info .wrap_seat_list .box_seat_inner td.area_info{overflow:hidden;background: url(https://cdnticket.melon.co.kr/resource/image/web/onestop/bg_onestop_arr2.png) no-repeat -5px -5px;text-indent:-9999px;font-size: 0;padding: 0;}
 .wrap_ticket_info .wrap_seat_list .box_seat_inner td.area_info.open{background-position:right -5px;}
 .wrap_ticket_info .wrap_seat_list .box_seat_inner .box_list_area td{padding:0;}
@@ -509,17 +509,17 @@ input.inp_w60{width:38px;padding:0 10px}
 .wrap_ticket_info .wrap_seatchange_list .box_seat_inner.box_seat_area2{overflow-y:auto;margin:0;height:110px;}
 .wrap_ticket_info .wrap_seatchange_list .box_seat_inner.box_seat_area2 .seat_info{margin: 4px 0}
 .box_seat h4{color:#333;background: #fafafa;padding:6px 10px;font-weight: normal;}
-.box_seat h4 strong{color: #00b523}
+.box_seat h4 strong{color: #fcd306}
 .box_seat .seat_info li{padding:2px 10px;color:#666;letter-spacing:0}
 .box_seat .seat_info li:hover{background-color:#eee}
 .btn_onestop .button.btchange{border: 1px solid #41d26b;background: #41d26b;}
-.btn_onestop .button.btchange:hover{border: 1px solid #00b523;background: #00b523;}
+.btn_onestop .button.btchange:hover{border: 1px solid #fcd306;background: #fcd306;}
 .btn_onestop .button.btchange a{color:#fff;}
 
 /* 좌석 위치확인 2016.02.05 */
 .wrap_ticket_info .wrap_seatchange_list .box_seat_inner.box_seat_area3{overflow-y:scroll;margin:0;height:240px;}
 .wrap_ticket_info .wrap_seatchange_list .box_seat_inner.box_seat_area3 .seat_info{margin: 4px 0}
-.tit_seatNum{color: #00b523}
+.tit_seatNum{color: #fcd306}
 .seat_info li a{line-height:13px}
 
 .seat_info em.seat_color{display:inline-block;width:12px;height:12px;margin:7px 7px 0 5px; text-indent: -9999px}
@@ -580,7 +580,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .highpass_wrap{position:relative;text-align:center;padding:33px 0;font-family:"맑은 고딕","Malgun Gothic",sans-serif;}
 .highpass_wrap h4, .highpass_wrap2 h4{display:none}
 .highpass_wrap .highpass_txt{font-size:18px;color:#333;letter-spacing:-2px;padding-bottom:4px;}
-.highpass_wrap .limit_time{font-size:26px;color:#00b523;letter-spacing:-2px;padding-bottom:3px;}
+.highpass_wrap .limit_time{font-size:26px;color:#fcd306;letter-spacing:-2px;padding-bottom:3px;}
 .highpass_wrap .highpass_date_time{font-size:16px;color:#999;display:block;padding-bottom:13px;}
 .highpass_wrap .highpass_txt2{font-size:14px;color:#717171;font-family:"돋움",Dotum;display:block;padding-top:20px;}
 .highpass_wrap .highpass_txt2 span{color:#f0780a}
@@ -589,7 +589,7 @@ input.inp_w60{width:38px;padding:0 10px}
 .highpass_wrap2  .limit_time2 .time, .highpass_wrap3  .limit_time2 .time{display:inline-block;width:76px;height:40px;color:#fff;font-weight:normal;letter-spacing:32px;text-indent:12px;margin:0 8px;background: url(//cdnticket.melon.co.kr/resource/image/web/onestop/img_highpass_time.png) no-repeat 0 0;}
 .highpass_wrap2 .highpass_date_time2{font-size:16px;color:#333;display:block;padding-top:7px;}
 .highpass_wrap3{position:relative;text-align:center;padding:2px 0 17px;font-family:"맑은 고딕","Malgun Gothic",sans-serif;}
-.highpass_wrap3 h4{color:#00b523;font-size:30px;font-weight:normal;padding-bottom:13px}
+.highpass_wrap3 h4{color:#fcd306;font-size:30px;font-weight:normal;padding-bottom:13px}
 .highpass_wrap3 .highpass_date_time2{font-size:16px;color:#333;display:block;padding-top:7px;}
 .highpass_wrap3 .highpass_txt{font-size:18px;line-height:28px;color:#666;letter-spacing:-2px;padding-top:19px;}
 .highpass_wrap3 .highpass_txt span{color:#f0780a}

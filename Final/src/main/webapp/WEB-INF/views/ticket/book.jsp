@@ -56,7 +56,7 @@ $(document).ready(function() {
 			}
 		});	
 	
-	//왼쪽 작은 좌석 구역
+	//왼쪽 미니 좌석 구역
 		$.ajax({
 			type:"get",
 			url:"/ticket/seatSection",
@@ -77,17 +77,16 @@ $(document).ready(function() {
 				$('#selectedSeats_small svg').width('300px');
 				
 				loadSectionData();
+				
 				$('#selectedSeats_small svg').on('click','path,rect',function(){
-					console.log($(this));
+					$('path').removeClass('clicked');
+					$('rect').removeClass('clicked');
+					
 					if(!$(this).hasClass('clicked')){
 						$(this).addClass('clicked');
 					}else {
 						$(this).removeClass('clicked');
 					}
-					
-					
-					
-					
 					
 				
 				});
@@ -96,6 +95,13 @@ $(document).ready(function() {
 		});	
 	
 	
+	//구역이름 클릭시 구역 선택하게
+	 $('text').click(function () {
+		var selector = ".section."+$(this).children().text();
+		$(this).parent().find(selector).click();
+	})
+		 
+		 
 	  //좌석 그리는 페이지띄어주기
 	  $('#selectedSeats').on('click','.section', function(){
 		  
@@ -424,8 +430,8 @@ function getSeatInfo(){
 					$('#selected-seats').html("");
 					$('#total').html("0");
 					$('#counter').html("0");
-					$('svg').css("width","650px");
-					$('svg').css("height","530px");
+					$('#selectedSeats svg').css("width","650px");
+					$('#selectedSeats svg').css("height","530px");
 					loadSectionData();
 				
 				}
@@ -512,6 +518,12 @@ function getSeatInfo(){
     bottom: 10px;
 }
 
+.clicked {
+ 	stroke: #222; 
+ 	stroke-width: 25; 
+ } 
+ 
+	
 </style>
 </head>
 <body>
@@ -552,7 +564,7 @@ function getSeatInfo(){
 <div id = "step2and3" style="display:none;">
 <div class="wrap_ticket_info" style="float:right">
 		<h2 class="logo_onestop">
-			<a href="#none"><img src="https://cdnticket.melon.co.kr/resource/image/web/onestop/logo_onestop.png" alt="바나나 티켓"></a>
+			<a href="#none"><img src="/resources/image/bananalogo2.png" alt="바나나 티켓"></a>
 		</h2>
 		<div class="box_info">
 		<h3 class="select_tit select_t txt_prod_name" title="공연제목">${param.name}</h3>
