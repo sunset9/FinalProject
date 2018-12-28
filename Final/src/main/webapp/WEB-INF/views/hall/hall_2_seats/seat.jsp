@@ -9,7 +9,7 @@
 
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="/resources/jquery.seat-charts.css">
-<script src="http://code.jquery.com/jquery-1.11.0.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.11.0.js"></script> -->
 <script src="/resources/jquery.seat-charts.js"></script>
 <style type="text/css">
 /*예약좌석*/

@@ -77,62 +77,102 @@ $(document).ready(function() {
 				$('#selectedSeats_small svg').width('300px');
 				
 				loadSectionData();
-				
-				$('#selectedSeats_small svg').on('click','path,rect',function(){
-					$('path').removeClass('clicked');
-					$('rect').removeClass('clicked');
-					
-					if(!$(this).hasClass('clicked')){
-						$(this).addClass('clicked');
-					}else {
-						$(this).removeClass('clicked');
-					}
-					
-				
-				});
+
 			
 			}
 		});	
 	
+		
+	//작은좌석구역 클릭시
+		$('#selectedSeats_small svg').on('click','path,rect',function(){
+			$('path').removeClass('clicked');
+			$('rect').removeClass('clicked');
+			if(!$(this).hasClass('clicked')){
+				$(this).addClass('clicked');
+			}else {
+				$(this).removeClass('clicked');
+			}
+			
+			  var color = $(this).css("fill");
+			  var secName = $(this).attr("class");
+			  var pay = $(this).data("pay");
+			  var appName = $(this).data("appName");
+			  var oriSecIdx = $(this).data("secIdx");
+			  var pfmIdx =${param.pfmIdx};
+			  var hallIdx =${param.hallIdx};
+			  
+				$.ajax({
+					type:"GET",
+					url:"/hall/hall_2_seats/seat",
+					data:{"color":color,
+						"secName":secName[0],
+						"pay":pay,
+						"appName":appName,
+						"hallIdx":hallIdx,
+						"oriSecIdx":oriSecIdx,
+						"pfmIdx" :pfmIdx,
+						"date" : "${param.date }",
+						"time" : "${param.time }"
+						},
+					dataType:"html",
+					success:function(res){
+						$('#selectedSeats').html(res);
+					}
+					
+				});
+			  
+			
+		});
 	
-	//구역이름 클릭시 구역 선택하게
-	 $('text').click(function () {
-		var selector = ".section."+$(this).children().text();
-		$(this).parent().find(selector).click();
-	})
+	
+		//구역이름 클릭시 구역 선택하게
+		 $('text').click(function () {
+			var selector = ".section."+$(this).children().text();
+			$(this).parent().find(selector).click();
+		})
 		 
 		 
 	  //좌석 그리는 페이지띄어주기
 	  $('#selectedSeats').on('click','.section', function(){
-		  
 		  var color = $(this).css("fill");
 		  var secName = $(this).attr("class");
 		  var pay = $(this).data("pay");
 		  var appName = $(this).data("appName");
 		  var oriSecIdx = $(this).data("secIdx");
+		  var pfmIdx =${param.pfmIdx};
+		  var hallIdx =${param.hallIdx};
 		  
 			$.ajax({
-				
 				type:"GET",
 				url:"/hall/hall_2_seats/seat",
 				data:{"color":color,
 					"secName":secName[0],
 					"pay":pay,
 					"appName":appName,
-					"hallIdx":${param.hallIdx},
+					"hallIdx":hallIdx,
 					"oriSecIdx":oriSecIdx,
-					"pfmIdx" :${param.pfmIdx},
+					"pfmIdx" :pfmIdx,
 					"date" : "${param.date }",
 					"time" : "${param.time }"
 					},
 				dataType:"html",
 				success:function(res){
 					$('#selectedSeats').html(res);
-					
 				}
 				
 			});
-		  
+			
+			//좌석구역 선택시 미니화면도 해당 구역으로 선택
+			var classAttr = $(this).attr("class").split(" ");
+			var classStr = "."+classAttr[0]+"."+classAttr[1];
+		     //미니화면 선택된거 리셋
+		    $('path').removeClass('clicked');
+		    $('rect').removeClass('clicked');
+			if (!$('#selectedSeats_small').find(classStr).hasClass("clicked")){
+				$('#selectedSeats_small').find(classStr).addClass("clicked");
+			}else{
+				$('#selectedSeats_small').find(classStr).removeClass("clicked");
+			};
 	  });
 	  
 
@@ -319,12 +359,7 @@ $(document).ready(function() {
 					  json[secName]=color[i];
 				  }
 				  
-// 				  for(var i=0;i<res.hashMap.secName.length;i++){
-// 					  secName = res.hashMap.secName[i];
-// 				  }
-				  
 					for(var i=0;i<res.hashMap.secMap.length;i++){
-						
 						var str = 'path.'+res.hashMap.secMap[i].oriSecName;
 						var path = $('.seat_block').find(str); //seat_block 하위요소중 path중에 불러온 이름중 원본섹션이름을 가진걸 불러와라
 						
@@ -404,10 +439,13 @@ function getSeatInfo(){
 	 }
 	 
 	 function seatAllView() {
-		 
+	      //미니화면 선택된거 리셋
+		  $('path').removeClass('clicked');
+		  $('rect').removeClass('clicked');
 		  //선택된 좌석들
 		  var IsSeatSelect = $('#seat-map').find('.selected');
-		  
+		  var pfmIdx =${param.pfmIdx };
+		  var hallIdx=${param.hallIdx };
 		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
 		  if (IsSeatSelect.size() != 0){
 			  if(confirm("선택한 좌석 정보를 삭제하고 이동하시겠습니까?")){
@@ -420,8 +458,8 @@ function getSeatInfo(){
 				type:"get",
 				url:"/ticket/seatSection",
 				data:{
-					"pfmIdx":${param.pfmIdx },
-					  "hallIdx":${param.hallIdx }
+					"pfmIdx":pfmIdx,
+					  "hallIdx":hallIdx
 					  },
 				async: false,
 				dataType:"html",
@@ -523,7 +561,6 @@ function getSeatInfo(){
  	stroke-width: 25; 
  } 
  
-	
 </style>
 </head>
 <body>
@@ -554,7 +591,7 @@ function getSeatInfo(){
 <!-- 	<div id="legend"></div> -->
 	
 	<button onclick="seatAllView()">좌석도 전체보기</button>
-	
+	<button id = "seatBtn" class="stepBtn nextBtn">다음단계</button>
 	</div>
 	
 </div>
@@ -800,7 +837,6 @@ function getSeatInfo(){
 
 </div>
 
-	<button id = "seatBtn" class="stepBtn nextBtn">다음단계</button>
 
 </body>
 </html>
