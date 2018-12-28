@@ -422,4 +422,18 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public int selectTotalPfm(String search);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 메인배너 파일 저장하기
+	 * @작성자: 김지은
+	 */
+	public void insertMainBanner(MainBanner mainBanner);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: pfmIdx로 메인 배너 중복 확인하기 
+	 * @작성자: 김지은
+	 */
+	public int selectPfmIdxDup(int pfmIdx);
 }

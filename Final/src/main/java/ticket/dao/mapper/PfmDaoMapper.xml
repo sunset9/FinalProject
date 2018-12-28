@@ -36,12 +36,15 @@
 	</resultMap>
 	
 	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
+		<result column="pfm_idx" property="pfmIdx"/>
 		<result column="mainban_idx" property="mainbanIdx"/>
 		<result column="pfm_start" property="pfmStart"/>
 		<result column="pfm_end" property="pfmEnd"/>
 		<result column="stored_name" property="storedName"/>
 		<result column="banner_img_str" property="bannerImgStr"/>
 		<result column="thumb_img_str" property="thumbImgStr"/>
+		<result column="banner_img_ori" property="bannerImgOri"/>
+		<result column="thumb_img_ori" property="thumbImgOri"/>
 		<result column="hall_name" property="hallName"/>
 	</resultMap>
 	
@@ -567,6 +570,16 @@
 			ORDER BY p.create_date DESC) PP
 			)
 		WHERE no BETWEEN #{startNo} AND #{endNo}
+	</select>
+	
+	<insert id="insertMainBanner" parameterType="ticket.dto.MainBanner">
+		INSERT INTO main_banner
+		VALUES(main_banner_seq.nextval, #{pfmIdx}, #{bannerImgOri}, #{bannerImgStr}, #{thumbImgOri}, #{thumbImgStr},  sysdate)
+	</insert>
+	
+	<select id="selectPfmIdxDup" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM main_banner 
+		WHERE pfm_idx = #{value}
 	</select>
 	
 </mapper>

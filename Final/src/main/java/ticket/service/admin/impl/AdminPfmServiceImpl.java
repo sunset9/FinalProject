@@ -6,15 +6,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import ticket.dao.face.CategoryConDao;
 import ticket.dao.face.CategoryFamDao;
@@ -806,6 +809,82 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public int getTotalPfm(String search) {
 		// 전체 공연수 가져오기
 		return pDao.selectCntPfmSearch(search);
+	}
+
+	@Override
+	public void fileUpload(int pfmIdx, ServletContext context, MultipartFile thumbFile, MultipartFile bannerFile) {
+		// 파일 업로드하기
+		
+		//UUID, 고유 식별자 
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		// 파일이 저장될 경로(서버에 저장해야함, 로컬저장x)
+		String stored = context.getRealPath("upload");
+
+		// 저장될 파일의 이름
+		String thumbFileName = thumbFile.getOriginalFilename() + "_" + uId;
+		String bannerFileName = bannerFile.getOriginalFilename() + "_" + uId;
+
+		// 파일 객체
+		File dest = new File(stored, thumbFileName);
+		File dest2 = new File(stored, bannerFileName);
+
+		// 파일 저장(업로드)
+		try {
+			thumbFile.transferTo(dest);
+			bannerFile.transferTo(dest2);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// DB에 저장(업로드 정보 기록)
+		// pfmIdx, thumbFile, bannerFile
+
+		// 테이블명 main_banner
+
+		// 파일번호(PK) fileno NUMBER
+		// 제목 pfmIdx NUMBER
+		
+		// 썸네일 원본파일명 thumb_img_ori VARCHAR2(200)
+		// 썸네일 저장된 파일명 thumb_img_str VARCHAR2(200)
+		
+		// 배너 원본파일명 banner_img_ori VARCHAR2(200)
+		// 배너 저장된 파일명 banner_img_str VARCHAR2(200)
+
+		// 시퀀스명 main_banner_seq
+
+		// DTO class MainBanner 
+//		Filetest filetest = new Filetest();
+		MainBanner mainBanner = new MainBanner();
+
+//		mainBanner.setTitle(title);
+//		mainBanner.setOrigin_name(fileupload.getOriginalFilename());
+//		mainBanner.setStored_name(name);
+		
+		mainBanner.setPfmIdx(pfmIdx);
+		mainBanner.setThumbImgOri(thumbFile.getOriginalFilename());
+		mainBanner.setThumbImgStr(thumbFileName);
+		mainBanner.setBannerImgOri(bannerFile.getOriginalFilename());
+		mainBanner.setBannerImgStr(bannerFileName);
+		
+//		fileDao.uploadInfoSave(filetest);
+		pDao.insertMainBanner(mainBanner);
+	}
+
+	@Override
+	public boolean checkPfmIdxDup(int pfmIdx) {
+		// pfmIdx로 메인 배너 중복 확인하기
+		if(pDao.selectPfmIdxDup(pfmIdx) == 0) {
+			// 중복 x
+			
+			return true;
+		} else {
+			// 중복 o
+			
+			return false;
+		}
 	}
 
 }

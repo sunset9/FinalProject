@@ -12,9 +12,10 @@
 오늘 등록된 뮤지컬&연극 : ${todayMusical}건<br>
 오늘 등록된 가족&아동 : ${todayFamily}건<br><br>
 
+현재 접속자 : ${countConnector}명<br>
 1:1 문의 미답변 : ${unansweredInq}건<br>
 
-	
+
 </div>
 
 </div>
