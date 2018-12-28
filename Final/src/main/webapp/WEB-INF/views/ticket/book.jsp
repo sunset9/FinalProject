@@ -466,6 +466,7 @@ function getSeatInfo(){
 				success:function(res){
 					$('#selectedSeats').html(res);
 					$('#selected-seats').html("");
+					$(".nth2_1").html("");
 					$('#total').html("0");
 					$('#counter').html("0");
 					$('#selectedSeats svg').css("width","650px");
