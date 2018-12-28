@@ -123,6 +123,7 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	public boolean mychoiceInsert(String userIdx, String pfmIdx) {
 		mDetailDao.InsertMychoice(userIdx, pfmIdx);
 
+		// 공연플래너 추가해준 후 true 반환해주기
 		return true;
 	}
 	
