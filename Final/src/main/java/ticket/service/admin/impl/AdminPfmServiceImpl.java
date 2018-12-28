@@ -512,7 +512,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			Date today = new Date();
 			
 			// 0. '조회 구간' 설정
-			// 시작 구간: 6일 전
+			// 시작 구간: 30일 전
 			Date periodS = new Date(today.getTime()); 
 			periodS.setTime((long) (periodS.getTime() - (double)30 * 24 * 60 * 60 * 1000));
 			// 끝 구간: 오늘
@@ -553,10 +553,14 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				int bookSeatCnt = pDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
 				System.out.println(bookSeatCnt);
 				
-				// 3.3 예매율 계산
+				// 3.3 해당 공연의 공연 횟수 구하기 
+				int pfmDbtCnt = pDao.selectPfmDbtCntByPfmIdx(pfm, startDate, endDate);
+				System.out.println(pfmDbtCnt);
+				
+				// 3.4 예매율 계산
 				float bookRate = 0;
 				if(bookSeatCnt != 0) {
-					bookRate = ((float)bookSeatCnt/totalSeatCnt) * 100;
+					bookRate = (((float)bookSeatCnt/pfmDbtCnt) / totalSeatCnt) * 100;
 				}
 				System.out.println("예매율:" + bookRate);
 				

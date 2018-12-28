@@ -194,20 +194,19 @@ public class MainController {
 		
 		if(array.equals("popularity")) {
 			// 인기순
-			//	sql문 작성하기
 			List<Performance> posterList = mainService.getPopularityList(genreIdx);
-			map.put("posterList", posterList);
+			map.put("pfmList", posterList);
 			
 		} else if(array.equals("Deadline")) {
 			// 마감 임박순
 			// 오늘 날짜 - 티켓마감일 순
 			List<Poster> posterList = mainService.getDeadlineList(genreIdx);
-			map.put("posterList", posterList);
+			map.put("pfmList", posterList);
 			
 		} else if (array.equals("Latest")) {
 			// 최신순
 			List<Poster> posterList = mainService.getLatestList(genreIdx);
-			map.put("posterList", posterList);
+			map.put("pfmList", posterList);
 		}
 		
 		return map;
