@@ -78,7 +78,7 @@ $(document).ready(function() {
 		
 		var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
 		var span = $('<span class="thumImg">');
-		var img = $('<img class="concertImg" src="/resources/image/'+ list.originName + '"><br>');
+		var img = $('<img class="concertImg" src="/resources/image/'+ list.storedName + '"><br>');
 		
 		a.append(span.append(img));
 		a.append($('<strong>'+ list.name +'</strong>'));
@@ -172,7 +172,7 @@ li.pfmInfo {
 	<c:forEach items="${topBanList }" var="topList">
 	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
-			<img class="bannerImg" src="/resources/image/${topList.originName}" />
+			<img class="bannerImg" src="/resources/image/${topList.storedName}" />
 		</a>
 	</li>
 	</c:forEach>
@@ -204,7 +204,7 @@ li.pfmInfo {
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-					<img class="concertImg" src="/resources/image/${list.originName}" /><br>
+					<img class="concertImg" src="/resources/image/${list.storedName}" /><br>
 				</span>
 				<strong class="imgname">${list.name }</strong>
 				</a>

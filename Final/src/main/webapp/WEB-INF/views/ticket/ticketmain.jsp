@@ -252,7 +252,7 @@ div>h4 {
 		<c:forEach items="${newList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.originName}"
+				<img src="/resources/image/${list.storedName}"
 					style="width: 150px; height: 200px;"/><br>
 					${list.name }
 			</a>
@@ -264,7 +264,7 @@ div>h4 {
 		<c:forEach items="${conList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.originName}"
+				<img src="/resources/image/${list.storedName}"
 					style="width: 150px; height: 200px;"/><br>
 					${list.name }
 			</a>
@@ -276,7 +276,7 @@ div>h4 {
 		<c:forEach items="${muList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.originName}"
+				<img src="/resources/image/${list.storedName}"
 					style="width: 150px; height: 200px;"/><br>
 					${list.name }
 			</a>

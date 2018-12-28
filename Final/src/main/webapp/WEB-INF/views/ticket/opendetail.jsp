@@ -219,7 +219,7 @@ ul.tabs li.current{
 <div class="container">
 	<div class="topDiv ddiv">
 		<div class="posterImgDiv">
-			<img class="choicePosterImg" src="/resources/image/${posterList.originName}" />
+			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
 		</div>
 	
 	
