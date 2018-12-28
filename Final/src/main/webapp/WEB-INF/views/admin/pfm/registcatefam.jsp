@@ -8,8 +8,8 @@
 #save {
     display: inline-block;
     position: absolute;
-    top: 9px;
-    right: -120px;
+    top: 60px;
+    right: 0px;
 }
 .img-thumbnail, .thumbnail {
     display: block;
@@ -30,7 +30,7 @@
     background-color: #33333352;
     height:150px;
     width: 103px;
-    right: 9px;
+    right: 15px;
     position: absolute;
 }
 .cover2 {
@@ -38,7 +38,7 @@
     background-color: #33333352;
     height:150px;
     width: 103px;
-    right: 9px;
+    right:15px;
     position: absolute;
 }
 .removeBtn {
@@ -143,6 +143,13 @@ function ajax(url){
 			}
 		});
 }
+
+$('input[type="text"]').keydown(function() {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+    }
+});
+
 $('#searchbtn').click(function() { //검색버튼 클릭시
 	var textLength= $('#searchposter').val().length;
 	var byteCnt = 0;
@@ -156,7 +163,7 @@ $('#searchbtn').click(function() { //검색버튼 클릭시
 		  
 		   }
 	}
-	if(byteCnt<2){
+	if(byteCnt<3){
 		alert("최소 두글자 이상 검색해주세요");
 		return;
 	}
@@ -365,7 +372,7 @@ $('.caption').on('mouseleave','.cover',function(){
 					<button type="button" id="searchbtn">검색하기</button>
 					</div>
 					<div class="row">
-						<div id="resultposter" style="text-align: center;">
+						<div id="resultposter" style="display: inline-flex;text-align: center;flex-flow: wrap;">
 						</div>
 						<div class="text-center">
 							<ul class="pagination">
