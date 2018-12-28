@@ -237,7 +237,7 @@ function openZipSearch() { //다음 우편번호 API
 	function requestPayment() {
 		var totalpay=$('#paymentAmount').text();
 		totalpay=totalpay.replace(/,/g, '');
-		
+		console.log($('input[name="payMethodCode"]:checked').val());
 		//console.log("무슨방법?:"+$('input[name="payMethodCode"]:checked').val());
 		IMP.request_pay({
 			pg : 'uplus', //PG사 - 'kakao':카카오페이, 'html5_inicis':이니시스(웹표준결제), 'nice':나이스페이, 'jtnet':제이티넷, 'uplus':LG유플러스, 'danal':다날, 'payco':페이코, 'syrup':시럽페이, 'paypal':페이팔
@@ -294,7 +294,7 @@ function openZipSearch() { //다음 우편번호 API
 // 						msg += '\n카드 승인번호 : ' + rsp.apply_num;
 // 						msg += '\n[done]';
 						ticketing(rsp.imp_uid);
-// 						alert(msg);
+						alert(msg);
 
 					} else {
 						var msg = '결제가 제대로 되지 않았습니다. 자동 취소 처리 하였습니다.'
@@ -307,10 +307,10 @@ function openZipSearch() { //다음 우편번호 API
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
 			}
-// 			alert(msg);
+			alert(msg);
 			//예매상세 페이지이동
-			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
-			window.close();
+// 			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
+// 			window.close();
 			
 	
 		});
@@ -331,7 +331,7 @@ function openZipSearch() { //다음 우편번호 API
 <ul class="list_receipt_how">
 <li id="payMethod001">
 	<label>
-	<input type="radio" id="pay_method1" name="payMethodCode" value="card" title="신용카드" class="radio_pay_metohd_code"> 
+	<input type="radio" id="pay_method1" name="payMethodCode" value="card" title="신용카드" class="radio_pay_metohd_code" checked="checked"> 
 	<span id="payMethodName001" class="txt_lab radio_pay_metohd_label">신용카드</span>
 	</label>
 </li>
