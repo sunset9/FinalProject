@@ -436,4 +436,25 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public int selectPfmIdxDup(int pfmIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징된 콘서트 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectAllConPfm(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징된 뮤지컬 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectAllMuPfm(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징된 전체 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectAllPfmList(Paging paging);
 }

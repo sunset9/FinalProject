@@ -785,6 +785,62 @@ public class AdminPfmController {
 		// 장르가 뮤지컬인 탭 배너 리스트 불러오기
 		List<TabBanner> muTabBanner = pService.getMuTabBanner();
 		
+		//----------------------------------------------------
+		//--------------  new 모달 페이징... --------------  
+		String newSearch = req.getParameter("newSearch");
+		logger.info("new Search : " + newSearch);
+		// 전체 공연갯수 얻기
+		int totalPfm = pService.getPfmSearchCnt(newSearch);
+		logger.info("totalPfm : " + totalPfm);
+		// 페이징 객체 생성
+		Paging paging = new Paging(totalPfm, curPage);
+		// 페이징 객체에 검색어 적용
+		paging.setSearch(newSearch);
+		logger.info("New 모달 페이징 : " + paging);
+		// 전체 공연 목록
+		List<Performance> allPfmList = pService.getAllPfmList(paging);
+		logger.info("allPfmList : " + allPfmList);
+		
+		model.addAttribute("allPfmList", allPfmList);
+		//----------------------------------------------------
+		
+		//----------------------------------------------------
+		// -------------- 콘서트 모달 페이징... --------------
+		String conSearch = req.getParameter("conSearch");
+		logger.info("new Search : " + conSearch);
+		// 콘서트 공연갯수 얻기
+		int totalConPfm = pService.getPfmSearchCnt(conSearch);
+		logger.info("totalConPfm : " + totalConPfm);
+		// 페이징 객체 생성
+		Paging paging2 = new Paging(totalPfm, curPage);
+		// 페이징 객체에 검색어 적용
+		paging2.setSearch(conSearch);
+		logger.info("콘서트 모달 페이징 : " + paging2);
+		// 전체 공연 목록
+		List<Performance> allConPfmList = pService.getAllConPfmList(paging2);
+		logger.info("allConPfmList : " + allConPfmList);
+
+		model.addAttribute("allConPfmList", allConPfmList);
+		// ----------------------------------------------------
+		
+		//----------------------------------------------------
+		// -------------- 뮤지컬 모달 페이징... --------------
+		String muSearch = req.getParameter("muSearch");
+		logger.info("new Search : " + muSearch);
+		// 뮤지컬 공연갯수 얻기
+		int totalMuPfm = pService.getPfmSearchCnt(muSearch);
+		logger.info("totalMuPfm : " + totalMuPfm);
+		// 페이징 객체 생성
+		Paging paging3 = new Paging(totalMuPfm, curPage);
+		// 페이징 객체에 검색어 적용
+		paging3.setSearch(muSearch);
+		logger.info("뮤지컬 모달 페이징 : " + paging3);
+		// 전체 공연 목록
+		List<Performance> allMuPfmList = pService.getAllMuPfmList(paging3);
+		logger.info("allMuPfmList : " + allMuPfmList);
+
+		model.addAttribute("allMuPfmList", allMuPfmList);
+		// ----------------------------------------------------
 		
 		// 뷰에 전달
 		model.addAttribute("newTabBanner", newTabBanner);

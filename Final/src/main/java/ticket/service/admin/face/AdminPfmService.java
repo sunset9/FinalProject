@@ -520,5 +520,26 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public boolean checkPfmIdxDup(int pfmIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징한 전체 공연 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> getAllPfmList(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징한 콘서트 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> getAllConPfmList(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징한 뮤지컬 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> getAllMuPfmList(Paging paging);
 
 }
