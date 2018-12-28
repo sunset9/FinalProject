@@ -6,17 +6,19 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
-function cancelBook(bookGroup) {
+function cancelBook(bookGroup, userIdx) {
 	var bookGroup = bookGroup;
+	var userIdx = userIdx;
 	console.log("bookgroup ::: "+bookGroup);
 	$.ajax({
 		type : 'POST',
 		url : '/admin/getImpUid',
-		data : { bookGroup : bookGroup },
+		data : {
+			bookGroup : bookGroup,
+			userIdx : userIdx
+			},
 		success : function(res) {
-			for(i=0; i<res.length; i++){
-				console.log(res[i].payIdx);
-			}
+			location.href = "/admin/userdetail?userIdx="+userIdx;
 		}
 	});
 };
@@ -124,7 +126,7 @@ ${curUser.email }님의 예매현황<br>
 	</td>
 	<td>
 	<c:if test="${sob.state eq '취소중'}">
-		<button onclick="cancelBook('${sob.bookGroup}');">환불하기</button>
+		<button onclick="cancelBook('${sob.bookGroup}','${sob.userIdx }');">환불하기</button>
 	</c:if>
 	<c:if test="${sob.state eq '예매완료(부분취소)'}">
 		<!-- 부분취소 모달 open btn-->

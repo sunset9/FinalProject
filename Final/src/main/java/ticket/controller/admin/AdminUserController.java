@@ -121,11 +121,12 @@ public class AdminUserController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value="/admin/getImpUid", method=RequestMethod.POST)
-	public @ResponseBody List<PaymentInfo> getImpUid(String bookGroup) {
+	public String getImpUid(String bookGroup, int userIdx) {
 		//bookGroup 중 '취소중'인 좌석의 impUid 가져오기
 		List<PaymentInfo> impUidOfCancelSeat = userService.getImpUid(bookGroup);
 		System.out.println("북그룹 확인 : "+impUidOfCancelSeat);
 		
+		System.out.println("유저넘버 확인 : "+userIdx);
 		
 //		System.out.println("취소중인 좌석의 impUid"+impUidOfCancelSeat);
 //		
@@ -136,7 +137,7 @@ public class AdminUserController {
 		String cancelCheck = userService.paymentCancel(impUidOfCancelSeat);
 		logger.info(cancelCheck);
 		
-		return impUidOfCancelSeat;
+		return "redirect:/admin/userlist";
 	}
 	
 	/**

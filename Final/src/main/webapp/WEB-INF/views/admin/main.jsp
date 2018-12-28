@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="ticket.utils.CountManager" %>
 <jsp:include page="../admin/layout/menu.jsp" />
 <div>
 <h1>관리자 홈</h1>
@@ -12,7 +13,7 @@
 오늘 등록된 뮤지컬&연극 : ${todayMusical}건<br>
 오늘 등록된 가족&아동 : ${todayFamily}건<br><br>
 
-현재 접속자 : ${countConnector}명<br>
+현재 접속자 : <%= CountManager.getCount() %>명<br>
 1:1 문의 미답변 : ${unansweredInq}건<br>
 
 
