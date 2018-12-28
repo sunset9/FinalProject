@@ -352,6 +352,11 @@ public class MainController {
 		logger.info("billing-GET");
 	}
 	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명:footer 부분 바나나티켓 이용약관
+	 * @작성자:박주희
+	 */
 	@RequestMapping(value="/ticket/agreement", method=RequestMethod.GET)
 	public void footerAgreementPop() {
 		logger.info("AgreementPop-GET");
