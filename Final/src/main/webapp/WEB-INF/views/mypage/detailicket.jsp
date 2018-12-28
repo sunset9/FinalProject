@@ -308,6 +308,8 @@ $(document).ready(function() {
 	<td>${ss.secPay }</td>
 	<td>${sob.state }
 		<input type="checkbox" value="${s.seatIdx},${sob.bookGroup}" name="cancelCheck"/>취소 가능
+		
+		
 	</td>
 </tr>
 </c:forEach>

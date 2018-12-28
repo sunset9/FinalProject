@@ -294,7 +294,7 @@ function openZipSearch() { //다음 우편번호 API
 // 						msg += '\n카드 승인번호 : ' + rsp.apply_num;
 // 						msg += '\n[done]';
 						ticketing(rsp.imp_uid);
-// 						alert(msg);
+						alert(msg);
 
 					} else {
 						var msg = '결제가 제대로 되지 않았습니다. 자동 취소 처리 하였습니다.'
@@ -307,10 +307,10 @@ function openZipSearch() { //다음 우편번호 API
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
 			}
-// 			alert(msg);
+			alert(msg);
 			//예매상세 페이지이동
-			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
-			window.close();
+// 			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
+// 			window.close();
 			
 	
 		});

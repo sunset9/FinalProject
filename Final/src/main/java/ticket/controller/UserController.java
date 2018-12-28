@@ -380,7 +380,7 @@ public class UserController {
 		// 수령 방법 먼저 조회 
 		// 1 : 직접 수령   2 : 택배 배송
 		int receive = userService.getReceive(bookGroup);
-		logger.info("배송 방법"+receive);
+		logger.info("배송 방법 : "+receive);
 		model.addAttribute("receive", receive);
 		
 		// 택배 배송일 때만 배송지 정보 조회해오기 
