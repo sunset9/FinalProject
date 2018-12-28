@@ -29,7 +29,8 @@
 <tr> <td>제목</td><td><input type="text" name="noticeTitle" value="${update.noticeTitle }"></td></tr>
 </table>
  <jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include>
-<textarea name="noticeContent" id="noticeContent" rows="10" cols="100" value="${update.noticeContent }" style="width:766px; height:412px; display:none;"></textarea>
+<textarea name="noticeContent" id="noticeContent" rows="10" cols="100" 
+ style="width:766px; height:412px; display:none;"></textarea>
 
 
 </form>

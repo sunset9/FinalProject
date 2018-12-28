@@ -40,23 +40,22 @@ $(document).ready(function(){
 <!-- conta = container -->
 <div class="con">
 
-<form action="/admin/noticelist" method="post">
+
 <div class="form-inline">
-	<select id="searchOption" name="searchOption">
+	<select id="searchTypeSel" name="searchType">
 		<option value="">검색조건</option>
-		<option value="all"><c:out value="${list.searchOption == 'all'?'selected':'' }"/> 제목+내용 </option>		
-		<option value="title"><c:out value="${list.searchOption == 'title'?'selected':'' }"/>제목</option>
-		<option value="content"><c:out value="${list.searchOption == 'content'?'selected':'' }"/>내용</option>
+		<option value="all"><c:out value="${map.searchOption == 'all'?'selected':'' }"/> 제목+내용 </option>		
+		<option value="title"><c:out value="${map.searchOption == 'title'?'selected':'' }"/>제목</option>
+		<option value="content"><c:out value="${map.searchOption == 'content'?'selected':'' }"/>내용</option>
 	</select>
 
-	<input class="form-control" type="text" id="keyword" name="keyword" value="${list.keyword }" placeholder="검색어를 입력하세요"/>
-	<input type="submit" value="조회">
-	
-	
-	</div>
-</form>
+	<input class="form-control" type="text" id="keyword" name="keyword"
+		value="${cri.keyword }" placeholder="검색어를 입력하세요"/>
+		
+	<button id="searchBtn" class="btn btn-primary">Search</button>
 
-	<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
+	</div>
+
 
 
 
@@ -66,7 +65,7 @@ $(document).ready(function(){
 <table class="table table-striped table-hover">
 	
 	<tr>
-<%-- 		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th> --%> <%--전체 박스  --%>
+		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th> 전체 박스 
 		<th>NO.</th>
 		<th>분류</th>
 		<th>제목</th>
@@ -95,6 +94,7 @@ $(document).ready(function(){
 
 </form>
 </div>
+<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 
 <jsp:include page="../../utils/noticepaging.jsp"/>
 
