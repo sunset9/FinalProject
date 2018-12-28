@@ -272,13 +272,10 @@ $(document).ready(function() {
 		  }
 		  
 		 $('#basePriceTotal').text( $('#ticketPriceTotal').text());
-		 var cnt = $("#nth2_1").children().size();
+		 var cnt = $(".nth2_1").children().size();
 		 var reservationFee_1 = 1000;
 		 var resultfee = reservationFee_1*cnt;
 		 resultfee=resultfee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		 
-		 console.log($("#nth2_1"));
-		 console.log(resultfee);
 		 $('#reservationFee').text(resultfee);
 	
 		 basepay = $('#basePriceTotal').text();
