@@ -29,9 +29,9 @@ $(document).ready(function() {
 			, success: function(d) {
 				// 테마에 맞는 리스트 가져오기
 				console.log('성공');
-// 				console.log(d);
+				console.log(d);
 				
-				themeList(d.posterList);
+				themeList(d.pfmList);
 			}
 			, error: function(e) {
 				console.log('실패 !!!');
@@ -60,7 +60,7 @@ $(document).ready(function() {
 				console.log('성공');
 				console.log(d);
 				
-				themeList(d.posterList);
+				themeList(d.pfmList);
 			}
 			, error: function(e) {
 				console.log('실패');
@@ -68,23 +68,24 @@ $(document).ready(function() {
 		});
 	}); // 정렬 선택 btn
 	
-	function themeList(posterList) {
+	function themeList(pfmList) {
 		
-		$('#posterList').html('');
+		$('#pfmList').html('');
 		
-		posterList.forEach(function(list) {
+		pfmList.forEach(function(list) {
 			
-		var li =$('<li class="pfmInfo">');
-		
-		var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
-		var span = $('<span class="thumImg">');
-		var img = $('<img class="concertImg" src="/resources/image/'+ list.storedName + '"><br>');
-		
-		a.append(span.append(img));
-		a.append($('<strong>'+ list.name +'</strong>'));
-		li.append(a);
-		
-		$('#posterList').append(li);
+			var li =$('<li class="pfmInfo">');
+			
+			var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
+			var span = $('<span class="thumImg">');
+			var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
+			
+			a.append(span.append(img));
+			a.append($('<strong>'+ list.name +'</strong>'));
+			a.append($('<p>'+ list.hallName +'</p>'));
+			li.append(a);
+			
+			$('#pfmList').append(li);
 
 		});
 	}
@@ -198,8 +199,8 @@ li.pfmInfo {
 		</ul>
 	</div>
 	
-	<!-- 포스터 리스트 출력 -->
-	<ul id="posterList">
+	<!-- 공연 리스트 출력 -->
+	<ul id="pfmList">
 		<c:forEach items="${posterList }" var="list">
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
