@@ -77,12 +77,7 @@ $(document).ready(function() {
 	width: 800px;
 	margin: 20px auto 10px auto;
 }
- 
-ul.tabs{
-	margin: 0px;
-	padding: 0px;
-	list-style: none;
-}
+
 ul.tabs li{
 	background: none;
 	color: #222;
@@ -107,7 +102,7 @@ ul.tabs li.current{
 	width: 100%;
 }
 
-.ddiv {
+.ddiv, #pfmInfo {
 	display: inline-block;
 	width: 100%;
 }
@@ -118,101 +113,21 @@ ul.tabs li.current{
 	text-align: center;
 }
 
-.imgli {
-	list-style: none;
-	float: left;
-	margin: 5px;
-}
-
 .castInfo {
 	margin-bottom: 20px;
 }
 
-.tabarray {
-	display: inline-block;
-}
-
-/* 기대평, 관람후기 */
-#userProfile {
-	width: 50px;
-	height: 50px;
-}
-
-#expecUser, #expecContent, #revUser, #revContent {
-	float: left;
-	text-align: center;
-}
-
-#expectationContent, #expectationUser, #reviewContent, #reviewUser {
+#pfmInfo {
+	border: 1px solid gray;
 	margin: 5px;
-	height: 70px;
-	text-align: center;
+	padding: 10px;
 }
 
-.expectationList, .reviewList {
-	margin-top: 10px;
-}
-
-#exptext, #revtext {
-	color: gray;
-}
-
-#modifieBtn, #deleteBtn {
-	list-style: none;
-	float: left;
-}
-
-.expecUserInfo, .expectation, .revUserInfo, .review {
-	list-style: none;
-	float: left;
-}
-
-.expContainer, .revContainer {
-	list-style: none;
-	display: flex;
-}
-
-/* 별점 */
-/* .starR{ */
-/*   background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0; */
-/*   background-size: auto 100%; */
-/*   width: 15px; */
-/*   height: 15px; */
-/*   display: inline-block; */
-/*   text-indent: -9999px; */
-/*   cursor: pointer; */
-/* } */
-/* .starR.on{ */
-/* 	background-position:0 0; */
-/* } */
-
-/* 구글 맵 */
-#map {
-	height: 400px;
-	width: 100%;
-}
-
-#hallImg {
-/* 	background-color: red;  */
-	float: left;
-	text-align: center;
-	margin-left: 40px;
-	position: static;
-}
-
-#hallInfo {
-/*  	background-color: blue;  */
-	width: auto;
-	height: 200px;
-	padding-top: 50px;
-	padding-left: 10px;
-	margin-bottom: 5px;
+#openticketText {
+	font-size: 15px;
 	display: inline-block;
-}
-
-#hallmap {
-	margin-top: 20px;
-/* 	background-color: yellow; */
+	width: 100%;
+	margin-left: 5px;
 }
 </style>
 
@@ -221,35 +136,38 @@ ul.tabs li.current{
 		<div class="posterImgDiv">
 			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
 		</div>
-	
-	
-	<div id = "pfmInfo">
-		<strong style="font-size: 20px;">${pfmInfoList.name }</strong><br><br>
-		티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy-MM-dd"/><br>
-	</div>
-	<div id="btnDiv">
-		<button id="mychoicebtn">공연플래너 담기</button>
-		<button>상세보기</button>
-	</div>
-	<div class="bottomDiv ddiv">
 		
-		<div id="tab-1" class="tab-content current">
-			<h3 style="float: left;">출연진</h3><br>
-			<div class="castInfo tabarray">
-			<ul>
-			<c:forEach items="${castList }" var="list">
-				<div class="imgli">
-					<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
-					${list.name }
-				</div>
-			</c:forEach>
-			</ul>
-			</div>
+		<div id="pfmTitle">
+			<strong style="font-size: 20px;">${pfmInfoList.name } 티켓 오픈 안내</strong><br><br>
+			<small>등록일 : <fmt:formatDate value="${pfmInfoList.createDate }" pattern="yyyy-MM-dd"/></small>
+		</div>
+		
+		<strong id="openticketText">티켓 오픈 일정</strong>
+		<div id="pfmInfo">
+			<strong>${pfmInfoList.name }</strong><br>
+			티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy-MM-dd"/>
+				<button id="mychoicebtn">공연플래너 담기</button>
+				<button>상세보기</button>
+		</div>
+		<div class="bottomDiv ddiv">
 			
-			<div class="pfmInfo tabarray">
-				${detailList.contents }
+			<div id="tab-1" class="tab-content current">
+				<h3 style="float: left;">출연진</h3><br>
+				<div class="castInfo tabarray">
+				<ul>
+				<c:forEach items="${castList }" var="list">
+					<div class="imgli">
+						<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
+						${list.name }
+					</div>
+				</c:forEach>
+				</ul>
+				</div>
+				
+				<div class="pfmInfo tabarray">
+					${detailList.contents }
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>	
 </div>

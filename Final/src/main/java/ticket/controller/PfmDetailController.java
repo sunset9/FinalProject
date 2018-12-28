@@ -203,9 +203,10 @@ public class PfmDetailController {
 		logger.info("userIdx : " + userIdx);
 		logger.info("pfmIdx : " + pfmIdx);
 		
-		// 추가해주기
+		// my_choice에 추가해주기
 		boolean choice = detailService.mychoiceInsert(userIdx, pfmIdx);
 		
+		// 추가되었을 경우 boolean 타입으로 data 넘겨주기
 		try {
 			out.write("" + choice);
 		} catch (IOException e) {

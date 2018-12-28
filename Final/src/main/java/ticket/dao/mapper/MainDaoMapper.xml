@@ -162,7 +162,7 @@
 	SELECT 
 		po.origin_name originName
 		,po.pfm_idx pfmIdx
-		,po.stored_name poster_name ,pp.*
+		,po.stored_name storedName ,pp.*
 	FROM (
     	SELECT ROWNUM as rnum, p.* FROM (
        		SELECT  * FROM performance
@@ -178,7 +178,7 @@
 		SELECT 
 		po.origin_name originName
 		,po.pfm_idx pfmIdx
-		,po.stored_name poster_name ,pp.*
+		,po.stored_name storedName ,pp.*
 	FROM (
     	SELECT ROWNUM as rnum, p.* FROM (
        		SELECT  * FROM performance
@@ -194,7 +194,7 @@
 		SELECT 
 		po.origin_name originName
 		,po.pfm_idx pfmIdx
-		,po.stored_name poster_name ,pp.*
+		,po.stored_name storedName ,pp.*
 	FROM (
     	SELECT ROWNUM as rnum, p.* FROM (
        		SELECT  * FROM performance

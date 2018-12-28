@@ -47,6 +47,7 @@
 			, age_grade_idx as ageGradeIdx
 			, running_time as runningTime
 			, ticket_start as ticketStart
+			, create_date as createDate
 		FROM performance
 		WHERE pfm_idx=#{pfmIdx}
 	</select>
