@@ -106,11 +106,10 @@ public interface MainDao {
 
 	/**
 	 * 최종수정일: 2018.12.14
-	 * @param genre 
 	 * @Method설명: 콘서트 - 인기순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectPopularityListPfm(@Param(value="genreIdx") String genreIdx);
+	public List<Performance> selectPopularityListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.15

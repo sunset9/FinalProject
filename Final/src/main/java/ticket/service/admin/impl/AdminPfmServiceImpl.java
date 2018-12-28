@@ -494,7 +494,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public List<Performance> getPfmListByGenre(String genre, String order, Paging paging) {
+	public List<Performance> getPfmListByGenreNOrder(String genre, String order, Paging paging) {
 		// 검색하려는 장르 인덱스 
 		int genreIdx = GenreEnum.valueOf(genre).getIdx();
 

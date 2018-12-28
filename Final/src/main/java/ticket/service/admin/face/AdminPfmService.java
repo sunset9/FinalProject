@@ -392,10 +392,10 @@ public interface AdminPfmService {
 	
 	/**
 	 * @최종수정일: 2018.12.11
-	 * @Method설명: 장르로 필터링, 현재 등록된  공연 목록 가져오기(페이징)
+	 * @Method설명: 장르/정렬순으로 필터링, 현재 등록된  공연 목록 가져오기(페이징)
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getPfmListByGenre(String genre, String order, Paging paging);
+	public List<Performance> getPfmListByGenreNOrder(String genre, String order, Paging paging);
 
 	/**
 	 * @최종수정일: 2018.12.12
@@ -520,5 +520,6 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public boolean checkPfmIdxDup(int pfmIdx);
+
 
 }
