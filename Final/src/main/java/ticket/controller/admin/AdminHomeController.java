@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import ticket.dto.User;
 import ticket.service.admin.face.AdminPfmService;
 import ticket.service.admin.face.AdminUserService;
+import ticket.utils.CountManager;
 
 @Controller
 public class AdminHomeController {
@@ -51,6 +52,8 @@ public class AdminHomeController {
 		int todayFamily = pService.getTodayFam();
 		
 		//현재 접속자수 불러오기 uService.getConnectUser()
+		CountManager cm = new CountManager();
+		int countConnector = cm.getCount();
 		
 		//1:1 문의 미답변수 불러오기 uService.getUnanswered()
 		int unansweredInq = pService.getUnanswered();
@@ -63,6 +66,7 @@ public class AdminHomeController {
 		model.addAttribute("todayMusical", todayMusical);
 		model.addAttribute("todayFamily", todayFamily);
 		model.addAttribute("unansweredInq", unansweredInq);
+		model.addAttribute("countConnector", countConnector);
 	}
 	
 	@RequestMapping(value="admin/adminmain", method=RequestMethod.GET)

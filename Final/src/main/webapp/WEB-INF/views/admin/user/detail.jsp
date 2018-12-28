@@ -89,7 +89,7 @@ ${curUser.email }님의 예매현황<br>
 <table class="table table-hover table-striped table-condensed">
 <thead>
 <tr>
-<th style="width: 33px;">예매일</th>
+<th style="width: 60px;">예매일</th>
 <th style="width: 500px;" colspan="2">공연정보</th>
 <th style="width: 300px;">예매정보</th>
 <th style="width: 150px;">상태</th>

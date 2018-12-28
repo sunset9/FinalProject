@@ -44,7 +44,9 @@ function submitWithTitle() {
 }
 
 
+function searchAjax() {
 
+}
 </script>
 <style type="text/css">
 p {
@@ -194,6 +196,49 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
   text-decoration: none;
   cursor: pointer;
 }
+
+.newpfmListBox {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+} 
+ 
+.ntb, .ctb, .mtb {
+    padding-top: 22px;
+    padding-bottom: 15px;
+    border: 1px solid #d4dae4;
+    margin: 8px; 
+}
+
+.ordering {
+    display: inline-block;	
+}
+
+.newest {
+    position: absolute;
+    right: 90px;
+    top: 77px;
+    
+}
+
+.alphabet {
+    position: absolute;
+    right: 25px;
+    top: 77px;
+}  
+   
+.modal-content { 
+	width: 700px;
+}
+
+.forEach {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    text-align: -webkit-center; 
+}
+ 
+.modal-footer{
+	text-align: center;  
+}
 </style>
 <body>
 <div class="tabbannerWrap">
@@ -229,12 +274,11 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
 			</c:forEach>
 			<div class="plusBox"> 
 				<c:if test="${fn:length(newTabBanner) < 5 }">
-		 			<button id="newModalBtn">추가하기</button>  
+		 			<button type="button" data-toggle="modal" data-target="#newModal">추가하기</button> 
 				</c:if>
 			</div>
 		</div>
 	</div>
-	
 </div>
 
 	<!-- 뮤지컬&연극 탭 영역 -->
@@ -252,7 +296,7 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
 			</c:forEach>
 			<div class="plusBox"> 
 				<c:if test="${fn:length(muTabBanner) < 5 }">
-		 			<button id="muModalBtn">추가하기</button>   
+		 			<button type="button" data-toggle="modal" data-target="#muModal">추가하기</button> 
 				</c:if>
 			</div>
 		</div>
@@ -273,92 +317,137 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
 			</c:forEach>
 			<div class="plusBox"> 
 				<c:if test="${fn:length(conTabBanner) < 5 }">
-		 			<button id="conModalBtn">추가하기</button>
+		 			<button type="button" data-toggle="modal" data-target="#conModal">추가하기</button> 
 				</c:if>
 			</div>
 		</div>
 	</div>
 </div>
 	
-<!-- 탭 배너 추가하기 모달 -->
-<!-- New Modal -->
-<div id="newModal" class="newModal">
-  <!-- Modal content -->
-  <div class="newModalContent">
-    <span class="newModalClose">&times;</span>
-    <p>New 탭 배너 추가하기</p>
+
+
+
+<!-- 탭 배너 - New 모달 -->
+ <!-- Modal -->
+  <div class="modal fade" id="newModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">탭배너 등록 - New</h4>
+        </div>
+        <div class="modal-body">
+          <div> 
+          	<input type="search" name="newSearch" onkeypress="searchAjax();"/>
+          </div> 
+          <hr>
+          <div class="ordering">
+          	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
+          </div>
+          <div class="forEach"> 
+          <c:forEach items="${newTabBanner }" var="ntb">
+          	<div class="ntb" data-dismiss="modal">  
+			    <div><img src="${ntb.bannerPath}" style="width: 140px; height: 198px;"></div>
+			    <div>${ntb.name }</div>
+			    <div><fmt:formatDate value="${ntb.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${ntb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${ntb.hallName }</div>
+		    </div>
+          </c:forEach>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
-</div>
 
-<!-- 콘서트 Modal -->
-<div id="conModal" class="conModal">
-  <!-- Modal content -->
-  <div class="conModalContent">
-    <span class="conModalClose">&times;</span>
-    <p>콘서트 탭 배너 추가하기</p>
+
+<!-- 탭 배너 - 콘서트 모달 -->
+  <!-- Modal -->
+  <div class="modal fade" id="conModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">탭배너 등록 - 콘서트</h4>
+        </div>
+        <div class="modal-body">
+          <div>
+          	<input type="search" name="conSearch"/>
+          </div> 
+          <hr>
+          <div class="ordering">
+          	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
+          </div>
+          <div class="forEach"> 
+          <c:forEach items="${conTabBanner }" var="ctb">
+          	<div class="ctb" data-dismiss="modal">  
+			    <div><img src="${ctb.bannerPath}" style="width: 140px; height: 198px;"></div>
+			    <div>${ctb.name }</div>
+			    <div><fmt:formatDate value="${ctb.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${ctb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${ctb.hallName }</div>
+		    </div>
+          </c:forEach>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
-</div>
-
-<!-- 뮤지컬&연극 Modal -->
-<div id="muModal" class="muModal">
-  <!-- Modal content -->
-  <div class="muModalContent">
-    <span class="muModalClose">&times;</span>
-    <p>뮤지컬 탭 배너 추가하기</p>
+  
+  
+ <!-- 탭 배너 - 뮤지컬 모달 -->
+  <!-- Modal -->
+  <div class="modal fade" id="muModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title">탭배너 등록 - 뮤지컬</h4>  
+        </div>
+        <div class="modal-body">
+          <div>
+          	<input type="search" name="muSearch"/>
+          </div> 
+          <hr>
+          <div class="ordering">
+          	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
+          </div>
+          <div class="forEach"> 
+          <c:forEach items="${muTabBanner }" var="mtb">
+          	<div class="mtb" data-dismiss="modal">  
+			    <div><img src="${mtb.bannerPath}" style="width: 140px; height: 198px;"></div>
+			    <div>${mtb.name }</div>
+			    <div><fmt:formatDate value="${mtb.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${mtb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${mtb.hallName }</div>
+		    </div>
+          </c:forEach>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
-</div>
-
-<script>
-// Get the modal
-var newModal = document.getElementById('newModal');
-var conModal = document.getElementById('conModal');
-var muModal = document.getElementById('muModal');
-
-// Get the button that opens the modal
-var newModalBtn = document.getElementById("newModalBtn");
-var conModalBtn = document.getElementById("conModalBtn");
-var muModalBtn = document.getElementById("muModalBtn");
-
-// Get the <span> element that closes the modal
-var newModalClose = document.getElementsByClassName("newModalClose")[0];
-var conModalClose = document.getElementsByClassName("conModalClose")[0];
-var muModalClose = document.getElementsByClassName("muModalClose")[0];
-
-// When the user clicks the button, open the modal 
-newModalBtn.onclick = function() {
-	newModal.style.display = "block"; }
-
-conModalBtn.onclick = function() {
-	conModal.style.display = "block"; }
-
-muModalBtn.onclick = function() {
-	muModal.style.display = "block"; }
-
-// When the user clicks on <span> (x), close the modal
-newModalClose.onclick = function() {
-	newModal.style.display = "none"; }
-
-conModalClose.onclick = function() {
-	conModal.style.display = "none"; }
-
-muModalClose.onclick = function() {
-	muModal.style.display = "none"; }
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == newModal) {
-	  newModal.style.display = "none"; } }
-
-window.onclick = function(event) {
-	  if (event.target == conModal) {
-		  conModal.style.display = "none"; } }
-
-window.onclick = function(event) {
-	  if (event.target == muModal) {
-		  muModal.style.display = "none"; } }
-		  
-</script>	
-
+  
+  
 </div>
 </body>
 </html> 

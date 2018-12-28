@@ -72,51 +72,123 @@
 }
 
 .np {
-	padding-top: 30px;
+    padding-top: 22px;
+    padding-bottom: 15px;
+    border: 1px solid #d4dae4;
+    margin: 8px; 
 }
+
+.ordering {
+    display: inline-block;	
+}
+
+.newest {
+    position: absolute;
+    right: 90px;
+    top: 77px;
+    
+}
+
+.alphabet {
+    position: absolute;
+    right: 25px;
+    top: 77px;
+}  
+   
+.modal-content { 
+	width: 700px;
+}
+
+.forEach {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    text-align: -webkit-center; 
+}
+ 
+.modal-footer{
+	text-align: center;  
+}
+ 
+#pfmName {
+	font-size: 20px;
+	font-weight: 800;
+}
+
+#hallName {
+	font-size: 17px;
+	font-weight: 700;
+}
+ 
 </style>
 <script type="text/javascript">
-function enterkey() {
-	if (window.event.keyCode == 13) {
-		console.log('엔터키 클릭');
-		
-   }
-};
 
-function clickPfm(np){
-	console.log('dd'+np);
-};
+	function clickedPfm(pfmIdx, name, pfmStart, pfmEnd, hallName) {
+		console.log(name);
+		console.log(pfmStart);
+		console.log(pfmEnd);
+		console.log(hallName); 
+		var div = document.getElementById('pfmName');
+		var pfmName = document.createTextNode(name);
+		div.style.fontsize = '20px';
+		div.style.fontweight = '800';
+		div.appendChild(pfmName);
+		
+		var div2 = document.getElementById('hallName');
+		var hallName = document.createTextNode(hallName);
+		div2.appendChild(hallName); 
+		
+		document.getElementById('pfmIdx').value = pfmIdx;
+	};
+	
+	function checkDuplicate() {
+		var pfmIdx = document.getElementById('pfmIdx').value;
+		$.ajax({
+			url: "/admin/checkpfmidxdup"
+			, method : "GET"
+			, data : {"pfmIdx" : pfmIdx}
+			, success : function(res) {
+				if(res == 0){
+					console.log('서브밋');
+					document.getElementById('registMbForm').submit();
+				}else{
+					alert("이미 등록된 공연입니다.");
+					window.location.reload();
+				}
+				
+			}
+		});
+	};
 </script>
 <body>
 
 <h3>배너관리 - 메인배너</h3>
 <hr>
 
-<h2>메인배너등록</h2>
+<h2>배너등록</h2>
 
-<div class="mainbannerRG">
-	<form action="">
-	<div>
-		공연 <a data-toggle="modal" href="#myModal"><input type="search" id="mainBanModalBtn"></a>
-		<div id="mbdiv mbPfmInfo">
-		[ 여기에 공연 이름, 시작일~종료일, 경기장이름 표시됨 ]		
+	<form action="/admin/registMainbanner" method="POST" name="registMBForm" enctype="multipart/form-data" id="registMbForm"> 
+	<div class="mainbannerRG">
+		<div>
+			공연 <a data-toggle="modal" href="#myModal"><input type="search" id="mainBanModalBtn"></a>
+			<div id="mbdiv mbPfmInfo">
+				<input type="hidden" name="pfmIdx" id="pfmIdx">
+				<p id="pfmName"></p>
+				<p id="hallName"></p>
+			</div>
 		</div>
-	</div>
-	<div>
-		썸네일 이미지 <input type="button" value="첨부파일" />
-		<div id="mbdiv mbThumbImg">
-		[ 여기에 썸네일 이미지, 파일명 표시됨 ]
+		<div>
+			썸네일 이미지 <input type="file" value="첨부파일" name="thumbFile" />
+			<div id="mbdiv mbThumbImg">
+			</div>
 		</div>
-	</div>
-	<div>
-		배너 이미지 <input type="button" value="첨부파일">
-		<div id="mbdiv mbBannerImg">
-		[ 여기에 배너 이미지, 파일명 표시됨 ]
+		<div>
+			배너 이미지 <input type="file" value="첨부파일" name="bannerFile">  
+			<div id="mbdiv mbBannerImg">  
+			</div>
 		</div>
+		<input type="button" onclick="checkDuplicate();" value="등록" /> <input type="button" value="취소"> 
 	</div>
-	<button>등록</button> <input type="button" value="취소">
 	</form>
-</div>
 
  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -129,13 +201,16 @@ function clickPfm(np){
           <h4 class="modal-title">메인 배너 공연 검색</h4>
         </div>
         <div class="modal-body">
+          <div>
+          	<input type="search" />
+          </div> 
+          <hr>
           <div class="ordering">
-          	<p>최신순</p> <p>가나다순</p>
+          	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
           </div>
-          <div class="forEach">
+          <div class="forEach"> 
           <c:forEach items="${NewPfmList }" var="np">
-          	<div class="np">
-			    <input type="radio" name="pfmCheck" onclick="clickPfm('${np}');">   
+          	<div class="np" data-dismiss="modal" onclick="clickedPfm('${np.pfmIdx}','${np.name}', '${np.pfmStart }', '${np.pfmEnd }', '${np.hallName}');">  
 			    <div><img src="/resources/image/${np.storedName}" style="width: 140px; height: 198px;"></div>
 			    <div>${np.name }</div>
 			    <div><fmt:formatDate value="${np.pfmStart }" pattern="yyyy.MM.dd" />
@@ -146,13 +221,11 @@ function clickPfm(np){
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
         </div>
       </div>
-      
     </div>
   </div>
-
 
 </div>
 </body>

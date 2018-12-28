@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -505,5 +506,19 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public int getTotalPfm(String search);
+	
+	/**
+	 * @최종수정일: 2018.12.27
+	 * @Method설명: 파일업로드하기
+	 * @작성자: 김지은
+	 */
+	public void fileUpload(int pfmIdx, ServletContext context, MultipartFile thumbFile, MultipartFile bannerFile);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: pfmIdx으로 메인 배너 중복 확인하기 
+	 * @작성자: 김지은
+	 */
+	public boolean checkPfmIdxDup(int pfmIdx);
 
 }

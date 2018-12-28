@@ -672,11 +672,42 @@ public class AdminPfmController {
 		return "admin/pfm/registMBanner";
 	}
 	
+	/**
+	 * @최종수정일: 2018.12.27
+	 * @Method설명: 메인배너등록 Form 데이터 받아서 처리하기
+	 * @작성자: 김지은
+	 */
 	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.POST)
-	public String registMBannerProc() {
+	public String registMBannerProc(
+			@RequestParam(value="pfmIdx") int pfmIdx, 
+			@RequestParam(value="thumbFile") MultipartFile thumbFile,
+			@RequestParam(value="bannerFile") MultipartFile bannerFile
+			) {
 	
-		return "admin/pfm/registMBanner";
+		pService.fileUpload(pfmIdx, context, thumbFile, bannerFile);
+		return "redirect:/admin/mainbannerlist";
 	}
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 메인배너 중복 등록 방지하기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/checkpfmidxdup", method=RequestMethod.GET)
+	public @ResponseBody int checkPfmIdxDup(
+			@RequestParam int pfmIdx
+			) {
+		boolean isDupPfmIdx = pService.checkPfmIdxDup(pfmIdx);
+		
+		if(isDupPfmIdx == true) {
+			// 중복x
+			return 0;
+		}else {
+			// 중복o
+			return 1;
+		}
+	}
+	
 	
 	@RequestMapping(value="/admin/testJ", method=RequestMethod.GET)
 	public String testJiEun() {
@@ -741,16 +772,19 @@ public class AdminPfmController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value = "/admin/tabBannerList", method = RequestMethod.GET)
-	public String tBannerList(Model model) {
+	public String tBannerList(
+			HttpServletRequest req,
+			Model model,
+			@RequestParam(defaultValue="1") int curPage
+			) {
 
 		// 장르가 New 인 탭 배너 리스트 불러오기
 		List<TabBanner> newTabBanner = pService.getNewTabBanner();
-
 		// 장르가 콘서트인 탭 배너 리스트 불러오기
 		List<TabBanner> conTabBanner = pService.getConTabBanner();
-		
 		// 장르가 뮤지컬인 탭 배너 리스트 불러오기
 		List<TabBanner> muTabBanner = pService.getMuTabBanner();
+		
 		
 		// 뷰에 전달
 		model.addAttribute("newTabBanner", newTabBanner);
@@ -765,17 +799,26 @@ public class AdminPfmController {
 	 * @Method설명: 탭배너 등록 모달창에서 공연 리스트 띄우기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/tBannerList", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/tbsearch", method = RequestMethod.GET)
 	public void searchTBannerPfm(
-	// 검색어
+			HttpServletRequest req,
+			Model model,
+			@RequestParam(defaultValue="1") int curPage
 	) {
-		// 검색어 받아오기
-
-		// if(검색어 null 일때 == 처음 모달창 띄워줄때)
-		// New, 콘서트, 뮤지컬 전체 목록 가져오기
-
-		// else(검색어 있을때)
-		// 검색어 적용된 New, 콘서트, 뮤지컬 목록 가져오기
+		//--------------  new 모달 페이징... --------------  
+		String newSearch = req.getParameter("newSearch");
+		logger.info("new Search : " + newSearch);
+		// 전체 공연갯수 얻기
+		int totalPfm = pService.getPfmSearchCnt(newSearch);
+		logger.info("totalPfm : " + totalPfm);
+		// 페이징 객체 생성
+		Paging paging = new Paging(totalPfm, curPage);
+		// 페이징 객체에 검색어 적용
+		paging.setSearch(newSearch);
+		logger.info("New 모달 페이징 : " + paging);
+		// 전체 공연 목록
+		List<Performance> allPfmList = pService.getPfmSearchList(newSearch, paging);
+		logger.info("allPfmList : " + allPfmList);
 	}
 
 	/**
@@ -919,5 +962,12 @@ public class AdminPfmController {
 		//logger.info(hall.toString());
 		pService.registHall(hall, file);
 		return "redirect:/admin/registhall";
+	}
+	
+	@RequestMapping(value="/admin/getpfminfo", method=RequestMethod.GET)
+	public void getPfmInfo(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("요청 파라미터 확인 : "+request.getParameter("pfmIdx"));
+		
+		
 	}
 }
