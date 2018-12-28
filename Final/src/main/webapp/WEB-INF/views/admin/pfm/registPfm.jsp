@@ -55,7 +55,7 @@ td:not(.seatInfoInput) {
 	width: 280px;
 }
 
-td input, td select {
+.long {
 	width: inherit !important;
 }
 
@@ -68,8 +68,18 @@ table button {
     width: 135px;
 }
 
+#selectSec {
+    display: inline;
+    width: 200px;
+}
+
+#setSecBtn {
+    margin-left: 5px;
+    padding-top: 4px;
+}
+
 #registStep-2 {
-	display: flex;
+ 	display: flex; 
 }
 .ticketDate{
 	display: inline;
@@ -127,6 +137,13 @@ table button {
     position: relative;
 }
 
+.resSelect {
+    margin-top: 5px;
+}
+.resSelect span{
+    margin-right: 10px;
+}
+
 #resultArtist{
 /* 	display: flex;  자식이 float 인 경우 높이 자동 조절 */
 }
@@ -161,10 +178,17 @@ table button {
 	cursor:pointer
 }
 
-.tempSecName, .tempSecPay {
+.tempSecName {
 	text-align: right;
-  	width: 150px;
+  	width: 125px;
     display: inline;
+}
+
+.tempSecPay {
+	text-align: right;
+  	width: 133px;
+    display: inline;
+    margin-left: 8px;
 }
 
 #seatHall td{
@@ -183,7 +207,7 @@ table button {
 
 .pfmDate{
 	display: inline;
-	width: 140px;
+	width: 125px;
 }
 
 #registStep{
@@ -265,7 +289,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #registStep-2 div{
-	flex: 1; 
+/* 	flex: 1;  */
+}
+
+#registStep-2 select {
+    width: 125px;
 }
 
 #registTimeForm{
@@ -276,13 +304,14 @@ input[type="number"]::-webkit-inner-spin-button {
 	border: 1px solid #aaa;
 	margin-top: 40px;
 	padding: 10px;
+	width: 365px;
 }
 
 #registStep-3, #registStep-4{
-	display: flex;	
+/* 	display: flex;	 */
 }
 #registStep-3 div:first, #registStep-3 div:first{
-    float: left;  
+/*     float: left;   */
 }
 
 </style>
@@ -749,7 +778,7 @@ $(document).ready(function(){
 	});
 	
 	// 좌석 가격입력창 - 화폐 포멧으로 콤마 찍어주기
-	$('#seatDiv table').on('change keyup','.tempSecPay', function(){
+	$('#seatDiv').on('change keyup','.tempSecPay', function(){
 		getNumber(this);
 	});
 	
@@ -805,7 +834,7 @@ $(document).ready(function(){
 		completeSetSec = [];
 		
 		// 셀렉트 박스 그려주기
-		var select = $('<select name="selectedSecName" class="form-control">')
+		var select = $('<select name="selectedSecName" id="selectSec" class="form-control">')
 		var isFirstOption = true;
 		$('.seatInfoInput').each(function(){
 			var secName = $(this).find('.tempSecName').val(); // 좌석정보란에서 입력한 구역명
@@ -845,9 +874,9 @@ $(document).ready(function(){
 				// 홀 jsp 삽입
 				$('#seatHall td').html(d);
 				// 사이즈 조절
-				$('#seatHall .stage_img').height('240px');
-				$('#seatHall .stage_img').width('350px');
-				$('#seatHall svg').width('350px');
+				$('#seatHall .stage_img').height('260px');
+				$('#seatHall .stage_img').width('380px');
+				$('#seatHall svg').width('380px');
 				// 구역 선택 시
 				$('#seatHall svg').on('click','path, rect',function(){
 					// 클릭안된 상태
@@ -1328,12 +1357,12 @@ function setComma(inNum){
 	<table>
 	<tr>
 		<th>공연 제목</th> 
-		<td><input type="text" name="name" class="form-control"/></td>
+		<td><input type="text" name="name" class="form-control long"/></td>
 	</tr>
 	<tr>
 		<th>공연 분류</th> 
 		<td>
-			<select name="genreIdx" class="form-control">
+			<select name="genreIdx" class="form-control long">
 			<option value="0" selected="selected">분류 선택</option>
 			<c:forEach var="genre" items="${genreList }">
 				<option value="${genre.genreIdx }">${genre.genre }</option>
@@ -1345,29 +1374,29 @@ function setComma(inNum){
 		<th>테마</th> 
 		<td>
 			<button type="button" id="themeSelBtn">테마 선택</button>
-			<p style="display:none;"></p>
+			<p style="display:none;" class="resSelect"></p>
 		</td>
 	</tr>
 	<tr class="not_space">
 		<th rowspan=2>티켓오픈</th> 
 		<td>
-			<input type="text" name="ticketStart" class="form-control date ticketDate" id="ticketStartDate" placeholder="시작일" >
+			<input type="text" name="ticketStart" class="form-control long date ticketDate" id="ticketStartDate" placeholder="시작일" >
 		</td>
 		
 	</tr>
 	<tr >
 		<td>
-			<input type="text" name="ticketEnd" class="form-control date ticketDate" id="ticketEndDate" placeholder="종료일">
+			<input type="text" name="ticketEnd" class="form-control long date ticketDate" id="ticketEndDate" placeholder="종료일">
 		</td>
 	</tr>
 	<tr>
 		<th>런닝타임</th> 
-		<td><input type="number" name="runningTime" class="form-control" min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
+		<td><input type="number" name="runningTime" class="form-control long" min='0' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"/></td>
 	</tr>
 	<tr>
 		<th>관람등급</th> 
 		<td>
-			<select name="ageGradeIdx" class="form-control">
+			<select name="ageGradeIdx" class="form-control long">
 			<option value="0" selected="selected">관람등급 선택</option>
 			<c:forEach var="ageGrade" items="${ageList }">
 				<option value="${ageGrade.ageGradeIdx }">${ageGrade.ageLimit }</option>
@@ -1379,13 +1408,13 @@ function setComma(inNum){
 		<th>출연진</th> 
 		<td>
 			<button type="button" id="artistBtn">출연진 선택</button>
-			<p style="display:none;"></p>
+			<p style="display:none;" class="resSelect"></p>
 		</td>
 	</tr>
 	<tr>
 		<th>공연장</th> 
 		<td>
-			<select name="hallIdx" class="form-control" class="form-control">
+			<select name="hallIdx" class="form-control long">
 			<option value="0" selected="selected">공연장 선택</option>
 			<c:forEach var="hall" items="${hallList }">
 				<option value="${hall.hallIdx }">${hall.hallName }</option>
@@ -1446,7 +1475,7 @@ function setComma(inNum){
       <div class="modal-body">
       	<!-- 검색 & 결과 뷰-->
       	<div id="viewArtist" class="text-center">
-      		<input type="text" id="searchArtist" class="form-control" placeholder="출연진 검색" onkeypress="if(event.keyCode==13){$('#searchArtistBtn').trigger('click'); return false;}"/> 
+      		<input type="text" id="searchArtist" class="form-control long" placeholder="출연진 검색" onkeypress="if(event.keyCode==13){$('#searchArtistBtn').trigger('click'); return false;}"/> 
       		<button type="button" id="searchArtistBtn">검색</button> 
       		<div id="resultArtist">
       		</div>
@@ -1504,7 +1533,7 @@ function setComma(inNum){
 		<p style='font-size: 13px; font-weight:bold;'>등록예정 공연일정</p>
 		<p style="display:none">(<span>시작일</span> ~ <span>종료일</span>)</p>
 		<hr>
-		<table class='table' style="width: 70%;">
+		<table class='table'>
 		<thead>
 			<tr>
 				<th>날짜</th>
@@ -1525,7 +1554,7 @@ function setComma(inNum){
 
 <!-- 공연등록 3st Tab : 상세정보 등록-->
 <div class='registPfmTab' id='registStep-3' style="display:none">
-<span>공연<br> 상세정보</span>
+<h4>공연 상세정보</h4>
 <div>
 <textarea name="pfmDetailContents"></textarea>
 </div>
@@ -1533,7 +1562,7 @@ function setComma(inNum){
 
 <!-- 공연등록 4st Tab : 예매정보 등록-->
 <div class='registPfmTab' id='registStep-4' style="display:none">
-<span>공연<br> 예매정보</span>
+<h4>공연 예매정보</h4>
 <div>
 <textarea name="pfmBookinfoContents"></textarea>
 </div>
