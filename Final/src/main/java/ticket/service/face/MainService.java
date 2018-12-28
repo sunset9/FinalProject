@@ -72,14 +72,14 @@ public interface MainService {
 	 * @Method설명: 콘서트 - 마감임박순 정렬
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getDeadlineList();
+	public List<Poster> getDeadlineList(String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
 	 * @Method설명: 콘서트 - 최신순 정렬
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getLatestList();
+	public List<Poster> getLatestList(String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
@@ -87,7 +87,7 @@ public interface MainService {
 	 * @Method설명: 콘서트 - 인기순
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getPopularityList();
+	public List<Poster> getPopularityList(String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.15
@@ -165,7 +165,7 @@ public interface MainService {
 	 * @Method설명: 오픈티켓 - 이름 검색
 	 * @작성자: 배수연
 	 */
-	public List<Performance> getopenSerchList(String opentext);
+	public List<Performance> getOpenSerchList(String opentext);
 
 	/**
 	 * 최종수정일: 2018.12.26
@@ -215,5 +215,12 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public int getHallCount(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: select 박스로 선택한 장르가 콘서트, 뮤지컬&연극, 가족&아동일 경우
+	 * @작성자: 배수연
+	 */
+	public List<Performance> getOpenSelectSearchList(String genreIdx, String opentext);
 
 }

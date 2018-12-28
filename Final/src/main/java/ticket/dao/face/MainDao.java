@@ -95,14 +95,14 @@ public interface MainDao {
 	 * @Method설명: 콘서트 - 마감임박순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectDeadlindListPfm();
+	public List<Poster> selectDeadlindListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
 	 * @Method설명: 콘서트 - 최신순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectLatestListPfm();
+	public List<Poster> selectLatestListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
@@ -110,7 +110,7 @@ public interface MainDao {
 	 * @Method설명: 콘서트 - 인기순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectPopularityListPfm();
+	public List<Poster> selectPopularityListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.15
@@ -261,5 +261,15 @@ public interface MainDao {
 	 * @작성자: 배수연
 	 */
 	public int selectHallCount(String top_searchh);
+
+	/**
+	 * 최종수정일: 2018.12.27
+	 * @Method설명: select 박스로 선택한 장르가 콘서트, 뮤지컬&연극, 가족&아동일 경우
+	 * @작성자: 배수연
+	 */
+	public List<Performance> selectOpenSelectSearchList(
+			@Param(value="genreIdx") String genreIdx
+			, @Param(value="value") String opentext
+		);
 
 }

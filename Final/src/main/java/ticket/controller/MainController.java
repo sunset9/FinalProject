@@ -34,8 +34,6 @@ public class MainController {
 	@RequestMapping(value="/ticket/test")
 	public void test(Model model) {
 		logger.info("Test");
-		List<Poster> topBanList = mainService.adminChoiceBannerCon();
-		model.addAttribute("topBanList", topBanList);
 	}
 	
 	/**
@@ -118,19 +116,23 @@ public class MainController {
 		
 		// 콘서트 - 테마 선택 후 리스트 출력
 		if( theme.equals("conall") ) {
+			// 콘서트 전체
 			List<Poster> posterList = mainService.getConPfmPoster();
 			
 			map.put("posterList", posterList);
 			
 		} else if( theme.equals("muall")) {
+			// 뮤지컬&연극 전체
 			List<Poster> posterList = mainService.getMuPfmPoster();
 			
 			map.put("posterList", posterList);
 		} else if( theme.equals("famall") ) {
+			// 가족&아동 전체
 			List<Poster> posterList = mainService.getFamPfmPoster();
 			
 			map.put("posterList", posterList);
 		} else {
+			// 테마 idx 선택 시
 			List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
 			
 			map.put("posterList", posterList);
@@ -138,37 +140,7 @@ public class MainController {
 		
 		return map;
 	}
-	
-	@RequestMapping(value="/ticket/arraylist", method=RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> arrayList(
-			String array
-		) {
-		
-		HashMap<String, Object> map = new HashMap<>();
-		
-		logger.info("선택값 : " + array);
-		
-		if(array.equals("popularity")) {
-			// 인기순
-			//	sql문 작성하기
-			List<Poster> posterList = mainService.getPopularityList();
-			map.put("posterList", posterList);
-			
-		} else if(array.equals("Deadline")) {
-			// 마감 임박순
-			// 오늘 날짜 - 티켓마감일 순
-			List<Poster> posterList = mainService.getDeadlineList();
-			map.put("posterList", posterList);
-			
-		} else if (array.equals("Latest")) {
-			// 최신순
-			List<Poster> posterList = mainService.getLatestList();
-			map.put("posterList", posterList);
-		}
-		
-		return map;
-	}
-	
+
 	/**
 	 * 최종수정일: 2018.12.11
 	 * @Method설명: 메인 상단에서 뮤지컬&연극 탭 선택시 이동하는 페이지
@@ -200,12 +172,45 @@ public class MainController {
 		) {
 		logger.info("가족&아동 FORM");
 		
-		// 관리자가 선택한 뮤지컬&연극 상단배너 출력
+		// 관리자가 선택한 가족&아동 상단배너 출력
 		List<Poster> topBanList = mainService.adminChoiceBannerFam();
 		model.addAttribute("topBanList", topBanList);
 		
+		// 모든 포스터 리스트 뿌려주기
 		List<Poster> posterList = mainService.getFamPfmPoster();
 		model.addAttribute("posterList", posterList);
+	}
+	
+	@RequestMapping(value="/ticket/arraylist", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> arrayList(
+			String array
+			, String genreIdx
+		) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		logger.info("선택값 : " + array);
+		logger.info("genreIdx : " + genreIdx);
+		
+		if(array.equals("popularity")) {
+			// 인기순
+			//	sql문 작성하기
+			List<Poster> posterList = mainService.getPopularityList(genreIdx);
+			map.put("posterList", posterList);
+			
+		} else if(array.equals("Deadline")) {
+			// 마감 임박순
+			// 오늘 날짜 - 티켓마감일 순
+			List<Poster> posterList = mainService.getDeadlineList(genreIdx);
+			map.put("posterList", posterList);
+			
+		} else if (array.equals("Latest")) {
+			// 최신순
+			List<Poster> posterList = mainService.getLatestList(genreIdx);
+			map.put("posterList", posterList);
+		}
+		
+		return map;
 	}
 	
 	/**
@@ -253,15 +258,24 @@ public class MainController {
 	@RequestMapping(value="/ticket/opensearch", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> openSearch(
 			String opentext
+			, String genreIdx
 			, HttpServletRequest req
 		) {
 		opentext = req.getParameter("opentext");
+		
 		logger.info("opentext : " + opentext);
+		logger.info("genreIdx : " + genreIdx);
 
 		HashMap<String, Object> map = new HashMap<>();
 		
-		List<Performance> openPfmList = mainService.getopenSerchList(opentext);
-		map.put("openPfmList", openPfmList);
+		if( genreIdx.equals("all") ) {
+			List<Performance> openPfmList = mainService.getOpenSerchList(opentext);
+			map.put("openPfmList", openPfmList);
+			
+		} else {
+			List<Performance> openPfmList = mainService.getOpenSelectSearchList(genreIdx, opentext);
+			map.put("openPfmList", openPfmList);
+		}
 		
 		return map;
 	}
@@ -299,6 +313,9 @@ public class MainController {
 		) {
 		top_searchh = req.getParameter("top_searchh");
 		logger.info("top_searchh : " + top_searchh);
+		
+		// 검색한 단어를 넘겨줌
+		model.addAttribute("top_searchh", top_searchh);
 		
 		// 공연 검색
 		List<Poster> pfmSearchList = mainService.getSearchPfmList(top_searchh);

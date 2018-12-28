@@ -6,17 +6,19 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#opensearchbtn').click(function() {
+		
+		var genreIdx = $("select[name=searchKind]").val();
+		console.log('select 선택 값 : ' + genreIdx);
+		
 		var opentext = $('#opensearchtext').val();
-		console.log(opentext);
-
-// 		var searchKind = $("select[name=searchKind]").val();
-// 		console.log(searchKind);
+		console.log('입력한 input 값 : ' + opentext);
 		
 		$.ajax({
 			url: '/ticket/opensearch'
 			, method: 'GET'
 			, data: {
 				"opentext": opentext
+				, "genreIdx": genreIdx
 			}
 			, dataType: 'json'
 			, success: function(d) {
@@ -61,7 +63,7 @@ $(document).ready(function() {
 			
 		var li =$('<li class="pfmInfo">');
 		
-		var a = $('<a href="/ticket/pfmdetail?pfmIdx=' + list.pfmIdx + '>');
+		var a = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
 		var span = $('<span class="pfmdate">');
 		var h5 = $('<h5>티켓오픈일 : ' + list.ticketStart + '</h5>');
 		
@@ -113,10 +115,6 @@ li.pfmInfo {
 	margin: 20px 5% 10px 5%;
 }
 
-#opensearchtext {
-	margin-left: 5%;
-}
-
 /* 정렬 */
 ul.array {
 	float: right;
@@ -146,7 +144,7 @@ ul.array li span{
 	<ul id="posterList">
 		<c:forEach items="${openList }" var="list">
 			<li class="pfmbanInfo">
-				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
 					<img class="bannerImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
@@ -161,12 +159,12 @@ ul.array li span{
 	
 	<hr>
 	<div id="searchandsort">
-<!-- 		<select name="searchKind"> -->
-<!-- 			<option value="all">전체</option> -->
-<!-- 			<option value="1">콘서트</option> -->
-<!-- 			<option value="2">뮤지컬&연극</option> -->
-<!-- 			<option value="3">가족&아동</option> -->
-<!-- 		</select> -->
+		<select name="searchKind">
+			<option value="all">전체</option>
+			<option value="1">콘서트</option>
+			<option value="2">뮤지컬&연극</option>
+			<option value="3">가족&아동</option>
+		</select>
 		<input id="opensearchtext" name="opensearchtext" type="text">
 		<button id="opensearchbtn" type="submit">검색</button>
 	
@@ -181,10 +179,10 @@ ul.array li span{
 	<ul id="bottomlist">
 		<c:forEach items="${openPfmList }" var="list">
 			<li class="pfmInfo">
-		<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+		<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
 			<span class="pfmdate">
-				<h5>티켓 오픈일 : <fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/></h5><br>
-				<h2>${list.name } 오픈 안내</h2><br>
+				티켓 오픈일 : <fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/><br>
+				${list.name } 오픈 안내<br>
 				등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy-MM-dd"/>
 				<img class="bannerImg" src="/resources/image/${list.posterName}" /><br>
 			</span>

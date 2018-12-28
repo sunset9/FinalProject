@@ -2,13 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
-	// 상단배너 이미지 하나씩 자동 슬라이드 해주기
-	setInterval(function() {
-// 		$('.topbannerimg').append($('.bannerImg').first());
-		
-	}, 2000);
 	
 	$("#muall, #6, #7").click(function() {
 		// 각 버튼을 눌렀을 경우 해당 버튼에 대한 id 값을 가져옴
@@ -37,17 +40,20 @@ $(document).ready(function() {
 	}); // 테마 선택 btn
 	
 	// 인기순, 임박순, 최신순
-	//	뮤지컬&연극 리스트 뽑는 거로 변경중
-	//	지금은 콘서트 리스트 뽑힘
 	$("#popularity, #Deadline, #Latest").click(function() {
 		var arrayList = $(this).attr('id');
 		console.log(arrayList);
+		
+		// 콘서트 장르 IDX 전달해주기
+		var genreIdx = 2;
+		console.log(genreIdx);
 		
 		$.ajax({
 			url: '/ticket/arraylist'
 			, method: 'GET'
 			, data: {
 				"array" : arrayList
+				, "genreIdx": genreIdx
 			}
 			, dataType: 'json'
 			, success: function(d) {
@@ -83,6 +89,15 @@ $(document).ready(function() {
 		});
 	}
 	
+	$('.bxslider').bxSlider({
+		minSlides : 5,
+		maxSlides : 5,
+		slideWidth : 350,
+		slideMargin : 20
+// 		ticker : true,
+// 		speed : 50000
+	});
+	
 });
 
 </script>
@@ -117,6 +132,7 @@ ul.array {
 	float: right;
 	list-style: none;
 }
+
 ul.array li {
 	float: left;
 }
@@ -126,10 +142,12 @@ ul.array li span{
     vertical-align: middle;
     cursor: pointer;
 }
+
 .arrayDiv {
 	width:100%;
 	float: right;
 }
+
 li.pfmInfo {
 	list-style: none;
 	float: left;
@@ -143,19 +161,22 @@ li.pfmInfo {
 
 .choiceDiv {
 	text-align: center;
+	margin-top: 20px;
 }
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
-	<h3>뮤지컬&연극</h3>
+	<h3 style="font-size: 30px;">뮤지컬&공연</h3><br>
 	<div class="topbannerimg">
+	<ul class="bxslider">
 	<c:forEach items="${topBanList }" var="topList">
-	<span class="thumImg">
+	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
 			<img class="bannerImg" src="/resources/image/${topList.originName}" />
 		</a>
-	</span>
+	</li>
 	</c:forEach>
+	</ul>
 	</div>
 	
 	<hr>
@@ -187,4 +208,6 @@ li.pfmInfo {
 			</li>
 		</c:forEach>
 	</ul>
+	
+	<!-- 무한스크롤 추가하기 -->
 </div>

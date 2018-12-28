@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<!-- 배수연 슬라이드 테스트 jsp -->
+
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 
@@ -13,37 +15,31 @@
 <script>
 	$(document).ready(function() {
 		$('.bxslider').bxSlider({
-			minSlides : 4,
-			maxSlides : 4,
-				slideWidth : 170,
 
-			slideMargin : 10,
+			  pagerCustom: '#bx-pager'
 
-			ticker : true,
-
-			speed : 6000
-
-		});
-
+			});
 	});
 </script>
 
-
 <ul class="bxslider">
-	<li><img src="/images/170_200/trees.jpg" /></li>
 
-	<li><img src="/images/170_200/tree_root.jpg" /></li>
+  <li><img src="/images/730_200/tree_root.jpg" /></li>
 
-	<li><img src="/images/170_200/houses.jpg" /></li>
+  <li><img src="/images/730_200/houses.jpg" /></li>
 
-	<li><img src="/images/170_200/hill_road.jpg" /></li>
-
-	<li><img src="/images/170_200/me_trees.jpg" /></li>
-
-	<li><img src="/images/170_200/hill_trees.jpg" /></li>
-
-	<li><img src="/images/170_200/mountain.jpg" /></li>
-
-	<li><img src="/images/170_200/houses.jpg" /></li>
+  <li><img src="/images/730_200/hill_fence.jpg" /></li>
 
 </ul>
+
+
+
+<div id="bx-pager">
+
+  <a data-slide-index="0" href=""><img src="/images/thumbs/tree_root.jpg" /></a>
+
+  <a data-slide-index="1" href=""><img src="/images/thumbs/houses.jpg" /></a>
+
+  <a data-slide-index="2" href=""><img src="/images/thumbs/hill_fence.jpg" /></a>
+
+</div>

@@ -67,18 +67,18 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getDeadlineList() {
-		return mainDao.selectDeadlindListPfm();
+	public List<Poster> getDeadlineList(String genreIdx) {
+		return mainDao.selectDeadlindListPfm(genreIdx);
 	}
 
 	@Override
-	public List<Poster> getLatestList() {
-		return mainDao.selectLatestListPfm();
+	public List<Poster> getLatestList(String genreIdx) {
+		return mainDao.selectLatestListPfm(genreIdx);
 	}
 
 	@Override
-	public List<Poster> getPopularityList() {
-		return mainDao.selectPopularityListPfm();
+	public List<Poster> getPopularityList(String genreIdx) {
+		return mainDao.selectPopularityListPfm(genreIdx);
 	}
 
 	@Override
@@ -261,7 +261,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Performance> getopenSerchList(String opentext) {
+	public List<Performance> getOpenSerchList(String opentext) {
 		return mainDao.selectOpenSearchList(opentext);
 	}
 
@@ -309,6 +309,11 @@ public class MainServiceImpl implements MainService {
 		int cnt = mainDao.selectHallCount(top_searchh);
 		
 		return cnt;
+	}
+
+	@Override
+	public List<Performance> getOpenSelectSearchList(String genreIdx, String opentext) {
+		return mainDao.selectOpenSelectSearchList(genreIdx, opentext);
 	}
 	
 }

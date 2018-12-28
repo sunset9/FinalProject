@@ -39,6 +39,9 @@
 		SELECT
 		    pfm_idx as pfmIdx
 		    , banner_img_ori as bannerImgOri
+		    , banner_img_str as bannerImgStr
+		    , thumb_img_ori as thumbImgOri
+		    , thumb_img_str as thumbImgStr
 		FROM main_banner
 	</select>
 	
@@ -220,14 +223,14 @@
 	</select>
 	
 	<!-- 콘서트 정렬기준 - 마감임박순 -->
-	<select id="selectDeadlindListPfm" resultMap="Poster">
+	<select id="selectDeadlindListPfm" parameterType="String" resultMap="Poster">
 		SELECT
 		    p.pfm_idx
 		    , p.name
 		    , po.origin_name
 		FROM (
 		    SELECT * FROM performance
-		    WHERE genre_idx=1
+		    WHERE genre_idx=${genreIdx}
 		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
 		) p
 		LEFT JOIN poster_info po
@@ -235,14 +238,14 @@
 	</select>
 	
 	<!-- 콘서트 정렬기준 - 최신순 -->
-	<select id="selectLatestListPfm" resultMap="Poster">
+	<select id="selectLatestListPfm" parameterType="String" resultMap="Poster">
 		SELECT
 		    p.pfm_idx
 		    , p.name
 		    , po.origin_name
 		FROM(
 		    SELECT * FROM performance
-		    WHERE genre_idx=1
+		    WHERE genre_idx=${genreIdx}
 		    ORDER BY ticket_start DESC
 		) p
 		LEFT JOIN poster_info po
@@ -250,7 +253,7 @@
 	</select>
 	
 	<!-- 콘서트 정렬기준 - 인기순 -->
-	<select id="selectPopularityListPfm" resultMap="Poster">
+	<select id="selectPopularityListPfm" parameterType="String" resultMap="Poster">
 		
 	</select>
 	
@@ -470,6 +473,24 @@
 		) h
 		LEFT JOIN hall_file hf
 		ON h.hall_idx = hf.hall_idx
+	</select>
+	
+	<select id="selectOpenSelectSearchList" parameterType="String" resultMap="Performance">
+		SELECT 
+			po.origin_name poster_name ,pp.*
+		FROM (
+    		SELECT ROWNUM as rnum, p.* FROM (
+       			SELECT * FROM performance
+                <if test='value!=null and value!=""'>
+				    WHERE NAME LIKE '%${value }%'
+				    	AND genre_idx=#{genreIdx}
+			    </if>
+                ORDER BY pfm_start desc
+    		) p
+		)pp
+        LEFT JOIN poster_info po
+        ON pp.pfm_idx = po.pfm_idx
+		ORDER BY rnum
 	</select>
 	
 </mapper>
