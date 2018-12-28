@@ -1,5 +1,7 @@
 package ticket.controller;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 
@@ -157,7 +159,7 @@ public class PfmDetailController {
 	}
 
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.28
 	 * 
 	 * @Method설명: 오픈소식 상세페이지
 	 * @작성자: 배수연
@@ -185,14 +187,30 @@ public class PfmDetailController {
 	}
 
 	/**
-	 * 최종수정일: 2018.12.05
+	 * 최종수정일: 2018.12.28
 	 * 
-	 * @Method설명: 오픈 상세 관련 정보 띄우기
+	 * @Method설명: 오픈 상세 - 공연플래너 담기
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value = "/ticket/opendetail", method = RequestMethod.POST)
-	public void opendetailProc() {
-
+	public void openMyChoice(
+			String userIdx
+			, String pfmIdx
+			, Writer out
+		) {
+		
+		logger.info("+ + + 공연플래너 담기 버튼 클릭 + + +");
+		logger.info("userIdx : " + userIdx);
+		logger.info("pfmIdx : " + pfmIdx);
+		
+		// 추가해주기
+		boolean choice = detailService.mychoiceInsert(userIdx, pfmIdx);
+		
+		try {
+			out.write("" + choice);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

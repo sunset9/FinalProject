@@ -117,7 +117,7 @@ ul.tabs li.current{
 		<c:forEach items="${pfmSearchList }" var="list">
 			<li id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.originName}"
+				<img src="/resources/image/${list.storedName}"
 					style="width: 150px; height: 200px;"/>
 				<strong style="text-align: center; height: 200px;">${list.name }</strong>
 			</a>
@@ -168,7 +168,7 @@ ul.tabs li.current{
 		<c:forEach items="${pfmSearchList }" var="list">
 			<li id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.originName}"
+				<img src="/resources/image/${list.storedName}"
 					style="width: 150px; height: 200px;"/>
 				<strong style="text-align: center; height: 200px;">${list.name }</strong>
 			</a>

@@ -51,6 +51,7 @@
 		    p.pfm_idx
 		    , p.name
 		    , po.origin_name
+		    , po.stored_name
 		FROM( 
 		    SELECT
 		        rownum, p.*
@@ -211,6 +212,7 @@
 		    p.pfm_idx
 		    , p.name
 		    , pi.origin_name
+		    , pi.stored_name
 		FROM(
 		    SELECT * FROM performance
 		    WHERE pfm_idx IN (
@@ -228,6 +230,7 @@
 		    p.pfm_idx
 		    , p.name
 		    , po.origin_name
+		    , po.stored_name
 		FROM (
 		    SELECT * FROM performance
 		    WHERE genre_idx=${genreIdx}
@@ -243,6 +246,7 @@
 		    p.pfm_idx
 		    , p.name
 		    , po.origin_name
+		    , po.stored_name
 		FROM(
 		    SELECT * FROM performance
 		    WHERE genre_idx=${genreIdx}

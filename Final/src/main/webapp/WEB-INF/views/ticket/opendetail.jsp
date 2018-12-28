@@ -8,6 +8,38 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
+	// 공연플래너 담기 버튼
+	$('#mychoicebtn').click(function() {
+		var userIdx = '${loginUser.userIdx }';
+		console.log("loginUserIdx : " + userIdx);
+		
+		var pfmIdx = '${pfmInfoList.pfmIdx}';
+		console.log("pfmIdx : " + pfmIdx);
+	
+		if(userIdx != '') {
+		$.ajax({
+			url: '/ticket/opendetail'
+			, method: 'POST'
+			, data: {
+				"userIdx" : userIdx
+				, "pfmIdx": pfmIdx
+			}
+			, dataType: 'json'
+			, success: function(choice) {
+				console.log('성공');
+				
+				if(choice)
+					alert('공연플래너 담기가 완료되었습니다.');
+			}
+			, error: function(e) {
+				console.log('실패');
+			}
+		});
+		} else {
+			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
+		}
+	});
+	
 });
 
 </script>
@@ -187,13 +219,17 @@ ul.tabs li.current{
 <div class="container">
 	<div class="topDiv ddiv">
 		<div class="posterImgDiv">
-			<img class="choicePosterImg" src="/resources/image/${posterList.originName}" />
+			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
 		</div>
 	
 	
 	<div id = "pfmInfo">
-		<strong style="font-size: 50px;">${pfmInfoList.name }</strong><br><br>
+		<strong style="font-size: 20px;">${pfmInfoList.name }</strong><br><br>
 		티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy-MM-dd"/><br>
+	</div>
+	<div id="btnDiv">
+		<button id="mychoicebtn">공연플래너 담기</button>
+		<button>상세보기</button>
 	</div>
 	<div class="bottomDiv ddiv">
 		
@@ -214,5 +250,6 @@ ul.tabs li.current{
 				${detailList.contents }
 			</div>
 		</div>
-		
+	</div>
+	</div>	
 </div>

@@ -149,4 +149,11 @@ public interface PfmDetailService {
 	 */
 	public HallFile getHallImg(Performance pfm);
 
+	/**
+	 * 최종수정일: 2018.12.28
+	 * @Method설명: 공연플래너 담기 버튼 클릭 시 my_choice 추가해주기
+	 * @작성자: 배수연
+	 */
+	public boolean mychoiceInsert(String userIdx, String pfmIdx);
+
 }

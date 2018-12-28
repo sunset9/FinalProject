@@ -201,4 +201,9 @@
 		AND p.hall_idx = h.hall_idx
 	</select>
 	
+	<insert id="InsertMychoice" parameterType="String">
+		INSERT INTO my_choice(choice_idx, user_idx, pfm_idx)
+		VALUES(my_choice_seq.nextval, ${userIdx}, ${pfmIdx})
+	</insert>
+	
 </mapper>

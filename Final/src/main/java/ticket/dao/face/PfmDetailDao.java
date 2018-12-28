@@ -162,5 +162,15 @@ public interface PfmDetailDao {
 	 * @작성자: 배수연
 	 */
 	public HallFile selectHallImg(Performance pfm);
+
+	/**
+	 * 최종수정일: 2018.12.28
+	 * @Method설명: 공연플래너 담기
+	 * @작성자: 배수연
+	 */
+	public void InsertMychoice(
+			@Param(value="userIdx") String userIdx
+			, @Param(value="pfmIdx") String pfmIdx
+		);
 	
 }
