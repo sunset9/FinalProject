@@ -51,20 +51,20 @@ public interface MainService {
 	 * @Method설명: 장르가 뮤지컬&공연인 모든 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getMuPfmPoster();
+	public List<Performance> getMuPfmPoster();
 
 	/**
 	 * 최종수정일: 2018.12.12
 	 * @Method설명: 장르가 가족&아동인 모든 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getFamPfmPoster();
+	public List<Performance> getFamPfmPoster();
 	/**
 	 * 최종수정일: 2018.12.11
 	 * @Method설명: 원하는 테마 선택 후 리스트 출력하기
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getpfmThemeChoicePoster(String theme);
+	public List<Performance> getpfmThemeChoicePoster(String theme);
 
 	/**
 	 * 최종수정일: 2018.12.14
