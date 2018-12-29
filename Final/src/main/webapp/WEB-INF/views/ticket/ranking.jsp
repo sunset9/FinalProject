@@ -42,7 +42,7 @@ $(document).ready(function(){
 			, method : 'GET'
 			, data: {
 				type: type
-				, today: today
+// 				, today: today
 			}
 			, dataType: 'json'
 			, success: function(d){

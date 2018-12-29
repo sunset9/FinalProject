@@ -243,47 +243,36 @@
 		)
 	</select>
 	
-	<!-- 인기순, 마감임박순, 최신순 정렬 -->
-	<select id="selectDeadlindListPfm" parameterType="String" resultMap="Performance">
-		SELECT * FROM (
-		    SELECT
-		        ROWNUM no
-		        , PP.*
-		    FROM (
-		        SELECT
-		            p.*
-		            , h.hall_name
-		            , pi.stored_name storedName
-		        FROM performance p
-		        JOIN poster_info pi
-			    ON p.pfm_idx = pi.pfm_idx
-		        JOIN hall h
-		        ON p.hall_idx = h.hall_idx
-		        WHERE genre_idx=${genreIdx}
-		        ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
-		    ) PP
-		)
+	<!-- 콘서트 정렬기준 - 마감임박순 -->
+	<select id="selectDeadlindListPfm" parameterType="int" resultMap="Poster">
+		SELECT
+		    p.pfm_idx
+		    , p.name
+		    , po.origin_name
+		    , po.stored_name
+		FROM (
+		    SELECT * FROM performance
+		    WHERE genre_idx=${genreIdx}
+		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
+		) p
+		LEFT JOIN poster_info po
+		    ON p.pfm_idx = po.pfm_idx
 	</select>
 	
-	<select id="selectLatestListPfm" parameterType="String" resultMap="Performance">
-		SELECT * FROM (
-		    SELECT
-		        ROWNUM no
-		        , PP.*
-		    FROM (
-		        SELECT
-		            p.*
-		            , h.hall_name
-		            , pi.stored_name storedName
-		        FROM performance p
-		        JOIN poster_info pi
-			    ON p.pfm_idx = pi.pfm_idx
-		        JOIN hall h
-		        ON p.hall_idx = h.hall_idx
-		        WHERE genre_idx=${genreIdx}
-		        ORDER BY ticket_start DESC
-		    ) PP
-		)
+	<!-- 콘서트 정렬기준 - 최신순 -->
+	<select id="selectLatestListPfm" parameterType="int" resultMap="Poster">
+		SELECT
+		    p.pfm_idx
+		    , p.name
+		    , po.origin_name
+		    , po.stored_name
+		FROM(
+		    SELECT * FROM performance
+		    WHERE genre_idx=${genreIdx}
+		    ORDER BY ticket_start DESC
+		) p
+		LEFT JOIN poster_info po
+		    ON p.pfm_idx = po.pfm_idx
 	</select>
 	
 	<select id="selectPopularityListPfm" parameterType="String" resultMap="Poster">
