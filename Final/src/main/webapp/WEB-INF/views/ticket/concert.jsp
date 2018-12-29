@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
@@ -207,7 +208,11 @@ li.pfmInfo {
 				<span class="thumImg">
 					<img class="concertImg" src="/resources/image/${list.storedName}" /><br>
 				</span>
-				<strong class="imgname">${list.name }</strong>
+				<strong class="imgname">${list.name }</strong><br>
+				<small>
+					<fmt:formatDate value="${list.pfmStart }" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${list.pfmEnd }" pattern="yyyy.MM.dd"/><br>
+				</small>
+				<small>${list.hallName }</small>
 				</a>
 			</li>
 		</c:forEach>

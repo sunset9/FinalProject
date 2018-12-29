@@ -52,27 +52,27 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getMuPfmPoster() {
+	public List<Performance> getMuPfmPoster() {
 		return mainDao.selectMuPfmPosterInfo();
 	}
 
 	@Override
-	public List<Poster> getFamPfmPoster() {
+	public List<Performance> getFamPfmPoster() {
 		return mainDao.selectFamPfmPosterInfo();
 	}
 
 	@Override
-	public List<Poster> getpfmThemeChoicePoster(String theme) {
-		return mainDao.ConThemeChoice(theme);
+	public List<Performance> getpfmThemeChoicePoster(String theme) {
+		return mainDao.ThemeChoice(theme);
 	}
 
 	@Override
-	public List<Poster> getDeadlineList(String genreIdx) {
+	public List<Performance> getDeadlineList(String genreIdx) {
 		return mainDao.selectDeadlindListPfm(genreIdx);
 	}
 
 	@Override
-	public List<Poster> getLatestList(String genreIdx) {
+	public List<Performance> getLatestList(String genreIdx) {
 		return mainDao.selectLatestListPfm(genreIdx);
 	}
 

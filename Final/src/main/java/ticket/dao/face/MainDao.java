@@ -73,21 +73,21 @@ public interface MainDao {
 	 * @Method설명: 장르가 뮤지컬&공연인 모든 포스터 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectMuPfmPosterInfo();
+	public List<Performance> selectMuPfmPosterInfo();
 
 	/**
 	 * 최종수정일: 2018.12.12
 	 * @Method설명: 장르가 가족&아동인 모든 포스터 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectFamPfmPosterInfo();
+	public List<Performance> selectFamPfmPosterInfo();
 
 	/**
 	 * 최종수정일: 2018.12.11
 	 * @Method설명: 장르가 콘서트이면서 원하는 테마 선택시 해당하는 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> ConThemeChoice(String theme);
+	public List<Performance> ThemeChoice(String theme);
 
 	/**
 	 * 최종수정일: 2018.12.14
@@ -95,14 +95,14 @@ public interface MainDao {
 	 * @Method설명: 콘서트 - 마감임박순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectDeadlindListPfm(@Param(value="genreIdx") String genreIdx);
+	public List<Performance> selectDeadlindListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
 	 * @Method설명: 콘서트 - 최신순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectLatestListPfm(@Param(value="genreIdx") String genreIdx);
+	public List<Performance> selectLatestListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14

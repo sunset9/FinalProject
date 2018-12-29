@@ -91,7 +91,7 @@ public class MainController {
 	public void concert(
 			Model model
 		) {
-		logger.info("콘서트 FORM");
+		logger.info("+ + + 콘서트 FORM + + +");
 		
 		// 관리자가 선택한 콘서트 상단 배너 15개`
 		List<Poster> topBanList = mainService.adminChoiceBannerCon();
@@ -123,17 +123,17 @@ public class MainController {
 			
 		} else if( theme.equals("muall")) {
 			// 뮤지컬&연극 전체
-			List<Poster> posterList = mainService.getMuPfmPoster();
+			List<Performance> posterList = mainService.getMuPfmPoster();
 			
 			map.put("posterList", posterList);
 		} else if( theme.equals("famall") ) {
 			// 가족&아동 전체
-			List<Poster> posterList = mainService.getFamPfmPoster();
+			List<Performance> posterList = mainService.getFamPfmPoster();
 			
 			map.put("posterList", posterList);
 		} else {
 			// 테마 idx 선택 시
-			List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
+			List<Performance> posterList = mainService.getpfmThemeChoicePoster(theme);
 			
 			map.put("posterList", posterList);
 		}
@@ -157,7 +157,7 @@ public class MainController {
 		model.addAttribute("topBanList", topBanList);
 		
 		// 모든 포스터 리스트 뿌려주기
-		List<Poster> posterList = mainService.getMuPfmPoster();
+		List<Performance> posterList = mainService.getMuPfmPoster();
 		model.addAttribute("posterList", posterList);
 	}
 	
@@ -177,7 +177,7 @@ public class MainController {
 		model.addAttribute("topBanList", topBanList);
 		
 		// 모든 포스터 리스트 뿌려주기
-		List<Poster> posterList = mainService.getFamPfmPoster();
+		List<Performance> posterList = mainService.getFamPfmPoster();
 		model.addAttribute("posterList", posterList);
 	}
 	
@@ -200,13 +200,13 @@ public class MainController {
 		} else if(array.equals("Deadline")) {
 			// 마감 임박순
 			// 오늘 날짜 - 티켓마감일 순
-			List<Poster> posterList = mainService.getDeadlineList(genreIdx);
-			map.put("pfmList", posterList);
+			List<Performance> posterList = mainService.getDeadlineList(genreIdx);
+			map.put("posterList", posterList);
 			
 		} else if (array.equals("Latest")) {
 			// 최신순
-			List<Poster> posterList = mainService.getLatestList(genreIdx);
-			map.put("pfmList", posterList);
+			List<Performance> posterList = mainService.getLatestList(genreIdx);
+			map.put("posterList", posterList);
 		}
 		
 		return map;

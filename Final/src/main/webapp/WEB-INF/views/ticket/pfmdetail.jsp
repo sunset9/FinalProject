@@ -244,7 +244,7 @@ $(document).ready(function() {
 }
 
 .posterImgDiv {
-	width: 400px;
+	width: auto;
 	float: left;
 	text-align: center;
 }
@@ -456,7 +456,7 @@ ul.tabs li.current{
 
 		<div id="tab-1" class="tab-content current">
 			<h3 style="float: left;">출연진</h3><br>
-			<div class="castInfo tabarray">
+			<div class="castInfo tabarray" style="width: 100%;">
 			<ul>
 			<c:forEach items="${castList }" var="list">
 				<div class="imgli">
@@ -467,7 +467,7 @@ ul.tabs li.current{
 			</ul>
 			</div>
 			
-			<div class="pfmInfo tabarray">
+			<div class="pfmInfo tabarray" style="display: inline-block;">
 				${detailList.contents }
 			</div>
 		</div>
