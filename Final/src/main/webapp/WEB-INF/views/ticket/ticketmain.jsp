@@ -224,7 +224,7 @@ div>h4 {
 		<c:forEach items="${bannerList }" var="list">
 			<li>
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.bannerImgOri}" />
+				<img src="/resources/image/${list.bannerImgStr}" />
 			</a>
 			</li>
 		</c:forEach>

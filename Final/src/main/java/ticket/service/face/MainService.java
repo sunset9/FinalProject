@@ -16,21 +16,21 @@ public interface MainService {
 	 * @Method설명: 관리자가 선택한 콘서트 상단배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> adminChoiceBannerCon();
+	public List<Performance> adminChoiceBannerCon();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 뮤지컬&공연 상단배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> adminChoiceBannerMu();
+	public List<Performance> adminChoiceBannerMu();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 가족&아동 상단배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> adminChoiceBannerFam();
+	public List<Performance> adminChoiceBannerFam();
 	
 	/**
 	 * 최종수정일: 2018.12.06
@@ -82,9 +82,9 @@ public interface MainService {
 	public List<Performance> getLatestList(String genreIdx);
 
 	/**
-	 * 최종수정일: 2018.12.14
+	 * 최종수정일: 2018.12.29
 	 * @Method설명: 콘서트 - 인기순
-	 * @작성자: 배수연
+	 * @작성자: 전해진
 	 */
 	public List<Performance> getPopularityList(String genreIdx);
 

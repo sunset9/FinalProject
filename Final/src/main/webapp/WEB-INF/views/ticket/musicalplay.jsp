@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
@@ -78,7 +79,7 @@ $(document).ready(function() {
 		
 		var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
 		var span = $('<span class="thumImg">');
-		var img = $('<img class="concertImg" src="/resources/image/'+ list.storedName + '"><br>');
+		var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
 		
 		a.append(span.append(img));
 		a.append($('<strong>'+ list.name +'</strong>'));
@@ -90,10 +91,13 @@ $(document).ready(function() {
 	}
 	
 	$('.bxslider').bxSlider({
+		// 무한 루프가 아닌 처음과 끝으로 표현
+		infiniteLoop: false,
+		hideControlOnEnd: true,
 		minSlides : 5,
 		maxSlides : 5,
-		slideWidth : 350,
-		slideMargin : 20
+		slideWidth : 350
+// 		slideMargin : 20
 // 		ticker : true,
 // 		speed : 50000
 	});
@@ -172,7 +176,8 @@ li.pfmInfo {
 	<c:forEach items="${topBanList }" var="topList">
 	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
-			<img class="bannerImg" src="/resources/image/${topList.storedName}" />
+			<img class="bannerImg" src="/resources/image/${topList.storedName}" /><br>
+			<small>${topList.name }</small>
 		</a>
 	</li>
 	</c:forEach>
@@ -196,14 +201,18 @@ li.pfmInfo {
 	</div>
 	
 	<!-- 포스터 리스트 출력 -->
-	<ul id="posterList">
+	<ul id="pfmList">
 		<c:forEach items="${posterList }" var="list">
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-					<img class="concertImg" src="/resources/image/${list.storedName}" /><br>
+					<img class="concertImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
-				<strong class="imgname">${list.name }</strong>
+				<strong class="imgname">${list.name }</strong><br>
+				<small>
+					<fmt:formatDate value="${list.pfmStart }" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${list.pfmEnd }" pattern="yyyy.MM.dd"/><br>
+				</small>
+				<small>${list.hallName }</small>
 				</a>
 			</li>
 		</c:forEach>

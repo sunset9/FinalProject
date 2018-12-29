@@ -93,8 +93,8 @@ public class MainController {
 		) {
 		logger.info("+ + + 콘서트 FORM + + +");
 		
-		// 관리자가 선택한 콘서트 상단 배너 15개`
-		List<Poster> topBanList = mainService.adminChoiceBannerCon();
+		// 관리자가 선택한 콘서트 상단 배너 15개
+		List<Performance> topBanList = mainService.adminChoiceBannerCon();
 		model.addAttribute("topBanList", topBanList);
 		
 		// 전체 리스트
@@ -117,25 +117,25 @@ public class MainController {
 		// 콘서트 - 테마 선택 후 리스트 출력
 		if( theme.equals("conall") ) {
 			// 콘서트 전체
-			List<Performance> posterList = mainService.getConPfmPoster();
+			List<Performance> pfmList = mainService.getConPfmPoster();
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 			
 		} else if( theme.equals("muall")) {
 			// 뮤지컬&연극 전체
-			List<Performance> posterList = mainService.getMuPfmPoster();
+			List<Performance> pfmList = mainService.getMuPfmPoster();
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 		} else if( theme.equals("famall") ) {
 			// 가족&아동 전체
-			List<Performance> posterList = mainService.getFamPfmPoster();
+			List<Performance> pfmList = mainService.getFamPfmPoster();
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 		} else {
 			// 테마 idx 선택 시
-			List<Performance> posterList = mainService.getpfmThemeChoicePoster(theme);
+			List<Performance> pfmList = mainService.getpfmThemeChoicePoster(theme);
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 		}
 		
 		return map;
@@ -153,7 +153,7 @@ public class MainController {
 		logger.info("뮤지컬&연극 FORM");
 		
 		// 관리자가 선택한 뮤지컬&연극 상단배너 출력
-		List<Poster> topBanList = mainService.adminChoiceBannerMu();
+		List<Performance> topBanList = mainService.adminChoiceBannerMu();
 		model.addAttribute("topBanList", topBanList);
 		
 		// 모든 포스터 리스트 뿌려주기
@@ -173,7 +173,7 @@ public class MainController {
 		logger.info("가족&아동 FORM");
 		
 		// 관리자가 선택한 가족&아동 상단배너 출력
-		List<Poster> topBanList = mainService.adminChoiceBannerFam();
+		List<Performance> topBanList = mainService.adminChoiceBannerFam();
 		model.addAttribute("topBanList", topBanList);
 		
 		// 모든 포스터 리스트 뿌려주기
@@ -194,20 +194,20 @@ public class MainController {
 		
 		if(array.equals("popularity")) {
 			// 인기순
-			//	sql문 작성하기
 			List<Performance> posterList = mainService.getPopularityList(genreIdx);
-			map.put("posterList", posterList);
+			map.put("pfmList", posterList);
 			
 		} else if(array.equals("Deadline")) {
 			// 마감 임박순
 			// 오늘 날짜 - 티켓마감일 순
 			List<Performance> posterList = mainService.getDeadlineList(genreIdx);
-			map.put("posterList", posterList);
+			map.put("pfmList", posterList);
 			
 		} else if (array.equals("Latest")) {
 			// 최신순
 			List<Performance> posterList = mainService.getLatestList(genreIdx);
-			map.put("posterList", posterList);
+			map.put("pfmList", posterList);
+
 		}
 		
 		return map;

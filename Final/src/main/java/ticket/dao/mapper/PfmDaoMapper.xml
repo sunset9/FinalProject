@@ -629,4 +629,10 @@
 			)
 		WHERE no BETWEEN #{startNo} AND #{endNo}
 	</select>
+	
+	<select id="selectPfmDbtCntByPfmIdx" resultType="int">
+		SELECT COUNT(*) FROM PFM_DATEBYTIME
+		WHERE pfm_idx = #{pfm.pfmIdx }
+			AND pfm_date BETWEEN #{startDate } AND #{endDate }
+	</select>
 </mapper>

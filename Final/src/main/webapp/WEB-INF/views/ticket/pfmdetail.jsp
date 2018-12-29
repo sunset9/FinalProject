@@ -479,9 +479,16 @@ ul.tabs li.current{
 			<div class="insertExpextation">
 			<ul>
 				<li class="expecUserInfo">
+				<c:if test="${login }">
 					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.name }</strong>
+				</c:if>
+				<c:if test="${not login }">
+				<!-- 로그인 되어있지 않을 경우 기본 이미지로 출력 -->
+					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
+					 src="<c:url value="/resources/image/profile.png"/>"/><br>
+				</c:if>
 				</li>
 				<c:if test="${login }">
 				<li class="expectation">
@@ -536,9 +543,15 @@ ul.tabs li.current{
 			<div class="insertReview">
 			<ul>
 				<li class="revUserInfo">
+				<c:if test="${login }">
 					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.name }</strong>
+				</c:if>
+				<c:if test="${not login }">
+					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
+					 src="<c:url value="/resources/image/profile.png"/>"/>
+				</c:if>
 				</li>
 				<c:if test="${login }">
 				<li class="review">

@@ -30,21 +30,21 @@ public interface MainDao {
 	 * @Method설명: 관리자가 선택한 콘서트 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectAdminBanCon();
+	public List<Performance> selectAdminBanCon();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 뮤지컬&공연 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectAdminBanMu();
+	public List<Performance> selectAdminBanMu();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 가족&아동 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectAdminBanFam();
+	public List<Performance> selectAdminBanFam();
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -270,5 +270,21 @@ public interface MainDao {
 			@Param(value="genreIdx") String genreIdx
 			, @Param(value="value") String opentext
 		);
+
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 설정한 범위 내에 등록된 공연 일정 개수 구하기 
+	 * @작성자: 전해진
+	 */
+	public int selectPfmDbtCntByPfmIdx(@Param(value="pfm") Performance pfm
+			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
+
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회 (좌석 수 오름차순으로 정렬)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmListByPeriodNGenre(@Param(value="start") String start
+			, @Param(value="end") String end, @Param(value="genreIdx") String genreIdx);
 
 }
