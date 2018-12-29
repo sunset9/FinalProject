@@ -271,4 +271,20 @@ public interface MainDao {
 			, @Param(value="value") String opentext
 		);
 
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 설정한 범위 내에 등록된 공연 일정 개수 구하기 
+	 * @작성자: 전해진
+	 */
+	public int selectPfmDbtCntByPfmIdx(@Param(value="pfm") Performance pfm
+			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
+
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 주어진 구간 내에 티켓을 판매하는 공연 리스트 조회 (좌석 수 오름차순으로 정렬)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectPfmListByPeriodNGenre(@Param(value="start") String start
+			, @Param(value="end") String end, @Param(value="genreIdx") String genreIdx);
+
 }

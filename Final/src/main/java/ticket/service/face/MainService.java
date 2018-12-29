@@ -82,9 +82,9 @@ public interface MainService {
 	public List<Performance> getLatestList(String genreIdx);
 
 	/**
-	 * 최종수정일: 2018.12.14
+	 * 최종수정일: 2018.12.29
 	 * @Method설명: 콘서트 - 인기순
-	 * @작성자: 배수연
+	 * @작성자: 전해진
 	 */
 	public List<Performance> getPopularityList(String genreIdx);
 

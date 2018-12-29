@@ -526,4 +526,32 @@
 		ORDER BY rnum
 	</select>
 	
+	<select id="selectPfmDbtCntByPfmIdx" resultType="int">
+		SELECT COUNT(*) FROM PFM_DATEBYTIME
+		WHERE pfm_idx = #{pfm.pfmIdx }
+			AND pfm_date BETWEEN #{startDate } AND #{endDate }
+	</select>
+	
+	<select id="selectPfmListByPeriodNGenre" resultMap="Performance">
+		SELECT P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name poster_name, H.hall_name, COUNT(S.seat_idx) cnt 
+		FROM performance P
+		LEFT JOIN seat S
+		ON P.hall_idx = S.hall_idx
+		LEFT JOIN hall H
+		ON P.hall_idx = H.hall_idx
+		LEFT JOIN poster_info Ps
+		ON P.pfm_idx = Ps.pfm_idx
+		WHERE ( p.genre_idx = #{genreIdx }
+				AND (
+					(ticket_start between #{start } and #{end })  
+					OR (ticket_end between #{start } and #{end })
+					OR (#{start } between ticket_start and ticket_end)  
+					OR (#{end } between ticket_start and ticket_end)
+				)
+			)
+		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx
+				, age_grade_idx, running_time, P.create_date, Ps.stored_name, H.hall_name
+		ORDER BY cnt	
+	</select>
 </mapper>
