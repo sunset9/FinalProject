@@ -72,21 +72,21 @@ public interface MainService {
 	 * @Method설명: 콘서트 - 마감임박순 정렬
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getDeadlineList(String genreIdx);
+	public List<Poster> getDeadlineList(int genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
 	 * @Method설명: 콘서트 - 최신순 정렬
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getLatestList(String genreIdx);
+	public List<Poster> getLatestList(int genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.29
 	 * @Method설명: 콘서트 - 인기순
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getPopularityList(String genreIdx);
+	public List<Performance> getPopularityList(int genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.15
@@ -117,13 +117,6 @@ public interface MainService {
 	public List<Poster> getMuPoster();
 
 	/**
-	 * 최종수정일: 2018.12.18
-	 * @Method설명: 테스트 데이터
-	 * @작성자: 배수연
-	 */
-	public List<Poster> getTestList();
-
-	/**
 	 * 최종수정일: 2018.12.16
 	 * @Method설명: 오픈 티켓 배너 리스트 5개
 	 * @작성자: 배수연
@@ -150,7 +143,7 @@ public interface MainService {
 	 * @Method설명: 공연 예매율 구하기
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getTopRank(String type, Date today);
+	public List<Performance> getTopRank(String type);
 
 	/**
 	 * 최종수정일: 2018.12.26
@@ -221,5 +214,12 @@ public interface MainService {
 	 * @작성자: 배수연
 	 */
 	public List<Performance> getOpenSelectSearchList(String genreIdx, String opentext);
+
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 장르별 랭킹 가져오기(top5)
+	 * @작성자: 전해진
+	 */
+	public List<Performance> getTopRankByGenre(String genre);
 
 }

@@ -222,7 +222,7 @@
 	</select>
 	
 	<!-- 콘서트 정렬기준 - 마감임박순 -->
-	<select id="selectDeadlindListPfm" parameterType="String" resultMap="Poster">
+	<select id="selectDeadlindListPfm" parameterType="int" resultMap="Poster">
 		SELECT
 		    p.pfm_idx
 		    , p.name
@@ -238,7 +238,7 @@
 	</select>
 	
 	<!-- 콘서트 정렬기준 - 최신순 -->
-	<select id="selectLatestListPfm" parameterType="String" resultMap="Poster">
+	<select id="selectLatestListPfm" parameterType="int" resultMap="Poster">
 		SELECT
 		    p.pfm_idx
 		    , p.name

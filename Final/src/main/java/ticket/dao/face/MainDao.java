@@ -95,14 +95,14 @@ public interface MainDao {
 	 * @Method설명: 콘서트 - 마감임박순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectDeadlindListPfm(@Param(value="genreIdx") String genreIdx);
+	public List<Poster> selectDeadlindListPfm(@Param(value="genreIdx") int genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
 	 * @Method설명: 콘서트 - 최신순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectLatestListPfm(@Param(value="genreIdx") String genreIdx);
+	public List<Poster> selectLatestListPfm(@Param(value="genreIdx") int genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
@@ -285,6 +285,6 @@ public interface MainDao {
 	 * @작성자: 전해진
 	 */
 	public List<Performance> selectPfmListByPeriodNGenre(@Param(value="start") String start
-			, @Param(value="end") String end, @Param(value="genreIdx") String genreIdx);
+			, @Param(value="end") String end, @Param(value="genreIdx") int genreIdx);
 
 }

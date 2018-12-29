@@ -38,6 +38,22 @@
 		    $("#"+tab_id).addClass('current');
 		});
 		
+		// 랭킹 가져오기
+		$('.kind span').click(function(){
+			$.ajax({
+				url: "/ticket/mainrank"
+				, method: "GET"
+				, data: {"genre": $(this).attr('id')}
+				, dataType: "JSON"
+				, success:function(d){
+					console.log(d);
+				}
+				, error:function() {
+					console.log('랭킹 가져오기 실패');
+				}
+			});
+		});
+		
 		// 맞춤 공연
 		function loginFitPfm() {
 			var userIdx = '${loginUser.userIdx }';
@@ -172,13 +188,18 @@ ul.kind li span{
 	width:100%;
 	float: right;
 }
+#rankList img:first {
+	height: 300px;
+    width: 240px;
+	
+}
 
 li.pfmInfo {
 	list-style: none;
 	float: left;
 }
 
-.tapImg {
+.rankPoster {
 	width: 100px;
 	height: 100px;
 }
@@ -290,18 +311,17 @@ div>h4 {
 	<h4>랭킹</h4>
 	<div class="kindDiv">
 		<ul class="kind">
-			<li><span id="con">콘서트</span></li>
-			<li><span id="mu">뮤지컬&연극</span></li>
-			<li><span id="fam">가족&아동</span></li>
+			<li><span id="CON">콘서트</span></li>
+			<li><span id="MU">뮤지컬&연극</span></li>
+			<li><span id="FAM">가족&아동</span></li>
 		</ul><br><br>
 		
-		<!-- 랭킹 테스트 데이터 이용해서 출력 중 / 쿼리문 작성 후 ajax 해야함 -->
-		<ul id="posterList">
-		<c:forEach items="${testList }" var="list">
+		<ul id="rankList">
+		<c:forEach items="${rankPfm }" var="list">
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-<%-- 					<img class="tapImg" src="/resources/image/${list.originName}" /><br> --%>
+					<img class="rankPoster" src="/resources/image/${list.posterName}" /><br>
 				</span>
 				</a>
 			</li>
