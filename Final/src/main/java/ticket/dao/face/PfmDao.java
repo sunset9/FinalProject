@@ -464,4 +464,13 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public Performance selectPfmByPfmIdx(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 설정한 범위 내에 등록된 공연 일정 개수 구하기
+	 * @작성자: 전해진
+	 */
+	public int selectPfmDbtCntByPfmIdx(@Param(value="pfm") Performance pfm
+			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
+
 }
