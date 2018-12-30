@@ -82,10 +82,13 @@ $(document).ready(function() {
 			var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
 			
 			a.append(span.append(img));
-			a.append($('<strong>'+ list.name +'</strong>'));
+			a.append($('<strong>'+ list.name +'</strong><br>'));
 			
-			var pfmStart = list.pfmStart;
-			console.log(pfmStart);
+			var pfmStart = getDateSimpleString(list.pfmStart);
+			var pfmEnd = getDateSimpleString(list.pfmEnd);
+// 			console.log(pfmStart);
+			
+			a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small>'));
 			
 			a.append($('<p>'+ list.hallName +'</p>'));
 			li.append(a);
@@ -93,6 +96,15 @@ $(document).ready(function() {
 			$('#pfmList').append(li);
 
 		});
+	}
+	
+	function getDateSimpleString(date){
+		var date = new Date(date);
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		return date.getFullYear() + "."
+			+ ((month < 10)? '0' + month : month) + "."
+			+ ((day < 10) ? '0' + day : day);
 	}
 	
 	$('.bxslider').bxSlider({
@@ -160,8 +172,9 @@ ul.array li span{
 li.pfmInfo {
 	list-style: none;
 	float: left;
-	margin: 5px;
+	margin: 10px;
 	text-align: center;
+	border: 1px solid #C6C5C5;
 }
 
 .choiceDiv button {

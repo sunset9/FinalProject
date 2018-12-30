@@ -83,11 +83,25 @@ $(document).ready(function() {
 		
 		a.append(span.append(img));
 		a.append($('<strong>'+ list.name +'</strong>'));
+
+		var pfmStart = getDateSimpleString(list.pfmStart);
+		var pfmEnd = getDateSimpleString(list.pfmEnd);
+		a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small>'));
+		
 		li.append(a);
 		
 		$('#posterList').append(li);
 
 		});
+	}
+
+	function getDateSimpleString(date){
+		var date = new Date(date);
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		return date.getFullYear() + "."
+			+ ((month < 10)? '0' + month : month) + "."
+			+ ((day < 10) ? '0' + day : day);
 	}
 	
 	$('.bxslider').bxSlider({
@@ -155,8 +169,9 @@ ul.array li span{
 li.pfmInfo {
 	list-style: none;
 	float: left;
-	margin: 5px;
 	text-align: center;
+	margin: 10px;
+	border: 1px solid #C6C5C5;
 }
 
 .choiceDiv button {
