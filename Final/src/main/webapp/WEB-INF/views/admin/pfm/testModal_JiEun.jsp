@@ -47,6 +47,31 @@
 <!-- Other elements -->
 <p data-toggle="modal" data-target="#myModal">Open Modal</p>
 
+<table>
+	<tr>
+		<td>공연</td>
+		<td><input type="search"/></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>공연정보</td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td>썸네일 이미지</td>
+		<td><input type="file" /></td>
+		<td>배너 이미지</td>
+		<td><input type="file" /></td>
+	</tr>
+	<tr>
+		<td>.</td>
+		<td><img src="" /></td>
+		<td>.</td>
+		<td><img src="" /></td>
+	</tr>
+</table>
+
 
  
 

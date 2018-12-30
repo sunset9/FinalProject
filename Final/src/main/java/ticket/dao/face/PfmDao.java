@@ -457,6 +457,13 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public List<Performance> selectAllPfmList(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: pfmIdx로 검색해서 pfm 정보 가져오기
+	 * @작성자: 김지은
+	 */
+	public Performance selectPfmByPfmIdx(int pfmIdx);
 
 	/**
 	 * @최종수정일: 2018.12.29
@@ -465,4 +472,5 @@ public interface PfmDao {
 	 */
 	public int selectPfmDbtCntByPfmIdx(@Param(value="pfm") Performance pfm
 			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
+
 }

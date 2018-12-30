@@ -911,4 +911,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectAllMuPfm(paging);
 	}
 
+	@Override
+	public Performance getPfmByPfmIdx(int pfmIdx) {
+		// pfmIdx로 검색해서 pfm 정보 가져오기
+		return pDao.selectPfmByPfmIdx(pfmIdx);
+	}
+
 }

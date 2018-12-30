@@ -1026,4 +1026,12 @@ public class AdminPfmController {
 		
 		
 	}
+	
+	@RequestMapping(value="/admin/getpfmbypfmidx", method=RequestMethod.GET)
+	@ResponseBody
+	public Performance getPfmByPfmIdx(@RequestParam int pfmIdx) {
+		logger.info("ajax 데이터 확인 : "+pfmIdx);
+		Performance pfm = pService.getPfmByPfmIdx(pfmIdx);
+		return pfm;
+	}
 }

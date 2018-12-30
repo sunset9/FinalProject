@@ -630,6 +630,14 @@
 		WHERE no BETWEEN #{startNo} AND #{endNo}
 	</select>
 	
+
+	<select id="selectPfmByPfmIdx" parameterType="int" resultMap="Performance">
+		SELECT p.*, h.hall_name
+		FROM performance p JOIN hall h
+		ON p.hall_idx = h.hall_idx
+		WHERE pfm_idx = 1
+  </select>
+
 	<select id="selectPfmDbtCntByPfmIdx" resultType="int">
 		SELECT COUNT(*) FROM PFM_DATEBYTIME
 		WHERE pfm_idx = #{pfm.pfmIdx }
