@@ -78,6 +78,10 @@
     margin: 8px; 
 }
 
+.np:hover {
+	border: 2px solid #8da7d3;   
+}
+
 .ordering {
     display: inline-block;	
 }
@@ -118,29 +122,45 @@
 	font-size: 17px;
 	font-weight: 700;
 }
- 
+
+#mbdiv mbPfmInfo {
+	width: 100px;
+}
 </style>
 <script type="text/javascript">
-
-	function clickedPfm(pfmIdx, name, pfmStart, pfmEnd, hallName) {
-		console.log(name);
-		console.log(pfmStart);
-		console.log(pfmEnd);
-		console.log(hallName); 
+$(document).ready(function(){
+	  $('div.np').on('click', function(){
+		  console.log('클릭되었습니다.');
+		  var pfmIdx = $(this).attr('id');
+		  $.ajax({
+			  url: "/admin/getpfmbypfmidx" 
+			  , method: "GET"
+			  , data: { "pfmIdx":pfmIdx }
+			  , success: function(data) {
+				  console.log(data); 
+				  
+			  }
+		  })
+	  });
+	
+});
+	/* function clickedPfm(pfmIdx, name, pfmStart, pfmEnd, hallName) {
 		var div = document.getElementById('pfmName');
-		var pfmName = document.createTextNode(name);
+		var pfmName = document.createTextNode(name); 
 		div.style.fontsize = '20px';
 		div.style.fontweight = '800';
-		div.appendChild(pfmName);
-		
+		div.appendChild(pfmName);  
+    		 
 		var div2 = document.getElementById('hallName');
 		var hallName = document.createTextNode(hallName);
 		div2.appendChild(hallName); 
 		
 		document.getElementById('pfmIdx').value = pfmIdx;
-	};
+		console.log(document.getElementById('pfmIdx').value );
+	}; */ 
 	
-	function checkDuplicate() {
+	/* 이미 등록된 공연인지 확인 */
+	/* function checkDuplicate() {
 		var pfmIdx = document.getElementById('pfmIdx').value;
 		$.ajax({
 			url: "/admin/checkpfmidxdup"
@@ -157,7 +177,9 @@
 				
 			}
 		});
-	};
+	}; */
+	
+	
 </script>
 <body>
 
@@ -171,18 +193,19 @@
 		<div>
 			공연 <a data-toggle="modal" href="#myModal"><input type="search" id="mainBanModalBtn"></a>
 			<div id="mbdiv mbPfmInfo">
-				<input type="hidden" name="pfmIdx" id="pfmIdx">
+			dkdkdk
+				<input type="hidden" name="pfmIdx" id="pfmIdx"> 
 				<p id="pfmName"></p>
 				<p id="hallName"></p>
 			</div>
 		</div>
 		<div>
-			썸네일 이미지 <input type="file" value="첨부파일" name="thumbFile" />
+			썸네일 이미지 <input type="file" name="thumbFile"/>
 			<div id="mbdiv mbThumbImg">
 			</div>
 		</div>
 		<div>
-			배너 이미지 <input type="file" value="첨부파일" name="bannerFile">  
+			배너 이미지 <input type="file" name="bannerFile">  
 			<div id="mbdiv mbBannerImg">  
 			</div>
 		</div>
@@ -209,15 +232,16 @@
           	<p class="newest">최신순</p> <p class="alphabet">가나다순</p>
           </div>
           <div class="forEach"> 
-          <c:forEach items="${NewPfmList }" var="np">
-          	<div class="np" data-dismiss="modal" onclick="clickedPfm('${np.pfmIdx}','${np.name}', '${np.pfmStart }', '${np.pfmEnd }', '${np.hallName}');">  
-			    <div><img src="/resources/image/${np.storedName}" style="width: 140px; height: 198px;"></div>
-			    <div>${np.name }</div>
-			    <div><fmt:formatDate value="${np.pfmStart }" pattern="yyyy.MM.dd" />
-			     ~ <fmt:formatDate value="${np.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-			    <div>${np.hallName }</div>
+          <c:forEach items="${NewPfmList }" var="newPl" varStatus="status">
+          	<div id="${newPl.pfmIdx }" class="np" data-dismiss="modal" >
+          		<input type="hidden" id="pfmIdx${status.index }" value="${newpl.pfmIdx }" class="currpfmidx"> 
+			    <div><img src="/resources/image/${newPl.storedName}" style="width: 140px; height: 198px;"></div>
+			    <div class="npname">${newPl.name }</div>
+			    <div><fmt:formatDate value="${newPl.pfmStart }" pattern="yyyy.MM.dd" />
+			     ~ <fmt:formatDate value="${newPl.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+			    <div>${newPl.hallName }</div>
 		    </div>
-          </c:forEach>
+          </c:forEach> 
           </div>
         </div>
         <div class="modal-footer">
@@ -226,7 +250,7 @@
       </div>
     </div>
   </div>
-
+ 
 </div>
 </body>
 </html>
