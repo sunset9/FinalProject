@@ -30,21 +30,21 @@ public interface MainDao {
 	 * @Method설명: 관리자가 선택한 콘서트 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectAdminBanCon();
+	public List<Performance> selectAdminBanCon();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 뮤지컬&공연 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectAdminBanMu();
+	public List<Performance> selectAdminBanMu();
 	
 	/**
 	 * 최종수정일: 2018.12.06
 	 * @Method설명: 관리자가 선택한 가족&아동 상단 배너 15개
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectAdminBanFam();
+	public List<Performance> selectAdminBanFam();
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -95,14 +95,14 @@ public interface MainDao {
 	 * @Method설명: 콘서트 - 마감임박순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectDeadlindListPfm(@Param(value="genreIdx") int genreIdx);
+	public List<Performance> selectDeadlindListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
 	 * @Method설명: 콘서트 - 최신순 정렬 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectLatestListPfm(@Param(value="genreIdx") int genreIdx);
+	public List<Performance> selectLatestListPfm(@Param(value="genreIdx") String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14
@@ -285,6 +285,6 @@ public interface MainDao {
 	 * @작성자: 전해진
 	 */
 	public List<Performance> selectPfmListByPeriodNGenre(@Param(value="start") String start
-			, @Param(value="end") String end, @Param(value="genreIdx") int genreIdx);
+			, @Param(value="end") String end, @Param(value="genreIdx") String genreIdx);
 
 }

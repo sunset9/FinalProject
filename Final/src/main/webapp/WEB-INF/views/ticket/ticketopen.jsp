@@ -65,7 +65,9 @@ $(document).ready(function() {
 		
 		var a = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
 		var span = $('<span class="pfmdate">');
-		var h5 = $('<h5>티켓오픈일 : ' + list.ticketStart + '</h5>');
+		
+		var ticketStart = getDateSimpleString(list.ticketStart);
+		var h5 = $('<h5>티켓오픈일 : ' + ticketStart + '</h5>');
 		
 		span.append(h5);
 		
@@ -80,6 +82,15 @@ $(document).ready(function() {
 
 		});
 	}
+
+	function getDateSimpleString(date){
+		var date = new Date(date);
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		return date.getFullYear() + "."
+			+ ((month < 10)? '0' + month : month) + "."
+			+ ((day < 10) ? '0' + day : day);
+	}
 	
 });
 </script>
@@ -93,10 +104,16 @@ $(document).ready(function() {
 	text-align: center;
 }
 
-.bannerImg	{
+.TopBannerImg {
 	margin: 5px;
 	width: 200px;
 	height: 250px;
+}
+
+.bannerImg	{
+	margin: 5px;
+	width: 100px;
+	height: 130px;
 	
 }
 
@@ -113,6 +130,11 @@ li.pfmInfo {
 
 #bottomlist, #searchandsort {
 	margin: 20px 5% 10px 5%;
+}
+
+#bottomlist {
+/* 	width: 1000px; */
+/* 	padding: 10px; */
 }
 
 /* 정렬 */
@@ -132,11 +154,22 @@ ul.array li span{
 .arrayDiv {
 	float: right;
 }
+
+#openInfoSpan {
+/*  	margin: 0 20px 0 20px; */
+	text-align: center;
+	width: 400px;
+	height: auto;
+}
+
+#pfmName {
+	font-size: 25px;
+}
 </style>
 
 
 <div class="container">
-	<h3>HOT OPEN 소식</h3>
+	<h3 style="font-size: 30px;">HOT OPEN 소식</h3>
 	
 	<!-- 관리자가 지정한 오픈소식 배너 ?-->
 	<!-- 	일단 등록된 포스터에서 rownum으로 5개 걸러내서 리스트 뽑음 -->
@@ -146,10 +179,11 @@ ul.array li span{
 			<li class="pfmbanInfo">
 				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-					<img class="bannerImg" src="/resources/image/${list.posterName}" /><br>
+					<img class="TopBannerImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
-				<strong class="pfmdate">${list.name }<br>
-				[오픈] <fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
+				<strong class="pfmdate">${list.name }<br></strong>
+				<strong style="color: #F8D83B">
+					[오픈] <fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
 				</strong>
 				</a>
 			</li>
@@ -157,6 +191,7 @@ ul.array li span{
 	</ul>
 	</div>
 	
+	<div style="margin: 0 50px 0 50px;">
 	<hr>
 	<div id="searchandsort">
 		<select name="searchKind">
@@ -179,16 +214,23 @@ ul.array li span{
 	<ul id="bottomlist">
 		<c:forEach items="${openPfmList }" var="list">
 			<li class="pfmInfo">
-		<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
-			<span class="pfmdate">
-				티켓 오픈일 : <fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/><br>
-				${list.name } 오픈 안내<br>
-				등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy-MM-dd"/>
-				<img class="bannerImg" src="/resources/image/${list.posterName}" /><br>
+			<span id="openInfoSpan">
+				티켓 오픈일<fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
 			</span>
-		</a>
+			<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
+				<span class="pfmdate">
+				<span id="openInfoSpan" style="display: inline-block;">
+					<strong id="pfmName">${list.name } 오픈 안내<br></strong>
+					<small style="color: #666;">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy-MM-dd"/></small>
+				</span>
+				<span id="openInfoSpan" style="display: inline-block;">
+					<img class="bannerImg" src="/resources/image/${list.posterName}" />
+				</span>
+				</span>
+			</a>
 			</li>
 		</c:forEach>
 	</ul>
+	</div>
 	
 <!-- </div> -->

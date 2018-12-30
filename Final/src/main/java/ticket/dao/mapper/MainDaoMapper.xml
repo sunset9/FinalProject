@@ -47,46 +47,50 @@
 	
 	<!-- 탭 : NEW -->
 	<select id="selectNewPfmList" resultMap="Poster">
-		SELECT
-		    p.pfm_idx
-		    , p.name
-		    , po.origin_name
-		    , po.stored_name
-		FROM( 
+		SELECT * FROM(
 		    SELECT
-		        rownum, p.*
-		    FROM performance p
-		    WHERE rownum BETWEEN 1 AND 5
-		    ORDER BY create_date DESC
-		) p
-		LEFT JOIN poster_info po
-		    ON po.pfm_idx = p.pfm_idx
+		        p.*
+		        , pi.stored_name storedName
+		    fROM performance p
+		    JOIN tab_banner t
+		    ON p.pfm_idx = t.pfm_idx
+		    JOIN poster_info pi
+		    ON p.pfm_idx = pi.pfm_idx
+		    WHERE tab_genre = 3
+		    ORDER BY p.create_date DESC
+		)
 	</select>
 	
 	<!-- 탭 : CONCERT -->
 	<select id="selectConTabList" resultMap="Poster">
-		SELECT p.* FROM (
-		    SELECT * FROM TAB_BANNER
-		    WHERE pfm_idx IN (
-		        SELECT pfm_idx FROM performance
-		        WHERE genre_idx=1
-		    ) 
-		) p
-		LEFT JOIN poster_info po
-		     ON p.pfm_idx=po.pfm_idx
+		SELECT * FROM(
+		    SELECT
+		        p.*
+		        , pi.stored_name storedName
+		    fROM performance p
+		    JOIN tab_banner t
+		    ON p.pfm_idx = t.pfm_idx
+		    JOIN poster_info pi
+		    ON p.pfm_idx = pi.pfm_idx
+		    WHERE tab_genre = 1
+		    ORDER BY p.create_date DESC
+		)
 	</select>
 	
 	<!-- 탭 : MUSICAL -->
 	<select id="selectMuTabList" resultMap="Poster">
-		SELECT p.* FROM (
-		    SELECT * FROM TAB_BANNER
-		    WHERE pfm_idx IN (
-		        SELECT pfm_idx FROM performance
-		        WHERE genre_idx=2
-		    ) 
-		) p
-		LEFT JOIN poster_info po
-		     ON p.pfm_idx=po.pfm_idx
+		SELECT * FROM(
+		    SELECT
+		        p.*
+		        , pi.stored_name storedName
+		    fROM performance p
+		    JOIN tab_banner t
+		    ON p.pfm_idx = t.pfm_idx
+		    JOIN poster_info pi
+		    ON p.pfm_idx = pi.pfm_idx
+		    WHERE tab_genre = 2
+		    ORDER BY p.create_date DESC
+		)
 	</select>
 	
 	<select id="selectTestList"	resultMap="Poster">
@@ -109,52 +113,40 @@
 	</select>
 	
 	<!-- 상단 배너 -->
-	<select id="selectAdminBanCon" resultMap="Poster">
-			SELECT
-				poster_idx
-				, pfm_idx
-				, origin_name
-				, stored_name
-				, create_date
-			FROM poster_info
-			WHERE pfm_idx IN (
-			    SELECT pfm_idx as pfmIdx FROM performance
-			    WHERE pfm_idx IN (
-			        SELECT pfm_idx as pfmIdx FROM category_con
-			    )
-			)
+	<select id="selectAdminBanCon" resultMap="Performance">
+		SELECT
+		    po.stored_name storedName
+		    , p.pfm_idx
+		    , p.name
+		FROM performance p
+		JOIN poster_info po
+		ON po.pfm_idx = p.pfm_idx
+		JOIN category_con cc
+		ON cc.pfm_idx = p.pfm_idx
 	</select>
 	
-	<select id="selectAdminBanMu" resultMap="Poster">
+	<select id="selectAdminBanMu" resultMap="Performance">
 		SELECT
-			poster_idx
-			, pfm_idx
-			, origin_name
-			, stored_name
-			, create_date
-		FROM poster_info
-		WHERE pfm_idx IN (
-			SELECT pfm_idx as pfmIdx FROM performance
-			WHERE pfm_idx IN (
-				SELECT pfm_idx as pfmIdx FROM category_mu
-			)
-		)
+		    po.stored_name storedName
+		    , p.pfm_idx
+		    , p.name
+		FROM performance p
+		JOIN poster_info po
+		ON po.pfm_idx = p.pfm_idx
+		JOIN category_mu cm
+		ON cm.pfm_idx = p.pfm_idx
 	</select>
 	
-	<select id="selectAdminBanFam" resultMap="Poster">
+	<select id="selectAdminBanFam" resultMap="Performance">
 		SELECT
-			poster_idx
-			, pfm_idx
-			, origin_name
-			, stored_name
-			, create_date
-		FROM poster_info
-		WHERE pfm_idx IN (
-			SELECT pfm_idx as pfmIdx FROM performance
-			WHERE pfm_idx IN (
-				SELECT pfm_idx as pfmIdx FROM category_fam
-			)
-		)
+		    po.stored_name storedName
+		    , p.pfm_idx
+		    , p.name
+		FROM performance p
+		JOIN poster_info po
+		ON po.pfm_idx = p.pfm_idx
+		JOIN category_fam cf
+		ON cf.pfm_idx = p.pfm_idx
 	</select>
 	
 	<!-- 전체 출력 -->
@@ -163,17 +155,18 @@
 		    SELECT
 		        ROWNUM no
 		        , PP.*
-		    FROM (SELECT
-		    		p.*
-		    		, h.hall_name
-		    		, pi.stored_name storedName
-		         FROM performance p
-		         JOIN poster_info pi
-		         ON p.pfm_idx = pi.pfm_idx
-		         JOIN hall h
-		         ON p.hall_idx = h.hall_idx
-		         WHERE p.genre_idx = 1
-		         ORDER BY p.create_date
+		    FROM (
+		        SELECT
+		            p.*
+		            , h.hall_name
+		            , pi.stored_name poster_name
+		        FROM performance p
+		        JOIN poster_info pi
+			    ON p.pfm_idx = pi.pfm_idx
+		        JOIN hall h
+		        ON p.hall_idx = h.hall_idx
+		        WHERE p.genre_idx = 1
+		        ORDER BY p.create_date
 		    ) PP
 		)
 	</select>
@@ -183,17 +176,18 @@
 		    SELECT
 		        ROWNUM no
 		        , PP.*
-		    FROM (SELECT
-		    		p.*
-		    		, h.hall_name
-		    		, pi.stored_name storedName
-		         FROM performance p
-		         JOIN poster_info pi
-		         ON p.pfm_idx = pi.pfm_idx
-		         JOIN hall h
-		         ON p.hall_idx = h.hall_idx
-		         WHERE p.genre_idx = 2
-		         ORDER BY p.create_date
+		    FROM (
+		        SELECT
+		            p.*
+		            , h.hall_name
+		            , pi.stored_name poster_name
+		        FROM performance p
+		        JOIN poster_info pi
+			    ON p.pfm_idx = pi.pfm_idx
+		        JOIN hall h
+		        ON p.hall_idx = h.hall_idx
+		        WHERE p.genre_idx = 2
+		        ORDER BY p.create_date
 		    ) PP
 		)
 	</select>
@@ -203,17 +197,18 @@
 		    SELECT
 		        ROWNUM no
 		        , PP.*
-		    FROM (SELECT
-		    		p.*
-		    		, h.hall_name
-		    		, pi.stored_name storedName
-		         FROM performance p
-		         JOIN poster_info pi
-		         ON p.pfm_idx = pi.pfm_idx
-		         JOIN hall h
-		         ON p.hall_idx = h.hall_idx
-		         WHERE p.genre_idx = 3
-		         ORDER BY p.create_date
+		    FROM (
+		        SELECT
+		            p.*
+		            , h.hall_name
+		            , pi.stored_name poster_name
+		        FROM performance p
+		        JOIN poster_info pi
+			    ON p.pfm_idx = pi.pfm_idx
+		        JOIN hall h
+		        ON p.hall_idx = h.hall_idx
+		        WHERE p.genre_idx = 3
+		        ORDER BY p.create_date
 		    ) PP
 		)
 	</select>
@@ -228,7 +223,7 @@
 		        SELECT
 		            p.*
 		            , h.hall_name
-		            , pi.stored_name storedName
+		            , pi.stored_name poster_name
 		        FROM performance p
 		        JOIN poster_info pi
 			    ON p.pfm_idx = pi.pfm_idx
@@ -243,45 +238,54 @@
 		)
 	</select>
 	
-	<!-- 콘서트 정렬기준 - 마감임박순 -->
-	<select id="selectDeadlindListPfm" parameterType="int" resultMap="Poster">
-		SELECT
-		    p.pfm_idx
-		    , p.name
-		    , po.origin_name
-		    , po.stored_name
-		FROM (
-		    SELECT * FROM performance
-		    WHERE genre_idx=${genreIdx}
-		    ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
-		) p
-		LEFT JOIN poster_info po
-		    ON p.pfm_idx = po.pfm_idx
+	<!-- 인기순, 마감임박순, 최신순 정렬 -->
+	<select id="selectDeadlindListPfm" parameterType="String" resultMap="Performance">
+		SELECT * FROM (
+		    SELECT
+		        ROWNUM no
+		        , PP.*
+		    FROM (
+		        SELECT
+		            p.*
+		            , h.hall_name
+		            , pi.stored_name poster_name
+		        FROM performance p
+		        JOIN poster_info pi
+			    ON p.pfm_idx = pi.pfm_idx
+		        JOIN hall h
+		        ON p.hall_idx = h.hall_idx
+		        WHERE genre_idx=${genreIdx}
+		        ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
+		    ) PP
+		)
 	</select>
 	
-	<!-- 콘서트 정렬기준 - 최신순 -->
-	<select id="selectLatestListPfm" parameterType="int" resultMap="Poster">
-		SELECT
-		    p.pfm_idx
-		    , p.name
-		    , po.origin_name
-		    , po.stored_name
-		FROM(
-		    SELECT * FROM performance
-		    WHERE genre_idx=${genreIdx}
-		    ORDER BY ticket_start DESC
-		) p
-		LEFT JOIN poster_info po
-		    ON p.pfm_idx = po.pfm_idx
-	</select>
-	
-	<select id="selectPopularityListPfm" parameterType="String" resultMap="Poster">
-		
+	<select id="selectLatestListPfm" parameterType="String" resultMap="Performance">
+		SELECT * FROM (
+		    SELECT
+		        ROWNUM no
+		        , PP.*
+		    FROM (
+		        SELECT
+		            p.*
+		            , h.hall_name
+		            , pi.stored_name poster_name
+		        FROM performance p
+		        JOIN poster_info pi
+			    ON p.pfm_idx = pi.pfm_idx
+		        JOIN hall h
+		        ON p.hall_idx = h.hall_idx
+		        WHERE genre_idx=${genreIdx}
+		        ORDER BY ticket_start DESC
+		    ) PP
+		)
 	</select>
 	
 	<select id="selectTicketOpenList" resultMap="Performance">
 		SELECT 
-			po.origin_name poster_name ,pp.*
+			po.origin_name originName
+			, po.stored_name poster_name
+			, pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
@@ -296,7 +300,9 @@
 	
 	<select id="selectTicketOpenPfmList" resultMap="Performance">
 		SELECT 
-			po.origin_name poster_name ,pp.*
+			po.origin_name originName
+			, po.stored_name poster_name
+			, pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
@@ -310,7 +316,9 @@
 	
 	<select id="selectOpenDayPfmList" resultMap="Performance">
 		SELECT 
-			po.origin_name poster_name ,pp.*
+			po.origin_name originName
+			, po.stored_name poster_name
+			, pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
@@ -371,7 +379,9 @@
 	
 	<select id="selectOpenSearchList" parameterType="String" resultMap="Performance">
 		SELECT 
-			po.origin_name poster_name ,pp.*
+			po.origin_name originName
+			, po.stored_name poster_name
+			, pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT * FROM performance
@@ -499,7 +509,9 @@
 	
 	<select id="selectOpenSelectSearchList" parameterType="String" resultMap="Performance">
 		SELECT 
-			po.origin_name poster_name ,pp.*
+			po.stored_name poster_name
+			, po.origin_name originName
+			, pp.*
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT * FROM performance

@@ -1,3 +1,4 @@
+
 package ticket.controller;
 
 import java.util.Date;
@@ -37,9 +38,9 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.29
+	 * 최종수정일: 2018.12.04
 	 * @Method설명: 홈페이지 접속시 첫 페이지
-	 * @작성자: 배수연, 전해진
+	 * @작성자: 배수연
 	 */
 	@RequestMapping(value="/ticket/ticketmain", method=RequestMethod.GET)
 	public void ticketmain(Model model) {
@@ -63,9 +64,8 @@ public class MainController {
 		model.addAttribute("muList", muList);
 		
 		// 랭킹 - sql문 작성해야함, 테스트리스트로 출력만 해둔 상태임
-		String genre = "CON"; // 장르 기본값: 콘서트 기준
-		List<Performance> rankList = mainService.getTopRankByGenre(genre);
-		model.addAttribute("rankPfm", rankList);
+		List<Poster> testList = mainService.getTestList();
+		model.addAttribute("testList", testList);
 	}
 	
 	@RequestMapping(value="/ticket/fit", method=RequestMethod.GET)
@@ -92,10 +92,10 @@ public class MainController {
 	public void concert(
 			Model model
 		) {
-		logger.info("콘서트 FORM");
+		logger.info("+ + + 콘서트 FORM + + +");
 		
-		// 관리자가 선택한 콘서트 상단 배너 15개`
-		List<Poster> topBanList = mainService.adminChoiceBannerCon();
+		// 관리자가 선택한 콘서트 상단 배너 15개
+		List<Performance> topBanList = mainService.adminChoiceBannerCon();
 		model.addAttribute("topBanList", topBanList);
 		
 		// 전체 리스트
@@ -118,25 +118,25 @@ public class MainController {
 		// 콘서트 - 테마 선택 후 리스트 출력
 		if( theme.equals("conall") ) {
 			// 콘서트 전체
-			List<Performance> posterList = mainService.getConPfmPoster();
+			List<Performance> pfmList = mainService.getConPfmPoster();
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 			
 		} else if( theme.equals("muall")) {
 			// 뮤지컬&연극 전체
-			List<Poster> posterList = mainService.getMuPfmPoster();
+			List<Performance> pfmList = mainService.getMuPfmPoster();
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 		} else if( theme.equals("famall") ) {
 			// 가족&아동 전체
-			List<Poster> posterList = mainService.getFamPfmPoster();
+			List<Performance> pfmList = mainService.getFamPfmPoster();
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 		} else {
 			// 테마 idx 선택 시
-			List<Poster> posterList = mainService.getpfmThemeChoicePoster(theme);
+			List<Performance> pfmList = mainService.getpfmThemeChoicePoster(theme);
 			
-			map.put("posterList", posterList);
+			map.put("pfmList", pfmList);
 		}
 		
 		return map;
@@ -154,11 +154,11 @@ public class MainController {
 		logger.info("뮤지컬&연극 FORM");
 		
 		// 관리자가 선택한 뮤지컬&연극 상단배너 출력
-		List<Poster> topBanList = mainService.adminChoiceBannerMu();
+		List<Performance> topBanList = mainService.adminChoiceBannerMu();
 		model.addAttribute("topBanList", topBanList);
 		
 		// 모든 포스터 리스트 뿌려주기
-		List<Poster> posterList = mainService.getMuPfmPoster();
+		List<Performance> posterList = mainService.getMuPfmPoster();
 		model.addAttribute("posterList", posterList);
 	}
 	
@@ -174,18 +174,18 @@ public class MainController {
 		logger.info("가족&아동 FORM");
 		
 		// 관리자가 선택한 가족&아동 상단배너 출력
-		List<Poster> topBanList = mainService.adminChoiceBannerFam();
+		List<Performance> topBanList = mainService.adminChoiceBannerFam();
 		model.addAttribute("topBanList", topBanList);
 		
 		// 모든 포스터 리스트 뿌려주기
-		List<Poster> posterList = mainService.getFamPfmPoster();
+		List<Performance> posterList = mainService.getFamPfmPoster();
 		model.addAttribute("posterList", posterList);
 	}
 	
 	@RequestMapping(value="/ticket/arraylist", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> arrayList(
 			String array
-			, int genreIdx
+			, String genreIdx
 		) {
 		
 		HashMap<String, Object> map = new HashMap<>();
@@ -201,13 +201,14 @@ public class MainController {
 		} else if(array.equals("Deadline")) {
 			// 마감 임박순
 			// 오늘 날짜 - 티켓마감일 순
-			List<Poster> posterList = mainService.getDeadlineList(genreIdx);
+			List<Performance> posterList = mainService.getDeadlineList(genreIdx);
 			map.put("pfmList", posterList);
 			
 		} else if (array.equals("Latest")) {
 			// 최신순
-			List<Poster> posterList = mainService.getLatestList(genreIdx);
+			List<Performance> posterList = mainService.getLatestList(genreIdx);
 			map.put("pfmList", posterList);
+
 		}
 		
 		return map;
@@ -296,8 +297,8 @@ public class MainController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/ticket/getrank", method=RequestMethod.GET)
-	public @ResponseBody List<Performance> getRank(String type) {
-		return mainService.getTopRank(type);
+	public @ResponseBody List<Performance> getRank(String type, Date today) {
+		return mainService.getTopRank(type, today);
 	}
 	
 	/**
@@ -360,15 +361,5 @@ public class MainController {
 	@RequestMapping(value="/ticket/agreement", method=RequestMethod.GET)
 	public void footerAgreementPop() {
 		logger.info("AgreementPop-GET");
-	}
-	
-	/**
-	 * @최종수정일: 2018.12.29
-	 * @Method설명: 메인화면에서 장르에 따른 랭킹 가져오기(ajax통신용)
-	 * @작성자: 전해진
-	 */
-	@RequestMapping(value="/ticket/mainrank", method=RequestMethod.GET)
-	public @ResponseBody List<Performance> getMainRank(String genre) {
-		return mainService.getTopRankByGenre(genre);
 	}
 }

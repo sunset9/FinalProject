@@ -100,7 +100,7 @@ ul.tabs li.current{
 <!-- 탭 배너 -->
 <div class="main_tab">
 
-	<strong style="font-size: 20px; color: red;">'${top_searchh }'</strong><small style="font-size: 20px;">에 대한 검색 결과</small><br><br>
+	<strong style="font-size: 20px; color: #F8D83B;">'${top_searchh }'</strong><small style="font-size: 15px;">에 대한 검색 결과</small><br><br>
 		
 	<ul class="tabs">
 		<!-- 테이블 명을 넘겨주어 조회 -->

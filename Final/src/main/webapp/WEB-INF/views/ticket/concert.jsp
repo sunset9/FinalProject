@@ -82,7 +82,14 @@ $(document).ready(function() {
 			var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
 			
 			a.append(span.append(img));
-			a.append($('<strong>'+ list.name +'</strong>'));
+			a.append($('<strong>'+ list.name +'</strong><br>'));
+			
+			var pfmStart = getDateSimpleString(list.pfmStart);
+			var pfmEnd = getDateSimpleString(list.pfmEnd);
+// 			console.log(pfmStart);
+			
+			a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small>'));
+			
 			a.append($('<p>'+ list.hallName +'</p>'));
 			li.append(a);
 			
@@ -91,11 +98,23 @@ $(document).ready(function() {
 		});
 	}
 	
+	function getDateSimpleString(date){
+		var date = new Date(date);
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		return date.getFullYear() + "."
+			+ ((month < 10)? '0' + month : month) + "."
+			+ ((day < 10) ? '0' + day : day);
+	}
+	
 	$('.bxslider').bxSlider({
+		// 무한 루프가 아닌 처음과 끝으로 표현
+		infiniteLoop: false,
+		hideControlOnEnd: true,
 		minSlides : 5,
 		maxSlides : 5,
-		slideWidth : 350,
-		slideMargin : 20
+		slideWidth : 350
+// 		slideMargin : 20
 // 		ticker : true,
 // 		speed : 50000
 	});
@@ -153,8 +172,9 @@ ul.array li span{
 li.pfmInfo {
 	list-style: none;
 	float: left;
-	margin: 5px;
+	margin: 10px;
 	text-align: center;
+	border: 1px solid #C6C5C5;
 }
 
 .choiceDiv button {
@@ -174,7 +194,8 @@ li.pfmInfo {
 	<c:forEach items="${topBanList }" var="topList">
 	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
-			<img class="bannerImg" src="/resources/image/${topList.storedName}" />
+			<img class="bannerImg" src="/resources/image/${topList.storedName}" /><br>
+			<small>${topList.name }</small>
 		</a>
 	</li>
 	</c:forEach>
@@ -206,7 +227,7 @@ li.pfmInfo {
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-					<img class="concertImg" src="/resources/image/${list.storedName}" /><br>
+					<img class="concertImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
 				<strong class="imgname">${list.name }</strong><br>
 				<small>
