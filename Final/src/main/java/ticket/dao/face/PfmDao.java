@@ -473,4 +473,14 @@ public interface PfmDao {
 	public int selectPfmDbtCntByPfmIdx(@Param(value="pfm") Performance pfm
 			, @Param(value="startDate") Date startDate, @Param(value="endDate") Date endDate);
 
+	
+	
+	/**
+	 * @최종수정일: 2018.12.31
+	 * @Method설명: 정렬 종류별 공연 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectNewestPfmList();
+	public List<Performance> selectAlpahPfmList();
+	
 }

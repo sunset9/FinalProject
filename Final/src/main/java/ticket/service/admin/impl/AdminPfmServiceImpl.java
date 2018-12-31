@@ -917,4 +917,16 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectPfmByPfmIdx(pfmIdx);
 	}
 
+	@Override
+	public List<Performance> getNewestPfmList() {
+		// 정렬 종류별 공연 목록 가져오기 
+		return pDao.selectNewestPfmList();
+	}
+
+	@Override
+	public List<Performance> getAlphaPfmList() {
+		// 정렬 종류별 공연 목록 가져오기 
+		return pDao.selectAlpahPfmList();
+	}
+
 }
