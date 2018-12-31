@@ -229,5 +229,28 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public List<Seat> selectSeatByBookGroup(String bookGroup);
+	
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명:취소후에 예매 상태 변환하기 !
+	 * @작성자:홍나영
+	 */
+	public void updateStateCancel(String names);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 취소되지 않은 좌석 예매완료 (부분취소)로 바꾸기
+	 * @작성자:홍나영
+	 */
+	public void updateState(String names);
+
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 취소 선택한 좌석 정보 조회
+	 * @작성자:홍나영
+	 */
+	public List<SeatSection> selectCancelSeat(String names);
 
 }

@@ -415,10 +415,37 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="mypage/bookcancel", method=RequestMethod.POST)
-	public void bookCancel( String names) {
+	public void bookCancel( String names
+			, int pfmIdx
+			, HttpSession session
+			, Model model
+			) {
 		logger.info("예매 삭제");
+		logger.info("공연 번호 :"+ pfmIdx);
+		User user = (User) session.getAttribute("loginUser");
+		logger.info("" + user);
+		
 		logger.info(names);
+		
+		// 예매 상태 변환해 놓기 !
+		userService.cancelBook(names);
+		
+		// 예매한 공연 상세 정보 가져오기
+		StateOfBook sob = userService.getDetailBook(user, pfmIdx);
+		logger.info("sob"+sob);
+		model.addAttribute("sob", sob);
+		
+		// 환불해줄 가격 조회해오기
+		List<SeatSection> ssList = userService.getCancelSeat(names);
+		logger.info("취소한 좌석 구역과 가격"+ssList);
+		model.addAttribute("ssList", ssList);
+		
+		logger.info("길이"+names.length());
+		
+		
 	}
+	
+	
 	
 	
 

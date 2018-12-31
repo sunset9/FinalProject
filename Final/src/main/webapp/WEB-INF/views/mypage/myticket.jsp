@@ -74,7 +74,13 @@
 		</div></td>
 
 		<td>${sob.state }
-		<button onclick="location.href='/mypage/detailicket?pfmIdx=${sob.pfmIdx}'">예매 상세</button>
+		<c:if test="${sob.state eq '취소중' || sob.state eq '취소완료'}">
+			<button onclick="location.href='/mypage/bookcancel?pfmIdx=${sob.pfmIdx}'">취소 상세</button>
+		</c:if>
+		
+		<c:if test="${sob.state eq '예매완료(부분취소)' || sob.state eq '예매완료(부분취소)'}">
+			<button onclick="location.href='/mypage/detailicket?pfmIdx=${sob.pfmIdx}'">예매 상세</button>
+		</c:if>
 		</td>
 	</tr>
 </c:forEach>
