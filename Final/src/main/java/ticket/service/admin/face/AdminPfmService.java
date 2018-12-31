@@ -548,4 +548,12 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public Performance getPfmByPfmIdx(int pfmIdx);
+	
+	/**
+	 * @최종수정일: 2018.12.31
+	 * @Method설명: 정렬 종류별 공연 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> getNewestPfmList();
+	public List<Performance> getAlphaPfmList();
 }

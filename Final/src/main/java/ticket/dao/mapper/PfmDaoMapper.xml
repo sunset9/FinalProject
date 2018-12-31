@@ -635,7 +635,7 @@
 		SELECT p.*, h.hall_name
 		FROM performance p JOIN hall h
 		ON p.hall_idx = h.hall_idx
-		WHERE pfm_idx = 1
+		WHERE pfm_idx = #{value}
   </select>
 
 	<select id="selectPfmDbtCntByPfmIdx" resultType="int">
@@ -643,4 +643,22 @@
 		WHERE pfm_idx = #{pfm.pfmIdx }
 			AND pfm_date BETWEEN #{startDate } AND #{endDate }
 	</select>
+	
+	<select id="selectNewestPfmList" resultMap="Performance">
+		SELECT p.*, h.hall_name, pi.stored_name
+		FROM performance p JOIN hall h
+		ON p.hall_idx = h.hall_idx JOIN poster_info pi
+        ON p.pfm_idx = pi.pfm_idx
+		ORDER BY p.create_date DESC
+	</select>
+	
+	<select id="selectAlpahPfmList" resultMap="Performance">
+		SELECT p.*, h.hall_name, pi.stored_name
+		FROM performance p JOIN hall h
+		ON p.hall_idx = h.hall_idx JOIN poster_info pi
+		ON p.pfm_idx = pi.pfm_idx
+		ORDER BY p.name
+	</select>
+	
+	
 </mapper>

@@ -1,6 +1,10 @@
 package ticket.controller.admin;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -598,9 +602,20 @@ public class AdminPfmController {
 	 * @Method설명: 공연 목록의 정렬 바꿔주기
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/pfmList", method = RequestMethod.POST)
-	public void setOrder() {
+	@RequestMapping(value = "/admin/setOrder", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Performance> setOrder(@RequestParam int order, Model model) {
 		// 정렬타입에 따라서 다시 정렬
+		// 0 : 최신순, 1 : 가나다순
+		if(order == 0) {
+			List<Performance> newPfmList = pService.getNewestPfmList();
+			System.out.println("최신순 리스트 확인 : "+newPfmList);
+			return newPfmList;
+		}else {
+			List<Performance> alphaPfmList = pService.getAlphaPfmList();
+			System.out.println("가나다순 리스트 확인 : "+alphaPfmList);
+			return alphaPfmList;
+		}
 	}
 
 	/**
@@ -666,7 +681,7 @@ public class AdminPfmController {
 		
 		//
 		
-		model.addAttribute("NewPfmList", NewPfmList);
+		model.addAttribute("orderList", NewPfmList);
 		model.addAttribute("paging", paging);
 		
 		return "admin/pfm/registMBanner";
@@ -1027,11 +1042,29 @@ public class AdminPfmController {
 		
 	}
 	
+	/**
+	 * @최종수정일: 2018.12.31
+	 * @Method설명: 메인 배너 추가 모달에서 공연 클릭했을 때 공연 정보 가져오기
+	 * @작성자: 김지은
+	 */
 	@RequestMapping(value="/admin/getpfmbypfmidx", method=RequestMethod.GET)
 	@ResponseBody
-	public Performance getPfmByPfmIdx(@RequestParam int pfmIdx) {
+	public Map<String, String> getPfmByPfmIdx(@RequestParam int pfmIdx) {
 		logger.info("ajax 데이터 확인 : "+pfmIdx);
+		
 		Performance pfm = pService.getPfmByPfmIdx(pfmIdx);
-		return pfm;
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy.MM.dd");
+		String pfmStart = sdFormat.format(pfm.getPfmStart());
+		String pfmEnd = sdFormat.format(pfm.getPfmEnd()); 
+		
+		Map<String, String> pfmInfo = new HashMap<>();
+		pfmInfo.put("pfmIdx", String.valueOf(pfm.getPfmIdx()));
+		pfmInfo.put("name", pfm.getName());
+		pfmInfo.put("pfmStart", pfmStart);
+		pfmInfo.put("pfmEnd", pfmEnd);
+		pfmInfo.put("hallName", pfm.getHallName());
+		
+		return pfmInfo;
 	}
 }

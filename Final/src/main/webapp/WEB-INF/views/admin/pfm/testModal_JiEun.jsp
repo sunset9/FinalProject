@@ -47,28 +47,44 @@
 <!-- Other elements -->
 <p data-toggle="modal" data-target="#myModal">Open Modal</p>
 
+
+
 <table>
 	<tr>
 		<td>공연</td>
-		<td><input type="search"/></td>
+		<td><a data-toggle="modal" href="#myModal"><input type="search" id="mainBanModalBtn"/></a></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td>공연정보</td>
+		<td>
+			<div id="mbdiv mbPfmInfo">
+				<input type="hidden" name="pfmIdx" id="pfmIdx"> 
+				<p id="pfmName"></p>
+				<p id="hallName"></p>
+			</div>
+		</td>
 	</tr>
 </table>
 <table>
 	<tr>
 		<td>썸네일 이미지</td>
-		<td><input type="file" /></td>
+		<td><input type="file" name="thumbFile"/></td>
 		<td>배너 이미지</td>
-		<td><input type="file" /></td>
+		<td><input type="file" name="bannerFile"/></td>
 	</tr>
 	<tr>
 		<td>.</td>
-		<td><img src="" /></td>
+		<td>
+			<div id="mbdiv mbThumbImg">
+				<img src="" />
+			</div>
+		</td>
 		<td>.</td>
-		<td><img src="" /></td>
+		<td>
+			<div id="mbdiv mbBannerImg">  
+				<img src="" />
+			</div>
+		</td>
 	</tr>
 </table>
 
