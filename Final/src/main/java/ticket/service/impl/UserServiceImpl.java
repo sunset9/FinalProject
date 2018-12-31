@@ -228,6 +228,19 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public void cancelBook(String names) {
+		userDao.updateStateCancel(names);
+		userDao.updateState(names);
+	}
+
+
+	@Override
+	public List<SeatSection> getCancelSeat(String names) {
+		return userDao.selectCancelSeat(names);
+	}
+
+
 
 	
 	

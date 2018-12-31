@@ -174,11 +174,21 @@ public interface UserService {
 	public List<Seat> getSeat(String bookGroup);
 
 
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명:BookIdx를 문자열로 만들어서 업데이트하기
+	 * @작성자:홍나영
+	 */
+	public void cancelBook(String names);
 
 
-
-
-
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 삭제 선택한 좌석의 가격정보 얻어오기
+	 * @작성자:홍나영
+	 */
+	public List<SeatSection> getCancelSeat(String names);
+	
 
 
 

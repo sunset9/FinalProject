@@ -105,7 +105,14 @@ $(document).ready(function() {
 					.attr("type", "hidden")
 					.attr("name", "names")
 					.attr("value", names)
+			)
+			.append(
+				$("<input>")
+					.attr("type", "hidden")
+					.attr("name", "pfmIdx")
+					.attr("value",${sob.pfmIdx})
 			);
+			
 		$(document.body).append($form);
 		$form.submit();
 		
@@ -306,10 +313,12 @@ $(document).ready(function() {
 	<td>${ss.appSec }</td>
 	<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
 	<td>${ss.secPay }</td>
-	<td>${sob.state }
-		<input type="checkbox" value="${s.seatIdx},${sob.bookGroup}" name="cancelCheck"/>취소 가능
-		
-		
+	
+	<td>${s.state }
+<%-- 	${s.state eq '예매완료(결제완료)' || s.state eq '예매완료(부분취소)'} --%>
+		<c:if test='${s.state eq "예매완료(결제완료)" || s.state eq "예매완료(부분취소)"}'>
+			<input type="checkbox" value="${s.bookIdx}" name="cancelCheck"/>취소 가능
+		</c:if>
 	</td>
 </tr>
 </c:forEach>
