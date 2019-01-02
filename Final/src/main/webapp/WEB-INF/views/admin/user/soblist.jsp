@@ -8,7 +8,7 @@
 <style type="text/css">
 .sobBox {
 	position: absolute;
-    left: 222px;
+    left: 242px;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;

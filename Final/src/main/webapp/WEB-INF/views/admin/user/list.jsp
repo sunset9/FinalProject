@@ -60,7 +60,7 @@ td {
 
 .container {
     position: absolute;
-    left: 222px;	
+    left: 242px;	
 }
 </style>
 

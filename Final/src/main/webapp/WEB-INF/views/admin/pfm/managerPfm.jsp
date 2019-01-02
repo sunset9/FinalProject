@@ -10,7 +10,7 @@
 	float: left;
     width: 80%;
     position: absolute;
-    left: 230px;
+    left: 250px;
 }
 
 #registBtn {

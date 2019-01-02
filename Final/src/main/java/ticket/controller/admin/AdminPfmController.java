@@ -613,6 +613,8 @@ public class AdminPfmController {
 			@RequestParam String mbPfmSearch,
 			Model model
 			) {
+		System.out.println(order);
+		System.out.println(mbPfmSearch);
 		// 정렬타입에 따라서 다시 정렬
 		// 0 : 최신순, 1 : 가나다순
 		if(order == 0) {
