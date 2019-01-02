@@ -2,7 +2,13 @@
     pageEncoding="UTF-8"%>
 
 
-
+<div class="body">
+	<!-- 에디터 시작 -->
+	<!--
+		@decsription
+		등록하기 위한 Form으로 상황에 맞게 수정하여 사용한다. Form 이름은 에디터를 생성할 때 설정값으로 설정한다.
+	-->
+	<form name="tx_editor_form" id="tx_editor_form" action="http://posttestserver.com/post.php" method="post" accept-charset="utf-8">
 		<!-- 에디터 컨테이너 시작 -->
 		<div id="tx_trex_container" class="tx-editor-container">
 			<!-- 사이드바 -->
@@ -25,7 +31,7 @@
 							<div unselectable="on" id="tx_file" class="tx-file tx-btn-trans">
 								<a href="javascript:;" title="파일" class="tx-text">파일</a>
 							</div>
-						</li>
+<!-- 						</li> -->
 <!-- 						<li class="tx-list"> -->
 <!-- 							<div unselectable="on" id="tx_media" class="tx-media tx-btn-trans"> -->
 <!-- 								<a href="javascript:;" title="외부컨텐츠" class="tx-text">외부컨텐츠</a> -->
@@ -234,7 +240,7 @@
 							<div class="tx-menu-inner">
 							</div>
 							<div class="tx-menu-footer">
-								<IMG class=tx-menu-confirm alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_confirm.gif?rv=1.0.1">
+							<IMG class=tx-menu-confirm alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_confirm.gif?rv=1.0.1">
 								<IMG class=tx-menu-cancel hspace=3 alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/btn_cancel.gif?rv=1.0.1">
 							</div>
 						</div>
@@ -372,29 +378,26 @@
 			<!-- 편집영역 시작 -->
 				<!-- 에디터 Start -->
 	<div id="tx_canvas" class="tx-canvas">
-		<DIV id=tx_loading class=tx-loading><DIV><IMG src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/loading2.png" width=113 align=absMiddle height=21></DIV></DIV>				
-		<div id="tx_canvas_wysiwyg_holder" class="tx-holder" style="display:block;">
+			<DIV id=tx_loading class=tx-loading><DIV><IMG src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/loading2.png" width=113 align=absMiddle height=21></DIV></DIV>		<div id="tx_canvas_wysiwyg_holder" class="tx-holder" style="display:block;">
 			<iframe id="tx_canvas_wysiwyg" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0"></iframe>
 		</div>
 		<div class="tx-source-deco">
 			<div id="tx_canvas_source_holder" class="tx-holder">
-				<textarea  id="tx_canvas_source" rows="30" cols="30"></textarea>
+				<textarea id="tx_canvas_source" rows="30" cols="30"></textarea>
 			</div>
 		</div>
 		<div id="tx_canvas_text_holder" class="tx-holder">
-			<textarea name="noticeContent" id="tx_canvas_text" rows="30" cols="30"></textarea>
+			<textarea id="tx_canvas_text" rows="30" cols="30"></textarea>
 		</div>
 	</div>
 					<!-- 높이조절 Start -->
 	<div id="tx_resizer" class="tx-resize-bar">
 		<div class="tx-resize-bar-bg"></div>
-		<IMG id=tx_resize_holder alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/skin/01/btn_drag01.gif" width=58 height=12 unselectable="on">
+	<IMG id=tx_resize_holder alt="" src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/skin/01/btn_drag01.gif" width=58 height=12 unselectable="on">
 	</div>
 					<div class="tx-side-bi" id="tx_side_bi">
 		<div style="text-align: right;">
-			
 			<IMG hspace=4 src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/editor_bi.png" width=78 align=absMiddle height=14>
-
 		</div>
 	</div>
 				<!-- 편집영역 끝 -->
@@ -404,7 +407,7 @@
 		<div id="tx_attach_txt" class="tx-attach-txt">파일 첨부</div>
 		<div id="tx_attach_box" class="tx-attach-box">
 			<div class="tx-attach-box-inner">
-				<div id="tx_attach_preview" class="tx-attach-preview"><p></p><img src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/pn_preview.gif" width="147" height="108" unselectable="on"/></div>
+			<div id="tx_attach_preview" class="tx-attach-preview"><p></p><img src="${pageContext.request.contextPath}/resources/daumOpenEditor/images/icon/editor/pn_preview.gif" width="147" height="108" unselectable="on"/></div>
 				<div class="tx-attach-main">
 					<div id="tx_upload_progress" class="tx-upload-progress"><div>0%</div><p>파일을 업로드하는 중입니다.</p></div>
 					<ul class="tx-attach-top">
@@ -423,4 +426,6 @@
 				<!-- 첨부박스 끝 -->
 		</div>
 		<!-- 에디터 컨테이너 끝 -->
-	
+	</form>
+</div>
+<!-- 에디터 끝 -->
