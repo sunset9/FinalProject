@@ -15,15 +15,9 @@ public interface AdminBoardDao {
 	
 	// 전체 게시글 조회
 	public int selectCntAll();
-	 
-					
+	 					
 	// 공지사항 상세보기
 	public Notice selectNotiView(int noticeIdx);
-
-
-	// 조회수 (향후 추가? (멜론, 카카오 오븐엔 없음)
-//	public Notice hit(int noticeIdx);
-	
 	
 	// 공지사항 글 쓰기
 	public void insertNoti(Notice notice);
@@ -37,22 +31,11 @@ public interface AdminBoardDao {
 	// 공지사항 글 삭제
 	public void deleteNoti(Notice deleteNotice);	
 	
+	// 이전글
+	public Notice preNoti(int noticeIdx);
 	
-	
-	// 파일 업로드
-	public void insertNotiFile(NoticeFile noticeFile);
-	
-	// 파일 전체 조회 (임시)
-	public List selectNotiFileAll();
-
-	// notiFileIdx를 이용한 조회
-	public NoticeFile selectByNotiFileIdx(int notiFileIdx);
-	
-	
-	
-	
-	
-	
+	// 다음글
+	public Notice postNoti(int noticeIdx);
 	
 	
 	
@@ -71,6 +54,23 @@ public interface AdminBoardDao {
 	// FAQ 답변 쓰기
 	public void insertFaqAnswer();
 
+	
+	
+	
+
+	
+	//==============================================
+	// 파일 업로드
+	public void insertNotiFile(NoticeFile noticeFile);
+	
+	// 파일 전체 조회 (임시)
+	public List selectNotiFileAll();
+
+	// notiFileIdx를 이용한 조회
+	public NoticeFile selectByNotiFileIdx(int notiFileIdx);
+	//==============================================
+	
+	
 }
 	
 	

@@ -230,7 +230,7 @@ $(document).ready(function(){
 				return allattachments;
 			}()
 			,
-// 			"content": document.getElementById("noticeContent") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+// 			"content": document.getElementById("noticeContent") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트  (script 맨위 넣으니 주석해도 content나오는데?)*/
 // 			"content": "${update.noticeContent }" /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 (강사님 방법 - 내용물 나오게함 이미지X 글O)*/
 			
 		});

@@ -88,6 +88,19 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		
 	}
 
+	
+
+	@Override
+	public Notice preNotiSer(int noticeIdx) {	
+		return adminBoardDao.preNoti(noticeIdx);
+	}
+
+	@Override
+	public Notice postNotiSer(int noticeIdx) {
+		return adminBoardDao.postNoti(noticeIdx);
+	}
+
+
 
 
 	@Override
@@ -180,7 +193,6 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		// null이나 "" 이면 0으로 반환
 		return 0;
 	}
-
 
 
 

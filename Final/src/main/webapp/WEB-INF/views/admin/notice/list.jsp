@@ -73,7 +73,8 @@ $(document).ready(function(){
 <table class="table table-striped table-hover">
 	
 	<tr>
-		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th>
+		<th>선택</th>
+<%-- 		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th> --%>
 		<th>글번호</th>
 		<th>분류</th>
 		<th>제목</th>

@@ -10,12 +10,41 @@ public class Notice {
 	private String noticeTitle;
 	private String noticeContent;
 	private Date createDate;
+	private String prev;
+	private String prevTitle;
+	private String next;
+	private String nextTitle;
 	
 	
+	public String getPrev() {
+		return prev;
+	}
+	public void setPrev(String prev) {
+		this.prev = prev;
+	}
+	public String getPrevTitle() {
+		return prevTitle;
+	}
+	public void setPrevTitle(String prevTitle) {
+		this.prevTitle = prevTitle;
+	}
+	public String getNext() {
+		return next;
+	}
+	public void setNext(String next) {
+		this.next = next;
+	}
+	public String getNextTitle() {
+		return nextTitle;
+	}
+	public void setNextTitle(String nextTitle) {
+		this.nextTitle = nextTitle;
+	}
 	@Override
 	public String toString() {
 		return "Notice [noticeIdx=" + noticeIdx + ", userIdx=" + userIdx + ", NTypeIdx=" + NTypeIdx + ", noticeTitle="
-				+ noticeTitle + ", noticeContent=" + noticeContent + ", createDate=" + createDate + "]";
+				+ noticeTitle + ", noticeContent=" + noticeContent + ", createDate=" + createDate + ", prev=" + prev
+				+ ", prevTitle=" + prevTitle + ", next=" + next + ", nextTitle=" + nextTitle + "]";
 	}
 	public int getNoticeIdx() {
 		return noticeIdx;
