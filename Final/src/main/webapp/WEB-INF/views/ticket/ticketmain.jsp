@@ -217,8 +217,8 @@ li.pfmInfo {
 }
 
 .ranking {
-	width: 50%;
-	height: 400px;
+	width: 565px;
+	height: 430px;
 	margin: 10px 0 20px 10%;
 	border: 1px solid silver;
 	float: left;
@@ -226,7 +226,7 @@ li.pfmInfo {
 
 .alignPfm {
 	width: 30%;
-	height: 400px;
+	height: 430px;
 	margin: 10px 10% 20px 0;
 	border: 1px solid silver;
 	float: left;

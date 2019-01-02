@@ -1,6 +1,7 @@
 package ticket.service.admin.face;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dto.Faq;
+import ticket.dto.Inquiry;
+import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.utils.Paging;
@@ -73,6 +76,69 @@ public interface AdminBoardService {
 	
 	// FAQ 답변 쓰기
 	public void writeFaqAnswer();
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 리스트  가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Inquiry> getInquiryList(Paging paging);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 등록된 개수 가져오기
+	 * @작성자: 전해진
+	 */
+	public int getCntInquiry();
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 상세 정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public Inquiry getInquiry(Inquiry inqParam);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변 이미지 업로드 처리
+	 * @작성자: 전해진
+	 */
+	public Map<Object, Object> uploadPfmImg(MultipartFile inqImgUpload);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변 이미지 삭제 처리
+	 * @작성자: 전해진
+	 */
+	public void deletePfmImg(String src);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 글 작성 하기
+	 * @작성자: 전해진
+	 */
+	public void writeInquiry(Inquiry inquiry);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변 하기
+	 * @작성자: 전해진
+	 */
+	public void replyInquiry(InquiryAnswer inqAnswer);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 답변 내용 가져오기
+	 * @작성자: 전해진
+	 */
+	public InquiryAnswer getInquiryAnswer(Inquiry inqParam);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 답변 수정하기
+	 * @작성자: 전해진
+	 */
+	public void editReplyInquiry(InquiryAnswer inqAnswer);
 	
 	
 }
