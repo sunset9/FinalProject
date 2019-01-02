@@ -47,7 +47,7 @@ $(document).ready(function() {
 		var userIdx = ${loginUser.userIdx }
 		
 		// 삭제할 기대평 idx
-		var expIdx = $('#expDeleteBtn').val();
+// 		var expIdx = $('#expDeleteBtn').val();
 		
 // 		console.log('선택 기대평 idx : ' + expIdx);
 // 		console.log('게시글 번호 : ' + pfmIdx);

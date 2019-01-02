@@ -414,7 +414,7 @@ public class MainServiceImpl implements MainService {
 		else if("FAM".equals(genreStr)) genre = 3;
 
 		List<Performance> pfmList = mainDao.selectPfmListByPeriodNGenre(startStr, endStr, genre);
-
+		System.out.println(pfmList.size());
 		// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
 		for(Performance pfm : pfmList) {
 			// 조회 범위 초기화
@@ -430,6 +430,10 @@ public class MainServiceImpl implements MainService {
 				endDate = pfm.getTicketEnd();
 			}
 
+			// 3.2 계산 구간에 예매한 좌석 수 구하기
+			int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
+			System.out.println(bookSeatCnt);
+			if(bookSeatCnt == 0 ) continue;
 			// 3.1 해당 공연의 총 좌석 수 구하기
 			int totalSeatCnt = mainDao.selectCntAllSeatByHallIdx(pfm);
 			System.out.println(totalSeatCnt);
@@ -437,9 +441,6 @@ public class MainServiceImpl implements MainService {
 			System.out.println(startDate);
 			System.out.println(endDate);
 
-			// 3.2 계산 구간에 예매한 좌석 수 구하기
-			int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
-			System.out.println(bookSeatCnt);
 
 			// 3.3 해당 공연의 공연 횟수 구하기 
 			int pfmDbtCnt = mainDao.selectPfmDbtCntByPfmIdx(pfm, startDate, endDate);
