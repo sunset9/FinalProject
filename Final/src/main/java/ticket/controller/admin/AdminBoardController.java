@@ -66,7 +66,7 @@ public class AdminBoardController {
 	
 	
 	/**
-	 * 2018.12.10
+	 * 
 	 * @Method설명: 공지사항 글 상세보기
 	 * @작성자: 조요한
 	 */
@@ -75,11 +75,20 @@ public class AdminBoardController {
 //		logger.info("공지 상세");
 		
 		Notice noticeView = adminBoardService.getViewNoti(noticeIdx);
+		Notice preNoti = adminBoardService.preNotiSer(noticeIdx);
+		Notice postNoti = adminBoardService.postNotiSer(noticeIdx);
 		
 		model.addAttribute("noticeView", noticeView);
+		model.addAttribute("preNoti", preNoti);
+		model.addAttribute("postNoti", postNoti);
+		
 		return "/admin/notice/view";
 		
 	}
+	
+
+	
+	
 	
 		
 	/**

@@ -51,25 +51,38 @@ $(document).ready(function(){
 
 <hr>
 
+
 <!-- 이전글 -->
 <table class="table table-striped table-hover" id="prewr">
 <tr>   
 	<td>이전글</td>   
-	<td>분류(서비스 점검)</td> 
-	<td> 제목(제목에만 링크)</td> 	
-	<td>작성일 </td>
+	<td>글번호 : ${preNoti.prev }</td> 
+	<td><a href="/admin/noticeView?noticeIdx=${preNoti.prev }"> ${preNoti.prevTitle }</a></td> 		
+<%-- 	<td><fmt:formatDate value="${preNoti.createDate }" pattern="yyyy-MM-dd"/> </td> --%>
 </tr>
-</table>
-
+</table>	
  
 <!-- 다음글 -->
 <table class="table table-striped table-hover" id="nextwr">
 <tr>   
 	<td>다음글</td>   
-	<td>분류(서비스 점검)</td> 
-	<td> 제목(제목에만 링크)</td> 
-	<td>작성일 </td></tr>
+	<td>글번호 : ${postNoti.next }</td> 
+	<td><a href="/admin/postNoti?noticeIdx=${postNoti.noticeIdx }"> ${postNoti.nextTitle }</a></td> 
+<%-- 	<td><fmt:formatDate value="${postNoti.createDate }" pattern="yyyy-MM-dd"/> </td></tr> --%>
 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <a href="/admin/noticelist"><button class="btnList">목록</button></a>

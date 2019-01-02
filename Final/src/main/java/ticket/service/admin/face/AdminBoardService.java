@@ -43,17 +43,12 @@ public interface AdminBoardService {
 	// 공지사항 글 삭제
 	public void delNoti(Notice deleteNotice);
 
+	// 이전글
+	public Notice preNotiSer(int noticeIdx);
 	
+	// 다음글
+	public Notice postNotiSer(int noticeIdx);
 	
-	
-	// 업로드된 파일 처리
-	public void filesave(ServletContext context, MultipartFile file);
-	
-	// 업로드 파일 목록
-	public List fileList();
-	
-	// notiFileIdx로 NoticeFile(notice_file) 조회
-	public NoticeFile getFile(int notiFileIdx);
 	
 	
 	
@@ -146,6 +141,18 @@ public interface AdminBoardService {
 	 * @작성자: 전해진
 	 */
 	public void deleteInquiry(Inquiry inquiry);
+	
+	
+
+	// 업로드된 파일 처리
+	public void filesave(ServletContext context, MultipartFile file);
+	
+	// 업로드 파일 목록
+	public List fileList();
+	
+	// notiFileIdx로 NoticeFile(notice_file) 조회
+	public NoticeFile getFile(int notiFileIdx);
+	
 	
 	
 }

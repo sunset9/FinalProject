@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<jsp:include page="../layout/menu.jsp"/>
  
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -14,6 +14,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <style>
+
     *{padding:0;margin: 0;}
     ul li{list-style: none;}
     .clearfix:after{content: "";display: block;clear: both;}
@@ -29,6 +30,11 @@
     .f_question1>ul>li:nth-child(3){width:75%; }
     .f_question1>ul>li:nth-child(4){width:5%; }
     .f_q_link{width: 100%;height: 100%;position:absolute;top: 0;left: 0;}
+    
+    .con{
+    	display:inline-block;
+    }
+    
 </style>
 
 
@@ -91,10 +97,10 @@
 
 <jsp:include page="../../utils/noticepaging.jsp"/>
 
-<!-- 아코디언 테스트 -->
+
 <script type="text/javascript">
 
-
+// 아코디언 시작
 $(function(){
 	  var className =""  //변수를 선언한다.
 	     
@@ -115,7 +121,7 @@ $(function(){
           
 	           }	             
 	        }        
-	    });
+	    });	// 아코디언 끝
 	  
 		$(".btnUpdate").click(function(){
 			$(location).attr("href", "/admin/noticeupdate?noticeIdx="+$(this).attr("data-idx"));

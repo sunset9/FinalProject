@@ -14,6 +14,13 @@
   	<result column="notice_title" property="noticeTitle" />
   	<result column="notice_content" property="noticeContent" />
   	<result column="create_date" property="createDate" />  
+  	<result column="prev" property="prev" />
+  	<result column="prev_title" property="prevTitle" />  	
+  	<result column="next" property="next" />
+  	<result column="next_title" property="nextTitle" />
+
+  	
+  	
   </resultMap>
   
 	<resultMap type="ticket.dto.Inquiry" id="Inquiry">
@@ -46,6 +53,25 @@
   	where R.rnum between #{startNo} AND #{endNo}
   	order by rnum
   </select>
+  
+  
+  <select id="preNoti" resultMap="notice">
+	select * from 
+	(select notice_idx
+	, lag(notice_idx,1) over(order by notice_idx) prev, 
+	lag(notice_title,1) over(order by notice_idx) prev_title from notice)
+	where notice_idx = #{notice_idx}
+  </select>
+  
+  <select id="postNoti" resultMap="notice">
+	select * from 
+	(select notice_idx
+	, lead(notice_idx,1) over(order by notice_idx) next, 
+	lead(notice_title,1) over(order by notice_idx) next_title from notice)
+	where notice_idx = #{notice_idx}
+  </select>
+  
+  
   
   <select id="selectCntAll" resultType="int">
   	select count(*) cut from(
