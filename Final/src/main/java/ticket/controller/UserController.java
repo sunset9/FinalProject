@@ -356,6 +356,8 @@ public class UserController {
 		
 		// 취소한 내역들 불러오기
 		sob = userService.cancelTicket(user);
+		logger.info("모든 좌석이 취소된 예매 : "+sob);
+		model.addAttribute("csob", sob);
 		
 		return "/mypage/myticket";
 	}
@@ -498,8 +500,10 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/mypage/myinq", method = RequestMethod.GET)
+	@RequestMapping(value = "/mypage/myinquiry", method = RequestMethod.GET)
 	public void mypageInq(Model model, User user) {
-
+		logger.info("내 문의 상세보기");
+		
+		
 	}
 }
