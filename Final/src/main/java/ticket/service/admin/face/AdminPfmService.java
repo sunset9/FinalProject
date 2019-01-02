@@ -147,6 +147,13 @@ public interface AdminPfmService {
 	public void deleteMainBanner(int mainbanIdx);
 	
 	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: tabIdx를 이용해서 탭 배너 삭제하기
+	 * @작성자: 김지은
+	 */
+	public void deleteTabBanner(int tabIdx);
+	
+	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 모든 장르 리스트 가져오기
 	 * @작성자: 전해진
@@ -509,10 +516,17 @@ public interface AdminPfmService {
 	
 	/**
 	 * @최종수정일: 2018.12.27
-	 * @Method설명: 파일업로드하기
+	 * @Method설명: 파일업로드하기(메인배너)
 	 * @작성자: 김지은
 	 */
 	public void fileUpload(int pfmIdx, ServletContext context, MultipartFile thumbFile, MultipartFile bannerFile);
+	
+	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: 탭배너등록하기
+	 * @작성자: 김지은
+	 */
+	public void insertTBanner(Map<String, String> tabInfo);
 	
 	/**
 	 * @최종수정일: 2018.12.28
@@ -522,18 +536,26 @@ public interface AdminPfmService {
 	public boolean checkPfmIdxDup(int pfmIdx);
 	
 	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: pfmIdx로 탭 배너 중복 확인하기 
+	 * @작성자: 김지은
+	 */
+	public boolean checkTabbanDup(Map<String, Integer> tabInfo);
+	
+	/**
 	 * @최종수정일: 2018.12.28
 	 * @Method설명: 페이징한 전체 공연 목록 가져오기
 	 * @작성자: 김지은
 	 */
 	public List<Performance> getAllPfmList(Paging paging);
-	
+	public List<Performance> getPfmListAlpha(Paging paging);
 	/**
 	 * @최종수정일: 2018.12.28
 	 * @Method설명: 페이징한 콘서트 목록 가져오기
 	 * @작성자: 김지은
 	 */
 	public List<Performance> getAllConPfmList(Paging paging);
+	public List<Performance> getConPfmListAlpha(Paging paging);
 	
 	/**
 	 * @최종수정일: 2018.12.28
@@ -541,7 +563,8 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public List<Performance> getAllMuPfmList(Paging paging);
-
+	public List<Performance> getMuPfmListAlpha(Paging paging);
+	
 	/**
 	 * @최종수정일: 2018.12.29
 	 * @Method설명: pfmIdx로 검색해서 pfm 정보 가져오기
@@ -554,6 +577,6 @@ public interface AdminPfmService {
 	 * @Method설명: 정렬 종류별 공연 목록 가져오기
 	 * @작성자: 김지은
 	 */
-	public List<Performance> getNewestPfmList();
+	public List<Performance> getNewestPfmList(String mbPfmSearch);
 	public List<Performance> getAlphaPfmList();
 }

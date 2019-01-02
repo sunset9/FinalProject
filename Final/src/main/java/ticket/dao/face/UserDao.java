@@ -253,4 +253,11 @@ public interface UserDao {
 	 */
 	public List<SeatSection> selectCancelSeat(String names);
 
+	
+	/**
+	 * @최종수정일: 2018.12.31
+	 * @Method설명: 취소 완료된 예매 유저 idx로 조회
+	 * @작성자:홍나영
+	 */
+	public List<StateOfBook> selectCancelTicket(User user);
 }

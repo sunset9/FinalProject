@@ -894,21 +894,14 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Performance> getAllPfmList(Paging paging) {
-		// 페이징 처리한 전체 목록 가져오기
-		
 		return pDao.selectAllPfmList(paging);
 	}
-
 	@Override
 	public List<Performance> getAllConPfmList(Paging paging) {
-		// 페이징된 콘서트 목록 가져오기
-		
 		return pDao.selectAllConPfm(paging);
 	}
-
 	@Override
 	public List<Performance> getAllMuPfmList(Paging paging) {
-		// 페이징된 뮤지컬 목록 가져오기
 		return pDao.selectAllMuPfm(paging);
 	}
 
@@ -919,15 +912,56 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public List<Performance> getNewestPfmList() {
+	public List<Performance> getNewestPfmList(String mbPfmSearch) {
 		// 정렬 종류별 공연 목록 가져오기 
-		return pDao.selectNewestPfmList();
+		return pDao.selectNewestPfmList(mbPfmSearch);
 	}
 
 	@Override
 	public List<Performance> getAlphaPfmList() {
 		// 정렬 종류별 공연 목록 가져오기 
 		return pDao.selectAlpahPfmList();
+	}
+
+	@Override
+	public void deleteTabBanner(int tabIdx) {
+		// tabIdx를 이용해서 탭 배너 삭제하기
+		pDao.deleteTabBanner(tabIdx);
+	}
+
+	@Override
+	public boolean checkTabbanDup(Map<String, Integer> tabInfo) {
+		// pfmIdx로 탭배너 중복 확인하기
+		if (pDao.selectTabbanDup(tabInfo) == 0) {
+			// 중복 x
+
+			return true;
+		} else {
+			// 중복 o
+
+			return false;
+		}
+	}
+
+	@Override
+	public void insertTBanner(Map<String, String> tabInfo) {
+		// TODO Auto-generated method stub
+		pDao.insertTBanner(tabInfo);
+	}
+
+	@Override
+	public List<Performance> getPfmListAlpha(Paging paging) {
+		return pDao.selectPfmListAlpha(paging);
+	}
+
+	@Override
+	public List<Performance> getConPfmListAlpha(Paging paging) {
+		return pDao.selectConPfmListAlpha(paging);
+	}
+
+	@Override
+	public List<Performance> getMuPfmListAlpha(Paging paging) {
+		return pDao.selectMuPfmListAlpha(paging);
 	}
 
 }

@@ -36,6 +36,9 @@
 	
 	border: 1px solid #CCC;
 }
+#searchArtist{
+	display: none;
+}
 </style>
 
 
@@ -98,6 +101,72 @@ $(document).ready(function(){
 		
 		}); // ajax end
 	}); // click end
+	
+	
+	
+	$('#btn_search').click(function() {
+		
+		console.log("검색 버튼 함수 실행");
+		searchArtistAjax();
+	});
+	
+	
+	// 아티스트 검색을 위한 ajax 통신
+	function searchArtistAjax(){
+		$.ajax({
+			url: "/mypage/searchArtist"
+			, method : "POST"
+			, data: {"name": $('#artist_text').val() }
+			, dataType: "json"
+			, success : function(d){
+				console.log(d);
+				console.log("ajax 통신 성공:" +d);
+// 				var artists = d.artists;
+				var artists = d;
+				
+				// 아티스트 검색 결과 띄워주기
+				$('#searchArtist').show();
+				$('#searchArtist').html('');
+				
+				if(artists.length == 0){
+					$('#searchArtist').html('검색 결과가 없습니다.');
+				}
+				var unit = 1;
+				var unitDiv = $('<div class="resUnit">'); 
+				var ul = $('<ul>')
+				
+				artists.forEach(function(artist){
+// 					console.log(artist)
+				
+					// 하나의 검색 결과 저장할 div
+					var resLi = $('<li>');
+					resLi.data('aIdx', artist.artistIdx); // 커스텀 태그로 artist 정보 삽입
+					resLi.data('aName', artist.name); // 커스텀 태그로 artist 정보 삽입
+					
+					// 아티스트 이미지 띄울 태그
+					var img = $('<img>');
+					img.attr('src', artist.imgUri);
+					// 아티스트명 띄울 태그
+					var name = $('<p>');
+					name.text(artist.name);
+
+					resLi.append(img);
+					resLi.append(name);
+					resLi.append("<input type='button' class='addArtist' value='추가'>")
+					
+					// 모달의 검색 결과 창에 결과 태그들 추가
+					$('#searchArtist').append(unitDiv.append(resLi));
+					
+				}); // foreach end 
+			} // success end
+			, error: function(){
+				console.log("아티스트 검색 실패");
+			} // error end
+			
+		});// ajax end
+		
+	}// function  end
+	
 }); //ready end
 
 
@@ -160,6 +229,26 @@ function artChoice(artistIdx, name){
 <hr>
 <h3>선호 아티스트 선택</h3>
 <div id ="preferArtist">
+
+
+<div class="search_in">
+	<fieldset>
+       <div class="wrap_form_input"><!-- form wrapper -->
+       	<input type="text" name="artist_text" id="artist_text" class="inputType" value="">
+       	<label for="artist_text" class="place_holder" style="display: none;">아티스트 검색</label>              
+		</div>                                                          
+    <button type="button" class="btn_icon search_m" title="검색" id="btn_search"><span class="btn_comm btn_search">검색</span></button>
+    </fieldset>
+</div>
+
+
+
+<div style="/*display: none; */">
+	<div id="searchArtist">
+		
+	</div>
+</div>
+
 
 <c:forEach items="${aList }" var="a">
     <div class="thumbnail" style="width: 15%;" onclick ="artChoice('${a.artistIdx}','${a.name }');">

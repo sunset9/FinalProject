@@ -59,6 +59,10 @@ public class AdminPfmController {
 	@Autowired
 	ServletContext context;
 
+	List<Map> mbList = new ArrayList<>();
+	
+	Map<String, String> mbMap = new HashMap<>();
+	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 새 공연 등록 폼 띄우기
@@ -604,11 +608,17 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/admin/setOrder", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Performance> setOrder(@RequestParam int order, Model model) {
+	public List<Performance> setOrder(
+			@RequestParam int order,
+			@RequestParam String mbPfmSearch,
+			Model model
+			) {
+		System.out.println(order);
+		System.out.println(mbPfmSearch);
 		// 정렬타입에 따라서 다시 정렬
 		// 0 : 최신순, 1 : 가나다순
 		if(order == 0) {
-			List<Performance> newPfmList = pService.getNewestPfmList();
+			List<Performance> newPfmList = pService.getNewestPfmList(mbPfmSearch);
 			System.out.println("최신순 리스트 확인 : "+newPfmList);
 			return newPfmList;
 		}else {
@@ -634,7 +644,43 @@ public class AdminPfmController {
 		
 		return "admin/pfm/mainBannerList"; 
 	}
+	
+	/**
+	 * @최종수정일: 2018.12.31
+	 * @Method설명: 메인 배너 등록 요청 파라미터 받기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/mainbannerlist", method = RequestMethod.POST)
+	public String mBannerList2(
+			@RequestParam(value="pfmIdx") List<String> pfmIdx
+			) {
+		
+		logger.info("지은 메인 배너 리스트에서 확인 : "+pfmIdx.toString());
 
+		
+		return "admin/pfm/mainBannerList"; 
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.05
+	 * @Method설명: 메인 배너 최종등록하기(최종저장 버튼 활성화는 jsp에서...??)
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value = "/admin/mbfinalsave", method = RequestMethod.POST)
+	public String mbFinalSave(
+			@RequestParam(value="pfmIdx") List<String> pfmIdx
+			) {
+		logger.info("지은 최종저장 pfmIdx 리스트 확인 : "+pfmIdx.toString());
+		// 공연 정보 받기
+		// Performance pfm = pService.getPfmInfo()
+
+		// 썸네일, 배너 정보 받기
+		// MainBanner mBanner = pService.getMBanner()
+
+		// 배너 등록하기 pService.registMBanner(정보들)
+		return "redirect:/admin/mainbannerlist";
+	}
+	
 	/**
 	 * @최종수정일: 2018.12.19
 	 * @Method설명: 메인 배너 삭제하기
@@ -689,17 +735,21 @@ public class AdminPfmController {
 	
 	/**
 	 * @최종수정일: 2018.12.27
-	 * @Method설명: 메인배너등록 Form 데이터 받아서 처리하기
+	 * @Method설명: 메인배너등록 페이지에서 '등록'시 처리
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.POST)
 	public String registMBannerProc(
+			Model model,
 			@RequestParam(value="pfmIdx") int pfmIdx, 
 			@RequestParam(value="thumbFile") MultipartFile thumbFile,
 			@RequestParam(value="bannerFile") MultipartFile bannerFile
 			) {
-	
+		
+		
+		
 		pService.fileUpload(pfmIdx, context, thumbFile, bannerFile);
+		
 		return "redirect:/admin/mainbannerlist";
 	}
 	
@@ -744,22 +794,6 @@ public class AdminPfmController {
 		// null(배너 등록)일 경우 빈값 뷰에 전달, 값이 있을 경우(배너 수정)에는 그 값 뷰에 전달
 		
 		return "admin/pfm/editMainBanner";
-	}
-
-	/**
-	 * @최종수정일: 2018.12.05
-	 * @Method설명: 메인 배너 최종등록하기(최종저장 버튼 활성화는 jsp에서...??)
-	 * @작성자: 김지은
-	 */
-	@RequestMapping(value = "/admin/pfm/mainbannerfs", method = RequestMethod.POST)
-	public void mbFinalSave() {
-		// 공연 정보 받기
-		// Performance pfm = pService.getPfmInfo()
-
-		// 썸네일, 배너 정보 받기
-		// MainBanner mBanner = pService.getMBanner()
-
-		// 배너 등록하기 pService.registMBanner(정보들)
 	}
 
 	/**
@@ -866,6 +900,82 @@ public class AdminPfmController {
 	}
 
 	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 탭배너 정렬(최신순/ 가나다순)
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/tbSetOrder", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Performance> tbSetOrder(
+			@RequestParam int order,
+			@RequestParam String search,
+			@RequestParam int btnId
+			) {
+		List<Performance> reList = null;
+		
+		if(order == 0) {
+			//최신순 정렬
+			if(btnId == 1) {
+				String newSearch = search;
+				int totalPfm = pService.getPfmSearchCnt(newSearch);
+				Paging paging = new Paging(totalPfm, 1);
+				paging.setSearch(newSearch);
+				reList = pService.getAllPfmList(paging);
+			}else if(btnId == 2) {
+				String conSearch = search;
+				int totalConPfm = pService.getPfmSearchCnt(conSearch);
+				Paging paging2 = new Paging(totalConPfm, 1);
+				paging2.setSearch(conSearch);
+				reList = pService.getAllConPfmList(paging2);
+			}else {
+				String muSearch = search;
+				int totalMuPfm = pService.getPfmSearchCnt(muSearch);
+				Paging paging3 = new Paging(totalMuPfm, 1);
+				paging3.setSearch(muSearch);
+				reList = pService.getAllMuPfmList(paging3);
+			}	
+			return reList;
+		} else {
+			//가나다순 정렬
+			if(btnId == 1) {
+				String newSearch = search;
+				int totalPfm = pService.getPfmSearchCnt(newSearch);
+				Paging paging = new Paging(totalPfm, 1);
+				paging.setSearch(newSearch);
+				reList = pService.getPfmListAlpha(paging);
+			}else if(btnId == 2) {
+				String conSearch = search;
+				int totalConPfm = pService.getPfmSearchCnt(conSearch);
+				Paging paging2 = new Paging(totalConPfm, 1);
+				paging2.setSearch(conSearch);
+				reList = pService.getConPfmListAlpha(paging2);
+			}else {
+				String muSearch = search;
+				int totalMuPfm = pService.getPfmSearchCnt(muSearch);
+				Paging paging3 = new Paging(totalMuPfm, 1);
+				paging3.setSearch(muSearch);
+				reList = pService.getMuPfmListAlpha(paging3);
+			}
+			return reList;
+		}
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.19
+	 * @Method설명: 탭배너 삭제하기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/tabbannerdelete", method=RequestMethod.GET)
+	@ResponseBody
+	public void tBannerDelete(int tabIdx) {
+		
+		System.out.println("tabIdx : "+tabIdx);
+		
+		//mainbanIdx를 이용해서 메인 배너 삭제하기
+		pService.deleteTabBanner(tabIdx);
+	}
+	
+	/**
 	 * @최종수정일: 2018.12.06
 	 * @Method설명: 탭배너 등록 모달창에서 공연 리스트 띄우기
 	 * @작성자: 김지은
@@ -893,6 +1003,33 @@ public class AdminPfmController {
 	}
 
 	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: 이미 등록된 탭배너인지 중복확인하기 
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/checktabbandup", method=RequestMethod.GET)
+	@ResponseBody
+	public int checkTabbanDup(
+			@RequestParam int pfmIdx,
+			@RequestParam int tabGenre
+			) {
+		
+		Map<String, Integer> tabInfo = new HashMap<>();
+		tabInfo.put("pfmIdx", pfmIdx);
+		tabInfo.put("tabGenre", tabGenre);
+		
+		boolean isDupTabban = pService.checkTabbanDup(tabInfo);
+		
+		if(isDupTabban == true) {
+			// 중복x
+			return 0;
+		}else {
+			// 중복o
+			return 1;
+		}
+	}
+	
+	/**
 	 * @최종수정일: 2018.12.06
 	 * @Method설명: 탭배너 등록 모달창에서 정렬(최신순/가나다순) 처리하기
 	 * @작성자: 김지은
@@ -903,12 +1040,30 @@ public class AdminPfmController {
 	}
 
 	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: 탭 배너 등록하기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/registtbanner", method=RequestMethod.POST)
+	@ResponseBody
+	public void registTBanner(@RequestParam int pfmIdx, @RequestParam int tabGenre, @RequestParam String bannerPath) {
+		logger.info("탭 배너 등록 메소드 실행~~");
+		
+		Map<String, String> tabInfo = new HashMap<>();
+		tabInfo.put("pfmIdx", String.valueOf(pfmIdx));
+		tabInfo.put("tabGenre", String.valueOf(tabGenre));
+		tabInfo.put("bannerPath", "/resources/image/"+bannerPath);
+		
+		pService.insertTBanner(tabInfo);
+	}
+	
+	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 탭 배너 최종 저장하기(탭배너 페이지에서 최종저장버튼 활성화됐을때만 가능)
 	 * @작성자: 김지은
 	 */
-	@RequestMapping(value = "/admin/pfm/registTBanner", method = RequestMethod.POST)
-	public void registTBanner() {
+	@RequestMapping(value = "/admin/tBannerfinalSave", method = RequestMethod.POST)
+	public void tBannerfinalSave() {
 		// 질문 : 탭배너에는 New/콘서트/뮤지컬 3분류가 있는데
 		// 디비에 저장될때는 분류 상관없이 그냥 등록된 순서대로 저장되는 것인지
 
@@ -1064,6 +1219,7 @@ public class AdminPfmController {
 		pfmInfo.put("pfmStart", pfmStart);
 		pfmInfo.put("pfmEnd", pfmEnd);
 		pfmInfo.put("hallName", pfm.getHallName());
+		pfmInfo.put("storedName", pfm.getStoredName());
 		
 		return pfmInfo;
 	}
