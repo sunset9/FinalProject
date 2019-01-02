@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.Artist;
 import ticket.dto.PreferArtist;
@@ -90,7 +91,7 @@ public class PreferController {
 	}
 	
 	@RequestMapping(value="/user/prefer", method=RequestMethod.POST)
-	public void themeProc(
+	public String themeProc(
 			@RequestParam(value="themeIdx[]") List<String> themeIdx
 			, int userIdx
 			) {
@@ -101,8 +102,16 @@ public class PreferController {
 		preferTService.choiceTheme(userIdx, themeIdx);
 		// 선택한거 취소하고 다 넣기..ㅎ
 		
-		
+		return "redirect:/mypage/mychoice";
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/mypage/searchArtist", method = RequestMethod.POST)
+	public List<Artist> searchArtist(String name) {
+		logger.info("아티스트 검색처리");
+		logger.info("name파라미터"+name);
+		
+		return preferAService.search(name);
+	}
 	
 }

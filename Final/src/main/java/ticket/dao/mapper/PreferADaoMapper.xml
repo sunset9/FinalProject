@@ -78,6 +78,13 @@
     WHERE user_idx= #{userIdx }
   
   </select>
+  
+  <select id ="selectArtistBySearch" parameterType="String" resultMap="ArtistMap">
+  	SELECT * 
+  	FROM artist 
+  	WHERE name LIKE  '%' || #{name} || '%'
+  
+  </select>
   </mapper>
   
   
