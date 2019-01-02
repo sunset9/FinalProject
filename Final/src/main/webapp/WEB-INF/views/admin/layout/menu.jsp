@@ -65,6 +65,7 @@ h1, h2, h3 {
  height: 150px;
 }
 
+
 .logo {    
     width: 200px;
     height: 83px;
@@ -108,6 +109,12 @@ h1, h2, h3 {
 	display: block;
 	font-weight: bold;
 	padding-left: 0px;
+
+.contents-wrapper{
+ 	float: left;
+    width: 1000px;
+    position: absolute;
+    left: 230px;
 }
 
 </style>
@@ -133,7 +140,7 @@ h1, h2, h3 {
 				<li><a href="/admin/registcatefam">가족&아동</a></li>
 			</ul>
 		</li>
-		<li><a href="">1:1 문의</a></li>
+		<li><a href="/admin/viewinquiry">1:1 문의</a></li>
 		<li><a href="/admin/noticelist">공지사항</a></li>
 		<li><a href="/admin/faqlist">FAQ</a></li>
 		<li><a href="/admin/registhall">공연장등록</a></li>

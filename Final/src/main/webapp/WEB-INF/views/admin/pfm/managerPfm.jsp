@@ -6,13 +6,14 @@
 <jsp:include page="../layout/menu.jsp" />
 
 <style>
+
 .managerPfmBox {
 	float: left;
     width: 80%;
     position: absolute;
     left: 250px;
 }
-
+  
 #registBtn {
     float: right;
 }
@@ -321,7 +322,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 
 </script>
 
-<div class="managerPfmBox">
+<div class="contents-wrapper">
 <h1>공연 관리 - 전체 목록 조회</h1>
 <hr>
 
