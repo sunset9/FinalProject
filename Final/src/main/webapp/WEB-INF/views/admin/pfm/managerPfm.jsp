@@ -7,13 +7,6 @@
 
 <style>
 
-.managerPfmBox {
-	float: left;
-    width: 80%;
-    position: absolute;
-    left: 250px;
-}
-  
 #registBtn {
     float: right;
 }
