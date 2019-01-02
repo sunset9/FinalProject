@@ -27,7 +27,7 @@ public interface PreferADao {
 	 * @Method설명: 검색어로 아티스트 조회
 	 * @작성자:홍나영
 	 */
-	public List<Artist> selectArtistBySearch(String search);
+	public List<Artist> selectArtistBySearch(String name);
 	
 	/**
 	 * @최종수정일: 2018.12.13

@@ -16,7 +16,7 @@
 
 <div class="conta">
 
-<h1> 공지 수정 </h1>
+<h1> 수정 </h1>
 
 
 <div>
@@ -24,11 +24,11 @@
 <input type="hidden" name="noticeIdx" value="${update.noticeIdx }"/>
 
 <table>
-<tr> <td>작성자</td><td>${userIdx }</td> </tr>
+<tr> <td>작성자</td><td>${update.userIdx }</td> </tr>
 <tr> <td>분류</td><td><input type="text" name="NTypeIdx" value="${update.NTypeIdx }"></td> </tr>
 <tr> <td>제목</td><td><input type="text" name="noticeTitle" value="${update.noticeTitle }"></td></tr>
 </table>
- <jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include>
 <textarea name="noticeContent" id="noticeContent" rows="10" cols="100" 
  style="width:766px; height:412px; display:none;"></textarea>
 
@@ -37,15 +37,13 @@
 </div>
 
 
-
-
-
 <button type="button" id="save_button">수정 적용</button>
 
 </div>
 
 
 <script>
+if('${update!=null}'=='true') Editor.modify({'content': '${update.noticeContent}'});  // 블로그 방법 이미지O, 글O
 
 
 var config = {
@@ -87,7 +85,8 @@ var config = {
 				show : true,
 				confirmForDeleteAll : true
 			},
-			// 		이미지첨부, 파일 관련 추가 config 
+			
+			// 		이미지첨부, 파일 관련 추가 config (팝업) 시작
 			attacher : {
 				image : {
 					features : {
@@ -111,7 +110,8 @@ var config = {
 					popPageUrl : '${pageContext.request.contextPath}/admin/filepopup' //팝업창 주소
 				}
 			}
-		},
+		}, // 팝업 끝
+		
 		size : {
 			contentWidth : 700
 		/* 지정된 본문영역의 넓이가 있을 경우에 설정 */
@@ -163,7 +163,7 @@ var config = {
 
 		// 본문 내용을 필드를 생성하여 값을 할당하는 부분
 		var textarea = document.createElement('textarea');
-		textarea.name = 'noticeContent';
+		textarea.name = 'noticeContent'; // 
 		textarea.value = content;
 		form.createField(textarea);
 
@@ -200,6 +200,7 @@ var config = {
 		Editor.save();
 	})
 
+		
 	// 1. Editor.save()    submit기능의 첫단계
 	// 2. validForm()     다음에디터 내에 자체적으로 호출되는 함수입니다.    
 	// 폼필드내에 입력태그들에 대한 validation 처리를 해당 함수에서 처리해주시면 되겠습니다.
@@ -207,6 +208,35 @@ var config = {
 	// 다음에디터에 입력된 내용을 넣어주는 작업함수입니다
 
 </script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	loadContent();
+});
+
+
+	function loadContent() {
+		var attachments = {};
+		
+		/* 저장된 컨텐츠를 불러오기 위한 함수 호출 */
+		Editor.modify({
+			"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김,위의 부분을 수정하고 아래 부분은 수정없이 사용 */
+				var allattachments = [];
+				for (var i in attachments) {
+					allattachments = allattachments.concat(attachments[i]);
+				}
+				return allattachments;
+			}()
+			,
+// 			"content": document.getElementById("noticeContent") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+// 			"content": "${update.noticeContent }" /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 (강사님 방법 - 내용물 나오게함 이미지X 글O)*/
+			
+		});
+	}	
+</script>
+
 
 
 </body>

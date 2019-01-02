@@ -27,11 +27,6 @@ href="${pageContext.request.contextPath}/resources/daumOpenEditor/css/editor.css
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-	// function formsubmit() {
-	// 	tx_editor_form.submit();
-	// }
-</script>
 </head>
 <body>
 
@@ -61,11 +56,10 @@ href="${pageContext.request.contextPath}/resources/daumOpenEditor/css/editor.css
 
 			</table>
 			<jsp:include page="/WEB-INF/views/admin/notice/editor_frame.jsp"></jsp:include>
-			<tr>
-				<td><textarea name="noticeContent" id="noticeContent" rows="10"
-						cols="100" style="width: 766px; height: 412px; display: none;"></textarea></td>
-			</tr>
-
+			
+				<textarea name="noticeContent" id="noticeContent" rows="10"
+						cols="100" style="width: 766px; height: 412px; display:none"></textarea>
+			
 
 			<input type="button" id="save_button" value="내용전송" />
 			<a href="http://localhost:8088/admin/noticelist"><button type="button" id="btnCancel">취소</button></a>

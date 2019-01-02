@@ -241,6 +241,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public List<StateOfBook> cancelTicket(User user) {
+		return userDao.selectCancelTicket(user);
+	}
+
+
 
 	
 	
