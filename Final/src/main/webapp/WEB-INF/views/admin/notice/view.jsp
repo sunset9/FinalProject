@@ -33,7 +33,7 @@ $(document).ready(function(){
 </head>
 <body>
 
-<h1>공지 상세보기</h1>
+<h1>상세보기</h1>
 
 <div class="conta">
 
@@ -76,5 +76,6 @@ $(document).ready(function(){
 <button id="btnDelete">삭제</button>
 <button id="btnUpdate">수정</button>
 </div>
+
 </body>
 </html>

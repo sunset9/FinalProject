@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="../layout/menu.jsp" />
+<jsp:include page="../layout/menu.jsp"/>
 
  
 <!-- 부트스트랩 -->
@@ -14,8 +14,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <style>
-
-.con{width:50%; }
+.list {
+	display: inline-block;
+	width: 500px;
+}
 
 </style>
 
@@ -41,7 +43,7 @@ $(document).ready(function(){
 </script>
 
 
-<h1>공지 리스트</h1>
+<!-- <h1>리스트</h1> -->
 <hr>
 <!-- conta = container -->
 <div class="con">
@@ -64,10 +66,10 @@ $(document).ready(function(){
 
 
 
-
+<div class="list">
 <form action="/admin/noticedelete" method="post">
 
-<div>
+
 <table class="table table-striped table-hover">
 	
 	<tr>
@@ -91,14 +93,17 @@ $(document).ready(function(){
 	</c:forEach>
 
 </table>
-
+<div class="btndel">
 <a href="/admin/noticedelete"> <button>글삭제</button></a>
+</div>
 
 </form>
-</div>
+<div class="btnwrite">
 <a href="/admin/noticewrite"><button> 글쓰기 </button></a>
+</div>
 
 <jsp:include page="../../utils/noticepaging.jsp"/>
+</div>
 </div>
 </body>
 </html>
