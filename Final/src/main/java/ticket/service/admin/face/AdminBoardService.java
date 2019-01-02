@@ -139,6 +139,13 @@ public interface AdminBoardService {
 	 * @작성자: 전해진
 	 */
 	public void editReplyInquiry(InquiryAnswer inqAnswer);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 삭제
+	 * @작성자: 전해진
+	 */
+	public void deleteInquiry(Inquiry inquiry);
 	
 	
 }

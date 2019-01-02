@@ -40,6 +40,8 @@
 <div class="contents-wrapper">
 <h1> 1:1 문의 확인</h1>
 
+<button onclick="location.href='/admin/deleteInquiry?inqIdx=${inq.inqIdx }'">삭제</button>
+
 <table id="detailTable" class="table table-bordered" >
 <tr>
 	<th>제목</th>

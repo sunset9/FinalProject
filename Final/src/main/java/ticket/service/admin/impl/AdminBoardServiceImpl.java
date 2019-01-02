@@ -276,6 +276,16 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		
 	}
 
+	@Override
+	public void deleteInquiry(Inquiry inquiry) {
+		InquiryAnswer inqAns = new InquiryAnswer();
+		inqAns.setInqIdx(inquiry.getInqIdx());
+		// 답글 삭제
+		adminBoardDao.deleteReplyInquiry(inqAns);
+		// 글 삭제
+		adminBoardDao.deleteInquiry(inquiry);
+	}
+
 
 
 	
