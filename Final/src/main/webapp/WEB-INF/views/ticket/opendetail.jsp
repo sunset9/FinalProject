@@ -40,6 +40,10 @@ $(document).ready(function() {
 		}
 	});
 	
+// 	$('#pfmDetailbtn').click(function() {
+// 		$(location).attr("href", "");
+// 	});
+	
 });
 
 </script>
@@ -138,8 +142,9 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="pfmTitle">
-			<strong style="font-size: 20px;">${pfmInfoList.name } 티켓 오픈 안내</strong><br><br>
-			<small>등록일 : <fmt:formatDate value="${pfmInfoList.createDate }" pattern="yyyy-MM-dd"/></small>
+			<strong style="font-size: 20px;">${pfmInfoList.name } 티켓 오픈 안내</strong><br>
+			<small>등록일 : <fmt:formatDate value="${pfmInfoList.createDate }" pattern="yyyy-MM-dd"/></small><br><br>
+			<small style="font-size: 15px;">안녕하세요. 바나나티켓입니다.<br>${pfmInfoList.name } 티켓 오픈 안내입니다.</small>
 		</div>
 		
 		<strong id="openticketText">티켓 오픈 일정</strong>
@@ -147,12 +152,12 @@ ul.tabs li.current{
 			<strong>${pfmInfoList.name }</strong><br>
 			티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy-MM-dd"/>
 				<button id="mychoicebtn">공연플래너 담기</button>
-				<button>상세보기</button>
+				<a href="/ticket/pfmdetail?pfmIdx=${pfmInfoList.pfmIdx}"><button id="pfmDetailbtn">상세보기</button></a>
 		</div>
 		<div class="bottomDiv ddiv">
 			
 			<div id="tab-1" class="tab-content current">
-				<h3 style="float: left;">출연진</h3><br>
+				<strong style="float: left; font-size: 20px;">출연진</strong><br>
 				<div class="castInfo tabarray">
 				<ul>
 				<c:forEach items="${castList }" var="list">
@@ -164,8 +169,8 @@ ul.tabs li.current{
 				</ul>
 				</div>
 				
-				<div class="pfmInfo tabarray" style="border: 1px solid black;">
-					<strong>공연 정보</strong>
+				<div class="pfmInfo tabarray">
+					<strong style="float: left; font-size: 20px;">공연 정보</strong><br>
 					${detailList.contents }
 				</div>
 			</div>

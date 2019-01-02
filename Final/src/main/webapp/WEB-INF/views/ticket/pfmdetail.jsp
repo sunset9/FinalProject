@@ -47,9 +47,9 @@ $(document).ready(function() {
 		var userIdx = ${loginUser.userIdx }
 		
 		// 삭제할 기대평 idx
-		var expIdx = $('#expDeleteBtn').val();
+// 		var expIdx = $('#expDeleteBtn').val();
 		
-// 		console.log('선택 기대평 idx : ' + expIdx);
+		console.log('선택 기대평 idx : ' + expIdx);
 // 		console.log('게시글 번호 : ' + pfmIdx);
 // 		console.log('내용 : ' + expContent);
 // 		console.log('로그인 유저 idx : ' + userIdx);
@@ -80,6 +80,45 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	// 답글 선택 시
+	$('#expReBtn').click(function() {
+		var expIdx = $('#expReBtn').val();
+		var contents = document.getElementById("expRecomm").value;
+		var userIdx = ${loginUser.userIdx }
+
+		console.log(expIdx);
+		console.log(contents);
+		console.log(userIdx);
+		
+		$.ajax({
+			url: '/pfmdetail/expectRecomm'
+			, method: 'GET'
+			, data: {
+				"expIdx": expIdx
+				, "contents": contents
+				, "userIdx": userIdx
+			}
+			, dataType: 'json'
+			, success: function(d){
+				console.log("+ + + 성공 + + +");
+					
+				// 성공할 경우 리스트에 출력해주기
+				insertExpRecomm(d.expRecommList);
+
+				// 작성 성공시 textarea 초기화해주기
+// 				$('#expRecomm').val("");
+			}
+			, error: function(e) {
+				console.log("실패");
+			}
+		});
+	});
+	
+	// 기대평 대댓글 리스트
+// 	function insertExpRecomm(expRecommList) {
+		
+// 	}
 
 	// 기대평 작성자 리스트
 	function insertExpUser(expecUserList) {
@@ -130,15 +169,12 @@ $(document).ready(function() {
 		// 작성, 삭제 여부 확인
 		var updel = $(this).attr('id');
 		
-// 		var star = $('#20, #40, #60, #80, #100').attr('id');
-// 		console.log(star);
-		
 		// 현재 공연 번호
 		var pfmIdx = ${pfmInfoList.pfmIdx };
 		
 		// 작성 내용 전달 및 작성할 유저 idx
 		var revContent = $('#review').val();
-		var userIdx = ${loginUser.userIdx }
+		var userIdx = ${loginUser.userIdx };
 		
 		console.log(updel);
 		console.log(revContent);
@@ -174,13 +210,6 @@ $(document).ready(function() {
 		});
 	});
 
-	// 별점
-// 	$('.starRev span').click(function(){
-// 		$(this).parent().children('span').removeClass('on');
-// 		$(this).addClass('on').prevAll('span').addClass('on');
-// 		return false;
-// 	});
-	
 	// 관람후기 작성자 리스트
 	function insertRevUser(reviewUserList) {
 		
@@ -325,6 +354,7 @@ ul.tabs li.current{
 #expecUser, #expecContent, #revUser, #revContent {
 	float: left;
 	text-align: center;
+	margin-top: 20px;
 }
 
 #expectationContent, #expectationUser, #reviewContent, #reviewUser {
@@ -356,21 +386,7 @@ ul.tabs li.current{
 	display: flex;
 }
 
-/* 별점 */
-/* .starR{ */
-/*   background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0; */
-/*   background-size: auto 100%; */
-/*   width: 15px; */
-/*   height: 15px; */
-/*   display: inline-block; */
-/*   text-indent: -9999px; */
-/*   cursor: pointer; */
-/* } */
-/* .starR.on{ */
-/* 	background-position:0 0; */
-/* } */
-
-/* 구글 맵 */
+/* 다음 맵 */
 #map {
 	height: 400px;
 	width: 100%;
@@ -444,6 +460,7 @@ ul.tabs li.current{
 	
 	<div id = "bookInfo">
 	</div>
+	
 	<div class="bottomDiv ddiv">
 		<ul class="tabs">
 			<li class="tab-link current" data-tab="tab-1">상세정보	</li>
@@ -519,15 +536,28 @@ ul.tabs li.current{
 				</div>
 					
 				<div id="expecContent">
-				<c:forEach items="${expecList }" var="list">
+				<c:forEach items="${expecList }" var="expecList">
 				<div id="expectationContent">
-					${list.expContent }
+					${expecList.expContent }
 					
 					<div id="expdelnup">
 <%-- 					<c:if test="${sessionScope.email eq loginUser.email }"> --%>
-						<button id="expDeleteBtn" value="${list.expIdx }">삭제</button>
+						<button id="expDeleteBtn" value="${expecList.expIdx }">삭제</button>
+<%-- 						<button id="expDeleteBtn" onclick="deleteExp(${expecList.expIdx})">삭제</button> --%>
+						<input type="text" id="expRecomm"><button id="expReBtn" value="${expecList.expIdx }">답글</button>
 <%-- 					</c:if> --%>
 					</div>
+					
+					<!-- 기대평 대댓글 출력 리스트 -->
+					<c:forEach items="${expRecommList }" var="relist">
+					<!-- 부모 기대평 댓글 번호와 자식이 갖고있는 부모 댓글번호가 일치할 경우에만 출력한다. -->
+					<c:if test="${relist.expIdx eq expecList.expIdx }">
+					<div class="expectaRecomm" style="margin-left: 20px;">
+						-> ${relist.eRecommIdx }, ${relist.contents }<br>
+					</div>
+					</c:if>
+					</c:forEach>
+					
 				</div>
 				</c:forEach>
 				</div>

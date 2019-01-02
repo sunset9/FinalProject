@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.Artist;
+import ticket.dto.ExpectRecomm;
 import ticket.dto.Expectation;
 import ticket.dto.Hall;
 import ticket.dto.HallFile;
@@ -65,8 +66,8 @@ public class PfmDetailController {
 		model.addAttribute("expecUserList", expecUserList);
 
 		// 기대평 대댓글 리스트 출력하기
-		// List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
-		// model.addAttribute("expRecommList", expRecommList);
+		 List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		 model.addAttribute("expRecommList", expRecommList);
 
 		// 관람후기 리스트 출력해주기
 		List<Review> reviewList = detailService.getReviewList(pfm);
@@ -122,6 +123,24 @@ public class PfmDetailController {
 		List<User> expecUserList = detailService.getExpectationUserList(pfm);
 		map.put("expecUserList", expecUserList);
 
+		return map;
+	}
+	
+	@RequestMapping(value = "/pfmdetail/expectRecomm", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> expectRecomm(
+			String expIdx
+			, String contents
+			, Performance pfm
+			, String userIdx
+		) {
+
+		HashMap<String, Object> map = new HashMap<>();
+		
+		detailService.getInExpectRecomm(userIdx, expIdx, contents);
+		
+		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		map.put("expRecommList", expRecommList);
+		
 		return map;
 	}
 

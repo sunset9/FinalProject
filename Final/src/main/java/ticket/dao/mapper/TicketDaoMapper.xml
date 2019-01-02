@@ -164,6 +164,36 @@
 	    originsection.sec_name = #{secName}
 	    AND
 	    book.pfm_dbt_idx = #{dateByTimeIdx}
+	    AND
+	    book.book_cate_idx = 2
+</select>
+
+<select id="selectCntBookedSeats" resultType="ticket.dto.NumBookedSeat">
+	SELECT
+	    sec.app_sec as appSec,
+	    count(*) as cnt
+	FROM
+	    book b
+	    LEFT JOIN seat s ON b.seat_idx = s.seat_idx
+	    LEFT JOIN seatsection sec ON s.ori_sec_idx = sec.ori_sec_idx
+	where 
+	    sec.pfm_idx = ${pfm.pfmIdx} and b.book_cate_idx = #{bookCateIdx} and b.pfm_dbt_idx = ${pfmDbtIdx}
+	group by sec.app_sec
+
+</select>
+
+<select id ="selectCntAllSeats" parameterType="ticket.dto.Performance" resultType="ticket.dto.NumBookedSeat">
+	SELECT
+	    sec.app_sec appSec,
+	    sec.sec_pay secPay,
+	    count(*) cnt
+	FROM
+	    seat s
+	    LEFT JOIN seatsection sec ON s.ori_sec_idx = sec.ori_sec_idx
+	WHERE
+	    s.hall_idx = ${hallIdx} and sec.pfm_idx=${pfmIdx}
+	GROUP BY
+	   sec.app_sec,sec.sec_pay
 </select>
 
 

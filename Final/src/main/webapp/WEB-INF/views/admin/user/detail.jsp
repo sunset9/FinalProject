@@ -9,24 +9,29 @@
 function cancelBook(bookGroup, userIdx) {
 	var bookGroup = bookGroup;
 	var userIdx = userIdx;
-	console.log("bookgroup ::: "+bookGroup);
-	$.ajax({
-		type : 'POST',
-		url : '/admin/getImpUid',
-		data : {
-			bookGroup : bookGroup,
-			userIdx : userIdx
-			},
-		success : function(res) {
-			location.href = "/admin/userdetail?userIdx="+userIdx;
-		}
-	});
+	var conf = confirm('환불처리 하시겠습니까?');
+	if(conf == true){
+		console.log("bookgroup ::: "+bookGroup);
+		$.ajax({
+			type : 'POST',
+			url : '/admin/getImpUid',
+			data : {
+				bookGroup : bookGroup,
+				userIdx : userIdx
+				},
+			success : function(res) {
+				/* location.href = "/admin/userdetail?userIdx="+userIdx; */
+				location.reload();
+				alert("환불처리되었습니다.");
+			}
+		});	
+	}
 };
 </script>
 
 
 <style type="text/css">
-table, td, th, tr {border: 1px solid black;}
+table, td, th, tr {}
 
 /* The Modal (background) */
 .partCancelModal {
@@ -65,6 +70,36 @@ table, td, th, tr {border: 1px solid black;}
   text-decoration: none;
   cursor: pointer;
 }
+
+table.type03 {
+	border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #e8e6e6;
+    border-left: 3px solid #547290;
+  	margin : 20px 0px;
+  	width: 800px;
+}
+
+table.type03 th {
+    width: 147px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #434344;
+    border-left: 3px solid #547290;
+    border-right: 1px solid #e8e6e6;
+    border-bottom: 1px solid #e8e6e6;
+
+}
+table.type03 td {
+    width: 349px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #e8e6e6;
+    border-bottom: 1px solid #e8e6e6;
+}
+
 </style>
 </head>
 <body>
@@ -73,22 +108,43 @@ table, td, th, tr {border: 1px solid black;}
 <hr>
 
 <div>
-회원정보칸<br><br>
-${curUser.email }님의 예매현황<br>
-이름 ${curUser.name}<br>
-성별 <c:if test="${curUser.sex eq 'female'}">여성</c:if>
-    <c:if test="${curUser.sex eq 'male'}">남성</c:if><br>
-닉네임 ${curUser.nick}<br>
-생년월일 <fmt:formatDate value="${curUser.birth}" pattern="yyyy.MM.dd" /><br>
-휴대폰번호 ${curUser.phone}<br>
-주소 ${curUser.addr} ${curUser.addrDetail }<br>
-회원등급 ${curUser.mGrade}
-
+<table class="type03">
+	<tbody>
+		<tr>
+			<th scope="row"colspan="4" style="font-size: 17px;">${curUser.email }님의 예매현황</th>
+		</tr>
+		<tr>
+			<th scope="row">주소</th>
+			<td colspan="3">${curUser.addr} ${curUser.addrDetail }</td>
+		</tr>
+		<tr>
+			<th scope="row">이름</th>
+			<td>${curUser.name}</td>
+			<th scope="row">닉네임</th>
+			<td>${curUser.nick}</td>
+		</tr>
+		<tr>
+			<th scope="row">회원등급</th>
+			<td>${curUser.mGrade}</td>
+			<th scope="row">성별</th>
+			<td>
+				<c:if test="${curUser.sex eq 'female'}">여성</c:if>
+	   			<c:if test="${curUser.sex eq 'male'}">남성</c:if>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">생년월일</th>
+			<td><fmt:formatDate value="${curUser.birth}" pattern="yyyy.MM.dd" /></td>
+			<th scope="row">휴대번호</th>
+			<td>${curUser.phone}</td>
+		</tr>
+	</tbody>
+</table>
 </div>
-<hr>
+
 <div style="width: 1100px;">
-예매현황칸<br><br>
-<table class="table table-hover table-striped table-condensed">
+<br><br>
+<table class="table table-hover">
 <thead>
 <tr>
 <th style="width: 60px;">예매일</th>

@@ -32,6 +32,7 @@ import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.User;
+import ticket.dto.NumBookedSeat;
 import ticket.service.face.TicketService;
 
 
@@ -67,18 +68,10 @@ public class TicketController {
 			dateStr.add("'"+ trans.format(dates.get(i).getPfmDate()) + "'");
 		}
 		
-		System.out.println(""+pfm);
 		model.addAttribute("pfm",pfm);
 		model.addAttribute("dates", dateStr);
 		
 		//-------------------
-		
-		
-	}
-	
-	
-	@RequestMapping(value="/ticket/book", method=RequestMethod.GET)
-	public void book (String Date, String time, String name) {
 		
 		
 	}
@@ -110,6 +103,44 @@ public class TicketController {
 		return mav;
 		
 		
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 좌석별 예매한 갯수 구하기
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="ticket/cntBookedSeats", method=RequestMethod.POST)
+	public ModelAndView numOfReservedSeats(Performance pfm,String time, String date) {
+
+		//전체 좌석 갯수
+		List<NumBookedSeat> allSeats = new ArrayList<>();
+		allSeats = ticketService.countAllSeats(pfm);
+		
+//		System.out.println("allSeats : " + allSeats);
+		
+		//날짜,시간,공연번호로 pfmDbtIdx 구하기
+		int pfmDbtIdx = ticketService.loadDayByTimeIdx(pfm.getPfmIdx(), date, time);
+		
+		//예매한 좌석갯수
+		List<NumBookedSeat> BookedSeats = new ArrayList<>();
+		BookedSeats =  ticketService.countBookedSeats(pfm,2,pfmDbtIdx);
+		
+//		System.out.println("BookedSeats : " + BookedSeats);
+	
+		
+		
+		//ModelAndView으로 데이터 보내기
+		ModelAndView mav = new ModelAndView();
+		
+		//JSON 활용 키,값 형태면 JSON으로보내준다
+		mav.setViewName("jsonView");
+		
+		Map seatCntMap = new HashMap();
+		seatCntMap.put("allSeats", allSeats);
+		seatCntMap.put("BookedSeats", BookedSeats);
+		mav.addObject(seatCntMap);
+		return mav;
 	}
 	
 	/**
@@ -221,17 +252,6 @@ public class TicketController {
 		return mav;
 		
 	}
-	
-	/**
-	 * @최종수정일: 2018.12.05
-	 * @Method설명: 예매한 좌석 불러오기
-	 * @작성자:이상지
-	 */
-	public void loadReservedSeats() {
-		
-	}
-	
-	
 	/**
 	 * @최종수정일: 2018.12.05
 	 * @Method설명: 좌석임시저장
@@ -248,15 +268,6 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	public void tempTicketRemove() {
-		
-	}
-	
-	/**
-	 * @최종수정일: 2018.12.05
-	 * @Method설명:섹션 선택된거 불러오기
-	 * @작성자:이상지
-	 */
-	public void loadSection() {
 		
 	}
 	
@@ -450,5 +461,6 @@ public class TicketController {
 		return mav;
 		
 	}
+	
 
 }

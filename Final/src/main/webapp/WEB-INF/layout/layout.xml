@@ -14,6 +14,8 @@
 		<definition name="ticket/agreement" template="/WEB-INF/views/ticket/agreement.jsp"/>
 		
 		<definition name="mypage/userinfo" template="/WEB-INF/views/mypage/userinfo.jsp"/>
+		<definition name="user/login" template="/WEB-INF/views/user/login.jsp"/>
+		<definition name="user/join" template="/WEB-INF/views/user/join.jsp"/>
 
 		<definition name="admin/*" template="/WEB-INF/views/admin/{1}.jsp"/>
 		<definition name="admin/*/*" template="/WEB-INF/views/admin/{1}/{2}.jsp"/>

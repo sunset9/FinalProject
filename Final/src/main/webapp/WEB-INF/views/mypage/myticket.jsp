@@ -116,7 +116,7 @@ $(document).ready(function(){
 </thead>
 
 <tbody>
-<c:forEach items="${sob }" var="sob"  >
+<c:forEach items="${csob }" var="sob"  >
 	<c:if test='${sob.state eq "취소중"||sob.state eq "취소완료"}'>
 	<tr>
 		<td><fmt:formatDate value="${sob.createDate }" pattern="yyyy-MM-dd"/></td>

@@ -318,7 +318,7 @@ $('.caption').on('mouseleave','.cover',function(){
 }); // end ready
 </script>
 
-<div style="position: absolute; float: left; left: 230px; width: 70%;">
+<div style="position: absolute; float: left; left: 275px; width: 70%;">
 <div>
 <h1>
 카테고리 가족&아동 배너 관리

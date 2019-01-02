@@ -2,7 +2,9 @@ package ticket.service.admin.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -14,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ticket.dao.face.AdminBoardDao;
 import ticket.dto.Faq;
+import ticket.dto.Inquiry;
+import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.service.admin.face.AdminBoardService;
@@ -23,6 +27,7 @@ import ticket.utils.Paging;
 public class AdminBoardServiceImpl implements AdminBoardService{
 
 	@Autowired AdminBoardDao adminBoardDao;
+	@Autowired ServletContext context;
 	
 	// 공지 전체 조회 리스트
 	@Override
@@ -194,17 +199,105 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		return 0;
 	}
 
+	@Override
+	public List<Inquiry> getInquiryList(Paging paging) {
+		return adminBoardDao.selectInquiryList(paging);
+	}
 
+	@Override
+	public int getCntInquiry() {
+		return adminBoardDao.selectCntAllInq();
+	}
 
+	@Override
+	public Inquiry getInquiry(Inquiry inqParam) {
+		return adminBoardDao.selectInquiryByInqIdx(inqParam);
+	}
 
+	@Override
+	public Map<Object, Object> uploadPfmImg(MultipartFile inqImgUpload) {
+		// UUID, 고유 식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
 
+		// 파일이 저장될 경로
+		String stored = context.getRealPath("resources/image");
 
+		// 저장될 파일의 이름
+		String oriName = inqImgUpload.getOriginalFilename();
+		String name = oriName + "_" + uId;
 
+		// 파일객체
+		File dest = new File(stored, name);
 
+		// 파일 저장(업로드)
+		try {
+			inqImgUpload.transferTo(dest);
 
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
+		String linkName = "http://localhost:8088/resources/image/" + name;
 
+		Map<Object, Object> responseData = new HashMap<Object, Object>();
+		responseData.put("link", linkName);
 
+		// 저장 경로 반환
+		return responseData;
+	}
+
+	@Override
+	public void deletePfmImg(String src) {
+		// 파일경로
+		String filePath = context.getRealPath("upload/story") + "\\";
+		// 파일이름 구하기
+		String[] fileName = src.split("/");
+		// 삭제할 파일 경로 + 파일이름
+		filePath += fileName[5];
+
+		File f = new File(filePath); // 파일 객체생성
+		if (f.exists())
+			f.delete(); // 파일이 존재하면 파일을 삭제한다.
+	}
+
+	@Override
+	public void writeInquiry(Inquiry inquiry) {
+		adminBoardDao.insertInquiry(inquiry);
+	}
+
+	@Override
+	public void replyInquiry(InquiryAnswer inqAnswer) {
+		// 답변 삽입
+		adminBoardDao.insertReplyInquiry(inqAnswer);
+		// 답변 처리 상태 변경
+		adminBoardDao.updateInqReplyStatus(inqAnswer);
+	}
+
+	@Override
+	public InquiryAnswer getInquiryAnswer(Inquiry inqParam) {
+		return adminBoardDao.selectInquiryAnswer(inqParam);
+	}
+
+	@Override
+	public void editReplyInquiry(InquiryAnswer inqAnswer) {
+		// 이전 답변 삭제
+		int res = adminBoardDao.deleteReplyInquiry(inqAnswer);
+		// 답변 등록
+		if(res > 0) adminBoardDao.insertReplyInquiry(inqAnswer);
+		
+	}
+
+	@Override
+	public void deleteInquiry(Inquiry inquiry) {
+		InquiryAnswer inqAns = new InquiryAnswer();
+		inqAns.setInqIdx(inquiry.getInqIdx());
+		// 답글 삭제
+		adminBoardDao.deleteReplyInquiry(inqAns);
+		// 글 삭제
+		adminBoardDao.deleteInquiry(inquiry);
+	}
 
 
 	

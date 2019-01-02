@@ -14,6 +14,7 @@ import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.User;
+import ticket.dto.NumBookedSeat;
 
 public interface TicketService {
 	
@@ -147,5 +148,20 @@ public interface TicketService {
 	 * @작성자:이상지
 	 */
 	public void storedShipment(Shipment shipment);
+
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 해당 공연의 예매된 좌석갯수 구하기
+	 * @작성자:이상지
+	 */
+	public List<NumBookedSeat> countBookedSeats(Performance pfm, int bookCateIdx, int pfmDbtIdx);
+
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 해당공연의 전체 좌석갯수 구하기
+	 * @작성자:이상지
+	 */
+	public List<NumBookedSeat> countAllSeats(Performance pfm);
 }
 
