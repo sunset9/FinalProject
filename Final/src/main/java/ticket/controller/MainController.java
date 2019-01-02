@@ -38,9 +38,9 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.04
+	 * 최종수정일: 2019.01.01
 	 * @Method설명: 홈페이지 접속시 첫 페이지
-	 * @작성자: 배수연
+	 * @작성자: 배수연, 전해진
 	 */
 	@RequestMapping(value="/ticket/ticketmain", method=RequestMethod.GET)
 	public void ticketmain(Model model) {
@@ -63,9 +63,10 @@ public class MainController {
 		List<Poster> muList = mainService.getMuPoster();
 		model.addAttribute("muList", muList);
 		
-		// 랭킹 - sql문 작성해야함, 테스트리스트로 출력만 해둔 상태임
-		List<Poster> testList = mainService.getTestList();
-		model.addAttribute("testList", testList);
+		// 랭킹	
+		String genre = "CON"; // 장르 기본값: 콘서트 기준
+		List<Performance> rankList = mainService.getTopRankByGenre(genre);
+		model.addAttribute("rankPfm", rankList);
 	}
 	
 	@RequestMapping(value="/ticket/fit", method=RequestMethod.GET)
@@ -185,7 +186,7 @@ public class MainController {
 	@RequestMapping(value="/ticket/arraylist", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> arrayList(
 			String array
-			, String genreIdx
+			, int genreIdx
 		) {
 		
 		HashMap<String, Object> map = new HashMap<>();
@@ -292,13 +293,13 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2018.12.19
+	 * 최종수정일: 2019.01.01
 	 * @Method설명: 예매순 랭킹 반환(ajax 통신 용)
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/ticket/getrank", method=RequestMethod.GET)
-	public @ResponseBody List<Performance> getRank(String type, Date today) {
-		return mainService.getTopRank(type, today);
+	public @ResponseBody List<Performance> getRank(String type) {
+		return mainService.getTopRank(type);
 	}
 	
 	/**
@@ -361,5 +362,15 @@ public class MainController {
 	@RequestMapping(value="/ticket/agreement", method=RequestMethod.GET)
 	public void footerAgreementPop() {
 		logger.info("AgreementPop-GET");
+	}
+	
+	/**
+	 * @최종수정일: 2018.12.29
+	 * @Method설명: 메인화면에서 장르에 따른 랭킹 가져오기(ajax통신용)
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/ticket/mainrank", method=RequestMethod.GET)
+	public @ResponseBody List<Performance> getMainRank(String genre) {
+		return mainService.getTopRankByGenre(genre);
 	}
 }

@@ -239,7 +239,7 @@
 	</select>
 	
 	<!-- 인기순, 마감임박순, 최신순 정렬 -->
-	<select id="selectDeadlindListPfm" parameterType="String" resultMap="Performance">
+	<select id="selectDeadlindListPfm" parameterType="int" resultMap="Performance">
 		SELECT * FROM (
 		    SELECT
 		        ROWNUM no
@@ -260,7 +260,7 @@
 		)
 	</select>
 	
-	<select id="selectLatestListPfm" parameterType="String" resultMap="Performance">
+	<select id="selectLatestListPfm" parameterType="int" resultMap="Performance">
 		SELECT * FROM (
 		    SELECT
 		        ROWNUM no

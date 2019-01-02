@@ -188,20 +188,26 @@ ul.kind li span{
 	width:100%;
 	float: right;
 }
-#rankList img:first {
-	height: 300px;
-    width: 240px;
-	
+
+li.pfmInfo:first-child {
+	padding-left: 25px;
 }
 
 li.pfmInfo {
 	list-style: none;
 	float: left;
+	margin: 5px;
+}
+
+.pfmInfo:first-child img {
+    width: 240px;
+	height: 316px;
 }
 
 .rankPoster {
 	width: 100px;
-	height: 100px;
+	height: 140px;
+	
 }
 
 /* 메인 하단 */
@@ -317,11 +323,12 @@ div>h4 {
 		</ul><br><br>
 		
 		<ul id="rankList">
-		<c:forEach items="${rankPfm }" var="list">
+		<c:forEach items="${rankPfm }" var="pfm">
 			<li class="pfmInfo">
-				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+				<a href="/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx}">
 				<span class="thumImg">
-					<img class="rankPoster" src="/resources/image/${list.posterName}" /><br>
+					<img class="rankPoster" src="/resources/image/${pfm.posterName}" /><br>
+					<strong>${pfm.name }</strong>
 				</span>
 				</a>
 			</li>

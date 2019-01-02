@@ -484,7 +484,7 @@ $(document).ready(function(){
 	var startDate = new Date(); 
 	var endDate = new Date(); 
 	$('.date').datepicker({
-		startDate: startDate, // 오늘 이후로 선택 가능
+// 		startDate: startDate, // 오늘 이후로 선택 가능
 	    todayHighlight: true,
 	    autoclose: true,
 	    format: "yyyy-mm-dd",

@@ -67,17 +67,17 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Performance> getDeadlineList(String genreIdx) {
+	public List<Performance> getDeadlineList(int genreIdx) {
 		return mainDao.selectDeadlindListPfm(genreIdx);
 	}
 
 	@Override
-	public List<Performance> getLatestList(String genreIdx) {
+	public List<Performance> getLatestList(int genreIdx) {
 		return mainDao.selectLatestListPfm(genreIdx);
 	}
 
 	@Override
-	public List<Performance> getPopularityList(String genreIdx) {
+	public List<Performance> getPopularityList(int genreIdx) {
 		List<Performance> resPfmList = new ArrayList<>();
 		
 		// 오늘 날짜
@@ -167,11 +167,6 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getTestList() {
-		return mainDao.selectTestList();
-	}
-
-	@Override
 	public List<Poster> getconPoster() {
 		return mainDao.selectConTabList();
 	}
@@ -197,10 +192,9 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Performance> getTopRank(String type, Date today) {
-		if(today == null) {
-			today = new Date();
-		}
+	public List<Performance> getTopRank(String type) {
+		Date today = new Date();
+		
 		List<Performance> pfmList = new ArrayList<Performance>();;
 		List<Performance> topTen = new ArrayList<Performance>();
 		
@@ -395,4 +389,93 @@ public class MainServiceImpl implements MainService {
 		return mainDao.selectOpenSelectSearchList(genreIdx, opentext);
 	}
 	
+	@Override
+	public List<Performance> getTopRankByGenre(String genreStr) {
+		Date today = new Date();
+
+		List<Performance> topFive = new ArrayList<Performance>();
+
+		// 0. '조회 구간' 설정
+		// 시작 구간: 6일 전
+		Date periodS = new Date(today.getTime()); 
+		periodS.setTime(periodS.getTime() - 6 * 24 * 60 * 60 * 1000);
+		// 끝 구간: 오늘
+		Date periodE = today; 
+
+		// Date -> String 변환
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String startStr = dateFormat.format(periodS);
+		String endStr = dateFormat.format(periodE);
+
+		// 1. 예매율 구하려는 공연 목록 가져옴
+		int genre = 0;
+		if("CON".equals(genreStr)) genre = 1;
+		else if("MU".equals(genreStr)) genre = 2;
+		else if("FAM".equals(genreStr)) genre = 3;
+
+		List<Performance> pfmList = mainDao.selectPfmListByPeriodNGenre(startStr, endStr, genre);
+
+		// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
+		for(Performance pfm : pfmList) {
+			// 조회 범위 초기화
+			Date startDate = periodS;
+			Date endDate = periodE;
+
+			// '티켓' 시작일이 '조회 구간' 시작일 보다 느린 경우, '계산 구간' 시작일 = '티켓' 시작일
+			if(pfm.getTicketStart().getTime() - startDate.getTime() >= 0) {
+				startDate = pfm.getTicketStart();
+			}
+			// '조회 구간' 마지막일이 '티켓' 종료일 보다 느린 경우, '계산 구간' 마지막일 = '조회 구간' 마지막일
+			if(endDate.getTime() - pfm.getTicketEnd().getTime() >= 0) {
+				endDate = pfm.getTicketEnd();
+			}
+
+			// 3.1 해당 공연의 총 좌석 수 구하기
+			int totalSeatCnt = mainDao.selectCntAllSeatByHallIdx(pfm);
+			System.out.println(totalSeatCnt);
+
+			System.out.println(startDate);
+			System.out.println(endDate);
+
+			// 3.2 계산 구간에 예매한 좌석 수 구하기
+			int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
+			System.out.println(bookSeatCnt);
+
+			// 3.3 해당 공연의 공연 횟수 구하기 
+			int pfmDbtCnt = mainDao.selectPfmDbtCntByPfmIdx(pfm, startDate, endDate);
+			System.out.println(pfmDbtCnt);
+
+			// 3.4 예매율 계산
+			float bookRate = 0;
+			if(bookSeatCnt != 0) {
+				bookRate = (((float)bookSeatCnt/pfmDbtCnt) / totalSeatCnt) * 100;
+			}
+			System.out.println("예매율:" + bookRate);
+
+			// 예매율 필드에 삽입
+			pfm.setBookingRate(bookRate);
+
+			// top5 판단
+			for(int i = 0; i<topFive.size(); i++) {
+				// 기존 top5 후보보다 예매율이 크면 그 자리에 새로 후보로 삽입
+				if(pfm.getBookingRate() >= topFive.get(i).getBookingRate()) {
+					topFive.add(i, pfm);
+					break;
+				}
+			}
+
+			// 첫 번째 요소인 경우 무조건 삽입
+			if(topFive.size() == 0) {
+				topFive.add(pfm);
+			}
+
+		}
+
+		// 5개 이상인 경우 5번째까지 자름
+		if(topFive.size() > 5) {
+			topFive.subList(0, 5);
+		}
+
+		return topFive;
+	}
 }
