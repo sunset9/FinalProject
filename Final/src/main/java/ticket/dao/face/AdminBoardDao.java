@@ -129,6 +129,13 @@ public interface AdminBoardDao {
 	 */
 	public int deleteReplyInquiry(InquiryAnswer inqAnswer);
 
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의글 삭제
+	 * @작성자: 전해진
+	 */
+	public void deleteInquiry(Inquiry inquiry);
+
 }
 	
 	

@@ -563,5 +563,17 @@ public class AdminBoardController {
 		return "redirect:/admin/viewinquiry";
 	}
 	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 삭제
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/deleteInquiry", method = RequestMethod.GET)
+	public String deleteInquiry(Inquiry inquiry) {
+		adminBoardService.deleteInquiry(inquiry);
+		
+		return "redirect:/admin/viewinquiry";
+	}
+	
 	
 }

@@ -136,6 +136,12 @@
 		DELETE inquiry_answer
 		WHERE inq_idx = #{inqIdx }
 	</delete>
+	
+	<delete id="deleteInquiry" parameterType="ticket.dto.Inquiry">
+		DELETE inquiry
+		WHERE inq_idx = #{inqIdx }
+	</delete>
+
 
   </mapper>
   
