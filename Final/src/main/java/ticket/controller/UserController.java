@@ -351,10 +351,11 @@ public class UserController {
 		List<StateOfBook> sob = new ArrayList<>();
 
 		sob = userService.userTicket(user);
-
 		logger.info("" + sob);
-		
 		model.addAttribute("sob", sob);
+		
+		// 취소한 내역들 불러오기
+		sob = userService.cancelTicket(user);
 		
 		return "/mypage/myticket";
 	}
@@ -445,7 +446,11 @@ public class UserController {
 		
 	}
 	
-	
+	@RequestMapping( value="mypage/canceldetail", method= RequestMethod.GET)
+	public void cancelDetail () {
+		logger.info("취소 상세페이지");
+		
+	}
 	
 	
 

@@ -190,7 +190,12 @@ public interface UserService {
 	public List<SeatSection> getCancelSeat(String names);
 	
 
-
+	/**
+	 * @최종수정일: 2018.12.31
+	 * @Method설명: 완전 취소된 티켓 리스트 조회
+	 * @작성자:홍나영
+	 */
+	public List<StateOfBook> cancelTicket(User user);
 
 
 

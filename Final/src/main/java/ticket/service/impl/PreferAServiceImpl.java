@@ -26,8 +26,8 @@ public class PreferAServiceImpl implements PreferAService{
 	}
 
 	@Override
-	public List<Artist> search(String search) {
-		return preferADao.selectArtistBySearch(search);
+	public List<Artist> search(String name) {
+		return preferADao.selectArtistBySearch(name);
 	}
 
 	@Override
