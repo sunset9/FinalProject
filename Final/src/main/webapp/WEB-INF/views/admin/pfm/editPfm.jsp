@@ -20,7 +20,6 @@
 <!-- Include Editor style. -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
-
 <!-- Include external JS libs. -->
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
@@ -29,13 +28,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/js/froala_editor.pkgd.min.js"></script>
 
 <style>
-.registBox {
-	float: left;
-    width: 1000px;
-    position: absolute;
-    left: 230px;
-}
-
 #registForm {
 	margin: 0 auto;
 }
@@ -1352,7 +1344,7 @@ $(document).ready(function(){
 	
 	$('textarea').froalaEditor({
 		language: 'ko'
-		, width: '760' // 너비
+		, width: '800' // 너비
 		, heightMin : 400 // 초기화시 크기
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
 		// 툴바 버튼 목록
@@ -1422,7 +1414,7 @@ function setComma(inNum){
 }
 </script>
 
-<div class="registBox">
+<div class="contents-wrapper">
 <h1>공연 등록 페이지</h1>
 <hr>
 

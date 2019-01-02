@@ -327,7 +327,7 @@ public class MainServiceImpl implements MainService {
 		
 		// 10개 이상인 경우 10번째까지 자름
 		if(topTen.size() > 10) {
-			topTen.subList(0, 10);
+			topTen = topTen.subList(0, 10);
 		}
 		
 		return topTen;
@@ -430,16 +430,18 @@ public class MainServiceImpl implements MainService {
 				endDate = pfm.getTicketEnd();
 			}
 
-			// 3.1 해당 공연의 총 좌석 수 구하기
+			// 3.1 계산 구간에 예매한 좌석 수 구하기
+			int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
+			System.out.println(bookSeatCnt);
+			if(bookSeatCnt == 0) continue;
+			
+			// 3.2 해당 공연의 총 좌석 수 구하기
 			int totalSeatCnt = mainDao.selectCntAllSeatByHallIdx(pfm);
 			System.out.println(totalSeatCnt);
 
 			System.out.println(startDate);
 			System.out.println(endDate);
 
-			// 3.2 계산 구간에 예매한 좌석 수 구하기
-			int bookSeatCnt = mainDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
-			System.out.println(bookSeatCnt);
 
 			// 3.3 해당 공연의 공연 횟수 구하기 
 			int pfmDbtCnt = mainDao.selectPfmDbtCntByPfmIdx(pfm, startDate, endDate);
@@ -473,7 +475,7 @@ public class MainServiceImpl implements MainService {
 
 		// 5개 이상인 경우 5번째까지 자름
 		if(topFive.size() > 5) {
-			topFive.subList(0, 5);
+			topFive = topFive.subList(0, 5);
 		}
 
 		return topFive;
