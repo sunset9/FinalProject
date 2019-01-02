@@ -109,12 +109,13 @@ h1, h2, h3 {
 	display: block;
 	font-weight: bold;
 	padding-left: 0px;
+}
 
 .contents-wrapper{
  	float: left;
     width: 1000px;
     position: absolute;
-    left: 230px;
+    left: 260px;
 }
 
 </style>
