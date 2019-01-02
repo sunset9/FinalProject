@@ -114,15 +114,34 @@
 		    ON u.user_idx = e.userIdx
 	</select>
 	
-	<insert id="insertExpectation">
+	<insert id="insertExpectation" parameterType="String">
 		INSERT INTO expectation(exp_idx, pfm_idx, user_idx, exp_content)
 		VALUES (expectation_seq.nextval, #{pfmIdx}, #{userIdx}, #{expContent})
 	</insert>
 	
-	<delete id="deleteExpectation">
+	<delete id="deleteExpectation" parameterType="String">
 		DELETE FROM expectation
 		WHERE exp_idx = #{expIdx}
 	</delete>
+	
+	<select id="selectExpRecommList" resultType="ticket.dto.ExpectRecomm">
+		SELECT err.* FROM (
+		    SELECT
+		        er.e_recomm_idx as eRecommIdx
+		        , er.exp_idx as expIdx
+		        , er.contents
+		        , er.create_date as createDate
+		    FROM expect_recomm er
+		    JOIN expectation e
+		    ON e.exp_idx = er.exp_idx
+		    ORDER BY er.create_date DESC
+		)err
+	</select>
+	
+	<insert id="insertExpectRecomm" parameterType="String">
+		INSERT INTO expect_recomm (e_recomm_idx, exp_idx, user_idx, contents)
+		VALUES(expect_recomm_seq.nextval, #{expIdx}, #{userIdx}, #{contents})
+	</insert>
 	
 	<!-- 관람 후기 -->
 	<select id="selectReviewList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Review">

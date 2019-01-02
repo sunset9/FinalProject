@@ -126,5 +126,10 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 		// 공연플래너 추가해준 후 true 반환해주기
 		return true;
 	}
+
+	@Override
+	public void getInExpectRecomm(String userIdx, String expIdx, String contents) {
+		mDetailDao.insertExpectRecomm(userIdx, expIdx, contents);
+	}
 	
 }

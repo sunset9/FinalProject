@@ -156,4 +156,6 @@ public interface PfmDetailService {
 	 */
 	public boolean mychoiceInsert(String userIdx, String pfmIdx);
 
+	public void getInExpectRecomm(String userIdx, String expIdx, String contents);
+
 }

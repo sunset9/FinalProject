@@ -322,7 +322,7 @@
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
-                ORDER BY pfm_start desc
+                ORDER BY pfm_start
     		) p
 		)pp
         LEFT JOIN poster_info po
