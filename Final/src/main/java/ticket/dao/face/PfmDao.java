@@ -365,6 +365,13 @@ public interface PfmDao {
 	public void deleteMainBanner(int mainbanIdx);
 	
 	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: tabIdx를 이용해서 탭 배너 삭제하기 
+	 * @작성자: 김지은
+	 */
+	public void deleteTabBanner(int tabIdx);
+	
+	/**
 	 * @최종수정일: 2018.12.20
 	 * @Method설명: New 탭배너 목록 가져오기
 	 * @작성자: 김지은
@@ -431,6 +438,13 @@ public interface PfmDao {
 	public void insertMainBanner(MainBanner mainBanner);
 	
 	/**
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: 탭배너 등록하기
+	 * @작성자: 김지은
+	 */
+	public void insertTBanner(Map<String, String> tabInfo);
+	
+	/**
 	 * @최종수정일: 2018.12.28
 	 * @Method설명: pfmIdx로 메인 배너 중복 확인하기 
 	 * @작성자: 김지은
@@ -438,18 +452,11 @@ public interface PfmDao {
 	public int selectPfmIdxDup(int pfmIdx);
 	
 	/**
-	 * @최종수정일: 2018.12.28
-	 * @Method설명: 페이징된 콘서트 목록 가져오기
+	 * @최종수정일: 2019.01.01
+	 * @Method설명: pfmIdx로 탭배너 중복 확인하기
 	 * @작성자: 김지은
 	 */
-	public List<Performance> selectAllConPfm(Paging paging);
-	
-	/**
-	 * @최종수정일: 2018.12.28
-	 * @Method설명: 페이징된 뮤지컬 목록 가져오기
-	 * @작성자: 김지은
-	 */
-	public List<Performance> selectAllMuPfm(Paging paging);
+	public int selectTabbanDup(Map<String, Integer> tabInfo);
 	
 	/**
 	 * @최종수정일: 2018.12.28
@@ -457,6 +464,23 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public List<Performance> selectAllPfmList(Paging paging);
+	public List<Performance> selectPfmListAlpha(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징된 콘서트 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectAllConPfm(Paging paging);
+	public List<Performance> selectConPfmListAlpha(Paging paging);
+	
+	/**
+	 * @최종수정일: 2018.12.28
+	 * @Method설명: 페이징된 뮤지컬 목록 가져오기
+	 * @작성자: 김지은
+	 */
+	public List<Performance> selectAllMuPfm(Paging paging);
+	public List<Performance> selectMuPfmListAlpha(Paging paging);
 	
 	/**
 	 * @최종수정일: 2018.12.29
@@ -480,7 +504,7 @@ public interface PfmDao {
 	 * @Method설명: 정렬 종류별 공연 목록 가져오기
 	 * @작성자: 김지은
 	 */
-	public List<Performance> selectNewestPfmList();
+	public List<Performance> selectNewestPfmList(String mbPfmSearch);
 	public List<Performance> selectAlpahPfmList();
 	
 }

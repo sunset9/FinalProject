@@ -77,7 +77,7 @@ h1, h2, h3 {
 		<li>메인 배너 관리
 			<ul>
 				<li><a href="/admin/mainbannerlist">메인배너</a></li>
-				<li><a href="/admin/tabBannerList">탭 배너</a></li>
+				<li><a href="/admin/tabBannerList#1">탭 배너</a></li>
 			</ul>
 		</li>
 		<li>카테고리 배너 관리
