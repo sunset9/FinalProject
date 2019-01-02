@@ -414,7 +414,7 @@ public class MainServiceImpl implements MainService {
 		else if("FAM".equals(genreStr)) genre = 3;
 
 		List<Performance> pfmList = mainDao.selectPfmListByPeriodNGenre(startStr, endStr, genre);
-
+		System.out.println(pfmList.size());
 		// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
 		for(Performance pfm : pfmList) {
 			// 조회 범위 초기화

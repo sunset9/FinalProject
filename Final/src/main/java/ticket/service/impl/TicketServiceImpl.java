@@ -17,6 +17,7 @@ import ticket.dto.Seat;
 import ticket.dto.SeatSection;
 import ticket.dto.Shipment;
 import ticket.dto.User;
+import ticket.dto.NumBookedSeat;
 import ticket.service.face.TicketService;
 
 @Service
@@ -129,6 +130,17 @@ public class TicketServiceImpl implements TicketService {
 		
 		ticketDao.insertShipment(shipment);
 		
+	}
+
+	@Override
+	public List<NumBookedSeat> countBookedSeats(Performance pfm, int bookCateIdx, int pfmDbtIdx) {
+		return ticketDao.selectCntBookedSeats(pfm,bookCateIdx,pfmDbtIdx);
+	}
+
+	@Override
+	public List<NumBookedSeat> countAllSeats(Performance pfm) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectCntAllSeats(pfm);
 	}
 	
 	
