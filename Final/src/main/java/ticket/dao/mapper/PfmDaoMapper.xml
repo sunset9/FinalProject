@@ -582,6 +582,11 @@
 		WHERE pfm_idx = #{value}
 	</select>
 	
+	<select id="selectTabbanDup" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*) FROM tab_banner
+        WHERE pfm_idx = #{pfmIdx} AND tab_genre = #{tabGenre}
+	</select>
+	
 	<select id="selectAllPfmList" parameterType="ticket.utils.Paging" resultMap="Performance">
 		SELECT * FROM (
 			SELECT ROWNUM no, PP.* FROM 
@@ -589,7 +594,6 @@
 			FROM performance p JOIN poster_info pi
 			ON p.pfm_idx = pi.pfm_idx JOIN hall h
 			ON p.hall_idx = h.hall_idx
-			WHERE to_char( p.create_date, 'yyyymmdd' ) = to_char( sysdate, 'yyyymmdd')
 			<if test= "search != null">
 				AND p.name LIKE '%' || #{search} || '%'
 			</if>
@@ -632,10 +636,11 @@
 	
 
 	<select id="selectPfmByPfmIdx" parameterType="int" resultMap="Performance">
-		SELECT p.*, h.hall_name
+		SELECT p.*, h.hall_name, pi.stored_name
 		FROM performance p JOIN hall h
-		ON p.hall_idx = h.hall_idx
-		WHERE pfm_idx = #{value}
+		ON p.hall_idx = h.hall_idx JOIN poster_info pi
+		ON p.pfm_idx = pi.pfm_idx
+		WHERE p.pfm_idx = #{value}
   </select>
 
 	<select id="selectPfmDbtCntByPfmIdx" resultType="int">
@@ -644,11 +649,14 @@
 			AND pfm_date BETWEEN #{startDate } AND #{endDate }
 	</select>
 	
-	<select id="selectNewestPfmList" resultMap="Performance">
+	<select id="selectNewestPfmList" resultMap="Performance" parameterType="String">
 		SELECT p.*, h.hall_name, pi.stored_name
 		FROM performance p JOIN hall h
 		ON p.hall_idx = h.hall_idx JOIN poster_info pi
         ON p.pfm_idx = pi.pfm_idx
+        <if test= "value != null">
+				AND p.name LIKE '%' || #{search} || '%'
+		</if>
 		ORDER BY p.create_date DESC
 	</select>
 	
@@ -660,5 +668,60 @@
 		ORDER BY p.name
 	</select>
 	
+	<delete id="deleteTabBanner" parameterType="int">
+		DELETE tab_banner
+		WHERE tab_idx = #{value}
+	</delete>
 	
+	<insert id="insertTBanner" parameterType="hashmap">
+		INSERT INTO tab_banner 
+        VALUES(tab_banner_seq.nextval, #{pfmIdx}, #{tabGenre}, #{bannerPath}, sysdate)
+	</insert>
+	
+	<select id="selectPfmListAlpha" parameterType="ticket.utils.Paging" resultMap="Performance">
+		SELECT * FROM (
+			SELECT ROWNUM no, PP.* FROM 
+			(SELECT p.*, pi.stored_name, h.hall_name
+			FROM performance p JOIN poster_info pi
+			ON p.pfm_idx = pi.pfm_idx JOIN hall h
+			ON p.hall_idx = h.hall_idx
+			<if test= "search != null">
+				AND p.name LIKE '%' || #{search} || '%'
+			</if>
+			ORDER BY p.name) PP
+			)
+		WHERE no BETWEEN #{startNo} AND #{endNo}
+	</select>
+	
+	<select id="selectConPfmListAlpha" parameterType="ticket.utils.Paging" resultMap="Performance">
+		SELECT * FROM (
+			SELECT ROWNUM no, PP.* FROM 
+			(SELECT p.*, pi.stored_name, h.hall_name
+			FROM performance p JOIN poster_info pi
+			ON p.pfm_idx = pi.pfm_idx JOIN hall h
+			ON p.hall_idx = h.hall_idx
+			WHERE p.genre_idx = 1
+			<if test= "search != null">
+				AND p.name LIKE '%' || #{search} || '%'
+			</if>
+			ORDER BY p.name) PP
+			)
+		WHERE no BETWEEN #{startNo} AND #{endNo}
+	</select>
+	
+	<select id="selectMuPfmListAlpha" parameterType="ticket.utils.Paging" resultMap="Performance">
+		SELECT * FROM (
+			SELECT ROWNUM no, PP.* FROM 
+			(SELECT p.*, pi.stored_name, h.hall_name
+			FROM performance p JOIN poster_info pi
+			ON p.pfm_idx = pi.pfm_idx JOIN hall h
+			ON p.hall_idx = h.hall_idx
+			WHERE p.genre_idx = 2
+			<if test= "search != null">
+				AND p.name LIKE '%' || #{search} || '%'
+			</if>
+			ORDER BY p.name) PP
+			)
+		WHERE no BETWEEN #{startNo} AND #{endNo}
+	</select>
 </mapper>
