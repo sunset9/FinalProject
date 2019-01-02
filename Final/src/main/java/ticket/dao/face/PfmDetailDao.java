@@ -172,5 +172,11 @@ public interface PfmDetailDao {
 			@Param(value="userIdx") String userIdx
 			, @Param(value="pfmIdx") String pfmIdx
 		);
+
+	public void insertExpectRecomm(
+			@Param(value="userIdx") String userIdx
+			, @Param(value="expIdx") String expIdx
+			, @Param(value="contents") String contents
+		);
 	
 }
