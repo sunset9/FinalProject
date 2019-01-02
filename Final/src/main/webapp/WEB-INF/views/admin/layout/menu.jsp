@@ -40,9 +40,9 @@
 
 .side {
 	float: left;
-	width : 200px;
-	height: -webkit-fill-available;
-	background: #e6eaf2;
+	width : 240px;
+	height: 2000px;
+	background: #e0e0e0;
 	margin-right: 20px;
 }
 
@@ -64,30 +64,83 @@ h1, h2, h3 {
 .pfmIdx>img{
  height: 150px;
 }
+
+
+.logo {    
+    width: 200px;
+    height: 83px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-left: 13px;
+}
+
+.menuUl {
+	list-style: none;
+}
+
+.menuUl li {
+	text-align: center;
+	padding-bottom: 5px;
+	font-size: 20px;
+	color: #333333;
+	font-weight: bold;
+}
+
+.menuUl li a{
+	color: #333333;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.menuUl li a:hover {
+	color: #333333;
+    font-weight: bold;
+    font-size: 21px;
+    text-decoration: none;
+}
+
+.menuUl li ul {
+	list-style: none;
+	display: none;
+}
+
+.dropdown:hover ul{
+	display: block;
+	font-weight: bold;
+	padding-left: 0px;
+
+.contents-wrapper{
+ 	float: left;
+    width: 1000px;
+    position: absolute;
+    left: 230px;
+}
+
 </style>
 </head>
 <body>
 <div class = "side">
-	<ul>
-		<li><a href="/ticket/ticketmain">메인으로</a></li>
+	<a href="/ticket/ticketmain"><img class="logo" src="/resources/image/bananalogo.png"/></a>
+	<ul class="menuUl">
 		<li><a href="/admin/main">관리자 홈</a></li>
 		<li><a href="/admin/userlist">회원 관리</a></li>
 		<li><a href="/admin/soblist">예매 현황</a></li>
 		<li><a href="/admin/managerpfm">공연 관리</a></li>
-		<li>메인 배너 관리
+		<li class="dropdown">메인 배너 관리
 			<ul>
 				<li><a href="/admin/mainbannerlist">메인배너</a></li>
 				<li><a href="/admin/tabBannerList#1">탭 배너</a></li>
 			</ul>
 		</li>
-		<li>카테고리 배너 관리
+		<li class="dropdown">카테고리 배너 관리
 			<ul>
 				<li><a href="/admin/registcatecon">콘서트</a></li>
 				<li><a href="/admin/registcatemu">뮤지컬&연극</a></li>
 				<li><a href="/admin/registcatefam">가족&아동</a></li>
 			</ul>
 		</li>
-		<li><a href="">1:1 문의</a></li>
+		<li><a href="/admin/viewinquiry">1:1 문의</a></li>
 		<li><a href="/admin/noticelist">공지사항</a></li>
 		<li><a href="/admin/faqlist">FAQ</a></li>
 		<li><a href="/admin/registhall">공연장등록</a></li>

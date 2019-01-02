@@ -366,11 +366,12 @@ $(document).ready(function(){
       
       /* 가나다순(정렬버튼) 클릭됐을 경우 */
       $('.alphabet').on('click', function() {
+    	  var mbPfmSearch = $('#mbPfmSearch').val();
     	  console.log('가나다순 정렬!');
     	  $.ajax({
      		 url : "/admin/setOrder", 
      		 method : "GET", 
-     		 data : {"order" : 1},
+     		 data : {"order" : 1, "mbPfmSearch" : mbPfmSearch},
      		 success : function(list){
      			$('.forEach').html(' ');     
      			list.forEach(function(pL){ 

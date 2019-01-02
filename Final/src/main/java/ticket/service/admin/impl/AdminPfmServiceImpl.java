@@ -436,6 +436,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return infoDao.selectBygenreIdx(2, null);
 	}
 
+	@Override
 	public void deletePfmImg(String src) {
 		// 파일경로
 		String filePath = context.getRealPath("upload/story") + "\\";

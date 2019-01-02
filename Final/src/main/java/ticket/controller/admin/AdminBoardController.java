@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
+import ticket.dto.Inquiry;
+import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
-import ticket.dto.NoticeFile;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.utils.Paging;
 
@@ -409,6 +413,167 @@ public class AdminBoardController {
 			
 	}
 	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 목록 보여주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/viewinquiry", method=RequestMethod.GET)
+	public String viewInquiry(
+			@RequestParam(defaultValue="1") int curPage
+			,Model model) {
+		// 페이징 정보
+		int inqTotCnt = adminBoardService.getCntInquiry();  
+		Paging paging = new Paging(inqTotCnt, curPage);
+		
+		// 리스트 가져오기
+		List<Inquiry> inqList = adminBoardService.getInquiryList(paging);
+		model.addAttribute("inqList", inqList);
+		
+		return "/admin/inquiry/viewInquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 목록 보여주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/detailinquiry", method=RequestMethod.GET)
+	public String viewInquiry(
+			Inquiry inqParam
+			,Model model) {
+		
+		// 상세내용 가져오기
+		Inquiry inquiry = adminBoardService.getInquiry(inqParam);
+		model.addAttribute("inq", inquiry);
+		
+		// 답변 가져오기
+		InquiryAnswer inqAns = adminBoardService.getInquiryAnswer(inqParam);
+		model.addAttribute("inqAns", inqAns);
+		
+		return "/admin/inquiry/detailInquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 글쓰기 화면 띄워주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/writeinquiry", method=RequestMethod.GET)
+	public String viewInquiry(){
+		return "/admin/inquiry/writeInquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 답변 수정하는 창 띄워주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/editreplyinquiry", method=RequestMethod.GET)
+	public String viewEditReplyInquiry(Inquiry inq
+			, Model model){
+		InquiryAnswer inqAns = adminBoardService.getInquiryAnswer(inq);
+		model.addAttribute("inqAns", inqAns);
+		
+		return "/admin/inquiry/editReplyInquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 답변 수정하기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/editreplyinquiry", method=RequestMethod.POST)
+	public String editReplyInquiry(
+			InquiryAnswer inqAns
+			, Model model){
+		
+		adminBoardService.editReplyInquiry(inqAns);
+		
+		return "redirect:/admin/detailinquiry?inqIdx=" + inqAns.getInqIdx();
+	}
+	
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변 화면 띄워주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/replyinquiry", method=RequestMethod.GET)
+	public String viewReplyInquiry(
+			Inquiry inq
+			, Model model) {
+		
+		// 답변 달려고 하는 글 정보 넘겨주기
+		model.addAttribute("inq", inq);
+		return "/admin/inquiry/replyInquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변하기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/admin/replyinquiry", method=RequestMethod.POST)
+	public String replyInquiry(InquiryAnswer inqAnswer) {
+		adminBoardService.replyInquiry(inqAnswer);
+		
+		return "redirect:/admin/viewinquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변 이미지 업로드 처리
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/uploadinqimg", method = RequestMethod.POST)
+	public void uploadInqImg(@RequestParam(name = "file") MultipartFile inqImgUpload,
+			HttpServletResponse response) {
+		Map<Object, Object> responseData = adminBoardService.uploadPfmImg(inqImgUpload);
+
+		String jsonResponseData = new Gson().toJson(responseData);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			response.getWriter().write(jsonResponseData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명:1:1 문의 답변 이미지 삭제 처리
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/deleteinqimg", method = RequestMethod.POST)
+	public @ResponseBody void deleteInqInfoImg(String src) {
+		adminBoardService.deletePfmImg(src);
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 글쓰기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/writeinquiry", method = RequestMethod.POST)
+	public String writeInquiry(Inquiry inquiry) {
+		adminBoardService.writeInquiry(inquiry);
+		
+		return "redirect:/admin/viewinquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 삭제
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/admin/deleteInquiry", method = RequestMethod.GET)
+	public String deleteInquiry(Inquiry inquiry) {
+		adminBoardService.deleteInquiry(inquiry);
+		
+		return "redirect:/admin/viewinquiry";
+	}
 	
 	
 }

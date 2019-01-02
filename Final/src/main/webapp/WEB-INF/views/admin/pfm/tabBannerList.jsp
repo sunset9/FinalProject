@@ -64,7 +64,7 @@ ul.tabs {
 	height: 32px; /*--Set height of tabs--*/
 	border-bottom: 1px solid #999;
 	border-left: 1px solid #999;
-	width: 100%;
+	width: 93%;
 	margin-top: 20px;
 }
 
@@ -117,7 +117,7 @@ ul.tabs li.active:hover {
 	float: left;
 	width: 80%;
 	position: absolute;
-	left: 230px;
+	left: 270px;
 }
 
 .newModal, .conModal, .muModal {
@@ -202,6 +202,18 @@ ul.tabs li.active:hover {
 
 .modal-footer {
 	text-align: center;
+}
+
+.finalSave {
+	position: absolute;
+    right: 135px;;
+    width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e27d24;
+    border: 1px solid #e27d24;
+    color: white;
+    font-weight: 700;
 }
 </style>
 <script type="text/javascript">

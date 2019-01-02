@@ -41,8 +41,8 @@ $(document).ready(function(){
 
 .mainBannerBox {
 	position: absolute;
-	left: 245px; 
-	top: 200px; 
+    left: 270px;
+    top: 190px;
 	width: 1090px;
 	display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
@@ -58,41 +58,64 @@ $(document).ready(function(){
     -webkit-box-sizing: content-box;
     box-sizing: content-box;		
 }
+
+.finalSave {
+    position: absolute;
+    right: 137px;
+    width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e27d24;
+    border: 1px solid #e27d24;
+    color: white;
+    font-weight: 700;
+}
+
+.maxP {
+    display: inline;
+    padding-left: 13px;
+    font-size: 17px;
+    position: absolute;
+    top: 116px;
+}
 </style>
 <body>
-<h3>배너관리 - 메인배너</h3>
-<hr>
-
-<p style="display: inline;">최대 5개 까지만 등록이 가능합니다.</p>
-
-
-<form action="/admin/mbfinalsave" method="post">
-	<button type="button" class="finalSave">최종저장</button><br>
-
-	<div class="mainBannerBox">
-		<c:forEach items="${mBannerList }" var="mb">
-			<div class="mainB">	
-				<input type="hidden" value="${mb.mainbanIdx}" name="pfmIdx" />
-				<div><img src="/resources/image/${mb.storedName }" style="width: 180px; height: 254px;"></div>
-				<div >${mb.name}</div>
-				<div><fmt:formatDate value="${mb.pfmStart }" pattern="yyyy.MM.dd" />
-				     ~ <fmt:formatDate value="${mb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-				    <div>${mb.hallName }</div> 
-				<div class="upDelBtn">
-					<input type="button" id="mbUpdate" onclick="mbEdit('${mb}');" value="수정" />
-					<input type="button" id="${mb.mainbanIdx}" class="mbDelete" value="삭제" />
+<div class="mainBannerWrap">
+	<h3>배너관리 - 메인배너</h3>
+	<hr>
+	
+	<p class="maxP" />최대 5개 까지만 등록이 가능합니다.</p>
+	<input type="button" class="finalSave" value="최종저장" />
+	
+	
+	<form action="/admin/mbfinalsave" method="post">
+	
+		<div class="mainBannerBox">
+			<c:forEach items="${mBannerList }" var="mb">
+				<div class="mainB">	
+					<input type="hidden" value="${mb.mainbanIdx}" name="pfmIdx" />
+					<div><img src="/resources/image/${mb.storedName }" style="width: 180px; height: 254px;"></div>
+					<div >${mb.name}</div>
+					<div><fmt:formatDate value="${mb.pfmStart }" pattern="yyyy.MM.dd" />
+					     ~ <fmt:formatDate value="${mb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
+					    <div>${mb.hallName }</div> 
+					<div class="upDelBtn">
+						<input type="button" id="mbUpdate" onclick="mbEdit('${mb}');" value="수정" />
+						<input type="button" id="${mb.mainbanIdx}" class="mbDelete" value="삭제" />
+					</div>
 				</div>
+			</c:forEach>
+			<div class="plusBox"> 
+				<c:if test="${fn:length(mBannerList) < 5 }">
+				<div class="plus">
+		 			<a href="/admin/registMainbanner"><input type="button" class="banRegistModalBtn" value="추가하기"></a>
+		 		</div>   
+				</c:if>
 			</div>
-		</c:forEach>
-		<div class="plusBox"> 
-			<c:if test="${fn:length(mBannerList) < 5 }">
-			<div class="plus">
-	 			<a href="/admin/registMainbanner"><input type="button" class="banRegistModalBtn" value="추가하기"></a>
-	 		</div>   
-			</c:if>
 		</div>
-	</div>
-</form>
+	</form>
+</div>
+
 
 </div>
 </body>
