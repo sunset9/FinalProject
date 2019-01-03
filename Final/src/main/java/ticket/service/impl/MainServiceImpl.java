@@ -162,17 +162,17 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Poster> getnewPoster() {
+	public List<Performance> getnewPoster() {
 		return mainDao.selectNewPfmList();
 	}
 
 	@Override
-	public List<Poster> getconPoster() {
+	public List<Performance> getconPoster() {
 		return mainDao.selectConTabList();
 	}
 
 	@Override
-	public List<Poster> getMuPoster() {
+	public List<Performance> getMuPoster() {
 		return mainDao.selectMuTabList();
 	}
 

@@ -100,21 +100,21 @@ public interface MainService {
 	 * @Method설명: 메인 - new 탭 공연  리스트
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getnewPoster();
+	public List<Performance> getnewPoster();
 
 	/**
 	 * 최종수정일: 2018.12.16
 	 * @Method설명: 메인 - 콘서트 탭 공연 리스트
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getconPoster();
+	public List<Performance> getconPoster();
 
 	/**
 	 * 최종수정일: 2018.12.16
 	 * @Method설명: 메인 - 뮤지컬&공연 탭 공연 리스트
 	 * @작성자: 배수연
 	 */
-	public List<Poster> getMuPoster();
+	public List<Performance> getMuPoster();
 
 	/**
 	 * 최종수정일: 2018.12.16

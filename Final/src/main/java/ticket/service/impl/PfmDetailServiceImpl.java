@@ -14,6 +14,8 @@ import ticket.dto.HallFile;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.dto.QNA;
+import ticket.dto.QNARecomm;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
 import ticket.dto.User;
@@ -60,8 +62,8 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
-	public boolean getDelExpRecomm(ExpectRecomm expRecomm) {
-		return mDetailDao.deleteExpRecomm(expRecomm);
+	public void getDelExpRecomm(String expIdx) {
+		mDetailDao.deleteExpRecomm(expIdx);
 	}
 
 	@Override
@@ -130,6 +132,21 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public void getInExpectRecomm(String userIdx, String expIdx, String contents) {
 		mDetailDao.insertExpectRecomm(userIdx, expIdx, contents);
+	}
+
+	@Override
+	public List<QNA> getQNAList(Performance pfm) {
+		return mDetailDao.selectQNAList(pfm);
+	}
+
+	@Override
+	public List<User> getQNAUserList(Performance pfm) {
+		return mDetailDao.selectQNAUserList(pfm);
+	}
+
+	@Override
+	public List<QNARecomm> getQNARecommList(Performance pfm) {
+		return mDetailDao.selectQNARecommList(pfm);
 	}
 	
 }
