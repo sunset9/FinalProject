@@ -12,6 +12,8 @@ import ticket.dto.HallFile;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.dto.QNA;
+import ticket.dto.QNARecomm;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
 import ticket.dto.User;
@@ -84,10 +86,10 @@ public interface PfmDetailDao {
 
 	/**
 	 * 최종수정일: 2018.12.05
-	 * @Method설명: 기대평 대댓글 삭제
+	 * @Method설명: 기대평 삭제시 달려있던 기대평 대댓글 삭제
 	 * @작성자: 배수연
 	 */
-	public boolean deleteExpRecomm(ExpectRecomm expRecomm);
+	public void deleteExpRecomm(String expIdx);
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -173,10 +175,26 @@ public interface PfmDetailDao {
 			, @Param(value="pfmIdx") String pfmIdx
 		);
 
+	/**
+	 * 최종수정일: 2019.01.02
+	 * @Method설명: 기대평 대댓글 리스트
+	 * @작성자: 배수연
+	 */
 	public void insertExpectRecomm(
 			@Param(value="userIdx") String userIdx
 			, @Param(value="expIdx") String expIdx
 			, @Param(value="contents") String contents
 		);
+
+	/**
+	 * 최종수정일: 2019.01.02
+	 * @Method설명: QNA 리스트
+	 * @작성자: 배수연
+	 */
+	public List<QNA> selectQNAList(Performance pfm);
+
+	public List<User> selectQNAUserList(Performance pfm);
+
+	public List<QNARecomm> selectQNARecommList(Performance pfm);
 	
 }

@@ -10,6 +10,8 @@ import ticket.dto.HallFile;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.dto.QNA;
+import ticket.dto.QNARecomm;
 import ticket.dto.Review;
 import ticket.dto.ReviewRecomm;
 import ticket.dto.User;
@@ -77,7 +79,7 @@ public interface PfmDetailService {
 	 * @Method설명: 기대평 대댓글 삭제
 	 * @작성자: 배수연
 	 */
-	public boolean getDelExpRecomm(ExpectRecomm expRecomm);
+	public void getDelExpRecomm(String expIdx);
 	
 	/**
 	 * 최종수정일: 2018.12.21
@@ -156,6 +158,22 @@ public interface PfmDetailService {
 	 */
 	public boolean mychoiceInsert(String userIdx, String pfmIdx);
 
+	/**
+	 * 최종수정일: 2019.01.02
+	 * @Method설명: 기대평 대댓글 리스트 출력
+	 * @작성자: 배수연
+	 */
 	public void getInExpectRecomm(String userIdx, String expIdx, String contents);
+
+	/**
+	 * 최종수정일: 2019.01.02
+	 * @Method설명: QNA 리스트 출력
+	 * @작성자: 배수연 
+	 */
+	public List<QNA> getQNAList(Performance pfm);
+
+	public List<User> getQNAUserList(Performance pfm);
+
+	public List<QNARecomm> getQNARecommList(Performance pfm);
 
 }

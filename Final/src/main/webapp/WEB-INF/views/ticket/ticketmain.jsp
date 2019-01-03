@@ -213,7 +213,7 @@ li.pfmInfo {
 /* 메인 하단 */
 .mainbottom {
 	width: 100%;
-/* 	display: inline; */
+/*  	display: inline; */
 }
 
 .ranking {

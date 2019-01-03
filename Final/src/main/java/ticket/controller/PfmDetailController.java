@@ -22,6 +22,8 @@ import ticket.dto.HallFile;
 import ticket.dto.Performance;
 import ticket.dto.PfmDetail;
 import ticket.dto.Poster;
+import ticket.dto.QNA;
+import ticket.dto.QNARecomm;
 import ticket.dto.Review;
 import ticket.dto.User;
 import ticket.service.face.PfmDetailService;
@@ -66,8 +68,8 @@ public class PfmDetailController {
 		model.addAttribute("expecUserList", expecUserList);
 
 		// 기대평 대댓글 리스트 출력하기
-		 List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
-		 model.addAttribute("expRecommList", expRecommList);
+		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		model.addAttribute("expRecommList", expRecommList);
 
 		// 관람후기 리스트 출력해주기
 		List<Review> reviewList = detailService.getReviewList(pfm);
@@ -84,6 +86,18 @@ public class PfmDetailController {
 		// 해당 공연장에 대한 이미지 출력해주기
 		HallFile hallImg = detailService.getHallImg(pfm);
 		model.addAttribute("hallImg", hallImg);
+		
+		// QNA 리스트
+		List<QNA> qnaList = detailService.getQNAList(pfm);
+		model.addAttribute("qnaList", qnaList);
+		
+		// QNA 작성자 리스트 
+		List<User> qnaUserList = detailService.getQNAUserList(pfm);
+		model.addAttribute("qnaUserList", qnaUserList);
+		
+		// QNA 대댓글 리스트
+		List<QNARecomm> qnaRecommList = detailService.getQNARecommList(pfm);
+		model.addAttribute("qnaRecommList", qnaRecommList);
 
 	}
 
@@ -112,6 +126,9 @@ public class PfmDetailController {
 		} else if (updel.equals("expDeleteBtn")) {
 			// 기대평 삭제
 			detailService.getDelExpectation(expIdx);
+			
+			// 기대평에 달려있던 대댓글도 삭제해준다.
+			detailService.getDelExpRecomm(expIdx);
 
 		}
 
@@ -122,10 +139,18 @@ public class PfmDetailController {
 		// 작성자 리스트 출력
 		List<User> expecUserList = detailService.getExpectationUserList(pfm);
 		map.put("expecUserList", expecUserList);
+		
+		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		map.put("expRecommList", expRecommList);
 
 		return map;
 	}
 	
+	/**
+	 * 최종수정일: 2019.01.03
+	 * @Method설명: 기대평 대댓글 리스트 출력
+	 * @작성자: 배수연
+	 */
 	@RequestMapping(value = "/pfmdetail/expectRecomm", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> expectRecomm(
 			String expIdx
@@ -144,6 +169,11 @@ public class PfmDetailController {
 		return map;
 	}
 
+	/**
+	 * 최종수정일: 2019.01.03
+	 * @Method설명: 관람후기 작성, 삭제
+	 * @작성자: 배수연
+	 */
 	@RequestMapping(value = "/pfmdetail/review", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> review(String reviewContent, String pfmIdx, String userIdx,
 			Performance pfm, String reviewStar, String reviewIdx, String updel) {

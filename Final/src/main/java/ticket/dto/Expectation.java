@@ -1,5 +1,7 @@
 package ticket.dto;
 
+import java.util.Date;
+
 import oracle.sql.DATE;
 
 // 기대평
@@ -8,12 +10,14 @@ public class Expectation {
 	private int pfmIdx;
 	private int userIdx;
 	private String expContent;
-	private DATE createDate;
+	private Date createDate;
+	private String profile; // 유저 프로필
+	private String nick; // 유저 닉네임
 
 	@Override
 	public String toString() {
 		return "Expectation [expIdx=" + expIdx + ", pfmIdx=" + pfmIdx + ", userIdx=" + userIdx + ", expContent="
-				+ expContent + ", createDate=" + createDate + "]";
+				+ expContent + ", createDate=" + createDate + ", profile=" + profile + ", nick=" + nick + "]";
 	}
 
 	public int getExpIdx() {
@@ -48,12 +52,28 @@ public class Expectation {
 		this.expContent = expContent;
 	}
 
-	public DATE getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(DATE createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 
 }

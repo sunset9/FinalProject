@@ -52,15 +52,15 @@ public class MainController {
 		
 		// 탭 배너
 		// tab-1 : NEW
-		List<Poster> newList = mainService.getnewPoster();
+		List<Performance> newList = mainService.getnewPoster();
 		model.addAttribute("newList", newList);
 		
 		// tab-2 : 콘서트
-		List<Poster> conList = mainService.getconPoster();
+		List<Performance> conList = mainService.getconPoster();
 		model.addAttribute("conList", conList);
 		
 		// tab-3 : 뮤지컬&공연
-		List<Poster> muList = mainService.getMuPoster();
+		List<Performance> muList = mainService.getMuPoster();
 		model.addAttribute("muList", muList);
 		
 		// 랭킹	
