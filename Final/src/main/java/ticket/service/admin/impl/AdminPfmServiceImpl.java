@@ -964,4 +964,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectMuPfmListAlpha(paging);
 	}
 
+	@Override
+	public int getLastMainbanIdx() {
+		// 가장 마지막 mainban_idx 가져오기
+		return pDao.selectLastMainbanIdx();
+	}
+
 }

@@ -65,50 +65,12 @@ h1, h2, h3 {
  height: 150px;
 }
 
-
 .logo {    
-    width: 200px;
-    height: 83px;
+    width: 170px;
+    height: 60px;
     margin-bottom: 20px;
     margin-top: 5px;
-    margin-left: 13px;
-}
-
-.menuUl {
-	list-style: none;
-}
-
-.menuUl li {
-	text-align: center;
-	padding-bottom: 5px;
-	font-size: 20px;
-	color: #333333;
-	font-weight: bold;
-}
-
-.menuUl li a{
-	color: #333333;
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: none;
-}
-
-.menuUl li a:hover {
-	color: #333333;
-    font-weight: bold;
-    font-size: 21px;
-    text-decoration: none;
-}
-
-.menuUl li ul {
-	list-style: none;
-	display: none;
-}
-
-.dropdown:hover ul{
-	display: block;
-	font-weight: bold;
-	padding-left: 0px;
+    margin-left: 26px;
 }
 
 .contents-wrapper{
@@ -118,27 +80,87 @@ h1, h2, h3 {
     left: 260px;
 }
 
+.dropdown {
+	position: relative;
+}
+
+.dropdown ul {
+	height: 0;
+	overflow: hidden;
+  	-webkit-transition: height linear .3s;
+    -moz-transition: height linear .3s;
+    -o-transition: height linear .3s;
+    transition: height linear .3s;
+    transition-duration: .3s;
+}
+
+.dropdown:hover ul {
+	height: 65px;
+}
+
+.dropdown2 ul {
+	height: 0;
+	overflow: hidden;
+  	-webkit-transition: height linear .3s;
+    -moz-transition: height linear .3s;
+    -o-transition: height linear .3s;
+    transition: height linear .3s;
+    transition-duration: .3s;
+}
+
+.dropdown2:hover ul {
+	height: 100px;  
+}
+
+.menuUl a{
+	text-decoration: none;
+	color: #333333;
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.menuUl a:hover{
+	color: #747475;
+}
+
+.dropdown, .dropdown2 {
+	color: #333333;
+}
+.dropdown:hover, .dropdown2:hover{
+	
+}
+
+.menuUl ul {
+	list-style: none;
+}
+
+.menuUl li {
+	font-size: 20px;
+	font-weight: 800;
+	margin-bottom: 7px;
+}
 </style>
 </head>
 <body>
 <div class = "side">
 	<a href="/ticket/ticketmain"><img class="logo" src="/resources/image/bananalogo.png"/></a>
-	<ul class="menuUl">
+	<div class="menuUl">
+	<ul>
 		<li><a href="/admin/main">관리자 홈</a></li>
 		<li><a href="/admin/userlist">회원 관리</a></li>
 		<li><a href="/admin/soblist">예매 현황</a></li>
 		<li><a href="/admin/managerpfm">공연 관리</a></li>
 		<li class="dropdown">메인 배너 관리
 			<ul>
-				<li><a href="/admin/mainbannerlist">메인배너</a></li>
-				<li><a href="/admin/tabBannerList#1">탭 배너</a></li>
+				<li><a href="/admin/mainbannerlist" style="font-size: 16px;">메인배너</a></li>
+				<li><a href="/admin/tabBannerList" style="font-size: 16px;">탭 배너</a></li>
 			</ul>
 		</li>
-		<li class="dropdown">카테고리 배너 관리
+		<li class="dropdown2">카테고리 배너 관리			
 			<ul>
-				<li><a href="/admin/registcatecon">콘서트</a></li>
-				<li><a href="/admin/registcatemu">뮤지컬&연극</a></li>
-				<li><a href="/admin/registcatefam">가족&아동</a></li>
+				<li><a href="/admin/registcatecon" style="font-size: 16px;">콘서트</a></li>
+				<li><a href="/admin/registcatemu" style="font-size: 16px;">뮤지컬&연극</a></li>
+				<li><a href="/admin/registcatefam" style="font-size: 16px;">가족&아동</a></li>
 			</ul>
 		</li>
 		<li><a href="/admin/viewinquiry">1:1 문의</a></li>
@@ -146,5 +168,6 @@ h1, h2, h3 {
 		<li><a href="/admin/faqlist">FAQ</a></li>
 		<li><a href="/admin/registhall">공연장등록</a></li>
 	</ul>
+	</div>
 </div>
 <div class = "main">

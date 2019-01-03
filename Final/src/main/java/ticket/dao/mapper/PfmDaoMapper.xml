@@ -724,4 +724,8 @@
 			)
 		WHERE no BETWEEN #{startNo} AND #{endNo}
 	</select>
+	
+	<select id="selectLastMainbanIdx" resultType="int">
+		SELECT MAX(mainban_idx) FROM main_banner
+	</select>
 </mapper>
