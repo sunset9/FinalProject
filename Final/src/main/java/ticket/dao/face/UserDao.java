@@ -260,4 +260,20 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public List<StateOfBook> selectCancelTicket(User user);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.03
+	 * @Method설명: 유저가 예매한 횟수 조회
+	 * @작성자:홍나영
+	 */
+	public int selectCntBook(int userIdx);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.03
+	 * @Method설명: 유저가 예매 취소한 횟수
+	 * @작성자:홍나영
+	 */
+	public int selectCntCancelBook(int userIdx);
 }
