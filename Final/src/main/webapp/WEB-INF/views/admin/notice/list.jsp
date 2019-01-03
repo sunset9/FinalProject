@@ -3,7 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="../layout/menu.jsp"/>
+<%-- <jsp:include page="../layout/menu.jsp"/> --%>
 
  
 <!-- 부트스트랩 -->
@@ -43,8 +43,6 @@ $(document).ready(function(){
 </script>
 
 
-<!-- <h1>리스트</h1> -->
-<hr>
 <!-- conta = container -->
 <div class="con">
 

@@ -108,28 +108,31 @@ href="${pageContext.request.contextPath}/resources/daumOpenEditor/css/editor.css
 				},
 				// 		이미지첨부, 파일 관련 추가 config 
 				attacher : {
-					image : {
+					image : {  //팝업창 사이즈 
 						features : {
 							left : 250,
 							top : 65,
 							width : 400,
 							height : 190,
 							scrollbars : 0
-						}, //팝업창 사이즈 
+						}, 
 						popPageUrl : '${pageContext.request.contextPath}/admin/imagepopup' //팝업창 주소
-					},
+					}, 
+						
+					
 				
-					file : {
+					file : {  //팝업창 사이즈 
 						features : {
 							left : 250,
 							top : 65,
 							width : 400,
 							height : 190,
 							scrollbars : 0
-						}, //팝업창 사이즈 
+						}, 
 						popPageUrl : '${pageContext.request.contextPath}/admin/filepopup' //팝업창 주소
 					}
-				}
+				},
+				capacity:{ maximum:10*1024*1024} // 파일 10메가 제한
 			},
 			size : {
 				contentWidth : 700
