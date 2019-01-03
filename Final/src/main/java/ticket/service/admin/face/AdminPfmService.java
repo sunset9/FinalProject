@@ -579,4 +579,11 @@ public interface AdminPfmService {
 	 */
 	public List<Performance> getNewestPfmList(String mbPfmSearch);
 	public List<Performance> getAlphaPfmList();
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 가장 마지막 mainban_idx 가져오기  
+	 * @작성자: 김지은
+	 */
+	public int getLastMainbanIdx();
 }
