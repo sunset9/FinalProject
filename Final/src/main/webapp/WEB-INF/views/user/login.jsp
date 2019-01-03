@@ -75,10 +75,23 @@
 #loginlogo{
 	margin-bottom: 30px;
 }
+.title{
+	width: 200px;
+	margin: 0 auto;
+}
 </style>
 
 <script type="text/javascript">
 $(document).ready(function() {
+// 	console.log("??"+'${mistake}');
+	// 아이디나 비밀번호가 틀렸을 때 session이 false 로 저장 되어서 
+	// 로그인 화면으로 redirect 되었을 때 뜨는 경고창
+// 	if(${mistake eq true }){
+// 		console.log("??"+'${mistake}');
+		
+// 		alert("아이디나 비밀번호가 잘못되었습니다.");
+// 	}
+	
 	
 	// 아이디랑 비밀번호가 있을 때만 로그인 처리 
 	$('#loginBtn').click(function() {
@@ -98,8 +111,14 @@ $(document).ready(function() {
 </script>
 
 <body>
+
+
 <div id = "loginFrom">
 	<div id = "loginlogo"><img style="width: 400px;" src="/resources/image/bananalogo.png"/></div>
+<div class ="title">
+	<img src="/resources/image/login.PNG" class ="title" >
+</div>
+<div>
 		<form action="/user/login" method="POST" id="loginForm">
 		  <div class="form-group">
 		    <div class="col-sm-10">
@@ -126,6 +145,7 @@ $(document).ready(function() {
 		    </div>
 		  </div>
 		</form>
+		</div>
 </div>
 
 

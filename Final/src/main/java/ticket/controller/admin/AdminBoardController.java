@@ -444,11 +444,11 @@ public class AdminBoardController {
 	
 	/**
 	 * @최종수정일: 2019.01.02
-	 * @Method설명: 1:1 목록 보여주기
+	 * @Method설명: 1:1 상세보기
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/admin/detailinquiry", method=RequestMethod.GET)
-	public String viewInquiry(
+	public String detailInquiry(
 			Inquiry inqParam
 			,Model model) {
 		
@@ -469,7 +469,7 @@ public class AdminBoardController {
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/admin/writeinquiry", method=RequestMethod.GET)
-	public String viewInquiry(){
+	public String writeInquiry(){
 		return "/admin/inquiry/writeInquiry";
 	}
 	

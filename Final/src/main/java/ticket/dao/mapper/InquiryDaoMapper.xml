@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="ticket.dao.face.InquiryDao">
+    
+    <resultMap type="ticket.dto.Inquiry" id="Inquiry">
+	 	<result column="inq_idx" property="inqIdx" />
+	 	<result column="user_idx" property="userIdx" />
+	 	<result column="title" property="title" />
+	 	<result column="contents" property="contents" />
+	 	<result column="reply_status" property="replyStatus" />
+	 	<result column="create_date" property="createDate" />  
+	 	<result column="name" property="userName" />  
+	 </resultMap>
+	 
+	<resultMap type="ticket.dto.InquiryAnswer" id="InquiryAnswer">
+	 	<result column="answer_idx" property="answerIdx" />
+	 	<result column="inq_idx" property="inqIdx" />
+	 	<result column="user_idx" property="userIdx" />
+	 	<result column="title" property="title" />
+	 	<result column="contents" property="contents" />
+	 	<result column="create_date" property="createDate" />  
+	 	<result column="name" property="userName" />  
+	 </resultMap>
+    
+    
+	<select id="selectCntAllInq" resultType="int">
+		SELECT COUNT(*) FROM inquiry
+	</select>
+
+	<select id="selectInquiryList" parameterType="ticket.utils.Paging" resultMap="Inquiry">
+		SELECT 
+			ii.*
+		FROM (
+    		SELECT ROWNUM as rnum, iq.* FROM (
+       			SELECT  i.*, u.name  FROM inquiry i
+                LEFT JOIN userinfo u
+                ON i.user_idx = u.user_idx
+                ORDER BY i.create_date desc
+    		) iq
+		) ii
+		WHERE rnum BETWEEN #{startNo } AND #{endNo }
+		ORDER BY rnum
+	</select>
+
+	<select id="selectInquiryByInqIdx" parameterType="ticket.dto.Inquiry" resultMap="Inquiry">
+		SELECT i.*, u.name FROM inquiry i
+		LEFT JOIN userinfo u
+        ON i.user_idx = u.user_idx
+		WHERE i.inq_idx = #{inqIdx }
+	</select>
+	
+	<insert id="insertInquiry" parameterType="ticket.dto.Inquiry">
+		INSERT INTO inquiry(inq_idx ,user_idx, title , contents, reply_status)
+		VALUES (inquiry_seq.nextval, #{userIdx }, #{title }, #{contents }, 0)
+	</insert>
+	
+	<insert id="insertReplyInquiry" parameterType="ticket.dto.InquiryAnswer">
+		INSERT INTO inquiry_answer( answer_idx ,inq_idx ,user_idx ,title ,contents)
+		VALUES (inquiry_answer_seq.nextval, #{inqIdx }, #{userIdx }, #{title }, #{contents })
+	</insert>
+
+	<update id="updateInqReplyStatus" parameterType="ticket.dto.InquiryAnswer">
+		UPDATE inquiry 
+		SET reply_status = 1
+		WHERE inq_idx = #{inqIdx }
+	</update>
+
+	<select id="selectInquiryAnswer" parameterType="ticket.dto.Inquiry" resultMap="InquiryAnswer">
+		SELECT ia.*, u.name
+		FROM inquiry_answer ia
+		LEFT JOIN userinfo u
+        ON ia.user_idx = u.user_idx
+		WHERE ia.inq_idx = #{inqIdx }
+	</select>
+	
+	<delete id="deleteReplyInquiry" parameterType="ticket.dto.InquiryAnswer">
+		DELETE inquiry_answer
+		WHERE inq_idx = #{inqIdx }
+	</delete>
+	
+	<delete id="deleteInquiry" parameterType="ticket.dto.Inquiry">
+		DELETE inquiry
+		WHERE inq_idx = #{inqIdx }
+	</delete>
+	
+    </mapper>
