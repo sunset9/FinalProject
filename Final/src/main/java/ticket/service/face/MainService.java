@@ -32,12 +32,6 @@ public interface MainService {
 	 */
 	public List<Performance> adminChoiceBannerFam();
 	
-	/**
-	 * 최종수정일: 2018.12.06
-	 * @Method설명: 공연 랭킹 출력 / 일간, 주간 / 예매율이 높은 TOP10
-	 * @작성자: 배수연
-	 */
-	public List getPfmRanking(Performance pfm);
 
 	/**
 	 * 최종수정일: 2018.12.11
@@ -83,8 +77,8 @@ public interface MainService {
 
 	/**
 	 * 최종수정일: 2018.12.29
-	 * @Method설명: 콘서트 - 인기순
-	 * @작성자: 전해진, 전해진
+	 * @Method설명: 콘서트 - 인기순(최근 30일 간)
+	 * @작성자: 전해진
 	 */
 	public List<Performance> getPopularityList(int genreIdx);
 
@@ -139,11 +133,11 @@ public interface MainService {
 
 	/**
 	 * @return 
-	 * @최종수정일: 2018.12.20
-	 * @Method설명: 공연 예매율 구하기
+	 * @최종수정일: 2019.01.06
+	 * @Method설명: 일간,주간에 따른 공연 예매율 구하기(top10)
 	 * @작성자: 전해진
 	 */
-	public List<Performance> getTopRank(String type);
+	public List<Performance> getTopRankByPeriod(String type);
 
 	/**
 	 * 최종수정일: 2018.12.26
@@ -217,7 +211,7 @@ public interface MainService {
 
 	/**
 	 * @최종수정일: 2018.12.29
-	 * @Method설명: 장르별 랭킹 가져오기(top5)
+	 * @Method설명: 장르별 랭킹 가져오기(top5)(최근 일주일간) 
 	 * @작성자: 전해진
 	 */
 	public List<Performance> getTopRankByGenre(String genre);

@@ -5,6 +5,9 @@
 	float: left;
 	width: 90px;
 } 
+#dailyInfo {
+	margin: 30px;
+}
 </style>
 
 <script>
@@ -24,6 +27,8 @@ $(document).ready(function(){
 			// 필터 기간 띄워주기
 			var strDate = getDateStringDaily(today);
 			$('#datePeriod').text(strDate);
+			// 집계 안내 메세지 띄워주기
+			$('#dailyInfo').show();
 			
 			type = 'daily';
 		
@@ -32,6 +37,8 @@ $(document).ready(function(){
 			// 필터 기간 띄워주기
 			var strDate = getDateStringWeekly(today);
 			$('#datePeriod').text(strDate);
+			// 집계 안내 메세지 감추기
+			$('#dailyInfo').hide();
 			
 			type = 'weekly';
 		}
@@ -97,11 +104,28 @@ function getDateString(date){
 function getDateStringDaily(date) {
 	var strDate = getDateString(date);
 	var hours = date.getHours();
+	var mins = date.getMinutes();
+	var strDaily;
 	
-	var strDaily = strDate
+	console.log(hours);
+	console.log(mins);
+	// 오전 10시 30분 이전이라면 전날로 조회
+	if(hours < 10 || (hours == 10 && mins <= 30)){
+		var yesterDay = new Date(date.getTime() - (1 * 24 * 60 * 60 * 1000));
+		hours = getDateString(yesterDay);
+		
+		strDaily = strDate
 	    + '00:00 ~'
-	    + ((hours < 10) ? '0' + hours : hours) + ':00'
-	    +' 현재';
+	    + '24:00';
+			
+	// 오전 10시 30분 이후인 경우
+	} else {
+		strDaily = strDate
+		    + '00:00 ~'
+		    + ((hours < 10) ? '0' + hours : hours) + ':00'
+		    +' 현재';
+	}
+	
 	
 	return strDaily;
 };
@@ -131,8 +155,10 @@ function viewRank(pfmList){
 		var tr = $('<tr>');
 		tr.append('<td>'+ (i+1) +'</td>'); // 순위
 		var mainInfo = $('<div>'); // 주요 정보(포스터, 이름)
-		mainInfo.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
-		mainInfo.append($('<p>'+ pfm.name +'</p>'));
+		var mainInfo_a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'" style="text-decoration:none">');
+		mainInfo_a.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
+		mainInfo_a.append($('<p>'+ pfm.name +'</p>'));
+		mainInfo.append(mainInfo_a);
 		
 		tr.append('<td>'+mainInfo.html()+'</td>');
 		
@@ -168,4 +194,12 @@ function viewRank(pfmList){
 <tbody>
 </tbody>
 </table>
+
+<div id="dailyInfo" style="display:none">
+<b>집계 대상</b>
+<ul>
+<li>당일 오전의 경우 판매비중이 낮기 때문에 오전 10시 30분 이전까지는 전일 24시간의 집계 현황을 알려드립니다.</li>
+</ul>
+</div>
+
 </div>

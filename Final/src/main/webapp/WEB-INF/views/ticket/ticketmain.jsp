@@ -47,6 +47,22 @@
 				, dataType: "JSON"
 				, success:function(d){
 					console.log(d);
+					
+					// 새로 그려주기
+					$('#rankList').html('');
+					
+					d.forEach(function(pfm){
+						var li = $('<li class="pfmInfo">');
+						var a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'">');
+						var span = $('<span class="thumImg">');
+						var img = $('<img class="rankPoster" src="/resources/image/'+pfm.posterName+'"/>');
+						var name = $('<strong>'+pfm.name+'</strong>');
+						
+						span.append(img).append('<br>').append(name);
+						li.append(a.append(span));
+						$('#rankList').append(li);
+					});
+					
 				}
 				, error:function() {
 					console.log('랭킹 가져오기 실패');
@@ -207,13 +223,15 @@ li.pfmInfo {
 .rankPoster {
 	width: 100px;
 	height: 140px;
-	
+}
+#rankList a {
+	text-decoration:none;
 }
 
 /* 메인 하단 */
 .mainbottom {
 	width: 100%;
-/*  	display: inline; */
+	display: flex;
 }
 
 .ranking {
