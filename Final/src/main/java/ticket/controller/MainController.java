@@ -1,7 +1,6 @@
 
 package ticket.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -294,12 +293,12 @@ public class MainController {
 	
 	/**
 	 * 최종수정일: 2019.01.01
-	 * @Method설명: 예매순 랭킹 반환(ajax 통신 용)
+	 * @Method설명: 랭킹 페이지 랭킹 반환(ajax 통신 용)
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value="/ticket/getrank", method=RequestMethod.GET)
 	public @ResponseBody List<Performance> getRank(String type) {
-		return mainService.getTopRank(type);
+		return mainService.getTopRankByPeriod(type);
 	}
 	
 	/**
