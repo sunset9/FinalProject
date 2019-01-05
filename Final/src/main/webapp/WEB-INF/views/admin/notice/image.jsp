@@ -85,7 +85,7 @@
 		$('.submit a').on('click', function(){
 
 			var form = $('#daumOpenEditorForm');	// form ID값
-			var fileName = $('.file input[type=file]').val(); // 파일명(절대경로명 또는 단일명)
+			var fileName = $('.file input[type=file]').val(); // 파일명(절대경로명 또는 단일명), 확장자 체크 위해
 			
 			form.ajaxSubmit({
 				type:'POST',

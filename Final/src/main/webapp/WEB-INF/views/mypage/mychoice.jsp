@@ -96,7 +96,7 @@ function pfmChoice(pfmIdx){
 <div id ="tabSec" style="border: 1px solid #CCC; ">
 	<a href='/mypage/myticket'><div class = "tabSec" id ="ticket">예매현황</div></a>
 	<a href='/mypage/mychoice'><div class = "tabSec" id ="choice">찜</div></a>
-	<a href='/mypage/myinquery'><div class = "tabSec" id ="inquiry">내 문의사항</div></a>
+	<a href='/mypage/viewinquiry'><div class = "tabSec" id ="inquiry">내 문의사항</div></a>
 </div>
 
 <!-- 선택한 아티스트 이름과 사진 보여주기 -->

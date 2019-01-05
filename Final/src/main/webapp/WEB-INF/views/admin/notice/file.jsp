@@ -87,17 +87,17 @@
 		$('.submit a').on('click', function(){
 			
 			var page = '${param.page}'; // 어디페이지에서 보냈는지 체크
-			var form = $('#daumOpenEditorForm');
+			var form = $('#daumOpenEditorForm');	// form ID값
 			
 			form.ajaxSubmit({
 				type:'POST',
 				url: '${pageContext.request.contextPath}/admin/singleUploadFileAjax',
 				dataType:'JSON', // 반환되는 데이터 타입
 				data:{'page':page},
-				beforeSubmit:function(){},
+				beforeSubmit:function(){}, // 확장자 체크 안하므로
 				success:function(fileInfo){
-					if(fileInfo.result==-1){
-						alert('5MB 초과');
+					if(fileInfo.result===-3){
+						alert('10MB 초과');
 						return false;
 					} else {
 						done(fileInfo);
@@ -160,7 +160,7 @@
 		</div>	
 		<div class="body">
 			<dl class="alert">
-		    	<dt>5MB이하만 가능합니다</dt>
+		    	<dt>10MB이하만 가능합니다</dt>
 		    	<dd>
 					<form id=daumOpenEditorForm encType="multipart/form-data" method="post" action="">
 					

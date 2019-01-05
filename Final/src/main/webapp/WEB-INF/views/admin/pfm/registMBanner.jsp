@@ -195,7 +195,8 @@ $(document).ready(function(){
 	  var pfmInfoCnt = 0;
 	  var thumbCnt = 0;
 	  var bannerCnt = 0;
-		
+	
+	  /* 모달에서 공연 선택했을 때 */
 	  $(document).on('click','.np', function(){
 		  console.log('클릭되었습니다.');
 		  var pfmIdx = $(this).attr('id');

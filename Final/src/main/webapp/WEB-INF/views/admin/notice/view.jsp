@@ -17,6 +17,31 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
+<style type="text/css">
+
+.preNext{
+	width:50px;
+}
+
+.preNextNum{
+	width:100px;
+}
+
+.preNextTitle{
+	width:100px;
+}
+.num{
+	width:10px;
+}
+.title{
+	width:70%;
+}
+.content{
+	width:90%;
+}
+
+</style>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#btnDelete").click(function(){
@@ -39,50 +64,36 @@ $(document).ready(function(){
 
 <table class="table table-striped table-hover">	
 	<tr>	
-		<td>${noticeView.noticeIdx }</td>
-		<td>${noticeView.noticeTitle }</td>	
+		<td id="num">${noticeView.noticeIdx }</td>
+		<td class="title">${noticeView.noticeTitle }</td>	
 		<td><fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
 	</tr>
 	<tr>
-		<td> ${noticeView.noticeContent }</td>
+		<td></td>
+		<td class="content"> ${noticeView.noticeContent }</td>
 	</tr>	
 </table>
 <hr>
 
 <hr>
 
-
-<!-- 이전글 -->
+<!-- prev(이전글 번호), prevTitle(이전글 제목), next(다음글 번호), nextTitle(다음글 번호) -->
+<!-- 이전글 --> 
 <table class="table table-striped table-hover" id="prewr">
 <tr>   
-	<td>이전글</td>   
-	<td>글번호 : ${preNoti.prev }</td> 
-	<td><a href="/admin/noticeView?noticeIdx=${preNoti.prev }"> ${preNoti.prevTitle }</a></td> 		
-<%-- 	<td><fmt:formatDate value="${preNoti.createDate }" pattern="yyyy-MM-dd"/> </td> --%>
+	<td class="preNext">이전글</td>   
+	<td class="preNextNum">${preNoti.prev }</td> 
+	<td class="preNextTitle"><a href="/admin/noticeview?noticeIdx=${preNoti.prev }"> ${preNoti.prevTitle }</a></td>
 </tr>
 </table>	
  
 <!-- 다음글 -->
 <table class="table table-striped table-hover" id="nextwr">
 <tr>   
-	<td>다음글</td>   
-	<td>글번호 : ${postNoti.next }</td> 
-	<td><a href="/admin/postNoti?noticeIdx=${postNoti.noticeIdx }"> ${postNoti.nextTitle }</a></td> 
-<%-- 	<td><fmt:formatDate value="${postNoti.createDate }" pattern="yyyy-MM-dd"/> </td></tr> --%>
+	<td class="preNext">다음글</td>   
+	<td class="preNextNum">${postNoti.next }</td> 
+	<td class="preNextTitle"><a href="/admin/noticeview?noticeIdx=${postNoti.next }"> ${postNoti.nextTitle }</a></td> 
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <a href="/admin/noticelist"><button class="btnList">목록</button></a>

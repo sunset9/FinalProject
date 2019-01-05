@@ -123,21 +123,21 @@ public interface MainDao {
 	 * @Method설명: 탭 - new 공연 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectNewPfmList();
+	public List<Performance> selectNewPfmList();
 
 	/**
 	 * 최종수정일: 2018.12.16
-	 * @Method설명: 메인 - 콘서트 탭 공연 리스트 출력 : sql문 확인 후 고치기
+	 * @Method설명: 메인 - 콘서트 탭 공연 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectConTabList();
+	public List<Performance> selectConTabList();
 
 	/**
 	 * 최종수정일: 2018.12.18
 	 * @Method설명: 메인 - 뮤지컬&연극 탭 공연 리스트 출력
 	 * @작성자: 배수연
 	 */
-	public List<Poster> selectMuTabList();
+	public List<Performance> selectMuTabList();
 
 	/**
 	 * 최종수정일: 2018.12.18

@@ -37,17 +37,22 @@
 	
 	<!-- 메인 배너 -->
 	<select id="selectMainbannerList" resultType="ticket.dto.MainBanner">
-		SELECT
-		    pfm_idx as pfmIdx
-		    , banner_img_ori as bannerImgOri
-		    , banner_img_str as bannerImgStr
-		    , thumb_img_ori as thumbImgOri
-		    , thumb_img_str as thumbImgStr
-		FROM main_banner
+		SELECT main.* FROM (
+		    SELECT
+		    	mb.pfm_idx as pfmIdx
+		    	, mb.banner_img_ori as bannerImgOri
+   			    , mb.banner_img_str as bannerImgStr
+   			    , mb.thumb_img_ori as thumbImgOri
+		        , mb.thumb_img_str as thumbImgStr
+		        , p.name
+		    FROM main_banner mb
+		    JOIN performance p
+		    ON mb.pfm_idx = p.pfm_idx
+		) main
 	</select>
 	
 	<!-- 탭 : NEW -->
-	<select id="selectNewPfmList" resultMap="Poster">
+	<select id="selectNewPfmList" resultMap="Performance">
 		SELECT * FROM(
 		    SELECT
 		        p.*
@@ -58,12 +63,11 @@
 		    JOIN poster_info pi
 		    ON p.pfm_idx = pi.pfm_idx
 		    WHERE tab_genre = 3
-		    ORDER BY p.create_date DESC
 		)
 	</select>
 	
 	<!-- 탭 : CONCERT -->
-	<select id="selectConTabList" resultMap="Poster">
+	<select id="selectConTabList" resultMap="Performance">
 		SELECT * FROM(
 		    SELECT
 		        p.*
@@ -74,12 +78,11 @@
 		    JOIN poster_info pi
 		    ON p.pfm_idx = pi.pfm_idx
 		    WHERE tab_genre = 1
-		    ORDER BY p.create_date DESC
 		)
 	</select>
 	
 	<!-- 탭 : MUSICAL -->
-	<select id="selectMuTabList" resultMap="Poster">
+	<select id="selectMuTabList" resultMap="Performance">
 		SELECT * FROM(
 		    SELECT
 		        p.*
@@ -90,7 +93,6 @@
 		    JOIN poster_info pi
 		    ON p.pfm_idx = pi.pfm_idx
 		    WHERE tab_genre = 2
-		    ORDER BY p.create_date DESC
 		)
 	</select>
 	

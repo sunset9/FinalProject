@@ -10,6 +10,45 @@
 .change {
 	font-weight: bold;
 }
+.info{
+	padding-right: 10px;
+	font-weight: bold;
+}
+td{
+	padding: 10px;
+}
+
+#userInfo{
+	width: 600px;
+	margin: 30px auto;
+	padding :30px;
+	border: 1px solid #CCC;
+	font-size: 1.3em;
+	
+}
+
+.modal-title{
+	font-weight: bolder;
+}
+
+.tip{
+	display: inline-block;
+
+}
+.title{
+	width: 300px;
+	margin: 0 auto;
+}
+.btnDiv{
+	text-align: center;
+	margin: 0 auto;
+}
+
+.btn-block{
+	margin: 30px auto;
+	height: 40px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -163,7 +202,9 @@ $("#nickCheck").click(function() {
 			passRule();
 		});
 
-
+	$('#changeEnd').click(function() {
+		location.href="/mypage/myticket";
+	}); //click end
 	
 	
 
@@ -269,22 +310,40 @@ function DaumPostcode() {
 </script>
 
 
-
-<h1>회원 정보 수정</h1>
+<div class ="title">
+	<img src="/resources/image/change.PNG" class ="title" >
+</div>
 
 <div>
 <!-- 연락처, 주소, 닉네임 -->
 <div id="userInfo">
-닉네임 :<span id="oriNick"> ${user.nick }</span> <span id ="nickCh" class = "change" data-toggle="modal" data-target="#nickModal">변경</span> <br>
-비밀번호 <span id ="passCh" class = "change" data-toggle="modal" data-target="#passModal" >변경</span><br>
-연락처 : <span id="oriPhone">${user.phone }</span><span id ="phoneCh" class = "change" data-toggle="modal" data-target="#phoneModal">변경</span><br>
-주소  :  <span id="oriAddr">${user.addr }</span><span id ="addrCh" class = "change" data-toggle="modal" data-target="#addrModal">변경</span><br>
-</div>
+<table>
+	<tr>
+		<td class="info">닉네임</td>
+		<td><span id="oriNick"> ${user.nick }</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id ="nickCh" class="btn btn-default btn-xs change"  data-toggle="modal" data-target="#nickModal">변경</button></td>
+	</tr>
+	<tr>
+		<td class="info">비밀번호</td>
+		<td> <button id ="passCh" class="btn btn-default btn-xs change"  data-toggle="modal" data-target="#passModal" >변경</button></td>
+	</tr>
+	<tr>
+		<td class="info">연락처</td>
+		<td><span id="oriPhone">${user.phone }</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id ="phoneCh" class="btn btn-default btn-xs change"  data-toggle="modal" data-target="#phoneModal" >변경</button></td>
+	</tr>
+	<tr>
+		<td class="info">주소</td>
+		<td><span id="oriAddr">${user.addr }</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id ="addrCh" class="btn btn-default btn-xs change"  data-toggle="modal" data-target="#addrModal" >변경</button></td>
+	</tr>
+</table>
+
 
 </div>
 
+<div class ="btnDiv"><button style="width: 500px;" id="changeEnd" class="btn btn-warning btn-block" >변경완료</button></div>
+</div>
 
-<!--//////////////////////////////////////////////////////  -->
+
+<!--/////////////////////////////////모달 모달////////////////////////////////////////////////////  -->
 <!-- nick Modal -->
 <div class="modal fade" id="nickModal" tabindex="-1" role="dialog" aria-labelledby="nickModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -294,16 +353,16 @@ function DaumPostcode() {
         <h4 class="modal-title" id="nickModalLabel">닉네임 변경</h4>
       </div>
       <div class="modal-body">
-      	<form id="nickForm">
-      	닉네임 : <input type="text" id ="nick" name ="nick"/>
+      	<form id="nickForm" class ="form-inline">
+      	닉네임 : <input type="text" id ="nick" name ="nick" class="form-control"/>
+      	<button type="button" id ="nickCheck">중복확인</button>
       	<div id ="checkMsg2"></div>
       	<p>한글 및 영문, 숫자만 사용 가능하며, 최대 15자까지만 등록 가능합니다.</p>
-      	<button type="button" id ="nickCheck">중복확인</button>
       	</form>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer form-inline">
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-        <div data-toggle="tooltip" data-placement="left" title="닉네임 중복확인을 해주세요.">
+        <div class="tip" data-toggle="tooltip" data-placement="left" title="닉네임 중복확인을 해주세요.">
         <button type="button" id = "Nconfirm" class="btn btn-primary"  data-dismiss="modal" disabled="disabled" >변경하기</button></div>
       </div>
     </div>
@@ -324,18 +383,24 @@ function DaumPostcode() {
       
       	<form id="passForm">
       	<p>숫자와 문자를 포함 형태의 8~15자리 이내로 설정해주세요!</p>
-      	비빌번호 : <input type="password" id ="password" name ="password"/>
-      	<div id="passRule"></div></td>
       	
-      	비밀번호 확인 :<input type="password" id ="password2" name ="password2" onkeyup="checkPw()"/>
-      	<div id ="checkPW3"></div>
-      
-      	</form>
+      	<table>
+      	<tr>
+      		<td class ="info">비빌번호</td>
+      		<td><input type="password" class="form-control" id ="password" name ="password" /></td>
+      		<td><div id="passRule"></div></td>
+      	</tr>
+      	<tr>
+      		<td class ="info">비밀번호 확인</td>
+      		<td><input type="password"  class="form-control" id ="password2" name ="password2" onkeyup="checkPw()"/></td>
+      		<td><div id ="checkPW3"></div></td>
+      	</tr>
+      	</table>
       	
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer form-inline">
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-        <div data-toggle="tooltip" data-placement="left" title="비밀번호를 확인해주세요">
+        <div class="tip" data-toggle="tooltip" data-placement="left" title="비밀번호를 확인해주세요">
         <button type="button" id ="Pconfirm" class="btn btn-primary"  data-dismiss="modal" disabled="disabled" >변경하기</button></div>
       </div>
     </div>
@@ -354,13 +419,13 @@ function DaumPostcode() {
         <h4 class="modal-title" id="phoneModalLabel">연락처 변경</h4>
       </div>
       <div class="modal-body">
-      	<form id="phoneForm">
-      	전화번호 : <input type="text" id ="phone" name ="phone"/>
-      	<div id ="checkMsg2"></div>
-      	<p>숫자만 입력해주세요.</p>
+      	<form id="phoneForm" class ="form-inline">
+      		전화번호 : <input type="text" class="form-control" id ="phone" name ="phone"/>
+      		<div id ="checkMsg2"></div>
+      		<p>숫자만 입력해주세요.</p>
       	</form>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer form-inline">
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
         <button type="button" id = "Phconfirm" class="btn btn-primary"  data-dismiss="modal">변경하기</button></div>
       </div>
@@ -380,12 +445,27 @@ function DaumPostcode() {
       </div>
       <div class="modal-body">
       	<form id="addrForm">
-      	우편번호 : <input type="text" id ="postcode" name ="postcode"/> <button type ="button" class ="btn btn-default" onclick="DaumPostcode();">우편번호검색</button>
-      	주소 : <input type="text" id ="addr" name ="addr" />
-      	상세주소 : <input type="text" id ="addrDetail" name ="addrDetail"/>
+      	
+      	<table>
+      	<tr>
+      		<td class="info">우편번호</td>
+      		<td><input type="text" class="form-control" id ="postcode" name ="postcode"/></td>
+      		<td><button type ="button" class ="btn btn-default" onclick="DaumPostcode();">우편번호검색</button></td>
+      	</tr>
+      	<tr>
+      		<td class="info">주소</td>
+      		<td><input type="text" class="form-control" id ="addr" name ="addr" /></td>
+      	</tr>
+      	<tr>
+      		<td class="info">상세주소</td>
+      		<td><input type="text" class="form-control" id ="addrDetail" name ="addrDetail"/></td>
+      	</tr>
+      	</table>
+      	
+  
       	</form>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer form-inline">
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
         <div data-toggle="tooltip" data-placement="left" title="주소를 입력 해주세요.">
         <button type="button" id = "Aconfirm" class="btn btn-primary"  data-dismiss="modal" disabled="disabled" >변경하기</button></div>

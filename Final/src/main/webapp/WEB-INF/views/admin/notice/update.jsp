@@ -109,7 +109,8 @@ var config = {
 					}, //팝업창 사이즈 
 					popPageUrl : '${pageContext.request.contextPath}/admin/filepopup' //팝업창 주소
 				}
-			}
+			},
+			capacity: {maximum:10*1024*1024} // 파일 10메가 제한
 		}, // 팝업 끝
 		
 		size : {

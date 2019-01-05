@@ -1,14 +1,18 @@
 package ticket.controller;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,7 +28,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import ticket.dto.Artist;
+import ticket.dto.Inquiry;
+import ticket.dto.InquiryAnswer;
 import ticket.dto.MyChoice;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
@@ -35,11 +43,13 @@ import ticket.dto.Shipment;
 import ticket.dto.StateOfBook;
 import ticket.dto.Theme;
 import ticket.dto.User;
+import ticket.service.face.InquiryService;
 import ticket.service.face.MyChoiceService;
 import ticket.service.face.PreferAService;
 import ticket.service.face.PreferTService;
 import ticket.service.face.UserService;
 import ticket.utils.ChangeDate;
+import ticket.utils.Paging;
 
 @Controller
 public class UserController {
@@ -54,6 +64,9 @@ public class UserController {
 	private PreferAService preferAService;
 	@Autowired
 	private MyChoiceService myChoiceService;
+	@Autowired
+	private InquiryService inquiryService;
+	
 	// 메일 보내는 객체
 	@Autowired
 	private JavaMailSender mailSender;
@@ -137,13 +150,31 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
-	public String loginProc(User user, HttpSession session) {
+	public String loginProc(User user
+			, HttpSession session
+			, Model model) {
 		logger.info("로그인 처리");
 
 		// 아이디와 비밀번호 확인, 세션 처리
-		userService.loginCheck(user, session);
-
+		int userIdx = userService.loginCheck(user, session);
+		logger.info("userIdx : "+ userIdx);
+		
+		if(userIdx==0) {
+			return "redirect:/user/alert";
+		}
+		
 		return "redirect:/ticket/ticketmain";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.03
+	 * @Method설명: 비밀번호나 아이디 틀렸을 때 띄워줄 경고창
+	 * @작성자:홍나영
+	 */
+	@RequestMapping(value="/user/alert")
+	public void alert(Model model, String msg, String url) {
+		model.addAttribute("msg", "아이디나 비밀번호가 잘못되었습니다.");
+		model.addAttribute("url", "/user/login");
 	}
 
 	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
@@ -340,7 +371,8 @@ public class UserController {
 		logger.info("마이페이지 메인");
 		user = (User) session.getAttribute("loginUser");
 		logger.info("" + user);
-
+		
+		logger.info("------------------티켓정보------------------");
 		// 세션 존재 확인
 		if (user.getEmail() == null) {
 			// 세션 없으면 로그인 페이지로 보내기
@@ -358,6 +390,9 @@ public class UserController {
 		sob = userService.cancelTicket(user);
 		logger.info("모든 좌석이 취소된 예매 : "+sob);
 		model.addAttribute("csob", sob);
+
+		
+		
 		
 		return "/mypage/myticket";
 	}
@@ -458,6 +493,8 @@ public class UserController {
 
 	@RequestMapping(value = "/mypage/mychoice", method = RequestMethod.GET)
 	public String mychoice(Model model, HttpSession session) {
+		logger.info("-----유저가 선택한 공연 정보----");
+		
 		User user = (User) session.getAttribute("loginUser");
 		int userIdx = user.getUserIdx();
 
@@ -500,10 +537,111 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/mypage/myinquiry", method = RequestMethod.GET)
-	public void mypageInq(Model model, User user) {
-		logger.info("내 문의 상세보기");
+	@RequestMapping(value = "/mypage/viewinquiry", method = RequestMethod.GET)
+	public void viewInquiry(
+			@RequestParam(defaultValue="1") int curPage
+			,Model model) {
+		logger.info("내 문의 리스트 페이지 ");
 		
+		// 페이징 정보
+		int totalCnt  = inquiryService.getCntInquiry();
+		Paging paging = new Paging(totalCnt, curPage);
+		
+		// 리스트 가져오기 
+		List<Inquiry> inqList = inquiryService.getInqList(paging);
+		
+		model.addAttribute("inqList", inqList);
 		
 	}
+	
+	@RequestMapping(value = "/mypage/detailinquiry", method = RequestMethod.GET)
+	public void detailInquiry(
+			Inquiry inqParam
+			,Model model) {
+		logger.info("내 문의 상세보기 페이지 ");
+		
+		// 상세 내용 가져오기 
+		Inquiry inq = inquiryService.getInquiry(inqParam);
+		model.addAttribute("inq", inq);
+		
+		// 문의 사항에 달린 답변 조회
+		InquiryAnswer inqAns= inquiryService.getInquiryAnswer(inqParam);
+		model.addAttribute("inqAns", inqAns);
+		
+	}
+	
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 답변 화면 띄워주기
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value="/mypage/replyinquiry", method=RequestMethod.GET)
+	public String viewReplyInquiry(
+			Inquiry inq
+			, Model model) {
+		
+		// 답변 달려고 하는 글 정보 넘겨주기
+		model.addAttribute("inq", inq);
+		return "/mypage/inquiry/replyInquiry";
+	}
+	
+
+	@RequestMapping(value="/mypage/writeinquiry", method=RequestMethod.GET)
+	public void writeInquiry() {
+		logger.info("1:1문의사항 글쓰기");
+	}
+	
+	
+
+	@RequestMapping(value = "/mypage/writeinquiry", method = RequestMethod.POST)
+	public String writeInquiry(Inquiry inquiry) {
+		logger.info("문의글 쓴거 처리");
+		inquiryService.writeInquiry(inquiry);
+		
+		return "redirect:/mypage/viewinquiry";
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.02
+	 * @Method설명: 1:1 문의 삭제
+	 * @작성자: 전해진
+	 */
+	@RequestMapping(value = "/mypage/deleteInquiry", method = RequestMethod.GET)
+	public String deleteInquiry(Inquiry inquiry) {
+		inquiryService.deleteInquiry(inquiry);
+		
+		return "redirect:/mypage/viewinquiry";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/user/bookstate", method= RequestMethod.POST)
+	public void bookState(int userIdx , Writer out) {
+		
+		// 예매 횟수 조회
+		int book = userService.getBook(userIdx);
+		
+		// 취소 횟수 조회
+		int cancel = userService.getCancel(userIdx);
+		
+		try {
+			out.write("{\"book\":"+book+",\"cancel\":"+cancel+"}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+//		return "{"
+//				+ "\"book\":"+book
+//				+ ",\"cancel\":"+cancel
+//				+"}";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

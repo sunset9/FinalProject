@@ -14,6 +14,25 @@
 		<result column="img_uri" property="imgUri"/>	
 	</resultMap>
 	
+	<resultMap type="ticket.dto.Expectation" id="Expectation">
+		<result column="exp_idx" property="expIdx"/>
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="user_idx" property="userIdx"/>
+		<result column="exp_content" property="expContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="profile" property="profile"/>
+		<result column="nick" property="nick"/>	
+	</resultMap>
+	
+	<resultMap type="ticket.dto.ExpectRecomm" id="ExpectRecomm">
+		<result column="exp_idx" property="expIdx"/>
+		<result column="e_recomm_idx" property="eRecommIdx"/>
+		<result column="user_idx" property="userIdx"/>
+		<result column="contents" property="contents"/>
+		<result column="create_date" property="createDate"/>
+		<result column="nick" property="nick"/>	
+	</resultMap>
+	
 	<resultMap type="ticket.dto.PfmDetail" id="PfmDetail">
 		<result column="pfm_detail_idx" property="pfmDetailIdx"/>
 		<result column="pfm_idx" property="pfmIdx"/>
@@ -72,26 +91,22 @@
 	</select>
 	
 	<!-- 기대평 -->
-	<select id="selectExpectationList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Expectation">
-		SELECT
-		    e.expIdx
-		    , e.pfmIdx
-		    , e.userIdx
-		    , e.expContent
-		    , e.createDate
-		FROM(
+	<select id="selectExpectationList" parameterType="ticket.dto.Performance" resultMap="Expectation">
+		SELECT exp.* FROM (
 		    SELECT
-		        exp_idx as expIdx
-		        , pfm_idx as pfmIdx
-		        , user_idx as userIdx
-		        , exp_content as expContent
-		        , create_date as createDate
-		    FROM expectation
+		        e.exp_idx
+		        , e.pfm_idx
+		        , e.user_idx
+		        , e.exp_content
+		        , e.create_date
+		        , u.profile
+		        , u.nick
+		    FROM expectation e
+		    JOIN userinfo u
+		    ON u.user_idx = e.user_idx
 		    WHERE pfm_idx=#{pfmIdx}
-		    ORDER BY create_date DESC
-		) e
-		LEFT JOIN userinfo u
-		    ON u.user_idx = e.userIdx
+		    ORDER BY e.create_date DESC
+		) exp
 	</select>
 	
 	<select id="selectExpecUserList" parameterType="ticket.dto.Performance" resultType="ticket.dto.User">
@@ -99,6 +114,7 @@
 		    u.profile
 		    , u.name
 		    , u.email
+       		, u.nick
 		FROM(
 		    SELECT
 		        exp_idx as expIdx
@@ -124,16 +140,19 @@
 		WHERE exp_idx = #{expIdx}
 	</delete>
 	
-	<select id="selectExpRecommList" resultType="ticket.dto.ExpectRecomm">
+	<select id="selectExpRecommList" resultMap="ExpectRecomm">
 		SELECT err.* FROM (
 		    SELECT
-		        er.e_recomm_idx as eRecommIdx
-		        , er.exp_idx as expIdx
+		        er.e_recomm_idx
+		        , er.exp_idx
 		        , er.contents
-		        , er.create_date as createDate
+		        , er.create_date
+                , u.nick
 		    FROM expect_recomm er
 		    JOIN expectation e
 		    ON e.exp_idx = er.exp_idx
+            JOIN userinfo u
+            ON u.user_idx = e.user_idx
 		    ORDER BY er.create_date DESC
 		)err
 	</select>
@@ -142,6 +161,11 @@
 		INSERT INTO expect_recomm (e_recomm_idx, exp_idx, user_idx, contents)
 		VALUES(expect_recomm_seq.nextval, #{expIdx}, #{userIdx}, #{contents})
 	</insert>
+	
+	<delete id="deleteExpRecomm" parameterType="String">
+		DELETE FROM expect_recomm
+		WHERE exp_idx = #{expIdx}
+	</delete>
 	
 	<!-- 관람 후기 -->
 	<select id="selectReviewList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Review">
@@ -172,6 +196,7 @@
 		    u.profile
 		    , u.name
 		    , u.email
+        	, u.nick
 		FROM(
 		    SELECT
 		        review_idx as reviewIdx
@@ -226,4 +251,49 @@
 		VALUES(my_choice_seq.nextval, ${userIdx}, ${pfmIdx})
 	</insert>
 	
+	<select id="selectQNAList" parameterType="ticket.dto.Performance" resultType="ticket.dto.QNA">
+		SELECT qna.* FROM (
+		    SELECT 
+		        q.qna_idx as qnaIdx
+		        , q.pfm_idx as pfmIdx
+		        , q.user_idx as userIdx
+		        , q.qna_content as qnaContent
+		        , q.create_date as createDate
+		    FROM qna q
+		    JOIN userinfo u
+		    ON u.user_idx = q.user_idx
+		    WHERE pfm_idx = #{pfmIdx}
+		    ORDER BY createDate DESC
+		) qna
+	</select>
+	
+	<select id="selectQNAUserList" parameterType="ticket.dto.Performance" resultType="ticket.dto.User">
+		SELECT us.* FROM (
+		    SELECT
+		        u.user_idx as userIdx
+		        , u.profile
+		        , u.name
+    		    , u.nick
+		        , u.create_date as createDate
+		    FROM userinfo u
+		    JOIN qna q
+		    ON q.user_idx = u.user_idx
+		    WHERE pfm_idx = 3
+		    ORDER BY u.create_date DESC
+		) us
+	</select>
+	
+	<select id="selectQNARecommList" resultType="ticket.dto.QNARecomm">
+		SELECT
+		    qr.q_recomm_idx as qRecommIdx
+		    , qr.qna_idx as qnaIdx
+		    , qr.user_idx as userIdx
+		    , qr.contents
+		    , qr.create_date as createDate
+		FROM qna_recomm qr
+		JOIN qna q
+		ON qr.qna_idx = q.qna_idx
+		WHERE q.pfm_idx = #{pfmIdx}
+		ORDER BY qr.create_date DESC
+	</select>
 </mapper>

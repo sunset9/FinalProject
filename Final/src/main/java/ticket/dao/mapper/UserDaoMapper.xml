@@ -77,7 +77,7 @@
   </sql>
   
   	<select id="selectCntUser" parameterType="ticket.dto.User" resultType="int">
-		 SELECT user_idx FROM userinfo
+		 SELECT NVL(MAX(user_idx), 0)user_idx FROM userinfo
 		  where 1=1
 		  <if test = "email != null and email != ''">
 		  	AND email = #{email}
@@ -477,8 +477,63 @@
 
 	</select>
 	
+	<select id="selectCntBook" parameterType="int" resultType="int">
+	SELECT COUNT (*) book FROM (
+    SELECT TEST.*, COUNT(state) as ea FROM (
+            SELECT
+                trunc(b.create_date, 'dd') create_date, p.pfm_idx, p.name, p.pfm_start, p.pfm_end, b.book_group, trunc(b.cancel_date, 'dd') cancel_date,
+                bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time, b.imp_uid
+            FROM
+                book b 
+                JOIN performance p ON b.pfm_idx = p.pfm_idx
+                JOIN poster_info pi ON p.pfm_idx = pi.pfm_idx
+                JOIN hall h ON p.hall_idx = h.hall_idx
+                JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
+                JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
+            WHERE
+                b.user_idx = 1 AND B.book_cate_idx IN(2,3)
+        ) TEST
+		GROUP BY
+		    create_date, name, pfm_start, pfm_end, book_group, cancel_date,
+		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx, imp_uid
+		ORDER BY create_date)
 	
 	
+	</select>
+	
+	<select id="selectCntCancelBook" parameterType="int" resultType="int">
+	SELECT COUNT(*) cancel FROM (
+	SELECT TEST.*, COUNT(state) as ea FROM (
+            SELECT
+                trunc(b.create_date, 'dd') create_date, p.pfm_idx, p.name, p.pfm_start, p.pfm_end, b.book_group, 
+                bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time, b.imp_uid
+            FROM
+                book b 
+                JOIN performance p ON b.pfm_idx = p.pfm_idx
+                JOIN poster_info pi ON p.pfm_idx = pi.pfm_idx
+                JOIN hall h ON p.hall_idx = h.hall_idx
+                JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
+                JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
+            WHERE
+                b.user_idx = #{userIdx } 
+                AND b.book_group 
+                IN (
+                 select book_group
+                from (
+                    select distinct book_group, book_cate_idx
+                    from book
+                    where book_cate_idx IN (3,4,5)
+                    ) A
+                group by book_group
+                having count(book_cate_idx) = 1
+                )
+        ) TEST
+		GROUP BY
+		    create_date, name, pfm_start, pfm_end, book_group,
+		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx, imp_uid
+		ORDER BY create_date)
+	
+	</select>
 	
 	
   </mapper>
