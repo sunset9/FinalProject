@@ -16,85 +16,16 @@
 	margin-left: 10px;
 }
 
-
 .maintext {
 	margin-left: 10px;
 }
 
-.tap_menu {
-    margin:20px 0 0 0;
-}
-.top_menu, .tap_menu {
-	display: inline-block;
-}
-#top_searchh{
+/* .tap_menu ul { */
+/* 	list-style: none; */
+/* 	margin: 0; */
+/* 	padding: 0; */
+/* } */
 
-}
-.top_menu ul, .tap_menu ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.logo_text {
-	display: inline-block;
-}
-
-.top_menu ul>li, .tap_menu ul>li {
-	margin: 0 5px 0 0;
-	padding: 0 0 0 0;
-	border: 0;
-	float: left;
-}
-
-/* 마이페이지 드롭 박스 */
-.tap_menu{
-border:none;
-border:0px;
-margin:0px;
-padding:0px;
-}
-
-.tap_menu li a{
-display:block;
-font-weight:normal;
-line-height:50px;
-margin:0px;
-padding:0px 25px;
-text-align:center;
-text-decoration:none;
-}
-
-.tap_menu li ul{
-background-color: white;
-display:none;
-height:auto;
-padding:0px;
-margin:0px;
-border:0px;
-position:absolute;
-width:200px;
-z-index:200;
-}
-
-.tap_menu li:hover ul{
-display:block;
-}
-
-.tap_menu li li {
-display:block;
-float:none;
-margin:0px;
-padding:0px;
-width:200px;
-}
-
-.tap_menu li ul a{
-display:block;
-margin:0px;
-padding:0px 10px 0px 15px;
-text-align:left;
-}
 
 .main_wrapper{
 	width: 1160px;

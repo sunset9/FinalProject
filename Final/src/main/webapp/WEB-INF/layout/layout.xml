@@ -29,7 +29,7 @@
 		template="/WEB-INF/layout/layout.jsp">
 			
 		<put-attribute name="header"
-			value="/WEB-INF/layout/header.jsp" />
+			value="/WEB-INF/layout/new_header.jsp" />
 		<put-attribute name="body" />
 		<put-attribute name="footer"
 			value="/WEB-INF/layout/footer.jsp" />
