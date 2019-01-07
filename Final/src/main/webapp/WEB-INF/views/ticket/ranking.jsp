@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
+.sorting {
+    text-align: center;	
+}
+.dateTitle {
+    text-align: center;
+}
+.pfmRanking {
+    margin-top: 30px;
+}
+
 .pfmRanking img {
 	float: left;
 	width: 90px;
@@ -8,6 +18,19 @@
 #dailyInfo {
 	margin: 30px;
 }
+.ranking {
+    font-size: 44px;
+    padding: 20px 110px 0px 40px !important;
+    width: 20px;
+    color: #fdd508;
+}
+.pfmInfo p {
+	display: inline-block;
+    padding-top: 40px;
+    padding-left: 10px;
+}
+
+
 </style>
 
 <script>
@@ -153,14 +176,14 @@ function viewRank(pfmList){
 	for(var i=0; i<pfmList.length; i++){
 		var pfm = pfmList[i];
 		var tr = $('<tr>');
-		tr.append('<td>'+ (i+1) +'</td>'); // 순위
-		var mainInfo = $('<div>'); // 주요 정보(포스터, 이름)
+		tr.append('<td class="ranking">'+ (i+1) +'</td>'); // 순위
+		var mainInfo = $('<div class="pfmInfo">'); // 주요 정보(포스터, 이름)
 		var mainInfo_a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'" style="text-decoration:none">');
 		mainInfo_a.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
 		mainInfo_a.append($('<p>'+ pfm.name +'</p>'));
-		mainInfo.append(mainInfo_a);
+		mainInfo.append(mainInfo_a);	
 		
-		tr.append('<td>'+mainInfo.html()+'</td>');
+		tr.append($('<td>').append(mainInfo));
 		
 		tr.append('<td>'+getDateSimpleString(pfm.pfmStart)
 				+'<br>~ '+getDateSimpleString(pfm.pfmEnd)+'</td>'); // 공연 일정
