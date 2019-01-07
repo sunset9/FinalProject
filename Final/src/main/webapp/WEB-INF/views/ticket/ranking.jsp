@@ -4,30 +4,69 @@
 .sorting {
     text-align: center;	
 }
+
+.sorting button{
+    width: 90px;
+    height: 40px;
+    line-height: 30px;
+    color: #F2B134;
+    background: white;
+    border: 1px solid #eee;
+}
+.sorting .clicked {
+    color: white;
+    background: #F2B134;
+    border: 1px solid #eee;
+    font-weight: bold;
+}
+
 .dateTitle {
     text-align: center;
+    font-size: 18px;
+    margin-top: 23px;
+    color: #555;
 }
+.pfmRanking strong {
+	font-size: 28px;
+}
+
 .pfmRanking {
     margin-top: 30px;
 }
+.pfmRanking table{
+    margin-top: 30px;
+}
 
+.pfmRanking .table>thead>tr>th{
+    border-top: 2px solid #ddd !important;
+}
 .pfmRanking img {
 	float: left;
-	width: 90px;
+	width: 110px;
+	position: relative;
+	left: 35px;
 } 
 #dailyInfo {
 	margin: 30px;
 }
+
 .ranking {
-    font-size: 44px;
-    padding: 20px 110px 0px 40px !important;
-    width: 20px;
-    color: #fdd508;
+    font-size: 40px;
+    color: #555;
+}
+tbody tr:nth-child(-n+3)>.ranking {
+    color: #F2B134;
+}
+.pfmRanking th,td {
+    text-align: center;
+}
+.pfmRanking tbody td{
+    vertical-align: middle !important;
 }
 .pfmInfo p {
 	display: inline-block;
     padding-top: 40px;
-    padding-left: 10px;
+/*     padding-left: 10px; */
 }
 
 
@@ -41,12 +80,13 @@ $(document).ready(function(){
 	$('.sorting button').click(function(){
 		$('.sorting button').removeClass('clicked');
 		$(this).addClass('clicked');
-
+		
 		var today = new Date(); // 오늘 일자
 		var type; // 타입 (일간, 주간)
 		
 		// 일간 버튼 클릭 시
 		if($(this).attr('id') == 'dailySort'){
+			$('.pfmRanking strong').html('일간 TOP10');
 			// 필터 기간 띄워주기
 			var strDate = getDateStringDaily(today);
 			$('#datePeriod').text(strDate);
@@ -57,6 +97,7 @@ $(document).ready(function(){
 		
 		// 주간 버튼 클릭 시	
 		}else if($(this).attr('id') == 'weeklySort'){
+			$('.pfmRanking strong').html('주간 TOP10');
 			// 필터 기간 띄워주기
 			var strDate = getDateStringWeekly(today);
 			$('#datePeriod').text(strDate);
@@ -206,14 +247,15 @@ function viewRank(pfmList){
 <div class="dateTitle"><p id="datePeriod"></p></div>
 
 <div class="pfmRanking">
+<strong>주간 TOP10</strong>
 <table class="table">
 <thead>
 	<tr>
-		<th>랭킹</th>
-		<th>공연명</th>
-		<th>공연일시</th>
-		<th>공연장소</th>
-		<th>예매</th>
+		<th width="10%">랭킹</th>
+		<th width="20%">공연명</th>
+		<th width="15%">공연일시</th>
+		<th width="15%">공연장소</th>
+		<th width="15%">예매</th>
 	</tr>
 </thead>
 <tbody>

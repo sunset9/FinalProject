@@ -22,7 +22,14 @@ fieldset {border:0; line-height:0;}
 legend   {position:absolute; top:-7000px; left:-7000px; height:0; /* visibility:hidden */}
 a img {border:none;}
 img	  {border:none;line-height:0;font-size:0;}
-#header	{position:relative;width:100%; min-width:1048px; height:192px; z-index:20;}
+#header	{
+	position:relative;
+	width:100%; 
+	min-width:1048px; 
+	height:192px; 
+	z-index:20;
+    border-bottom: 1.5px solid #d4d4d4;
+    margin-bottom: 20px;}
 #header_wrap	{width:1008px;margin:0 auto;padding:0 228px 0 20px;}
 /*#header.more_lay		{background:url(//cdnimg.melon.co.kr/resource/image/web/common/bg_head02.png) repeat-x;} 140314_GNB수정 */
 #header_wrap	{width:1008px;margin:0 auto;padding:0 228px 0 20px;}
@@ -33,7 +40,6 @@ img	  {border:none;line-height:0;font-size:0;}
 #header_wrap.fold_on	{padding:0 20px;}
 #util_menu		{width:100%;height:30px;}
 
-#gnb {border:none;}
 #gnb h1	{float:left;line-height:0;}
 #gnb_menu {position:relative;height:55px;z-index:14;}
 #gnb_menu ul {width:819px;}/*170531 수정 kjh*/
@@ -98,26 +104,26 @@ img	  {border:none;line-height:0;font-size:0;}
 <div id="gnb" class="clear_g">
 <div id="util_menu">
 <div class="top_right ">
-						<ul class="clfix">
-							
-							<li class="first_child">
-							<a href="/admin/main" class="menu01 mlog" ><span>관리자</span></a>
-							</li>
-							<c:if test="${login }">
-							<li><a href="/user/logout" class="menu01 mlog"><span>로그아웃</span></a></li>
-							</c:if>
-							
-							<c:if test="${!login }">
-							<li><a href="/user/login" class="menu01 mlog"><span>로그인</span></a></li>
-							</c:if>
-							<c:if test="${!login }">
-							<li><a href="/user/join"class="menu01 mlog"><span>회원가입</span></a></li>
-							</c:if>
-							
-							<li><a href="#" class="menu01 mlog"><span>고객센터</span></a></li>
-							<li class="last_child"><a href="#" class="menu01 mlog"><span>이용안내</span></a></li>
-	
-						</ul>
+		<ul class="clfix">
+			
+			<li class="first_child">
+			<a href="/admin/main" class="menu01 mlog" ><span>관리자</span></a>
+			</li>
+			<c:if test="${login }">
+			<li><a href="/user/logout" class="menu01 mlog"><span>로그아웃</span></a></li>
+			</c:if>
+			
+			<c:if test="${!login }">
+			<li><a href="/user/login" class="menu01 mlog"><span>로그인</span></a></li>
+			</c:if>
+			<c:if test="${!login }">
+			<li><a href="/user/join"class="menu01 mlog"><span>회원가입</span></a></li>
+			</c:if>
+			
+			<li><a href="#" class="menu01 mlog"><span>고객센터</span></a></li>
+			<li class="last_child"><a href="#" class="menu01 mlog"><span>이용안내</span></a></li>
+
+		</ul>
 </div><!-- top_right -->
 </div><!-- util_menu -->
 <h1 id="logo">
