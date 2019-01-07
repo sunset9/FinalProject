@@ -263,6 +263,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 
+	@Override
+	public int getCntPreferArtist(int userIdx) {
+		return userDao.selectCntPreferArtist(userIdx);
+	}
+
+
 
 	
 	

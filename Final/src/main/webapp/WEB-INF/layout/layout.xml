@@ -13,7 +13,10 @@
 		<definition name="ticket/billing" template="/WEB-INF/views/ticket/billing.jsp"/>
 		<definition name="ticket/agreement" template="/WEB-INF/views/ticket/agreement.jsp"/>
 		
+		<definition name="utils/*" template="/WEB-INF/views/utils/{1}.jsp"/>
+		
 		<definition name="mypage/userinfo" template="/WEB-INF/views/mypage/userinfo.jsp"/>
+		<definition name="mypage/preferartist" template="/WEB-INF/views/mypage/preferartist.jsp"/>
 		<definition name="user/login" template="/WEB-INF/views/user/login.jsp"/>
 		<definition name="user/join" template="/WEB-INF/views/user/join.jsp"/>
 		<definition name="user/alert" template="/WEB-INF/views/user/alert.jsp"/>

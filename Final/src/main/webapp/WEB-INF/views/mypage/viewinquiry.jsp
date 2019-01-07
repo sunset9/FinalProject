@@ -19,7 +19,7 @@
 </style>
 <h1>내 문의사항 상세보기</h1>
 <hr>
-<div>
+<div class ="main_wrapper">
 <!-- 유저 정보 담고 있는 jsp -->
 <jsp:include page="userinfo.jsp" />
 </div>

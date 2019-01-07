@@ -214,6 +214,11 @@ public interface UserService {
 	public int getCancel(int userIdx);
 
 
-
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 유저가 선택한 아티스트 수 조회
+	 * @작성자:홍나영
+	 */
+	public int getCntPreferArtist(int userIdx);
 
 }

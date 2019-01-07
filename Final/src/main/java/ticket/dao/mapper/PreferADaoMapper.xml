@@ -70,12 +70,19 @@
   	WHERE user_idx = #{userIdx }
   </delete>
   
-  <select id="selectArtistByUserIdx" parameterType="int" resultMap="ArtistMap">
+  <select id="selectArtistByUserIdx" parameterType="hashmap" resultMap="ArtistMap">
     
-    SELECT * FROM artist A
-    INNER JOIN prefer_artist PA
-    ON A.artist_idx = PA.artist_idx
-    WHERE user_idx= #{userIdx }
+    SELECT * FROM (
+    SELECT rownum rnum, C.* FROM ( 
+        SELECT * FROM artist A
+        INNER JOIN prefer_artist PA
+        ON A.artist_idx = PA.artist_idx
+        WHERE user_idx= #{userIdx }
+        ORDER BY a.name 
+        ) C
+    ORDER BY rnum
+    )
+    WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
   
   </select>
   
