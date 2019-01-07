@@ -97,7 +97,7 @@ text-align:left;
 }
 
 .main_wrapper{
-	width: 1420px;
+	width: 1160px;
 	margin: 0 auto;
 }
 </style>
