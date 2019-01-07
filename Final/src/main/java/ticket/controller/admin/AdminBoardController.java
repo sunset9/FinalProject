@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import ticket.dto.Faq;
 import ticket.dto.Inquiry;
 import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
@@ -57,9 +58,7 @@ public class AdminBoardController {
 		
 		List<Notice> list = adminBoardService.getNotiList(paging);
 		model.addAttribute("noticelist", list);
-		
 
-		
 		return "/admin/notice/list";
 	}
 	
@@ -142,9 +141,9 @@ public class AdminBoardController {
 				return fileInfo;
 			}
 		
-			// 파일 크기 제한(1MB)
+			// 이미지 크기(용량) 제한(10MB)
 			long filesize = multipartFile.getSize();
-			long limitFileSize = 1*1024*1024;
+			long limitFileSize = 10*1024*1024;
 			if(limitFileSize < filesize){
 				fileInfo.put("result", -2);
 				return fileInfo;
@@ -279,7 +278,7 @@ public class AdminBoardController {
 
 	/**
 	 * 2018.12.12
-	 * @Method설명: 공지사항 글 수정 처리
+	 * @Method설명: 공지사항 글 수정 
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticeupdate", method=RequestMethod.GET)
@@ -328,14 +327,34 @@ public class AdminBoardController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/faqlist", method=RequestMethod.GET)
-	public String faqList(Model model) {
-		logger.info("faqlist");
+	public String faqList(Model model,
+			@RequestParam(required=false, defaultValue="0")int curPage,
+			@RequestParam(required=false, defaultValue="10")int listCount,
+			@RequestParam(required=false, defaultValue="10")int pageCount) {
+		
+
+		Paging paging = adminBoardService.getPaging(curPage, listCount, pageCount);
+		model.addAttribute("paging", paging);
+		
+		
+		List<Faq> list = adminBoardService.getFaqList(paging);
+		model.addAttribute("faqlist", list);
 
 		return "/admin/faq/list";
 		
 	}
 	
-
+	@RequestMapping(value="/admin/faqview", method=RequestMethod.GET)
+	public String faqView(Model model, int faqIdx) {
+		
+		Faq faqView = adminBoardService.getViewFaq(faqIdx);
+		
+		model.addAttribute("faqView", faqView);
+		
+		return "/admin/faq/view";
+		
+	}
+	
 	
 	/**
 	 * 2018.12.05
@@ -343,8 +362,9 @@ public class AdminBoardController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/faqwrite", method=RequestMethod.GET)
-	public void faqWrite() {
-		logger.info("FAQ 글 쓰기");
+	public String faqWrite() {
+		return "/admin/faq/write";
+		
 	}
 	
 	/**
@@ -353,29 +373,10 @@ public class AdminBoardController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/faqwrite", method=RequestMethod.POST)
-	public String faqWriteProc() {
-		return null;
+	public String faqWriteProc(Faq faq, HttpSession session, HttpServletRequest request) {
 		
-	}
-	
-	/**
-	 * 2018.12.05
-	 * @Method설명: FAQ 글에 달린 답변
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/faqanswer", method=RequestMethod.GET)
-	public void faqAnswer() {
-		
-	}
-	
-	/**
-	 * 2018.12.05
-	 * @Method설명: FAQ 글에 달린 답변 처리
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/faqanswer", method=RequestMethod.POST)
-	public String faqAnswerProc() {
-		return null;
+		adminBoardService.writeFaq(faq);
+		return "redirect:/admin/faqlist";
 		
 	}
 	
@@ -386,39 +387,33 @@ public class AdminBoardController {
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/faqupdate", method=RequestMethod.GET)
-	public void faqUpdate() {
+	public String faqUpdate(Faq faq, Model model) {
+		
+		faq = adminBoardService.faqUpdateView(faq);
+		
+		model.addAttribute("update", faq);
+		
+		return "/admin/faq/update";
 		
 	}
 	
-	/**
-	 * 2018.12.05
-	 * @Method설명: FAQ 글 수정 처리
-	 * @작성자: 조요한
-	 */
 	@RequestMapping(value="/admin/faqupdate", method=RequestMethod.POST)
-	public String faqUpdateProc() {
-		return null;
+	public String faqUpdateProc(Faq faq) {
+		adminBoardService.upFaq(faq);
+		return "redirect:/admin/faqlist";
 		
 	}
 	
-	/**
-	 * 2018.12.05
-	 * @Method설명: FAQ 글 삭제
-	 * @작성자: 조요한
-	 */
-	@RequestMapping(value="/admin/faqdelete", method=RequestMethod.GET)
-	public void faqDelete() {
-			
-	}
 	
 	/**
 	 * 2018.12.05
-	 * @Method설명: FAQ 글 삭제 처리
+	 * @Method설명: FAQ 글 삭제 
 	 * @작성자: 조요한
 	 */
-	@RequestMapping(value="/admin/faqdelete", method=RequestMethod.POST)
-	public String faqDeleteProc() {
-		return null;
+	@RequestMapping(value="/admin/faqdelete")
+	public String faqDeleteProc(Faq faq) {
+		adminBoardService.delFaq(faq);
+			return "redirect:/admin/faqlist";
 			
 	}
 	

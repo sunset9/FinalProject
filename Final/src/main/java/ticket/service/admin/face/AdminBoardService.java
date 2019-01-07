@@ -49,29 +49,30 @@ public interface AdminBoardService {
 	// 다음글
 	public Notice postNotiSer(int noticeIdx);
 	
+	// FAQ 글 리스트 가져오기
+	public List<Faq> getFaqList(Paging paging);
 	
-	
-	
+	// FAQ 게시글 전체 수
+	public int selectCountAllFaq();
 	
 	//현재 페이지 얻기
 	public int getCurPage(HttpServletRequest req);
 
 	
-	// FAQ 글 리스트
-	public List getFaqList(Faq faq);
+	// FAQ 상세보기
+	public Faq getViewFaq(int faqIdx);
 	
 	// FAQ 글 쓰기
-	public void writeFaq();
+	public void writeFaq(Faq faq);
 
 	// FAQ 글 수정
-	public void upFaq();
+	public Faq faqUpdateView(Faq faq);
+	public Faq upFaq(Faq faq);
 
 	// FAQ 글 삭제
-	public void delFaq();
-	
-	// FAQ 답변 쓰기
-	public void writeFaqAnswer();
+	public void delFaq(Faq faq);
 
+	
 	/**
 	 * @최종수정일: 2019.01.02
 	 * @Method설명: 1:1 문의 리스트  가져오기

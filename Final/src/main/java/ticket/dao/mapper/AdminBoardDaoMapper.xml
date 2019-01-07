@@ -18,9 +18,6 @@
   	<result column="prev_title" property="prevTitle" />  	
   	<result column="next" property="next" />
   	<result column="next_title" property="nextTitle" />
-
-  	
-  	
   </resultMap>
   
 	<resultMap type="ticket.dto.Inquiry" id="Inquiry">
@@ -42,7 +39,16 @@
 	 	<result column="create_date" property="createDate" />  
 	 	<result column="name" property="userName" />  
 	 </resultMap>
-
+	 
+	 <resultMap type="ticket.dto.Faq" id="Faq">
+	 	<result column="faq_idx" property="faqIdx"/>
+	 	<result column="f_type_idx" property="FTypeIdx"/>
+	 	<result column="faq_question" property="faqQuestion"/>
+	 	<result column="faq_answer" property="faqAnswer"/>
+	 	<result column="create_date" property="createDate"/>	 
+	 </resultMap>
+	 
+<!-- 	공지사항 전체 글 리스트 -->
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
   	select * from ( 
   		select rownum rnum, B.* from (
@@ -54,7 +60,7 @@
   	order by rnum
   </select>
   
-  
+<!--   이전글 -->
   <select id="preNoti" resultMap="notice">
 	select * from 
 	(select notice_idx
@@ -63,6 +69,7 @@
 	where notice_idx = #{notice_idx}
   </select>
   
+<!--   다음글 -->
   <select id="postNoti" resultMap="notice">
 	select * from 
 	(select notice_idx
@@ -72,33 +79,37 @@
   </select>
   
   
-  
+<!--   전체 게시글 조회 -->
   <select id="selectCntAll" resultType="int">
   	select count(*) cut from(
-  		select * from notice 
+  		select * from notice
   		
   	) cnt
   </select>
   
+<!--   공지사항 상세보기 -->
   <select id="selectNotiView" resultMap="notice">
   	select * from notice
   		where notice_idx = #{notice_idx}
   </select>
 
-
+<!-- 공지사항 글 쓰기 -->
   <insert id="insertNoti" parameterType="ticket.dto.Notice">
   	insert into notice (notice_idx,  n_type_idx, notice_title , notice_content) 
   			values (notice_seq.nextval, #{NTypeIdx}, #{noticeTitle} , #{noticeContent})
   </insert>
 
-	
+<!-- 	글번호로 게시글 조회 (수정 get) -->
   <select id="selectNoticeBynoticeIdx" resultMap="notice">
   	select * from notice
   		where notice_idx = #{noticeIdx}
   </select>
 	
   <update id="updateNoti" parameterType="ticket.dto.Notice">
-	  UPDATE notice set n_type_idx = #{NTypeIdx}, notice_title = #{noticeTitle}, notice_content = #{noticeContent} 
+	  UPDATE notice set 
+	  			 n_type_idx = #{NTypeIdx},
+	  			 notice_title = #{noticeTitle}, 
+	  			 notice_content = #{noticeContent} 
 	  where notice_idx = #{noticeIdx}
   </update>
 
@@ -167,6 +178,65 @@
 		DELETE inquiry
 		WHERE inq_idx = #{inqIdx }
 	</delete>
+
+
+<!-- 	FAQ 전체 글 리스트 -->
+	<select id="selectFaqList" resultMap="Faq" parameterType="ticket.utils.Paging">
+	 	select * from ( 
+  		select rownum rnum, B.* from (
+  			select * from faq order by faq_idx desc
+  		) B
+  		order by faq_idx desc
+  	) R
+  	where R.rnum between #{startNo} AND #{endNo}
+  	order by rnum
+	</select>
+
+
+<!-- FAQ 전체 게시글 조회 -->
+	<select id="selectCntAllFaq" resultType="int">
+		select count(*) cut from(
+	  		select * from faq  		
+	  	) cnt
+	</select>
+	
+	
+	
+<!-- FAQ 상세보기 (조회) -->
+<select id="faqView" resultMap="Faq"> 
+select * from faq 
+	where faq_idx = #{faq_idx}
+</select>
+
+<!-- FAQ 쓰기 -->
+<insert id="insertFaq" parameterType="ticket.dto.Faq">
+insert into faq ( faq_idx,  f_type_idx, faq_question, faq_answer)
+    values (faq_seq.nextval, #{FTypeIdx} ,#{faqQuestion}, #{faqAnswer})
+</insert>
+
+
+<!-- FAQ 수정 (FAQ조회, 수정 나중에 해당 부분 수정필요))-->
+<select id="selectFaqByfaqIdx" resultMap="Faq">
+	select * from faq
+		where faq_idx = #{faqIdx}
+</select>
+
+<update id="updateFaq" parameterType="ticket.dto.Faq">
+UPDATE faq set
+        f_type_idx = #{FTypeIdx},
+        faq_question = #{faqQuestion},
+        faq_answer = #{faqAnswer} 
+    where faq_idx = #{faqIdx}
+</update>
+        
+<!-- FAQ 삭제 -->
+<delete id="deleteFaq" parameterType="ticket.dto.Faq">
+	delete from faq	where faq_idx = #{faqIdx}
+</delete>
+
+
+
+
 
 
   </mapper>

@@ -151,38 +151,52 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 
 	
 	
+	// FAQ 전체 조회 리스트
+	@Override
+	public List<Faq> getFaqList(Paging paging) {
+		return adminBoardDao.selectFaqList(paging);
+	}
+
+	@Override
+	public int selectCountAllFaq() {
+		return adminBoardDao.selectCntAllFaq();
+	}
+
+
+	@Override
+	public Faq getViewFaq(int faqIdx) {
+		
+		return adminBoardDao.faqView(faqIdx);
+	}
+
+	@Override
+	public void writeFaq(Faq faq) {
+		adminBoardDao.insertFaq(faq);
+	}
+
+
+	@Override
+	public Faq faqUpdateView(Faq faq) {
+		return adminBoardDao.selectFaqByfaqIdx(faq);
+	}
+	@Override
+	public Faq upFaq(Faq faq) {
+		adminBoardDao.updateFaq(faq);
+		return faq;
+	}
+
+	@Override
+	public void delFaq(Faq faq) {
+		adminBoardDao.deleteFaq(faq);
+	}
+
+	
+
+
 	
 	
+	
 
-	@Override
-	public List getFaqList(Faq faq) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void writeFaq() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void upFaq() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delFaq() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void writeFaqAnswer() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	// 현재 페이지 얻기
 	@Override
@@ -298,7 +312,6 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		// 글 삭제
 		adminBoardDao.deleteInquiry(inquiry);
 	}
-
 
 	
 }

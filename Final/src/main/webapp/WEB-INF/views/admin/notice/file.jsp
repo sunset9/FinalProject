@@ -94,7 +94,7 @@
 				url: '${pageContext.request.contextPath}/admin/singleUploadFileAjax',
 				dataType:'JSON', // 반환되는 데이터 타입
 				data:{'page':page},
-				beforeSubmit:function(){}, // 확장자 체크 안하므로
+				beforeSubmit:function(){}, // 확장자 체크 안하므로 before값 X
 				success:function(fileInfo){
 					if(fileInfo.result===-3){
 						alert('10MB 초과');

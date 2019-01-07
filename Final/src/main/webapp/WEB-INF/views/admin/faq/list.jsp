@@ -31,8 +31,9 @@
     .f_question1>ul>li:nth-child(4){width:5%; }
     .f_q_link{width: 100%;height: 100%;position:absolute;top: 0;left: 0;}
     
-    .con{
+    .con {
     	display:inline-block;
+    	width:80%;
     }
     
 </style>
@@ -40,10 +41,8 @@
 
 <body>
 
-<h1> FAQ 임시 </h1>
+<h1> FAQ </h1>
 
-<hr>
-<!-- conta = container -->
 <div class="con">
 
 
@@ -63,16 +62,16 @@
 	</div>
 
 
-<div>
+<div class="faqCotent">
   
-	<c:forEach items="${noticelist }" var="noli">
+	<c:forEach items="${faqlist }" var="flist">
 	
 	    <ul class="fnq">
         <li class="f_question1">
             <ul class="clearfix">
-                <li>${noli.noticeIdx }</li>
-                <li>${noli.NTypeIdx }</li>
-                <li>${noli.noticeTitle }</li>
+                <li>${flist.faqIdx }</li>
+                <li>${flist.FTypeIdx }</li>
+                <li>${flist.faqQuestion }</li>
                 <li><i class="fa fa-angle-double-up"></i></li>
             </ul>
             
@@ -81,10 +80,10 @@
         <li class="f_answer1">
             <ul class="clearfix">
                 <li>번호 : 20 </li>
-                <li>${noli.noticeContent }</li>             
+                <li>${flist.faqAnswer }</li>             
             </ul>
-			<button class="btnUpdate" data-idx='${noli.noticeIdx }'>수정</button>
-			<button class="btnDelete" data-idx='${noli.noticeIdx }'>삭제</button>
+			<button class="btnUpdate" data-idx='${flist.faqIdx }'>수정</button>
+			<button class="btnDelete" data-idx='${flist.faqIdx }'>삭제</button>
         </li>
     </ul>
 	</c:forEach>
@@ -93,9 +92,9 @@
 </div>
 
 </div>
-<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
+<a href="/admin/faqwrite"><button> 글쓰기 </button></a>
 
-<jsp:include page="../../utils/noticepaging.jsp"/>
+<jsp:include page="../../utils/faqpaging.jsp"/>
 
 
 <script type="text/javascript">
@@ -124,10 +123,10 @@ $(function(){
 	    });	// 아코디언 끝
 	  
 		$(".btnUpdate").click(function(){
-			$(location).attr("href", "/admin/noticeupdate?noticeIdx="+$(this).attr("data-idx"));
+			$(location).attr("href", "/admin/faqupdate?faqIdx="+$(this).attr("data-idx"));
 		});
 		$(".btnDelete").click(function(){
-			$(location).attr("href", "/admin/noticedelete?noticeIdx="+$(this).attr("data-idx"));
+			$(location).attr("href", "/admin/faqdelete?faqIdx="+$(this).attr("data-idx"));
 		});
 		
 	     
