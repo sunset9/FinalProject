@@ -517,7 +517,7 @@ function openList(listName) {
 </script>
 <body>
 	<div class="tabbannerWrap">
-		<h3>배너관리 - 탭 배너</h3>
+		<h1>배너관리 - 탭 배너</h1>
 		<hr>
 
 		<p>최대 5개 까지만 등록이 가능합니다.</p>

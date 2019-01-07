@@ -21,7 +21,7 @@ th {
 </style>
 
 <div class="sobBox">
-<h3>예매현황</h3>
+<h1>예매현황</h1>
 <hr>
 <table class="table table-hover table-striped table-condensed">
 <colgroup>

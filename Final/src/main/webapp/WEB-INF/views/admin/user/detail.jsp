@@ -104,7 +104,7 @@ table.type03 td {
 </head>
 <body>
 <div style="display: flow-root;">
-<h3>회원 상세</h3>
+<h1>회원 상세</h1>
 <hr>
 
 <div>

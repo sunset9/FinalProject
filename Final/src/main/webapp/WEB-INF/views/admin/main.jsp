@@ -103,7 +103,7 @@ h2 {
 			<td><h2>${todayFamily}건</h2></td>
 		</tr>
 		<tr>
-			<td colspan="2"><h3 style="padding-bottom: 20px;">총 누적공연 : 1000건</h3></td>
+			<td colspan="2"><h3 style="padding-bottom: 20px;">총 누적공연 : ${totalPfmCnt}건</h3></td>
 		</tr>
 	</table>
 	</div>
