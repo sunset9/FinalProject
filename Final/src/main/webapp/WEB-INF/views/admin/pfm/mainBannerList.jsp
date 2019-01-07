@@ -100,6 +100,7 @@ $(document).ready(function(){
 <div class="mainBannerWrap">
 	<h1>배너관리 - 메인배너</h1>
 	<hr>
+	<div>mbannerList : ${mbannerList }</div>
 	
 	<p class="maxP" />최대 5개 까지만 등록이 가능합니다.</p>
 	<input type="button" class="finalSave" value="최종저장" />
@@ -127,7 +128,7 @@ $(document).ready(function(){
 				<div class="plus">
 		 			<a href="/admin/registMainbanner">
 		 				<input type="button" class="banRegistModalBtn" value="추가하기">
-		 				<input type="hidden" value="${lastMainbanIdx }" id="lastMainbanIdx"/>
+		 				<input type="hidden" value="${lastMainbanIdx }" id="lastMainbanIdx"  name="lastMainbanIdx"/>
 		 			</a>
 		 		</div>   
 				</c:if>
