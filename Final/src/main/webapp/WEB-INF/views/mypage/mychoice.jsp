@@ -48,7 +48,7 @@
 /* 화면 사용 범위 */
 
 .temp{
-	width: 75%;
+	width: 95%;
 	margin: 0 auto;
 	margin-bottom: 30px;
 	border-bottom: 1px solid #CCC;
@@ -65,20 +65,39 @@
 	border-left: 1px solid #CCC;
 	border-right: 1px solid #CCC;
 	color :#fcd303;
-	border-bottom: 3px solid #fcd303;
+	border-bottom: 3px solid #F2B134;
 }	
 
 /* 선택한 아티스트 목록 리스트	 */
 
 #selectedArt{
+	width: 800px;
+	border: 3px solid #fcd303;
+
 }
 	
 </style>
 
 <script type="text/javascript">
+function artList(curPage) {
+	// 페이징 처리 선호처리한 아티스트
+	$.ajax({
+		url:"/mypage/preferartist"
+		,data: {"curPage" : curPage}
+		, type:"POST"
+		, dataType:"HTML"
+		, success:function(data){
+			console.log("ajax 성공");
+			$('#selectedArt').html(data)
+			
+		} // end success
+	
+	}); // end ajax 
+}
+
 $(document).ready(function() {
 	
-	
+	artList(0);
 	
 	// 오늘 날짜 구하기
 	var today = new Date();
@@ -121,7 +140,7 @@ function pfmChoice(pfmIdx){
 
 </script>
 
-<h1>내가 찜한 공연</h1>
+<div class ="main_wrapper">
 <button onclick="location ='/mypage/prefer'">선호 수정하기</button>
 <hr>
 <div>
@@ -135,17 +154,22 @@ function pfmChoice(pfmIdx){
 	<a href='/mypage/viewinquiry'><div class = "tabSec" id ="inquiry">내 문의사항</div></a>
 </div>
 
+
+
 <!-- 선택한 아티스트 이름과 사진 보여주기 -->
 <div id = "selectedArt">
-	<c:forEach items="${aList }" var ="a">
-	<c:if test ="${! empty  a}">
-	<div  data-paidx="${a.artistIdx }" class = "artistSec">
-		<img id = "artistImg" src="${a.imgUri }"  class="img-circle"/>
-		<span>${a.name } </span>
-	</div>
-	</c:if>
-	</c:forEach>
+	<ul>
+		<c:forEach items="${aList }" var ="a">
+		<c:if test ="${! empty  a}">
+		<li  data-paidx="${a.artistIdx }" class = "artistSec">
+			<img id = "artistImg" src="${a.imgUri }"  class="img-circle"/>
+			<span>${a.name } </span>
+		</li>
+		</c:if>
+		</c:forEach>
+	</ul>
 </div>
+
 
 <!-- 유저가 찜해 놓은 공연 목록 보여주기 -->
 <div id ="choicePfm">
@@ -225,5 +249,6 @@ function pfmChoice(pfmIdx){
 	</c:forEach>
 </div>
 
+</div>
 </div>
 </div>

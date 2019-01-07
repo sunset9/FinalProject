@@ -23,7 +23,7 @@
 
 /* 화면 사용 범위 */
 .temp{
-	width: 75%;
+	width: 95%;
 	margin: 0 auto;
 	margin-bottom: 30px;
 	border-bottom: 1px solid #CCC;
@@ -125,7 +125,7 @@ $(document).ready(function(){
 
 
 <hr>
-<div>
+<div class = "main_wrapper">
 <!-- 유저 정보 담고 있는 jsp -->
 <jsp:include page="userinfo.jsp" />
 </div>

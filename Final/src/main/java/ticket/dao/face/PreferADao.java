@@ -50,5 +50,5 @@ public interface PreferADao {
 	 * 				아티스트 이미지 가져오고 싶어서
 	 * @작성자:홍나영
 	 */
-	public List<Artist> selectArtistByUserIdx(int userIdx);
+	public List<Artist> selectArtistByUserIdx(Map map);
 }

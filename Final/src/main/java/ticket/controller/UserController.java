@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -12,7 +13,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,8 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.gson.Gson;
+import org.springframework.web.servlet.ModelAndView;
 
 import ticket.dto.Artist;
 import ticket.dto.Inquiry;
@@ -504,10 +503,7 @@ public class UserController {
 			return "redirect:/user/login";
 		}
 
-		// 유저가 선택한 아티스트 불러오기
-		List<Artist> aList = preferAService.choiceArtistList(userIdx);
-		model.addAttribute("aList", aList);
-		logger.info("유저가 선택한 아티스트" + aList);
+	
 
 		// 유저가 찜해논 공연 불러오기
 		List<MyChoice> pfmList = myChoiceService.choicePfmList(userIdx);
@@ -525,6 +521,63 @@ public class UserController {
 
 		return null;
 
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 선호 아티스트 조회
+	 * @작성자:홍나영
+	 */
+	@RequestMapping(value="mypage/preferartist", method=RequestMethod.GET)
+	public void preferAtist(HttpSession session, Model model
+			,@RequestParam(defaultValue="1") int curPage) {
+		
+		logger.info("선호 아티스트 조회");
+		User user = (User) session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
+		
+		// 총 아티스트 수 
+		int totalCount = userService.getCntPreferArtist(userIdx);
+		
+		// 페이징 객체 만들기
+		Paging paging = new Paging(totalCount, curPage, 4);
+		model.addAttribute("paging", paging);
+		
+		// 유저가 선택한 아티스트 불러오기
+		List<Artist> aList = preferAService.choiceArtistList(userIdx, paging);
+		model.addAttribute("aList", aList);
+		logger.info("유저가 선택한 아티스트" + aList);
+		
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 선호선택한 아티스트 ajax 응답하기
+	 * @작성자:홍나영
+	 */
+	@ResponseBody
+	@RequestMapping(value="mypage/preferartist", method=RequestMethod.POST)
+	public ModelAndView preferAtistView( HttpSession session
+			,@RequestParam(defaultValue="1") int curPage) {
+		
+		logger.info("유저가 선택한 아티스트 AJAX ");
+		ModelAndView mav = new ModelAndView();
+		User user = (User) session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
+		
+		// 총 아티스트 수 
+		int totalCount = userService.getCntPreferArtist(userIdx);
+		
+		// 페이징 객체 만들기
+		Paging paging = new Paging(totalCount, curPage, 4);
+		mav.addObject("paging", paging);
+		
+		// 유저가 선택한 아티스트 불러오기
+		List<Artist> aList = preferAService.choiceArtistList(userIdx, paging);
+		mav.addObject("aList", aList);
+
+		mav.setViewName("mypage/preferartist");
+		return mav;
 	}
 
 	@RequestMapping(value = "/mypage/pfmchoice", method = RequestMethod.POST)

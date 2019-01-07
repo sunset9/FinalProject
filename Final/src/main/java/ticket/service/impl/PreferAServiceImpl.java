@@ -12,6 +12,7 @@ import ticket.dto.Artist;
 import ticket.dto.PreferArtist;
 import ticket.dto.PreferTheme;
 import ticket.service.face.PreferAService;
+import ticket.utils.Paging;
 
 @Service
 public class PreferAServiceImpl implements PreferAService{
@@ -56,8 +57,12 @@ public class PreferAServiceImpl implements PreferAService{
 	}
 
 	@Override
-	public List<Artist> choiceArtistList(int userIdx) {
-		return preferADao.selectArtistByUserIdx(userIdx);
+	public List<Artist> choiceArtistList(int userIdx, Paging paging) {
+		
+		Map map = new HashMap<>();
+		map.put("userIdx", userIdx);
+		map.put("paging", paging);
+		return preferADao.selectArtistByUserIdx(map);
 	}
 
 }

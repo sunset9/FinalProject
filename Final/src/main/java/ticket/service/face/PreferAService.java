@@ -5,7 +5,7 @@ import java.util.List;
 import ticket.dto.Artist;
 import ticket.dto.PreferArtist;
 import ticket.dto.PreferTheme;
-import ticket.dto.Theme;
+import ticket.utils.Paging;
 
 public interface PreferAService {
 
@@ -39,10 +39,10 @@ public interface PreferAService {
 
 	
 	/**
-	 * @최종수정일: 2018.12.14
-	 * @Method설명: 유저가 선택한 아티스트 리스트 조회 
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 유저가 선택한 아티스트 리스트 조회(페이징 포함)
 	 * 				사진을 가져오려고 반환타입 다르게 만들었음 !
 	 * @작성자:홍나영
 	 */
-	public List<Artist> choiceArtistList(int userIdx);
+	public List<Artist> choiceArtistList(int userIdx, Paging paging);
 }
