@@ -15,6 +15,7 @@ import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatSection;
+import ticket.dto.SectionInfo;
 import ticket.dto.Shipment;
 import ticket.dto.User;
 import ticket.dto.NumBookedSeat;
@@ -141,6 +142,17 @@ public class TicketServiceImpl implements TicketService {
 	public List<NumBookedSeat> countAllSeats(Performance pfm) {
 		// TODO Auto-generated method stub
 		return ticketDao.selectCntAllSeats(pfm);
+	}
+
+	@Override
+	public List<SeatSection> loadSecPay(int pfmIdx) {
+		return ticketDao.selectSecPayBypfmIdx(pfmIdx);
+	}
+
+	@Override
+	public List<SectionInfo> loadsecInfo(int pfmIdx) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectSecInfo(pfmIdx);
 	}
 	
 	

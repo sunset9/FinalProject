@@ -196,5 +196,21 @@
 	   sec.app_sec,sec.sec_pay
 </select>
 
+<select id="selectSecPayBypfmIdx" parameterType="int" resultMap="seatSectionMap">
+select app_sec,sec_pay from seatsection where pfm_idx = #{pfmIdx} group by app_sec,sec_pay
+</select>
+
+<select id="selectSecInfo" parameterType="int" resultType="ticket.dto.SectionInfo">
+	SELECT
+	    orisec.sec_name secName,
+	    sec.app_sec appSec,
+	    sec.sec_pay secPay
+	FROM
+	    seatsection sec
+	    LEFT JOIN originsection orisec ON sec.ori_sec_idx = orisec.ori_sec_idx
+	WHERE
+	    pfm_idx = #{pfmIdx}
+</select>
+
 
 </mapper>

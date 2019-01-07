@@ -45,7 +45,7 @@ div.seatCharts-cell {
     height: 22px;
     width: 22px;
     margin: 1px;
-    font-size: 12px;
+    font-size: 0px;
     line-height: 21px;
  }   
  
@@ -68,6 +68,15 @@ div.seatCharts-cell {
     text-align: center;
     line-height: -3;
     
+}
+
+.glyphicon-remove:before {
+    left: 5px !important;
+    font-size: 12px !important;
+}
+
+.glyphicon-remove:hover {
+	color: #F2B134 !important;
 }
            			
 </style>
@@ -168,7 +177,7 @@ div.seatCharts-cell {
                                                       + ' : '
                                                       + this.data().price
                                                       + '<b> 원'
-                                                      + '</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                      + '</b> <a href="#" class="cancel-cart-item"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #F2B134"></span></a></li>')
                                                 .attr('id','cart-item-'+ this.settings.id)
                                                 .data('seatId',this.settings.id).appendTo($cart);
 

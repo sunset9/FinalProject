@@ -18,13 +18,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
+
+<!-- 스크롤바 -->
 <script type="text/javascript">
 var basepay=0;
 var fee=0;
 var rp =0;
 var delvyTypeCode = 1;
 $(document).ready(function() {
-	
+
 	$('#buyer_name').val("${sessionScope.loginUser.name}");
 	$('#buyer_tel').val("${sessionScope.loginUser.phone}");
 	$('#buyer_email').val("${sessionScope.loginUser.email}");
@@ -50,11 +52,13 @@ $(document).ready(function() {
 			success:function(res){
 				$('#selectedSeats').html(res);
 				$('svg').css("width","650px");
-				$('svg').css("height","530px");
-				loadSectionData();
+				$('svg').css("height","630px");
+				loadSectionData($('#selectedSeats'));
+// 				loadSectionInfo();
 			
 			}
 		});	
+
 	
 	//왼쪽 미니 좌석 구역
 		$.ajax({
@@ -75,14 +79,17 @@ $(document).ready(function() {
 				$('#selectedSeats_small #scroller').css("width","100px");
 				$('#selectedSeats_small #scroller').css("height","100px");
 				$('#selectedSeats_small svg').width('300px');
+				$('#selectedSeats_small #wrapper').css("width","10px");
+				$('#selectedSeats_small #wrapper').css("height","10px");
+				$('#selectedSeats_small .stage_img').height('213px');
 				
-				loadSectionData();
+				loadSectionData($('#selectedSeats_small'));
 
 			
 			}
 		});	
 	
-		
+	
 	//작은좌석구역 클릭시
 		$('#selectedSeats_small svg').on('click','path,rect',function(){
 			$('path').removeClass('clicked');
@@ -92,6 +99,12 @@ $(document).ready(function() {
 			}else {
 				$(this).removeClass('clicked');
 			}
+			
+			$('#selectedSeats_small').find("path").css("opacity","0");
+			$('#selectedSeats_small').find("rect").css("opacity","0");
+			
+			$(this).css("opacity","1");
+			
 			
 			  var color = $(this).css("fill");
 			  var secName = $(this).attr("class");
@@ -131,6 +144,7 @@ $(document).ready(function() {
 			$(this).parent().find(selector).click();
 		})
 		 
+		
 		 
 	  //좌석 그리는 페이지띄어주기
 	  $('#selectedSeats').on('click','.section', function(){
@@ -141,6 +155,7 @@ $(document).ready(function() {
 		  var oriSecIdx = $(this).data("secIdx");
 		  var pfmIdx =${param.pfmIdx};
 		  var hallIdx =${param.hallIdx};
+
 		  
 			$.ajax({
 				type:"GET",
@@ -173,6 +188,12 @@ $(document).ready(function() {
 			}else{
 				$('#selectedSeats_small').find(classStr).removeClass("clicked");
 			};
+			
+			$('#selectedSeats_small').find("rect").css("opacity","0");
+			$('#selectedSeats_small').find("path").css("opacity","0");
+			$('#selectedSeats_small').find(".clicked").css("opacity","1");
+		
+			
 	  });
 	  
 
@@ -340,7 +361,7 @@ $(document).ready(function() {
 
 	  
 	  //섹션 데이터 받아오기
-	  function loadSectionData(){
+	  function loadSectionData(obj){
 		  $.ajax({
 			  type:"POST",
 			  url:"/ticket/seatSection",
@@ -385,6 +406,9 @@ $(document).ready(function() {
 						  }
 					
 					}
+					if(obj.is($('#selectedSeats'))){
+						loadSectionInfo();
+					}
 					
 			  },
 			  error:function(e){
@@ -394,6 +418,64 @@ $(document).ready(function() {
 		  })
 		  
 	  }
+	  
+		//세션 정보 클래스에 넣어주기
+		function loadSectionInfo() {
+			$.ajax({
+				type:"get",
+				url:"/ticket/secInfo",
+				data:{
+					"pfmIdx":${param.pfmIdx }
+					  },
+				async: false,
+				dataType:"json",
+				success:function(res){
+					for(var i=0;i<res.secInfo.length;i++){
+						var findClass = res.secInfo[i].secName;
+						$('#selectedSeats').find("."+findClass).addClass(res.secInfo[i].appSec);
+						$('#selectedSeats').find("."+findClass).addClass(""+res.secInfo[i].secPay);
+					}
+					console.log('클래스 넣어주기 끝');
+					
+					loadSectionPay();
+				}
+			});	
+			
+			
+		}
+		
+//구역별 가격 받아오기		
+function loadSectionPay(){
+	$.ajax({
+		type:"post",
+		url:"/ticket/sectionPay",
+		data:{
+			"pfmIdx":${param.pfmIdx },
+			  },
+		async: false,
+		dataType:"json",
+		success:function(res){
+			var appSec;
+			var secPay;
+			var color;
+			var findclass;
+			for(var i =0; i<res.seatSecPay.length;i++){
+				appSec = res.seatSecPay[i].appSec;
+				secPay = res.seatSecPay[i].secPay;
+				findclass="."+appSec+"."+secPay;
+				$('#selectedSeats').find('path').each(function () {
+					if($(this).hasClass(appSec)){
+						console.log($(this).css("fill"));
+						$('#legend2').append("<li><div class='payRect' style='background-color: "+$(this).css("fill")+";'></div>"+appSec+" 석 "+secPay+" 원"+"</li>");
+						return false;
+					}; 
+					
+				})
+			}
+		}
+	});	
+	
+}
 	 
 // 좌석정보 2스탭 테이블에 뿌려주기
 function getSeatInfo(){
@@ -443,42 +525,51 @@ function getSeatInfo(){
 	 }
 	 
 	 function seatAllView() {
-	      //미니화면 선택된거 리셋
-		  $('path').removeClass('clicked');
-		  $('rect').removeClass('clicked');
-		  //선택된 좌석들
-		  var IsSeatSelect = $('#seat-map').find('.selected');
-		  var pfmIdx =${param.pfmIdx };
-		  var hallIdx=${param.hallIdx };
-		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
+		 var IsSeatSelect = $('#seat-map').find('.selected');
 		  if (IsSeatSelect.size() != 0){
 			  if(confirm("선택한 좌석 정보를 삭제하고 이동하시겠습니까?")){
+		
 			  }else{
 				  return;
 			  }
 		  }
+		  location.reload();
+// 	      //미니화면 선택된거 리셋
+// 		  $('path').removeClass('clicked');
+// 		  $('rect').removeClass('clicked');
+// 		  //선택된 좌석들
+// 		  var IsSeatSelect = $('#seat-map').find('.selected');
+// 		  var pfmIdx =${param.pfmIdx };
+// 		  var hallIdx=${param.hallIdx };
+// 		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
+// 		  if (IsSeatSelect.size() != 0){
+// 			  if(confirm("선택한 좌석 정보를 삭제하고 이동하시겠습니까?")){
+// 			  }else{
+// 				  return;
+// 			  }
+// 		  }
 		  
-			$.ajax({
-				type:"get",
-				url:"/ticket/seatSection",
-				data:{
-					"pfmIdx":pfmIdx,
-					  "hallIdx":hallIdx
-					  },
-				async: false,
-				dataType:"html",
-				success:function(res){
-					$('#selectedSeats').html(res);
-					$('#selected-seats').html("");
-					$(".nth2_1").html("");
-					$('#total').html("0");
-					$('#counter').html("0");
-					$('#selectedSeats svg').css("width","650px");
-					$('#selectedSeats svg').css("height","530px");
-					loadSectionData();
+// 			$.ajax({
+// 				type:"get",
+// 				url:"/ticket/seatSection",
+// 				data:{
+// 					"pfmIdx":pfmIdx,
+// 					  "hallIdx":hallIdx
+// 					  },
+// 				async: false,
+// 				dataType:"html",
+// 				success:function(res){
+// 					$('#selectedSeats').html(res);
+// 					$('#selected-seats').html("");
+// 					$(".nth2_1").html("");
+// 					$('#total').html("0");
+// 					$('#counter').html("0");
+// 					$('#selectedSeats svg').css("width","650px");
+// 					$('#selectedSeats svg').css("height","530px");
+// 					loadSectionData();
 				
-				}
-			});	
+// 				}
+// 			});	
 	
 	}
 	 
@@ -566,6 +657,85 @@ function getSeatInfo(){
  	stroke-width: 25; 
  } 
  
+ #userSelect{
+    height: 130px;
+    overflow: auto;
+    border: 1px solid #F2B134;
+    border-radius: 3px;
+ }
+ 
+ #selectedSeats_small>#wrapper{
+	 height: 10px;
+	 width: 10px;
+ }
+ 
+ /*가격정보 네모*/
+ .payRect{
+	 margin-right: 10px; 
+	 margin-bottom: -5px; 
+	 margin-top: 2px;
+	 display: inline-block; 
+	 height:22px; 
+	 width:22px;
+ }
+ 
+ /*다음단계*/
+ #seatBtn{
+     width: 300px;
+    background-color: #FFF;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    color: #F2B134;
+    border: 2px solid #F2B134;
+ }
+ /* 다음단계버튼 hover*/
+ #seatBtn:hover{
+ background-color: #F2B134;
+  color: #fff;
+}
+
+/*좌석도 전체보기 버튼*/
+#seatAllViewBtn{
+	width: 300px;
+    background-color: #FFF;
+    padding: 5px;
+    font-size: 14px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    color: #F2B134;
+    border: 2px solid #F2B134;
+}
+/*좌석도 전체보기 버튼 hover*/
+ #seatAllViewBtn:hover{
+ background-color: #F2B134;
+  color: #fff;
+}
+::-webkit-scrollbar {
+      width: 15px;
+} /* this targets the default scrollbar (compulsory) */
+::-webkit-scrollbar-track {
+      background-color: #F2B134;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1); 
+} /* this will style the thumb, ignoring the track */
+ 
+::-webkit-scrollbar-button {
+      background-color: #F2B134;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+ 
+::-webkit-scrollbar-corner {
+      background-color: #F2B134;
+}
+ 
+#selected-seats{
+	padding-left: 4px;
+    list-style: none;
+    font-size: 15px;
+}
 </style>
 </head>
 <body>
@@ -580,22 +750,30 @@ function getSeatInfo(){
 <!-- STEP 1. 좌석선택 -->
 <div id ="bookStep_1">
 	<div id = "selectedSeats" style="float: left; width: 650px; " ></div>
-	<div id="booking-detail"style="float: right">
+	<div id="booking-detail"style="float: left; padding-left: 20px;">
 	<div id="selectedSeats_small"></div> 
-	<h2>예매정보</h2>
-	<h3>
-	   선택된 좌석 (<span id="counter">0</span>):
-	</h3>
-	<div class="allScreen"></div>
-	<ul id="selected-seats"></ul>
+	<button id = "seatAllViewBtn" onclick="seatAllView()">좌석도 전체보기</button>
 	
-	총 결제금액 : <b>$<span id="total">0</span></b>
+	<div id ="selectedSeatInfo">
+	<h3 style="color: #F2B134;">선택된 좌석 (<span id="counter">0</span>)</h3>
+	<div id = "userSelect">
+		<div class="allScreen"></div>
+		<ul id="selected-seats"></ul>
+		
+<!-- 		<div id="legend"></div> -->
+	</div>
+	<div id ="payInfo">
+		<!-- 좌석별 가격표 -->
+		<h3 style="color: #F2B134;">좌석등급/가격</h3>
+		<ul id ="legend2" style="list-style:none; margin-left: -38px;">
+		
+		</ul>
+	</div>	
+
+	</div>
 	
-	<button class="checkout-button">Checkout &raquo;</button>
-	
-<!-- 	<div id="legend"></div> -->
-	
-	<button onclick="seatAllView()">좌석도 전체보기</button>
+	총 결제금액 : <b><span id="total">0</span> 원</b><br>
+
 	<button id = "seatBtn" class="stepBtn nextBtn">다음단계</button>
 	</div>
 	

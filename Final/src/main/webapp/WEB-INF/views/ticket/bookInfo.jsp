@@ -86,11 +86,16 @@
 	  });
 	  });
   function overm(obj) {
-	  obj.css("border","2px solid #fddf48");
+	  obj.css("border","2px solid #F2B134");
+	  obj.css("color","#F2B134");
   }
   
   function leavem(obj) {
-	  obj.css("border","0px solid #BCBCBC");
+	  obj.css("border-top"," 0px solid #f6f6f6");
+	  obj.css("border-left","0px solid #f6f6f6");
+	  obj.css("border-right","0px solid #f6f6f6");
+	  obj.css("border-bottom","3px solid #f6f6f6");
+	  obj.css("color","#666");
   }
   
   function downm(obj) {
@@ -193,15 +198,47 @@
   
   </script>
 <style type="text/css">
+
+.selected{
+	 border: 2px solid #3E4982 !important;
+	 color: #F2B134 !important;
+    margin-bottom: 0px !important;
+}
 .times{
-     width: 350px;
+    width: 350px;
     height: 59px;
     font-size: 19px;
     text-align: center;
     background-color: #fff;
-    border: 1px solid #fddf48;
+    border-top: 0px solid #f6f6f6;
+    border-left: 0px solid #f6f6f6;
+    border-right: 0px solid #f6f6f6;
+    border-bottom: 3px solid #f6f6f6;
     color: #666;
   }
+  
+
+.list-group{
+    -webkit-box-shadow: 0 0px 0px rgba(0,0,0,.075) !important;
+    /* border-radius: 4px; */
+    box-shadow: 0 0px 0px rgba(0,0,0,.075);
+}
+
+#bookBtn{
+   width: 300px;
+   background-color: #FFF;
+   padding: 10px 16px;
+   font-size: 18px;
+   line-height: 1.3333333;
+   border-radius: 6px;
+   color: #F2B134;
+   border: 2px solid #F2B134;
+}
+
+#bookBtn:hover{
+ background-color: #F2B134;
+  color: #fff;
+}
   
 </style>
 </head>
@@ -221,17 +258,15 @@
 		<ul id = "timeList" class="list-group">
 		</ul>
 	</div>
-	
-	<div id = "ResidualSeats" style="float: left; width:250px; padding-left: 20px;">
-		<ul id ="ResidualSeatList">
-		</ul>
-	</div>
-	
-	<div style="float: left; margin-top: 163px;">
-		<button type="button" id ="bookBtn" class="btn btn-primary btn-lg" style="width: 300px;">
+	<div style="float: left; width:250px; padding-left: 20px;">
+		<div id = "ResidualSeats" style="float: left; width:250px; padding-left: 20px;    height: 160px;">
+			<ul id ="ResidualSeatList">
+			</ul>
+		</div>
+		<button type="button" id ="bookBtn" style="width: 300px;">
 		  예매하기
 		</button>
-		</div>
+	</div>
 </div>
 
 </div>
