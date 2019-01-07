@@ -253,7 +253,7 @@ $(document).ready(function () {
 							stroke-width="0"
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
 							
-						<text x="805.0978587963112" y="1152.665945658769"
+						<text x="805.0978587963112" y="1152.665945658769" class="14text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -262,7 +262,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">14</tspan></text>
 							
 							
-						<text x="947.5793402777928" y="1384.378908621732"
+						<text x="947.5793402777928" y="1384.378908621732" class="13text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -271,7 +271,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">13</tspan></text>
 							
 							
-						<text x="1132.2960069444596" y="1568.2955752883988"
+						<text x="1132.2960069444596" y="1568.2955752883988" class="12text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -280,7 +280,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">12</tspan></text>
 							
 							
-						<text x="1347.367824074089" y="1709.57705676988"
+						<text x="1347.367824074089" y="1709.57705676988" class="11text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -289,7 +289,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">11</tspan></text>
 							
 							
-						<text x="1599.1756365740891" y="1800.0085382513619"
+						<text x="1599.1756365740891" y="1800.0085382513619" class="10text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -298,7 +298,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">10</tspan></text>
 							
 							
-						<text x="2099.3616898148293" y="1795.6603901032133"
+						<text x="2099.3616898148293" y="1795.6603901032133" class="8text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -307,7 +307,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">8</tspan></text>
 							
 							
-						<text x="2352.0302083333486" y="1715.880760473584"
+						<text x="2352.0302083333486" y="1715.880760473584" class="7text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -316,7 +316,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">7</tspan></text>
 							
 							
-						<text x="2572.324652777793" y="1579.5048345476578"
+						<text x="2572.324652777793" y="1579.5048345476578" class="6text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -325,7 +325,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">6</tspan></text>
 							
 							
-	                  	<text x="2760.3283564814965" y="1391.9011308439542"
+	                  	<text x="2760.3283564814965" y="1391.9011308439542" class="5text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -334,7 +334,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">5</tspan></text>
 							
 							
-	                  	<text x="2901.4431712963114" y="1170.091871584695"
+	                  	<text x="2901.4431712963114" y="1170.091871584695" class="4text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -343,7 +343,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4</tspan></text>
 							
 							
-	                  	<text x="403.0561342592594" y="1447.5336520947171"
+	                  	<text x="403.0561342592594" y="1447.5336520947171" class="42text"
 							text-anchor="middle" font-family="Arial" font-size="50px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -352,7 +352,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">42</tspan></text>
 							
 							
-	                  	<text x="555.101562499995" y="1733.4122419550697"
+	                  	<text x="555.101562499995" y="1733.4122419550697" class="41text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -361,7 +361,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">41</tspan></text>
 							
 							
-	                  	<text x="782.1237847222178" y="1944.4048345476644"
+	                  	<text x="782.1237847222178" y="1944.4048345476644" class="40text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -370,7 +370,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">40</tspan></text>
 							
 							
-	                  	<text x="1068.5126736111065" y="2117.167797510627"
+	                  	<text x="1068.5126736111065" y="2117.167797510627" class="39text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -379,7 +379,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">39</tspan></text>
 							
 							
-						<text x="1341.8274884259215" y="2303.81039010322"
+						<text x="1341.8274884259215" y="2303.81039010322" class="38text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -388,7 +388,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">38</tspan></text>
 							
 							
-	                  	<text x="1690.3663773148105" y="2221.1881678809978"
+	                  	<text x="1690.3663773148105" y="2221.1881678809978" class="37text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -397,7 +397,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">37</tspan></text>
 							
 							
-	                  	<text x="2008.3182291666615" y="2217.8381678809947"
+	                  	<text x="2008.3182291666615" y="2217.8381678809947" class="36text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -406,7 +406,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">36</tspan></text>
 							
 							
-						<text x="2352.997858796291" y="2287.0326123254395"
+						<text x="2352.997858796291" y="2287.0326123254395" class="35text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -414,8 +414,8 @@ $(document).ready(function () {
 	                  		<tspan dy="0"
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">35</tspan></text>
 							
-							
-						<text x="2621.40711805555" y="2107.8474271402542"
+							 
+						<text x="2621.40711805555" y="2107.8474271402542" class="34text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -424,7 +424,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">34</tspan></text>
 							
 							
-						<text x="2898.4923032407355" y="1943.5529826958095"
+						<text x="2898.4923032407355" y="1943.5529826958095" class="33text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -433,7 +433,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">33</tspan></text>
 							
 							
-						<text x="3136.349710648143" y="1730.1548345476617"
+						<text x="3136.349710648143" y="1730.1548345476617" class="32text"
 							text-anchor="middle" font-family="Arial" font-size="100px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -442,7 +442,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">32</tspan></text>
 							
 							
-						<text x="3301.9589120370424" y="1460.10124468731"
+						<text x="3301.9589120370424" y="1460.10124468731" class="31text"
 							text-anchor="middle" font-family="Arial" font-size="50px"
 							font-style="normal" font-weight="bold" stroke="none"
 							fill="#ffffff"
@@ -495,7 +495,7 @@ $(document).ready(function () {
 							stroke-width="0"
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
 							
-						<text x="2319.677025462963" y="978.512708712811"
+						<text x="2319.677025462963" y="978.512708712811" class="Atext"
 							text-anchor="middle" font-family="Malgun Gothic"
 							font-size="100px" font-style="normal" font-weight="bold"
 							stroke="none" fill="#ffffff"
@@ -504,7 +504,7 @@ $(document).ready(function () {
 							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">A</tspan>
 							</text>
 							
-						<text x="1852.414525462963" y="978.512708712811"
+						<text x="1852.414525462963" y="978.512708712811" class="Btext"
 							text-anchor="middle" font-family="Malgun Gothic"
 							font-size="100px" font-style="normal" font-weight="bold"
 							stroke="none" fill="#ffffff"
@@ -514,7 +514,7 @@ $(document).ready(function () {
 							</text>
 							
 							
-						<text x="1378.6052083333334" y="978.512708712811"
+						<text x="1378.6052083333334" y="978.512708712811" class="Ctext"
 							text-anchor="middle" font-family="Malgun Gothic"
 							font-size="100px" font-style="normal" font-weight="bold"
 							stroke="none" fill="#ffffff"
@@ -524,7 +524,7 @@ $(document).ready(function () {
 							</text>
 							
 							
-						<text x="1847.2872685185177" y="1820.8904864905887"
+						<text x="1847.2872685185177" y="1820.8904864905887" class="9text"
 							text-anchor="middle" font-family="Malgun Gothic"
 							font-size="100px" font-style="normal" font-weight="bold"
 							stroke="none" fill="#ffffff"

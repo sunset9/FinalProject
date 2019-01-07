@@ -14,6 +14,7 @@ import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
+import ticket.dto.SectionInfo;
 import ticket.dto.Shipment;
 import ticket.dto.User;
 import ticket.dto.NumBookedSeat;
@@ -169,5 +170,20 @@ public interface TicketDao {
 	 * @작성자:이상지
 	 */
 	public List<NumBookedSeat> selectCntAllSeats(Performance pfm); 
+	
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 공연별 섹션가격정보 불러오기
+	 * @작성자:이상지
+	 */
+	public List<SeatSection> selectSecPayBypfmIdx(int pfmIdx);
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 공연별 세션이름, 가격정보 불러오기
+	 * @작성자:이상지
+	 */
+	public List<SectionInfo> selectSecInfo(int pfmIdx);
 	
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,6 +32,7 @@ import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
 import ticket.dto.SeatSection;
+import ticket.dto.SectionInfo;
 import ticket.dto.Shipment;
 import ticket.dto.User;
 import ticket.dto.NumBookedSeat;
@@ -460,6 +463,54 @@ public class TicketController {
 		
 		return mav;
 		
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 예매하기 버튼눌렀을때, 예매하기 새창 띄워주기
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/book", method=RequestMethod.GET)
+	public void book (String Date, String time, String name) {
+		
+		
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 세션별 가격정보
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/sectionPay", method=RequestMethod.POST)
+	public ModelAndView sectionPay(int pfmIdx) {
+		
+		List<SeatSection> seatSec = new ArrayList<>();
+		
+		seatSec = ticketService.loadSecPay(pfmIdx);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jsonView");
+		mav.addObject("seatSecPay", seatSec);
+		return mav;
+		
+	}
+	
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 공연별 세션이름, 가격 정보 받아오기
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/secInfo", method=RequestMethod.GET)
+	public ModelAndView sectionInfo(int pfmIdx) { 
+		List<SectionInfo> secInfo = new ArrayList<>();
+		
+		secInfo = ticketService.loadsecInfo(pfmIdx);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jsonView");
+		mav.addObject("secInfo", secInfo);
+		
+		return mav;
 	}
 	
 
