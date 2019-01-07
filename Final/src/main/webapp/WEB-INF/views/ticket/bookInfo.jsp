@@ -86,11 +86,11 @@
 	  });
 	  });
   function overm(obj) {
-	  obj.css("border","2px solid cyan");
+	  obj.css("border","2px solid #fddf48");
   }
   
   function leavem(obj) {
-	  obj.css("border","1px solid #BCBCBC");
+	  obj.css("border","0px solid #BCBCBC");
   }
   
   function downm(obj) {
@@ -99,10 +99,10 @@
 		  var findsId = finds[i].id;
 		  var id = '#'+findsId;
 		  if(findsId==obj.attr("id")){
-			  $(id).css("background-color",'yellow');
+// 			  $(id).css("background-color",'yellow');
 			  $(id).attr("class","list-group-item times selected");
 		  }else{	
-			  $(id).css("background-color",'white');
+// 			  $(id).css("background-color",'white');
 			  $(id).attr("class","list-group-item times non_selected");
 		  } 
 	  }
@@ -198,6 +198,9 @@
     height: 59px;
     font-size: 19px;
     text-align: center;
+    background-color: #fff;
+    border: 1px solid #fddf48;
+    color: #666;
   }
   
 </style>
@@ -214,12 +217,12 @@
 <div id = "info" style="float: bottom">
 	<div id = "datepicker" style="float: left"></div>
 	
-	<div id = "timeDiv" style="float: left; width: 372px;">
+	<div id = "timeDiv" style="float: left; width: 372px; padding-left: 20px;">
 		<ul id = "timeList" class="list-group">
 		</ul>
 	</div>
 	
-	<div id = "ResidualSeats" style="float: left; width:250px;">
+	<div id = "ResidualSeats" style="float: left; width:250px; padding-left: 20px;">
 		<ul id ="ResidualSeatList">
 		</ul>
 	</div>
