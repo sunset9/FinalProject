@@ -66,7 +66,7 @@ td {
 
 <div class="container">
 
-<h3>회원 목록</h3>
+<h1>회원 목록</h1>
 <hr>
 
 <table class="table table-hover table-striped table-condensed">

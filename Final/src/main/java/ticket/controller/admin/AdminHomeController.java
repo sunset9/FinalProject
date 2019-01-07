@@ -51,9 +51,13 @@ public class AdminHomeController {
 		//오늘 등록된 가족&아동수 pService.getTodayFam()
 		int todayFamily = pService.getTodayFam();
 		
+		//총 누적공연수 가져오기 
+		int totalPfmCnt = pService.getTotalPfmCnt();
+		
 		//현재 접속자수 불러오기 uService.getConnectUser()
 		//CountManager cm = new CountManager();
 		//int countConnector = cm.getCount();
+		
 		
 		//1:1 문의 미답변수 불러오기 uService.getUnanswered()
 		int unansweredInq = pService.getUnanswered();
@@ -65,6 +69,7 @@ public class AdminHomeController {
 		model.addAttribute("todayConcert", todayConcert);
 		model.addAttribute("todayMusical", todayMusical);
 		model.addAttribute("todayFamily", todayFamily);
+		model.addAttribute("totalPfmCnt", totalPfmCnt);
 		model.addAttribute("unansweredInq", unansweredInq);
 		//model.addAttribute("countConnector", countConnector);
 	}

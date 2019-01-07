@@ -586,4 +586,11 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public int getLastMainbanIdx();
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 총 누적 공연수 가져오기 
+	 * @작성자: 김지은
+	 */
+	public int getTotalPfmCnt();
 }

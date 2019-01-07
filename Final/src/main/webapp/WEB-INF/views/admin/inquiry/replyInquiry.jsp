@@ -31,6 +31,18 @@
   	border-top: none;
 }
 
+.submitBtn{
+	width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e27d24;
+    border: 1px solid #e27d24;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
 </style>
 
 <script>

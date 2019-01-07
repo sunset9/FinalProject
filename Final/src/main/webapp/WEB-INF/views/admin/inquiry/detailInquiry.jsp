@@ -21,7 +21,7 @@
 
 <style>
 #detailTable{
-	width: 70%;
+    width: 100%;
 }
 
 .waiting {
@@ -32,6 +32,27 @@
     padding: 15px;
 }
 
+th {
+	background: #e5e5e5;
+	
+}
+
+#detailTable {
+	border: 1px solid #bbbaba;
+}
+
+.inqDelBtn, .replyBtn, .replyBtn {
+    float: right;
+    width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e27d24;
+    border: 1px solid #e27d24;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
 </style>
 
 <script>
@@ -39,30 +60,33 @@
 
 <div class="contents-wrapper">
 <h1> 1:1 문의 확인</h1>
-
-<button onclick="location.href='/admin/deleteInquiry?inqIdx=${inq.inqIdx }'">삭제</button>
-
-<table id="detailTable" class="table table-bordered" >
-<tr>
-	<th>제목</th>
-	<td>${inq.title }</td>
-	<th>답변 상태</th>
-	<c:if test="${inq.replyStatus eq 0}"><td class="waiting">답변 대기</td></c:if>
-	<c:if test="${inq.replyStatus eq 1}"><td>답변 완료</td></c:if>
-</tr>
-<tr>
-	<th>작성자</th>
-	<td>${inq.userName }</td>
-	<th>작성일</th>
-	<td>
-	<fmt:formatDate value="${inq.createDate }" pattern="yyyy-MM-dd HH:mm"/>
-	</td>
-</tr>
-<tr id="inqContents">
-	<td colspan=4><div class="fr-view">${inq.contents }</div></td>
-</tr>
-
-</table>
+<hr>
+<div>
+<h4 style="position: absolute; font-weight: 700;">문의사항</h4>
+	<button class="inqDelBtn" onclick="location.href='/admin/deleteInquiry?inqIdx=${inq.inqIdx }'">삭제</button>
+	
+	<table id="detailTable" class="table table-bordered" >
+	<tr>
+		<th>제목</th>
+		<td>${inq.title }</td>
+		<th>답변 상태</th>
+		<c:if test="${inq.replyStatus eq 0}"><td class="waiting">답변 대기</td></c:if>
+		<c:if test="${inq.replyStatus eq 1}"><td>답변 완료</td></c:if>
+	</tr>
+	<tr>
+		<th>작성자</th>
+		<td>${inq.userName }</td>
+		<th>작성일</th>
+		<td>
+		<fmt:formatDate value="${inq.createDate }" pattern="yyyy-MM-dd HH:mm"/>
+		</td>
+	</tr>
+	<tr id="inqContents">
+		<td colspan=4><div class="fr-view">${inq.contents }</div></td>
+	</tr>
+	
+	</table>
+</div>
 
 <c:if test="${inq.replyStatus eq 0}">
 	<button class="replyBtn" onclick="location.href='/admin/replyinquiry?inqIdx=${inq.inqIdx }'">답변 하기</button>
@@ -70,8 +94,9 @@
 
 <c:if test="${inq.replyStatus eq 1}">
 <div class="reply">
-<hr>
-<h4>답변</h4>
+<br><br><br>
+<h4 style="position: absolute; font-weight: 700;">답변</h4>
+
 <button class="replyBtn" onclick="location.href='/admin/editreplyinquiry?inqIdx=${inq.inqIdx }'">답변 수정</button>
 
 <table id="detailTable" class="table table-bordered" >

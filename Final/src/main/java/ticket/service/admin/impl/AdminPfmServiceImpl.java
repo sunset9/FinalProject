@@ -970,4 +970,10 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectLastMainbanIdx();
 	}
 
+	@Override
+	public int getTotalPfmCnt() {
+		// 총 누적공연수 가져오기 
+		return pDao.selectTotalPfmCnt();
+	}
+
 }

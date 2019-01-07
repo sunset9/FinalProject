@@ -9,22 +9,45 @@
 	color:red;
 }
 #inqList { 
-	width: 900px;
+    width: 1100px;
+}
+
+th, td {
+	text-align: center;
+}
+
+hr {
+    width: 1100px;
+}
+
+.inqBtn {
+	float: right;
+    width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e27d24;
+    border: 1px solid #e27d24;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 </style>
 
-<div class="contents-wrapper">
+<div class="contents-wrapper" style="width: 1100px;">
 
 <h1>1:1 문의 리스트</h1>
-<button onclick="location.href='/admin/writeinquiry'">1:1문의하기</button>
-<table class="table" id="inqList">
+<hr>
+
+<button onclick="location.href='/admin/writeinquiry'" class="inqBtn">1:1문의하기</button>
+<table class="table table-hover table-striped table-condensed" id="inqList">
 <thead>
 <tr>
-	<th>글번호</th>
-	<th>제목</th>
-	<th>답변 상태</th>
-	<th>작성자</th>
-	<th>작성일</th>
+	<th style="width:5%">글번호</th>
+	<th style="width:35%">제목</th>
+	<th style="width:15%">답변 상태</th>
+	<th style="width:10%">작성자</th>
+	<th style="width:25%">작성일</th>
 </tr>
 </thead>
 <tbody>
