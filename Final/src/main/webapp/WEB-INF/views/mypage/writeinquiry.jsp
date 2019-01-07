@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<jsp:include page="../layout/menu.jsp" />
 
 <!-- Froara Editor 관련 -->
 <!-- Include external CSS. -->
@@ -18,6 +17,7 @@
 <!-- Include Editor JS files. -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.1/js/froala_editor.pkgd.min.js"></script>
 
+
 <style>
 #detailTable{
 	width: 70%;
@@ -29,18 +29,6 @@
 
 #inqContents td{
   	border-top: none;
-}
-
-.submitBtn{
-	width: 85px;
-    height: 38px;
-    border-radius: 10px;
-    background: #e27d24;
-    border: 1px solid #e27d24;
-    color: white;
-    font-weight: 700;
-    margin-bottom: 5px;
-    margin-top: 5px;
 }
 
 </style>
@@ -57,7 +45,7 @@ $(document).ready(function(){
 		// 툴바 버튼 목록
 		, toolbarButtons: ['fontFamily','bold', 'italic', 'underline','align','|','insertLink','insertImage','|', 'undo', 'redo']
 		 // Set the image upload URL.
-	    , imageUploadURL: '/admin/uploadinqimg'
+	    , imageUploadURL: '/mypage/uploadinqimg'
 	    , imageUploadParams: {
 	      id: 'my_editor'
 	    }
@@ -67,7 +55,7 @@ $(document).ready(function(){
 	}).on('froalaEditor.image.removed', function (e, editor, $img) { //이미지 삭제 
 	    $.ajax({
 	        method: "POST",
-	        url: "/admin/deleteinqimg", //이미지삭제 경로
+	        url: "/mypage/deleteinqimg", //이미지삭제 경로
 	        data: {
 	          src: $img.attr('src')
 	        }
@@ -75,23 +63,34 @@ $(document).ready(function(){
 	        console.log ('image delete problem');
 	     });
 	 });
+
+	
+// 취소 버튼 눌렀을 때
+	$('#cancelBtn').click(function() {
+		if(confirm("입력을 취소하시겠습니까?")== true){
+			//yes
+			loaction.href="/mypage/viewinquiry";
+		} else {
+			//no
+			return;
+		}
+	}); // click end
 });
 </script>
 
 <div class="contents-wrapper">
-<h1> 1:1 문의 답변하기</h1>
+<h1> 1:1 문의 하기</h1>
 
-<form action="/admin/replyinquiry" method="post">
+<form action="/mypage/writeinquiry" method="post">
 
 <input type="hidden" name="userIdx" value="${loginUser.userIdx }"/>
-<input type="hidden" name="inqIdx" value="${inq.inqIdx }"/>
-<table id="detailTable" class="table" >	
+<table id="detailTable" class="table" >
 <tr>
 	<th>제목</th>
 	<td><input type="text" name="title" class="form-control"></td>
 </tr>
 <tr>
-	<th>관리자이름</th>
+	<th>작성자</th>
 	<td >${loginUser.name }</td>
 </tr>
 <tr>
@@ -103,12 +102,9 @@ $(document).ready(function(){
 
 </table>
 
-<button class="submitBtn">답변 하기</button>
+<button class="submitBtn">문의 하기</button>
 
 </form>
+<button id="cancelBtn">취소</button>
 </div>
 
-
-</div>
-</body>
-</html>

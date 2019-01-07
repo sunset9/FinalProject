@@ -197,6 +197,21 @@ public interface UserService {
 	 */
 	public List<StateOfBook> cancelTicket(User user);
 
+	
+	/**
+	 * @최종수정일: 2019.01.03
+	 * @Method설명: 유저가 예매한 횟수 조회 
+	 * @작성자:홍나영
+	 */
+	public int getBook(int userIdx);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.03
+	 * @Method설명:유저가 취소한 예매 횟수 조회 
+	 * @작성자:홍나영
+	 */
+	public int getCancel(int userIdx);
 
 
 

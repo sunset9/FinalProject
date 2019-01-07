@@ -6,6 +6,17 @@
 <jsp:include page="../layout/menu.jsp" />
 <script type="text/javascript">
 $(document).ready(function(){
+	var lastMainbanIdx = $('#lastMainbanIdx').val();
+	var idxList = new Array();
+	if(lastMainbanIdx == 'null'){
+		console.log('null임');
+	}else{
+		console.log('조회되나? : '+lastMainbanIdx);
+		idxList.push(lastMainbanIdx);
+		console.log(idxList);
+	}
+	
+	
 	
 	/* 삭제 버튼 눌렀을 경우 */
 	$(document).on('click','.mbDelete',function(){
@@ -78,15 +89,21 @@ $(document).ready(function(){
     position: absolute;
     top: 116px;
 }
+
+.banRegistModalBtn {
+	position: relative;
+    left: 0px;
+    top: 100px;
+}
 </style>
 <body>
 <div class="mainBannerWrap">
-	<h3>배너관리 - 메인배너</h3>
+	<h1>배너관리 - 메인배너</h1>
 	<hr>
 	
 	<p class="maxP" />최대 5개 까지만 등록이 가능합니다.</p>
 	<input type="button" class="finalSave" value="최종저장" />
-	
+	<input type="hidden" value="${lastMainbanIdx }" id="lastMainbanIdx"/>
 	
 	<form action="/admin/mbfinalsave" method="post">
 	
@@ -108,7 +125,10 @@ $(document).ready(function(){
 			<div class="plusBox"> 
 				<c:if test="${fn:length(mBannerList) < 5 }">
 				<div class="plus">
-		 			<a href="/admin/registMainbanner"><input type="button" class="banRegistModalBtn" value="추가하기"></a>
+		 			<a href="/admin/registMainbanner">
+		 				<input type="button" class="banRegistModalBtn" value="추가하기">
+		 				<input type="hidden" value="${lastMainbanIdx }" id="lastMainbanIdx"/>
+		 			</a>
 		 		</div>   
 				</c:if>
 			</div>

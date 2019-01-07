@@ -26,6 +26,7 @@ public class Performance {
 	private String hallName; // 공연장 이름
 	private int no;
 	private String storedName; //저장이름
+	
 	@Override
 	public String toString() {
 		return "Performance [pfmIdx=" + pfmIdx + ", name=" + name + ", genreIdx=" + genreIdx + ", pfmStart=" + pfmStart
@@ -130,6 +131,5 @@ public class Performance {
 	public void setStoredName(String storedName) {
 		this.storedName = storedName;
 	}
-	
 	
 }

@@ -39,7 +39,11 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public int loginCheck(User user, HttpSession session) {
-			int userIdx =userDao.selectCntUser(user) ;
+			
+		int userIdx =userDao.selectCntUser(user) ;
+		
+		System.out.println("DAO 실행하고 오시나?");
+		
 		if(userIdx!= 0) { 
 			user.setUserIdx(userIdx);
 			session.setAttribute("login", true);
@@ -244,6 +248,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<StateOfBook> cancelTicket(User user) {
 		return userDao.selectCancelTicket(user);
+	}
+
+
+	@Override
+	public int getBook(int userIdx) {
+		return userDao.selectCntBook(userIdx);
+	}
+
+
+	@Override
+	public int getCancel(int userIdx) {
+		return userDao.selectCntCancelBook(userIdx);
 	}
 
 

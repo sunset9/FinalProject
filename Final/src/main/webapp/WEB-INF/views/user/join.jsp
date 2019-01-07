@@ -81,6 +81,10 @@ tr{
 	border: 1px solid #CCC;
 	background: #DDD;
 }
+.title{
+	width: 300px;
+	margin: 0 auto;
+}
 </style>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------- -->
 	
@@ -585,6 +589,10 @@ function DaumPostcode() {
 <body>
 	<div id = "logo"><a href="/ticket/ticketmain"><img style="width: 400px;" src="/resources/image/bananalogo.png"/></a></div>
 	<div class="container">
+	
+	<div class ="title">
+	<img src="/resources/image/join.PNG" class ="title" >
+</div>
 
 	<div class="row" id="joinStep">
 		<ol class="breadcrumb">

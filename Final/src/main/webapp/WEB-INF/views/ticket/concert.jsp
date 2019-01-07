@@ -203,6 +203,7 @@ li.pfmInfo {
 	</div>
 	
 	<hr>
+	<div class="main_wrapper">
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="conall" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
@@ -238,6 +239,6 @@ li.pfmInfo {
 			</li>
 		</c:forEach>
 	</ul>
-	
+	</div>
 	<!-- 무한스크롤 추가하기 -->
 </div>

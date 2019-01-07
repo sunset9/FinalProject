@@ -87,7 +87,7 @@ table.type03 th {
     font-weight: bold;
     vertical-align: top;
     color: #434344;
-    border-left: 3px solid #547290;
+    border-left: 3px solid #dddddd;
     border-right: 1px solid #e8e6e6;
     border-bottom: 1px solid #e8e6e6;
 
@@ -104,7 +104,7 @@ table.type03 td {
 </head>
 <body>
 <div style="display: flow-root;">
-<h3>회원 상세</h3>
+<h1>회원 상세</h1>
 <hr>
 
 <div>
@@ -144,7 +144,7 @@ table.type03 td {
 
 <div style="width: 1100px;">
 <br><br>
-<table class="table table-hover">
+<table class="table table-hover" style="border-top: 2px solid #dddddd;">
 <thead>
 <tr>
 <th style="width: 60px;">예매일</th>

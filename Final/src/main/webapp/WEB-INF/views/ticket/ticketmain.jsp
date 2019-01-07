@@ -277,6 +277,7 @@ div>h4 {
 	</div>
 </div>
 
+<div class="main_wrapper">
 <!-- 탭 배너 -->
 <div class="main_tab">
 	<ul class="tabs">
@@ -365,6 +366,7 @@ div>h4 {
 			<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
 		</c:if>
 	</div>
+</div>
 </div>
 
 </div>

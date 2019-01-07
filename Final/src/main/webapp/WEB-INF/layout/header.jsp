@@ -110,7 +110,10 @@ img	  {border:none;line-height:0;font-size:0;}
 							<c:if test="${!login }">
 							<li><a href="/user/login" class="menu01 mlog"><span>로그인</span></a></li>
 							</c:if>
+							<c:if test="${!login }">
 							<li><a href="/user/join"class="menu01 mlog"><span>회원가입</span></a></li>
+							</c:if>
+							
 							<li><a href="#" class="menu01 mlog"><span>고객센터</span></a></li>
 							<li class="last_child"><a href="#" class="menu01 mlog"><span>이용안내</span></a></li>
 	

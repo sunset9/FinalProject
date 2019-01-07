@@ -16,6 +16,7 @@
 	margin-left: 10px;
 }
 
+
 .maintext {
 	margin-left: 10px;
 }
@@ -95,6 +96,10 @@ padding:0px 10px 0px 15px;
 text-align:left;
 }
 
+.main_wrapper{
+	width: 1160px;
+	margin: 0 auto;
+}
 </style>
 
  <!-- jQuery 2.2.4 --> 
@@ -147,7 +152,7 @@ text-align:left;
 	<tiles:insertAttribute name="header" />
 
 	<!-- BODY -->
-	<div class="wrap">
+	<div class="content-wrap">
 		<tiles:insertAttribute name="body" />
 	</div>
 

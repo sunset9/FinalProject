@@ -1,29 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-  <mapper namespace="ticket.dao.face.AdminBoardDao">
   
-  
-  <resultMap type="ticket.dto.Notice" id="notice">
-  	<result column="notice_idx" property="noticeIdx" />
-  	<result column="user_idx" property="userIdx" />
-  	<result column="n_type_idx" property="NTypeIdx" />
-  	<result column="notice_title" property="noticeTitle" />
-  	<result column="notice_content" property="noticeContent" />
-  	<result column="create_date" property="createDate" />  
-  	<result column="prev" property="prev" />
-  	<result column="prev_title" property="prevTitle" />  	
-  	<result column="next" property="next" />
-  	<result column="next_title" property="nextTitle" />
-
-  	
-  	
-  </resultMap>
-  
-	<resultMap type="ticket.dto.Inquiry" id="Inquiry">
+<mapper namespace="ticket.dao.face.InquiryDao">
+    
+    <resultMap type="ticket.dto.Inquiry" id="Inquiry">
 	 	<result column="inq_idx" property="inqIdx" />
 	 	<result column="user_idx" property="userIdx" />
 	 	<result column="title" property="title" />
@@ -42,72 +24,8 @@
 	 	<result column="create_date" property="createDate" />  
 	 	<result column="name" property="userName" />  
 	 </resultMap>
-
-  <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
-  	select * from ( 
-  		select rownum rnum, B.* from (
-  			select * from notice order by notice_idx desc
-  		) B
-  		order by notice_idx desc
-  	) R
-  	where R.rnum between #{startNo} AND #{endNo}
-  	order by rnum
-  </select>
-  
-  
-  <select id="preNoti" resultMap="notice">
-	select * from 
-	(select notice_idx
-	, lag(notice_idx,1) over(order by notice_idx) prev, 
-	lag(notice_title,1) over(order by notice_idx) prev_title from notice)
-	where notice_idx = #{notice_idx}
-  </select>
-  
-  <select id="postNoti" resultMap="notice">
-	select * from 
-	(select notice_idx
-	, lead(notice_idx,1) over(order by notice_idx) next, 
-	lead(notice_title,1) over(order by notice_idx) next_title from notice)
-	where notice_idx = #{notice_idx}
-  </select>
-  
-  
-  
-  <select id="selectCntAll" resultType="int">
-  	select count(*) cut from(
-  		select * from notice 
-  		
-  	) cnt
-  </select>
-  
-  <select id="selectNotiView" resultMap="notice">
-  	select * from notice
-  		where notice_idx = #{notice_idx}
-  </select>
-
-
-  <insert id="insertNoti" parameterType="ticket.dto.Notice">
-  	insert into notice (notice_idx,  n_type_idx, notice_title , notice_content) 
-  			values (notice_seq.nextval, #{NTypeIdx}, #{noticeTitle} , #{noticeContent})
-  </insert>
-
-	
-  <select id="selectNoticeBynoticeIdx" resultMap="notice">
-  	select * from notice
-  		where notice_idx = #{noticeIdx}
-  </select>
-	
-  <update id="updateNoti" parameterType="ticket.dto.Notice">
-	  UPDATE notice set n_type_idx = #{NTypeIdx}, notice_title = #{noticeTitle}, notice_content = #{noticeContent} 
-	  where notice_idx = #{noticeIdx}
-  </update>
-
-
-  <delete id="deleteNoti" parameterType="ticket.dto.Notice">
-    	delete notice where notice_idx = #{noticeIdx}
-  </delete>
-
-
+    
+    
 	<select id="selectCntAllInq" resultType="int">
 		SELECT COUNT(*) FROM inquiry
 	</select>
@@ -167,16 +85,5 @@
 		DELETE inquiry
 		WHERE inq_idx = #{inqIdx }
 	</delete>
-
-
-  </mapper>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+	
+    </mapper>

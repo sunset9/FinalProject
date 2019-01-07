@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
@@ -634,14 +636,21 @@ public class AdminPfmController {
 	 * @작성자: 김지은
 	 */
 	@RequestMapping(value = "/admin/mainbannerlist", method = RequestMethod.GET)
-	public String mBannerList(Model model) {
+	public String mBannerList(
+			Model model,
+			@RequestParam(value = "lastMainbanIdx", defaultValue = "0") int lastMainbanIdx
+			) {
 		logger.info("PfmController의 mainBannerList() 호출됨");
 		// List mBannerList = pService.getMBannerList
 		List<MainBanner> mBannerList = pService.getMBannerList();
 		logger.info("메인 배너 리스트 확인 : "+mBannerList.toString());
 		
 		model.addAttribute("mBannerList", mBannerList);
-		
+		if(lastMainbanIdx != 0) {
+			model.addAttribute("lastMainbanIdx", lastMainbanIdx);
+		}else if(lastMainbanIdx == 0) {
+			model.addAttribute("lastMainbanIdx", "null");
+		}
 		return "admin/pfm/mainBannerList"; 
 	}
 	
@@ -706,9 +715,10 @@ public class AdminPfmController {
 	public String registMBanner(
 			HttpServletRequest req,
 			Model model,
-			@RequestParam(defaultValue="1") int curPage
+			@RequestParam(defaultValue="1") int curPage,
+			int lastMainbanIdx
 			) {
-	
+		System.out.println("lastMainbanIdx 넘어왔니 : "+lastMainbanIdx);
 		String search = req.getParameter("mainBanSearch");
 		logger.info("메인 배너 검색 결과 : "+search);
 		
@@ -722,10 +732,6 @@ public class AdminPfmController {
 		//최신순 공연목록 가져오기
 		List<Performance> NewPfmList = pService.getNeweastPfm(paging);
 		logger.info("최신순 공연목록 : "+NewPfmList);
-		//가나다순 공연목록 가져오기
-		//List<Performance> orderedPfmList = pService.getOrderedPfmList();
-		
-		//
 		
 		model.addAttribute("orderList", NewPfmList);
 		model.addAttribute("paging", paging);
@@ -741,14 +747,38 @@ public class AdminPfmController {
 	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.POST)
 	public String registMBannerProc(
 			Model model,
-			@RequestParam(value="pfmIdx") int pfmIdx, 
+			@RequestParam(value="pfmIdx") String pfmIdx, 
 			@RequestParam(value="thumbFile") MultipartFile thumbFile,
-			@RequestParam(value="bannerFile") MultipartFile bannerFile
+			@RequestParam(value="bannerFile") MultipartFile bannerFile,
+			RedirectAttributes redirectAttributes,
+			HttpServletRequest req
 			) {
+		// 파일 업로드
+		//pService.fileUpload(pfmIdx, context, thumbFile, bannerFile);
 		
+		//UUID 고유식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
 		
+		// file 오리진네임, 스토어드네임 구하기 
+		String thumbOrigin = thumbFile.getOriginalFilename();
+		String thumbStored = thumbOrigin + "_" + uId;
 		
-		pService.fileUpload(pfmIdx, context, thumbFile, bannerFile);
+		String bannerOrigin = bannerFile.getOriginalFilename();
+		String bannerStored = bannerOrigin + "_" + uId;
+		
+		// Map에 저장하기
+		Map<String, String> mbannerInfo = new HashMap<>();
+		mbannerInfo.put("pfmIdx", pfmIdx);
+		mbannerInfo.put("thumbOrigin", thumbOrigin);
+		mbannerInfo.put("thumbStored", thumbStored);
+		mbannerInfo.put("bannerOrigin", bannerOrigin);
+		mbannerInfo.put("bannerStored", bannerStored);
+		
+		List<Map<String, String>> mbannerList = new ArrayList<>();
+		mbannerList.add(mbannerInfo);
+		
+		redirectAttributes.addAttribute("mbannerList", mbannerList);
+		
 		
 		return "redirect:/admin/mainbannerlist";
 	}

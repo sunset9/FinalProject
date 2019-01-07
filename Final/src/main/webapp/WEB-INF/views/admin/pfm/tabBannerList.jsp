@@ -215,6 +215,11 @@ ul.tabs li.active:hover {
     color: white;
     font-weight: 700;
 }
+
+.tabbanRegistBtn{
+	position: relative;
+    top: 100px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -512,7 +517,7 @@ function openList(listName) {
 </script>
 <body>
 	<div class="tabbannerWrap">
-		<h3>배너관리 - 탭 배너</h3>
+		<h1>배너관리 - 탭 배너</h1>
 		<hr>
 
 		<p>최대 5개 까지만 등록이 가능합니다.</p>
@@ -551,7 +556,7 @@ function openList(listName) {
 					<div class="plusBox">
 						<c:if test="${fn:length(newTabBanner) < 5 }">
 						<div class="plus">
-							<button type="button" data-toggle="modal" data-target="#newModal">추가하기</button>
+							<button type="button" data-toggle="modal" data-target="#newModal" class="tabbanRegistBtn">추가하기</button>
 						</div>
 						</c:if>
 					</div>
@@ -583,7 +588,7 @@ function openList(listName) {
 				<div class="plusBox">
 					<c:if test="${fn:length(muTabBanner) < 5 }">
 					<div class="plus">					
-						<button type="button" data-toggle="modal" data-target="#muModal">추가하기</button>
+						<button type="button" data-toggle="modal" data-target="#muModal" class="tabbanRegistBtn">추가하기</button>
 					</div>
 					</c:if>
 				</div>
@@ -614,7 +619,7 @@ function openList(listName) {
 				<div class="plusBox">
 					<c:if test="${fn:length(conTabBanner) < 5 }">
 					<div class="plus">
-						<button type="button" data-toggle="modal" data-target="#conModal">추가하기</button>
+						<button type="button" data-toggle="modal" data-target="#conModal" class="tabbanRegistBtn">추가하기</button>
 					</div>
 					</c:if>
 				</div>

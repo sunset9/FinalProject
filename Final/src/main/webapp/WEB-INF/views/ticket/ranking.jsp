@@ -1,10 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
+.sorting {
+    text-align: center;	
+}
+.dateTitle {
+    text-align: center;
+}
+.pfmRanking {
+    margin-top: 30px;
+}
+
 .pfmRanking img {
 	float: left;
 	width: 90px;
 } 
+#dailyInfo {
+	margin: 30px;
+}
+.ranking {
+    font-size: 44px;
+    padding: 20px 110px 0px 40px !important;
+    width: 20px;
+    color: #fdd508;
+}
+.pfmInfo p {
+	display: inline-block;
+    padding-top: 40px;
+    padding-left: 10px;
+}
+
+
 </style>
 
 <script>
@@ -24,6 +50,8 @@ $(document).ready(function(){
 			// 필터 기간 띄워주기
 			var strDate = getDateStringDaily(today);
 			$('#datePeriod').text(strDate);
+			// 집계 안내 메세지 띄워주기
+			$('#dailyInfo').show();
 			
 			type = 'daily';
 		
@@ -32,6 +60,8 @@ $(document).ready(function(){
 			// 필터 기간 띄워주기
 			var strDate = getDateStringWeekly(today);
 			$('#datePeriod').text(strDate);
+			// 집계 안내 메세지 감추기
+			$('#dailyInfo').hide();
 			
 			type = 'weekly';
 		}
@@ -97,11 +127,28 @@ function getDateString(date){
 function getDateStringDaily(date) {
 	var strDate = getDateString(date);
 	var hours = date.getHours();
+	var mins = date.getMinutes();
+	var strDaily;
 	
-	var strDaily = strDate
+	console.log(hours);
+	console.log(mins);
+	// 오전 10시 30분 이전이라면 전날로 조회
+	if(hours < 10 || (hours == 10 && mins <= 30)){
+		var yesterDay = new Date(date.getTime() - (1 * 24 * 60 * 60 * 1000));
+		hours = getDateString(yesterDay);
+		
+		strDaily = strDate
 	    + '00:00 ~'
-	    + ((hours < 10) ? '0' + hours : hours) + ':00'
-	    +' 현재';
+	    + '24:00';
+			
+	// 오전 10시 30분 이후인 경우
+	} else {
+		strDaily = strDate
+		    + '00:00 ~'
+		    + ((hours < 10) ? '0' + hours : hours) + ':00'
+		    +' 현재';
+	}
+	
 	
 	return strDaily;
 };
@@ -129,12 +176,14 @@ function viewRank(pfmList){
 	for(var i=0; i<pfmList.length; i++){
 		var pfm = pfmList[i];
 		var tr = $('<tr>');
-		tr.append('<td>'+ (i+1) +'</td>'); // 순위
-		var mainInfo = $('<div>'); // 주요 정보(포스터, 이름)
-		mainInfo.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
-		mainInfo.append($('<p>'+ pfm.name +'</p>'));
+		tr.append('<td class="ranking">'+ (i+1) +'</td>'); // 순위
+		var mainInfo = $('<div class="pfmInfo">'); // 주요 정보(포스터, 이름)
+		var mainInfo_a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'" style="text-decoration:none">');
+		mainInfo_a.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
+		mainInfo_a.append($('<p>'+ pfm.name +'</p>'));
+		mainInfo.append(mainInfo_a);	
 		
-		tr.append('<td>'+mainInfo.html()+'</td>');
+		tr.append($('<td>').append(mainInfo));
 		
 		tr.append('<td>'+getDateSimpleString(pfm.pfmStart)
 				+'<br>~ '+getDateSimpleString(pfm.pfmEnd)+'</td>'); // 공연 일정
@@ -148,10 +197,12 @@ function viewRank(pfmList){
 }
 </script>
 
+<div class="main_wrapper">
 <div class="sorting">
 <button id="dailySort">일간</button>
 <button id="weeklySort" class="clicked">주간</button>
 </div>
+
 <div class="dateTitle"><p id="datePeriod"></p></div>
 
 <div class="pfmRanking">
@@ -168,4 +219,13 @@ function viewRank(pfmList){
 <tbody>
 </tbody>
 </table>
+
+<div id="dailyInfo" style="display:none">
+<b>집계 대상</b>
+<ul>
+<li>당일 오전의 경우 판매비중이 낮기 때문에 오전 10시 30분 이전까지는 전일 24시간의 집계 현황을 알려드립니다.</li>
+</ul>
+</div>
+</div>
+
 </div>
