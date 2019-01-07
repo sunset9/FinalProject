@@ -34,10 +34,45 @@
 	border: 1px solid #CCC;
 	width: 250px;
 }
+/* 탭 메뉴 설정 */
 .tabSec{
-	border: 1px solid #CCC;
+/* 	border: 1px solid #CCC; */
 	width: 33%;
 	display: inline-block;	
+/* 	height: 40px; */
+	text-align: center;
+	font-size: 1.5em;
+	font-weight: bold;
+	vertical-align:middle;
+}
+/* 화면 사용 범위 */
+
+.temp{
+	width: 75%;
+	margin: 0 auto;
+	margin-bottom: 30px;
+	border-bottom: 1px solid #CCC;
+	text-align: center;
+}
+
+#tabDiv{
+	margin-top: 20px; 
+}
+
+/* 활성화된 탭 */
+
+#choice{
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
+	color :#fcd303;
+	border-bottom: 3px solid #fcd303;
+}	
+
+/* 선택한 아티스트 목록 리스트	 */
+
+#selectedArt{
+}
+	
 </style>
 
 <script type="text/javascript">
@@ -93,7 +128,8 @@ function pfmChoice(pfmIdx){
 <!-- 유저 정보 담고 있는 jsp -->
 <jsp:include page="userinfo.jsp" />
 </div>
-<div id ="tabSec" style="border: 1px solid #CCC; ">
+
+<div id="tabDiv"class ="temp">
 	<a href='/mypage/myticket'><div class = "tabSec" id ="ticket">예매현황</div></a>
 	<a href='/mypage/mychoice'><div class = "tabSec" id ="choice">찜</div></a>
 	<a href='/mypage/viewinquiry'><div class = "tabSec" id ="inquiry">내 문의사항</div></a>
