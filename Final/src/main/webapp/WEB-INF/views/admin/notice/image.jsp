@@ -180,7 +180,7 @@
 		</div>	
 		<div class="body">
 			<dl class="alert">
-		    		<dt>1MB이하 (JPG,GIF,PNG,BMP)</dt>
+		    		<dt>10MB이하 (JPG,GIF,PNG,BMP)</dt>
 		    		<dd>
 		    		 <form id=daumOpenEditorForm encType=multipart/form-data method=post action="">
 

@@ -25,8 +25,7 @@ public interface AdminBoardDao {
 	public void insertNoti(Notice notice);
 	
 	// 글번호로 게시글 조회 (수정 get)
-	public Notice selectNoticeBynoticeIdx(Notice notice);
-	
+	public Notice selectNoticeBynoticeIdx(Notice notice);	
 	// 공지사항 글 수정 (수정 post)
 	public void updateNoti(Notice notice);
 	
@@ -40,21 +39,26 @@ public interface AdminBoardDao {
 	public Notice postNoti(int noticeIdx);
 	
 	
+	// Faq 전체 글 리스트
+	public List<Faq> selectFaqList(Paging paging);
 	
-	// FAQ 글 리스트
-	public List selectFaqList(Faq faq);
+	// Faq 전체 글 조회
+	public int selectCntAllFaq();
+	
+	// FAQ 상세보기
+	public Faq faqView(int faqIdx);
 
 	// FAQ 글 쓰기
-	public void insertFaq();
+	public void insertFaq(Faq faq);
 	
 	// FAQ 글 수정
-	public void updateFaq();
+	public Faq selectFaqByfaqIdx(Faq faq);
+	public void updateFaq(Faq faq);
+	
 	
 	// FAQ 글 삭제
-	public void deleteFaq();
+	public void deleteFaq(Faq faq);
 	
-	// FAQ 답변 쓰기
-	public void insertFaqAnswer();
 
 	
 	
