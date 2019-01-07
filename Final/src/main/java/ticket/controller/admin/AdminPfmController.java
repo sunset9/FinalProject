@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -640,7 +641,9 @@ public class AdminPfmController {
 			Model model,
 			@RequestParam(value = "lastMainbanIdx", defaultValue = "0") int lastMainbanIdx
 			) {
-		logger.info("PfmController의 mainBannerList() 호출됨");
+		//logger.info("mbannerList "+mbannerList);
+		
+		logger.info("adminPfmController의 mBannerList() 호출됨");
 		// List mBannerList = pService.getMBannerList
 		List<MainBanner> mBannerList = pService.getMBannerList();
 		logger.info("메인 배너 리스트 확인 : "+mBannerList.toString());
@@ -716,11 +719,14 @@ public class AdminPfmController {
 			HttpServletRequest req,
 			Model model,
 			@RequestParam(defaultValue="1") int curPage,
-			int lastMainbanIdx
+			@RequestParam(defaultValue="0") int lastMainbanIdx
 			) {
-		System.out.println("lastMainbanIdx 넘어왔니 : "+lastMainbanIdx);
-		String search = req.getParameter("mainBanSearch");
-		logger.info("메인 배너 검색 결과 : "+search);
+		String search = "";
+		if(lastMainbanIdx != 0) {
+			System.out.println("lastMainbanIdx 넘어왔니 : "+lastMainbanIdx);
+			search = req.getParameter("mainBanSearch");
+			logger.info("메인 배너 검색 결과 : "+search);
+		}
 		
 		//공연수 얻기
 		int totalPfm = pService.getTotalPfm(search);
@@ -747,7 +753,7 @@ public class AdminPfmController {
 	@RequestMapping(value="/admin/registMainbanner", method=RequestMethod.POST)
 	public String registMBannerProc(
 			Model model,
-			@RequestParam(value="pfmIdx") String pfmIdx, 
+			@RequestParam(value="pfmIdx") int pfmIdx, 
 			@RequestParam(value="thumbFile") MultipartFile thumbFile,
 			@RequestParam(value="bannerFile") MultipartFile bannerFile,
 			RedirectAttributes redirectAttributes,
@@ -768,17 +774,20 @@ public class AdminPfmController {
 		
 		// Map에 저장하기
 		Map<String, String> mbannerInfo = new HashMap<>();
-		mbannerInfo.put("pfmIdx", pfmIdx);
+		mbannerInfo.put("pfmIdx", String.valueOf(pfmIdx));
 		mbannerInfo.put("thumbOrigin", thumbOrigin);
 		mbannerInfo.put("thumbStored", thumbStored);
 		mbannerInfo.put("bannerOrigin", bannerOrigin);
 		mbannerInfo.put("bannerStored", bannerStored);
 		
-		List<Map<String, String>> mbannerList = new ArrayList<>();
+		logger.info("여기까지왔나");
+		
+		List mbannerList = new ArrayList<>();
 		mbannerList.add(mbannerInfo);
 		
-		redirectAttributes.addAttribute("mbannerList", mbannerList);
 		
+		//redirectAttributes.addAttribute(mbannerList);
+		redirectAttributes.addFlashAttribute("mbannerList", mbannerList);
 		
 		return "redirect:/admin/mainbannerlist";
 	}
