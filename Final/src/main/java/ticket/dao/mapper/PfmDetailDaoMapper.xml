@@ -24,6 +24,26 @@
 		<result column="nick" property="nick"/>	
 	</resultMap>
 	
+	<resultMap type="ticket.dto.Review" id="Review">
+		<result column="review_idx" property="reviewIdx"/>
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="user_idx" property="userIdx"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="profile" property="profile"/>
+		<result column="nick" property="nick"/>	
+	</resultMap>
+	
+	<resultMap type="ticket.dto.QNA" id="QNA">
+		<result column="qna_idx" property="qnaIdx"/>
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="user_idx" property="userIdx"/>
+		<result column="qna_content" property="qnaContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="profile" property="profile"/>
+		<result column="nick" property="nick"/>	
+	</resultMap>
+	
 	<resultMap type="ticket.dto.ExpectRecomm" id="ExpectRecomm">
 		<result column="exp_idx" property="expIdx"/>
 		<result column="e_recomm_idx" property="eRecommIdx"/>
@@ -31,6 +51,23 @@
 		<result column="contents" property="contents"/>
 		<result column="create_date" property="createDate"/>
 		<result column="nick" property="nick"/>	
+	</resultMap>
+	
+	<resultMap type="ticket.dto.ReviewRecomm" id="ReviewRecomm">
+		<result column="review_idx" property="reviewIdx"/>
+		<result column="r_recomm_idx" property="rRecommIdx"/>
+		<result column="user_idx" property="userIdx"/>
+		<result column="contents" property="contents"/>
+		<result column="create_date" property="createDate"/>
+		<result column="nick" property="nick"/>	
+	</resultMap>
+	
+	<resultMap type="ticket.dto.QNARecomm" id="QNARecomm">
+		<result column="q_recomm_idx" property="qRecommIdx"/>
+		<result column="qna_idx" property="qnaIdx"/>
+		<result column="user_idx" property="userIdx"/>
+		<result column="contents" property="contents"/>
+		<result column="create_date" property="createDate"/>
 	</resultMap>
 	
 	<resultMap type="ticket.dto.PfmDetail" id="PfmDetail">
@@ -168,27 +205,22 @@
 	</delete>
 	
 	<!-- 관람 후기 -->
-	<select id="selectReviewList" parameterType="ticket.dto.Performance" resultType="ticket.dto.Review">
-		SELECT
-		    r.reviewIdx
-		    , r.pfmIdx
-		    , r.userIdx
-		    , r.reviewContent
-		    , r.createDate
-		FROM(
+	<select id="selectReviewList" parameterType="ticket.dto.Performance" resultMap="Review">
+		SELECT rev.* FROM (
 		    SELECT
-		        review_idx as reviewIdx
-                , pfm_idx as pfmIdx
-                , user_idx as userIdx
-                , review_content as reviewContent
-<!--                 , review_star as reviewStar -->
-                , create_date as createDate
-		    FROM review
+		        r.review_idx
+		        , r.pfm_idx
+		        , r.user_idx
+		        , r.review_content
+		        , r.create_date
+		        , u.profile
+		        , u.nick
+		    FROM review r
+		    JOIN userinfo u
+		    ON u.user_idx = r.user_idx
 		    WHERE pfm_idx=#{pfmIdx}
-		    ORDER BY create_date DESC
-		) r
-		LEFT JOIN userinfo u
-		    ON u.user_idx = r.userIdx
+		    ORDER BY r.create_date DESC
+		) rev
 	</select>
 	
 	<select id="selectReviewUserList" parameterType="ticket.dto.Performance" resultType="ticket.dto.User">
@@ -203,7 +235,6 @@
 		        , pfm_idx as pfmIdx
 		        , user_idx as userIdx
 		        , review_content as reviewContent
-<!--                 , review_star as reviewStar -->
 		        , create_date as createDate
 		    FROM review
 		    WHERE pfm_idx=#{pfmIdx}
@@ -251,36 +282,22 @@
 		VALUES(my_choice_seq.nextval, ${userIdx}, ${pfmIdx})
 	</insert>
 	
-	<select id="selectQNAList" parameterType="ticket.dto.Performance" resultType="ticket.dto.QNA">
-		SELECT qna.* FROM (
-		    SELECT 
-		        q.qna_idx as qnaIdx
-		        , q.pfm_idx as pfmIdx
-		        , q.user_idx as userIdx
-		        , q.qna_content as qnaContent
-		        , q.create_date as createDate
+	<select id="selectQNAList" parameterType="ticket.dto.Performance" resultMap="QNA">
+		SELECT qnaa.* FROM (
+		    SELECT
+		        q.qna_idx
+		        , q.pfm_idx
+		        , q.user_idx
+		        , q.qna_content
+		        , q.create_date
+		        , u.profile
+		        , u.nick
 		    FROM qna q
 		    JOIN userinfo u
 		    ON u.user_idx = q.user_idx
-		    WHERE pfm_idx = #{pfmIdx}
-		    ORDER BY createDate DESC
-		) qna
-	</select>
-	
-	<select id="selectQNAUserList" parameterType="ticket.dto.Performance" resultType="ticket.dto.User">
-		SELECT us.* FROM (
-		    SELECT
-		        u.user_idx as userIdx
-		        , u.profile
-		        , u.name
-    		    , u.nick
-		        , u.create_date as createDate
-		    FROM userinfo u
-		    JOIN qna q
-		    ON q.user_idx = u.user_idx
-		    WHERE pfm_idx = 3
-		    ORDER BY u.create_date DESC
-		) us
+		    WHERE pfm_idx=#{pfmIdx}
+		    ORDER BY q.create_date DESC
+		) qnaa
 	</select>
 	
 	<select id="selectQNARecommList" resultType="ticket.dto.QNARecomm">
@@ -296,4 +313,19 @@
 		WHERE q.pfm_idx = #{pfmIdx}
 		ORDER BY qr.create_date DESC
 	</select>
+	
+	<insert id="insertQNA" parameterType="String">
+		INSERT INTO qna (qna_idx, pfm_idx, user_idx, qna_content)
+		VALUES(qna_seq.nextval, #{pfmIdx}, #{userIdx}, #{qnaContent})
+	</insert>
+	
+	<delete id="deleteQNA" parameterType="String">
+		delete qna
+		where qna_idx = #{qnaIdx}
+	</delete>
+	
+	<insert id="insertQnaRecomm" parameterType="String">
+		INSERT INTO qna_recomm (q_recomm_idx, qna_idx, user_idx, contents)
+		VALUES(qna_recomm_seq.nextval, #{qnaIdx}, 1, #{contents})
+	</insert>
 </mapper>

@@ -5,6 +5,8 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,21 +65,13 @@ public class PfmDetailController {
 		List<Expectation> expecList = detailService.getExpectationList(pfm);
 		model.addAttribute("expecList", expecList);
 
-		// 기대평 작성자 리스트 출력
-		List<User> expecUserList = detailService.getExpectationUserList(pfm);
-		model.addAttribute("expecUserList", expecUserList);
-
 		// 기대평 대댓글 리스트 출력하기
-		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		List<ExpectRecomm> expRecommList = detailService.getExpRecommList();
 		model.addAttribute("expRecommList", expRecommList);
 
 		// 관람후기 리스트 출력해주기
 		List<Review> reviewList = detailService.getReviewList(pfm);
 		model.addAttribute("reviewList", reviewList);
-
-		// 관람후기 작성자 리스트 출력
-		List<User> reviewUserList = detailService.getReviwUserList(pfm);
-		model.addAttribute("reviewUserList", reviewUserList);
 
 		// 해당 공연에 대한 공연장 정보 출력
 		Hall hallInfoList = detailService.getHallInfoList(pfm);
@@ -90,10 +84,6 @@ public class PfmDetailController {
 		// QNA 리스트
 		List<QNA> qnaList = detailService.getQNAList(pfm);
 		model.addAttribute("qnaList", qnaList);
-		
-		// QNA 작성자 리스트 
-		List<User> qnaUserList = detailService.getQNAUserList(pfm);
-		model.addAttribute("qnaUserList", qnaUserList);
 		
 		// QNA 대댓글 리스트
 		List<QNARecomm> qnaRecommList = detailService.getQNARecommList(pfm);
@@ -108,8 +98,14 @@ public class PfmDetailController {
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value = "/pfmdetail/expectation", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> expectation(String expContent, String pfmIdx, String userIdx,
-			Performance pfm, String expIdx, String updel) {
+	public @ResponseBody HashMap<String, Object> expectation(
+			String expContent
+			, String pfmIdx
+			, String userIdx
+			, Performance pfm
+			, String expIdx
+			, String updel
+		) {
 
 		HashMap<String, Object> map = new HashMap<>();
 
@@ -135,12 +131,9 @@ public class PfmDetailController {
 		// 기대평 리스트 출력해주기
 		List<Expectation> expecList = detailService.getExpectationList(pfm);
 		map.put("expecList", expecList);
-
-		// 작성자 리스트 출력
-		List<User> expecUserList = detailService.getExpectationUserList(pfm);
-		map.put("expecUserList", expecUserList);
 		
-		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		// 기대평 대댓글 리스트 출력하기
+		List<ExpectRecomm> expRecommList = detailService.getExpRecommList();
 		map.put("expRecommList", expRecommList);
 
 		return map;
@@ -163,7 +156,7 @@ public class PfmDetailController {
 		
 		detailService.getInExpectRecomm(userIdx, expIdx, contents);
 		
-		List<ExpectRecomm> expRecommList = detailService.getExpRecommList(pfm);
+		List<ExpectRecomm> expRecommList = detailService.getExpRecommList();
 		map.put("expRecommList", expRecommList);
 		
 		return map;
@@ -176,7 +169,7 @@ public class PfmDetailController {
 	 */
 	@RequestMapping(value = "/pfmdetail/review", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> review(String reviewContent, String pfmIdx, String userIdx,
-			Performance pfm, String reviewStar, String reviewIdx, String updel) {
+			Performance pfm, String reviewIdx, String updel) {
 
 		HashMap<String, Object> map = new HashMap<>();
 
@@ -184,7 +177,6 @@ public class PfmDetailController {
 		logger.info(reviewContent);
 		logger.info(pfmIdx);
 		logger.info(userIdx);
-		logger.info(reviewStar);
 
 		if (updel.equals("revBtn")) {
 			// 관람후기 작성
@@ -207,6 +199,92 @@ public class PfmDetailController {
 		return map;
 	}
 
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 전체 리스트 출력
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value = "/pfmdetail/qna", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> qna(
+			String qnaContent
+			, String pfmIdx
+			, String userIdx
+			, String qnaIdx
+			, Performance pfm
+		) {
+
+		HashMap<String, Object> map = new HashMap<>();
+
+		logger.info(qnaContent);
+		logger.info(pfmIdx);
+		logger.info(userIdx);
+		
+		// 관람후기 작성
+		detailService.getInQna(qnaContent, pfmIdx, userIdx);
+
+		// 관람후기 리스트 출력해주기
+		List<QNA> qnaList = detailService.getQNAList(pfm);
+		map.put("qnaList", qnaList);
+
+		return map;
+	}
+	
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 댓글 삭제
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value = "/pfmdetail/qnadelete", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> qnadelete(
+			String qnaIdx
+			, Performance pfm
+		) {
+
+		HashMap<String, Object> map = new HashMap<>();
+
+		logger.info(qnaIdx);
+		
+		// 관람후기 작성
+		detailService.getDelQna(qnaIdx);
+
+		// 관람후기 리스트 출력해주기
+		List<QNA> qnaList = detailService.getQNAList(pfm);
+		map.put("qnaList", qnaList);
+		
+		return map;
+	}
+	
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 대댓글 작성
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value = "/pfmdetail/qnarecomm", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> qnarecomm(
+			String qnaIdx
+			, String contents
+			, Performance pfm
+		) {
+
+		HashMap<String, Object> map = new HashMap<>();
+
+		logger.info("qnaIdx : " + qnaIdx);
+		logger.info("contents : " + contents);
+		
+		// QNA 대댓글 작성
+		if(contents != null)
+			detailService.getInQnaRecomm(qnaIdx, contents);
+
+		// QNA 리스트 출력해주기
+		List<QNA> qnaList = detailService.getQNAList(pfm);
+		map.put("qnaList", qnaList);
+		
+		List<QNARecomm> qnaRecommList = detailService.getQNARecommList(pfm);
+		map.put("qnaRecommList", qnaRecommList);
+		
+		return map;
+	}
+	
 	/**
 	 * 최종수정일: 2018.12.28
 	 * 

@@ -8,11 +8,29 @@ public class QNA {
 	private int userIdx;
 	private String qnaContent;
 	private Date createDate;
+	private String profile; // 유저 프로필
+	private String nick; // 유저 닉네임
 
 	@Override
 	public String toString() {
 		return "QNA [qnaIdx=" + qnaIdx + ", pfmIdx=" + pfmIdx + ", userIdx=" + userIdx + ", qnaContent=" + qnaContent
-				+ ", createDate=" + createDate + "]";
+				+ ", createDate=" + createDate + ", profile=" + profile + ", nick=" + nick + "]";
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 
 	public int getQnaIdx() {

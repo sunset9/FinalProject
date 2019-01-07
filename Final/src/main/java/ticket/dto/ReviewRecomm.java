@@ -1,5 +1,7 @@
 package ticket.dto;
 
+import java.util.Date;
+
 import oracle.sql.DATE;
 
 // 관람 후기 대댓글
@@ -8,12 +10,21 @@ public class ReviewRecomm {
 	private int reviewIdx;
 	private int userIdx;
 	private String contents;
-	private DATE createDate;
+	private Date createDate;
+	private String nick; // 유저 닉네임
 
 	@Override
 	public String toString() {
 		return "ReviewRecomm [rRecommIdx=" + rRecommIdx + ", reviewIdx=" + reviewIdx + ", userIdx=" + userIdx
-				+ ", contents=" + contents + ", createDate=" + createDate + "]";
+				+ ", contents=" + contents + ", createDate=" + createDate + ", nick=" + nick + "]";
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 
 	public int getrRecommIdx() {
@@ -48,11 +59,11 @@ public class ReviewRecomm {
 		this.contents = contents;
 	}
 
-	public DATE getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(DATE createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 

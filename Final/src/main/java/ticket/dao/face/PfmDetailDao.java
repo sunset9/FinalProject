@@ -75,7 +75,7 @@ public interface PfmDetailDao {
 	 * @Method설명: 기대평 대댓글 리스트
 	 * @작성자: 배수연
 	 */
-	public List<ExpectRecomm> selectExpRecommList(Performance pfm);
+	public List<ExpectRecomm> selectExpRecommList();
 
 	/**
 	 * 최종수정일: 2018.12.05
@@ -193,8 +193,46 @@ public interface PfmDetailDao {
 	 */
 	public List<QNA> selectQNAList(Performance pfm);
 
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 작성자 리스트
+	 * @작성자: 배수연
+	 */
 	public List<User> selectQNAUserList(Performance pfm);
 
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 대댓글 리스트
+	 * @작성자: 배수연
+	 */
 	public List<QNARecomm> selectQNARecommList(Performance pfm);
+
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 작성
+	 * @작성자: 배수연
+	 */
+	public void insertQNA(
+			@Param(value="qnaContent") String qnaContent
+			, @Param(value="pfmIdx") String pfmIdx
+			, @Param(value="userIdx") String userIdx
+		);
+
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 삭제
+	 * @작성자: 배수연
+	 */
+	public void deleteQNA(String qnaIdx);
+
+	/**
+	 * 최종수정일: 2019.01.06
+	 * @Method설명: QNA 대댓글 작성
+	 * @작성자: 배수연
+	 */
+	public void insertQnaRecomm(
+			@Param(value="qnaIdx") String qnaIdx
+			, @Param(value="contents") String contents
+		);
 	
 }
