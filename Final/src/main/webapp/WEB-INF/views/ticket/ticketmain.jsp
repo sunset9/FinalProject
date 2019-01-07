@@ -22,9 +22,14 @@
 	$(document).ready(function() {
 
 		// 메인 배너 슬라이드
+// 		$('.mainbanner').bxSlider({
+// 			minSlides: 1,
+// 			maxSlides: 1
+// 		});
+		
+		// 배너 썸네일
 		$('.mainbanner').bxSlider({
-			minSlides: 1,
-			maxSlides: 1
+			pagerCustom : '#mainThumb'
 		});
 		
 		// 메인배너 아래 탭
@@ -47,22 +52,6 @@
 				, dataType: "JSON"
 				, success:function(d){
 					console.log(d);
-					
-					// 새로 그려주기
-					$('#rankList').html('');
-					
-					d.forEach(function(pfm){
-						var li = $('<li class="pfmInfo">');
-						var a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'">');
-						var span = $('<span class="thumImg">');
-						var img = $('<img class="rankPoster" src="/resources/image/'+pfm.posterName+'"/>');
-						var name = $('<strong>'+pfm.name+'</strong>');
-						
-						span.append(img).append('<br>').append(name);
-						li.append(a.append(span));
-						$('#rankList').append(li);
-					});
-					
 				}
 				, error:function() {
 					console.log('랭킹 가져오기 실패');
@@ -146,6 +135,11 @@
 	height: 350px;
 }
 
+#thumbImg {
+	width: 100px;
+	height: 100px;
+}
+
 #fitImg {
 	width: 50px;
 	height: 100px;
@@ -223,15 +217,13 @@ li.pfmInfo {
 .rankPoster {
 	width: 100px;
 	height: 140px;
-}
-#rankList a {
-	text-decoration:none;
+	
 }
 
 /* 메인 하단 */
 .mainbottom {
 	width: 100%;
-	display: flex;
+ 	display: inline;
 }
 
 .ranking {
@@ -276,13 +268,13 @@ div>h4 {
 	</ul>
 	
 	<!-- 슬라이드 CSS 추가 시 변경 예정 -->
-<!-- 	<ul class="mainThumb"> -->
-<%-- 		<c:forEach items="${bannerList }" var="list"> --%>
-<!-- 			<li> -->
-<%-- 				<img src="/resources/image/${list.thumbImgOri}" /> --%>
-<!-- 			</li> -->
-<%-- 		</c:forEach> --%>
-<!-- 	</ul> -->
+	<div id="mainThumb">
+		<c:forEach items="${bannerList }" var="list">
+			<a data-slide-index="${list.mainbanIdx }" href="">
+				<img id="thumbImg" src="/resources/image/${list.thumbImgStr}" />
+			</a>
+		</c:forEach>
+	</div>
 </div>
 
 <div class="main_wrapper">
@@ -364,7 +356,7 @@ div>h4 {
 			<ul class="fitPfmbox" onload="loginFitPfm();">
 				<li>
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-					<img src="/resources/image/${list.bannerImgOri}" />
+					<img src="/resources/image/${list.bannerImgStr}" />
 				</a>
 				</li>
 			</ul>
@@ -375,7 +367,6 @@ div>h4 {
 		</c:if>
 	</div>
 </div>
-
 </div>
 
 </div>
