@@ -285,6 +285,7 @@ div>h4 {
 <!-- 	</ul> -->
 </div>
 
+<div class="main_wrapper">
 <!-- 탭 배너 -->
 <div class="main_tab">
 	<ul class="tabs">
@@ -374,4 +375,7 @@ div>h4 {
 		</c:if>
 	</div>
 </div>
+
+</div>
+
 </div>

@@ -128,10 +128,6 @@ $(document).ready(function() {
 	text-align: center;
 }
 
-.container {
-	margin: 0 5% 10px 5%;
-}
-
 .concertImg {
 	width: 250px;
 	height: 300px;
@@ -186,7 +182,7 @@ li.pfmInfo {
 	margin-top: 20px;
 }
 </style>
-<div class="container">
+<div class="main_wrapper">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
 	<h3 style="font-size: 30px;">콘서트</h3><br>
 	<div class="topbannerimg">
