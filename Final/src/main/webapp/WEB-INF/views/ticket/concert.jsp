@@ -128,6 +128,10 @@ $(document).ready(function() {
 	text-align: center;
 }
 
+.container {
+	margin: 0 5% 10px 5%;
+}
+
 .concertImg {
 	width: 250px;
 	height: 300px;
@@ -182,7 +186,7 @@ li.pfmInfo {
 	margin-top: 20px;
 }
 </style>
-<div class="main_wrapper">
+<div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
 	<h3 style="font-size: 30px;">콘서트</h3><br>
 	<div class="topbannerimg">
@@ -199,6 +203,7 @@ li.pfmInfo {
 	</div>
 	
 	<hr>
+	<div class="main_wrapper">
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="conall" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
@@ -234,6 +239,6 @@ li.pfmInfo {
 			</li>
 		</c:forEach>
 	</ul>
-	
+	</div>
 	<!-- 무한스크롤 추가하기 -->
 </div>

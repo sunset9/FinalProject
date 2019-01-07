@@ -197,10 +197,12 @@ function viewRank(pfmList){
 }
 </script>
 
+<div class="main_wrapper">
 <div class="sorting">
 <button id="dailySort">일간</button>
 <button id="weeklySort" class="clicked">주간</button>
 </div>
+
 <div class="dateTitle"><p id="datePeriod"></p></div>
 
 <div class="pfmRanking">
@@ -223,6 +225,7 @@ function viewRank(pfmList){
 <ul>
 <li>당일 오전의 경우 판매비중이 낮기 때문에 오전 10시 30분 이전까지는 전일 24시간의 집계 현황을 알려드립니다.</li>
 </ul>
+</div>
 </div>
 
 </div>
