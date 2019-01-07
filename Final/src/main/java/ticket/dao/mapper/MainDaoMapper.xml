@@ -39,6 +39,7 @@
 		SELECT main.* FROM (
 		    SELECT
 		    	mb.pfm_idx as pfmIdx
+		    	, mb.mainban_idx as mainbanIdx
 		    	, mb.banner_img_ori as bannerImgOri
    			    , mb.banner_img_str as bannerImgStr
    			    , mb.thumb_img_ori as thumbImgOri
