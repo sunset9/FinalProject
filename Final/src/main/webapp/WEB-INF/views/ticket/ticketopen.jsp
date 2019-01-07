@@ -60,23 +60,40 @@ $(document).ready(function() {
 		$('#bottomlist').html('');
 		
 		openPfmList.forEach(function(list) {
-			
-		var li =$('<li class="pfmInfo">');
 		
-		var a = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
-		var span = $('<span class="pfmdate">');
+		var li = $('<li class="pfmInfo">');
+		var ul = $('<ul>');
 		
 		var ticketStart = getDateSimpleString(list.ticketStart);
-		var h5 = $('<h5>티켓오픈일 : ' + ticketStart + '</h5>');
 		
-		span.append(h5);
+		var li1 = $('<li class="ticketOpenDay ticketOpenLI">');
+		var span1 = $('<span>티켓오픈일<br>' + ticketStart + '</span>');
 		
-		var h2 = $('<h2>' + list.name + ' 오픈 안내</h2>');
-		span.append(h2);
+		li1.append(span1);
+
+		var createDate = getDateSimpleString(list.createDate);
 		
-		var img = $('<img class="bannerImg" src="/resources/image/'+ list.posterName + '"><br>');
-		span.append(img);
-		li.append(span);
+		var li2 = $('<li class="ticketOpenInfo ticketOpenLI">');
+		var a1 = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
+		var span2 = $('<span>');
+		var strong = $('<strong id="pfmName">' + list.name + ' 오픈 안내<br></strong>');
+		var small = $('<small style="color: #666;">등록일 : ' + createDate + '</small>');
+		
+		span2.append(strong).append(small);
+		a1.append(span2);
+		li2.append(a1);
+		
+		var li3 = $('<li class="ticketOpenImg">');
+		var a2 = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
+		var span3 = $('<span>');
+		var img = $('<img class="bannerImg" src="/resources/image/' + list.posterName + '"/>');
+		
+		span3.append(img);
+		a2.append(span3);
+		li3.append(a2);
+		
+		ul.append(li1).append(li2).append(li3);
+		li.append(ul);
 		
 		$('#bottomlist').append(li);
 
@@ -96,10 +113,6 @@ $(document).ready(function() {
 </script>
 
 <style>
-.container {
-	margin: 0 5% 10px 5%;
-}
-
 .topbanner {
 	text-align: center;
 }
@@ -124,13 +137,14 @@ li.pfmbanInfo {
 
 li.pfmInfo {
 	list-style: none;
+	width: 100%;
 	border-top: 1px solid gray;
 	border-bottom: 1px solid gray;
 }
 
-#bottomlist, #searchandsort {
-	margin: 20px 5% 10px 5%;
-}
+/* #bottomlist, #searchandsort { */
+/* 	margin: 20px 5% 10px 5%; */
+/* } */
 
 #bottomlist {
 /* 	width: 1000px; */
@@ -155,21 +169,44 @@ ul.array li span{
 	float: right;
 }
 
-#openInfoSpan {
-/*  	margin: 0 20px 0 20px; */
-	text-align: center;
-	width: 400px;
-	height: auto;
-}
-
 #pfmName {
 	font-size: 25px;
+}
+
+.container {
+	text-align: center;
+	margin-left: 30px;
+}
+
+.ticketOpenLI {
+	float: left;
+	height: 140px;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.ticketOpenDay {
+	width: 380px;
+}
+
+.ticketOpenInfo {
+	width: 450px;
+	margin-right: 80px;
+}
+
+.ticketOpenImg {
+	height: 140px;
+}
+
+.main_wrapper {
+	margin-bottom: 50px;
 }
 </style>
 
 
+<div class="main_wrapper">
 <div class="container">
-	<h3 style="font-size: 30px;">HOT OPEN 소식</h3>
+	<h3 style="font-size: 30px; text-align: left;">HOT OPEN 소식</h3>
 	
 	<!-- 관리자가 지정한 오픈소식 배너 ?-->
 	<!-- 	일단 등록된 포스터에서 rownum으로 5개 걸러내서 리스트 뽑음 -->
@@ -191,7 +228,6 @@ ul.array li span{
 	</ul>
 	</div>
 	
-	<div style="margin: 0 50px 0 50px;">
 	<hr>
 	<div id="searchandsort">
 		<select name="searchKind">
@@ -214,23 +250,34 @@ ul.array li span{
 	<ul id="bottomlist">
 		<c:forEach items="${openPfmList }" var="list">
 			<li class="pfmInfo">
-			<span id="openInfoSpan">
-				티켓 오픈일<fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
-			</span>
-			<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
-				<span class="pfmdate">
-				<span id="openInfoSpan" style="display: inline-block;">
+			<ul>
+				<li class="ticketOpenDay ticketOpenLI">
+				<span>
+					티켓 오픈일<br><fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
+				</span>
+				</li>
+				
+				<li class="ticketOpenInfo ticketOpenLI">
+				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
+				<span>
 					<strong id="pfmName">${list.name } 오픈 안내<br></strong>
 					<small style="color: #666;">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy-MM-dd"/></small>
 				</span>
-				<span id="openInfoSpan" style="display: inline-block;">
+				</a>
+				</li>
+				
+				<li class="ticketOpenImg">
+				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
+				<span>
 					<img class="bannerImg" src="/resources/image/${list.posterName}" />
 				</span>
-				</span>
-			</a>
+				</a>
+				</li>
+			</ul>
 			</li>
 		</c:forEach>
 	</ul>
-	</div>
+	
+</div>
 	
 <!-- </div> -->

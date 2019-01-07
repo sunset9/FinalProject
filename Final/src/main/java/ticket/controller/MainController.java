@@ -111,9 +111,12 @@ public class MainController {
 	@RequestMapping(value="/ticket/themelist", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> themeList(
 			String theme
+			, String genreIdx
 		) {
 		
 		HashMap<String, Object> map = new HashMap<>();
+		
+		logger.info(genreIdx);
 		
 		// 콘서트 - 테마 선택 후 리스트 출력
 		if( theme.equals("conall") ) {
@@ -134,7 +137,7 @@ public class MainController {
 			map.put("pfmList", pfmList);
 		} else {
 			// 테마 idx 선택 시
-			List<Performance> pfmList = mainService.getpfmThemeChoicePoster(theme);
+			List<Performance> pfmList = mainService.getpfmThemeChoicePoster(theme, genreIdx);
 			
 			map.put("pfmList", pfmList);
 		}

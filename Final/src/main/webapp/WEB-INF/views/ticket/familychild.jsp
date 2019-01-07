@@ -20,11 +20,15 @@ $(document).ready(function() {
 		var themeIdx = $(this).attr('id');
 		console.log(themeIdx);
 		
+		var genreIdx = 3;
+		console.log(genreIdx);
+		
 		$.ajax({
 			url: '/ticket/themelist'
 			, method: 'GET'
 			, data: {
 				"theme" : themeIdx
+				, "genreIdx" : genreIdx
 			}
 			, dataType: 'json'
 			, success: function(d) {
@@ -32,7 +36,7 @@ $(document).ready(function() {
 				console.log('성공');
 // 				console.log(d);
 				
-				themeList(d.posterList);
+				themeList(d.pfmList);
 			}
 			, error: function(e) {
 				console.log('실패 !!!');
@@ -61,7 +65,7 @@ $(document).ready(function() {
 				console.log('성공');
 				console.log(d);
 				
-				themeList(d.posterList);
+				themeList(d.pfmList);
 			}
 			, error: function(e) {
 				console.log('실패');
@@ -69,11 +73,11 @@ $(document).ready(function() {
 		});
 	}); // 정렬 선택 btn
 	
-	function themeList(posterList) {
+	function themeList(pfmList) {
 		
-		$('#posterList').html('');
+		$('#pfmList').html('');
 		
-		posterList.forEach(function(list) {
+		pfmList.forEach(function(list) {
 			
 		var li =$('<li class="pfmInfo">');
 		
@@ -90,7 +94,7 @@ $(document).ready(function() {
 		
 		li.append(a);
 		
-		$('#posterList').append(li);
+		$('#pfmList').append(li);
 
 		});
 	}
@@ -123,10 +127,6 @@ $(document).ready(function() {
 <style>
 .topbannerimg {
 	text-align: center;
-}
-
-.container {
-	margin: 0 5% 10px 5%;
 }
 
 .familyImg {
@@ -182,6 +182,10 @@ li.pfmInfo {
 	text-align: center;
 	margin-top: 20px;
 }
+
+.container {
+	margin-bottom: 50px;
+}
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
@@ -200,6 +204,7 @@ li.pfmInfo {
 	</div>
 	
 	<hr>
+	<div class="main_wrapper">
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="conall" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
@@ -233,6 +238,6 @@ li.pfmInfo {
 			</li>
 		</c:forEach>
 	</ul>
-	
+	</div>
 	<!-- 무한스크롤 추가하기 -->
 </div>

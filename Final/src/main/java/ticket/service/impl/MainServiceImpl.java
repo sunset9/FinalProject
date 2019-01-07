@@ -57,8 +57,8 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Performance> getpfmThemeChoicePoster(String theme) {
-		return mainDao.ThemeChoice(theme);
+	public List<Performance> getpfmThemeChoicePoster(String theme, String genreIdx) {
+		return mainDao.ThemeChoice(theme, genreIdx);
 	}
 
 	@Override

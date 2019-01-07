@@ -113,7 +113,7 @@
 	position: relative;
 	max-width: 100%;
 	height: auto;
-/* 	border: 1px solid black;   */
+ 	border: 1px solid black;   
 /* 	overflow: hidden; */
 	margin: 0 auto;
 /* 	z-index: 2; */
@@ -138,6 +138,10 @@
 #thumbImg {
 	width: 100px;
 	height: 100px;
+}
+
+#mainThumb {
+	text-align: center;
 }
 
 #fitImg {
@@ -223,7 +227,7 @@ li.pfmInfo {
 /* 메인 하단 */
 .mainbottom {
 	width: 100%;
- 	display: inline;
+ 	display: flex;
 }
 
 .ranking {
@@ -252,6 +256,11 @@ div>h4 {
 
 .tab-content {
 	width: 100%;
+}
+
+/* 메인 배너 사진 속에 썸네일 사진 넣어주기 */
+.bx-wrapper {
+	display: contents;
 }
 </style>
 

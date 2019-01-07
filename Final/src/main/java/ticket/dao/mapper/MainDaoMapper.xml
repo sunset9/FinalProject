@@ -40,7 +40,7 @@
 		SELECT main.* FROM (
 		    SELECT
 		    	mb.pfm_idx as pfmIdx
-		    	, mb.mainban_idx as mainbanIdx
+		    	, rownum-1 as mainbanIdx
 		    	, mb.banner_img_ori as bannerImgOri
    			    , mb.banner_img_str as bannerImgStr
    			    , mb.thumb_img_ori as thumbImgOri
@@ -237,6 +237,7 @@
 		            SELECT pfm_idx
 		            FROM pfm_theme
 		            WHERE theme_idx = #{themeIdx}
+		            	AND genre_idx = #{genreIdx}
 				)
 		    ) PP
 		)
