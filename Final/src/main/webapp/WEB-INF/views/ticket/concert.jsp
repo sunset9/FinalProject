@@ -20,11 +20,15 @@ $(document).ready(function() {
 		var themeIdx = $(this).attr('id');
 		console.log(themeIdx);
 		
+		var genreIdx = 1;
+		console.log(genreIdx);
+		
 		$.ajax({
 			url: '/ticket/themelist'
 			, method: 'GET'
 			, data: {
 				"theme" : themeIdx
+				, "genreIdx" : genreIdx
 			}
 			, dataType: 'json'
 			, success: function(d) {
@@ -128,10 +132,6 @@ $(document).ready(function() {
 	text-align: center;
 }
 
-.container {
-	margin: 0 5% 10px 5%;
-}
-
 .concertImg {
 	width: 250px;
 	height: 300px;
@@ -184,6 +184,10 @@ li.pfmInfo {
 .choiceDiv {
 	text-align: center;
 	margin-top: 20px;
+}
+
+.container {
+	margin-bottom: 50px;
 }
 </style>
 <div class="container">

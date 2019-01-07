@@ -83,11 +83,13 @@ public interface MainDao {
 	public List<Performance> selectFamPfmPosterInfo();
 
 	/**
-	 * 최종수정일: 2018.12.11
-	 * @Method설명: 장르가 콘서트이면서 원하는 테마 선택시 해당하는 포스터 이미지 출력
+	 * 최종수정일: 2019.01.07
+	 * @Method설명: 원하는 장르의 원하는 테마 선택시 해당하는 포스터 이미지 출력
 	 * @작성자: 배수연
 	 */
-	public List<Performance> ThemeChoice(String theme);
+	public List<Performance> ThemeChoice(
+			@Param(value="themeIdx") String theme
+			,@Param(value="genreIdx")  String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.14

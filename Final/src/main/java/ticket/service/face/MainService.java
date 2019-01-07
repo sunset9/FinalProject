@@ -54,11 +54,12 @@ public interface MainService {
 	 */
 	public List<Performance> getFamPfmPoster();
 	/**
-	 * 최종수정일: 2018.12.11
+	 * 최종수정일: 2019.01.07
 	 * @Method설명: 원하는 테마 선택 후 리스트 출력하기
+	 * 			다른 테마더라도 동일한 장르일 경우(콘서트, 뮤지컬 : 발라드) 같이 출력되므로 장르 idx를 추가하여 조회
 	 * @작성자: 배수연
 	 */
-	public List<Performance> getpfmThemeChoicePoster(String theme);
+	public List<Performance> getpfmThemeChoicePoster(String theme, String genreIdx);
 
 	/**
 	 * 최종수정일: 2018.12.29
