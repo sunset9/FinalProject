@@ -26,7 +26,8 @@ $(document).ready(function() {
 			"pfmIdx" : ${pfmInfoList.pfmIdx},
 			"hallIdx" : ${pfmInfoList.hallIdx},
 			"name" : "${pfmInfoList.name}"
-		},
+		}
+		,
 		async: false,
 		dataType:"html",
 		success:function(res){
@@ -48,12 +49,11 @@ $(document).ready(function() {
 		
 		// 삭제할 기대평 idx
 		var expIdx = $('#expDeleteBtn').val();
-// 		var expIdx = document.getElementById("expDeleteBtn").value;
 		
 		console.log('선택 기대평 idx : ' + expIdx);
 // 		console.log('게시글 번호 : ' + pfmIdx);
 // 		console.log('내용 : ' + expContent);
-// 		console.log('로그인 유저 idx : ' + userIdx);
+		console.log('로그인 유저 idx : ' + userIdx);
 		
 		$.ajax({
 			url: '/pfmdetail/expectation'
@@ -68,10 +68,10 @@ $(document).ready(function() {
 			, dataType: 'json'
 			, success: function(d){
 				console.log("+ + + 성공 + + +");
+				console.log(d);
 					
 				// 성공할 경우 리스트에 출력해주기
 				insertExpContent(d.expecList);
-				insertExpUser(d.expecUserList);
 // 				insertExpRecomm(d.expRecommList);
 
 				// 작성 성공시 textarea 초기화해주기
@@ -82,18 +82,52 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
+	// 기대평 리스트
+	function insertExpContent(expecList) {
+		console.log('+ + + insertExpContent 함수 호출 완료 + + +');
+		
+		$('.ListExp').html('');
+		
+		expecList.forEach(function(list) {
+			
+		var div1 = $('<div class="expListUserInfo">');
+		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var strong = $('<strong>' + list.nick + '</strong>');
+		
+		div1.append(img).append(strong);
+		
+		var div2 = $('<div class="expListContentInfo">');
+		var small1 = $('<small>' + list.expContent + '</small><br>');
+		var small2 = $('<small id="contentDay">등록일 : ' + list.createDate + '</small>');
+		
+		div2.append(small1).append(small2);
+		
+		var div3 = $('<div id="expdelnup">');
+		var btn1 = $('<button id="expDeleteBtn" value="' + list.expIdx + '">삭제</button>');
+		var input = $('<input type="text" id="expRecomm">');
+		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
+		
+		console.log(list.expIdx);
+		
+		div3.append(btn1).append(input).append(btn2);
+			
+		$('.ListExp').append(div1).append(div2).append(div3);
+		
+		});
+	};
+
 	// 답글 선택 시
 	$('#expReBtn').click(function() {
 		var expIdx = $('#expReBtn').val();
 		var contents = document.getElementById("expRecomm").value;
-		var userIdx = ${loginUser.userIdx }
+		var userIdx = '${loginUser.userIdx }';
 
-		console.log(expIdx);
-		console.log(contents);
-		console.log(userIdx);
+		console.log('답글 작성 expIdx : ' + expIdx);
+// 		console.log(contents);
+// 		console.log(userIdx);
 		
-		$.ajax({
+		$.ajax({     
 			url: '/pfmdetail/expectRecomm'
 			, method: 'GET'
 			, data: {
@@ -123,68 +157,26 @@ $(document).ready(function() {
 	function insertExpRecomm(expRecommList) {
 		console.log('+ + + insertExpRecomm 함수 호출 완료 + + +');
 		
-		$('#expectaRecomm').html('');
+		$('#expectationRecomm').html('');
 
 		// 현재 대댓글을 달으려하는 댓글의 번호를 가져옴
 		var expIdx = $('#expReBtn').val();
-		console.log(expIdx);
+// 		console.log('expIdx : ' + expIdx);
 		
 		expRecommList.forEach(function(relist) {
-// 			console.log('relist');
-			
 			// 대댓글 데이터 중 expIdx와 부모 댓글의 expIdx가 동일할 경우
-			//	안됨,,, 고쳐야돼 !
 			if(relist.expIdx == expIdx) {
-				var small = $('<small>-> ' + relist.nick + " : " + relist.contents + '</small><br>');
+				console.log('relist.expIdx : ' + relist.expIdx);
+				console.log('expIdx : ' + expIdx);
 				
-				$('#expectaRecomm').append(small);
+				var div = $('<div id="expectaRecomm">');
+				var small = $('<small>-> ' + relist.nick + " : " + relist.contents + '</small><br>');
+				div.append(small);
+				
+				$('#expectationRecomm').append(div);
 			}
 		});
-	}
-
-	// 기대평 작성자 리스트
-	function insertExpUser(expecUserList) {
-		
-		$('#expecUser').html('');
-		
-		expecUserList.forEach(function(list) {
-			
-		var div = $('<div id="expectationUser">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
-		var strong = $('<strong>' + list.name + '</strong>');
-		
-		div.append(img);
-		div.append(strong);
-		
-		$('#expecUser').append(div);
-
-		});
-	}
-	
-	// 기대평 리스트
-	function insertExpContent(expecList) {
-		
-		$('#expecContent').html('');
-		
-		expecList.forEach(function(list) {
-			
-		var div1 = $('<div id="expectationContent">');
-		var content = list.expContent;
-
-		div1.append(content);
-		
-		var div2 = $('<div id="expdelnup">');
- 		var delbtn = $('<button id="expDeleteBtn" value="' + list.expIdx + '">삭제</button>');
-		
-		div2.append(delbtn);
-		
-		div1.append(div2);
-		
-		$('#expecContent').append(div1);
-		
-		});
-	}
-
+	};
 	
 	// 관람 후기
 	$('#revBtn, #revDeleteBtn').click(function() {
@@ -221,7 +213,6 @@ $(document).ready(function() {
 					
 				// 성공할 경우 리스트에 출력해주기
 				insertRevContent(d.reviewList);
-				insertRevUser(d.reviewUserList);
 
 				// 작성 성공시 textarea 초기화해주기
 				$('#review').val("");
@@ -232,51 +223,193 @@ $(document).ready(function() {
 		});
 	});
 
-	// 관람후기 작성자 리스트
-	function insertRevUser(reviewUserList) {
-		
-		$('#revUser').html('');
-		
-		reviewUserList.forEach(function(list) {
-			
-		var div = $('<div id="reviewUser">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
-		var strong = $('<strong>' + list.nick + '</strong>');
-		
-		div.append(img);
-		div.append(strong);
-		
-		$('#revUser').append(div);
-
-		});
-	}
-
 	// 관람후기 리스트
 	function insertRevContent(reviewList) {
 		
-		$('#revContent').html('');
+		$('.ListReview').html('');
 		
 		reviewList.forEach(function(list) {
 			
-		var div1 = $('<div id="reviewContent">');
-		var content = list.reviewContent;
-
-		div1.append(content);
+		var div1 = $('<div class="revListUserInfo">');
+		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var strong = $('<strong>' + list.nick + '</strong>');
 		
-		var div2 = $('<div id="revdelnup">');
- 		var delbtn = $('<button id="revDeleteBtn" value="' + list.reviewIdx + '">삭제</button>');
+		div1.append(img).append(strong);
 		
-		div2.append(delbtn);
+		var div2 = $('<div class="revListContentInfo">');
+		var small1 = $('<small>' + list.reviewContent + '</small><br>');
+		var small2 = $('<small id="contentDay">등록일 : ' + list.createDate + '</small>');
 		
-		div1.append(div2);
+		div2.append(small1).append(small2);
 		
-		$('#revContent').append(div1);
+		var div3 = $('<div id="revdelnup">');
+		var btn1 = $('<button id="revDeleteBtn" value="' + list.reviewIdx + '">삭제</button>');
+		var input = $('<input type="text" id="revRecomm">');
+		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
+		
+		console.log(list.reviewIdx);
+		
+		div3.append(btn1).append(input).append(btn2);
+			
+		$('.ListReview').append(div1).append(div2).append(div3);
 		
 		});
-	}
+	};
+	
+	// QNA
+	$('#qnaBtn').click(function() {
+		// 현재 공연 번호
+		var pfmIdx = ${pfmInfoList.pfmIdx };
+		
+		// 작성 내용 전달 및 작성할 유저 idx
+		var qnaContent = $('#qna').val();
+		var userIdx = '${loginUser.userIdx }';
+		
+		console.log(qnaContent);
+		console.log(userIdx);
+		
+		$.ajax({
+			url: '/pfmdetail/qna'
+			, method: 'GET'
+			, data: {
+				"qnaContent" : qnaContent
+				, "pfmIdx" : pfmIdx
+				, "userIdx" : userIdx
+			}
+			, dataType: 'json'
+			, success: function(d){
+				console.log("+ + + 성공 + + +");
+					
+				// 성공할 경우 리스트에 출력해주기
+				insertQnaContent(d.qnaList);
+
+				// 작성 성공시 textarea 초기화해주기
+				$('#qna').val("");
+			}
+			, error: function(e) {
+				console.log("실패");
+			}
+		});
+	});
 	
 });
 
+function deleteQna (qnaIdx){
+	
+	console.log('+ + + QNA DELETE + + +');
+	
+	var pfmIdx = ${pfmInfoList.pfmIdx };
+	
+	console.log(pfmIdx);
+	console.log(qnaIdx);
+	
+	$.ajax({
+		type: "get"
+		, url: "/pfmdetail/qnadelete"
+		, dataType: "json"
+		, data: {
+			qnaIdx : qnaIdx
+			, pfmIdx : pfmIdx
+		}
+		, success: function(d){
+			var confirmDelete;
+// 			confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+			
+			if(confirmDelete) {
+			$("[data-qnaIdx='"+qnaIdx+"']").remove();					
+			} else {
+// 				console.log('삭제 취소');
+			}
+			insertQnaContent(d.qnaList)
+		}
+		, error: function() {
+			console.log("error");
+		}
+	});
+};
+
+function insertQnaRecomm(qnaIdx){
+	
+	console.log('+ + + QNA Recomm Insert + + +');
+	
+	var pfmIdx = ${pfmInfoList.pfmIdx };
+	console.log('pfmIdx : ' + pfmIdx);
+	
+	var contents = $('#qnaRecomm').val();
+// 	var contents = $('input[name=qnaRecomm]').val();
+	console.log('contents : ' + contents);
+	
+	console.log('qnaIdx : ' + qnaIdx);
+	
+	$.ajax({
+		type: "get"
+		, url: "/pfmdetail/qnarecomm"
+		, dataType: "json"
+		, data: {
+			qnaIdx : qnaIdx
+			, contents : contents
+			, pfmIdx : pfmIdx
+		}
+		, success: function(d){			
+			insertQnaContent(d.qnaList);
+// 			insertQnaRecommList(d.qnaRecommList);
+		}
+		, error: function() {
+			console.log("error");
+		}
+	});
+};
+
+// function insertQnaRecommList(qnaRecommList) {
+// 	$('#qnaRecomm').html('');
+	
+// 	qnaRecommList.forEach(function(list) {
+// 		var qnaIdx = $('#qnaReBtn').val();
+// 		console.log(qnaIdx);
+		
+// 		if(list.qnaIdx == qnaIdx) {
+// 			var div = $('<div id="qRecomm">');
+// 			var small = $('<small>-> 관리자 : ' + list.contents + '</small><br>');
+			
+// 			div.append(small);
+			
+// 			$('#qnaRecomm').append(div);
+// 		}
+		
+// 	});
+// };
+
+function insertQnaContent(qnaList) {
+	
+	$('.ListQna').html('');
+	
+	qnaList.forEach(function(list) {
+		
+	var div1 = $('<div class="qnaListUserInfo">');
+	var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+	var strong = $('<strong>' + list.nick + '</strong>');
+	
+	div1.append(img).append(strong);
+	
+	var div2 = $('<div class="qnaListContentInfo">');
+	var small1 = $('<small>' + list.qnaContent + '</small><br>');
+	var small2 = $('<small id="contentDay">등록일 : ' + list.createDate + '</small>');
+	
+	div2.append(small1).append(small2);
+	
+	var div3 = $('<div id="qnadelnup">');
+	var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
+	var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
+	var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
+	
+	console.log(list.qnaIdx);
+	
+	div3.append(btn1).append(input).append(btn2);
+		
+	$('.ListQna').append(div1).append(div2).append(div3);
+	
+	});
+};
 </script>
 
 <style>
@@ -347,6 +480,22 @@ ul.tabs li.current{
 	width: 100%;
 }
 
+/* 기대평, 관람후기, qna */
+#loginUserImg {
+	 width: 50px;
+	 height: 50px;
+}
+
+.insertExp {
+	height: auto;
+}
+
+.insertExpUserInfo {
+	float: left;
+	text-align: center;
+	margin: 5px;
+}
+
 #castimg{
 	width: 100px;
 	height: 100px;
@@ -372,40 +521,9 @@ ul.tabs li.current{
 	width: 50px;
 	height: 50px;
 }
-
-#expecUser, #expecContent, #revUser, #revContent {
-	float: left;
-	text-align: center;
-	margin-top: 20px;
-}
-
-#expectationContent, #expectationUser, #reviewContent, #reviewUser {
-	margin: 5px;
-	height: auto;
-	text-align: center;
-}
-
-.expectationList, .reviewList {
-	margin-top: 10px;
-}
-
-#exptext, #revtext {
-	color: gray;
-}
-
 #modifieBtn, #deleteBtn {
 	list-style: none;
 	float: left;
-}
-
-.expecUserInfo, .expectation, .revUserInfo, .review {
-	list-style: none;
-	float: left;
-}
-
-.expContainer, .revContainer {
-	list-style: none;
-	display: flex;
 }
 
 /* 다음 맵 */
@@ -512,210 +630,191 @@ ul.tabs li.current{
 		</div>
 		
 		<div id="tab-2" class="tab-content">
-			<!-- 기대평 등록 부분, 나중에 이미지 경로 변경해주기 -->
-			<ul>
-			<li class="expContainer">
-			<div class="insertExpextation">
-			<ul>
-				<li class="expecUserInfo">
+		<!-- 전체를 감싸는 div -->
+		<div class="expectationContainer">
+		
+			<!-- 댓글 작성하는 부분 div -->
+			<div class="insertExp">
 				<c:if test="${login }">
-					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
+				<div class="insertExpUserInfo">
+				<img id="loginUserImg" class="img-circle"
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
-				</c:if>
-				<c:if test="${not login }">
-				<!-- 로그인 되어있지 않을 경우 기본 이미지로 출력 -->
-					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
-					 src="<c:url value="/resources/image/profile.png"/>"/><br>
-				</c:if>
-				</li>
-				<c:if test="${login }">
-				<li class="expectation">
-					<textarea id="expectation" cols="100" rows="5"></textarea>
+				</div>
+				<textarea id="expectation" cols="100" rows="5"></textarea>
 					<button type="submit" id="expecBtn">작성</button>
-				</li>
 				</c:if>
 				
 				<c:if test="${not login }">
-				<div class="expectation">
-					<textarea id="exptextarea" readonly="readonly" cols="100" rows="5">로그인 후 기대평 작성이 가능합니다.</textarea>
-					<button type="submit" id="expecBtn">작성</button>
+				<div class="insertExpUserInfo">
+				<img id="loginUserImg" class="img-circle"
+					 src="<c:url value="/resources/image/profile.png"/>"/><br>
 				</div>
+				<textarea id="exptextarea" readonly="readonly" cols="100" rows="5">로그인 후 기대평 작성이 가능합니다.</textarea>
+					<button type="submit" id="expecBtn" disabled="disabled">작성</button>
 				</c:if>
-			</ul>
 			</div>
-			</li>
 			
-			<!-- 기대평 리스트 출력 부분 -->
-			<li class="expectationList expContainer">
-				<div id="expecUser">
-				<c:forEach items="${expecUserList }" var="list"> <!-- expecList로 변경하여 출력 후 ajax 출력 부분도 변경하기 -->
-					<div id="expectationUser">
-						<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
-						<strong>${list.nick }</strong> 
-					</div>
-				</c:forEach>
+			<!-- 기대평 출력되는 부분의 div -->
+			<div class="ListExp">
+			<c:forEach items="${expecList }" var="list">
+				<!-- 기대평 작성한 사람의 정보 출력 div -->
+				<div class="expListUserInfo">
+					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
+					<strong>${list.nick }</strong> 
 				</div>
-					
-				<div id="expecContent">
-				<c:forEach items="${expecList }" var="expecList">
-				<div id="expectationContent">
-					${expecList.expContent }<br>
-					<small style="color: gray;">등록일 : ${expecList.createDate }</small>
-					
-					<div id="expdelnup">
-<%-- 					<c:if test="${sessionScope.email eq loginUser.email }"> --%>
-						<button id="expDeleteBtn" value="${expecList.expIdx }">삭제</button>
-<%-- 					</c:if> --%>
-						<input type="text" id="expRecomm"><button id="expReBtn" value="${expecList.expIdx }">답글</button>
-					</div>
-					
-					<!-- 기대평 대댓글 출력 리스트 -->
-					<c:forEach items="${expRecommList }" var="relist">
-					
-					<!-- 기대평 댓글 번호와 대댓글 테이블에서 갖고있는 댓글 번호와 일치할 경우에만 출력해주기 -->
-					<!-- ajax로 댓글 등록 확인 / 댓글 작성시에도 출력되도록 변경하기 -->
-					<c:if test="${relist.expIdx eq expecList.expIdx }">
+				
+				<!-- 기대평 내용 출력 div -->
+				<div class="expListContentInfo" style="float: inherit;">
+					<small>${list.expContent }</small><br>
+					<small id="contentDay">등록일 : ${list.createDate }</small>
+				</div>
+				
+				<div id="expdelnup"> 
+					<button id="expDeleteBtn" value="${list.expIdx }">삭제</button>
+					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button>
+				</div>
+				
+				<!-- 대댓글 출력 부분 -->
+				<c:forEach items="${expRecommList }" var="relist">
+					<div id="expectationRecomm">
+					<c:if test="${relist.expIdx eq list.expIdx }">
 					<div id="expectaRecomm">
 						<small>-> ${relist.nick} : ${relist.contents }</small><br>
 					</div>
 					</c:if>
-					</c:forEach>
-						
-				</div>
+					</div>
 				</c:forEach>
-				</div>
-			</li>
-			</ul>
+					
+			</c:forEach>			
+			</div>
+		</div>
+		
 		</div> <!-- tab2 -->
 		
 		<div id="tab-3" class="tab-content">
-						
-			<!-- 관람후기 등록 부분, 나중에 이미지 경로 변경해주기 -->
-			<ul>
-			<li class="revContainer">
-			<div class="insertReview">
-			<ul>
-				<li class="revUserInfo">
+			<!-- 전체를 감싸는 div -->
+		<div class="reviewContainer">
+		
+			<!-- 댓글 작성하는 부분 div -->
+			<div class="insertRev">
 				<c:if test="${login }">
-					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
+				<div class="insertRevUserInfo">
+				<img id="loginUserImg" class="img-circle"
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
-				</c:if>
-				<c:if test="${not login }">
-					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;"
-					 src="<c:url value="/resources/image/profile.png"/>"/>
-				</c:if>
-				</li>
-				<c:if test="${login }">
-				<li class="review">
-					<textarea id="review" cols="100" rows="5"></textarea>
+				</div>
+				<textarea id="review" cols="100" rows="5"></textarea>
 					<button type="submit" id="revBtn">작성</button>
-				</li>
 				</c:if>
 				
 				<c:if test="${not login }">
-				<div class="review">
-					<textarea id="revtextarea" readonly="readonly" cols="100" rows="5">로그인 후 관람후기 작성이 가능합니다.</textarea>
-					<button type="submit" id="revBtn">작성</button>
+				<div class="insertRevUserInfo">
+				<img id="loginUserImg" class="img-circle"
+					 src="<c:url value="/resources/image/profile.png"/>"/><br>
 				</div>
+				<textarea id="revtextarea" readonly="readonly" cols="100" rows="5">로그인 후 관람후기 작성이 가능합니다.</textarea>
+					<button type="submit" id="revBtn" disabled="disabled">작성</button>
 				</c:if>
-			</ul>
 			</div>
-			</li>
 			
-			<!-- 관람후기 리스트 출력 부분 -->
-			<li class="reviewList revContainer">
-				<div id="revUser">
-				<c:forEach items="${reviewUserList }" var="list">
-					<div id="reviewUser">
-						<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
-						<strong>${list.nick }</strong>
-					</div>
-				</c:forEach>
+			<!-- 관람후기 출력되는 부분의 div -->
+			<div class="ListReview">
+			<c:forEach items="${reviewList }" var="list">
+				<!-- 관람후기 작성한 사람의 정보 출력 div -->
+				<div class="revListUserInfo">
+					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
+					<strong>${list.nick }</strong> 
 				</div>
-					
-				<div id="revContent">
-				<c:forEach items="${reviewList }" var="list">
-				<div id="reviewContent">
-					${list.reviewContent }<br>
-					
-					<div id="revdelnup">
-<%-- 					<c:if test="${sessionScope.email eq loginUser.email }"> --%>
-						<button id="revDeleteBtn" value="${list.reviewIdx }">삭제</button>
+				
+				<!-- 관람후기 내용 출력 div -->
+				<div class="revListContentInfo">
+					<small>${list.reviewContent }</small><br>
+					<small id="contentDay">등록일 : ${list.createDate }</small>
+				</div>
+				
+				<div id="revdelnup"> 
+					<button id="revDeleteBtn" value="${list.reviewIdx }">삭제</button>
+					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button>
+				</div>
+				
+				<!-- 대댓글 출력 부분 -->
+<%-- 				<c:forEach items="${revRecommList }" var="relist"> --%>
+<!-- 					<div id="expectationRecomm"> -->
+<%-- 					<c:if test="${relist.expIdx eq list.expIdx }"> --%>
+<!-- 					<div id="expectaRecomm"> -->
+<%-- 						<small>-> ${relist.nick} : ${relist.contents }</small><br> --%>
+<!-- 					</div> -->
 <%-- 					</c:if> --%>
-					</div>
-				</div>
-				</c:forEach>
-				</div>
-			</li>
-			</ul>
+<!-- 					</div> -->
+<%-- 				</c:forEach> --%>
+					
+			</c:forEach>			
+			</div>
+		</div>
 		</div>	
 		
 		<div id="tab-4" class="tab-content">
-<!-- 			<ul> -->
-<!-- 			<li class="revContainer"> -->
-<!-- 			<div class="insertReview"> -->
-<!-- 			<ul> -->
-<!-- 				<li class="revUserInfo"> -->
-<%-- 				<c:if test="${login }"> --%>
-<!-- 					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;" -->
-<%-- 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br> --%>
-<%-- 					<strong>${loginUser.nick }</strong> --%>
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${not login }"> --%>
-<!-- 					<img id="loginUserImg" class="img-circle" style="width: 50px; height: 50px;" -->
-<%-- 					 src="<c:url value="/resources/image/profile.png"/>"/> --%>
-<%-- 				</c:if> --%>
-<!-- 				</li> -->
-<%-- 				<c:if test="${login }"> --%>
-<!-- 				<li class="review"> -->
-<!-- 					<textarea id="review" cols="100" rows="5">아직작성안됨</textarea> -->
-<!-- 					<button type="submit" id="revBtn">작성</button> -->
-<!-- 				</li> -->
-<%-- 				</c:if> --%>
+			<div class="qnaContainer">
+		
+			<!-- 댓글 작성하는 부분 div -->
+			<div class="insertQna">
+				<c:if test="${login }">
+				<div class="insertQnaUserInfo">
+				<img id="loginUserImg" class="img-circle"
+					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
+					<strong>${loginUser.nick }</strong>
+				</div>
+				<textarea id="qna" cols="100" rows="5"></textarea>
+					<button type="submit" id="qnaBtn">작성</button>
+				</c:if>
 				
-<%-- 				<c:if test="${not login }"> --%>
-<!-- 				<div class="review"> -->
-<!-- 					<textarea id="revtextarea" readonly="readonly" cols="100" rows="5">로그인 후 관람후기 작성이 가능합니다.</textarea> -->
-<!-- 					<button type="submit" id="revBtn">작성</button> -->
-<!-- 				</div> -->
-<%-- 				</c:if> --%>
-<!-- 			</ul> -->
-<!-- 			</div> -->
-<!-- 			</li> -->
+				<c:if test="${not login }">
+				<div class="insertQnaUserInfo">
+				<img id="loginUserImg" class="img-circle"
+					 src="<c:url value="/resources/image/profile.png"/>"/><br>
+				</div>
+				<textarea id="qnatextarea" readonly="readonly" cols="100" rows="5">로그인 후 QNA 작성이 가능합니다.</textarea>
+					<button type="submit" id="qnaBtn" disabled="disabled">작성</button>
+				</c:if>
+			</div>
 			
-<!-- 			<!-- 관람후기 리스트 출력 부분 --> -->
-<!-- 			<li class="reviewList revContainer"> -->
-<!-- 				<div id="revUser"> -->
-<%-- 				<c:forEach items="${qnaUserList }" var="list"> --%>
-<!-- 					<div id="reviewUser"> -->
-<%-- 						<strong>${list.nick }</strong> --%>
-<!-- 					</div> -->
-<%-- 				</c:forEach> --%>
-<!-- 				</div> -->
-					
-<!-- 				<div id="revContent"> -->
-<%-- 				<c:forEach items="${qnaList }" var="qnaList"> --%>
-<!-- 				<div id="reviewContent" style="margin-bottom: 10px; height: auto;"> -->
-<%-- 					${qnaList.qnaContent }<br> --%>
-					
-<!-- 					<div id="revdelnup"> -->
-<%-- <%-- 					<c:if test="${sessionScope.email eq loginUser.email }"> --%> --%>
-<%-- 						<button id="revDeleteBtn" value="${qnaList.qnaIdx }">삭제</button> --%>
-<%-- <%-- 					</c:if> --%> --%>
-<!-- 					</div> -->
-					
-<%-- 					<c:forEach items="${qnaRecommList }" var="qreList"> --%>
-<%-- 						<c:if test="${qreList.qnaIdx eq qnaList.qnaIdx }"> --%>
-<%-- 							<small style="font-style: 10px; margin: 5px;">${qreList.contents }<br></small> --%>
-<%-- 						</c:if> --%>
-<%-- 					</c:forEach> --%>
-<!-- 				</div> -->
-<%-- 				</c:forEach> --%>
-<!-- 				</div> -->
-<!-- 			</li> -->
-<!-- 			</ul> -->
+			<!-- QNA 출력되는 부분의 div -->
+			<div class="ListQna">
+			<c:forEach items="${qnaList }" var="list">
+				<!-- QNA 작성한 사람의 정보 출력 div -->
+				<div class="qnaListUserInfo">
+					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
+					<strong>${list.nick }</strong> 
+				</div>
+				
+				<!-- QNA 내용 출력 div -->
+				<div class="qnaListContentInfo">
+					<small>${list.qnaContent }</small><br>
+					<small id="contentDay">등록일 : ${list.createDate }</small>
+				</div>
+				
+				<div id="qnadelnup"> 
+					<button id="qnaDeleteBtn" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
+					<input type="text" id="qnaRecomm" name="qnaRecomm">
+					<button id="qnaReBtn" type="button" value="${list.qnaIdx }"
+						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button>
+				</div>
+				
+				<c:forEach items="${qnaRecommList }" var="relist">
+				<div id="qnaRecomm">
+					<c:if test="${relist.qnaIdx eq list.qnaIdx}">
+					<div id="qRecomm">
+					<!-- 관리자 부분 변경하기 -->
+						<small>-> 관리자 : ${relist.contents }</small><br>
+					</div> 
+					</c:if>
+ 				</div> 
+				</c:forEach>
+				
+			</c:forEach>			
+			</div>
+		</div>
 		</div>
 		
 		<div id="tab-5" class="tab-content">

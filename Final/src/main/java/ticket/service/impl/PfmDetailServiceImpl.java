@@ -57,8 +57,8 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	}
 
 	@Override
-	public List<ExpectRecomm> getExpRecommList(Performance pfm) {
-		return mDetailDao.selectExpRecommList(pfm);
+	public List<ExpectRecomm> getExpRecommList() {
+		return mDetailDao.selectExpRecommList();
 	}
 
 	@Override
@@ -147,6 +147,21 @@ public class PfmDetailServiceImpl implements PfmDetailService {
 	@Override
 	public List<QNARecomm> getQNARecommList(Performance pfm) {
 		return mDetailDao.selectQNARecommList(pfm);
+	}
+
+	@Override
+	public void getInQna(String qnaContent, String pfmIdx, String userIdx) {
+		mDetailDao.insertQNA(qnaContent, pfmIdx, userIdx);
+	}
+
+	@Override
+	public void getDelQna(String qnaIdx) {
+		mDetailDao.deleteQNA(qnaIdx);
+	}
+
+	@Override
+	public void getInQnaRecomm(String qnaIdx, String contents) {
+		mDetailDao.insertQnaRecomm(qnaIdx, contents);
 	}
 	
 }
