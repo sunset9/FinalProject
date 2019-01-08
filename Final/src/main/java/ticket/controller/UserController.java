@@ -502,8 +502,9 @@ public class UserController {
 			// 세션 없으면 로그인 페이지로 보내기
 			return "redirect:/user/login";
 		}
-
-	
+		// 유저가 선택한 아티스트 이름 조회 
+		List<Artist> aNameList = userService.getArtistName(userIdx);
+		model.addAttribute("aNameList", aNameList);
 
 		// 유저가 찜해논 공연 불러오기
 		List<MyChoice> pfmList = myChoiceService.choicePfmList(userIdx);
@@ -523,32 +524,6 @@ public class UserController {
 
 	}
 	
-	/**
-	 * @최종수정일: 2019.01.07
-	 * @Method설명: 선호 아티스트 조회
-	 * @작성자:홍나영
-	 */
-	@RequestMapping(value="mypage/preferartist", method=RequestMethod.GET)
-	public void preferAtist(HttpSession session, Model model
-			,@RequestParam(defaultValue="1") int curPage) {
-		
-		logger.info("선호 아티스트 조회");
-		User user = (User) session.getAttribute("loginUser");
-		int userIdx = user.getUserIdx();
-		
-		// 총 아티스트 수 
-		int totalCount = userService.getCntPreferArtist(userIdx);
-		
-		// 페이징 객체 만들기
-		Paging paging = new Paging(totalCount, curPage, 4);
-		model.addAttribute("paging", paging);
-		
-		// 유저가 선택한 아티스트 불러오기
-		List<Artist> aList = preferAService.choiceArtistList(userIdx, paging);
-		model.addAttribute("aList", aList);
-		logger.info("유저가 선택한 아티스트" + aList);
-		
-	}
 	
 	/**
 	 * @최종수정일: 2019.01.07

@@ -6,8 +6,11 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <style type="text/css">
 .alist{
-	display: inline;
+	display: inline-block;
+	text-align: center;
+	margin-right: 5px;
 }
+
 nav{
 	float: right;
 }
@@ -18,15 +21,22 @@ ul{
 
 #preferImg{
 	clear: right;
+	display: inline-block;
+	width:120px;
+	height:150px;
 	border: 1px soild #F2B134;
 }
+.artistImg{
+/* 	display: block; */
+}
 </style>
+
+<div class = "main_wrap">
 
 
 
 <div class="text-center">
 <nav>
-<span>선호 아티스트</span>
   <ul class="pagination">
   
   
@@ -70,16 +80,16 @@ ul{
 
 <div>
 <ul>
-		<li class ="alist"><img id="preferImg" src="/resources/image/prefera.PNG"  class="img-circle"/>
-			<span>${a.name }</span>
+		<li class ="alist"><img id="preferImg" src="/resources/image/prefera.PNG"  class="img-circle artistImg"/><br>
+			<span>내 아티스트</span>
 		</li>	  
 
 	<c:forEach items="${aList }" var ="a"> 
-		<li class ="alist"><img src="${a.imgUri }"  class="img-circle"/>
-			<span>${a.name }</span>
+		<li class ="alist"><img src="${a.imgUri }"  class="img-circle artistImg"/><br>
+			<span class="artistName">${a.name }</span>
 		</li>	  
 	</c:forEach>
-
 </ul>
 </div>
-
+	
+</div>

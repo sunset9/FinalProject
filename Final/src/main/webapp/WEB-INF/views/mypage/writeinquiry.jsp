@@ -19,8 +19,11 @@
 
 
 <style>
+.contents-wrapper{
+	margin: 30px;
+}
 #detailTable{
-	width: 70%;
+	width: 100%;
 }
 
 .waiting {
@@ -30,7 +33,26 @@
 #inqContents td{
   	border-top: none;
 }
+#submitBtn{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #F2B134;
+    font-weight: bold;
+}
 
+#cancelBtn{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #CCC;
+    background: #CCC;
+    font-weight: bold;
+}
+.btnDiv{
+	text-align: center;
+}
 </style>
 
 <script>
@@ -38,7 +60,7 @@ $(document).ready(function(){
 	
 	// 내용 에디터 적용
 	$('textarea').froalaEditor({
-		width: '800' // 너비
+		width: '1150' // 너비
 		, heightMin : 400 // 초기화시 크기
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
 		, language: 'ko'
@@ -77,9 +99,9 @@ $(document).ready(function(){
 	}); // click end
 });
 </script>
-
+<div class ="main_wrapper">
 <div class="contents-wrapper">
-<h1> 1:1 문의 하기</h1>
+<h1> 1:1 문의</h1>
 
 <form action="/mypage/writeinquiry" method="post">
 
@@ -101,10 +123,11 @@ $(document).ready(function(){
 </tr>
 
 </table>
-
-<button class="submitBtn">문의 하기</button>
-
+<div class ="btnDiv">
+	<button class="submitBtn" id="submitBtn" >문의 하기</button>
+	<button type="button" id="cancelBtn"  >취소</button>
+</div>
 </form>
-<button id="cancelBtn">취소</button>
 </div>
 
+</div>

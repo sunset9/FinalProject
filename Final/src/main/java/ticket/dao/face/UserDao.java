@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import ticket.dto.Artist;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Seat;
 import ticket.dto.SeatSection;
@@ -283,4 +284,11 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public int selectCntPreferArtist(int userIdx);
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 유저가 선택한 아티스트 이름 조회해오기
+	 * @작성자:홍나영
+	 */
+	public List<Artist> selectArtistName(int userIdx);
 }

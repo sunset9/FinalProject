@@ -37,7 +37,7 @@
 /* 활성화된 탭 */
 #ticket{
 	color :#fcd303;
-	border-bottom: 3px solid #fcd303;
+	border-bottom: 3px solid #F2B134;
 /* 	border-left: 3px solid #fcd303; */
 /* 	border-right: 3px solid #fcd303; */
 /* 	border:3px solid #fcd303; */
@@ -52,8 +52,8 @@
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #fcd303;
-    background: #fcd303;
+    border: 2px solid #F2B134;
+    background: #F2B134;
     font-weight: bold;
 }
 
@@ -61,7 +61,7 @@
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #fcd303;
+    border: 2px solid #F2B134;
     background: #FFF;
     color:#AAA;
     font-weight: bold;
@@ -104,7 +104,7 @@ $(document).ready(function(){
 	$('#completeBtn').click(function() {
 		$('#complete').show();
 		$('#cancel').hide();
-		$('#completeBtn').css("background","#fcd303");
+		$('#completeBtn').css("background","#F2B134");
 		$('#completeBtn').css("color","black");
 		$('#cancelBtn').css("background","#FFF");
 		$('#cancelBtn').css("color","#AAA");
@@ -114,7 +114,7 @@ $(document).ready(function(){
 	$('#cancelBtn').click(function() {
 		$('#cancel').show();
 		$('#complete').hide();
-		$('#cancelBtn').css("background","#fcd303");
+		$('#cancelBtn').css("background","#F2B134");
 		$('#cancelBtn').css("color","black");
 		$('#completeBtn').css("background","#FFF");
 		$('#completeBtn').css("color","#AAA");

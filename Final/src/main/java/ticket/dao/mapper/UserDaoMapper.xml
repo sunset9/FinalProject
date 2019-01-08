@@ -72,6 +72,13 @@
   	<result column="state" property="state"/>
   </resultMap>
   
+    
+  <resultMap type="ticket.dto.Artist" id="ArtistMap">
+  	<result column="artist_idx" property="artistIdx"/>
+  	<result column="img_uri" property="imgUri"/>
+  	<result column="theme_idx" property="themeIdx"/>
+  </resultMap>
+  
   <sql id="selectCnt">
   	SELECT COUNT(*) FROM userinfo
   </sql>
@@ -539,6 +546,15 @@
 		SELECT COUNT(*) 
 		FROM prefer_artist 
 		WHERE user_idx= #{userIdx }
+	</select>
+	
+	<select id ="selectArtistName" parameterType="int" resultMap="ArtistMap">
+		SELECT DISTINCT A.name
+		FROM prefer_artist P
+        INNER JOIN artist A
+        ON P.artist_idx = A.artist_idx
+		WHERE user_idx=  #{userIdx }
+	
 	</select>
 	
 	
