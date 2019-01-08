@@ -130,8 +130,8 @@ $(document).ready(function() {
 }
 
 .familyImg {
-	width: 250px;
-	height: 300px;
+	width: 230px;
+	height: 280px;
 	margin: 5px;
 }
 

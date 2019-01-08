@@ -33,6 +33,7 @@
 		<result column="poster_name" property="posterName"/>
 		<result column="hall_name" property="hallName"/>
 		<result column="booking_rate" property="bookingRate"/>
+		<result column="dday" property="dday"/>
 	</resultMap>
 	
 	<!-- 메인 배너 -->
@@ -308,9 +309,11 @@
 			po.origin_name originName
 			, po.stored_name poster_name
 			, pp.*
+			, ROUND(ticket_start - sysdate) dday
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
+       			WHERE pfm_start <![CDATA[ > ]]> sysdate
                 order by create_date desc
     		) p
 		)pp
@@ -327,6 +330,7 @@
 		FROM (
     		SELECT ROWNUM as rnum, p.* FROM (
        			SELECT  * FROM performance
+       			WHERE pfm_start <![CDATA[ > ]]> sysdate
                 ORDER BY pfm_start
     		) p
 		)pp
