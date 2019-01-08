@@ -6,28 +6,62 @@
 <style>
 ul{	list-style:none;}
 
-a {color:#1a1a1a; text-decoration:none;}
-a:link	{color:#1a1a1a; text-decoration:none;}
+a {text-decoration:none;}
+a:link	{text-decoration:none;}
 
+#wrap {
+	border: 1px solid #676767;
+}
 #header {
     width: 1130px;
     margin: 0 auto;
+    padding: 20px 0 0 0;
+}
+#header_wrap {
+	text-align: center;
 }
 #util_menu{
     display: flex;
     float: right;
 }
-#util_menu li:not(.first_child):after{
-	content: '';
-	
+#util_menu li:not(.last_child):after{
+	content: '|';
+    margin-left: 5px;
+    position: relative;
+    top: -1px;
+    color: #888;
 }
+
 #util_menu li {
 	float:left;
 	margin-left:10px;
+	display: flex;
+}
+#util_menu li>a{
+	color: #888;
 }
 
-.srch_set{
-	display: flex;
+#logo {
+	display: inline-block;
+}
+.main_srch { 
+	display: inline-block;
+	margin-left: 70px;
+    position: relative;
+    top: 10px;
+}
+#top_search {
+	border: 2px solid #fcd303;
+    height: 38px;
+    width: 245px;
+}
+.main_srch_btn {
+    background: #fcd303;
+    border: none;
+    color: white;
+    height: 38px;
+    width: 55px;
+    font-weight: bold;
 }
 .tap_menu {
 	display: inline-block;
@@ -40,15 +74,16 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 	display: inline-block;
 }
 
- .tap_menu li a{ 
- display:block; 
- font-weight:normal; 
- line-height:50px; 
- margin:0px; 
- padding:0px 25px; 
- text-align:center; 
- text-decoration:none; 
- } 
+.tap_menu li a{ 
+	 display:block; 
+	 font-weight:normal; 
+	 line-height:50px; 
+	 margin:0px; 
+	 padding:0px 25px; 
+	 text-align:center; 
+	 text-decoration:none; 
+	 color: #1a1a1a;
+} 
 
 /* 마이페이지 드롭 박스 */
 .tap_menu li ul{
@@ -107,13 +142,12 @@ text-align:left;
 	</ul>
 </div><!-- util_menu -->
 
-<h1 id="logo">
-<a href="/ticket/ticketmain"><img  height="80" alt="바나나로고" src="/resources/image/bananalogo2.png"></a>
-</h1>
+<a href="/ticket/ticketmain" id="logo"><img  height="80" alt="바나나로고" src="/resources/image/bananalogo2.png"></a>
+
 <div class="main_srch">
 	<form action="/ticket/ticketsearch" method="get">
-	<input type="text" title="공연 검색" name="top_searchh" id="top_searchh" class="placeholder">
-	<button type="submit" class="main_search_btn" title="검색" >검색</button>
+	<input type="text" title="공연 검색" name="top_search" id="top_search" class="placeholder">
+	<button type="submit" class="main_srch_btn" title="검색" >검색</button>
 	</form>
 </div>
 
