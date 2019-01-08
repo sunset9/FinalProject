@@ -23,15 +23,19 @@ ul.tabs li{
 }
  
 ul.tabs li.current{
-	background: #ededed;
-	color: #222;
+    background: #f9f9f9;
+    border: 1px solid #d8d5d5;
+    border-bottom: 1px solid #f9f9f9;
+    color: #222;
 }
  
 .tab-content{
-	display: none;
-	background: #ededed;
-	padding: 20px;
-	width: 1000px;
+    display: none;
+    background: #ffffff;
+    padding: 23px;
+    width: 1000px;
+    background: #f9f9f9;
+    border: 1px solid #d8d5d5;
 }
  
 .tab-content.current{
@@ -40,20 +44,32 @@ ul.tabs li.current{
 }
 
 #tabPfmList {
-/* 	border-top: 1px solid black; */
-	width: 100%;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	display: inline-block;
+    width: 192px;
+    padding: 7px;
+    padding-top: 20px;
+    display: inline-block;
+    margin: 16px;
+    border: 1px solid #dedddd;
+}
+
+#tabPfmList:hover {
+	border: 1.5px solid #f1c40f;
 }
 
 #tabPfmList img {
     display: block;
-    margin-left: 37px;
-    margin-right: 36px;
+    margin-left: 15px;
 }
 
-#hallImgDiv, #hallNameDiv {
+#hallImgDiv {
+    margin-left: 20px;
+    width: 400px;
+    float: left;
+    text-align: center;
+}
+
+#hallNameDiv {
+	width: 500px;
 	float: left;
 	text-align: center;
 }
@@ -63,14 +79,21 @@ ul.tabs li.current{
 	height: 100px;
 }
 
-#hallNameDiv {
-	padding-top: 40px;
+#reviewContent{
+    margin: 5px;
+    height: 20px;
+    text-align: center;
+    border-bottom: 1px solid #dedddd;
+    padding-bottom: 71px;
+    padding-top: 71px;
+    margin-left: 1px;
 }
 
-#reviewContent, #reviewUser {
+#reviewUser{
 	margin: 5px;
 	height: 120px;
 	text-align: center;
+	margin-right: 0;
 }
 
 .basicSize {
@@ -86,10 +109,12 @@ ul.tabs li.current{
 
 
 .basicSize span {
-    text-align: center;
+	text-align: center;
     display: block;
-    margin-left: 37px;
-    margin-right: 36px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .imgli {
@@ -100,7 +125,19 @@ ul.tabs li.current{
 	width: 130px;
 	height: 130px;
 	margin: 10px;
+	display: inline-block;
 }
+
+div.artimg {
+	display: inline-block;
+}
+
+div#reviewUser {
+	border-bottom: 1px solid #dedddd;
+    margin-bottom: 28px;
+    margin-top: 28px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -154,11 +191,11 @@ ul.tabs li.current{
 		</div>
 		
 		<strong style="font-size: 20px">아티스트( ${artCount }건 )</strong><br>
-		<div class="basicSize">
+		<div class="basicSize" style="display: grid; grid-template-columns: 25% 25% 25% 25%;">
 		<c:forEach items="${artSearchList }" var="list">
 			<div class="artimg">
-				<img id="artistImg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
-				${list.name }
+				<img id="artistImg" class="img-circle" src="<c:url value="${list.imgUri}"/>" style="margin-left: 50px;"/><br>
+				<span>${list.name }</span>
 			</div>
 		</c:forEach>
 		</div>
