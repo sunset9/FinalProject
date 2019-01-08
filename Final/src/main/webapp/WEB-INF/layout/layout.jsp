@@ -30,6 +30,7 @@
 .main_wrapper{
 	width: 1160px;
 	margin: 0 auto;
+	padding-top: 30px;
 }
 </style>
 

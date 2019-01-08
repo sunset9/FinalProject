@@ -429,6 +429,7 @@ public class AdminBoardController {
 		// 페이징 정보
 		int inqTotCnt = adminBoardService.getCntInquiry();  
 		Paging paging = new Paging(inqTotCnt, curPage);
+		model.addAttribute("paging", paging);
 		
 		// 리스트 가져오기
 		List<Inquiry> inqList = adminBoardService.getInquiryList(paging);
