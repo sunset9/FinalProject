@@ -35,10 +35,9 @@ $(document).ready(function() {
 		}
 	});	
 	
-	// 기대평
-	$('#expecBtn, #expDeleteBtn').click(function() {
-		// 작성, 삭제 여부 확인
-		var updel = $(this).attr('id');
+	// 기대평 작성
+	$('#expecBtn').click(function() {
+		console.log('+ + + 기대평 작성 버튼 + + +');
 		
 		// 현재 공연 번호
 		var pfmIdx = ${pfmInfoList.pfmIdx };
@@ -47,23 +46,17 @@ $(document).ready(function() {
 		var expContent = $('#expectation').val();
 		var userIdx = '${loginUser.userIdx }';
 		
-		// 삭제할 기대평 idx
-		var expIdx = $('#expDeleteBtn').val();
-		
-		console.log('선택 기대평 idx : ' + expIdx);
-// 		console.log('게시글 번호 : ' + pfmIdx);
-// 		console.log('내용 : ' + expContent);
+		console.log('게시글 번호 : ' + pfmIdx);
+		console.log('내용 : ' + expContent);
 		console.log('로그인 유저 idx : ' + userIdx);
 		
 		$.ajax({
-			url: '/pfmdetail/expectation'
+			url: '/pfmdetail/expecinsert'
 			, method: 'GET'
 			, data: {
 				"expContent" : expContent
 				, "pfmIdx" : pfmIdx
 				, "userIdx" : userIdx
-				, "updel" : updel
-				, "expIdx" : expIdx
 			}
 			, dataType: 'json'
 			, success: function(d){
@@ -82,40 +75,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
-	// 기대평 리스트
-	function insertExpContent(expecList) {
-		console.log('+ + + insertExpContent 함수 호출 완료 + + +');
-		
-		$('.ListExp').html('');
-		
-		expecList.forEach(function(list) {
-			
-		var div1 = $('<div class="expListUserInfo">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
-		var strong = $('<strong>' + list.nick + '</strong>');
-		
-		div1.append(img).append(strong);
-		
-		var div2 = $('<div class="expListContentInfo">');
-		var small1 = $('<small>' + list.expContent + '</small><br>');
-		var small2 = $('<small id="contentDay">등록일 : ' + list.createDate + '</small>');
-		
-		div2.append(small1).append(small2);
-		
-		var div3 = $('<div id="expdelnup">');
-		var btn1 = $('<button id="expDeleteBtn" value="' + list.expIdx + '">삭제</button>');
-		var input = $('<input type="text" id="expRecomm">');
-		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
-		
-		console.log(list.expIdx);
-		
-		div3.append(btn1).append(input).append(btn2);
-			
-		$('.ListExp').append(div1).append(div2).append(div3);
-		
-		});
-	};
 
 	// 답글 선택 시
 	$('#expReBtn').click(function() {
@@ -178,10 +137,9 @@ $(document).ready(function() {
 		});
 	};
 	
-	// 관람 후기
-	$('#revBtn, #revDeleteBtn').click(function() {
-		// 작성, 삭제 여부 확인
-		var updel = $(this).attr('id');
+	// 관람 후기 작성
+	$('#revBtn').click(function() {
+		console.log('+ + + 관람 후기 작성 버튼 + + +');
 		
 		// 현재 공연 번호
 		var pfmIdx = ${pfmInfoList.pfmIdx };
@@ -190,22 +148,17 @@ $(document).ready(function() {
 		var revContent = $('#review').val();
 		var userIdx = '${loginUser.userIdx }';
 		
-		console.log(updel);
+		console.log(pfmIdx);
 		console.log(revContent);
 		console.log(userIdx);
 		
-		// 삭제할 관람후기 idx
-		var reviewIdx = $('#revDeleteBtn').val();
-		
 		$.ajax({
-			url: '/pfmdetail/review'
+			url: '/pfmdetail/reviewinsert'
 			, method: 'GET'
 			, data: {
 				"reviewContent" : revContent
 				, "pfmIdx" : pfmIdx
 				, "userIdx" : userIdx
-				, "updel" : updel
-				, "reviewIdx" : reviewIdx
 			}
 			, dataType: 'json'
 			, success: function(d){
@@ -223,40 +176,7 @@ $(document).ready(function() {
 		});
 	});
 
-	// 관람후기 리스트
-	function insertRevContent(reviewList) {
-		
-		$('.ListReview').html('');
-		
-		reviewList.forEach(function(list) {
-			
-		var div1 = $('<div class="revListUserInfo">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
-		var strong = $('<strong>' + list.nick + '</strong>');
-		
-		div1.append(img).append(strong);
-		
-		var div2 = $('<div class="revListContentInfo">');
-		var small1 = $('<small>' + list.reviewContent + '</small><br>');
-		var small2 = $('<small id="contentDay">등록일 : ' + list.createDate + '</small>');
-		
-		div2.append(small1).append(small2);
-		
-		var div3 = $('<div id="revdelnup">');
-		var btn1 = $('<button id="revDeleteBtn" value="' + list.reviewIdx + '">삭제</button>');
-		var input = $('<input type="text" id="revRecomm">');
-		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
-		
-		console.log(list.reviewIdx);
-		
-		div3.append(btn1).append(input).append(btn2);
-			
-		$('.ListReview').append(div1).append(div2).append(div3);
-		
-		});
-	};
-	
-	// QNA
+	// QNA 작성
 	$('#qnaBtn').click(function() {
 		// 현재 공연 번호
 		var pfmIdx = ${pfmInfoList.pfmIdx };
@@ -269,7 +189,7 @@ $(document).ready(function() {
 		console.log(userIdx);
 		
 		$.ajax({
-			url: '/pfmdetail/qna'
+			url: '/pfmdetail/qnainsert'
 			, method: 'GET'
 			, data: {
 				"qnaContent" : qnaContent
@@ -294,71 +214,146 @@ $(document).ready(function() {
 	
 });
 
-function deleteQna (qnaIdx){
-	
-	console.log('+ + + QNA DELETE + + +');
-	
-	var pfmIdx = ${pfmInfoList.pfmIdx };
-	
-	console.log(pfmIdx);
-	console.log(qnaIdx);
-	
-	$.ajax({
-		type: "get"
-		, url: "/pfmdetail/qnadelete"
-		, dataType: "json"
-		, data: {
-			qnaIdx : qnaIdx
-			, pfmIdx : pfmIdx
-		}
-		, success: function(d){
-			var confirmDelete;
-// 			confirmDelete = confirm("댓글을 삭제하시겠습니까?");
-			
-			if(confirmDelete) {
-			$("[data-qnaIdx='"+qnaIdx+"']").remove();					
-			} else {
-// 				console.log('삭제 취소');
+	// 기대평 삭제
+	function deleteExp(expIdx){
+		
+		console.log('+ + + EXPECTATION DELETE + + +');
+		
+		var pfmIdx = ${pfmInfoList.pfmIdx };
+		
+		console.log(pfmIdx);
+		console.log(expIdx);
+		
+		$.ajax({
+			type: "get"
+			, url: "/pfmdetail/expecdelete"
+			, dataType: "json"
+			, data: {
+				expIdx : expIdx
+				, pfmIdx : pfmIdx
 			}
-			insertQnaContent(d.qnaList)
-		}
-		, error: function() {
-			console.log("error");
-		}
-	});
-};
+			, success: function(d){
+				var confirmDelete;
+	// 			confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+				
+				if(confirmDelete) {
+					$("[data-expIdx='"+expIdx+"']").remove();					
+				} else {
+	// 				console.log('삭제 취소');
+				}
+				
+				insertExpContent(d.expecList);
+			}
+			, error: function() {
+				console.log("error");
+			}
+		});
+	};
 
-function insertQnaRecomm(qnaIdx){
-	
-	console.log('+ + + QNA Recomm Insert + + +');
-	
-	var pfmIdx = ${pfmInfoList.pfmIdx };
-	console.log('pfmIdx : ' + pfmIdx);
-	
-	var contents = $('#qnaRecomm').val();
-// 	var contents = $('input[name=qnaRecomm]').val();
-	console.log('contents : ' + contents);
-	
-	console.log('qnaIdx : ' + qnaIdx);
-	
-	$.ajax({
-		type: "get"
-		, url: "/pfmdetail/qnarecomm"
-		, dataType: "json"
-		, data: {
-			qnaIdx : qnaIdx
-			, contents : contents
-			, pfmIdx : pfmIdx
-		}
-		, success: function(d){			
-			insertQnaContent(d.qnaList);
-// 			insertQnaRecommList(d.qnaRecommList);
-		}
-		, error: function() {
-			console.log("error");
-		}
-	});
-};
+	// 관람후기 삭제
+	function deleteRev(reviewIdx){
+		
+		console.log('+ + + REVIEW DELETE + + +');
+		
+		var pfmIdx = ${pfmInfoList.pfmIdx };
+		
+		console.log(pfmIdx);
+		console.log(reviewIdx);
+		
+		$.ajax({
+			type: "get"
+			, url: "/pfmdetail/reviewdelete"
+			, dataType: "json"
+			, data: {
+				reviewIdx : reviewIdx
+				, pfmIdx : pfmIdx
+			}
+			, success: function(d){
+				var confirmDelete;
+	// 			confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+				
+				if(confirmDelete) {
+					$("[data-reviewIdx='"+reviewIdx+"']").remove();					
+				} else {
+	// 				console.log('삭제 취소');
+				}
+				
+				insertRevContent(d.reviewList);
+			}
+			, error: function() {
+				console.log("error");
+			}
+		});
+	};
+
+	// QNA 삭제
+	function deleteQna(qnaIdx){
+		
+		console.log('+ + + QNA DELETE + + +');
+		
+		var pfmIdx = ${pfmInfoList.pfmIdx };
+		
+		console.log(pfmIdx);
+		console.log(qnaIdx);
+		
+		$.ajax({
+			type: "get"
+			, url: "/pfmdetail/qnadelete"
+			, dataType: "json"
+			, data: {
+				qnaIdx : qnaIdx
+				, pfmIdx : pfmIdx
+			}
+			, success: function(d){
+				var confirmDelete;
+	// 			confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+				
+				if(confirmDelete) {
+					$("[data-qnaIdx='"+qnaIdx+"']").remove();					
+				} else {
+	// 				console.log('삭제 취소');
+				}
+				
+				insertQnaContent(d.qnaList);
+			}
+			, error: function() {
+				console.log("error");
+			}
+		});
+	};
+
+	// QNA 대댓글 작성
+	function insertQnaRecomm(qnaIdx){
+		
+		console.log('+ + + QNA Recomm Insert + + +');
+		
+		var pfmIdx = ${pfmInfoList.pfmIdx };
+		console.log('pfmIdx : ' + pfmIdx);
+		
+		var contents = $('#qnaRecomm').val();
+	// 	var contents = $('input[name=qnaRecomm]').val();
+		console.log('contents : ' + contents);
+		
+		console.log('qnaIdx : ' + qnaIdx);
+		
+		$.ajax({
+			type: "get"
+			, url: "/pfmdetail/qnarecomm"
+			, dataType: "json"
+			, data: {
+				qnaIdx : qnaIdx
+				, contents : contents
+				, pfmIdx : pfmIdx
+			}
+			, success: function(d){			
+				insertQnaContent(d.qnaList);
+	// 			insertQnaRecommList(d.qnaRecommList);
+			}
+			, error: function() {
+				console.log("error");
+			}
+		});
+	};
 
 // function insertQnaRecommList(qnaRecommList) {
 // 	$('#qnaRecomm').html('');
@@ -379,37 +374,117 @@ function insertQnaRecomm(qnaIdx){
 // 	});
 // };
 
-function insertQnaContent(qnaList) {
-	
-	$('.ListQna').html('');
-	
-	qnaList.forEach(function(list) {
+	// 기대평 출력부
+	function insertExpContent(expecList) {
+		console.log('+ + + insertExpContent 함수 호출 완료 + + +');
 		
-	var div1 = $('<div class="qnaListUserInfo">');
-	var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
-	var strong = $('<strong>' + list.nick + '</strong>');
-	
-	div1.append(img).append(strong);
-	
-	var div2 = $('<div class="qnaListContentInfo">');
-	var small1 = $('<small>' + list.qnaContent + '</small><br>');
-	var small2 = $('<small id="contentDay">등록일 : ' + list.createDate + '</small>');
-	
-	div2.append(small1).append(small2);
-	
-	var div3 = $('<div id="qnadelnup">');
-	var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
-	var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
-	var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
-	
-	console.log(list.qnaIdx);
-	
-	div3.append(btn1).append(input).append(btn2);
+		$('.ListExp').html('');
 		
-	$('.ListQna').append(div1).append(div2).append(div3);
+		expecList.forEach(function(list) {
+			
+		var div1 = $('<div class="expListUserInfo">');
+		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var strong = $('<strong>' + list.nick + '</strong>');
+		
+		div1.append(img).append(strong);
+		
+		var div2 = $('<div class="expListContentInfo">');
+		var small1 = $('<small>' + list.expContent + '</small><br>');
+		var createDate = getDateSimpleString(list.createDate);
+		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
+		
+		div2.append(small1).append(small2);
+		
+		var div3 = $('<div id="expdelnup">');
+		var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">삭제</button>');
+		var input = $('<input type="text" id="expRecomm">');
+		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
+		
+		console.log(list.expIdx);
+		
+		div3.append(btn1).append(input).append(btn2);
+			
+		$('.ListExp').append(div1).append(div2).append(div3);
+		
+		});
+	};
+
+	// 관람후기 출력부
+	function insertRevContent(reviewList) {
+		
+		$('.ListReview').html('');
+		
+		reviewList.forEach(function(list) {
+			
+		var div1 = $('<div class="revListUserInfo">');
+		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var strong = $('<strong>' + list.nick + '</strong>');
+		
+		div1.append(img).append(strong);
+		
+		var div2 = $('<div class="revListContentInfo">');
+		var small1 = $('<small>' + list.reviewContent + '</small><br>');
+		var createDate = getDateSimpleString(list.createDate);
+		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
+		
+		div2.append(small1).append(small2);
+		
+		var div3 = $('<div id="revdelnup">');
+		var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">삭제</button>');
+		var input = $('<input type="text" id="revRecomm">');
+		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
+		
+		console.log(list.reviewIdx);
+		
+		div3.append(btn1).append(input).append(btn2);
+			
+		$('.ListReview').append(div1).append(div2).append(div3);
+		
+		});
+	};
 	
-	});
-};
+	// QNA 출력부
+	function insertQnaContent(qnaList) {
+		
+		$('.ListQna').html('');
+		
+		qnaList.forEach(function(list) {
+			
+		var div1 = $('<div class="qnaListUserInfo">');
+		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var strong = $('<strong>' + list.nick + '</strong>');
+		
+		div1.append(img).append(strong);
+		
+		var div2 = $('<div class="qnaListContentInfo">');
+		var small1 = $('<small>' + list.qnaContent + '</small><br>');
+		var createDate = getDateSimpleString(list.createDate);
+		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
+		
+		div2.append(small1).append(small2);
+		
+		var div3 = $('<div id="qnadelnup">');
+		var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
+		var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
+		var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
+		
+		console.log(list.qnaIdx);
+		
+		div3.append(btn1).append(input).append(btn2);
+			
+		$('.ListQna').append(div1).append(div2).append(div3);
+		
+		});
+	};
+	
+	function getDateSimpleString(date){
+		var date = new Date(date);
+		var month = date.getMonth() + 1;
+		var day = date.getDate();
+		return date.getFullYear() + "."
+			+ ((month < 10)? '0' + month : month) + "."
+			+ ((day < 10) ? '0' + day : day);
+	}
 </script>
 
 <style>
@@ -671,7 +746,7 @@ ul.tabs li.current{
 				</div>
 				
 				<div id="expdelnup"> 
-					<button id="expDeleteBtn" value="${list.expIdx }">삭제</button>
+					<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button>
 				</div>
 				
@@ -734,7 +809,7 @@ ul.tabs li.current{
 				</div>
 				
 				<div id="revdelnup"> 
-					<button id="revDeleteBtn" value="${list.reviewIdx }">삭제</button>
+					<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
 					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button>
 				</div>
 				

@@ -133,8 +133,8 @@ $(document).ready(function() {
 }
 
 .concertImg {
-	width: 250px;
-	height: 300px;
+	width: 230px;
+	height: 280px;
 	margin: 5px;
 }
 

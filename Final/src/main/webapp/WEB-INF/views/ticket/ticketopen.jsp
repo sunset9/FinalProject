@@ -60,31 +60,42 @@ $(document).ready(function() {
 		$('#bottomlist').html('');
 		
 		openPfmList.forEach(function(list) {
-		
+			
 		var li = $('<li class="pfmInfo">');
-		var ul = $('<ul>');
+		var ul = $('<ul class="pfmInfoUl">');
 		
 		var ticketStart = getDateSimpleString(list.ticketStart);
 		
+		var now = new Date();
+		var then = new Date(ticketStart); 
+		var gap = then.getTime() - now.getTime();
+		gap = Math.floor(gap / (1000 * 60 * 60 * 24));
+		console.log(list.pfmIdx + '공연 : ' + gap + 'day');
+
+		var dday = $('<strong id="dday">D-' + gap + '</strong><br>');
 		var li1 = $('<li class="ticketOpenDay ticketOpenLI">');
-		var span1 = $('<span>티켓오픈일<br>' + ticketStart + '</span>');
+		var span1 = $('<span class="ticketStartDay"><strong>티켓오픈일<br></strong>' + ticketStart + '</span>');
+
 		
+		if(gap > 0) {
+			li1.append(dday);	
+		}
 		li1.append(span1);
 
 		var createDate = getDateSimpleString(list.createDate);
 		
 		var li2 = $('<li class="ticketOpenInfo ticketOpenLI">');
-		var a1 = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
+		var a1 = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '">');
 		var span2 = $('<span>');
 		var strong = $('<strong id="pfmName">' + list.name + ' 오픈 안내<br></strong>');
 		var small = $('<small style="color: #666;">등록일 : ' + createDate + '</small>');
-		
-		span2.append(strong).append(small);
+		span2.append(strong);
+		span2.append(small);
 		a1.append(span2);
 		li2.append(a1);
 		
 		var li3 = $('<li class="ticketOpenImg">');
-		var a2 = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '>');
+		var a2 = $('<a href="/ticket/opendetail?pfmIdx=' + list.pfmIdx + '">');
 		var span3 = $('<span>');
 		var img = $('<img class="bannerImg" src="/resources/image/' + list.posterName + '"/>');
 		
@@ -98,7 +109,7 @@ $(document).ready(function() {
 		$('#bottomlist').append(li);
 
 		});
-	}
+	};
 
 	function getDateSimpleString(date){
 		var date = new Date(date);
@@ -107,7 +118,7 @@ $(document).ready(function() {
 		return date.getFullYear() + "."
 			+ ((month < 10)? '0' + month : month) + "."
 			+ ((day < 10) ? '0' + day : day);
-	}
+	};
 	
 });
 </script>
@@ -142,6 +153,10 @@ li.pfmInfo {
 	border-bottom: 1px solid gray;
 }
 
+.pfmInfoUl {
+	padding: 0px;
+}
+
 /* #bottomlist, #searchandsort { */
 /* 	margin: 20px 5% 10px 5%; */
 /* } */
@@ -149,6 +164,7 @@ li.pfmInfo {
 #bottomlist {
 /* 	width: 1000px; */
 /* 	padding: 10px; */
+	padding: 0;
 }
 
 /* 정렬 */
@@ -180,13 +196,13 @@ ul.array li span{
 
 .ticketOpenLI {
 	float: left;
-	height: 140px;
+	height: 100px;
 	padding-top: 50px;
 	text-align: center;
 }
 
 .ticketOpenDay {
-	width: 380px;
+	width: 350px;
 }
 
 .ticketOpenInfo {
@@ -200,6 +216,10 @@ ul.array li span{
 
 .main_wrapper {
 	margin-bottom: 50px;
+}
+
+.ticketStartDay {
+	font-size: 20px;
 }
 </style>
 
@@ -220,7 +240,7 @@ ul.array li span{
 				</span>
 				<strong class="pfmdate">${list.name }<br></strong>
 				<strong style="color: #F8D83B">
-					[오픈] <fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
+					[오픈] <fmt:formatDate value="${list.ticketStart }" pattern="yyyy.MM.dd"/>
 				</strong>
 				</a>
 			</li>
@@ -250,10 +270,14 @@ ul.array li span{
 	<ul id="bottomlist">
 		<c:forEach items="${openPfmList }" var="list">
 			<li class="pfmInfo">
-			<ul>
+			<ul class="pfmInfoUl">
 				<li class="ticketOpenDay ticketOpenLI">
-				<span>
-					티켓 오픈일<br><fmt:formatDate value="${list.ticketStart }" pattern="yyyy-MM-dd"/>
+				<span class="ticketStartDay">
+					<c:if test="${list.dday > 0 }">
+						<strong id="dday">D-${list.dday }</strong><br>
+					</c:if>
+					<strong>티켓 오픈일<br></strong>
+					<fmt:formatDate value="${list.ticketStart }" pattern="yyyy.MM.dd"/>
 				</span>
 				</li>
 				
@@ -261,7 +285,7 @@ ul.array li span{
 				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
 				<span>
 					<strong id="pfmName">${list.name } 오픈 안내<br></strong>
-					<small style="color: #666;">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy-MM-dd"/></small>
+					<small style="color: #666;">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 				</span>
 				</a>
 				</li>

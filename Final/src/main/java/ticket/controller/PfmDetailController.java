@@ -97,14 +97,12 @@ public class PfmDetailController {
 	 * @Method설명: 기대평 작성, 삭제
 	 * @작성자: 배수연
 	 */
-	@RequestMapping(value = "/pfmdetail/expectation", method = RequestMethod.GET)
+	@RequestMapping(value = "/pfmdetail/expecinsert", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> expectation(
 			String expContent
 			, String pfmIdx
 			, String userIdx
 			, Performance pfm
-			, String expIdx
-			, String updel
 		) {
 
 		HashMap<String, Object> map = new HashMap<>();
@@ -112,21 +110,10 @@ public class PfmDetailController {
 		logger.info(expContent);
 		logger.info(pfmIdx);
 		logger.info(userIdx);
-		logger.info(expIdx);
-		logger.info(updel);
 
-		if (updel.equals("expecBtn")) {
-			// 기대평 작성
-			detailService.getExpectationInsert(expContent, pfmIdx, userIdx);
+		// 기대평 작성
+		detailService.getExpectationInsert(expContent, pfmIdx, userIdx);
 
-		} else if (updel.equals("expDeleteBtn")) {
-			// 기대평 삭제
-			detailService.getDelExpectation(expIdx);
-			
-			// 기대평에 달려있던 대댓글도 삭제해준다.
-			detailService.getDelExpRecomm(expIdx);
-
-		}
 
 		// 기대평 리스트 출력해주기
 		List<Expectation> expecList = detailService.getExpectationList(pfm);
@@ -138,7 +125,35 @@ public class PfmDetailController {
 
 		return map;
 	}
-	
+
+	/**
+	 * 최종수정일: 2019.01.07
+	 * @Method설명: 기대평 댓글 삭제
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value = "/pfmdetail/expecdelete", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> expdelete(
+			String expIdx
+			, Performance pfm
+		) {
+
+		HashMap<String, Object> map = new HashMap<>();
+
+		logger.info(expIdx);
+
+		// 기대평 삭제
+		detailService.getDelExpectation(expIdx);
+		
+		// 기대평에 달려있던 대댓글도 삭제해준다.
+		detailService.getDelExpRecomm(expIdx);
+
+		// 기대평 리스트 출력해주기
+		List<Expectation> expecList = detailService.getExpectationList(pfm);
+		map.put("expecList", expecList);
+		
+		return map;
+	}
+
 	/**
 	 * 최종수정일: 2019.01.03
 	 * @Method설명: 기대평 대댓글 리스트 출력
@@ -164,38 +179,55 @@ public class PfmDetailController {
 
 	/**
 	 * 최종수정일: 2019.01.03
-	 * @Method설명: 관람후기 작성, 삭제
+	 * @Method설명: 관람후기 작성
 	 * @작성자: 배수연
 	 */
-	@RequestMapping(value = "/pfmdetail/review", method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> review(String reviewContent, String pfmIdx, String userIdx,
-			Performance pfm, String reviewIdx, String updel) {
+	@RequestMapping(value = "/pfmdetail/reviewinsert", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> review(
+			String reviewContent
+			, String pfmIdx
+			, String userIdx
+			, Performance pfm
+		) {
 
 		HashMap<String, Object> map = new HashMap<>();
 
-		logger.info(updel);
 		logger.info(reviewContent);
 		logger.info(pfmIdx);
 		logger.info(userIdx);
 
-		if (updel.equals("revBtn")) {
-			// 관람후기 작성
-			detailService.getInReview(reviewContent, pfmIdx, userIdx);
-
-		} else if (updel.equals("revDeleteBtn")) {
-			// 관람후기 삭제
-			detailService.getDelReview(reviewIdx);
-
-		}
+		// 관람후기 작성
+		detailService.getInReview(reviewContent, pfmIdx, userIdx);
 
 		// 관람후기 리스트 출력해주기
 		List<Review> reviewList = detailService.getReviewList(pfm);
 		map.put("reviewList", reviewList);
 
-		// 관람후기 작성자 리스트 출력
-		List<User> reviewUserList = detailService.getReviwUserList(pfm);
-		map.put("reviewUserList", reviewUserList);
+		return map;
+	}
+	
+	/**
+	 * 최종수정일: 2019.01.07
+	 * @Method설명: 관람후기 댓글 삭제
+	 * @작성자: 배수연
+	 */
+	@RequestMapping(value = "/pfmdetail/reviewdelete", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> reviewdelete(
+			String reviewIdx
+			, Performance pfm
+		) {
 
+		HashMap<String, Object> map = new HashMap<>();
+
+		logger.info(reviewIdx);
+		
+		// 관람후기 삭제
+		detailService.getDelReview(reviewIdx);
+
+		// 관람후기 리스트 출력해주기
+		List<Review> reviewList = detailService.getReviewList(pfm);
+		map.put("reviewList", reviewList);
+		
 		return map;
 	}
 
@@ -204,7 +236,7 @@ public class PfmDetailController {
 	 * @Method설명: QNA 전체 리스트 출력
 	 * @작성자: 배수연
 	 */
-	@RequestMapping(value = "/pfmdetail/qna", method = RequestMethod.GET)
+	@RequestMapping(value = "/pfmdetail/qnainsert", method = RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> qna(
 			String qnaContent
 			, String pfmIdx
@@ -219,10 +251,10 @@ public class PfmDetailController {
 		logger.info(pfmIdx);
 		logger.info(userIdx);
 		
-		// 관람후기 작성
+		// QNA 작성
 		detailService.getInQna(qnaContent, pfmIdx, userIdx);
 
-		// 관람후기 리스트 출력해주기
+		// QNA 리스트 출력해주기
 		List<QNA> qnaList = detailService.getQNAList(pfm);
 		map.put("qnaList", qnaList);
 
@@ -244,10 +276,10 @@ public class PfmDetailController {
 
 		logger.info(qnaIdx);
 		
-		// 관람후기 작성
+		// QNA 삭제
 		detailService.getDelQna(qnaIdx);
 
-		// 관람후기 리스트 출력해주기
+		// QNA 리스트 출력해주기
 		List<QNA> qnaList = detailService.getQNAList(pfm);
 		map.put("qnaList", qnaList);
 		
