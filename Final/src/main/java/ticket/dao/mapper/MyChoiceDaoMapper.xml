@@ -24,6 +24,10 @@
 	    ,  name pfmName
 	    , ticket_start ticketStart
 	    , ticket_end ticketEnd 
+	    , CASE
+            WHEN to_date(sysdate ,'yy/MM/dd')-to_date(ticket_end,'yy/MM/dd')>0 THEN '판매완료'
+            WHEN to_date(sysdate ,'yy/MM/dd')-to_date(ticket_start,'yy/MM/dd')>0 THEN '판매중'
+            ELSE '판매예정' end salestate
 	FROM my_choice M
 	INNER JOIN performance P
 	ON M.pfm_idx = P.pfm_idx

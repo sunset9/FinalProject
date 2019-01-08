@@ -7,8 +7,8 @@
 
 #warpTicket{
 	display: grid;
-	width:1200px;
-	margin: 0 auto;
+	width:1160px;
+	margin: 20px auto;
 	grid-template-columns: 200px auto ;
  	grid-gap: 10px;
  	grid-template-rows:50px, auto; 
@@ -21,7 +21,7 @@
 #title{
 	
 	grid-area: 1/ 2 / 2 /3 ;
-	
+	text-align : center;
 	border: 1px solid black;
 }
 
@@ -122,8 +122,8 @@ $(document).ready(function() {
 
 </script>
 
-<h1>예약 상세</h1>
-<hr>
+
+<div class="main_wrapper">
 <div>
 <!-- 유저 정보 담고 있는 jsp -->
 <jsp:include page="userinfo.jsp" />
@@ -337,3 +337,4 @@ $(document).ready(function() {
 
 
 
+</div>
