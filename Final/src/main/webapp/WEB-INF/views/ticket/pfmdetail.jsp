@@ -58,7 +58,7 @@ $(document).ready(function() {
 			, data: {
 				"expContent" : expContent
 				, "pfmIdx" : pfmIdx
-				, "userIdx" : userIdx
+				, "userIdx" : userIdx                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	
 			}
 			, dataType: 'json'
 			, success: function(d){
@@ -383,7 +383,8 @@ $(document).ready(function() {
 		$('.ListExp').html('');
 		
 		expecList.forEach(function(list) {
-			
+		var div3 = $('<div id="oneExpec">');
+		
 		var div1 = $('<div class="expListUserInfo">');
 		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
 		var strong = $('<strong>' + list.nick + '</strong>');
@@ -391,22 +392,18 @@ $(document).ready(function() {
 		div1.append(img).append(strong);
 		
 		var div2 = $('<div class="expListContentInfo">');
-		var small1 = $('<small>' + list.expContent + '</small><br>');
+		var small1 = $('<small id="exptationContent">' + list.expContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
 		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
-		
-		div2.append(small1).append(small2);
-		
-		var div3 = $('<div id="expdelnup">');
 		var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">삭제</button>');
 		var input = $('<input type="text" id="expRecomm">');
 		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
 		
-		console.log(list.expIdx);
+		div2.append(small1).append(small2).append(btn1).append(input).append(btn2);
 		
-		div3.append(btn1).append(input).append(btn2);
-			
-		$('.ListExp').append(div1).append(div2).append(div3);
+		div3.append(div1).append(div2);
+		
+		$('.ListExp').append(div3);
 		
 		});
 	};
@@ -417,6 +414,7 @@ $(document).ready(function() {
 		$('.ListReview').html('');
 		
 		reviewList.forEach(function(list) {
+		var div3 = $('<div id="oneReview">');
 			
 		var div1 = $('<div class="revListUserInfo">');
 		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
@@ -425,22 +423,20 @@ $(document).ready(function() {
 		div1.append(img).append(strong);
 		
 		var div2 = $('<div class="revListContentInfo">');
-		var small1 = $('<small>' + list.reviewContent + '</small><br>');
+		var small1 = $('<small id="reviewContent">' + list.reviewContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
 		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
-		
-		div2.append(small1).append(small2);
-		
-		var div3 = $('<div id="revdelnup">');
 		var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">삭제</button>');
 		var input = $('<input type="text" id="revRecomm">');
 		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
 		
-		console.log(list.reviewIdx);
+		div2.append(small1).append(small2).append(btn1).append(input).append(btn2);
 		
-		div3.append(btn1).append(input).append(btn2);
+// 		console.log(list.reviewIdx);
+		
+		div3.append(div1).append(div2);
 			
-		$('.ListReview').append(div1).append(div2).append(div3);
+		$('.ListReview').append(div3);
 		
 		});
 	};
@@ -490,8 +486,8 @@ $(document).ready(function() {
 </script>
 
 <style>
-.container {
-	margin: 0 5% 10px 5%;
+.expListContentInfo {
+	padding-left: 10px;
 }
 
 .erImgDiv {
@@ -563,11 +559,11 @@ ul.tabs li.current{
 	 height: 50px;
 }
 
-.insertExp {
+.insertExp, .insertRev, insertQna {
 	height: auto;
 }
 
-.insertExpUserInfo {
+.insertExpUserInfo, .insertRevUserInfo, .insertQnaUserInfo {
 	float: left;
 	text-align: center;
 	margin: 5px;
@@ -593,7 +589,6 @@ ul.tabs li.current{
 	display: inline-block;
 }
 
-/* 기대평, 관람후기 */
 #userProfile {
 	width: 50px;
 	height: 50px;
@@ -631,6 +626,30 @@ ul.tabs li.current{
 	margin-top: 20px;
 /* 	background-color: yellow; */
 }
+
+#expectationContent, #reviewContent, #qnaContent {
+	font-size: 15px;
+}
+
+.expListUserInfo, .revListUserInfo, .qnaListUserInfo {
+	float: left;
+	text-align: center;
+}
+
+#oneExpec, #oneReview {
+	display: flex;
+	margin: 15px;
+}
+
+.tab-link {
+	width: 190px;
+	text-align: center;
+}
+
+/* .expDeleteBtn, expReBtn { */
+/* 	border: none; */
+/* 	color: black; */
+/* } */
 </style>
 
 <div class="main_wrapper">
@@ -736,22 +755,22 @@ ul.tabs li.current{
 			<div class="ListExp">
 			<c:forEach items="${expecList }" var="list">
 				<!-- 댓글 하나를 감싸는 div -->
-				<div style="display: inline-flex;">
-				<div class="expListUserInfo" style="float: left;">
+				<div id="oneExpec">
+				<div class="expListUserInfo">
 					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
 					<strong>${list.nick }</strong> 
 				</div>
 				
 				<!-- 기대평 내용 출력 div -->
 				<div class="expListContentInfo">
-					<small>${list.expContent }</small><br>
-					<small id="contentDay">등록일 : ${list.createDate }</small>
-				</div>
-				
-				<div id="expdelnup">
+					<small id="exptationContent">${list.expContent }</small><br>
+					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button>
 				</div>
+				
+<!-- 				<div id="expdelnup"> -->
+<!-- 				</div> -->
 				
 				<!-- 대댓글 출력 부분 -->
 <%-- 				<c:forEach items="${expRecommList }" var="relist"> --%>
@@ -799,6 +818,7 @@ ul.tabs li.current{
 			<!-- 관람후기 출력되는 부분의 div -->
 			<div class="ListReview">
 			<c:forEach items="${reviewList }" var="list">
+				<div id="oneReview">
 				<!-- 관람후기 작성한 사람의 정보 출력 div -->
 				<div class="revListUserInfo">
 					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
@@ -807,11 +827,8 @@ ul.tabs li.current{
 				
 				<!-- 관람후기 내용 출력 div -->
 				<div class="revListContentInfo">
-					<small>${list.reviewContent }</small><br>
-					<small id="contentDay">등록일 : ${list.createDate }</small>
-				</div>
-				
-				<div id="revdelnup"> 
+					<small id="reviewContent">${list.reviewContent }</small><br>
+					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
 					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button>
 				</div>
@@ -826,7 +843,7 @@ ul.tabs li.current{
 <%-- 					</c:if> --%>
 <!-- 					</div> -->
 <%-- 				</c:forEach> --%>
-					
+				</div>
 			</c:forEach>			
 			</div>
 		</div>
@@ -869,7 +886,7 @@ ul.tabs li.current{
 				<!-- QNA 내용 출력 div -->
 				<div class="qnaListContentInfo">
 					<small>${list.qnaContent }</small><br>
-					<small id="contentDay">등록일 : ${list.createDate }</small>
+					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 				</div>
 				
 				<div id="qnadelnup"> 
