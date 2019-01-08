@@ -167,7 +167,7 @@
 
 /* 탭 메뉴 */
 .main_tab{
-	width: 850px;
+	width: 970px;
 	margin: 20px auto 10px auto;
 }
  
@@ -193,6 +193,7 @@ ul.tabs li.current{
 	display: none;
 	background: #ededed;
 	padding: 15px;
+	width: 970px;
 }
  
 .tab-content.current{
@@ -229,7 +230,7 @@ li.pfmInfo:first-child {
     position: absolute;
     left: 7px;
     top: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #d8d7d7;
     padding: 10px;
 }
 
@@ -245,28 +246,28 @@ li.pfmInfo:nth-child(2) {
     position: absolute;
     left: 309px;
     top: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #d8d7d7;
     padding: 10px;
 }
 li.pfmInfo:nth-child(3) {
 	position: absolute;
     left: 473px;
     top: 8px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #d8d7d7;
     padding: 10px;
 }
 li.pfmInfo:nth-child(4) {
     position: absolute;
     left: 309px;
     top: 217px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #d8d7d7;
     padding: 10px;
 }
 li.pfmInfo:nth-child(5) {
     position: absolute;
     left: 473px;
     top: 217px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #d8d7d7;
     padding: 10px;
 }
 
@@ -328,6 +329,7 @@ div>h4 {
 
 #tabPfmList {
 	float: left;
+	margin-top: 30px;
 }
 
 .tab-content {
@@ -386,7 +388,7 @@ div>h4 {
 	    <li class="tab-link" data-tab="tab-3">뮤지컬&연극</li>
 	</ul>
 
-	<div id="tab-1" class="tab-content current">
+	<div id="tab-1" class="tab-content current" style="height: 300px;">
 		<c:forEach items="${newList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
@@ -398,7 +400,7 @@ div>h4 {
 		</c:forEach>
 	</div>
 	
-	<div id="tab-2" class="tab-content">
+	<div id="tab-2" class="tab-content" style="height: 300px;">
 		<c:forEach items="${conList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
@@ -410,7 +412,7 @@ div>h4 {
 		</c:forEach>
 	</div>
 	
-	<div id="tab-3" class="tab-content">
+	<div id="tab-3" class="tab-content" style="height: 300px;">
 		<c:forEach items="${muList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
