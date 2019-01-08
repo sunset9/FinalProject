@@ -95,8 +95,10 @@ div.seatCharts-cell {
       $(document).ready(function() {
     	  				//cart  = 선택된 좌석 , counter = 선택된좌석의 갯수, total=총 좌석 갯수 sc = 좌석맵?
     	  						
-    	  				var $cart = $('#selected-seats'), $counter = $('#counter'), $total = $('#total'), sc = $('#seat-map')
-                           .seatCharts(
+    	  				var $cart = $('#selected-seats')
+    	  				var $counter = $('#counter')
+    	  				var $total = $('#total'), 
+    	  				var sc = $('#seat-map').seatCharts(
                                  {
 									map : [${seatMap.seats }],
                                     seats : {
