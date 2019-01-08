@@ -72,14 +72,17 @@ $(document).ready(function() {
 		gap = Math.floor(gap / (1000 * 60 * 60 * 24));
 		console.log(list.pfmIdx + '공연 : ' + gap + 'day');
 
-		var dday = $('<strong id="dday">D-' + gap + '</strong><br>');
 		var li1 = $('<li class="ticketOpenDay ticketOpenLI">');
-		var span1 = $('<span class="ticketStartDay"><strong>티켓오픈일<br></strong>' + ticketStart + '</span>');
-
-		
+		var span1 = $('<span class="ticketStartDay">');
 		if(gap > 0) {
-			li1.append(dday);	
+			var dday = $('<strong id="dday">D-' + gap + '</strong><br>');
+		} else if (gap < 0) {
+			var dday = $('<strong id="dday">오픈</strong><br>	');
 		}
+		var strong11 = $('<strong>티켓 오픈일<br></strong><small>' + ticketStart + '</small>');
+
+		span1.append(dday);
+		span1.append(strong11);
 		li1.append(span1);
 
 		var createDate = getDateSimpleString(list.createDate);
@@ -161,6 +164,10 @@ li.pfmInfo {
 /* 	margin: 20px 5% 10px 5%; */
 /* } */
 
+#searchandsort {
+	margin: 10px;
+}
+
 #bottomlist {
 /* 	width: 1000px; */
 /* 	padding: 10px; */
@@ -197,17 +204,18 @@ ul.array li span{
 .ticketOpenLI {
 	float: left;
 	height: 100px;
-	padding-top: 50px;
 	text-align: center;
 }
 
 .ticketOpenDay {
 	width: 350px;
+	padding-top: 25px;
 }
 
 .ticketOpenInfo {
 	width: 450px;
 	margin-right: 80px;
+	padding-top: 50px;
 }
 
 .ticketOpenImg {
@@ -220,6 +228,14 @@ ul.array li span{
 
 .ticketStartDay {
 	font-size: 20px;
+}
+
+#dday, #openTopStartDay {
+	color: #01DF74;
+}
+
+a {
+	color: black;
 }
 </style>
 
@@ -239,7 +255,7 @@ ul.array li span{
 					<img class="TopBannerImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
 				<strong class="pfmdate">${list.name }<br></strong>
-				<strong style="color: #F8D83B">
+				<strong id="openTopStartDay">
 					[오픈] <fmt:formatDate value="${list.ticketStart }" pattern="yyyy.MM.dd"/>
 				</strong>
 				</a>
@@ -276,8 +292,11 @@ ul.array li span{
 					<c:if test="${list.dday > 0 }">
 						<strong id="dday">D-${list.dday }</strong><br>
 					</c:if>
+					<c:if test="${list.dday < 0 }">
+						<strong id="dday">오픈</strong><br>
+					</c:if>
 					<strong>티켓 오픈일<br></strong>
-					<fmt:formatDate value="${list.ticketStart }" pattern="yyyy.MM.dd"/>
+					<small><fmt:formatDate value="${list.ticketStart }" pattern="yyyy.MM.dd"/></small>
 				</span>
 				</li>
 				

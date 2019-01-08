@@ -7,7 +7,9 @@
 				
 <script type="text/javascript">
 $(document).ready(function() {
-	console.log(1);	
+// 	console.log(1);	
+	console.log('LOGIN USER IDX : ' + ${loginUser.userIdx});
+	
 	// 탭
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
@@ -631,7 +633,7 @@ ul.tabs li.current{
 }
 </style>
 
-<div class="container">
+<div class="main_wrapper">
 	<div class="topDiv ddiv">
 		<div class="posterImgDiv">
 			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
@@ -730,37 +732,38 @@ ul.tabs li.current{
 				</c:if>
 			</div>
 			
-			<!-- 기대평 출력되는 부분의 div -->
+			<!-- 기대평 출력되는 부분의 전체 감싸는 div -->
 			<div class="ListExp">
 			<c:forEach items="${expecList }" var="list">
-				<!-- 기대평 작성한 사람의 정보 출력 div -->
-				<div class="expListUserInfo">
+				<!-- 댓글 하나를 감싸는 div -->
+				<div style="display: inline-flex;">
+				<div class="expListUserInfo" style="float: left;">
 					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
 					<strong>${list.nick }</strong> 
 				</div>
 				
 				<!-- 기대평 내용 출력 div -->
-				<div class="expListContentInfo" style="float: inherit;">
+				<div class="expListContentInfo">
 					<small>${list.expContent }</small><br>
 					<small id="contentDay">등록일 : ${list.createDate }</small>
 				</div>
 				
-				<div id="expdelnup"> 
+				<div id="expdelnup">
 					<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button>
 				</div>
 				
 				<!-- 대댓글 출력 부분 -->
-				<c:forEach items="${expRecommList }" var="relist">
-					<div id="expectationRecomm">
-					<c:if test="${relist.expIdx eq list.expIdx }">
-					<div id="expectaRecomm">
-						<small>-> ${relist.nick} : ${relist.contents }</small><br>
-					</div>
-					</c:if>
-					</div>
-				</c:forEach>
-					
+<%-- 				<c:forEach items="${expRecommList }" var="relist"> --%>
+<!-- 					<div id="expectationRecomm"> -->
+<%-- 					<c:if test="${relist.expIdx eq list.expIdx }"> --%>
+<!-- 					<div id="expectaRecomm"> -->
+<%-- 						<small>-> ${relist.nick} : ${relist.contents }</small><br> --%>
+<!-- 					</div> -->
+<%-- 					</c:if> --%>
+<!-- 					</div> -->
+<%-- 				</c:forEach> --%>
+				</div>
 			</c:forEach>			
 			</div>
 		</div>
