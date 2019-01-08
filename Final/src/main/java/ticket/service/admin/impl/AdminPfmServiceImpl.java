@@ -512,76 +512,15 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			// 오늘 날짜
 			Date today = new Date();
 			
-			// 0. '조회 구간' 설정
+			// 조회 구간 설정
 			// 시작 구간: 30일 전
-			Date periodS = new Date(today.getTime()); 
-			periodS.setTime((long) (periodS.getTime() - (double)30 * 24 * 60 * 60 * 1000));
+			Date start = new Date(today.getTime()); 
+			start.setTime((long) (start.getTime() - (double)30 * 24 * 60 * 60 * 1000));
 			// 끝 구간: 오늘
-			Date periodE = today; 
+			Date end = today; 
 			
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			resPfmList = pDao.selectAllRankByGenre(start, end, genreIdx);
 			
-			// Date -> String 변환
-			String startStr = dateFormat.format(periodS);
-			String endStr = dateFormat.format(periodE);
-			
-			// 1. 예매율 구하려는 공연 목록 가져옴
-			List<Performance> pfmList = pDao.selectPfmListByPeriod(startStr, endStr, genreIdx);
-			
-			// 2. 공연 리스트 반복문으로 돌면서, 예매율 계산할 구간 구하기
-			for(Performance pfm : pfmList) {
-				// 최종 조회 범위
-				Date startDate = periodS;
-				Date endDate = periodE;
-				
-				// '티켓' 시작일이 '조회 구간' 시작일 보다 느린 경우, '계산 구간' 시작일 = '티켓' 시작일
-				if(pfm.getTicketStart().getTime() - startDate.getTime() >= 0) {
-					startDate = pfm.getTicketStart();
-				}
-				// '조회 구간' 마지막일이 '티켓' 종료일 보다 느린 경우, '계산 구간' 마지막일 = '조회 구간' 마지막일
-				if(endDate.getTime() - pfm.getTicketEnd().getTime() >= 0) {
-					endDate = pfm.getTicketEnd();
-				}
-				
-				// 3.1 해당 공연의 총 좌석 수 구하기
-				int totalSeatCnt = pDao.selectCntAllSeatByHallIdx(pfm);
-				System.out.println(totalSeatCnt);
-				
-				System.out.println(startDate);
-				System.out.println(endDate);
-				
-				// 3.2 계산 구간에 예매한 좌석 수 구하기
-				int bookSeatCnt = pDao.selectCntBookSeatBypfmIdx(pfm, startDate, endDate);
-				System.out.println(bookSeatCnt);
-				
-				// 3.3 해당 공연의 공연 횟수 구하기 
-				int pfmDbtCnt = pDao.selectPfmDbtCntByPfmIdx(pfm, startDate, endDate);
-				System.out.println(pfmDbtCnt);
-				
-				// 3.4 예매율 계산
-				float bookRate = 0;
-				if(bookSeatCnt != 0) {
-					bookRate = (((float)bookSeatCnt/pfmDbtCnt) / totalSeatCnt) * 100;
-				}
-				System.out.println("예매율:" + bookRate);
-				
-				// 예매율 필드에 삽입
-				pfm.setBookingRate(bookRate);
-				
-				// 예매순으로 결과 리스트에 삽입
-				for(int i = 0; i<resPfmList.size(); i++) {
-					if(pfm.getBookingRate() >= resPfmList.get(i).getBookingRate()) {
-						resPfmList.add(i, pfm);
-						break;
-					}
-				}
-				
-				// 첫 번째 요소인 경우 무조건 삽입
-				if(resPfmList.size() == 0) {
-					resPfmList.add(pfm);
-				}
-				
-			} // end for
 			return resPfmList;
 		}
 		

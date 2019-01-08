@@ -520,5 +520,14 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public int selectTotalPfmCnt();
+
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: 조회 범위에 따른 랭킹 목록 가져오기
+	 * @작성자: 전해진
+	 */
+	public List<Performance> selectAllRankByGenre(
+			@Param(value="start") Date start, @Param(value="end") Date end
+			, @Param(value="genreIdx") int genreIdx);
 	
 }

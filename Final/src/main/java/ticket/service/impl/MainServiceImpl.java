@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ticket.dao.face.MainDao;
 import ticket.dto.Artist;
+import ticket.dto.GenreEnum;
 import ticket.dto.Hall;
 import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
@@ -252,10 +253,8 @@ public class MainServiceImpl implements MainService {
 		// 끝 구간: 오늘
 		Date end = today; 
 
-		int genre = 0;
-		if("CON".equals(genreStr)) genre = 1;
-		else if("MU".equals(genreStr)) genre = 2;
-		else if("FAM".equals(genreStr)) genre = 3;
+		// 검색하려는 장르 인덱스 
+		int genre = GenreEnum.valueOf(genreStr).getIdx();
 		
 		topFive = mainDao.selectRankByGenre(RANK, start, end, genre);
 		
