@@ -368,8 +368,8 @@ function openZipSearch() { //다음 우편번호 API
 					for="chkAgree01"><span class="txt_lab">예매 및 취소 수수료/
 						취소기한을 확인하였으며 동의합니다.</span></label>
 			</div>
-			<div class="box_ar_info">
-				<div class="tb_date">
+			<div class="box_ar_info" style="margin-left: 51px;">
+				<div class="tb_date"  style="  background-color: #ffffff;" >
 					<table class="tbl">
 						<caption class="hide"></caption>
 						<colgroup>

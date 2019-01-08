@@ -2,7 +2,8 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
-
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
 <html>
 <head>
 <title>JSC Demo</title>
@@ -84,21 +85,21 @@ div.seatCharts-cell {
 <body>
    <div class="wrapper">
       <div class="container">
-         <div id="seat-map">
+         <div id="seat-map" class="<%=new Date().getTime() %>">
             <div class="front-indicator" >Screen</div>
          </div>
       </div>
    </div>
    <script>
       var firstSeatLabel = 1;
-      
+      var sc ;
       $(document).ready(function() {
+    	  console.log("jsp 호출");
     	  				//cart  = 선택된 좌석 , counter = 선택된좌석의 갯수, total=총 좌석 갯수 sc = 좌석맵?
-    	  						
-    	  				var $cart = $('#selected-seats')
-    	  				var $counter = $('#counter')
-    	  				var $total = $('#total') 
-    	  				var sc = $('#seat-map').seatCharts(
+    	  				var $cart = $('#selected-seats');
+    	  				var $counter = $('#counter');
+    	  				var $total = $('#total'); 
+    	  				sc = $('#seat-map').seatCharts(
                                  {
 									map : [${seatMap.seats }],
                                     seats : {
@@ -174,7 +175,8 @@ div.seatCharts-cell {
                                            */
                                           $counter.text(sc.find('selected').length + 1);
                                           $total.text(recalculateTotal(sc)+ this.data().price);
-                                       
+                                        console.log("2");
+                                        console.log(sc);
                                           return 'selected';
                                        } else if (this.status() == 'selected') {
                                           //update the counter
@@ -193,16 +195,21 @@ div.seatCharts-cell {
                                        }
                                     }
                                  });
-
+    	  				
+    	  			console.log("1");
+    	  			console.log(sc);
+    	  			
                      //[cancel] 클릭시 작동
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-                              console.log(sc);
-                              sc.get($(this).parents('li:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
-                              var id = $(this).parents('li:first').attr("id"); //클릭된 li의 id 구하기
-                              var ids = new Array(); 
-                              ids = id.split("-"); 
-                              $("li."+ids[2]).remove() //클릭된 li삭제
+                              try{
+                            	  sc.get($(this).parents('li:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
+                              }catch(e){
+                              }
+//                               var id = $(this).parents('li:first').attr("id"); //클릭된 li의 id 구하기
+//                               var ids = new Array(); 
+//                               ids = id.split("-"); 
+//                               $("li."+ids[2]).remove() //클릭된 li삭제
                            });
 
                      //예약된 좌석 목록 
