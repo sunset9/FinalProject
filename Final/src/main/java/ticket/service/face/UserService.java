@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ticket.dto.Artist;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
@@ -220,5 +221,13 @@ public interface UserService {
 	 * @작성자:홍나영
 	 */
 	public int getCntPreferArtist(int userIdx);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.07
+	 * @Method설명: 유저가 선택한 아티스트 이름 조회
+	 * @작성자:홍나영
+	 */
+	public List<Artist> getArtistName(int userIdx);
 
 }

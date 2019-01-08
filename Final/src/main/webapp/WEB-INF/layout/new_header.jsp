@@ -128,7 +128,7 @@ text-align:left;
 			<ul>
 	        	<li><a href="/mypage/myticket"">예매 현황</a></li>
 	        	<li><a href="/mypage/mychoice">찜</a></li>
-	        	<li><a href="/mypage/myinquiry">내 문의</a></li>
+	        	<li><a href="/mypage/viewinquiry">내 문의</a></li>
 	        </ul>
         </li>
 	</ul>

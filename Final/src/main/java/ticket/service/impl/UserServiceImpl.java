@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ticket.dao.face.MyChoiceDao;
 import ticket.dao.face.PfmDao;
 import ticket.dao.face.UserDao;
+import ticket.dto.Artist;
 import ticket.dto.PaymentInfo;
 import ticket.dto.Performance;
 import ticket.dto.PreferTheme;
@@ -266,6 +267,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int getCntPreferArtist(int userIdx) {
 		return userDao.selectCntPreferArtist(userIdx);
+	}
+
+
+	@Override
+	public List<Artist> getArtistName(int userIdx) {
+		return userDao.selectArtistName(userIdx);
 	}
 
 

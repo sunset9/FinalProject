@@ -9,7 +9,7 @@
 	
 }
 #userinfo{
-	width:75%;
+
 	display : grid;
 	grid-template-columns:200px  500px 200px 200px;
 	background-color: #CCC;
