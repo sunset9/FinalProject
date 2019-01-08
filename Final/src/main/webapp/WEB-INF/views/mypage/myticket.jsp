@@ -95,7 +95,10 @@ td{
 .bookTr{
 	height: 132px;
 }
-
+.posterImg{
+	width: 80px;
+	height: 118px;
+}
 </style>
 
 <script type="text/javascript">
@@ -126,6 +129,7 @@ $(document).ready(function(){
 
 <hr>
 <div class = "main_wrapper">
+<div>
 <!-- 유저 정보 담고 있는 jsp -->
 <jsp:include page="userinfo.jsp" />
 </div>
@@ -164,7 +168,7 @@ $(document).ready(function(){
 		<div>
 		
 		<div class="poster">
-			<a><img style="width: 80px" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
+			<a><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
 		</div>
 		<div class ="pfminfo">
 			<span>${sob.name }</span> <!-- 공연제목 --><br>
@@ -219,7 +223,7 @@ $(document).ready(function(){
 		<td>
 		<div>
 		<div class="poster">
-		<a><img style="width: 80px" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
+		<a><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
 		</div>
 			<div class ="pfminfo">
 			<span>${sob.name }</span><br> <!-- 공연제목 -->
@@ -255,5 +259,5 @@ $(document).ready(function(){
 
 
 
-
+</div>
 </div>

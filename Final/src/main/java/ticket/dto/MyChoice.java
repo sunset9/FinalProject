@@ -12,9 +12,17 @@ public class MyChoice {
 	private String pfmName; // 공연 타이틀? 이름? 가져오려고 DB테이블이랑 다르게 추가
 	private Date ticketStart;// 티켓 오픈일 DB에 없지요
 	private Date ticketEnd; // 티켓 마감일 DB에 없지요
+	private String saleState; // 티켓 오픈 상태
 
 	public String getPfmName() {
+		
 		return pfmName;
+	}
+	public String getSaleState() {
+		return saleState;
+	}
+	public void setSaleState(String saleState) {
+		this.saleState = saleState;
 	}
 	public Date getTicketStart() {
 		return ticketStart;
@@ -35,7 +43,7 @@ public class MyChoice {
 	public String toString() {
 		return "MyChoice [choiceIdx=" + choiceIdx + ", userIdx=" + userIdx + ", pfmIdx=" + pfmIdx + ", createDate="
 				+ createDate + ", posterImg=" + posterImg + ", pfmName=" + pfmName + ", ticketStart=" + ticketStart
-				+ ", ticketEnd=" + ticketEnd + "]";
+				+ ", ticketEnd=" + ticketEnd + ", saleState=" + saleState + "]";
 	}
 	public int getChoiceIdx() {
 		return choiceIdx;
