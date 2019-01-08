@@ -72,13 +72,18 @@ a:link	{color:#1a1a1a; text-decoration:none;}
     border: none;
     color: white;
     height: 38px;
-    width: 55px;
+    width: 50px;
     font-weight: bold;
 }
 .tap_menu {
 	display: inline-block;
 	margin-top: 13px;
 	position: relative;
+    border-top: 1px solid #eee;
+    width: 100%;
+}
+.tap_menu ul {
+	display: inline-block;
 }
 .tap_menu li {
 	float:left;
@@ -101,6 +106,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 	 text-decoration:none; 
 	 color: #1a1a1a;
 	 font-size: 17px;
+	 font-weight: 600;
 } 
 
 /* 마이페이지 드롭 박스 */
@@ -167,7 +173,11 @@ text-align:left;
 <div class="main_srch">
 	<form action="/ticket/ticketsearch" method="get">
 	<input type="text" title="공연 검색" name="top_search" id="top_search" class="placeholder">
-	<button type="submit" class="main_srch_btn" title="검색" >검색</button>
+<!-- 	<button type="submit" class="main_srch_btn" title="검색" >검색</button> -->
+	<button type="submit" class="main_srch_btn" title="검색" >
+		<span class="glyphicon glyphicon-search"></span>
+	</button>
+	
 	</form>
 </div>
 </div>

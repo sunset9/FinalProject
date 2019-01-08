@@ -13,7 +13,7 @@
 <!-- 폰트 : https://github.com/innks/NanumSquareRound 참고 -->
 <style type="text/css">
 * {
-	font-family: 'NanumSquareRound',sans-serif;
+	font-family: 'NanumSquareRound',Segoe UI, sans-serif;
 }
 
 h1 {

@@ -258,7 +258,8 @@ table button {
 }
 /* 활성화된 요소의 글자 색 */
 .progressbar li.completeStep {
-	color: green; 
+	color: #f2b134; 
+	font-weight: 600;
 }
 /* 활성화된 요소의 step 서클 */
 .progressbar li.completeStep:before {
@@ -266,11 +267,11 @@ table button {
 	background-image: url(/resources/image/checked.png);
 	background-size: 28px 28px;
     background-position: -1px -1px;
-	border-color: #55b776; 
+	border-color: #f2b134; 
 }
 /* 활성화 된 요소에 연결된 progress 줄 색 변경*/
 .progressbar li.completeStep + li:after {
-     background-color: #55b776; 
+     background-color: #f2b134; 
 }
 
 /*<input type="number"/> 화살표 지우기*/
