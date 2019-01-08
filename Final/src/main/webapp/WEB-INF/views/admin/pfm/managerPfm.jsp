@@ -11,6 +11,10 @@
     float: right;
 }
 
+#searchPfm {
+	width: 300px;
+	height: 40px;
+}
  /*TAB CSS*/
 ul.tabs {
     margin: 0;
@@ -202,8 +206,9 @@ $(document).ready(function(){
     // 정렬 기준 클릭 시
     $('.order').on('click', 'span', function(){
    		curPage = 1; // 현재 페이지 초기화
-   		isEnd = false; // 무한스크롤 동작 여부 초기화
    		order = $(this).attr('id'); // 정렬 기준 설정
+   		if("RANK" == order) isEnd = true; // 무한스크롤 동작 중지
+   		else isEnd = false; // 무한스크롤 동작 여부 초기화
    		getPfmListAjax();
     });
     
@@ -234,8 +239,8 @@ $(document).ready(function(){
 //ajax 통신으로 공연 리스트 가져오는 메소드
 function getPfmListAjax(){
 	var url ="";
-	if(genre != 'SEARCH') url='/admin/viewpfmlist'; // 검색시 호출 url
-	else url = '/admin/searchpfm'; // 분류탭 클릭시 호출 url
+	if(genre != 'SEARCH') url='/admin/viewpfmlist'; // 분류탭 클릭시 호출 url
+	else url = '/admin/searchpfm'; // 검색시 호출 url
 	
 	if(!order) order = 'LATEST'; 
 	

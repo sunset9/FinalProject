@@ -6,14 +6,15 @@
 <style>
 ul{	list-style:none;}
 
-a {text-decoration:none;}
-a:link	{text-decoration:none;}
+a {color:#1a1a1a; text-decoration:none;}
+a:link	{color:#1a1a1a; text-decoration:none;}
 
 #wrap {
 	border-bottom: 1px solid #676767;
 }
 #header {
     width: 1130px;
+    height: 185px;
     margin: 0 auto;
     padding: 20px 0 0 0;
 }
@@ -21,8 +22,8 @@ a:link	{text-decoration:none;}
 	text-align: center;
 }
 #util_menu{
-    display: flex;
-    float: right;
+     display: flex; 
+     float: right; 
 }
 #util_menu li:not(.last_child):after{
 	content: '|';
@@ -31,29 +32,40 @@ a:link	{text-decoration:none;}
     top: -1px;
     color: #888;
 }
-
+#util_menu ul {
+	margin: 0;
+}
 #util_menu li {
 	float:left;
 	margin-left:10px;
 	display: flex;
 }
 #util_menu li>a{
-	color: #888;
+	color: #888;	
 }
-
+.middle {
+	clear: both;
+}
 #logo {
 	display: inline-block;
+    margin-top: 10px;
+    position: relative;
+    left: -43px;
+}
+#logo img {
+    width: 217px;
+    height: auto;
 }
 .main_srch { 
 	display: inline-block;
-	margin-left: 70px;
     position: relative;
     top: 10px;
+    left: 15px;
 }
 #top_search {
 	border: 2px solid #fcd303;
     height: 38px;
-    width: 245px;
+    width: 398px;
 }
 .main_srch_btn {
     background: #fcd303;
@@ -65,9 +77,14 @@ a:link	{text-decoration:none;}
 }
 .tap_menu {
 	display: inline-block;
+	margin-top: 13px;
+	position: relative;
 }
 .tap_menu li {
 	float:left;
+}
+.tap_menu li:hover {
+    border-bottom: 5px solid #fcd303;
 }
 
 .logo_text {
@@ -83,6 +100,7 @@ a:link	{text-decoration:none;}
 	 text-align:center; 
 	 text-decoration:none; 
 	 color: #1a1a1a;
+	 font-size: 17px;
 } 
 
 /* 마이페이지 드롭 박스 */
@@ -108,6 +126,7 @@ float:none;
 margin:0px;
 padding:0px;
 width:200px;
+background: #f9f9f9;
 }
 
 .tap_menu li ul a{
@@ -142,6 +161,7 @@ text-align:left;
 	</ul>
 </div><!-- util_menu -->
 
+<div class="middle">
 <a href="/ticket/ticketmain" id="logo"><img  height="80" alt="바나나로고" src="/resources/image/bananalogo2.png"></a>
 
 <div class="main_srch">
@@ -149,6 +169,7 @@ text-align:left;
 	<input type="text" title="공연 검색" name="top_search" id="top_search" class="placeholder">
 	<button type="submit" class="main_srch_btn" title="검색" >검색</button>
 	</form>
+</div>
 </div>
 
 <div class="tap_menu">

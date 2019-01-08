@@ -44,6 +44,13 @@ ul.tabs li.current{
 	width: 100%;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	display: inline-block;
+}
+
+#tabPfmList img {
+    display: block;
+    margin-left: 37px;
+    margin-right: 36px;
 }
 
 #hallImgDiv, #hallNameDiv {
@@ -69,6 +76,20 @@ ul.tabs li.current{
 .basicSize {
 	border-bottom: 1px solid black;
 	margin: 10px;
+}
+
+.basicSize ul {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    padding-left: 0px;    
+}
+
+
+.basicSize span {
+    text-align: center;
+    display: block;
+    margin-left: 37px;
+    margin-right: 36px;
 }
 
 .imgli {
@@ -117,11 +138,12 @@ ul.tabs li.current{
 		<ul>
 		<c:forEach items="${pfmSearchList }" var="list">
 			<li id="tabPfmList">
-			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.storedName}"
-					style="width: 150px; height: 200px;"/>
-				<strong style="text-align: center; height: 200px;">${list.name }</strong>
-			</a>
+			<div id="tabPfm">
+				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
+					<img src="/resources/image/${list.storedName}" style="width: 150px; height: 200px;"/>
+					<span>${list.name }</span>
+				</a>
+			</div>
 			</li>
 			
 <%-- 			<c:if test="${empty list }"> --%>

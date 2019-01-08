@@ -185,6 +185,7 @@
 			  }
 			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx}+"&name="+"${pfm.name}";
 			  window.open(path, "_blank", "width=1150px,height=750px");
+
 		});
 
 

@@ -33,6 +33,8 @@
 		<result column="poster_name" property="posterName"/>
 		<result column="stored_name" property="storedName"/>
 		<result column="hall_name" property="hallName"/>
+		<result column="booking_rate" property="bookingRate"/>
+		<result column="dday" property="dday"/>
 	</resultMap>
 	
 	<resultMap type="ticket.dto.MainBanner" id="MainBannerMap">
@@ -731,5 +733,48 @@
 	
 	<select id="selectTotalPfmCnt" resultType="int">
 		SELECT count(*) FROM performance
+	</select>
+	
+	<select id="selectAllRankByGenre" resultMap="Performance">
+		-- 임시 table 생성
+		WITH pfm_view AS 
+		(SELECT P.*, ps.stored_name poster_name, H.hall_name, COUNT(S.seat_idx) hall_cnt 
+		FROM PERFORMANCE P 
+		LEFT JOIN seat S 
+		ON P.hall_idx = S.hall_idx 
+		LEFT JOIN hall H 
+		ON P.hall_idx = H.hall_idx 
+		LEFT JOIN poster_info ps 
+		ON P.pfm_idx = ps.pfm_idx 
+		WHERE 
+	    	( P.genre_idx = #{genreIdx }
+		    AND ( 
+		    	(ticket_start BETWEEN TRUNC(#{start },'dd') AND TRUNC(#{end },'dd')) 
+		        OR (ticket_end BETWEEN TRUNC(#{start },'dd') AND TRUNC(#{end },'dd')) 
+		        OR (TRUNC(#{start },'dd') BETWEEN ticket_start AND ticket_end) 
+		        OR (TRUNC(#{end },'dd') BETWEEN ticket_start AND ticket_end) ) ) 
+		GROUP BY P.pfm_idx, P.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, P.hall_idx , age_grade_idx, running_time, P.create_date
+		, ps.stored_name, H.hall_name )
+		
+		-- 결과 구하기
+	     SELECT res.pfm_idx, res.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, hall_idx, age_grade_idx, running_time, res.create_date, poster_name, hall_name
+        , nvl(book_cnt/nullif(COUNT(dbt.pfm_date),0)/nullif(hall_cnt,0) *100 , 0) AS booking_rate 
+        FROM (
+        	SELECT P.*,  nvl(b.book_cnt, 0) AS book_cnt
+		    FROM pfm_view P
+		    LEFT JOIN (
+		        SELECT pfm_idx, COUNT(*) AS book_cnt FROM book
+		        WHERE pfm_idx IN (SELECT pfm_idx FROM pfm_view)
+		        AND book_cate_idx = 2
+		        AND TRUNC(create_date,'dd') BETWEEN #{start } AND #{end }
+		        GROUP BY pfm_idx
+		        ) b
+		    ON b.pfm_idx = P.pfm_idx
+            ORDER BY book_cnt DESC, hall_cnt DESC
+		) res
+        LEFT JOIN pfm_datebytime dbt
+        ON res.pfm_idx = dbt.pfm_idx  AND dbt.pfm_date BETWEEN TRUNC(#{start },'dd') AND TRUNC(#{end },'dd')
+        GROUP BY res.pfm_idx, res.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, hall_idx, age_grade_idx, running_time, res.create_date, poster_name, hall_name, hall_cnt, book_cnt
+        ORDER BY booking_rate DESC
 	</select>
 </mapper>

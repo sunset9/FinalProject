@@ -9,7 +9,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css">
+<!-- 폰트 : https://github.com/innks/NanumSquareRound 참고 -->
 <style type="text/css">
+* {
+	font-family: 'NanumSquareRound',sans-serif;
+}
+
+h1 {
+    font-weight: 700;
+}
 /* 모든 페이지에 적용되는 스타일 */
 #searchBox {
 	margin-top: 10px;
