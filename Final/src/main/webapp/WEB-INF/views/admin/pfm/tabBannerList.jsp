@@ -191,7 +191,7 @@ ul.tabs li.active:hover {
 }
 
 .modal-content {
-	width: 700px;
+	width: 790px;
 }
 
 .forEach {
@@ -219,6 +219,17 @@ ul.tabs li.active:hover {
 .tabbanRegistBtn{
 	position: relative;
     top: 100px;
+}
+
+.tb {
+    padding-top: 22px;
+    padding-bottom: 15px;
+    border: 1px solid #d4dae4;
+    margin: 8px;
+}
+
+.tb:hover {
+	border: 2px solid #8da7d3;
 }
 </style>
 <script type="text/javascript">

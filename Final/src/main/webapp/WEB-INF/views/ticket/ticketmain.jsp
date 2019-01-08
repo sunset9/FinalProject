@@ -200,6 +200,7 @@ ul.kind li span{
 }
 .kindDiv {
 	width:100%;
+	height: 388px;
 	float: right;
 }
 
@@ -342,18 +343,20 @@ div>h4 {
 			<li><span id="FAM">가족&아동</span></li>
 		</ul><br><br>
 		
-		<ul id="rankList">
-		<c:forEach items="${rankPfm }" var="pfm">
-			<li class="pfmInfo">
-				<a href="/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx}">
-				<span class="thumImg">
-					<img class="rankPoster" src="/resources/image/${pfm.posterName}" /><br>
-					<strong>${pfm.name }</strong>
-				</span>
-				</a>
-			</li>
-		</c:forEach>
-		</ul>
+		<div class="rankBox">
+			<ul id="rankList">
+			<c:forEach items="${rankPfm }" var="pfm">
+				<li class="pfmInfo">
+					<a href="/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx}">
+					<span class="thumImg">
+						<img class="rankPoster" src="/resources/image/${pfm.posterName}" /><br>
+						<strong>${pfm.name }</strong>
+					</span>
+					</a>
+				</li>
+			</c:forEach>
+			</ul>
+		</div>
 	</div>
 </div>
 
