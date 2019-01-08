@@ -13,10 +13,10 @@
 <!-- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
 <style>
-.wrap_ticket_info {
-    width: 260px;
+/* .wrap_ticket_info { */
+/*     width: 260px; */
  
-}
+/* } */
 .txt_gray {
 text-align: center;
 }

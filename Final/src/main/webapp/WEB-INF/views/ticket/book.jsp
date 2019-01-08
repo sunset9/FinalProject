@@ -681,7 +681,7 @@ function getSeatInfo(){
  
  /*다음단계*/
  #seatBtn{
-     width: 300px;
+     width: 300px !important;
     background-color: #FFF;
     padding: 10px 16px;
     font-size: 18px;
@@ -736,6 +736,58 @@ function getSeatInfo(){
     list-style: none;
     font-size: 15px;
 }
+
+/*티켓정보*/
+.wrap_ticket_info{
+	float: right;
+    top: -50px;
+}
+
+
+.nth2_1{
+	list-style: none;
+	margin-left: -35px !important;
+}
+
+#bookStep_2{
+	width: 677px;
+    padding: 50px 50px 50px 70px;
+    margin-top: -510px;
+    margin-left: 80px;
+    border: 1px solid #BCC;
+}
+
+.stepBtn{
+    width: 100px !important;
+        background-color: #FFF;
+    padding: 10px 16px;
+    font-size: 15px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    color: #F2B134 !important;
+    border: 2px solid #F2B134;
+}
+
+.box_info{
+    margin-top: 58px;
+}
+
+.select_tit{
+    font-size: 20px;
+    margin-top: -12px;
+}
+
+.tit_receipt{
+    font-size: 20px !important;
+    margin-left: -16px !important;
+}
+
+.btn_onestop .button.btNext {
+    border: 1px solid #FFF !important;
+    background: #FFF !important;
+}
+
+
 </style>
 </head>
 <body>
@@ -782,9 +834,9 @@ function getSeatInfo(){
 
 <!-- 전체 묶음 DIV -->
 <div id = "step2and3" style="display:none;">
-<div class="wrap_ticket_info" style="float:right">
+<div class="wrap_ticket_info">
 		<h2 class="logo_onestop">
-			<a href="#none"><img src="/resources/image/bananalogo2.png" alt="바나나 티켓"></a>
+			<a href="#none"><img src="/resources/image/bananalogo2.png" alt="바나나 티켓" style="margin-left: -50px; height: 58px; margin-top: 24px;"></a>
 		</h2>
 		<div class="box_info">
 		<h3 class="select_tit select_t txt_prod_name" title="공연제목">${param.name}</h3>
@@ -800,7 +852,7 @@ function getSeatInfo(){
 				</ul>
 			</div> <!-- box_ticket -->
 		</div><!-- box_info -->
-		<div class="box_info">
+		<div class="box_info" style="margin-top: -10px;">
 		<h3 class="select_tit">결제금액</h3>
 		<div class="box_ticket">
 				<div class="box_total_inner">
@@ -855,7 +907,7 @@ function getSeatInfo(){
 <div id="detailStep" style="float: left">
 
 	<!-- STEP 2. 가격/수령방법 -->
-	<div id ="bookStep_2" style=" display: none; width: 630px; padding: 50px; padding-left: 70px;">
+	<div id ="bookStep_2" style=" display: none;">
 		<table id ="bookStep_2_tb" class="table">
 		</table>
 		<h3 class="select_tit">수령방법을 선택하세요</h3>
@@ -878,9 +930,9 @@ function getSeatInfo(){
 		
 		<div class="box_how"> 
 
-	<div class="box_info_use box_gray">
+	<div class="box_info_use box_gray" style="background-color: #FFF">
 	<!-- 현장수령 선택시-->
-		<h4 class="tit_receipt">주문자정보</h4>
+		<h3 class="tit_receipt">주문자정보</h3>
 		<div class="box_inp_opt">
 			<table class="tbl">
 				<caption class="hide"></caption>
@@ -898,22 +950,24 @@ function getSeatInfo(){
 						<td>
 							<div class="wrap_form_input">
 								<input type="text" name="buyerName" id="buyer_name"
-									class="inputType inp_txt inp_w77" >
+									class="inputType inp_txt inp_w77" style="width: 90px;" >
 							</div>
 						</td>
-						<th class="txt_gray" style="width: 80px;">연락처<span class="require">*</span></th>
+						<th class="txt_gray" style="width: 120px; padding-left: 18px;">연락처<span class="require">*</span></th>
 						<td>
 							<div class="wrap_form_input">
 							<input type="text" name="buyer_tel" id="buyer_tel"
-									class="inputType inp_txt inp_w150" value="">
+									class="inputType inp_txt inp_w150" value="" placeholder="'-' 없이 입력해주세요">
 							</div>
 						</td>
-						<th class="txt_gray" style="width: 75px;">이메일<span class="require">*</span></th>
+						</tr>
+						<tr>
+						<th class="txt_gray" style="width: 110px; padding-left: 0px;">이메일<span class="require">*</span></th>
 						<td>
-							<div class="wrap_form_input">
+							<div class="wrap_form_input" style="height: 46px;">
 								<!-- form wrapper -->
 								<input type="text" name="email" id="buyer_email"
-									class="inputType inp_txt inp_w150" value=""> <label
+									class="inputType inp_txt inp_w150" value="" style="width: 176px;"> <label
 									for="email" class="place_holder"></label>
 							</div>
 						</td>
