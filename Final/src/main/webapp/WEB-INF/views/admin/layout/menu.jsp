@@ -116,7 +116,7 @@ h1, h2, h3 {
 	text-decoration: none;
 	color: #333333;
 	font-size: 20px;
-	font-weight: 800;
+	font-weight: 600;
 }
 
 .menuUl a:hover{
@@ -136,7 +136,7 @@ h1, h2, h3 {
 
 .menuUl li {
 	font-size: 20px;
-	font-weight: 800;
+	font-weight: 600;
 	margin-bottom: 7px;
 }
 </style>
