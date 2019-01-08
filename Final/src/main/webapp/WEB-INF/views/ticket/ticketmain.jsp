@@ -215,14 +215,62 @@ ul.kind li span{
     cursor: pointer;
 }
 .kindDiv {
-	width:100%;
-	height: 388px;
-	float: right;
+	width: 100%;
+    height: 388px;
+    float: right;
+    position: relative;
+}
+
+.kindDiv ul.kind {
+	margin-bottom: 0px;
 }
 
 li.pfmInfo:first-child {
-	padding-left: 25px;
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    border: 1px solid #c0c0c0;
+    padding: 10px;
 }
+
+li.pfmInfo:nth-child(2),li.pfmInfo:nth-child(3),
+li.pfmInfo:nth-child(4),li.pfmInfo:nth-child(5){
+	list-style: none;
+    float: left;
+    margin: 5px;
+    width: 147px;
+}
+
+li.pfmInfo:nth-child(2) {
+    position: absolute;
+    left: 309px;
+    top: 8px;
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+}
+li.pfmInfo:nth-child(3) {
+	position: absolute;
+    left: 473px;
+    top: 8px;
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+}
+li.pfmInfo:nth-child(4) {
+    position: absolute;
+    left: 309px;
+    top: 217px;
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+}
+li.pfmInfo:nth-child(5) {
+    position: absolute;
+    left: 473px;
+    top: 217px;
+    border: 1px solid #c0c0c0;
+    padding: 10px;
+}
+
+
 
 li.pfmInfo {
 	list-style: none;
@@ -231,14 +279,13 @@ li.pfmInfo {
 }
 
 .pfmInfo:first-child img {
-    width: 240px;
-	height: 316px;
+    width: 260px;
+    height: 359px;
 }
 
 .rankPoster {
-	width: 100px;
-	height: 140px;
-	
+    width: 120px;
+    height: 130px;
 }
 
 /* 메인 하단 */
@@ -248,19 +295,31 @@ li.pfmInfo {
 }
 
 .ranking {
-	width: 565px;
-	height: 430px;
+    width: 640px;
+    height: 520px;
 	margin: 10px 0 20px 10%;
 	border: 1px solid silver;
 	float: left;
+	margin-left: 87px;
 }
 
 .alignPfm {
 	width: 30%;
-	height: 430px;
+	height: 520px;
 	margin: 10px 10% 20px 0;
 	border: 1px solid silver;
 	float: left;
+	margin: 10px;
+}
+
+.ranking h4{
+    font-weight: 900;
+    font-size: 30px;
+}
+
+.alignPfm h4{
+    font-weight: 900;
+    font-size: 30px;
 }
 
 div>h4 {
@@ -278,6 +337,21 @@ div>h4 {
 /* 메인 배너 사진 속에 썸네일 사진 넣어주기 */
 .bx-wrapper {
 	display: contents;
+}
+
+.rankBox {
+	width: 630px;
+    height: 450px;
+    position: absolute;
+    top: 30px;
+}
+
+.kind span {
+	font-weight: 700;
+}
+
+.kind span:hover {
+	color: #f1c40f;
 }
 </style>
 

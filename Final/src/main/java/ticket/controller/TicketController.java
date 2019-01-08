@@ -170,7 +170,7 @@ public class TicketController {
 			) {
 		
 		int pfmDbtIdx = 0;
-		
+		System.out.println("receiveIdx: "+receiveIdx);
 		//날짜 인덱스 구하기(공연번호, 시간,날짜를 조건으로)
 		pfmDbtIdx = ticketService.loadDayByTimeIdx(pfmIdx,date,time);
 		
