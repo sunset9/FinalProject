@@ -97,7 +97,7 @@ div.seatCharts-cell {
     	  						
     	  				var $cart = $('#selected-seats')
     	  				var $counter = $('#counter')
-    	  				var $total = $('#total'), 
+    	  				var $total = $('#total') 
     	  				var sc = $('#seat-map').seatCharts(
                                  {
 									map : [${seatMap.seats }],
