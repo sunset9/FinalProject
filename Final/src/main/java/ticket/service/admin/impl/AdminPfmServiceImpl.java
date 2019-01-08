@@ -877,6 +877,13 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 //		fileDao.uploadInfoSave(filetest);
 		pDao.insertMainBanner(mainBanner);
 	}
+	
+	@Override
+	public void saveMainbanner(MainBanner mainbanner) {
+		// 메인배너저장
+		pDao.insertMainBanner(mainbanner);
+		
+	}
 
 	@Override
 	public boolean checkPfmIdxDup(int pfmIdx) {
@@ -975,5 +982,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		// 총 누적공연수 가져오기 
 		return pDao.selectTotalPfmCnt();
 	}
+
+	
 
 }

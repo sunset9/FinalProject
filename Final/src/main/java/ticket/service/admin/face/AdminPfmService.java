@@ -520,6 +520,7 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public void fileUpload(int pfmIdx, ServletContext context, MultipartFile thumbFile, MultipartFile bannerFile);
+	public void saveMainbanner(MainBanner mainbanner);
 	
 	/**
 	 * @최종수정일: 2019.01.01

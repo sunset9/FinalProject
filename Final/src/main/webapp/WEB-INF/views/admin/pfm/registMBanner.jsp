@@ -218,6 +218,7 @@ $(document).ready(function(){
 			  }
 		  });
 		  
+		  
 		  /* 이미 등록된 공연이 아닐경우 append 해주기 */
 		  function append(){
 			  $.ajax({
