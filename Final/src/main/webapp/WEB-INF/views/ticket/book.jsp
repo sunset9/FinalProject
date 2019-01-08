@@ -92,6 +92,22 @@ $(document).ready(function() {
 	
 	//작은좌석구역 클릭시
 		$('#selectedSeats_small svg').on('click','path,rect',function(){
+			 var IsSeatSelect = $('#seat-map').find('.selected');
+			  if (IsSeatSelect.size() != 0){
+				  if(confirm("선택한 좌석 정보를 삭제하고 이동하시겠습니까?")){
+			
+				  }else{
+					  return;
+				  }
+			  }
+			  
+			$('#selectedSeats').html("");  
+			$('#selected-seats').html("");
+			$('#seat-map').html("");
+			$(".nth2_1").html("");
+			$('#total').html("0");
+			$('#counter').html("0");
+			
 			$('path').removeClass('clicked');
 			$('rect').removeClass('clicked');
 			if(!$(this).hasClass('clicked')){
@@ -104,8 +120,6 @@ $(document).ready(function() {
 			$('#selectedSeats_small').find("rect").css("opacity","0");
 			
 			$(this).css("opacity","1");
-			
-			
 			  var color = $(this).css("fill");
 			  var secName = $(this).attr("class");
 			  var pay = $(this).data("pay");
@@ -114,11 +128,13 @@ $(document).ready(function() {
 			  var pfmIdx =${param.pfmIdx};
 			  var hallIdx =${param.hallIdx};
 			  
+			  var secNameArr = secName.split(" ");
+			  $("#seat-map").html("");
 				$.ajax({
 					type:"GET",
 					url:"/hall/hall_2_seats/seat",
 					data:{"color":color,
-						"secName":secName[0],
+						"secName":secNameArr[0],
 						"pay":pay,
 						"appName":appName,
 						"hallIdx":hallIdx,
@@ -155,13 +171,14 @@ $(document).ready(function() {
 		  var oriSecIdx = $(this).data("secIdx");
 		  var pfmIdx =${param.pfmIdx};
 		  var hallIdx =${param.hallIdx};
-
+		  
+		  var secNameArr = secName.split(" ");
 		  
 			$.ajax({
 				type:"GET",
 				url:"/hall/hall_2_seats/seat",
 				data:{"color":color,
-					"secName":secName[0],
+					"secName":secNameArr[0],
 					"pay":pay,
 					"appName":appName,
 					"hallIdx":hallIdx,
@@ -435,7 +452,6 @@ $(document).ready(function() {
 						$('#selectedSeats').find("."+findClass).addClass(res.secInfo[i].appSec);
 						$('#selectedSeats').find("."+findClass).addClass(""+res.secInfo[i].secPay);
 					}
-					console.log('클래스 넣어주기 끝');
 					
 					loadSectionPay();
 				}
@@ -693,7 +709,7 @@ function getSeatInfo(){
  /* 다음단계버튼 hover*/
  #seatBtn:hover{
  background-color: #F2B134;
-  color: #fff;
+  color: #fff !important;
 }
 
 /*좌석도 전체보기 버튼*/
@@ -705,7 +721,7 @@ function getSeatInfo(){
     line-height: 1.3333333;
     border-radius: 6px;
     color: #F2B134;
-    border: 2px solid #F2B134;
+    border: 1px solid #F2B134;
 }
 /*좌석도 전체보기 버튼 hover*/
  #seatAllViewBtn:hover{
@@ -741,6 +757,7 @@ function getSeatInfo(){
 .wrap_ticket_info{
 	float: right;
     top: -50px;
+    background-color: #FFF !important;
 }
 
 
@@ -750,16 +767,17 @@ function getSeatInfo(){
 }
 
 #bookStep_2{
-	width: 677px;
+width: 677px;
     padding: 50px 50px 50px 70px;
-    margin-top: -510px;
+    margin-top: -533px;
     margin-left: 80px;
     border: 1px solid #BCC;
 }
 
+/*스탭버튼*/
 .stepBtn{
-    width: 100px !important;
-        background-color: #FFF;
+    width: 113px !important;
+    background-color: #FFF;
     padding: 10px 16px;
     font-size: 15px;
     line-height: 1.3333333;
@@ -768,6 +786,10 @@ function getSeatInfo(){
     border: 2px solid #F2B134;
 }
 
+.stepBtn:hover{
+  background-color: #F2B134;
+  color: #fff !important;
+}
 .box_info{
     margin-top: 58px;
 }
@@ -787,11 +809,50 @@ function getSeatInfo(){
     background: #FFF !important;
 }
 
+#allDiv{
+    padding: 35px;
+    padding-left: 73px;
+    padding-top: 45px;
+}
 
+#selectedSeats{
+   float: left;
+    width: 594px;
+    padding-left: -9px;
+    padding-top: -6px;
+    padding-bottom: 20px;
+    margin-left: 170px;
+    /* border: 1px solid #BCBC; */
+    /* margin-left: 22px; */
+}
+
+/*결제하기버튼*/
+#payment{
+  	width: 113px !important;
+    background-color: #FFF;
+    padding: 10px 16px;
+    font-size: 15px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    color: #F2B134 !important;
+    border: 2px solid #F2B134;
+}
+#payment:hover{
+ background-color: #F2B134;
+  color: #fff !important;
+}
+
+.box_r{
+    margin-top: -533px !important;
+    margin-left: 28px;
+    width: 760px !important;
+    border: 1px solid #BCBC !important;
+    height: 531px !important;
+}
 </style>
 </head>
 <body>
-
+<div id = allDiv>
 <div id ="stepInfo">
 <ul class="progressbar">
 	<li id="step-1" class='inProgress'>좌석선택</li>
@@ -801,8 +862,8 @@ function getSeatInfo(){
 </div>
 <!-- STEP 1. 좌석선택 -->
 <div id ="bookStep_1">
-	<div id = "selectedSeats" style="float: left; width: 650px; " ></div>
-	<div id="booking-detail"style="float: left; padding-left: 20px;">
+	<div id = "selectedSeats"></div>
+	<div id="booking-detail"style="float: right; padding-left: 20px;">
 	<div id="selectedSeats_small"></div> 
 	<button id = "seatAllViewBtn" onclick="seatAllView()">좌석도 전체보기</button>
 	
@@ -844,7 +905,8 @@ function getSeatInfo(){
 				<ul class="box_ticket_list" style="list-style: none;    margin: 16px -29px;
     font-size: 13px;
     line-height: 24px;">
-					<li class="nth nth1 txt_prod_schedule">${param.date} ${param.time}</li>
+					<li class="nth nth1 txt_prod_schedule" style="border-bottom: 1px solid #eeeeee;
+    width: 205px; text-align: center;">${param.date} ${param.time}</li>
 					<li class="nth nth2 txt_ticket_info">
 						<ul class ="nth nth2_1">
 						</ul>
@@ -852,7 +914,7 @@ function getSeatInfo(){
 				</ul>
 			</div> <!-- box_ticket -->
 		</div><!-- box_info -->
-		<div class="box_info" style="margin-top: -10px;">
+		<div class="box_info" style="margin-top: 20px;">
 		<h3 class="select_tit">결제금액</h3>
 		<div class="box_ticket">
 				<div class="box_total_inner">
@@ -945,7 +1007,7 @@ function getSeatInfo(){
 					<col style="width: 150px;">
 				</colgroup>
 				<tbody>
-					<tr>
+					<tr  style="line-height: 22px;">
 						<th class="txt_gray" style="width: 70px;" id="labUserName">이름<span class="require">*</span></th>
 						<td>
 							<div class="wrap_form_input">
@@ -961,8 +1023,8 @@ function getSeatInfo(){
 							</div>
 						</td>
 						</tr>
-						<tr>
-						<th class="txt_gray" style="width: 110px; padding-left: 0px;">이메일<span class="require">*</span></th>
+						<tr  style="line-height: 22px;">
+						<th class="txt_gray" style="width: 110px; padding-left: 0px; padding-bottom: 20px;">이메일<span class="require">*</span></th>
 						<td>
 							<div class="wrap_form_input" style="height: 46px;">
 								<!-- form wrapper -->
@@ -977,7 +1039,7 @@ function getSeatInfo(){
 			<p class="txt_more txt_gray">입력하신 이메일로 예매확인 내역을 보내드립니다.</p>
 		</div>
 	</div>
-	<div class="box_location box_gray" id="part_delivery_info" style="display: none;">
+	<div class="box_location box_gray" id="part_delivery_info" style="display: none; background-color: #FFF">
 	<!-- 일반배송 선택시-->
 	<h4 class="tit_receipt">
 			배송지 정보 <span class="box_check"> <label><input
@@ -995,7 +1057,7 @@ function getSeatInfo(){
 						<col style="width: 198px;">
 					</colgroup>
 					<tbody>
-					<tr>
+					<tr style="line-height: 22px;">
 					<th class="txt_gray">수령인<span class="require">*</span></th>
 					<td>
 					<div class="wrap_form_input">
@@ -1013,35 +1075,35 @@ function getSeatInfo(){
 									<input type="hidden" name="delvyTel" id="delvyTel"
 										class="inputType inp_txt inp_w190" value=""> <input
 										type="text" name="delvyTel1" id="delvyTel1"
-										class="inputType inp_txt inp_w60" value="" maxlength="4">
+										class="inputType inp_txt inp_w60" value="" maxlength="4" style="width: 55px;">
 									<input type="text" name="delvyTel2" id="delvyTel2"
-										class="inputType inp_txt inp_w60" value="" maxlength="4">
+										class="inputType inp_txt inp_w60" value="" maxlength="4" style="width: 55px;">
 									<input type="text" name="delvyTel3" id="delvyTel3"
-										class="inputType inp_txt inp_w60" value="" maxlength="4">
+										class="inputType inp_txt inp_w60" value="" maxlength="4" style="width: 55px;">
 									<label for="delvyTel" class="place_holder"></label>
 								</div>
 							</td>
 						</tr>
-						<tr>
-							<th class="txt_gray txt_top" rowspan="3">주소<span
+						<tr style="line-height: 22px;">
+							<th class="txt_gray txt_top"  rowspan="3">주소<span
 								class="require">*</span></th>
 							<td colspan="3">
 									<input type="text" name="postCode"
-									id="postCode" class="inputType inp_txt inp_l2" value=""> 
+									id="postCode" class="inputType inp_txt inp_l2" value="" style="width: 95px;"> 
 								<button type="button" class="box_inp_btn" id="btnSearchAddress" onclick="openZipSearch()">우편번호</button>
 							</td>
 						</tr>
-						<tr>
+						<tr  style="line-height: 22px;">
 							<td colspan="3" class="td_pd"><span class="wrap_form_input">
 									<!-- form wrapper -->
 									<input type="text" name="delvyAddr"
 									id="buyer_addr" class="inputType inp_txt inp_l2" value=""
-									> <label for="delvyAddr"
+									style="margin-bottom: 6px;"> <label for="delvyAddr"
 									class="place_holder"></label>
 							</span> 
 							</td>
 						</tr>
-						<tr>
+						<tr  style="line-height: 22px;">
 							<td colspan="3" class="td_pd"><span class="wrap_form_input">
 									<!-- form wrapper -->
 									<input type="text" name="delvyAddrDetail"
@@ -1074,6 +1136,7 @@ function getSeatInfo(){
 
 </div>
 
-
+</div> 
+<!-- AllDiv 끝 -->
 </body>
 </html>

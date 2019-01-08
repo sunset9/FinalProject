@@ -62,7 +62,7 @@ div.seatCharts-cell {
 .front-indicator{
     height: 34px;
     padding: -40px;
-    width: 452px;
+    width: 548px;
     border: 3px solid #CCC;
     background: #DCDCDC;
     text-align: center;
@@ -87,32 +87,15 @@ div.seatCharts-cell {
          <div id="seat-map">
             <div class="front-indicator" >Screen</div>
          </div>
-<!--          <div class="booking-details"> -->
-<!--             <h2>Booking Details</h2> -->
-
-<!--             <h3> -->
-<!--                Selected Seats (<span id="counter">0</span>): -->
-<!--             </h3> -->
-<!--             <ul id="selected-seats"></ul> -->
-
-<!--             Total: <b>$<span id="total">0</span></b> -->
-
-<!--             <button class="checkout-button">Checkout &raquo;</button> -->
-
-<!--             <div id="legend"></div> -->
-<!--          </div> -->
       </div>
    </div>
-
-
-
    <script>
-   
       var firstSeatLabel = 1;
       
       $(document).ready(function() {
     	  				//cart  = 선택된 좌석 , counter = 선택된좌석의 갯수, total=총 좌석 갯수 sc = 좌석맵?
-                     var $cart = $('#selected-seats'), $counter = $('#counter'), $total = $('#total'), sc = $('#seat-map')
+    	  						
+    	  				var $cart = $('#selected-seats'), $counter = $('#counter'), $total = $('#total'), sc = $('#seat-map')
                            .seatCharts(
                                  {
 									map : [${seatMap.seats }],
@@ -121,7 +104,7 @@ div.seatCharts-cell {
                                           price : ${seatMap.pay}, //좌석 가격
                                           classes : '${seatMap.appName}'+' '+'${seatMap.secName}' +' '+"${seatMap.pay}" , //your custom CSS class
                                           category : '${seatMap.appName}'
-                                       },
+                                       }
 //                                        e : {
 //                                           price : 40,
 //                                           classes : 'economy-class'+' '+'A', //your custom CSS class
@@ -212,6 +195,7 @@ div.seatCharts-cell {
                      //[cancel] 클릭시 작동
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                              console.log(sc);
                               sc.get($(this).parents('li:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
                               var id = $(this).parents('li:first').attr("id"); //클릭된 li의 id 구하기
                               var ids = new Array(); 
@@ -267,6 +251,7 @@ div.seatCharts-cell {
     		  var array = new Array(); 
     		  array = str.split(" ");
     		  
+    		  console.log(array);
     		  $(".nth2_1").append("<li class='seatInfo "+seat+"'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay}+"</li>")
 
     		  
