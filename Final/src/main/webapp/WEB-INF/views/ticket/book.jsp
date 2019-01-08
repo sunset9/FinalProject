@@ -767,10 +767,10 @@ function getSeatInfo(){
 }
 
 #bookStep_2{
-width: 677px;
+    width: 760px;
     padding: 50px 50px 50px 70px;
     margin-top: -533px;
-    margin-left: 80px;
+    margin-left: 114px;
     border: 1px solid #BCC;
 }
 
@@ -843,11 +843,12 @@ width: 677px;
 }
 
 .box_r{
-    margin-top: -533px !important;
-    margin-left: 28px;
+      margin-top: -533px !important;
+    margin-left: 24px;
     width: 760px !important;
     border: 1px solid #BCBC !important;
     height: 531px !important;
+}
 }
 </style>
 </head>
