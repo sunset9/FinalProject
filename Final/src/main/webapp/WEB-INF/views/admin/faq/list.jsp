@@ -33,18 +33,22 @@
     
     .con {
     	display:inline-block;
-    	width:80%;
+    	width:500px;
     }
     
+    .faqCotent {
+    	width:1500px;
+    }
 </style>
+
 
 
 <body>
 
-<h1> FAQ </h1>
 
 <div class="con">
 
+<h1> FAQ </h1>
 
 <div class="form-inline">
 	<select id="searchTypeSel" name="searchType">
@@ -79,7 +83,7 @@
         </li>
         <li class="f_answer1">
             <ul class="clearfix">
-                <li>번호 : 20 </li>
+                <li>글번호 : ${flist.faqIdx } </li>
                 <li>${flist.faqAnswer }</li>             
             </ul>
 			<button class="btnUpdate" data-idx='${flist.faqIdx }'>수정</button>
@@ -92,10 +96,10 @@
 </div>
 
 </div>
-<a href="/admin/faqwrite"><button> 글쓰기 </button></a>
 
 <jsp:include page="../../utils/faqpaging.jsp"/>
 
+<a href="/admin/faqwrite"><button> 글쓰기 </button></a>
 
 <script type="text/javascript">
 

@@ -14,10 +14,17 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <style>
+
 .list {
 	display: inline-block;
 	width: 500px;
 }
+
+body {
+  	position:relative;  
+ 	background-color:blue;
+  	z-index:100; 
+ }
 
 </style>
 
@@ -44,6 +51,7 @@ $(document).ready(function(){
 
 
 <!-- conta = container -->
+
 <div class="con">
 
 
@@ -77,6 +85,7 @@ $(document).ready(function(){
 		<th>분류</th>
 		<th>제목</th>
 		<th>등록일</th>	
+		<th> <img src="../image.test.PNG"> </th>
 	</tr>
 
   

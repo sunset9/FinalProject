@@ -49,7 +49,7 @@
 	 </resultMap>
 	 
 <!-- 	공지사항 전체 글 리스트 -->
-  <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.Paging">
+  <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.PagingT">
   	select * from ( 
   		select rownum rnum, B.* from (
   			select * from notice order by notice_idx desc
@@ -183,7 +183,7 @@
 
 
 <!-- 	FAQ 전체 글 리스트 -->
-	<select id="selectFaqList" resultMap="Faq" parameterType="ticket.utils.Paging">
+	<select id="selectFaqList" resultMap="Faq" parameterType="ticket.utils.PagingT">
 	 	select * from ( 
   		select rownum rnum, B.* from (
   			select * from faq order by faq_idx desc
