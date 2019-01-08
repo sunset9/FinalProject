@@ -96,7 +96,11 @@
 				data:{'page':page},
 				beforeSubmit:function(){}, // 확장자 체크 안하므로 before값 X
 				success:function(fileInfo){
+					
+					console.log(fileInfo.result); // 개발자도구 console
+					
 					if(fileInfo.result===-3){
+						
 						alert('10MB 초과');
 						return false;
 					} else {

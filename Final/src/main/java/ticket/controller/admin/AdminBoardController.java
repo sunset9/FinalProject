@@ -265,13 +265,16 @@ public class AdminBoardController {
 			
 			String fileMime = multipartFile.getContentType();
 			
+			
 			// 콜백 - 맵에 담기
 			String attachurl = httpSession.getServletContext().getContextPath() + "/upload/board/files/" + modifyName; // separator와 다름
+			System.out.println(attachurl);
 			fileInfo.put("attachurl", attachurl); // 상대 파일 경로
 			fileInfo.put("filemime", fileMime);
 			fileInfo.put("filename", modifyName);
 			fileInfo.put("filesize", filesize);
-			fileInfo.put("result", 1);						
+			fileInfo.put("result", 1);				
+			
 		}				
 		return fileInfo;		
 	}

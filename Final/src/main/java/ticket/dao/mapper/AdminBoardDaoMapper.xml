@@ -63,18 +63,20 @@
 <!--   이전글 -->
   <select id="preNoti" resultMap="notice">
 	select * from 
-	(select notice_idx
-	, lag(notice_idx,1) over(order by notice_idx) prev, 
-	lag(notice_title,1) over(order by notice_idx) prev_title from notice)
+		(select notice_idx, 
+			lag(notice_idx,1) over(order by notice_idx) prev, 
+			lag(notice_title,1) over(order by notice_idx) prev_title 
+		from notice)
 	where notice_idx = #{notice_idx}
   </select>
   
 <!--   다음글 -->
   <select id="postNoti" resultMap="notice">
 	select * from 
-	(select notice_idx
-	, lead(notice_idx,1) over(order by notice_idx) next, 
-	lead(notice_title,1) over(order by notice_idx) next_title from notice)
+		(select notice_idx, 
+			lead(notice_idx,1) over(order by notice_idx) next, 
+			lead(notice_title,1) over(order by notice_idx) next_title 
+		from notice)
 	where notice_idx = #{notice_idx}
   </select>
   
