@@ -10,7 +10,7 @@ a {text-decoration:none;}
 a:link	{text-decoration:none;}
 
 #wrap {
-	border: 1px solid #676767;
+	border-bottom: 1px solid #676767;
 }
 #header {
     width: 1130px;
