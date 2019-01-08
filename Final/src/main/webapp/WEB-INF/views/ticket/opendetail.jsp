@@ -106,70 +106,105 @@ ul.tabs li.current{
 	width: 100%;
 }
 
-.ddiv, #pfmInfo {
+.ddiv, .pfmInfo {
 	display: inline-block;
 	width: 100%;
+	margin: 10px;
 }
 
 #castimg{
 	width: 100px;
 	height: 100px;
 	text-align: center;
+	margin: 5px;
 }
 
 .castInfo {
 	margin-bottom: 20px;
 }
 
-#pfmInfo {
-	border: 1px solid gray;
-	margin: 5px;
-	padding: 10px;
+.pfmInfo {
+	margin: 20px 0px 10px 0px;
+/* 	padding: 10px; */
 }
 
 #openticketText {
-	font-size: 15px;
+	font-size: 30px;
 	display: inline-block;
 	width: 100%;
-	margin-left: 5px;
+	margin: 30px 5px 0px 5px;
+}
+
+.imgli {
+	float: left;
+}
+
+.castUl {
+	text-align: center;
+}
+
+.topDiv {
+	border: 1px solid #666;
+	height: 320px;
+	padding: 10px;
+}
+
+#pfmMyChoice {
+	border: 1px solid #666;
+	padding: 20px;
+	font-size: 20px;
+	margin-bottom: 30px;
+	display: flex;
+}
+
+#pfmTitle {
+	padding: 10px;
 }
 </style>
 
-<div class="container">
-	<div class="topDiv ddiv">
+<div class="main_wrapper">
+	<div class="ddiv">
+		<div class="topDiv">
 		<div class="posterImgDiv">
 			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
 		</div>
 		
 		<div id="pfmTitle">
-			<strong style="font-size: 20px;">${pfmInfoList.name } 티켓 오픈 안내</strong><br>
-			<small>등록일 : <fmt:formatDate value="${pfmInfoList.createDate }" pattern="yyyy-MM-dd"/></small><br><br>
+			<strong style="font-size: 30px;">${pfmInfoList.name } 티켓 오픈 안내</strong><br>
+			<small>등록일 : <fmt:formatDate value="${pfmInfoList.createDate }" pattern="yyyy.MM.dd"/></small><br><br>
 			<small style="font-size: 15px;">안녕하세요. 바나나티켓입니다.<br>${pfmInfoList.name } 티켓 오픈 안내입니다.</small>
+		</div>
 		</div>
 		
 		<strong id="openticketText">티켓 오픈 일정</strong>
-		<div id="pfmInfo">
+		<div id="pfmMyChoice">
+		<div style="width: 580px;">
 			<strong>${pfmInfoList.name }</strong><br>
-			티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy-MM-dd"/>
-				<button id="mychoicebtn">공연플래너 담기</button>
-				<a href="/ticket/pfmdetail?pfmIdx=${pfmInfoList.pfmIdx}"><button id="pfmDetailbtn">상세보기</button></a>
+			티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy.MM.dd"/>
+		</div>
+		<div style="width: 580px; text-align: center; margin-top: 10px;">
+			<button class="btn btn-default" id="mychoicebtn">공연플래너 담기</button>
+			<a href="/ticket/pfmdetail?pfmIdx=${pfmInfoList.pfmIdx}">
+				<button id="pfmDetailbtn" class="btn btn-success">상세보기</button>
+			</a>
+		</div>
 		</div>
 		<div class="bottomDiv ddiv">
 			
 			<div id="tab-1" class="tab-content current">
 				<strong style="float: left; font-size: 20px;">출연진</strong><br>
 				<div class="castInfo tabarray">
-				<ul>
+				<ul class="castUl">
 				<c:forEach items="${castList }" var="list">
-					<div class="imgli">
+					<li class="imgli">
 						<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
 						${list.name }
-					</div>
+					</li>
 				</c:forEach>
 				</ul>
 				</div>
 				
-				<div class="pfmInfo tabarray">
+				<div class="pfmInfo tabarray"style="display: inline-block;">
 					<strong style="float: left; font-size: 20px;">공연 정보</strong><br>
 					${detailList.contents }
 				</div>
