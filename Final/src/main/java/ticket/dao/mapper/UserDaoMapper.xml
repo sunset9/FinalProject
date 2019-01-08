@@ -106,10 +106,13 @@
 		,addr
 		,addr_detail
 		,postcode
-		,m_grade_idx
+		,U.m_grade_idx
 		,create_date
 		,profile 
-  	FROM userinfo 
+		,G.m_grade
+  	FROM userinfo U
+  	LEFT JOIN MEMBER_GRADE G
+  	ON G.m_grade_idx = U.m_grade_idx
   	WHERE user_idx = #{userIdx}
   </select>
   

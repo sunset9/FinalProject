@@ -66,6 +66,10 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 	border: 2px solid #fcd303;
     height: 38px;
     width: 398px;
+    padding-left: 13px;
+}
+#top_search:focus {
+	outline: none;
 }
 .main_srch_btn {
     background: #fcd303;
@@ -74,6 +78,13 @@ a:link	{color:#1a1a1a; text-decoration:none;}
     height: 38px;
     width: 50px;
     font-weight: bold;
+    font-size: 18px;
+    position: relative;
+    top: 1px;
+}
+.main_srch_btn>span{
+    position: relative;
+    top: 3px;
 }
 .tap_menu {
 	display: inline-block;
