@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script type="text/javascript"
-
-	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<!-- 아임포트 스크립트 이게 없으면 실행이 안됨.. -->
  <link rel="stylesheet" href="/resources/css/onestop.css" type="text/css" /> 
 <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
@@ -352,7 +350,7 @@ function openZipSearch() { //다음 우편번호 API
 <!-- 결제수단 -->
 <!-- 결제 동의 -->
 <div id="partCheckAgree" class="box_cont box_receipt">
-	<ul class="box_agree" style="list-style: none;">
+	<ul class="box_agree" style="list-style: none; margin-left: -34px;">
 		<li class="list_agree frt">
 			<div class="select_tit">
 				예매자동의
@@ -395,7 +393,7 @@ function openZipSearch() { //다음 우편번호 API
 			</div>
 		</li>
 		<li class="list_agree">
-			<ul>
+			<ul style="list-style: none;">
 				<li class="float_l">
 					<div class="tit_check">
 						<input type="checkbox" id="chkAgree05" name="chkAgree"
