@@ -219,11 +219,12 @@ public class TicketController {
 		
 			//세션에서 유저정보 받아오기
 			User loginUser = (User) session.getAttribute("loginUser");
-			
+			logger.info("세션에서 로그인정보 가져오기 ::: "+loginUser);
 			Book book = new Book();
 			book.setBookGroup(bookGroup);
 			book.setPfmIdx(pfmIdx);
 			book.setUserIdx(loginUser.getUserIdx());
+			logger.info("유저번호 가져오기 :::: "+String.valueOf(loginUser.getUserIdx()));
 			book.setBookCateIdx(2);
 			book.setPfmDbtIdx(pfmDbtIdx);
 			book.setSeatIdx(seatIdx.get(i));
