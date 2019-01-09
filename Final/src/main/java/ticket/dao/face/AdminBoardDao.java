@@ -9,16 +9,23 @@ import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.utils.Paging;
 import ticket.utils.PagingT;
+import ticket.utils.SearchPagingT;
 
 public interface AdminBoardDao {
 
 
-	// 공지사항 전체 글 리스트
+	// 목록 + 페이징 (공지사항 전체 글 리스트)
 	public List<Notice> selectNotiList(PagingT pagingt);
 	
-	// 전체 게시글 조회
+	// 전체 게시글 조회(개수)
 	public int selectCntAll();
 	 					
+	// 목록+페이징+검색
+	public List<Notice> noticeListSearch(SearchPagingT searchpagingt);
+	
+	// 검색 결과 개수
+	public int noticeCountSearch(SearchPagingT searchpagingt);
+	
 	// 공지사항 상세보기
 	public Notice selectNotiView(int noticeIdx);
 	

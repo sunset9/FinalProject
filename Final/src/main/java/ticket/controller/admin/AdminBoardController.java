@@ -36,6 +36,7 @@ import ticket.dto.PageMaker;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.utils.Paging;
 import ticket.utils.PagingT;
+import ticket.utils.SearchPagingT;
 
 @Controller
 public class AdminBoardController {
@@ -47,7 +48,6 @@ public class AdminBoardController {
 	
 	/**
 	 * 2018.12.09
-	 * @param cri 
 	 * @Method설명: 공지사항 목록 페이징 리스트
 	 * @작성자: 조요한
 	 */
@@ -65,6 +65,23 @@ public class AdminBoardController {
 		
 		return "/admin/notice/list";
 	}
+	
+	// 글 목록 + 페이징 + 검색
+	@RequestMapping(value="/admin/noticelistsearch", method=RequestMethod.GET)	
+	public String notiList(@ModelAttribute("searchpagingt")SearchPagingT searchpagingt, Model model) {
+	
+		
+		List<Notice> list = adminBoardService.getNotiList(searchpagingt);
+		model.addAttribute("noticelist", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPagingt(searchpagingt);
+		pageMaker.setTotalCount(adminBoardService.selectCountAll());
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "/admin/notice/list";
+	}
+	
 	
 	
 	

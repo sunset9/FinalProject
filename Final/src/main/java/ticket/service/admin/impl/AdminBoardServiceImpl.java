@@ -23,6 +23,7 @@ import ticket.dto.NoticeFile;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.utils.Paging;
 import ticket.utils.PagingT;
+import ticket.utils.SearchPagingT;
 
 @Service
 public class AdminBoardServiceImpl implements AdminBoardService{
@@ -44,7 +45,19 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		
 	}
 	
-	// 페이징 정보
+	// 검색
+	@Override
+	public List<Notice> noticeListSearchService(SearchPagingT searchpagingt) {
+		return adminBoardDao.noticeListSearch(searchpagingt);
+	}
+
+	// 전체 검색 수
+	@Override
+	public int noticeCountSearchService(SearchPagingT searchpagingt) {
+		return adminBoardDao.noticeCountSearch(searchpagingt);
+	}
+	
+	// 페이징 정보(안씀)
 	@Override
 	public Paging getPaging(int curPage, int listCount, int pageCount) {
 
@@ -313,6 +326,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		// 글 삭제
 		adminBoardDao.deleteInquiry(inquiry);
 	}
+
 
 
 	
