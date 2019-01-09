@@ -391,8 +391,7 @@ $(document).ready(function() {
 				  pfmSeatSection = res.hashMap.pfmSeatSection;
 				  
 				  //정해진 구역 랜덤으로 색 칠해주기 위해 선언한 color 배열
-				  var color = ['#1E88E5','#3E4982','#DEB069','#FFE561','#A0B7E3','#7EB2B3'];
-				  
+				  var color = ['#D47D9A','#3E4982','#B1D275','#F2E9B5','#C5B3D1','#8A7676'];
 				  var json = { };
 				  var secName; 
 				  for(var i=0;i<res.hashMap.secName.length;i++){
@@ -644,7 +643,7 @@ function getSeatInfo(){
 }
 /* 활성화된 요소의 글자 색 */
 .progressbar li.completeStep {
-	color: green; 
+	color: #F2B134; 
 }
 /* 활성화된 요소의 step 서클 */
 .progressbar li.completeStep:before {
@@ -652,11 +651,11 @@ function getSeatInfo(){
 	background-image: url(/resources/image/checked.png);
 	background-size: 28px 28px;
     background-position: -1px -1px;
-	border-color: #55b776; 
+	border-color: #F2B134; 
 }
 /* 활성화 된 요소에 연결된 progress 줄 색 변경*/
 .progressbar li.completeStep + li:after {
-     background-color: #55b776; 
+     background-color: #F2B134; 
 }
 
 
@@ -770,7 +769,8 @@ function getSeatInfo(){
     width: 760px;
     padding: 50px 50px 50px 70px;
     margin-top: -533px;
-    margin-left: 114px;
+    margin-left: -30px;
+/*     margin-left: 114px; */
     border: 1px solid #BCC;
 }
 
@@ -821,7 +821,8 @@ function getSeatInfo(){
     padding-left: -9px;
     padding-top: -6px;
     padding-bottom: 20px;
-    margin-left: 170px;
+    margin-left: -38px;
+/*     margin-left: 170px; */
     /* border: 1px solid #BCBC; */
     /* margin-left: 22px; */
 }
@@ -844,18 +845,24 @@ function getSeatInfo(){
 
 .box_r{
       margin-top: -533px !important;
-    margin-left: 24px;
+/*     margin-left: 24px; */
+     margin-left: -120px; 
     width: 760px !important;
     border: 1px solid #BCBC !important;
     height: 531px !important;
 }
+
+#pfmNameInfo{
+    margin-left: -38px;
+/*     margin-left: 174px; */
+    font-size: 20px;
 }
 </style>
 </head>
 <body>
 <div id = allDiv>
 <div id ="stepInfo">
-<ul class="progressbar">
+<ul class="progressbar" style="margin-left: -38px;">
 	<li id="step-1" class='inProgress'>좌석선택</li>
 	<li id="step-2">가격/수령방법</li>
 	<li id="step-3">결제방법</li>
@@ -863,7 +870,14 @@ function getSeatInfo(){
 </div>
 <!-- STEP 1. 좌석선택 -->
 <div id ="bookStep_1">
+<div style="float: left">
+	<div style="width: 611px;">
+		<div id ="pfmNameInfo" style="display: inline;"><b>좌석 선택</b> <span> ${param.name}</span></div>
+		<div id ="pfmDateInfo" style="display: inline; float: right; font-size: 16px;">${param.date} ${param.time}</div>
+	</div>
+	<br>
 	<div id = "selectedSeats"></div>
+</div>
 	<div id="booking-detail"style="float: right; padding-left: 20px;">
 	<div id="selectedSeats_small"></div> 
 	<button id = "seatAllViewBtn" onclick="seatAllView()">좌석도 전체보기</button>
@@ -886,11 +900,12 @@ function getSeatInfo(){
 
 	</div>
 	
-	총 결제금액 : <b><span id="total">0</span> 원</b><br>
+	<div style="font-size:24px; color:#F2B134; display:inline" >총 결제금액 : </div> 
+	<b style="font-size: 25px"><span id="total">0</span> 원</b><br>
 
 	<button id = "seatBtn" class="stepBtn nextBtn">다음단계</button>
 	</div>
-	
+
 </div>
 <!-- STEP 1. 좌석선택 -->
 
