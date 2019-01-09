@@ -3,10 +3,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11b0d7e1cbaf8eb3510561bbddb85ae9&libraries=services"></script>
-				
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
+	$('.castImgUl').bxSlider({
+		// 무한 루프가 아닌 처음과 끝으로 표현
+		infiniteLoop: false,
+		hideControlOnEnd: true,
+		pager: false,
+		minSlides : 7,
+		maxSlides : 7,
+		slideWidth : 1130,
+		slideMargin : 10
+	});
 	
 	
 	// 해당공연이 찜이 되어있는지 확인
@@ -178,20 +194,20 @@ $(document).ready(function() {
 
 ul.tabs li{
 	background: none;
-	color: #222;
+/* 	color: #222; */
 	display: inline-block;
 	padding: 10px 15px;
 	cursor: pointer;
 }
  
 ul.tabs li.current{
-	background: #ededed;
+/* 	background: #ededed; */
 	color: #222;
 }
  
 .tab-content{
 	display: none;
-	background: #ededed;
+/* 	background: #ededed; */
 	padding: 15px;
 }
  
@@ -233,18 +249,18 @@ ul.tabs li.current{
 	float: left;
 }
 
-.castUl {
-	text-align: center;
+.bx-wrapper {
+	margin-top: 20px;
 }
 
 .topDiv {
-	border: 1px solid #666;
+	border: 1px solid #BDBDBD;
 	height: 320px;
 	padding: 10px;
 }
 
 #pfmMyChoice {
-	border: 1px solid #666;
+	border: 1px solid #BDBDBD;
 	padding: 20px;
 	font-size: 20px;
 	margin-bottom: 30px;
@@ -293,7 +309,7 @@ ul.tabs li.current{
 			<div id="tab-1" class="tab-content current">
 				<strong style="float: left; font-size: 20px;">출연진</strong><br>
 				<div class="castInfo tabarray">
-				<ul class="castUl">
+				<ul class="castImgUl">
 				<c:forEach items="${castList }" var="list">
 					<li class="imgli">
 						<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
