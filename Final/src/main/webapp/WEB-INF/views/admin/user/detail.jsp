@@ -189,8 +189,7 @@ table.type03 td {
 	<c:if test="${sob.state eq '예매완료(부분취소)'}">
 		<!-- 부분취소 모달 open btn-->
 			<input type="hidden" id="userIdx" value="${curUser.userIdx}">
-			<input type="hidden" id="bookGroup" value="${sob.bookGroup}">	
-			<button id="partCancelModalBtn">환불하기</button>	
+			<input type="hidden" id="bookGroup" value="${sob.bookGroup}">
 	</c:if>
 	</td>
 </tr>
