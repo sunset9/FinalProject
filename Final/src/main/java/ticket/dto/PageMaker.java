@@ -1,9 +1,13 @@
 package ticket.dto;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import ticket.utils.PagingT;
+import ticket.utils.SearchPagingT;
 
 //totalCount : 게시물의 총 갯수
 //startPage : 현제 페이지의 시작 번호 (1, 11, 21 등등)
@@ -37,10 +41,31 @@ public class PageMaker {
 	    UriComponentsBuilder.newInstance()
 	    .queryParam("page", page)
 	    .queryParam("perPageNum", pagingt.getPerPageNum())
-	    .build();
-	    
+	    .build();	    
 	  return uriComponents.toUriString();
 	 }
+	 
+	 public String makeSearch(int page) {
+	   
+	  UriComponents uriComponents =
+		UriComponentsBuilder.newInstance().queryParam("page", page)
+		.queryParam("perPageNum", pagingt.getPerPageNum())
+		.queryParam("searchType", ((SearchPagingT)pagingt).getSearchType())
+		.queryParam("keyword", encoding(((SearchPagingT)pagingt).getKeyword()))
+		.build(); 
+	  return uriComponents.toUriString();  
+	 }
+
+	 private String encoding(String keyword) {
+	  if(keyword == null || keyword.trim().length() == 0)
+	  { return ""; }
+	  
+	  try {
+	   return URLEncoder.encode(keyword, "UTF-8");
+	  } catch(UnsupportedEncodingException e)
+	  { return ""; }
+	 }
+	 
 	 
 	 public int getTotalCount() {
 	  return totalCount;

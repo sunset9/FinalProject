@@ -15,6 +15,7 @@ import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.utils.Paging;
 import ticket.utils.PagingT;
+import ticket.utils.SearchPagingT;
 
 public interface AdminBoardService {
 
@@ -24,6 +25,11 @@ public interface AdminBoardService {
 	// 게시글 전체 수
 	public int selectCountAll();
 	
+	// 목록+페이징+검색
+	public List<Notice> noticeListSearchService(SearchPagingT searchpagingt);
+	
+	// 검색 결과 개수
+	public int noticeCountSearchService(SearchPagingT searchpagingt);
 	
 	// 공지사항 상세보기
 	public Notice getViewNoti(int noticeIdx);
