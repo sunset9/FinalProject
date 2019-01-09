@@ -1,5 +1,8 @@
 package ticket.dto;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import ticket.utils.PagingT;
 
 //totalCount : 게시물의 총 갯수
@@ -7,7 +10,7 @@ import ticket.utils.PagingT;
 //endPage : 현제 페이지의 끝 번호 (10, 20, 30 등등)
 //prev : 이전 페이지로 이동하는 링크의 존재 여부
 //next : 다음 페이지로 이동하는 링크의 존재 여부
-
+//UriComponents URI 생성 클래스
 public class PageMaker {
 
 	 private int totalCount;
@@ -29,6 +32,16 @@ public class PageMaker {
 	  calcData();
 	 }
 
+	 public String makeQuery(int page) {		 
+	  UriComponents uriComponents =
+	    UriComponentsBuilder.newInstance()
+	    .queryParam("page", page)
+	    .queryParam("perPageNum", pagingt.getPerPageNum())
+	    .build();
+	    
+	  return uriComponents.toUriString();
+	 }
+	 
 	 public int getTotalCount() {
 	  return totalCount;
 	 }

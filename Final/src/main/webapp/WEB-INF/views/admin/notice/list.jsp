@@ -101,6 +101,26 @@ $(document).ready(function(){
 	</c:forEach>
 
 </table>
+
+<div>
+ <ul>
+  <c:if test="${pageMaker.prev}">
+   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+  </c:if> 
+  
+  <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+   <li><a href="noticelist${pageMaker.makeQuery(idx)}">${idx}</a></li>
+  </c:forEach>
+    
+  <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+  </c:if> 
+ </ul>
+</div>
+
+
+
+
 <div class="btndel">
 <a href="/admin/noticedelete"> <button>글삭제</button></a>
 </div>
@@ -110,7 +130,7 @@ $(document).ready(function(){
 <a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 </div>
 <a href="/admin/noticelist">페이징 테스트</a>
-<jsp:include page="../../utils/noticepaging.jsp"/>
+<%-- <jsp:include page="../../utils/noticepaging.jsp"/> --%>
 </div>
 </div>
 </body>
