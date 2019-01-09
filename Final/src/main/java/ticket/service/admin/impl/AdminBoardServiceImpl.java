@@ -22,6 +22,7 @@ import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.utils.Paging;
+import ticket.utils.PagingT;
 
 @Service
 public class AdminBoardServiceImpl implements AdminBoardService{
@@ -31,9 +32,9 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	
 	// 공지 전체 조회 리스트
 	@Override
-	public List getNotiList(Paging paging) {
+	public List<Notice> getNotiList(PagingT pagingt) {
 			
-		return adminBoardDao.selectNotiList(paging);
+		return adminBoardDao.selectNotiList(pagingt);
 	}
  
 	// 게시글 전체 수
@@ -312,6 +313,7 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 		// 글 삭제
 		adminBoardDao.deleteInquiry(inquiry);
 	}
+
 
 	
 }
