@@ -610,6 +610,7 @@ $(document).ready(function() {
 <style>
 .expListContentInfo, .revListContentInfo, .qnaListContentInfo  {
 	margin-left: 30px;
+}
 
 #mychoiceBtn{
 	width: 140px;
