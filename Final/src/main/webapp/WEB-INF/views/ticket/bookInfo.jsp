@@ -185,8 +185,8 @@
 			  var userheight = screen.height - 170;
 			  
 			  
-			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
-// 			  window.open(path, "_blank", "width=1150px,height=750px");
+// 			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
+			  window.open(path, "_blank", "width=990px,height=710px");
 
 		});
 

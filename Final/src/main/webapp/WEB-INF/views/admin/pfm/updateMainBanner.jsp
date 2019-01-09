@@ -206,8 +206,14 @@ $(document).ready(function(){
     				"thumbFile" : thumbFile,
     				"bannerFile" : bannerFile
     			},
-    			success : function(){
-    				
+    			success : function(result){
+    				var res = result;
+    				if(res == 1){
+    					/* 파일이 하나라도 바뀌었거나, 둘 다 바뀌었을 경우 -> 수정처리 */
+    					console.log('수정처리');
+    				}else{
+    					/* 똑같은 파일이니 수정처리 안해도됨 */
+    				}
     			}
     		 });
     	 }
