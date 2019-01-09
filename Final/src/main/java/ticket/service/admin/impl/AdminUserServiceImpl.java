@@ -139,6 +139,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			
 			CancelData cancel_data = new CancelData(already_cancelled_imp_uid, true, BigDecimal.valueOf(pay.get(i).getSecPay())); // imp_uid를 통한 전액취소
 			System.out.println("취소금액 확인 : "+pay.get(i).getSecPay());
+			
 			try {
 				IamportResponse<Payment> payment_response = client.cancelPaymentByImpUid(cancel_data);
 	

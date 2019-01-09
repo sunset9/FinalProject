@@ -48,6 +48,7 @@
 		<result column="banner_img_ori" property="bannerImgOri"/>
 		<result column="thumb_img_ori" property="thumbImgOri"/>
 		<result column="hall_name" property="hallName"/>
+		<result column="create_date" property="createDate"/>
 	</resultMap>
 	
 	<resultMap type="ticket.dto.TabBanner" id="TabBannerMap">
@@ -777,4 +778,13 @@
         GROUP BY res.pfm_idx, res.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, hall_idx, age_grade_idx, running_time, res.create_date, poster_name, hall_name, hall_cnt, book_cnt
         ORDER BY booking_rate DESC
 	</select>
+	
+	<select id="selectMbBymainbanIdx" resultMap="MainBannerMap" parameterType="int">
+		SELECT mb.mainban_idx, mb.pfm_idx, mb.banner_img_ori, mb.banner_img_str, mb.thumb_img_ori, mb.thumb_img_str, mb.create_date, p.name, p.pfm_start, p.pfm_end, h.hall_name
+		FROM main_banner mb JOIN performance p
+		ON mb.pfm_idx = p.pfm_idx JOIN hall h
+		ON p.hall_idx = h.hall_idx
+		WHERE mainban_idx = #{value}	
+	</select>
+	
 </mapper>

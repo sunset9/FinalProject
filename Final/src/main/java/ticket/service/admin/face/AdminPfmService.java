@@ -594,4 +594,11 @@ public interface AdminPfmService {
 	 * @작성자: 김지은
 	 */
 	public int getTotalPfmCnt();
+	
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: mainbanIdx로 mainbanner 정보 가져오기
+	 * @작성자: 김지은
+	 */
+	public MainBanner getMbBymainbanIdx(int mainbanIdx);
 }

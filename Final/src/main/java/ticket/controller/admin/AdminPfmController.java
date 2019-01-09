@@ -1282,4 +1282,67 @@ public class AdminPfmController {
 		
 		return pfmInfo;
 	}
+	
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: 메인 배너 수정하기
+	 * @작성자: 김지은
+	 */
+	@RequestMapping(value="/admin/updatemainbanner", method=RequestMethod.GET)
+	public String updateMainbanner(
+			@RequestParam(defaultValue="1") int curPage,
+			@RequestParam int mainbanIdx, 
+			Model model,
+			HttpServletRequest req
+			) {
+		//검색어 얻기
+		String search = req.getParameter("mainBanSearch");
+		
+		//공연수 얻기
+		int totalPfm = pService.getTotalPfm(search);
+		System.out.println("공연수 확인 : "+totalPfm);
+		
+		//페이징 객체
+		Paging paging = new Paging(totalPfm, curPage, 9);
+		
+		//최신순 공연목록 가져오기
+		List<Performance> NewPfmList = pService.getNeweastPfm(paging);
+		logger.info("최신순 공연목록 : "+NewPfmList);
+		
+		model.addAttribute("NewPfmList", NewPfmList);
+		model.addAttribute("paging", paging);
+		
+		//mainbanIdx로 메인 배너 정보 가져오기
+		MainBanner mainbanner = pService.getMbBymainbanIdx(mainbanIdx);
+		logger.info("수정할 mainbanner 정보 가져오기 : "+mainbanner);
+		
+		//addAttribute
+		model.addAttribute("mainbanner", mainbanner);
+		
+		return "admin/pfm/updateMainBanner";
+	}
+	
+	@RequestMapping(value="/admin/updatemainbanner", method=RequestMethod.POST)
+	public void updateMainbannerP() {
+		
+	}
+	
+	@RequestMapping(value="/admin/checkmainban", method=RequestMethod.POST)
+	@ResponseBody
+	public void checkmainban(
+			@RequestParam int mainbanIdx,
+			@RequestParam String thumbFile,
+			@RequestParam String bannerFile
+			) {
+		
+		MainBanner oriMainBanner = pService.getMbBymainbanIdx(mainbanIdx);
+		String oriThumb = oriMainBanner.getThumbImgOri();
+		String oriBanner = oriMainBanner.getBannerImgOri();
+		
+		if(thumbFile.equals(oriThumb) && bannerFile.equals(oriBanner)) {
+			System.out.println("같은 파일");
+		}else if(thumbFile.equals(oriThumb) || bannerFile.equals(oriBanner)) {
+			System.out.println("하나라도 다른 파일 -> 수정처리");
+		}
+	}
 }
