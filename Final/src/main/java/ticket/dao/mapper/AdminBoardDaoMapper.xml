@@ -48,6 +48,16 @@
 	 	<result column="create_date" property="createDate"/>	 
 	 </resultMap>
 	 
+	 <sql id="search">
+	 	<if test="searchType !=null">
+	 		<if test="searchType == 't'.toString()">where notice_title like '%' || #{keyword} || '%'</if>
+	 		<if test="searchType == 'c'.toString()">where notice_content like '%' || #{keyword} || '%'</if>
+	 		<if test="searchType == 'tc'.toString()">where (notice_title like '%' || #{keyword} || '%')
+	 			or (notice_content like '%' || #{keyword} || '%')</if>	 	
+	 	</if>
+	 </sql>
+	 
+	 
 <!-- 	공지사항 전체 글 리스트 -->
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.PagingT">
 	select notice_idx, user_idx, n_type_idx, notice_title ,notice_content
@@ -238,15 +248,30 @@ UPDATE faq set
 </delete>
 
 
+<select id="noticeListSearch" resultMap="notice" parameterType="ticket.utils.PagingT">
+	select * from (
+    select notice_idx, user_idx, n_type_idx, notice_title, notice_content,
+        row_number() over(order by notice_idx desc) as rNum
+    from notice
+    	<include refid="search"></include>
+    ) noti
+        where rNum between #{rowStart} and #{rowEnd}
+            order by notice_idx desc		
+</select>
 
+
+<select id="noticeCountSearch" resultType="int">
+	select count(notice_idx)
+    	from notice
+    		<include refid="search"></include>
+        <![CDATA[
+        and notice_idx>0
+        ]]>
+</select>
 
 
 
   </mapper>
-  
-  
-  
-  
   
   
   
