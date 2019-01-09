@@ -193,9 +193,11 @@ function openZipSearch() { //다음 우편번호 API
 				  , "postCode" : postCode
 			     },
 			async: false,
-			dataType:"html",
+			dataType:"json",
 			success:function(res){
-			
+				var path ='/mypage/detailicket?bookGroup='+ res.bookGroup;
+				opener.location.href=path;
+				window.close();
 			}
 		});	
 	}
@@ -308,8 +310,7 @@ function openZipSearch() { //다음 우편번호 API
 			}
 			alert(msg);
 			//예매상세 페이지이동
-			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
-			window.close();
+
 			
 	
 		});

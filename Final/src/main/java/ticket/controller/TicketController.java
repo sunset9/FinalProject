@@ -252,7 +252,8 @@ public class TicketController {
 		}
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/ticket/ticketingComplete");
+		mav.setViewName("jsonView");
+		mav.addObject("bookGroup", bookGroup);
 		return mav;
 		
 	}
