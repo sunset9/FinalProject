@@ -308,8 +308,8 @@ function openZipSearch() { //다음 우편번호 API
 			}
 			alert(msg);
 			//예매상세 페이지이동
-// 			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
-// 			window.close();
+			opener.location.href='/mypage/detailicket?pfmIdx='+${param.pfmIdx};
+			window.close();
 			
 	
 		});
