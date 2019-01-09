@@ -192,7 +192,7 @@ li.pfmInfo {
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
-	<h3 style="font-size: 30px;">콘서트</h3><br>
+	<h3 style="font-size: 40px;">콘서트</h3><br>
 	<div class="topbannerimg">
 	<ul class="bxslider">
 	<c:forEach items="${topBanList }" var="topList">
@@ -207,7 +207,6 @@ li.pfmInfo {
 	</div>
 	
 	<hr>
-	<div class="main_wrapper">
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="conall" style="border: none; background-color: #FFFFFF; color: black;">전체</button>

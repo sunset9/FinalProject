@@ -96,7 +96,7 @@
 					console.log('로그인 되어있지 않음 - 맞춤 공연 x');
 				}
 			});
-		}
+		};
 		
 		// 맞춤 공연
 // 		$('.bxslider').bxSlider({
@@ -112,14 +112,14 @@
 // 				var ul = $('<ul class="bxslider">');
 				
 // 				var li = $('<li>');
-				var img = $('<img id="fitImg" src="/resources/image/' + list.originName + '" />');
+				var img = $('<img id="fitImg" src="/resources/image/' + list.storedName + '" />');
 
 // 				li.append(img);
 // 				ul.append(li);
 				
 				$('.fitPfmbox').append(img);
 			});
-		}
+		};
 	});
 </script>
  
@@ -173,27 +173,30 @@
  
 ul.tabs{
 	margin: 0px;
-	padding: 0px;
+	padding: 0px 1px;
 	list-style: none;
 }
 ul.tabs li{
 	background: none;
-	color: #222;
+/* 	color: #222; */
 	display: inline-block;
 	padding: 10px 15px;
 	cursor: pointer;
+	width: 320px;
+	text-align: center;
 }
  
 ul.tabs li.current{
-	background: #ededed;
-	color: #222;
+/* 	background: #ededed; */
+/* 	color: #222; */
+	border-bottom: 5px solid #F2B134;
 }
  
 .tab-content{
 	display: none;
-	background: #ededed;
+/* 	background: #ededed; */
 	padding: 15px;
-	width: 970px;
+    border: 1px solid #BDBDBD;
 }
  
 .tab-content.current{
@@ -329,7 +332,8 @@ div>h4 {
 
 #tabPfmList {
 	float: left;
-	margin-top: 30px;
+    margin: 15px;
+    padding-top: 15px;
 }
 
 .tab-content {
@@ -458,11 +462,13 @@ div>h4 {
 		<c:if test="${login }" >
 <!--  		<script>loginFitPfm();</script> -->
 			<ul class="fitPfmbox" onload="loginFitPfm();">
+			<c:forEach items="${fitPfmList }" var="list">
 				<li>
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-					<img src="/resources/image/${list.bannerImgStr}" />
+					<img src="/resources/image/${list.storedName}" />
 				</a>
 				</li>
+			</c:forEach>
 			</ul>
 		</c:if>
 		
