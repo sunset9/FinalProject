@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -873,7 +874,9 @@ function getSeatInfo(){
 <div style="float: left">
 	<div style="width: 611px;">
 		<div id ="pfmNameInfo" style="display: inline;"><b>좌석 선택</b> <span> ${param.name}</span></div>
-		<div id ="pfmDateInfo" style="display: inline; float: right; font-size: 16px;">${param.date} ${param.time}</div>
+		<div id ="pfmDateInfo" style="display: inline; float: right; font-size: 16px;">
+		${param.date} ${param.time}
+		</div>
 	</div>
 	<br>
 	<div id = "selectedSeats"></div>
@@ -922,7 +925,7 @@ function getSeatInfo(){
     font-size: 13px;
     line-height: 24px;">
 					<li class="nth nth1 txt_prod_schedule" style="border-bottom: 1px solid #eeeeee;
-    width: 205px; text-align: center;">${param.date} ${param.time}</li>
+    width: 205px; text-align: center; font-size: 15px;">${param.date} <br> ${param.time}</li>
 					<li class="nth nth2 txt_ticket_info">
 						<ul class ="nth nth2_1">
 						</ul>

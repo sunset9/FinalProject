@@ -88,8 +88,8 @@ div.seatCharts-cell {
 <body>
    <div class="wrapper">
       <div class="container">
-         <div id="seat-map" class="<%=new Date().getTime() %>">
-            <div class="front-indicator">STAGE</div>
+      <div class="front-indicator">STAGE</div>
+         <div id="seat-map">
          </div>
       </div>
    </div>
@@ -97,8 +97,7 @@ div.seatCharts-cell {
       var firstSeatLabel = 1;
       var sc ;
       $(document).ready(function() {
-    	  console.log("jsp 호출");
-    	  				//cart  = 선택된 좌석 , counter = 선택된좌석의 갯수, total=총 좌석 갯수 sc = 좌석맵?
+    	  				//cart  = 선택된 좌석 , counter = 선택된좌석의 갯수, total=총 좌석 갯수  sc = 좌석맵?
     	  				var $cart = $('#selected-seats');
     	  				var $counter = $('#counter');
     	  				var $total = $('#total'); 
@@ -199,9 +198,6 @@ div.seatCharts-cell {
                                     }
                                  });
     	  				
-    	  			console.log("1");
-    	  			console.log(sc);
-    	  			
                      //[cancel] 클릭시 작동
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
@@ -236,6 +232,18 @@ div.seatCharts-cell {
                      $('div').find('.seatCharts-seat.${seatMap.appName}').css("background-color","${seatMap.color}");
            			 
 
+                     
+                     var row = ${seatMap.maxRow};
+                     var col = ${seatMap.maxCol};
+                     
+                     if(row <= 15 || col <= 15 ){
+                    	 
+                    	 $("div.seatCharts-cell").css("height","30px");
+                    	 $("div.seatCharts-cell").css("width","30px");
+                    	 $("div.seatCharts-row").css("margin","-15px");
+                    	 
+                     }
+                     
                });
 
       //총 가격 계산 

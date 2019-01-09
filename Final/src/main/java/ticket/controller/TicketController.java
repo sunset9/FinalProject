@@ -389,7 +389,8 @@ public class TicketController {
 		seatMap.put("secName", secName);
 		seatMap.put("pay", pay);
 		seatMap.put("appName", appName);
-		
+		seatMap.put("maxRow",maxRow);
+		seatMap.put("maxCol",maxCol);
 		mav.addObject("seatMap",seatMap);
 		
 		return mav;

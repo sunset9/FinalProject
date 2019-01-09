@@ -136,12 +136,12 @@
 						for(var j=0;j<res.hashMap.BookedSeats.length;j++){
 							if(res.hashMap.allSeats[i].appSec == res.hashMap.BookedSeats[j].appSec){
 								var ResidualSeat = res.hashMap.allSeats[i].cnt - res.hashMap.BookedSeats[j].cnt;
-								$('#ResidualSeatList').append("<li><table class='table'><tr><td style='width:20%'>"+ res.hashMap.allSeats[i].appSec + " 석</td> <td style='width:30%; text-align: right;'>"+" "+pay+"원 </td> <td style='width: 20%; text-align: right;'>"+ ResidualSeat +" 석</td></tr></table></li>");
+								$('#ResidualSeatList').append("<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec + " 석</td> <td style='width:30%; text-align: right;'>"+" "+pay+" 원 </td> <td style='width: 20%; text-align: right;'>"+ ResidualSeat +" 석</td></tr></table></li>");
 								
 							}else{
 								$('#ResidualSeatList').append(
-										"<li><table class='table'><tr><td style='width:20%'>"+ res.hashMap.allSeats[i].appSec 
-										+ " 석 </td> <td style='width:30%; text-align: right;'>"+" "+pay+"원 </td> <td style='width:20%;  text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
+										"<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec 
+										+ " 석 </td> <td style='width:30%; text-align: right;'>"+" "+pay+" 원 </td> <td style='width:20%;  text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
 										
 										
 								);
@@ -149,8 +149,8 @@
 						}
 					}else{//예매된 좌석이 없을경우
 						$('#ResidualSeatList').append(
-								"<li><table class='table'><tr><td style='width:20%;'>"+ res.hashMap.allSeats[i].appSec 
-								+ " 석</td> <td style='width:30%; text-align: right;'> "+" "+pay+"원 </td> <td style='width:20%; text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
+								"<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec 
+								+ " 석</td> <td style='width:30%; text-align: right;'> "+" "+pay+" 원 </td> <td style='width:20%; text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
 						);
 					}
 				
@@ -170,7 +170,23 @@
 	  $('#bookBtn').click(function() {
 		  
 			  var date = new Date($('#datepicker').datepicker( "getDate" ));
-			  var dateStr = date.getFullYear() + "-" + (date.getMonth()+1) +"-"+ date.getDate();
+			
+			  var month;
+			  if(date.getMonth()+1 < 10){
+				  month = "0"+(date.getMonth()+1);
+			  }else{
+				  month = date.getMonth()+1;
+			  }
+			  
+			  var day;
+			  if(date.getDate() < 10){
+				  day = "0"+(date.getDate()+1);
+			  }else{
+				  day = date.getDate()+1;
+			  }
+			  
+			  var dateStr = date.getFullYear() + "-" + month +"-"+ day;
+			  
 			  $(this).attr("data-date",dateStr);
 			  
 			  var selectDate = $(this).data("date");
@@ -185,8 +201,8 @@
 			  var userheight = screen.height - 170;
 			  
 			  
-			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
-// 			  window.open(path, "_blank", "width=1150px,height=750px");
+// 			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
+			  window.open(path, "_blank", "width=1075px,height=710px");
 
 		});
 
@@ -210,11 +226,12 @@
     margin-bottom: 0px !important;
 }
 .times{
-    width: 110%;
+    width: 105%;
     height: 59px;
     font-size: 19px;
     text-align: center;
     background-color: #fff;
+    margin-left: 7px;
     border-top: 0px solid #f6f6f6;
     border-left: 0px solid #f6f6f6;
     border-right: 0px solid #f6f6f6;
@@ -258,15 +275,15 @@
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
     border: 1px solid #F2b134;
-    background: #eed0988a;
+    background: #ffdc9aa8;
     font-weight: normal;
     color: #454545;
 }
 
 .ui-widget-header {
-    border: 1px solid #f9e8e8;
-    background: #f2b134;
-    color: #333333;
+    border: 2px solid #ffc6585e;
+    background: #ffe7b900;
+    color: #F2B134;
     font-weight: bold;
 }
   
@@ -276,9 +293,9 @@
 <div id = "ticketInfo">
 <div id = "infoTitle" style="float: top"> 
 <ul class="nav nav-pills" style="font-size: 27px;text-align: center;">
-  <li role="presentation" style="width: 40%; color:#F2B134 ">날짜선택</li>
-  <li role="presentation" style="width: 30%; color:#F2B134 ">시간선택</li>
-  <li role="presentation" style="width: 29%; color:#F2B134 ">잔여석</li>
+  <li role="presentation" style="width: 30%; color:#4a4a4a ">날짜선택</li>
+  <li role="presentation" style="width: 41%; color:#4a4a4a ">시간선택</li>
+  <li role="presentation" style="width: 28%; color:#4a4a4a ">잔여석</li>
 </ul>
 </div>
 <div id = "info" style="float: bottom">
