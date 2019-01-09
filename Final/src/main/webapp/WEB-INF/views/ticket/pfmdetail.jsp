@@ -5,21 +5,27 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11b0d7e1cbaf8eb3510561bbddb85ae9&libraries=services"></script>
 				
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+	
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+				
 <script type="text/javascript">
 $(document).ready(function() {
 // 	console.log(1);	
 // 	console.log('LOGIN USER IDX : ' + ${loginUser.userIdx});
 
-// 	$('.castImgUl').bxSlider({
-// 		// 무한 루프가 아닌 처음과 끝으로 표현
-// 		infiniteLoop: false,
-// 		hideControlOnEnd: true,
-// 		pager: false,
-// 		minSlides : 7,
-// 		maxSlides : 7,
-// 		slideWidth : 1130,
-// 		slideMargin : 10
-// 	});
+	$('.castImgUl').bxSlider({
+		// 무한 루프가 아닌 처음과 끝으로 표현
+		infiniteLoop: false,
+		hideControlOnEnd: true,
+		pager: false,
+		minSlides : 7,
+		maxSlides : 7,
+		slideWidth : 1130,
+		slideMargin : 10
+	});
 	
 	
 	// 해당공연이 찜이 되어있는지 확인
@@ -698,6 +704,10 @@ ul.tabs li.current{
 	width: 100%;
 }
 
+.topDiv {
+	margin-bottom: 40px;
+}
+
 /* 기대평, 관람후기, qna */
 #loginUserImg {
 	 width: 50px;
@@ -810,6 +820,10 @@ td {
 	padding: 5px;
 }
 
+#choicePmfInfo {
+	font-size: 20px;
+}
+
 /* #infoTitle { */
 /* 	width: 150px; */
 /* } */
@@ -825,9 +839,9 @@ td {
 			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
 		</div>
 	
-		<div class="posterInfoDiv" style="font-size: 15px;">
+		<div class="posterInfoDiv">
 			<strong style="font-size: 30px;">${pfmInfoList.name }</strong><br><br><br>
-			<table >
+			<table id="choicePmfInfo">
 				<tr>
 					<td id="infoTitle" align="left">관람시간</td>
 					<td id="infoContent" align="left">${pfmInfoList.runningTime }분</td>
@@ -875,37 +889,6 @@ td {
 					</td>
 				</tr>
 			</table>
-<%-- 			관람시간 : ${pfmInfoList.runningTime }분<br> --%>
-<%-- 			공연장 : ${hallInfoList.hallName }<br> --%>
-<!-- 			연령제한 :  -->
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 1}"> --%>
-<!-- 					전체 관람<br> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 2 }"> --%>
-<!-- 					7세 이상<br> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 3 }"> --%>
-<!-- 					15세 이상<br> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 4 }"> --%>
-<!-- 					청소년 관람 불가<br> -->
-<%-- 				</c:when> --%>
-<%-- 			</c:choose> --%>
-<%-- 			공연기간 : <fmt:formatDate value="${pfmInfoList.pfmStart }" pattern="yyyy.MM.dd"/> ~  --%>
-<%-- 			<fmt:formatDate value="${pfmInfoList.pfmEnd }" pattern="yyyy.MM.dd"/><br> --%>
-<!-- 			장르 :  -->
-<%-- 			<c:choose> --%>
-<%-- 				<c:when test="${pfmInfoList.genreIdx eq 1 }"> --%>
-<!-- 					콘서트<br> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${pfmInfoList.genreIdx eq 2 }"> --%>
-<!-- 					뮤지컬&연극<br> -->
-<%-- 				</c:when> --%>
-<%-- 				<c:when test="${pfmInfoList.genreIdx eq 3 }"> --%>
-<!-- 					가족&아동<br> -->
-<%-- 				</c:when> --%>
-<%-- 			</c:choose> --%>
 		</div>
 		
 		<div id = "choiceBtn">
@@ -957,7 +940,7 @@ td {
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
-				<textarea id="expectation" cols="100" rows="5"></textarea>
+				<textarea id="expectation" cols="100" rows="4"></textarea>
 					<button type="submit" id="expecBtn">작성</button>
 				</c:if>
 				
@@ -966,7 +949,7 @@ td {
 				<img id="loginUserImg" class="img-circle"
 					 src="<c:url value="/resources/image/profile.png"/>"/><br>
 				</div>
-				<textarea id="exptextarea" readonly="readonly" cols="100" rows="5">로그인 후 기대평 작성이 가능합니다.</textarea>
+				<textarea id="exptextarea" readonly="readonly" cols="100" rows="4">로그인 후 기대평 작성이 가능합니다.</textarea>
 					<button type="submit" id="expecBtn" disabled="disabled">작성</button>
 				</c:if>
 			</div>
@@ -985,7 +968,9 @@ td {
 				<div class="expListContentInfo">
 					<small id="exptationContent">${list.expContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+<%-- 					<c:if test="${loginUser.email}"> --%>
 					<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
+<%-- 					</c:if> --%>
 <%-- 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button> --%>
 				</div>
 				
@@ -1021,7 +1006,7 @@ td {
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
-				<textarea id="review" cols="100" rows="5"></textarea>
+				<textarea id="review" cols="100" rows="4"></textarea>
 					<button type="submit" id="revBtn">작성</button>
 				</c:if>
 				
@@ -1030,7 +1015,7 @@ td {
 				<img id="loginUserImg" class="img-circle"
 					 src="<c:url value="/resources/image/profile.png"/>"/><br>
 				</div>
-				<textarea id="revtextarea" readonly="readonly" cols="100" rows="5">로그인 후 관람후기 작성이 가능합니다.</textarea>
+				<textarea id="revtextarea" readonly="readonly" cols="100" rows="4">로그인 후 관람후기 작성이 가능합니다.</textarea>
 					<button type="submit" id="revBtn" disabled="disabled">작성</button>
 				</c:if>
 			</div>
@@ -1080,7 +1065,7 @@ td {
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
-				<textarea id="qna" cols="100" rows="5"></textarea>
+				<textarea id="qna" cols="100" rows="4"></textarea>
 					<button type="submit" id="qnaBtn">작성</button>
 				</c:if>
 				
@@ -1089,7 +1074,7 @@ td {
 				<img id="loginUserImg" class="img-circle"
 					 src="<c:url value="/resources/image/profile.png"/>"/><br>
 				</div>
-				<textarea id="qnatextarea" readonly="readonly" cols="100" rows="5">로그인 후 QNA 작성이 가능합니다.</textarea>
+				<textarea id="qnatextarea" readonly="readonly" cols="100" rows="4">로그인 후 QNA 작성이 가능합니다.</textarea>
 					<button type="submit" id="qnaBtn" disabled="disabled">작성</button>
 				</c:if>
 			</div>
@@ -1187,6 +1172,7 @@ td {
 				        // 인포윈도우로 장소에 대한 설명을 표시합니다
 				        var infowindow = new daum.maps.InfoWindow({
 				            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + hallName + '</div>'
+				            , disableAutoPan: true
 				        });
 				        infowindow.open(map, marker);
 				

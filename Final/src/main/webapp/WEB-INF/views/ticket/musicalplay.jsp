@@ -189,7 +189,7 @@ li.pfmInfo {
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
-	<h3 style="font-size: 30px;">뮤지컬&공연</h3><br>
+	<h3 style="font-size: 40px;">뮤지컬&공연</h3><br>
 	<div class="topbannerimg">
 	<ul class="bxslider">
 	<c:forEach items="${topBanList }" var="topList">

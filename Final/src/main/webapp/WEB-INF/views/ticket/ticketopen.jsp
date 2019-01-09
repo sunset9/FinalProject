@@ -147,6 +147,7 @@ $(document).ready(function() {
 li.pfmbanInfo {
 	list-style: none;
 	float: left;
+	margin-bottom: 20px;
 }
 
 li.pfmInfo {
@@ -241,8 +242,7 @@ a {
 
 
 <div class="main_wrapper">
-<div class="container">
-	<h3 style="font-size: 30px; text-align: left;">HOT OPEN 소식</h3>
+	<h3 style="font-size: 40px; text-align: left;">HOT OPEN 소식</h3>
 	
 	<!-- 관리자가 지정한 오픈소식 배너 ?-->
 	<!-- 	일단 등록된 포스터에서 rownum으로 5개 걸러내서 리스트 뽑음 -->
@@ -262,7 +262,6 @@ a {
 			</li>
 		</c:forEach>
 	</ul>
-	</div>
 	
 	<hr>
 	<div id="searchandsort">
@@ -322,5 +321,4 @@ a {
 	</ul>
 	
 </div>
-	
 <!-- </div> -->
