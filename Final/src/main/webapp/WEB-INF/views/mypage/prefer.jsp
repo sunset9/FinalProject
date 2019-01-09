@@ -38,6 +38,53 @@
 }
 #searchArtist{
 	display: none;
+	border: 1px solid #CCC;
+	float: right;
+}
+
+.alist{
+	display: inline-block;
+	text-align: center;
+	margin: 15px;
+}
+.heightFix{
+	height: 400px;
+	border: 1px solid #CCC;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+.preferTitle{
+	font-size: 2em;
+	font-weight: bolder;
+}
+#artist_text{
+	border-bottom: 2px solid  #F2B134;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	font-size: 1.5em;
+}
+#btn_search{
+	font-size: 1.5em;
+	color: #F2B134;
+}
+.search_in{
+	margin:10px;
+}
+.form{
+	text-align: right;
+}
+.searchList{
+	font-size: 2em;
+	margin-right: 20px;
+	
+}
+.searchImg{
+	width: 80px;
+	height: 80px;
+}
+.glyphicon-ok-circle{
+	font-size : 3em;
 }
 </style>
 
@@ -142,17 +189,25 @@ $(document).ready(function(){
 					var resLi = $('<li>');
 					resLi.data('aIdx', artist.artistIdx); // 커스텀 태그로 artist 정보 삽입
 					resLi.data('aName', artist.name); // 커스텀 태그로 artist 정보 삽입
+					resLi.addClass('searchArtist');
 					
 					// 아티스트 이미지 띄울 태그
 					var img = $('<img>');
 					img.attr('src', artist.imgUri);
+					img.addClass('artistImg');
+					img.addClass('img-circle');
+					img.addClass('searchImg');
+					
 					// 아티스트명 띄울 태그
-					var name = $('<p>');
+					var name = $('<span>');
 					name.text(artist.name);
+					name.addClass('searchList');
 
 					resLi.append(img);
 					resLi.append(name);
-					resLi.append("<input type='button' class='addArtist' value='추가'>")
+
+// 					resLi.append("<input type='button' class='addArtist' value='추가'>")
+					resLi.append("<span class='glyphicon glyphicon-ok-circle searchList'/>")
 					
 					// 모달의 검색 결과 창에 결과 태그들 추가
 					$('#searchArtist').append(unitDiv.append(resLi));
@@ -211,54 +266,38 @@ function artChoice(artistIdx, name){
 </script>
 
 
-    
-<h1>마이페이지 선호 찜</h1>
+<div class ="main_wrapper">    
+<h1>나만의 공연취향을 설정해보세요</h1>
+<span class="preferTitle">아티스트 선택</span>
 <hr>
-<div id = "userinfo">
-	<div class = "form-inline">
-	
-		<img id = "userProfile" src="${loginUser.profile }"  class="img-circle"/>
-		<span id="userNick">${loginUser.nick }</span> <small>님 안녕하세요</small>
-		<button id="userInfoChange" class="btn btn-default">정보 변경</button>
-		<span>입금 대기</span><span>예매 완료</span><span>취소 현황</span>
-	</div>
-	
-	
-</div>
 
-<hr>
-<h3>선호 아티스트 선택</h3>
+
 <div id ="preferArtist">
 
 
 <div class="search_in">
-	<fieldset>
-       <div class="wrap_form_input"><!-- form wrapper -->
-       	<input type="text" name="artist_text" id="artist_text" class="inputType" value="">
-       	<label for="artist_text" class="place_holder" style="display: none;">아티스트 검색</label>              
-		</div>                                                          
-    <button type="button" class="btn_icon search_m" title="검색" id="btn_search"><span class="btn_comm btn_search">검색</span></button>
-    </fieldset>
+	<div class="form">
+       	<input type="text" name="artist_text" id="artist_text" class="inputType" placeholder="아티스트 검색">
+		<span id="btn_search" class="glyphicon glyphicon-search"></span>
+	</div>                                                          
 </div>
 
 
 
-<div style="/*display: none; */">
+<!-- 아티스트 검색결과 보여줄 Div -->
 	<div id="searchArtist">
 		
 	</div>
+	<div class="floatFix"></div>
+
+<div class ="heightFix">
+<c:forEach items="${list }" var="a">
+		<li class ="alist" onclick ="artChoice('${a.artistIdx}','${a.name }');"><img src="${a.imgUri }"  class="img-circle artistImg"/><br>
+			<span class="artistName">${a.name }</span>
+		</li>	
+</c:forEach>
 </div>
 
-
-<c:forEach items="${aList }" var="a">
-    <div class="thumbnail" style="width: 15%;" onclick ="artChoice('${a.artistIdx}','${a.name }');">
-      <img style = "width: 80px;" src="${a.imgUri }" class="img-circle" >
-      <div class="caption">
-        <p style="text-align: center;">${a.name }</p>
-    </div>
-  </div>
-	
-</c:forEach>
 
 <div id = "selectedArt">
 	<c:forEach items="${paList }" var ="pa">
@@ -270,11 +309,13 @@ function artChoice(artistIdx, name){
 	</c:if>
 	</c:forEach>
 </div>
+
 </div>
 
 <div id ="preferTheme">
 <hr>
-<h3>선호 테마 선택</h3>
+
+<span class="preferTitle">테마/장르 선택</span>
 
 <c:forEach items="${tList }" var="t">
 	<label class="checkbox-inline" style ="width:30%">
@@ -289,3 +330,5 @@ function artChoice(artistIdx, name){
 </div>
 
 <button id="cancel" class="btn btn-default"> 취소 </button><button id="preferChoice" class="btn btn-default"> 취향 설정 완료 </button>
+
+</div>

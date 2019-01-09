@@ -283,7 +283,7 @@ function pfmChoice(pfmIdx){
 <ul id = "pfmUl">
 	<c:forEach items="${pfmList }" var ="pfm">
 	<c:if test ="${! empty pfm}">
-	<li  data-pfmidx="${pfm.pfmIdx }" class = "pfmSec pfmdate" onclick="location.href='http://www.naver.com'">
+	<li  data-pfmidx="${pfm.pfmIdx }" class = "pfmSec pfmdate" onclick="location.href='/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx }'">
 		<div class = "innerBox">
 			<div class="frame">
 			<div class="frametextbox"><span class="frametext">${pfm.saleState }</span></div>
