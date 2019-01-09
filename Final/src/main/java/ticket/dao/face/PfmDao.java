@@ -530,4 +530,11 @@ public interface PfmDao {
 			@Param(value="start") Date start, @Param(value="end") Date end
 			, @Param(value="genreIdx") int genreIdx);
 	
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: mainbanIdx로 mainbanner 정보가져오기
+	 * @작성자: 김지은
+	 */
+	public MainBanner selectMbBymainbanIdx(int mainbanIdx);
+	
 }

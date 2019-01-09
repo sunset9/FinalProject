@@ -21,6 +21,7 @@ function cancelBook(bookGroup, userIdx) {
 				},
 			success : function(res) {
 				/* location.href = "/admin/userdetail?userIdx="+userIdx; */
+				$('.btnOfBookStatus').find
 				location.reload();
 				alert("환불처리되었습니다.");
 			}
@@ -180,9 +181,10 @@ table.type03 td {
 	<td>
 	${sob.state }<br>
 	</td>
-	<td>
+	<td class="btnOfBookStatus">
 	<c:if test="${sob.state eq '취소중'}">
-		<button onclick="cancelBook('${sob.bookGroup}','${sob.userIdx }');">환불하기</button>
+		<button onclick="cancelBook('${sob.bookGroup}','${sob.userIdx }');" id="cancelBook">환불하기</button>
+		<div class="cancelBook"></div>
 	</c:if>
 	<c:if test="${sob.state eq '예매완료(부분취소)'}">
 		<!-- 부분취소 모달 open btn-->

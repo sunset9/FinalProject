@@ -922,6 +922,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectTotalPfmCnt();
 	}
 
+	@Override
+	public MainBanner getMbBymainbanIdx(int mainbanIdx) {
+		// mainbanIdx로 mainbanner 정보 가져오기
+		return pDao.selectMbBymainbanIdx(mainbanIdx);
+	}
+
 	
 
 }

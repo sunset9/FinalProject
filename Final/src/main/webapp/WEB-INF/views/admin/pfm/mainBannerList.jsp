@@ -4,124 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="../layout/menu.jsp" />
-<script type="text/javascript">
 
-$(document).ready(function(){
-	
-	var registCheckList = new Array();
-	var mbSize = parseInt($('#mbSize').val());
-	var apSize = 0;
-	console.log(mbSize);
-	
-	<%-- var sessionList = "<%= session.getAttribute("mbannerList") %>"; --%>
-	var isExistSession = $('#existSession').val();
-	
-	
-	if(isExistSession == 1){
-		activeSaveBtn(true);
-		
-		console.log('세션 존재함');
-		$('.finalSave').css("background", "#e27d24");
-		$('.finalSave').css("border", "1px solid #e27d24");
-		
-		$('#appendList').find('input').each(function(i, e){
-			var appendPfm = $(this).val();
-			/* console.log(appendPfm); */
-			prepend(appendPfm);
-		});
-		
-		/* 추가된 공연 디비에 저장하지 않고 그냥 화면에만 띄워주기 */
-		function prepend(pfmIdx) {
-			$.ajax({
-				url : "/admin/getpfmbypfmidx"
-				, method : "GET"
-				, data : { "pfmIdx": pfmIdx }
-				, success : function(data){
-					var pfmInfo = data;
-					var pfmIdx = pfmInfo['pfmIdx'];
-					var storedName = pfmInfo['storedName'];
-					var name = pfmInfo['name'];
-					var pfmStart = pfmInfo['pfmStart'];
-					var pfmEnd = pfmInfo['pfmEnd'];
-					var hallName = pfmInfo['hallName'];
-					
-					var div = $('.mainBannerBox');
-					var pfmDiv = $('<div id="appendDiv" style="display:inline-block; width:180px; margin-right:15px; padding:15px; border: 1px solid #edeeef;">');
-					var pfmIdxDiv = $('<input type="hidden" value="'+pfmIdx+'" />');
-					var imgDiv = $('<div><img src="/resources/image/'+storedName+'" style="width:180px; height: 254px;"/></div>');
-					var nameDiv = $('<div id="nameDiv">'+name+'</div>');
-					var dateDiv = $('<div id="dateDiv">'+pfmStart+' ~ '+pfmEnd+'</div>');
-					var hallNameDiv = $('<div id="hallNameDiv">'+hallName+'</div>');
-					var btnDiv = $('<div class="upDelBtn">');
-					var upBtn = $('<input type="button" id="upBtn" value="수정" style="margin-right: 5px;"/>');
-					var delBtn = $('<input type="button" id="delBtn" value="삭제" />');
-					btnDiv.append(upBtn);
-					btnDiv.append(delBtn);
-					
-					pfmDiv.append(imgDiv);
-					pfmDiv.append(nameDiv);
-					pfmDiv.append(dateDiv);
-					pfmDiv.append(hallNameDiv);
-					pfmDiv.append(btnDiv);
-					
-					div.prepend(pfmDiv);
-					registCheckList.push(pfmIdx);
-					console.log("registCheckList "+registCheckList);
-					apSize += 1;
-					console.log("apSize "+apSize);
-				}
-			});
-		}
-		
-	}else {
-		console.log('세션 존재하지 않음');
-	}
-	
-	function activeSaveBtn(isActive){
-		if(isActive){ // 수정했으면 버튼 활성화
-			$(".finalSave").removeAttr("disabled");
-		}else{ // 저장 상태이면 버튼 비활성화
-			$(".finalSave").attr("disabled", 'disabled');
-		}
-	}
-	
-	/* 삭제 버튼 눌렀을 경우 */
-	$(document).on('click','.mbDelete',function(){
-		var conf = confirm("정말 삭제하시겠습니까?");
-		if(conf == true){
-			mbSize-=1;
-			var mainbanIdx = $(this).attr("id");
-			console.log(mainbanIdx);
-			location.href="/admin/mainbannerdelete?mainbanIdx="+mainbanIdx;
-		}
-	});
-	
-	/* 최종저장 버튼 눌렀을 경우 */
-	$(document).on('click','.finalSave',function(){
-		$('#appendDiv').html('');
-		location.href="/admin/mbfinalsave";
-	});
-	
-	
-	/* 추가하기 버튼 누를때 */
-	$(document).on('click', '.banRegistModalBtn', function(){
-		var cnt = mbSize + apSize;
-		console.log("cnt : "+cnt);
-		if(cnt == 5){
-			alert('최대 5개 까지만 등록이 가능합니다.');
-			return false;
-		}else {
-			$('#regMbForm').submit();
-		}
-	});
-
-	 
-
-	
-
-
-});
-</script>
 <style type="text/css">
 .mainB {
 	display: inline-block;
@@ -208,6 +91,126 @@ $(document).ready(function(){
     font-weight: 700;
 }
 </style>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	var registCheckList = new Array();
+	var mbSize = parseInt($('#mbSize').val());
+	var apSize = 0;
+	console.log(mbSize);
+	
+	<%-- var sessionList = "<%= session.getAttribute("mbannerList") %>"; --%>
+	var isExistSession = $('#existSession').val();
+	
+	
+	if(isExistSession == 1){
+		activeSaveBtn(true);
+		
+		console.log('세션 존재함');
+		$('.finalSave').css("background", "#e27d24");
+		$('.finalSave').css("border", "1px solid #e27d24");
+		
+		$('#appendList').find('input').each(function(i, e){
+			var appendPfm = $(this).val();
+			/* console.log(appendPfm); */
+			prepend(appendPfm);
+		});
+		
+		/* 추가된 공연 디비에 저장하지 않고 그냥 화면에만 띄워주기 */
+		function prepend(pfmIdx) {
+			$.ajax({
+				url : "/admin/getpfmbypfmidx"
+				, method : "GET"
+				, data : { "pfmIdx": pfmIdx }
+				, success : function(data){
+					var pfmInfo = data;
+					var pfmIdx = pfmInfo['pfmIdx'];
+					var storedName = pfmInfo['storedName'];
+					var name = pfmInfo['name'];
+					var pfmStart = pfmInfo['pfmStart'];
+					var pfmEnd = pfmInfo['pfmEnd'];
+					var hallName = pfmInfo['hallName'];
+					
+					var div = $('.mainBannerBox');
+					var pfmDiv = $('<div id="appendDiv" style="display:inline-block; width:180px; margin-right:15px; padding:15px; border: 1px solid #edeeef;">');
+					var pfmIdxDiv = $('<input type="hidden" value="'+pfmIdx+'" />');
+					var imgDiv = $('<div><img src="/resources/image/'+storedName+'" style="width:180px; height: 254px;"/></div>');
+					var nameDiv = $('<div id="nameDiv">'+name+'</div>');
+					var dateDiv = $('<div id="dateDiv">'+pfmStart+' ~ '+pfmEnd+'</div>');
+					var hallNameDiv = $('<div id="hallNameDiv">'+hallName+'</div>');
+					var btnDiv = $('<div class="upDelBtn">');
+					var upBtn = $('<input type="button" id="upBtn" value="수정" style="margin-right: 5px;"/>');
+					var delBtn = $('<input type="button" id="delBtn" value="삭제" />');
+					btnDiv.append(upBtn);
+					btnDiv.append(delBtn);
+					
+					pfmDiv.append(imgDiv);
+					pfmDiv.append(nameDiv);
+					pfmDiv.append(dateDiv);
+					pfmDiv.append(hallNameDiv);
+					pfmDiv.append(btnDiv);
+					
+					div.prepend(pfmDiv);
+					registCheckList.push(pfmIdx);
+					console.log("registCheckList "+registCheckList);
+					apSize += 1;
+					console.log("apSize "+apSize);
+				}
+			});
+		}
+		
+	}else {
+		console.log('세션 존재하지 않음');
+	}
+	
+	function activeSaveBtn(isActive){
+		if(isActive){
+			$(".finalSave").removeAttr("disabled"); //활성화
+		}else{ 
+			$(".finalSave").attr("disabled", 'disabled'); //비활성화 
+		}
+	}
+	
+	/* 삭제 버튼 눌렀을 경우 */
+	$(document).on('click','.mbDelete',function(){
+		var conf = confirm("정말 삭제하시겠습니까?");
+		if(conf == true){
+			mbSize-=1;
+			var mainbanIdx = $(this).attr("id");
+			console.log(mainbanIdx);
+			location.href="/admin/mainbannerdelete?mainbanIdx="+mainbanIdx;
+		}
+	});
+	
+	/* 최종저장 버튼 눌렀을 경우 */
+	$(document).on('click','.finalSave',function(){
+		$('#appendDiv').html('');
+		location.href="/admin/mbfinalsave";
+	});
+	
+	
+	/* 추가하기 버튼 누를때 */
+	$(document).on('click', '.banRegistModalBtn', function(){
+		var cnt = mbSize + apSize;
+		console.log("cnt : "+cnt);
+		if(cnt == 5){
+			alert('최대 5개 까지만 등록이 가능합니다.');
+			return false;
+		}else {
+			$('#regMbForm').submit();
+		}
+	});
+	
+	/* 수정 버튼 눌렀을 때 */
+	$(document).on('click','#mbUpdate', function(){
+		console.log("수정 버튼 누름 mainbanIdx : "+$(this).val());
+		var mainbanIdx = $(this).val();
+		location.href="/admin/updatemainbanner?mainbanIdx="+mainbanIdx;
+	});
+});
+</script>
+
 <body>
 <div class="mainBannerWrap">
 	<h1>배너관리 - 메인배너</h1>
@@ -234,7 +237,7 @@ $(document).ready(function(){
 					     ~ <fmt:formatDate value="${mb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
 					    <div>${mb.hallName }</div> 
 					<div class="upDelBtn">
-						<input type="button" id="mbUpdate" onclick="mbEdit('${mb}');" value="수정" />
+						<button id="mbUpdate" value="${mb.mainbanIdx}">수정</button>
 						<input type="button" id="${mb.mainbanIdx}" class="mbDelete" value="삭제" />
 					</div>
 				</div>
