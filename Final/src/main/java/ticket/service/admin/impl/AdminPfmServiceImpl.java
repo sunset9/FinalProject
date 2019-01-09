@@ -928,6 +928,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		return pDao.selectMbBymainbanIdx(mainbanIdx);
 	}
 
+	@Override
+	public void updateMainbanner(MainBanner mainbanner) {
+		// 메인배너 update
+		
+	}
+
 	
 
 }
