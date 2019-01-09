@@ -165,6 +165,8 @@
 	    AND
 	    book.pfm_dbt_idx = #{dateByTimeIdx}
 	    AND
+	    book.book_cate_idx = 1 
+	    OR 
 	    book.book_cate_idx = 2
 </select>
 

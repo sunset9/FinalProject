@@ -61,13 +61,16 @@ div.seatCharts-cell {
 }
 		
 .front-indicator{
-    height: 34px;
+	height: 49px;
     padding: -40px;
     width: 548px;
-    border: 3px solid #CCC;
-    background: #DCDCDC;
+    border: 3px solid #f8f8f8;
+    background: #ececec;
     text-align: center;
+    line-height: 42px;
     line-height: -3;
+    color: #bbbbbb;
+    font-size: 23px;
     
 }
 
@@ -86,7 +89,7 @@ div.seatCharts-cell {
    <div class="wrapper">
       <div class="container">
          <div id="seat-map" class="<%=new Date().getTime() %>">
-            <div class="front-indicator" >Screen</div>
+            <div class="front-indicator">STAGE</div>
          </div>
       </div>
    </div>
