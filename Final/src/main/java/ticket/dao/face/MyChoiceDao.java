@@ -23,4 +23,12 @@ public interface MyChoiceDao {
 	 * @작성자 : 홍나영
 	 */
 	public void delete(MyChoice myChoice);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.09
+	 * @Method설명: 해당 공연 찜해논 이력이 있는지 체크
+	 * @작성자:홍나영
+	 */
+	public int selectCntChoice(MyChoice myChoice);
 }

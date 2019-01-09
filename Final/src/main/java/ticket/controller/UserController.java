@@ -400,20 +400,18 @@ public class UserController {
 	public void myticket(Model model
 			, User user
 			, HttpSession session
-			, int pfmIdx
+			, String bookGroup
 			 ) {
 		logger.info("티켓 상세");
-		logger.info("공연IDX" +pfmIdx);
 		user = (User) session.getAttribute("loginUser");
 		logger.info("" + user);
 		
 		// 예매한 공연 상세 정보 가져오기
-		StateOfBook sob = userService.getDetailBook(user, pfmIdx);
+		StateOfBook sob = userService.getDetailBook(user, bookGroup);
 		logger.info("sob"+sob);
 		model.addAttribute("sob", sob);
 		
 		// 티켓수령 정보 가져오기(수령 방법, 배송지 정보)
-		String bookGroup = sob.getBookGroup();
 		// 수령 방법 먼저 조회 
 		// 1 : 직접 수령   2 : 택배 배송
 		int receive = userService.getReceive(bookGroup);
@@ -453,12 +451,11 @@ public class UserController {
 	
 	@RequestMapping(value ="mypage/bookcancel", method=RequestMethod.POST)
 	public void bookCancel( String names
-			, int pfmIdx
+			, String bookGroup
 			, HttpSession session
 			, Model model
 			) {
 		logger.info("예매 삭제");
-		logger.info("공연 번호 :"+ pfmIdx);
 		User user = (User) session.getAttribute("loginUser");
 		logger.info("" + user);
 		
@@ -468,7 +465,7 @@ public class UserController {
 		userService.cancelBook(names);
 		
 		// 예매한 공연 상세 정보 가져오기
-		StateOfBook sob = userService.getDetailBook(user, pfmIdx);
+		StateOfBook sob = userService.getDetailBook(user, bookGroup);
 		logger.info("sob"+sob);
 		model.addAttribute("sob", sob);
 		
@@ -483,8 +480,43 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="mypage/canceldetail", method= RequestMethod.GET)
-	public void cancelDetail () {
+	public void cancelDetail (
+			HttpSession session,
+			String bookGroup,
+			User user,
+			Model model
+			) {
 		logger.info("취소 상세페이지");
+		
+		user = (User) session.getAttribute("loginUser");
+		logger.info("" + user);
+		
+		logger.info(bookGroup);
+		// 예매한 공연 상세 정보 가져오기
+		StateOfBook sob = userService.getDetailCancel(user, bookGroup);
+		logger.info("sob"+sob);
+		model.addAttribute("sob", sob);
+		
+		// 결제 내역 (결제 방법, 결제 날짜, 거래자, 금액) 
+		PaymentInfo payment = new PaymentInfo();
+		logger.info("impuid : "+sob.getImpUid());
+		payment = userService.getPayment(sob.getImpUid());
+		logger.info("결제정보:"+payment);
+		model.addAttribute("payment", payment);
+		
+//		// 환불 내역 (취소된 좌석수 구해오기)
+//		int cancelCnt = userService.getCancelCnt(bookGroup);
+//		model.addAttribute("seatCnt", cancelCnt);
+		
+		// 좌석 가격
+		SeatSection ss = userService.selectSeatSection(bookGroup);
+		logger.info("좌석 구역과 가격"+ss);
+		model.addAttribute("ss", ss);
+		
+		// 좌석 조회
+		List<Seat> seatList = userService.getSeat(bookGroup);
+		logger.info("좌석정보:" +seatList);
+		model.addAttribute("seatList", seatList);
 		
 	}
 	

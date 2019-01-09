@@ -41,8 +41,31 @@
   	</selectKey>
   	
   	INSERT INTO my_choice( choice_idx, user_idx, pfm_idx)
-  	VALUES (#{choiceIdx ], #{userIdx ], #{pfmIdx ])
+  	VALUES (#{choiceIdx }, #{userIdx }, #{pfmIdx })
   
   </insert>
+  
+  <select id="selectCntChoice" parameterType="ticket.dto.MyChoice" resultType="int">
+  	SELECT COUNT(*) 
+  	FROM my_choice 
+  	WHERE user_idx =#{userIdx } 
+  		AND pfm_idx=#{pfmIdx }
+  </select>
+  
+  
+  <delete id ="delete" parameterType="ticket.dto.MyChoice">
+  	DELETE FROM my_choice
+  	WHERE user_idx =#{userIdx } 
+  		AND pfm_idx=#{pfmIdx }
+  </delete>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   </mapper>

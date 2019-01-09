@@ -192,11 +192,11 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public StateOfBook getDetailBook(User user, int pfmIdx) {
+	public StateOfBook getDetailBook(User user, String bookGroup) {
 		Map map = new HashMap<>();
 		System.out.println("getDetailBook함수 안에 유저인덱스 검사"+user.getUserIdx());
 		map.put("userIdx", user.getUserIdx());
-		map.put("pfmIdx", pfmIdx);
+		map.put("bookGroup", bookGroup);
 		
 		return userDao.selectBook(map);
 	}
@@ -273,6 +273,22 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<Artist> getArtistName(int userIdx) {
 		return userDao.selectArtistName(userIdx);
+	}
+
+
+	@Override
+	public int getCancelCnt(String bookGroup) {
+		return userDao.selectCntCancel(bookGroup);
+	}
+
+
+	@Override
+	public StateOfBook getDetailCancel(User user, String bookGroup) {
+		Map map = new HashMap<>();
+		map.put("userIdx", user.getUserIdx());
+		map.put("bookGroup", bookGroup);
+		
+		return userDao.selectCancel(map);
 	}
 
 

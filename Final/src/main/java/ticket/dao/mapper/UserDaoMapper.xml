@@ -372,13 +372,36 @@
                 JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
                 JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
             WHERE
-                b.user_idx = #{userIdx} AND p.pfm_idx =#{pfmIdx} AND B.book_cate_idx IN(2,3)
+                b.user_idx = #{userIdx} AND b.pfm_idx  =(SELECT DISTINCT pfm_idx FROM book WHERE book_group=#{bookGroup} ) AND B.book_cate_idx IN(1,2)
         ) TEST
 		GROUP BY
 		    create_date, name, pfm_start, pfm_end, book_group, cancel_date,
 		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx, imp_uid
 		ORDER BY create_date
 
+	</select>
+	
+	<select id ="selectCancel" parameterType="hashmap" resultMap="SOBMap">
+	SELECT TEST.*,(SELECT MAX(cancel_date) FROM book WHERE book_group='da159cdaf21e') cancel_date, COUNT(state) as ea FROM (
+            SELECT
+                trunc(b.create_date, 'dd') create_date, p.pfm_idx, p.name, p.pfm_start, p.pfm_end, b.book_group, 
+                
+                bc.state, pi.stored_name, h.hall_name, pd.pfm_date, pd.pfm_time, b.imp_uid
+            FROM
+                book b 
+                JOIN performance p ON b.pfm_idx = p.pfm_idx
+                JOIN poster_info pi ON p.pfm_idx = pi.pfm_idx
+                JOIN hall h ON p.hall_idx = h.hall_idx
+                JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
+                JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
+            WHERE
+                 b.user_idx = #{userIdx} AND b.book_group=#{bookGroup}  AND B.book_cate_idx IN(3,4)
+                
+        ) TEST
+		GROUP BY
+		    create_date, name, pfm_start, pfm_end, book_group, 
+           
+		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx, imp_uid
 	</select>
 	
 	<select id="selectReceive" parameterType="String" resultType="int">
@@ -421,6 +444,7 @@
             ON PD.pfm_dbt_idx = B.pfm_dbt_idx
                 AND b.pfm_idx = pd.pfm_idx
         WHERE S.seat_idx IN( ( SELECT seat_idx FROM book WHERE book_group=#{bookGroup }) )
+        ORDER BY seat_row , seat_col
 	</select>
 	
 	
@@ -433,8 +457,8 @@
 	
 	<update id="updateState" parameterType="String">
 		UPDATE book 
-		SET book_cate_idx =3 
-		WHERE book_idx NOT IN (${_parameter }) AND book_cate_idx =2
+		SET book_cate_idx =2 
+		WHERE book_idx NOT IN (${_parameter }) AND book_cate_idx =1
 	</update>
 	
 	<select id ="selectCancelSeat" resultMap="SeatSection" parameterType="String">
@@ -471,7 +495,7 @@
                 from (
                     select distinct book_group, book_cate_idx
                     from book
-                    where book_cate_idx IN (3,4,5)
+                    where book_cate_idx IN (2,3,4)
                     ) A
                 group by book_group
                 having count(book_cate_idx) = 1
@@ -498,7 +522,7 @@
                 JOIN pfm_datebytime pd ON b.pfm_dbt_idx = pd.pfm_dbt_idx
                 JOIN book_cate bc ON b.book_cate_idx = bc.book_cate_idx
             WHERE
-                b.user_idx = 1 AND B.book_cate_idx IN(2,3)
+                b.user_idx = 1 AND B.book_cate_idx IN(1,2)
         ) TEST
 		GROUP BY
 		    create_date, name, pfm_start, pfm_end, book_group, cancel_date,
@@ -529,7 +553,7 @@
                 from (
                     select distinct book_group, book_cate_idx
                     from book
-                    where book_cate_idx IN (3,4,5)
+                    where book_cate_idx IN (2,3,4)
                     ) A
                 group by book_group
                 having count(book_cate_idx) = 1
@@ -555,6 +579,13 @@
         ON P.artist_idx = A.artist_idx
 		WHERE user_idx=  #{userIdx }
 	
+	</select>
+	
+	<select id="selectCntCancel" parameterType="String" resultType="int">
+		SELECT COUNT(*) 
+		FROM book 
+		WHERE book_group=#{bookGroup } 
+		AND book_cate_idx IN (3,4)
 	</select>
 	
 	
