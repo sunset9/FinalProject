@@ -8,12 +8,13 @@ import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.utils.Paging;
+import ticket.utils.PagingT;
 
 public interface AdminBoardDao {
 
 
 	// 공지사항 전체 글 리스트
-	public List selectNotiList(Paging paging);
+	public List<Notice> selectNotiList(PagingT pagingt);
 	
 	// 전체 게시글 조회
 	public int selectCntAll();
