@@ -638,20 +638,21 @@ public class AdminPfmController {
 			Model model,
 			HttpSession session
 			) {
-		List sessionList = (List) session.getAttribute("mbannerList");
+		List registList = (List) session.getAttribute("mbannerList");
+		List updateList = (List) session.getAttribute("mbannerForUpdate");
 		
-		if(sessionList == null) {
+		if(registList == null && updateList == null) {
 			System.out.println("현재 저장할 메인배너 없음.");
 		}else {
 			System.out.println("저장할 메인 배너 있음");
 			List appendList = new ArrayList();
-			for(int i=0;i<sessionList.size(); i++) {
-				Map<String, String> mbannermap = (Map<String, String>) sessionList.get(i);
+			for(int i=0;i<registList.size(); i++) {
+				Map<String, String> mbannermap = (Map<String, String>) registList.get(i);
 				appendList.add(mbannermap.get("pfmIdx"));
 			}
 			System.out.println(appendList);
 			model.addAttribute("appendList", appendList);
-			model.addAttribute("appendSize", sessionList.size());
+			model.addAttribute("appendSize", registList.size());
 			model.addAttribute("existSession", "1");
 		}
 		
@@ -687,16 +688,11 @@ public class AdminPfmController {
 	public String mbFinalSave(
 			HttpSession session
 			) {
-		//세션에 있는 값 디비에 저장 
+		//세션에 있는 메인배너리스트 디비에 인서트 
 		List list = (List) session.getAttribute("mbannerList");
 		for(int i = 0; i<list.size(); i++) {
 			Map<String,String> map = (Map<String, String>) list.get(i);
-//			System.out.println("map~~~~~~~~~~~~: "+map.get("pfmIdx"));
-//			System.out.println("map~~~~~~~~~~~~: "+map.get("thumbOrigin"));
-//			System.out.println("map~~~~~~~~~~~~: "+map.get("thumbStored"));
-//			System.out.println("map~~~~~~~~~~~~: "+map.get("bannerOrigin"));
-//			System.out.println("map~~~~~~~~~~~~: "+map.get("bannerStored"));
-//			System.out.println();
+
 			MainBanner mainbanner = new MainBanner();
 			mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
 			mainbanner.setThumbImgOri(map.get("thumbOrigin"));
@@ -705,6 +701,21 @@ public class AdminPfmController {
 			mainbanner.setBannerImgStr(map.get("bannerStored"));
 			
 			pService.saveMainbanner(mainbanner);
+		}
+		
+		//디비 업데이트
+		List updateList = (List) session.getAttribute("mbannerForUpdate");
+		for(int i = 0; i<updateList.size(); i++) {
+			Map<String, String> map = (Map<String, String>) updateList.get(i);
+			
+			MainBanner mainbanner = new MainBanner();
+			mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
+			mainbanner.setThumbImgOri(map.get("thumbOrigin"));
+			mainbanner.setThumbImgStr(map.get("thumbStored"));
+			mainbanner.setBannerImgOri(map.get("bannerOrigin"));
+			mainbanner.setBannerImgStr(map.get("bannerStored"));
+			
+			pService.updateMainbanner(mainbanner);
 		}
 		
 		session.removeAttribute("mbannerList");
@@ -1324,10 +1335,37 @@ public class AdminPfmController {
 	}
 	
 	@RequestMapping(value="/admin/updatemainbanner", method=RequestMethod.POST)
-	public String updateMBanner() {
+	public String updateMBanner(
+			@RequestParam(value="pfmIdx") int pfmIdx, 
+			@RequestParam(value="thumbFile") MultipartFile thumbFile,
+			@RequestParam(value="bannerFile") MultipartFile bannerFile,
+			HttpServletRequest req,
+			HttpSession session
+			) {
+		//UUID 고유식별자
+		String uId = UUID.randomUUID().toString().split("-")[0];
+
+		// file 오리진네임, 스토어드네임 구하기
+		String thumbOrigin = thumbFile.getOriginalFilename();
+		String thumbStored = thumbOrigin + "_" + uId;
+
+		String bannerOrigin = bannerFile.getOriginalFilename();
+		String bannerStored = bannerOrigin + "_" + uId;
+
+		// Map에 저장하기
+		Map<String, String> mbannerInfo = new HashMap<>();
+		mbannerInfo.put("pfmIdx", String.valueOf(pfmIdx));
+		mbannerInfo.put("thumbOrigin", thumbOrigin);
+		mbannerInfo.put("thumbStored", thumbStored);
+		mbannerInfo.put("bannerOrigin", bannerOrigin);
+		mbannerInfo.put("bannerStored", bannerStored);
+
+		// 리스트에 저장 + 세션에 저장
+		mbannerList.add(mbannerInfo);
+		session.setAttribute("mbannerForUpdate", mbannerList);
 		
 		
-		return null;
+		return "redirect:/admin/mainbannerlist";
 	}
 	
 	@RequestMapping(value="/admin/checkmainban", method=RequestMethod.POST)

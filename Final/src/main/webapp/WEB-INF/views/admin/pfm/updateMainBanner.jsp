@@ -211,6 +211,7 @@ $(document).ready(function(){
     				if(res == 1){
     					/* 파일이 하나라도 바뀌었거나, 둘 다 바뀌었을 경우 -> 수정처리 */
     					console.log('수정처리');
+    					$('#updateMbForm').submit();
     				}else{
     					/* 똑같은 파일이니 수정처리 안해도됨 */
     				}
@@ -311,8 +312,7 @@ $(document).ready(function(){
 					<div class="forEach">
 						<c:forEach items="${NewPfmList }" var="newPl" varStatus="status">
 							<div id="${newPl.pfmIdx }" class="np" data-dismiss="modal">
-								<input type="hidden" id="pfmIdx${status.index }"
-									value="${newpl.pfmIdx }" class="currpfmidx">
+								<input type="hidden" id="pfmIdx${status.index }" value="${newpl.pfmIdx }" class="currpfmidx">
 								<div>
 									<img src="/resources/image/${newPl.storedName}"
 										style="width: 140px; height: 198px;">
