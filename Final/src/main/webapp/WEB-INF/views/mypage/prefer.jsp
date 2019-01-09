@@ -40,6 +40,10 @@
 	display: none;
 	border: 1px solid #CCC;
 	float: right;
+	
+	position: absolute;
+    top: 410px;
+    right: 200px;
 }
 
 .alist{
@@ -77,6 +81,7 @@
 .searchList{
 	font-size: 2em;
 	margin-right: 20px;
+	vertical-align: middle;
 	
 }
 .searchImg{
