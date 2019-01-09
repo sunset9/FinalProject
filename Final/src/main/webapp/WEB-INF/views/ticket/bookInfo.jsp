@@ -210,7 +210,7 @@
     margin-bottom: 0px !important;
 }
 .times{
-    width: 350px;
+    width: 110%;
     height: 59px;
     font-size: 19px;
     text-align: center;
@@ -245,6 +245,30 @@
  background-color: #F2B134;
   color: #fff;
 }
+.ui-widget.ui-widget-content {
+    border: 1px solid #F2B134;
+}
+.ui-datepicker{ 
+	font-size: 14px;
+    width: 100%;
+    height: 100%;
+    color: #F2B134;
+    background: 1px solid #F2B134; 
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid #F2b134;
+    background: #eed0988a;
+    font-weight: normal;
+    color: #454545;
+}
+
+.ui-widget-header {
+    border: 1px solid #f9e8e8;
+    background: #f2b134;
+    color: #333333;
+    font-weight: bold;
+}
   
 </style>
 </head>
@@ -252,19 +276,24 @@
 <div id = "ticketInfo">
 <div id = "infoTitle" style="float: top"> 
 <ul class="nav nav-pills" style="font-size: 27px;text-align: center;">
-  <li role="presentation" style="width: 240px;">날짜선택</li>
-  <li role="presentation" style="width: 372px;">시간선택</li>
-  <li role="presentation" style="width: 338px;">잔여석</li>
+  <li role="presentation" style="width: 40%; color:#F2B134 ">날짜선택</li>
+  <li role="presentation" style="width: 30%; color:#F2B134 ">시간선택</li>
+  <li role="presentation" style="width: 29%; color:#F2B134 ">잔여석</li>
 </ul>
 </div>
 <div id = "info" style="float: bottom">
-	<div id = "datepicker" style="float: left"></div>
+	<div id = "datepicker" 
+	style="float: left;
+    width: 30%;">
+    </div>
 	
-	<div id = "timeDiv" style="float: left; width: 372px; padding-left: 20px;">
+	<div id = "timeDiv" style="float: left; width: 40%;">
 		<ul id = "timeList" class="list-group">
 		</ul>
 	</div>
-	<div style="float: left; width:250px; padding-left: 20px;">
+	<div style="float: left;
+    width: 30%;
+    padding-left: 20px;">
 		<div id = "ResidualSeats" 
 		style="overflow: auto; float: left; width:300px; padding-left: 20px; height: 160px;">
 			<ul id ="ResidualSeatList" style="padding:0px; width: 100%;">

@@ -277,7 +277,7 @@ function openZipSearch() { //다음 우편번호 API
 						paidAmount : rsp.paid_amount, //결제금액
 						buyerName : rsp.buyer_name, //구매자 이름 
 						buyerEmail : rsp.buyer_email, //구매자 메일 
-						useridx : "${loginUser.userIdx }", //유저 idx
+						userIdx : "${loginUser.userIdx }", //유저 idx
 						paid_at : rsp.paid_at //필요없음
 					}
 
@@ -286,6 +286,7 @@ function openZipSearch() { //다음 우편번호 API
 					console.log(data);
 					if (data.success = 'success') {
 						var msg = '결제가 완료되었습니다.';
+						msg+= "${loginUser.userIdx }";
 // 						msg += '\n고유ID : ' + rsp.imp_uid;
 // 						msg += '\n상점 거래ID : ' + rsp.merchant_uid;
 // 						msg += '\n결제 금액 : ' + rsp.paid_amount;
