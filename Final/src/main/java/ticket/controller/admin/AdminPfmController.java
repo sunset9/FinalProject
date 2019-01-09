@@ -812,6 +812,7 @@ public class AdminPfmController {
 		return "redirect:/admin/mainbannerlist";
 	}
 	
+	
 	/**
 	 * @최종수정일: 2018.12.28
 	 * @Method설명: 메인배너 중복 등록 방지하기
@@ -1323,13 +1324,15 @@ public class AdminPfmController {
 	}
 	
 	@RequestMapping(value="/admin/updatemainbanner", method=RequestMethod.POST)
-	public void updateMainbannerP() {
+	public String updateMBanner() {
 		
+		
+		return null;
 	}
 	
 	@RequestMapping(value="/admin/checkmainban", method=RequestMethod.POST)
 	@ResponseBody
-	public void checkmainban(
+	public int checkmainban(
 			@RequestParam int mainbanIdx,
 			@RequestParam String thumbFile,
 			@RequestParam String bannerFile
@@ -1341,8 +1344,13 @@ public class AdminPfmController {
 		
 		if(thumbFile.equals(oriThumb) && bannerFile.equals(oriBanner)) {
 			System.out.println("같은 파일");
+			return 0;
 		}else if(thumbFile.equals(oriThumb) || bannerFile.equals(oriBanner)) {
 			System.out.println("하나라도 다른 파일 -> 수정처리");
+			return 1;
+		}else {
+			System.out.println("둘다 다른 파일 -> 수정처리");
+			return 1;
 		}
 	}
 }

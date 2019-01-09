@@ -204,6 +204,7 @@
 // 			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
 			  window.open(path, "_blank", "width=1075px,height=710px");
 
+
 		});
 
 

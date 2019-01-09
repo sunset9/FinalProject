@@ -1,5 +1,6 @@
 package ticket.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -63,6 +64,26 @@ public class PreferController {
 		// 유저가 선택한 아티스트 리스트 얻기 
 		List<PreferArtist> paList = preferAService.choiceList(userIdx);
 		model.addAttribute("paList", paList);
+		
+		List<Artist> list =new ArrayList();
+		
+		// 유저가 선택한 아티스트 제외
+		for(int i =0; i<aList.size(); i++) {
+			int cnt =0;
+			
+			for (int j=0; j<paList.size(); j++) {
+				if (aList.get(i).getArtistIdx() == paList.get(j).getArtistIdx()) {
+					cnt ++;
+				}
+			}
+			
+			if(cnt==0) {
+				list.add(aList.get(i));
+			}
+		}
+		logger.info("유저가 선택한 아티스트 제외:"+ list);
+		model.addAttribute("list", list);
+		
 		
 		String search= null;
 		// 검색 할 때 검색어로 리스트 얻기
