@@ -193,6 +193,13 @@ public interface UserDao {
 	
 	
 	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: 한 공연에 대한 취소정보 얻어오기
+	 * @작성자:홍나영
+	 */
+	public StateOfBook selectCancel(Map map);
+	
+	/**
 	 * @최종수정일: 2018.12.24
 	 * @Method설명: 티켓 수령방법 조회하기
 	 * @작성자:홍나영
@@ -291,4 +298,12 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public List<Artist> selectArtistName(int userIdx);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: 한 예매에서 취소한 좌석 수 구하기 
+	 * @작성자:홍나영
+	 */
+	public int selectCntCancel(String bookGroup);
 }

@@ -224,8 +224,8 @@ public class TicketController {
 			book.setBookGroup(bookGroup);
 			book.setPfmIdx(pfmIdx);
 			book.setUserIdx(loginUser.getUserIdx());
-			logger.info("유저번호 가져오기 :::: "+String.valueOf(loginUser.getUserIdx()));
-			book.setBookCateIdx(2);
+
+			book.setBookCateIdx(1);
 			book.setPfmDbtIdx(pfmDbtIdx);
 			book.setSeatIdx(seatIdx.get(i));
 			book.setImpUid(impUid);

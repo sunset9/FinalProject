@@ -8,7 +8,128 @@
 <script type="text/javascript">
 $(document).ready(function() {
 // 	console.log(1);	
-	console.log('LOGIN USER IDX : ' + ${loginUser.userIdx});
+// 	console.log('LOGIN USER IDX : ' + ${loginUser.userIdx});
+
+// 	$('.castImgUl').bxSlider({
+// 		// 무한 루프가 아닌 처음과 끝으로 표현
+// 		infiniteLoop: false,
+// 		hideControlOnEnd: true,
+// 		pager: false,
+// 		minSlides : 7,
+// 		maxSlides : 7,
+// 		slideWidth : 1130,
+// 		slideMargin : 10
+// 	});
+	
+	
+	// 해당공연이 찜이 되어있는지 확인
+	var userIdx = '${loginUser.userIdx }';
+	console.log("loginUserIdx : " + userIdx);
+	
+	var pfmIdx = '${pfmInfoList.pfmIdx}';
+	console.log("실행pfmIdx : " + pfmIdx);
+	
+	$.ajax({
+		url:"/mychoice/check"
+		, method:"POST"
+		, data : {
+			"userIdx" : userIdx
+			, "pfmIdx": pfmIdx
+		}
+		, dataType :"json"
+		, success: function(data){
+			console.log("check 성공");
+			if(parseInt(data)=="1"){
+				$('#choiceBtn').html('<button class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+			}
+		}
+		, error: function(e){
+			console.log(e);
+		}
+		
+		
+	}); // end ajax
+	
+	
+	// 공연플래너 담기 버튼
+	$('#choiceBtn').on('click','#cancelBtn',function(){
+// 	$('#mychoiceBtn').click(function() {
+		var userIdx = '${loginUser.userIdx }';
+		console.log("loginUserIdx : " + userIdx);
+		
+		var pfmIdx = '${pfmInfoList.pfmIdx}';
+		console.log("pfmIdx : " + pfmIdx);
+	
+		if(userIdx != '') {
+		$.ajax({
+			url: '/ticket/opendetail'
+			, method: 'POST'
+			, data: {
+				"userIdx" : userIdx
+				, "pfmIdx": pfmIdx
+			}
+			, dataType: 'json'
+			, success: function(choice) {
+				console.log('성공');
+				
+				if(choice)
+					alert('공연플래너 담기가 완료되었습니다.');
+					$('#choiceBtn').html('<button  class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+			}
+			, error: function(e) {
+				console.log('실패');
+			}
+		}); // end ajax
+		} else {
+			
+			if(confirm('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.')==true){
+				location.href='user/login';
+			}else {
+				return ;
+			} // confirm if end
+			
+	//			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
+		} // userIdx if end
+// 	}); // end click
+	}); // end on 
+	
+	// 공연플래너 취소 버튼
+	$('#choiceBtn').on('click','#cancelBtn',function(){
+	//		$('#cancelBtn').click(function() {
+	
+			var userIdx = '${loginUser.userIdx }';
+			console.log("loginUserIdx : " + userIdx);
+			
+			var pfmIdx = '${pfmInfoList.pfmIdx}';
+			console.log("pfmIdx : " + pfmIdx);
+		
+		
+			$.ajax({
+				url: '/mychoice/cancel'
+				, method: 'POST'
+				, data: {
+					"userIdx" : userIdx
+					, "pfmIdx": pfmIdx
+				}
+				, dataType: 'json'
+				, success: function(data) {
+					console.log('성공');
+					
+					if(data)
+						alert('찜 한 공연이 취소되었습니다.');
+						$('#choiceBtn').html('<button  class="btn btn-warning" id="mychoiceBtn">공연 담기</button>')
+					
+				}
+				, error: function(e) {
+					console.log('실패');
+				}
+			}); // end ajax 
+				
+	//		}); // end click
+	
+	}); // end on
+	
+	
 	
 	// 탭
 	$('ul.tabs li').click(function(){
@@ -399,7 +520,8 @@ $(document).ready(function() {
 		var input = $('<input type="text" id="expRecomm">');
 		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
 		
-		div2.append(small1).append(small2).append(btn1).append(input).append(btn2);
+		div2.append(small1).append(small2).append(btn1);
+// 		div2.append(input).append(btn2);
 		
 		div3.append(div1).append(div2);
 		
@@ -430,7 +552,8 @@ $(document).ready(function() {
 		var input = $('<input type="text" id="revRecomm">');
 		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
 		
-		div2.append(small1).append(small2).append(btn1).append(input).append(btn2);
+		div2.append(small1).append(small2).append(btn1);
+// 		div2.append(input).append(btn2);
 		
 // 		console.log(list.reviewIdx);
 		
@@ -448,29 +571,28 @@ $(document).ready(function() {
 		
 		qnaList.forEach(function(list) {
 			
+		var div3 = $('<div id="oneQna">');
+			
 		var div1 = $('<div class="qnaListUserInfo">');
 		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
 		var strong = $('<strong>' + list.nick + '</strong>');
-		
+			
 		div1.append(img).append(strong);
-		
+			
 		var div2 = $('<div class="qnaListContentInfo">');
-		var small1 = $('<small>' + list.qnaContent + '</small><br>');
+		var small1 = $('<small id="qnaContent">' + list.qnaContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
 		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
-		
-		div2.append(small1).append(small2);
-		
-		var div3 = $('<div id="qnadelnup">');
 		var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
 		var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
 		var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
-		
-		console.log(list.qnaIdx);
-		
-		div3.append(btn1).append(input).append(btn2);
+
+		div2.append(small1).append(small2).append(btn1);
+// 		div2.append(input).append(btn2);
 			
-		$('.ListQna').append(div1).append(div2).append(div3);
+		div3.append(div1).append(div2);
+			
+		$('.ListQna').append(div3);
 		
 		});
 	};
@@ -486,6 +608,30 @@ $(document).ready(function() {
 </script>
 
 <style>
+.expListContentInfo, .revListContentInfo, .qnaListContentInfo  {
+	margin-left: 30px;
+}
+
+#mychoiceBtn{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #F2B134;
+    font-weight: bold;
+    color: #fff;
+}
+
+#cancelBtn{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #FFF;
+    color:#AAA;
+    font-weight: bold;
+}
+
 .expListContentInfo {
 	padding-left: 10px;
 }
@@ -508,9 +654,8 @@ $(document).ready(function() {
 
 .posterInfoDiv {
 	float: left;
-	margin-left: 20px;
 	height: auto;
-/* 	margin: 10px 0 10px 20px; */
+	margin: 10px 0px 0px 60px;
 }
 
 /* 하단 탭 */
@@ -526,20 +671,20 @@ ul.tabs{
 }
 ul.tabs li{
 	background: none;
-	color: #222;
+/* 	color: #222; */
 	display: inline-block;
 	padding: 10px 15px;
 	cursor: pointer;
 }
  
 ul.tabs li.current{
-	background: #ededed;
-	color: #222;
+/* 	background: #ededed; */
+	border-bottom: 3px solid #F2B134;
 }
  
 .tab-content{
 	display: none;
-	background: #ededed;
+/* 	background: #ededed; */
 	padding: 15px;
 }
  
@@ -559,8 +704,9 @@ ul.tabs li.current{
 	 height: 50px;
 }
 
-.insertExp, .insertRev, insertQna {
+.insertExp, .insertRev, .insertQna {
 	height: auto;
+	margin-bottom: 30px;
 }
 
 .insertExpUserInfo, .insertRevUserInfo, .insertQnaUserInfo {
@@ -636,9 +782,11 @@ ul.tabs li.current{
 	text-align: center;
 }
 
-#oneExpec, #oneReview {
+#oneExpec, #oneReview, #oneQna {
 	display: flex;
-	margin: 15px;
+	margin: 20px 0px 20px 0px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #BDBDBD;
 }
 
 .tab-link {
@@ -646,9 +794,28 @@ ul.tabs li.current{
 	text-align: center;
 }
 
-/* .expDeleteBtn, expReBtn { */
-/* 	border: none; */
-/* 	color: black; */
+#expDeleteBtn, #revDeleteBtn, #qnaDeleteBtn {
+	border: none;
+	background-color: #FFFFFF;
+	color: #BDBDBD;
+}
+
+table {
+	width: 700px;
+}
+
+td {
+/* 	width: 350px; */
+/* 	font-size: 20px; */
+	padding: 5px;
+}
+
+/* #infoTitle { */
+/* 	width: 150px; */
+/* } */
+
+/* #infoContent { */
+/* 	width: 200px; */
 /* } */
 </style>
 
@@ -659,39 +826,92 @@ ul.tabs li.current{
 		</div>
 	
 		<div class="posterInfoDiv" style="font-size: 15px;">
-			<strong style="font-size: 20px;">${pfmInfoList.name }</strong><br><br><br>
-			관람시간 : ${pfmInfoList.runningTime }분<br>
-			공연장 : ${hallInfoList.hallName }<br>
-			연령제한 : 
-			<c:choose>
-				<c:when test="${pfmInfoList.ageGradeIdx eq 1}">
-					전체 관람<br>
-				</c:when>
-				<c:when test="${pfmInfoList.ageGradeIdx eq 2 }">
-					7세 이상<br>
-				</c:when>
-				<c:when test="${pfmInfoList.ageGradeIdx eq 3 }">
-					15세 이상<br>
-				</c:when>
-				<c:when test="${pfmInfoList.ageGradeIdx eq 4 }">
-					청소년 관람 불가<br>
-				</c:when>
-			</c:choose>
-			공연기간 : <fmt:formatDate value="${pfmInfoList.pfmStart }" pattern="yyyy.MM.dd"/> ~ 
-			<fmt:formatDate value="${pfmInfoList.pfmEnd }" pattern="yyyy.MM.dd"/><br>
-			장르 : 
-			<c:choose>
-				<c:when test="${pfmInfoList.genreIdx eq 1 }">
-					콘서트<br>
-				</c:when>
-				<c:when test="${pfmInfoList.genreIdx eq 2 }">
-					뮤지컬&연극<br>
-				</c:when>
-				<c:when test="${pfmInfoList.genreIdx eq 3 }">
-					가족&아동<br>
-				</c:when>
-			</c:choose>
+			<strong style="font-size: 30px;">${pfmInfoList.name }</strong><br><br><br>
+			<table >
+				<tr>
+					<td id="infoTitle" align="left">관람시간</td>
+					<td id="infoContent" align="left">${pfmInfoList.runningTime }분</td>
+					<td id="infoTitle" align="left">공연장</td>
+					<td id="infoContent" align="left">${hallInfoList.hallName }</td>
+				</tr>
+				<tr>
+					<td id="infoTitle" align="left">연령제한</td>
+					<td id="infoContent" align="left">
+						<c:choose>
+							<c:when test="${pfmInfoList.ageGradeIdx eq 1}">
+								전체 관람
+							</c:when>
+							<c:when test="${pfmInfoList.ageGradeIdx eq 2 }">
+								7세 이상
+							</c:when>
+							<c:when test="${pfmInfoList.ageGradeIdx eq 3 }">
+								15세 이상
+							</c:when>
+							<c:when test="${pfmInfoList.ageGradeIdx eq 4 }">
+								청소년 관람 불가
+							</c:when>
+						</c:choose>
+					</td>
+					<td id="infoTitle" align="left">공연기간</td>
+					<td id="infoContent" align="left">
+					<fmt:formatDate value="${pfmInfoList.pfmStart }" pattern="yyyy.MM.dd"/> ~ 
+						<fmt:formatDate value="${pfmInfoList.pfmEnd }" pattern="yyyy.MM.dd"/>
+					</td>
+				</tr>
+				<tr>
+					<td id="infoTitle" align="left">장르</td>
+					<td id="infoContent" align="left">
+					<c:choose>
+						<c:when test="${pfmInfoList.genreIdx eq 1 }">
+							콘서트
+						</c:when>
+						<c:when test="${pfmInfoList.genreIdx eq 2 }">
+							뮤지컬&연극
+						</c:when>
+						<c:when test="${pfmInfoList.genreIdx eq 3 }">
+							가족&아동
+						</c:when>
+					</c:choose>
+					</td>
+				</tr>
+			</table>
+<%-- 			관람시간 : ${pfmInfoList.runningTime }분<br> --%>
+<%-- 			공연장 : ${hallInfoList.hallName }<br> --%>
+<!-- 			연령제한 :  -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 1}"> --%>
+<!-- 					전체 관람<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 2 }"> --%>
+<!-- 					7세 이상<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 3 }"> --%>
+<!-- 					15세 이상<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${pfmInfoList.ageGradeIdx eq 4 }"> --%>
+<!-- 					청소년 관람 불가<br> -->
+<%-- 				</c:when> --%>
+<%-- 			</c:choose> --%>
+<%-- 			공연기간 : <fmt:formatDate value="${pfmInfoList.pfmStart }" pattern="yyyy.MM.dd"/> ~  --%>
+<%-- 			<fmt:formatDate value="${pfmInfoList.pfmEnd }" pattern="yyyy.MM.dd"/><br> --%>
+<!-- 			장르 :  -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${pfmInfoList.genreIdx eq 1 }"> --%>
+<!-- 					콘서트<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${pfmInfoList.genreIdx eq 2 }"> --%>
+<!-- 					뮤지컬&연극<br> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:when test="${pfmInfoList.genreIdx eq 3 }"> --%>
+<!-- 					가족&아동<br> -->
+<%-- 				</c:when> --%>
+<%-- 			</c:choose> --%>
 		</div>
+		
+		<div id = "choiceBtn">
+			<button id = "mychoiceBtn">내 공연 담기</button>
+		</div>
+		
 	</div>
 	
 	<div id = "bookInfo">
@@ -710,12 +930,12 @@ ul.tabs li.current{
 		<div id="tab-1" class="tab-content current">
 			<h3 style="float: left;">출연진</h3><br>
 			<div class="castInfo tabarray" style="width: 100%;">
-			<ul>
+			<ul class="castImgUl">
 			<c:forEach items="${castList }" var="list">
-				<div class="imgli">
+				<li class="imgli">
 					<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
 					${list.name }
-				</div>
+				</li>
 			</c:forEach>
 			</ul>
 			</div>
@@ -766,7 +986,7 @@ ul.tabs li.current{
 					<small id="exptationContent">${list.expContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
-					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button>
+<%-- 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button> --%>
 				</div>
 				
 <!-- 				<div id="expdelnup"> -->
@@ -830,7 +1050,7 @@ ul.tabs li.current{
 					<small id="reviewContent">${list.reviewContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
-					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button>
+<%-- 					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button> --%>
 				</div>
 				
 				<!-- 대댓글 출력 부분 -->
@@ -877,6 +1097,7 @@ ul.tabs li.current{
 			<!-- QNA 출력되는 부분의 div -->
 			<div class="ListQna">
 			<c:forEach items="${qnaList }" var="list">
+				<div id="oneQna">
 				<!-- QNA 작성한 사람의 정보 출력 div -->
 				<div class="qnaListUserInfo">
 					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
@@ -885,15 +1106,12 @@ ul.tabs li.current{
 				
 				<!-- QNA 내용 출력 div -->
 				<div class="qnaListContentInfo">
-					<small>${list.qnaContent }</small><br>
+					<small id="QnaContent">${list.qnaContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
-				</div>
-				
-				<div id="qnadelnup"> 
 					<button id="qnaDeleteBtn" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
-					<input type="text" id="qnaRecomm" name="qnaRecomm">
-					<button id="qnaReBtn" type="button" value="${list.qnaIdx }"
-						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button>
+<!-- 					<input type="text" id="qnaRecomm" name="qnaRecomm"> -->
+<%-- 					<button id="qnaReBtn" type="button" value="${list.qnaIdx }" --%>
+<%-- 						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button> --%>
 				</div>
 				
 				<c:forEach items="${qnaRecommList }" var="relist">
@@ -906,7 +1124,7 @@ ul.tabs li.current{
 					</c:if>
  				</div> 
 				</c:forEach>
-				
+				</div>
 			</c:forEach>			
 			</div>
 		</div>

@@ -3,10 +3,56 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11b0d7e1cbaf8eb3510561bbddb85ae9&libraries=services"></script>
-				
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
+	$('.castImgUl').bxSlider({
+		// 무한 루프가 아닌 처음과 끝으로 표현
+		infiniteLoop: false,
+		hideControlOnEnd: true,
+		pager: false,
+		minSlides : 7,
+		maxSlides : 7,
+		slideWidth : 1130,
+		slideMargin : 10
+	});
+	
+	
+	// 해당공연이 찜이 되어있는지 확인
+		var userIdx = '${loginUser.userIdx }';
+		console.log("loginUserIdx : " + userIdx);
+		
+		var pfmIdx = '${pfmInfoList.pfmIdx}';
+		console.log("실행pfmIdx : " + pfmIdx);
+		
+	$.ajax({
+		url:"/mychoice/check"
+		, method:"POST"
+		, data : {
+			"userIdx" : userIdx
+			, "pfmIdx": pfmIdx
+		}
+		, dataType :"json"
+		, success: function(data){
+			console.log("check 성공");
+			if(parseInt(data)=="1"){
+				$('#choiceBtn').html('<button class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+			}
+		}
+		, error: function(e){
+			console.log(e);
+		}
+		
+		
+	}); // end ajax
+	
 	
 	// 공연플래너 담기 버튼
 	$('#mychoicebtn').click(function() {
@@ -30,15 +76,60 @@ $(document).ready(function() {
 				
 				if(choice)
 					alert('공연플래너 담기가 완료되었습니다.');
+					$('#choiceBtn').html('<button  class="btn btn-default" id="cancelBtn" >담기 취소</button>')
 			}
 			, error: function(e) {
 				console.log('실패');
 			}
-		});
+		}); // end ajax
 		} else {
-			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
-		}
-	});
+			
+			if(confirm('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.')==true){
+				location.href='user/login';
+			}else {
+				return ;
+			} // confirm if end
+			
+// 			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
+		} // userIdx if end
+	}); // end click
+	
+	
+	// 공연플래너 취소 버튼
+	$('#choiceBtn').on('click','#cancelBtn',function(){
+// 		$('#cancelBtn').click(function() {
+	
+			var userIdx = '${loginUser.userIdx }';
+			console.log("loginUserIdx : " + userIdx);
+			
+			var pfmIdx = '${pfmInfoList.pfmIdx}';
+			console.log("pfmIdx : " + pfmIdx);
+		
+		
+			$.ajax({
+				url: '/mychoice/cancel'
+				, method: 'POST'
+				, data: {
+					"userIdx" : userIdx
+					, "pfmIdx": pfmIdx
+				}
+				, dataType: 'json'
+				, success: function(data) {
+					console.log('성공');
+					
+					if(data)
+						alert('찜 한 공연이 취소되었습니다.');
+						$('#choiceBtn').html('<button  class="btn btn-warning" id="mychoicebtn">공연 담기</button>')
+					
+				}
+				, error: function(e) {
+					console.log('실패');
+				}
+			}); // end ajax 
+				
+// 		}); // end click
+
+	}); // end on
 	
 // 	$('#pfmDetailbtn').click(function() {
 // 		$(location).attr("href", "");
@@ -49,6 +140,25 @@ $(document).ready(function() {
 </script>
 
 <style>
+
+/* #mychoicebtn{ */
+/* 	width: 77px; */
+/*     height: 34px; */
+/*     border-radius: 5px; */
+/* /*     border: 2px solid #F2B134; */ */
+/*     background: #F2B134; */
+/*     color: #fff; */
+/*     font-weight: 200; */
+/* } */
+
+/* #cancelBtn{ */
+/* 	width: 77px; */
+/*     height: 34px; */
+/*     border-radius: 5px; */
+/*     border: 2px solid #F2B134; */
+/*     background: #FFF; */
+/*     color:#AAA; */
+/* } */
 .container {
 	margin: 0 5% 10px 5%;
 }
@@ -84,20 +194,20 @@ $(document).ready(function() {
 
 ul.tabs li{
 	background: none;
-	color: #222;
+/* 	color: #222; */
 	display: inline-block;
 	padding: 10px 15px;
 	cursor: pointer;
 }
  
 ul.tabs li.current{
-	background: #ededed;
+/* 	background: #ededed; */
 	color: #222;
 }
  
 .tab-content{
 	display: none;
-	background: #ededed;
+/* 	background: #ededed; */
 	padding: 15px;
 }
  
@@ -139,18 +249,18 @@ ul.tabs li.current{
 	float: left;
 }
 
-.castUl {
-	text-align: center;
+.bx-wrapper {
+	margin-top: 20px;
 }
 
 .topDiv {
-	border: 1px solid #666;
+	border: 1px solid #BDBDBD;
 	height: 320px;
 	padding: 10px;
 }
 
 #pfmMyChoice {
-	border: 1px solid #666;
+	border: 1px solid #BDBDBD;
 	padding: 20px;
 	font-size: 20px;
 	margin-bottom: 30px;
@@ -159,6 +269,9 @@ ul.tabs li.current{
 
 #pfmTitle {
 	padding: 10px;
+}
+#choiceBtn{
+	display: inline;
 }
 </style>
 
@@ -183,7 +296,9 @@ ul.tabs li.current{
 			티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy.MM.dd"/>
 		</div>
 		<div style="width: 580px; text-align: center; margin-top: 10px;">
-			<button class="btn btn-default" id="mychoicebtn">공연플래너 담기</button>
+			<div id="choiceBtn">
+				<button class="btn btn-warning" id="mychoicebtn"  class="btn btn-success">공연 담기</button>
+			</div>
 			<a href="/ticket/pfmdetail?pfmIdx=${pfmInfoList.pfmIdx}">
 				<button id="pfmDetailbtn" class="btn btn-success">상세보기</button>
 			</a>
@@ -194,7 +309,7 @@ ul.tabs li.current{
 			<div id="tab-1" class="tab-content current">
 				<strong style="float: left; font-size: 20px;">출연진</strong><br>
 				<div class="castInfo tabarray">
-				<ul class="castUl">
+				<ul class="castImgUl">
 				<c:forEach items="${castList }" var="list">
 					<li class="imgli">
 						<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>

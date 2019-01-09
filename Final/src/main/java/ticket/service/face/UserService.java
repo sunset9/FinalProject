@@ -132,7 +132,7 @@ public interface UserService {
 	 * @Method설명: 예약한 정보 상세 보기 할때 쓸 정보 불러오기
 	 * @작성자:홍나영
 	 */
-	public StateOfBook getDetailBook(User user, int pfmIdx);
+	public StateOfBook getDetailBook(User user, String bookGroup);
 
 
 	/**
@@ -230,4 +230,19 @@ public interface UserService {
 	 */
 	public List<Artist> getArtistName(int userIdx);
 
+	
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: 취소한 공연 불러오기
+	 * @작성자:홍나영
+	 */
+	public StateOfBook getDetailCancel(User user, String bookGroup);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.08
+	 * @Method설명: 취소한 좌석 숫자 구하기
+	 * @작성자:홍나영
+	 */
+	public int getCancelCnt(String bookGroup);
 }

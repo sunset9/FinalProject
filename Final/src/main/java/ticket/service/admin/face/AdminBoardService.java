@@ -14,17 +14,15 @@ import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
 import ticket.dto.NoticeFile;
 import ticket.utils.Paging;
+import ticket.utils.PagingT;
 
 public interface AdminBoardService {
 
 	// 공지사항 글 리스트 가져오기
-	public List getNotiList(Paging paging);
+	public List<Notice> getNotiList(PagingT pagingt);
 		 
 	// 게시글 전체 수
 	public int selectCountAll();
-	
-	// 페이징 정보
-	public Paging getPaging(int curPage, int listCount, int pageCount);
 	
 	
 	// 공지사항 상세보기
@@ -145,14 +143,14 @@ public interface AdminBoardService {
 	
 	
 
-	// 업로드된 파일 처리
-	public void filesave(ServletContext context, MultipartFile file);
-	
-	// 업로드 파일 목록
-	public List fileList();
-	
-	// notiFileIdx로 NoticeFile(notice_file) 조회
+	// 업로드된 파일 처리(안씀)
+	public void filesave(ServletContext context, MultipartFile file);	
+	// 업로드 파일 목록(안씀)
+	public List fileList();	
+	// notiFileIdx로 NoticeFile(notice_file) 조회(안씀)
 	public NoticeFile getFile(int notiFileIdx);
+	// 페이징 정보 (안씀)
+	public Paging getPaging(int curPage, int listCount, int pageCount);
 	
 	
 	

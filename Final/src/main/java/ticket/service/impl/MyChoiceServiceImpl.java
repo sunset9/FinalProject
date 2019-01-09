@@ -30,8 +30,27 @@ public class MyChoiceServiceImpl implements MyChoiceService{
 	}
 
 	@Override
-	public void cancel(MyChoice myChoice) {
+	public boolean cancel(MyChoice myChoice) {
+		
+		boolean res = false;
+		
 		myChoiceDao.delete(myChoice);
+		
+		// 다시 조회해서 잘 삭제 되었는지 확인
+		if (myChoiceDao.selectCntChoice(myChoice)==0) {
+			res = true ;
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int check(int userIdx, int pfmIdx) {
+		MyChoice myChoice = new MyChoice();
+		myChoice.setPfmIdx(pfmIdx);
+		myChoice.setUserIdx(userIdx);
+		
+		return myChoiceDao.selectCntChoice(myChoice);
 	}
 
 

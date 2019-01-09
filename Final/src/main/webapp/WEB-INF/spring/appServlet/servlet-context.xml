@@ -15,14 +15,14 @@
 	<annotation-driven />
 
 	<!-- 인터셉터 설정 -->
-	<!-- <interceptors> -->
-	<!-- <interceptor> -->
-	<!-- <mapping path="/interceptor/admin/**" /> -->
-	<!-- <exclude-mapping path="/interceptor/admin/adminFail" /> -->
-	<!-- <beans:bean -->
-	<!-- class="interceptor.interceptor.AdminInterceptor" /> -->
-	<!-- </interceptor> -->
-	<!-- </interceptors> -->
+	<interceptors>
+	<interceptor>
+	<mapping path="/admin/**" />
+<!-- 	<exclude-mapping path="/ticket/admin/adminFail" /> -->
+	<beans:bean
+	class="ticket.interceptor.AdminInterceptor" />
+	</interceptor>
+	</interceptors>
  
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->

@@ -50,14 +50,14 @@
 	 
 <!-- 	공지사항 전체 글 리스트 -->
   <select id="selectNotiList" resultMap="notice" parameterType="ticket.utils.PagingT">
-  	select * from ( 
-  		select rownum rnum, B.* from (
-  			select * from notice order by notice_idx desc
-  		) B
-  		order by notice_idx desc
-  	) R
-  	where R.rnum between #{startNo} AND #{endNo}
-  	order by rnum
+	select notice_idx, user_idx, n_type_idx, notice_title ,notice_content
+		from (
+			select notice_idx, user_idx, n_type_idx, notice_title ,notice_content,
+				row_number() over(order by notice_idx desc) as rNum
+		from notice
+	) noti
+	where rNum between #{rowStart} and #{rowEnd}
+		order by notice_idx desc
   </select>
   
 <!--   이전글 -->
@@ -83,10 +83,11 @@
   
 <!--   전체 게시글 조회 -->
   <select id="selectCntAll" resultType="int">
-  	select count(*) cut from(
-  		select * from notice
-  		
-  	) cnt
+  	<![CDATA[
+	select count(notice_idx)
+	    from notice
+	        where notice_idx>0
+  	]]>
   </select>
   
 <!--   공지사항 상세보기 -->
