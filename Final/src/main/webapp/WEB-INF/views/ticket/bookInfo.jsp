@@ -129,9 +129,6 @@
 			dataType:"json",
 			success:function(res){
 				$('#ResidualSeatList').html("");
-				
-				console.log(res.hashMap.allSeats.length);
-				console.log(res.hashMap.BookedSeats.length);
 				for(var i =0;i<res.hashMap.allSeats.length;i++){ //전체좌석
 					var pay = res.hashMap.allSeats[i].secPay;
 					pay = pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -139,12 +136,12 @@
 						for(var j=0;j<res.hashMap.BookedSeats.length;j++){
 							if(res.hashMap.allSeats[i].appSec == res.hashMap.BookedSeats[j].appSec){
 								var ResidualSeat = res.hashMap.allSeats[i].cnt - res.hashMap.BookedSeats[j].cnt;
-								$('#ResidualSeatList').append("<li>"+ res.hashMap.allSeats[i].appSec + " 석 "+" "+pay+"원 "+ ResidualSeat +" 석</li>");
+								$('#ResidualSeatList').append("<li><table class='table'><tr><td style='width:20%'>"+ res.hashMap.allSeats[i].appSec + " 석</td> <td style='width:30%; text-align: right;'>"+" "+pay+"원 </td> <td style='width: 20%; text-align: right;'>"+ ResidualSeat +" 석</td></tr></table></li>");
 								
 							}else{
 								$('#ResidualSeatList').append(
-										"<li>"+ res.hashMap.allSeats[i].appSec 
-										+ " 석 "+" "+pay+"원 "+ res.hashMap.allSeats[i].cnt +" 석</li>"
+										"<li><table class='table'><tr><td style='width:20%'>"+ res.hashMap.allSeats[i].appSec 
+										+ " 석 </td> <td style='width:30%; text-align: right;'>"+" "+pay+"원 </td> <td style='width:20%;  text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
 										
 										
 								);
@@ -152,8 +149,8 @@
 						}
 					}else{//예매된 좌석이 없을경우
 						$('#ResidualSeatList').append(
-								"<li>"+ res.hashMap.allSeats[i].appSec 
-								+ " 석 "+" "+pay+"원 "+ res.hashMap.allSeats[i].cnt +" 석</li>"
+								"<li><table class='table'><tr><td style='width:20%;'>"+ res.hashMap.allSeats[i].appSec 
+								+ " 석</td> <td style='width:30%; text-align: right;'> "+" "+pay+"원 </td> <td style='width:20%; text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
 						);
 					}
 				
@@ -184,7 +181,12 @@
 				  return;
 			  }
 			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx}+"&name="+"${pfm.name}";
-			  window.open(path, "_blank", "width=1150px,height=750px");
+			  var userwidth = screen.width - 550;
+			  var userheight = screen.height - 170;
+			  
+			  
+			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
+// 			  window.open(path, "_blank", "width=1150px,height=750px");
 
 		});
 
@@ -199,7 +201,9 @@
   
   </script>
 <style type="text/css">
-
+.table{
+	margin-bottom: 1px !important;
+}
 .selected{
 	 border: 2px solid #3E4982 !important;
 	 color: #F2B134 !important;
@@ -234,6 +238,7 @@
    border-radius: 6px;
    color: #F2B134;
    border: 2px solid #F2B134;
+   margin-left: 15px;
 }
 
 #bookBtn:hover{
@@ -249,7 +254,7 @@
 <ul class="nav nav-pills" style="font-size: 27px;text-align: center;">
   <li role="presentation" style="width: 240px;">날짜선택</li>
   <li role="presentation" style="width: 372px;">시간선택</li>
-  <li role="presentation" style="width: 250px;">잔여석</li>
+  <li role="presentation" style="width: 338px;">잔여석</li>
 </ul>
 </div>
 <div id = "info" style="float: bottom">
@@ -260,8 +265,9 @@
 		</ul>
 	</div>
 	<div style="float: left; width:250px; padding-left: 20px;">
-		<div id = "ResidualSeats" style="float: left; width:250px; padding-left: 20px;    height: 160px;">
-			<ul id ="ResidualSeatList">
+		<div id = "ResidualSeats" 
+		style="overflow: auto; float: left; width:300px; padding-left: 20px; height: 160px;">
+			<ul id ="ResidualSeatList" style="padding:0px; width: 100%;">
 			</ul>
 		</div>
 		<button type="button" id ="bookBtn" style="width: 300px;">

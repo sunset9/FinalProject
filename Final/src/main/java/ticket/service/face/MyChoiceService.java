@@ -23,8 +23,15 @@ public interface MyChoiceService {
 	 * @Method설명: 찜 취소 할 때 삭제
 	 * @작성자 : 홍나영
 	 */
-	public void cancel(MyChoice myChoice);
+	public boolean cancel(MyChoice myChoice);
 	
+	
+	/**
+	 * @최종수정일: 2019.01.09
+	 * @Method설명: 해당 공연을 찜해놓았는지 확인
+	 * @작성자:홍나영
+	 */
+	public int check(int userIdx, int pfmIdx);
 	
 	
 }

@@ -36,9 +36,9 @@
     	width:500px;
     }
     
-    .faqCotent {
-    	width:1500px;
-    }
+     .faqCotent { 
+     	width:1500px; 
+     } 
 </style>
 
 
@@ -67,7 +67,8 @@
 
 
 <div class="faqCotent">
-  
+
+<table class="table table-striped table-hover">
 	<c:forEach items="${faqlist }" var="flist">
 	
 	    <ul class="fnq">
@@ -92,7 +93,7 @@
     </ul>
 	</c:forEach>
 
-
+</table>  
 </div>
 
 </div>

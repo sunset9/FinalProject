@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +32,10 @@ import ticket.dto.Faq;
 import ticket.dto.Inquiry;
 import ticket.dto.InquiryAnswer;
 import ticket.dto.Notice;
+import ticket.dto.PageMaker;
 import ticket.service.admin.face.AdminBoardService;
 import ticket.utils.Paging;
+import ticket.utils.PagingT;
 
 @Controller
 public class AdminBoardController {
@@ -41,24 +44,25 @@ public class AdminBoardController {
 
 	@Autowired AdminBoardService adminBoardService;
 	@Autowired ServletContext context;
+	
 	/**
 	 * 2018.12.09
+	 * @param cri 
 	 * @Method설명: 공지사항 목록 페이징 리스트
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/noticelist", method=RequestMethod.GET)	
-	public String notiList(Model model,
-			@RequestParam(required=false, defaultValue="0")int curPage,
-			@RequestParam(required=false, defaultValue="10")int listCount,
-			@RequestParam(required=false, defaultValue="10")int pageCount
-			) {
+	public String notiList(@ModelAttribute("pagingt") PagingT pagingt, Model model) {
 	
-		Paging paging = adminBoardService.getPaging(curPage, listCount, pageCount);
-		model.addAttribute("paging", paging);
 		
-		List<Notice> list = adminBoardService.getNotiList(paging);
+		List<Notice> list = adminBoardService.getNotiList(pagingt);
 		model.addAttribute("noticelist", list);
 
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPagingt(pagingt);
+		pageMaker.setTotalCount(adminBoardService.selectCountAll());
+		model.addAttribute("pageMaker", pageMaker);
+		
 		return "/admin/notice/list";
 	}
 	

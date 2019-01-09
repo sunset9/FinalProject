@@ -24,6 +24,36 @@ $(document).ready(function() {
 		slideMargin : 10
 	});
 	
+	
+	// 해당공연이 찜이 되어있는지 확인
+		var userIdx = '${loginUser.userIdx }';
+		console.log("loginUserIdx : " + userIdx);
+		
+		var pfmIdx = '${pfmInfoList.pfmIdx}';
+		console.log("실행pfmIdx : " + pfmIdx);
+		
+	$.ajax({
+		url:"/mychoice/check"
+		, method:"POST"
+		, data : {
+			"userIdx" : userIdx
+			, "pfmIdx": pfmIdx
+		}
+		, dataType :"json"
+		, success: function(data){
+			console.log("check 성공");
+			if(parseInt(data)=="1"){
+				$('#choiceBtn').html('<button class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+			}
+		}
+		, error: function(e){
+			console.log(e);
+		}
+		
+		
+	}); // end ajax
+	
+	
 	// 공연플래너 담기 버튼
 	$('#mychoicebtn').click(function() {
 		var userIdx = '${loginUser.userIdx }';
@@ -46,15 +76,60 @@ $(document).ready(function() {
 				
 				if(choice)
 					alert('공연플래너 담기가 완료되었습니다.');
+					$('#choiceBtn').html('<button  class="btn btn-default" id="cancelBtn" >담기 취소</button>')
 			}
 			, error: function(e) {
 				console.log('실패');
 			}
-		});
+		}); // end ajax
 		} else {
-			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
-		}
-	});
+			
+			if(confirm('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.')==true){
+				location.href='user/login';
+			}else {
+				return ;
+			} // confirm if end
+			
+// 			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
+		} // userIdx if end
+	}); // end click
+	
+	
+	// 공연플래너 취소 버튼
+	$('#choiceBtn').on('click','#cancelBtn',function(){
+// 		$('#cancelBtn').click(function() {
+	
+			var userIdx = '${loginUser.userIdx }';
+			console.log("loginUserIdx : " + userIdx);
+			
+			var pfmIdx = '${pfmInfoList.pfmIdx}';
+			console.log("pfmIdx : " + pfmIdx);
+		
+		
+			$.ajax({
+				url: '/mychoice/cancel'
+				, method: 'POST'
+				, data: {
+					"userIdx" : userIdx
+					, "pfmIdx": pfmIdx
+				}
+				, dataType: 'json'
+				, success: function(data) {
+					console.log('성공');
+					
+					if(data)
+						alert('찜 한 공연이 취소되었습니다.');
+						$('#choiceBtn').html('<button  class="btn btn-warning" id="mychoicebtn">공연 담기</button>')
+					
+				}
+				, error: function(e) {
+					console.log('실패');
+				}
+			}); // end ajax 
+				
+// 		}); // end click
+
+	}); // end on
 	
 // 	$('#pfmDetailbtn').click(function() {
 // 		$(location).attr("href", "");
@@ -65,6 +140,25 @@ $(document).ready(function() {
 </script>
 
 <style>
+
+/* #mychoicebtn{ */
+/* 	width: 77px; */
+/*     height: 34px; */
+/*     border-radius: 5px; */
+/* /*     border: 2px solid #F2B134; */ */
+/*     background: #F2B134; */
+/*     color: #fff; */
+/*     font-weight: 200; */
+/* } */
+
+/* #cancelBtn{ */
+/* 	width: 77px; */
+/*     height: 34px; */
+/*     border-radius: 5px; */
+/*     border: 2px solid #F2B134; */
+/*     background: #FFF; */
+/*     color:#AAA; */
+/* } */
 .container {
 	margin: 0 5% 10px 5%;
 }
@@ -176,6 +270,9 @@ ul.tabs li.current{
 #pfmTitle {
 	padding: 10px;
 }
+#choiceBtn{
+	display: inline;
+}
 </style>
 
 <div class="main_wrapper">
@@ -199,7 +296,9 @@ ul.tabs li.current{
 			티켓 오픈일 : <fmt:formatDate value="${pfmInfoList.ticketStart }" pattern="yyyy.MM.dd"/>
 		</div>
 		<div style="width: 580px; text-align: center; margin-top: 10px;">
-			<button class="btn btn-default" id="mychoicebtn">공연플래너 담기</button>
+			<div id="choiceBtn">
+				<button class="btn btn-warning" id="mychoicebtn"  class="btn btn-success">공연 담기</button>
+			</div>
 			<a href="/ticket/pfmdetail?pfmIdx=${pfmInfoList.pfmIdx}">
 				<button id="pfmDetailbtn" class="btn btn-success">상세보기</button>
 			</a>

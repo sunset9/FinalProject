@@ -7,24 +7,24 @@
 
  
 <!-- 부트스트랩 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <style>
 
-.list {
+.con {
 	display: inline-block;
 	width: 500px;
 }
 
-body {
-  	position:relative;  
- 	background-color:blue;
-  	z-index:100; 
- }
+/* body { */
+/*   	position:relative;   */
+/*  	background-color:blue; */
+/*   	z-index:100;  */
+/*  } */
 
 </style>
 
@@ -79,13 +79,13 @@ $(document).ready(function(){
 <table class="table table-striped table-hover">
 	
 	<tr>
-		<th>선택</th>
-<%-- 		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th> --%>
+<!-- 		<th>선택</th> -->
+		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th>
 		<th>글번호</th>
 		<th>분류</th>
 		<th>제목</th>
 		<th>등록일</th>	
-		<th> <img src="../image.test.PNG"> </th>
+<!-- 		<th> <img src="../../../../../test.PNG"> </th> -->
 	</tr>
 
   
@@ -109,7 +109,7 @@ $(document).ready(function(){
 <div class="btnwrite">
 <a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 </div>
-
+<a href="/admin/noticelist">페이징 테스트</a>
 <jsp:include page="../../utils/noticepaging.jsp"/>
 </div>
 </div>

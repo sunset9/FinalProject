@@ -6,22 +6,60 @@
 <jsp:include page="../layout/menu.jsp" />
 
 <style>
+a {color:#1a1a1a; text-decoration:none;}
+a:link	{color:#1a1a1a; text-decoration:none;}
 
 #registBtn {
     float: right;
+    height: 38px;
+    width: 135px;
+    font-weight: 600;
+    font-size: 18px;
+    color: white;
+    background: #fcd303;
+    border: 1.8px solid #fcd303;
+    box-shadow: 1px 1px 4px -1px #4e4b4b;
+}
+#registBtn:hover {
+    float: right;
+    height: 38px;
+    font-weight: 600;
+    color: #fcd303;
+    background: white;
+    border: 1.8px solid #fcd303;
+    box-shadow: none;
 }
 
 #searchPfm {
+	display: inline;
+/* 	border: 2px solid #fcd303; */
 	width: 300px;
-	height: 40px;
+	height: 38px;
+	padding-left: 13px;
 }
+#searchPfm:focus {
+/* 	outline: none; */
+}
+#searchPfmBtn {
+/* 	background: #fcd303; */
+    border: none;
+/*     color: white; */
+    height: 38px;
+    width: 50px;
+/*     font-weight: bold; */
+}
+
+.managerAllBox {
+	margin-top: 35px;
+}
+
  /*TAB CSS*/
 ul.tabs {
     margin: 0;
     padding: 0;
     float: left;
     list-style: none;
-    height: 32px; /*--Set height of tabs--*/
+    height: 41px; /*--Set height of tabs--*/
     border-bottom: 1px solid #999;
     border-left: 1px solid #999;
     width: 100%;
@@ -30,8 +68,8 @@ ul.tabs li {
     float: left;
     margin: 0;
     padding: 0;
-    height: 31px; /*--Subtract 1px from the height of the unordered list--*/
-    line-height: 31px; /*--Vertically aligns the text within the tab--*/
+    height: 41px; /*--Subtract 1px from the height of the unordered list--*/
+    line-height: 40px; /*--Vertically aligns the text within the tab--*/
     border: 1px solid #999;
     border-left: none;
     margin-bottom: -1px; /*--Pull the list item down 1px--*/
@@ -57,12 +95,14 @@ ul.tabs li.active, ul.tabs li.active span:hover  {
     /*--Makes sure that the active tab does not listen to the hover properties--*/
     background: #fff;
     /*--Makes the active tab look like it's connected with its content--*/
-    border-bottom: 1px solid #fff; 
+    border-bottom: 1px solid #fff;
+    font-weight: bold; 
 }
 
 ul.order {
 	float: right;
 	list-style: none;
+    margin-top: 10px;
 }
 ul.order li {
 	float: left;
@@ -327,7 +367,7 @@ $(window).scroll(function() { // 스크롤 이벤트가 발생할 때마다 인�
 <button id="registBtn" onclick="location.href='/admin/registpfm'">공연 등록</button>
 <div id="managePfm">
 <!-- 검색창 -->
-<input type="text" id="searchPfm" placeholder="공연 제목 검색" onkeypress="if(event.keyCode==13){$('#searchPfmBtn').trigger('click'); return false;}"/> 
+<input type="text" id="searchPfm" class="form-control"placeholder="공연 제목 검색" onkeypress="if(event.keyCode==13){$('#searchPfmBtn').trigger('click'); return false;}"/> 
 <button type="button" id="searchPfmBtn">검색</button>
  
 <div class="managerAllBox">

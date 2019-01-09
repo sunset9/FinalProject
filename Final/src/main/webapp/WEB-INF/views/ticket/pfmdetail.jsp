@@ -21,6 +21,116 @@ $(document).ready(function() {
 // 		slideMargin : 10
 // 	});
 	
+	
+	// 해당공연이 찜이 되어있는지 확인
+	var userIdx = '${loginUser.userIdx }';
+	console.log("loginUserIdx : " + userIdx);
+	
+	var pfmIdx = '${pfmInfoList.pfmIdx}';
+	console.log("실행pfmIdx : " + pfmIdx);
+	
+	$.ajax({
+		url:"/mychoice/check"
+		, method:"POST"
+		, data : {
+			"userIdx" : userIdx
+			, "pfmIdx": pfmIdx
+		}
+		, dataType :"json"
+		, success: function(data){
+			console.log("check 성공");
+			if(parseInt(data)=="1"){
+				$('#choiceBtn').html('<button class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+			}
+		}
+		, error: function(e){
+			console.log(e);
+		}
+		
+		
+	}); // end ajax
+	
+	
+	// 공연플래너 담기 버튼
+	$('#choiceBtn').on('click','#cancelBtn',function(){
+// 	$('#mychoiceBtn').click(function() {
+		var userIdx = '${loginUser.userIdx }';
+		console.log("loginUserIdx : " + userIdx);
+		
+		var pfmIdx = '${pfmInfoList.pfmIdx}';
+		console.log("pfmIdx : " + pfmIdx);
+	
+		if(userIdx != '') {
+		$.ajax({
+			url: '/ticket/opendetail'
+			, method: 'POST'
+			, data: {
+				"userIdx" : userIdx
+				, "pfmIdx": pfmIdx
+			}
+			, dataType: 'json'
+			, success: function(choice) {
+				console.log('성공');
+				
+				if(choice)
+					alert('공연플래너 담기가 완료되었습니다.');
+					$('#choiceBtn').html('<button  class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+			}
+			, error: function(e) {
+				console.log('실패');
+			}
+		}); // end ajax
+		} else {
+			
+			if(confirm('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.')==true){
+				location.href='user/login';
+			}else {
+				return ;
+			} // confirm if end
+			
+	//			alert('해당 기능은 로그인 후 이용가능합니다.\n로그인 후 이용해주세요.');
+		} // userIdx if end
+// 	}); // end click
+	}); // end on 
+	
+	// 공연플래너 취소 버튼
+	$('#choiceBtn').on('click','#cancelBtn',function(){
+	//		$('#cancelBtn').click(function() {
+	
+			var userIdx = '${loginUser.userIdx }';
+			console.log("loginUserIdx : " + userIdx);
+			
+			var pfmIdx = '${pfmInfoList.pfmIdx}';
+			console.log("pfmIdx : " + pfmIdx);
+		
+		
+			$.ajax({
+				url: '/mychoice/cancel'
+				, method: 'POST'
+				, data: {
+					"userIdx" : userIdx
+					, "pfmIdx": pfmIdx
+				}
+				, dataType: 'json'
+				, success: function(data) {
+					console.log('성공');
+					
+					if(data)
+						alert('찜 한 공연이 취소되었습니다.');
+						$('#choiceBtn').html('<button  class="btn btn-warning" id="mychoiceBtn">공연 담기</button>')
+					
+				}
+				, error: function(e) {
+					console.log('실패');
+				}
+			}); // end ajax 
+				
+	//		}); // end click
+	
+	}); // end on
+	
+	
+	
 	// 탭
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
@@ -500,6 +610,29 @@ $(document).ready(function() {
 <style>
 .expListContentInfo, .revListContentInfo, .qnaListContentInfo  {
 	margin-left: 30px;
+
+#mychoiceBtn{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #F2B134;
+    font-weight: bold;
+    color: #fff;
+}
+
+#cancelBtn{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #FFF;
+    color:#AAA;
+    font-weight: bold;
+}
+
+.expListContentInfo {
+	padding-left: 10px;
 }
 
 .erImgDiv {
@@ -773,6 +906,11 @@ td {
 <%-- 				</c:when> --%>
 <%-- 			</c:choose> --%>
 		</div>
+		
+		<div id = "choiceBtn">
+			<button id = "mychoiceBtn">내 공연 담기</button>
+		</div>
+		
 	</div>
 	
 	<div id = "bookInfo">

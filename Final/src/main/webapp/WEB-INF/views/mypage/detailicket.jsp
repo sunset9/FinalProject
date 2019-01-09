@@ -4,14 +4,19 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 
 <style type="text/css">
-
+.boxDiv{
+ 	border: 1px solid #CCC;
+ 	padding :10px;
+}
 #warpTicket{
 	display: grid;
 	width:1160px;
 	margin: 20px auto;
+/* 	padding :10px; */
 	grid-template-columns: 200px auto ;
  	grid-gap: 10px;
  	grid-template-rows:50px, auto; 
+
 }
 #poster {
 	display: inline-block;
@@ -22,21 +27,67 @@
 	
 	grid-area: 1/ 2 / 2 /3 ;
 	text-align : center;
-	border: 1px solid black;
+/* 	border: 1px solid black; */
+	font-weight: bolder;
+	font-size: 3em;
+	
 }
 
 
 #bookDetail{
 	grid-area: 2/ 2 / 3 /3;
+	text-align: center;
+	
+}
+.innerBox{
+/* 	북 디테일 담고 있는 div */
+	width: 500px;
+	margin: 0 auto;
 }
 dt{
 	float: left;
 	margin-right: 10px;
 }
+th{
+	text-align: center !important;
+}
 
-td{
-	border: 1px solid black;
-	width: 400px;
+ td{ 
+/* 	border: 1px solid black; */
+	padding: 10px;
+
+ }
+ 
+dd{
+	padding:5xp ;
+ 	text-align: center;
+ } 
+table{
+	width: 100%;
+	text-align: center;
+}
+.pfmInfo{
+	width: 20%;
+	background: #EEE;
+	border-bottom: #fff;
+}
+.fontSize{
+	font-size: 1.2em;
+}
+
+.btnDiv{
+	margin: 20px auto;
+	text-align: center;
+}
+
+#bookCancel{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    color:#fff;
+    background: #F2B134;
+    font-weight: bold;
 }
 </style>
 
@@ -131,36 +182,38 @@ $(document).ready(function() {
 
 
 <!-- 구매 티켓 정보 -->
-<div id = "warpTicket">
+<div id = "warpTicket" class ="boxDiv">
 	<div id = "poster">
 	<img style ="width: 180px;" src="/resources/image/${sob.storedName }">
 	</div>
 	
 <!-- 	공연 타이틀 -->
 	<div id="title">
-	<span><h3>${sob.name }</h3></span>
+	<span>${sob.name }</span>
 	</div>
 
 <!-- 	예매 상세 정보	 -->
 	<div id="bookDetail">
-		<dl>
-		<dt>예매번호</dt> <dd>${sob.bookGroup }</dd>
-		<dt>공연장</dt> <dd>${sob.hallName }</dd>
-		</dl>
-		<dl>
-		<dt>예매일시</dt> <dd>
-		<fmt:formatDate value="${sob.createDate }" pattern="yyyy-MM-dd"/>
-		</dd>
-		<dt>상태</dt> <dd>${sob.state }</dd>
-		</dl>
-		<dl>
-		<dt>관람일시</dt> <dd>
-			<fmt:formatDate value="${sob.pfmDate}" pattern="yyyy-MM-dd"/>
-			(<fmt:formatDate value="${sob.pfmDate}" pattern="E"/>)
-			 &nbsp; ${sob.pfmTime} 
-			 </dd>
-		<dt>매수</dt> <dd>${sob.ea }매</dd>
-		</dl>
+		<div class = "innerBox">
+			<dl>
+			<dt>예매번호</dt> <dd>${sob.bookGroup }</dd>
+			<dt>공연장</dt> <dd>${sob.hallName }</dd>
+			</dl>
+			<dl>
+			<dt>예매일시</dt> <dd>
+			<fmt:formatDate value="${sob.createDate }" pattern="yyyy-MM-dd"/>
+			</dd>
+			<dt>상태</dt> <dd>${sob.state }</dd>
+			</dl>
+			<dl>
+			<dt>관람일시</dt> <dd>
+				<fmt:formatDate value="${sob.pfmDate}" pattern="yyyy-MM-dd"/>
+				(<fmt:formatDate value="${sob.pfmDate}" pattern="E"/>)
+				 &nbsp; ${sob.pfmTime} 
+				 </dd>
+			<dt>매수</dt> <dd>${sob.ea }매</dd>
+			</dl>
+		</div>
 	</div>
 	
 
@@ -172,30 +225,30 @@ $(document).ready(function() {
 <!-- 티켓 수령 방법 -->
 <div id="receive">
 	<h2>티켓 수령 방법</h2>
-	<div>
+	<div class="boxDiv">
 	<table>
 	<c:if test="${receive eq 1 }">
 	<tr>
-		<td>수량 방법</td>
-		<td><p>현장수령 | 공연 당일 현장 교부처에서 예매번호 및 본인 확인 후 티켓을 수령하여 입장이 가능합니다.</p></td>
+		<td class="pfmInfo">수량 방법</td>
+		<td class="fontSize"><p>현장수령 | 공연 당일 현장 교부처에서 예매번호 및 본인 확인 후 티켓을 수령하여 입장이 가능합니다.</p></td>
 	</tr>
 	</c:if>
 	<c:if test="${receive eq 2 }">
 	<tr>
-		<td>수량 방법</td>
-		<td><p>배송 | 예매완료(결제익일) 기준으로 4~5일 이내 배송됩니다.(주말/공휴일을 제외한 영업일 기준)</p></td>
+		<td class="pfmInfo">수량 방법</td>
+		<td class="fontSize"><p>배송 | 예매완료(결제익일) 기준으로 4~5일 이내 배송됩니다.(주말/공휴일을 제외한 영업일 기준)</p></td>
 	</tr>
 	<tr>
-		<td>받으시는 분</td>
-		<td>${shipment.name }</td>
+		<td class="pfmInfo">받으시는 분</td>
+		<td class="fontSize">${shipment.name }</td>
 	</tr>
 	<tr>
-		<td>연락처</td>
-		<td>${shipment.phone }</td>
+		<td class="pfmInfo">연락처</td>
+		<td class="fontSize">${shipment.phone }</td>
 	</tr>
 	<tr>
-		<td>주소</td>
-		<td>${shipment.addr }
+		<td class="pfmInfo">주소</td>
+		<td class="fontSize">${shipment.addr }
 			${shipment.addrDetail }
 		<br> 우편번호 :	${shipment.postcode }
 		</td>
@@ -210,22 +263,22 @@ $(document).ready(function() {
 
 <!-- 구매내역 -->
 <h2>구매 내역</h2>
-<div id = "buy">
+<div id = "buy" class="boxDiv">
 <table>
 <tr>
 	<td>
 <!-- 		티켓 금액 -->
-		<dl>
+		<dl class="fontSize">
 			<dt>총 티켓 가격</dt>
-			<dd id = "ticketPrice"></dd>
+			<dd id = "ticketPrice" ></dd>
 			<dt>좌석 가격</dt>
-			<dd>${ss.appSec } : 
+			<dd>${ss.appSec }석 : 
 			<fmt:formatNumber value="${ss.secPay }" pattern="##,###"/> * ${sob.ea }</dd>
 		</dl>
 	</td>	
 <!-- 		예매 수수료, 배송료 -->
-	<td>	
-		<dl>
+	<td style="border-left: 1px solid #CCC;border-right: 1px solid #CCC;">	
+		<dl class="fontSize">
 			<dt>추가 비용</dt>
 			<dd id="extraFee"> </dd>
 			
@@ -239,7 +292,7 @@ $(document).ready(function() {
 	</td>	
 		
 	<td>	
-		<dl>
+		<dl class="fontSize">
 			<dt>총 금액</dt>
 			<dd id="totalFee"></dd>
 		</dl>
@@ -256,41 +309,30 @@ $(document).ready(function() {
 
 <!-- 결제내역 -->
 <h2>결제내역</h2>
-<div>
+<div class="boxDiv">
 <table>
 	<tr>
-		<td>
-		<dl>
-			<dt>결제방법</dt>
-			<dd>카드</dd>
-		</dl>
+		<td class="pfmInfo">
+			결제방법
+		</td>
+		<td class="fontSize">
+			카드
 		</td>
 	</tr>
 	<tr>
-		<td>
-		<dl>
-			<dt>거래자명</dt>
-			<dd>${payment.buyerName }</dd>
-		</dl>
-		</td>
+		<td class="pfmInfo"> 거래자명</td>
+		<td class="fontSize">${payment.buyerName }</td>
 	</tr>
 	<tr>
-		<td>
-		<dl>
-			<dt>결제 금액</dt>
-			<dd>${payment.paidAmount }</dd>
-		</dl>
-		</td>
+		<td class="pfmInfo">결제 금액</td>
+		<td class="fontSize">${payment.paidAmount }원</td>
 	</tr>
 	<tr>
-		<td>
-		<dl>
-			<dt>결제 날짜</dt>
-			<dd>
+		<td class="pfmInfo">결제 날짜</td>
+			<td class="fontSize">
 			<fmt:formatDate value="${payment.createDate }" pattern="yyyy-MM-dd"/>
 			(<fmt:formatDate value="${payment.createDate }" pattern="E"/>)
-			</dd>
-		</dl>
+			
 		</td>
 	</tr>
 
@@ -301,8 +343,8 @@ $(document).ready(function() {
 
 <!-- 좌석정보  -->
 <h2>좌석정보</h2>
-<div><table>
-<tr>
+<div class="boxDiv"><table class="fontSize">
+<tr >
 <th>좌석등급</th>
 <th>좌석번호</th>
 <th>좌석 구매 가격</th>
@@ -312,7 +354,7 @@ $(document).ready(function() {
 <tr>
 	<td>${ss.appSec }</td>
 	<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
-	<td>${ss.secPay }</td>
+	<td>${ss.secPay } 원</td>
 	
 	<td>${s.state }
 <%-- 	${s.state eq '예매완료(결제완료)' || s.state eq '예매완료(부분취소)'} --%>
@@ -325,13 +367,13 @@ $(document).ready(function() {
 
 </table>
 
-	<div>
-		<button id = "bookCancel">취소 요청</button>
-	</div>
-
 </div>
 
 <!-- //좌석정보 -->
+	<div class ="btnDiv">
+		<button id = "bookCancel">취소 요청</button>
+	</div>
+
 
 
 

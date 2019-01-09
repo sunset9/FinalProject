@@ -55,6 +55,7 @@
     border: 2px solid #F2B134;
     background: #F2B134;
     font-weight: bold;
+    color: #fff;
 }
 
 #cancelBtn{
@@ -108,7 +109,7 @@ $(document).ready(function(){
 		$('#complete').show();
 		$('#cancel').hide();
 		$('#completeBtn').css("background","#F2B134");
-		$('#completeBtn').css("color","black");
+		$('#completeBtn').css("color","#fff");
 		$('#cancelBtn').css("background","#FFF");
 		$('#cancelBtn').css("color","#AAA");
 		
@@ -118,7 +119,7 @@ $(document).ready(function(){
 		$('#cancel').show();
 		$('#complete').hide();
 		$('#cancelBtn').css("background","#F2B134");
-		$('#cancelBtn').css("color","black");
+		$('#cancelBtn').css("color","#fff");
 		$('#completeBtn').css("background","#FFF");
 		$('#completeBtn').css("color","#AAA");
 		
@@ -168,7 +169,7 @@ $(document).ready(function(){
 		<div>
 		
 		<div class="poster">
-			<a><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
+			<a href='/ticket/pfmdetail?pfmIdx=${sob.pfmIdx }'><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
 		</div>
 		<div class ="pfminfo">
 			<span>${sob.name }</span> <!-- 공연제목 --><br>
@@ -194,7 +195,7 @@ $(document).ready(function(){
 		</div></td>
 
 		<td>${sob.state }
-			<button onclick="location.href='/mypage/detailicket?pfmIdx=${sob.pfmIdx}'">예매 상세</button>
+			<button onclick="location.href='/mypage/detailicket?bookGroup=${sob.bookGroup}'">예매 상세</button>
 		</td>
 	</tr>
 	</c:if>
@@ -223,7 +224,7 @@ $(document).ready(function(){
 		<td>
 		<div>
 		<div class="poster">
-		<a><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
+		<a href='/ticket/pfmdetail?pfmIdx=${sob.pfmIdx }'><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
 		</div>
 			<div class ="pfminfo">
 			<span>${sob.name }</span><br> <!-- 공연제목 -->
@@ -248,7 +249,7 @@ $(document).ready(function(){
 		</div></td>
 
 		<td>${sob.state }
-			<button onclick="location.href='/mypage/canceldetail?pfmIdx=${sob.pfmIdx}'">취소 상세</button>
+			<button onclick="location.href='/mypage/canceldetail?bookGroup=${sob.bookGroup}'">취소 상세</button>
 		</td>
 	</tr>
 	</c:if>
