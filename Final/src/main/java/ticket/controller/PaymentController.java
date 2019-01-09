@@ -44,6 +44,7 @@ public class PaymentController {
 	@RequestMapping(value = "/ticket/payment", method = RequestMethod.POST)
 	public ModelAndView payProc(PaymentInfo pay) {
 
+		logger.info(""+pay.getUserIdx());
 		logger.info(pay.toString());
 		logger.info("POST");
 		int r=paymentService.pay(pay);
