@@ -30,6 +30,12 @@ table{
 	margin: 30px auto;
 	height: 40px;
 }
+.title{
+	font-size: 3em;
+	margin: 0 auto;
+	display: inline;
+	
+}
 </style>
     
     
@@ -57,7 +63,7 @@ $(document).ready(function() {
 }); // ready end
 </script>
     
-<h1>비밀번호 체크</h1>
+<div class ="title"><span class ="title">비밀번호 체크</span></div>
 <br><br><br>
 <div id = "checkDiv">
 	<form id = "checkform" class="form-horizontal">
