@@ -6,6 +6,7 @@
 
 .artistName{
 	color: green;
+	margin-right:5px;
 	text-decoration: underline;
 }
 .artistSec {
@@ -67,9 +68,7 @@
 }
 
 .preferTitle{
-/* 	display:inline; */
-
-/* 	float: left; */
+	margin-left:10px;
 	width:700px;
 	font-size: 1.5em;
 	font-weight: bold;	
