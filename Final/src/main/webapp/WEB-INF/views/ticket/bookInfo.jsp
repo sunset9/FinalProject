@@ -293,6 +293,13 @@
     color: #F2B134;
     font-weight: bold;
 }
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+	border: 1px solid #ffffff00;
+    background: #F2b134;
+    font-weight: normal;
+    color: #ffffff;
+}
   
 </style>
 </head>
