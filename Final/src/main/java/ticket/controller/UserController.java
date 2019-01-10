@@ -469,17 +469,35 @@ public class UserController {
 		// 예매 상태 변환해 놓기 !
 		userService.cancelBook(names);
 		
-		// 예매한 공연 상세 정보 가져오기
-		StateOfBook sob = userService.getDetailBook(user, bookGroup);
+		logger.info(bookGroup);
+		
+		// 공연 상세 정보 가져오기
+		StateOfBook sob = userService.getDetailCancel(user, bookGroup);
 		logger.info("sob"+sob);
 		model.addAttribute("sob", sob);
 		
-		// 환불해줄 가격 조회해오기
-		List<SeatSection> ssList = userService.getCancelSeat(names);
-		logger.info("취소한 좌석 구역과 가격"+ssList);
-		model.addAttribute("ssList", ssList);
 		
 		logger.info("길이"+names.length());
+		
+
+		// 결제 내역 (결제 방법, 결제 날짜, 거래자, 금액) 
+		PaymentInfo payment = new PaymentInfo();
+		logger.info("impuid : "+sob.getImpUid());
+		payment = userService.getPayment(sob.getImpUid());
+		logger.info("결제정보:"+payment);
+		model.addAttribute("payment", payment);
+				
+				
+		// 좌석 가격
+		SeatSection ss = userService.selectSeatSection(bookGroup);
+		logger.info("좌석 구역과 가격"+ss);
+		model.addAttribute("ss", ss);
+				
+		// 좌석 조회
+		List<Seat> seatList = userService.getCancelSeatInfo(names);
+		logger.info("좌석정보:" +seatList);
+		model.addAttribute("seatList", seatList);
+				
 		
 		
 	}

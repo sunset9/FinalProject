@@ -198,6 +198,10 @@ li{
 .newChoice{
 	color: #F2B134;
 }
+.artistImg{
+	width: 120px;
+	height: 120px;
+}
 </style>
 
 

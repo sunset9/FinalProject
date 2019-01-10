@@ -116,7 +116,7 @@ $(document).ready(function() {
 	// 배송비 
 	var delivery =0;
 	
-	if (${receive } == 2){
+	if ('${receive }' == 2){
 		delivery =2500 ;
 	}
 	$('#delivery').text(delivery.toString().replace(regexp, ','));
@@ -169,7 +169,13 @@ $(document).ready(function() {
 				$("<input>")
 					.attr("type", "hidden")
 					.attr("name", "pfmIdx")
-					.attr("value",${sob.pfmIdx})
+					.attr("value","${sob.pfmIdx}")
+			)
+			.append(
+					$("<input>")
+					.attr("type", "hidden")
+					.attr("name", "bookGroup")
+					.attr("value","${sob.bookGroup}")
 			);
 			
 		$(document.body).append($form);

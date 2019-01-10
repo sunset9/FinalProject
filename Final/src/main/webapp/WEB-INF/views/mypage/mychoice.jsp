@@ -178,6 +178,13 @@
     font-weight: bold;
     margin-bottom: 5px;
 }
+.artistImg{
+	width: 120px;
+	height: 120px;
+}
+.carousel-control{
+	background: none !important;
+}
 </style>
 
 <script type="text/javascript">
@@ -271,7 +278,7 @@ function pfmChoice(pfmIdx){
 		<c:forEach items="${aList }" var ="a">
 		<c:if test ="${! empty  a}">
 		<li  data-paidx="${a.artistIdx }" class = "artistSec">
-			<img id = "artistImg" src="${a.imgUri }"  class="img-circle"/>
+			<img class = "artistImg" src="${a.imgUri }"  class="img-circle"/>
 			<span>${a.name } </span>
 		</li>
 		</c:if>
@@ -359,16 +366,18 @@ function pfmChoice(pfmIdx){
 
 <div>
 	<h5 class ="cateinfo">&lt;아티스트&gt;</h5>
-	<c:forEach items="${aNameList }" var ="a">
+	<c:forEach items="${aNameList }" var ="a" varStatus="status">
 	<c:if test ="${! empty  a}">
+		<c:if test="${status.count%4 == 0 }"><br></c:if>
 		<span class="artistName">${a.name } </span>
 	</c:if>
 	</c:forEach>
 	
 	<h5 class ="cateinfo">&lt;테마&gt;</h5>
-	<c:forEach items="${ptList }" var ="pt">
+	<c:forEach items="${ptList }" var ="pt" varStatus="status">
 	<c:if test ="${! empty  pt}">
-		<span >${pt.themeName } </span>
+		<c:if test="${status.count%4 == 0 }"><br></c:if>
+		<span style="margin: 2px;">${pt.themeName } </span>
 	</c:if>
 	</c:forEach>
 </div>

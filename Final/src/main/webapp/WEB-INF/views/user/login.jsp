@@ -106,7 +106,13 @@ $(document).ready(function() {
 		} else {
 				$('#loginForm').submit();
 		}
-	})
+	});// click 
+	
+	function enterkey(){
+		if(window.event.keyCode==13){
+			$('#loginBtn').click();
+		} // if end
+	}
 });
 
 </script>
@@ -131,7 +137,9 @@ $(document).ready(function() {
 		  </div>
 		  <div class="form-group">
 		    <div class="col-sm-10">
-		      <input type="password" class="form-control login-input" id="inputPassword3"  name="password"  placeholder="비밀번호">
+		      <input type="password" class="form-control login-input" id="inputPassword3"  name="password" 
+		      onkeyup="enterkey();"
+		       placeholder="비밀번호">
 		    </div>
 		  </div>
 		  <div class="form-group">

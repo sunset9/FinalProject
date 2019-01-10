@@ -159,16 +159,20 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void updateProfile(ServletContext context, MultipartFile file, User user) {
-		
+		//UUID, 고유 식별자 
+		String uId = UUID.randomUUID().toString().split("-")[0];
 		
 		// 파일이 저장될 경로 
-		String stored = context.getRealPath("profile");
+		String stored = context.getRealPath("/resources/image/profile");
+		
+		// 저장될 파일 이름 
+		String name = file.getOriginalFilename()+"_"+uId;
 		
 		// 파일 객체 
-		File profile = new File (stored);
+		File profile = new File (stored, name);
 		
 		// 원본이름과 저장이름 지정 
-		user.setProfile("/resources/image/profile/"+file.getOriginalFilename());
+		user.setProfile("/resources/image/profile/"+name);
 
 		try {
 			// 파일 저장 (업로드)
@@ -196,6 +200,7 @@ public class UserServiceImpl implements UserService{
 	public StateOfBook getDetailBook(User user, String bookGroup) {
 		Map map = new HashMap<>();
 		System.out.println("getDetailBook함수 안에 유저인덱스 검사"+user.getUserIdx());
+		System.out.println("bookgroup:"+bookGroup);
 		map.put("userIdx", user.getUserIdx());
 		map.put("bookGroup", bookGroup);
 		
@@ -290,6 +295,12 @@ public class UserServiceImpl implements UserService{
 		map.put("bookGroup", bookGroup);
 		
 		return userDao.selectCancel(map);
+	}
+
+
+	@Override
+	public List<Seat> getCancelSeatInfo(String names) {
+		return userDao.selectSeatInfo(names);
 	}
 
 
