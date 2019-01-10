@@ -189,7 +189,9 @@ ul.tabs li{
 ul.tabs li.current{
 /* 	background: #ededed; */
 /* 	color: #222; */
+    border: 1px solid #eee;
 	border-bottom: 5px solid #F2B134;
+	font-weight: 600;
 }
  
 .tab-content{

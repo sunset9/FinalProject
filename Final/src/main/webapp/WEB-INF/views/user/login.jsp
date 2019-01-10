@@ -120,6 +120,7 @@ $(document).ready(function() {
 </div>
 <div>
 		<form action="/user/login" method="POST" id="loginForm">
+		  <input type="hidden" name="targetUrl" value="${targetUrl }">
 		  <div class="form-group">
 		    <div class="col-sm-10">
 		      <input type="email" class="form-control login-input" id="inputEmail3" name="email" placeholder="아이디(이메일)">
