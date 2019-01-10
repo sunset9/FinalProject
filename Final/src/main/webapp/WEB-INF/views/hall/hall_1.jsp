@@ -11,229 +11,129 @@
 	src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 
-function section() {
-	console.log(1);
-	$.ajax({
-		type:"get",
-		url:"/seatDemo",
-		data:{},
-		dataType:"html",
-		success:function(res){
-		$('.stage_img').html(res);
-		$('.allScreen').html('전체화면으로');
-		}
-	})
-	
-}
-
-
 </script>
 <body>
-	<!-- 이화여대 대강당 -->
-	<div class="stage_img">
-		<div id="wrapper" style="width: 682px; height: 602px;">
-			<div id="scroller"
-				style="transform-origin: 0px 0px 0px; transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) scale(1); width: 682px; height: 602px;">
-				<div class="seat_block" id="ez_canvas_zone"
-					style="width: 682px; height: 602px; display: block;">
-					<svg height="1204" version="1.1" width="1364"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink"
-						style="overflow: hidden; position: relative; top: -0.98261px; background-color: rgb(244, 244, 244); width: 824px; height: 695px;"
-						viewBox="0 0 2950 2214" preserveAspectRatio="xMidYMid meet">
-						<image x="0" y="0" width="2950" height="2214"
-							preserveAspectRatio="none"
-							xlink:href="https://cdnticket.melon.co.kr/resource/image/upload/seat/2018/11/20181114103509e79b2ba8-7b74-48dc-a0c8-afc9d3e96643.svg"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></image>
-	                  <desc
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc>
-						<defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
-						
-						
-						<!-- 1층 -->
-	                  <rect onclick="section();" x="585.0185185185179" y="360.1240740740741"
-							width="384.3888888888889" height="997.3333333333333" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-							
-	                  <rect x="982.6759259259254" y="358.8351851851849"
-							width="384.24259259259287" height="999.6259259259261" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-	                  <rect x="1553.603703703703" y="358.7962962962961"
-							width="393.1870370370368" height="1000.0981481481481" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-						<rect x="1958.4555555555544" y="358.48333333333284"
-							width="393.18703703703704" height="998.4666666666667" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-	                  <path fill="#bea886" stroke="#000000"
-							d="M2362.596296296295,1356.72037037037L2757.718518518517,1356.72037037037L2759.249999999999,708.9037037037031L2561.688888888888,359.72592592592537L2362.596296296295,359.72592592592537L2362.596296296295,1356.72037037037Z"
-							stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-					  <path fill="#bea886" stroke="#000000"
-							d="M187.44444444444247,1358.0537037037031L570.8425925925906,1358.0537037037031L570.8425925925906,361.2185185185182L379.9592592592573,361.2185185185182L189.07592592592397,703.8296296296294L187.44444444444247,1358.0537037037031Z"
-							stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-							
-	                  <text x="382.26070601851853" y="890.706151335762"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  	<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">가</tspan></text>
-							
-	                  <text onclick="section();" x="777.9366319444445" y="895.6691142987248"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  	<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">나</tspan></text>
-							
-							
-	                  <text x="1167.9181134259259" y="887.6968920765026"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  	<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">다</tspan></text>
-	                  <text x="1743.0384837962963" y="894.5487439283545"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  	<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">라</tspan></text>
-	                  <text x="2148.6495949074074" y="897.9005957802063"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  <tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">마</tspan></text>
-	                  <text x="2567.1310763888887" y="900.9746698542804"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  <tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">바</tspan></text>
+<!-- 잠실실내 체육관 -->
+<div class="wrap_seat"><!-- 좌석영역-->
+            <div class="box_stage" style="display: none;"><!-- 구역설명-->
+                <div class="stage"><span>무대방향 (STAGE)</span></div>
+                <div class="txt_stage">현재 보고 계신 구역은 <span class="area"></span> <span id="areaName"></span>입니다.</div>   
+            </div>
+	        <div class="stage_img">
+	            <div id="wrapper" style="width: 682px; height: 602px;">
+	                <div id="scroller" style="transform-origin: 0px 0px 0px; transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) scale(1); width: 682px; height: 602px;">
+	                  <div class="seat_block" id="ez_canvas_zone" style="width: 682px; height: 602px;">
+	                  <svg height="1204" version="1.1" width="1364" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; background-color: rgb(244, 244, 244);" viewBox="0 0 2950 2220" preserveAspectRatio="xMidYMid meet">
+	                  <image x="0" y="0" width="2950" height="2220" preserveAspectRatio="none" xlink:href="https://cdnticket.melon.co.kr/resource/image/upload/seat/2018/12/2018122414463996082bd4-e266-49ea-9067-ebac9a80ee28.svg" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></image>
+	                  <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc>
+	                  <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
 	                  
+	                  <path fill="#ff8ab4" stroke="#000000" d="M467.7907407407408,1018.12037037037L590.537037037037,1298.683333333333L829.8407407407408,1132.6148148148145L740.1018518518517,934.57037037037L467.7907407407408,1015.0259259259255L467.7907407407408,1018.12037037037Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M606.0092592592591,1322.4074074074065L840.1555555555553,1149.1185185185175L1000.0351851851849,1315.1870370370361L816.4314814814812,1542.1129629629618L607.0407407407406,1324.4703703703694L606.0092592592591,1322.4074074074065Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M841.0055555555547,1563.4648148148128L1012.2907407407399,1332.3129629629611L1220.1611111111101,1436.2481481481461L1117.0574074074066,1708.1425925925905L842.6685185185177,1565.127777777776L841.0055555555547,1563.4648148148128Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1236.7907407407395,1444.562962962961L1469.6055555555542,1477.82222222222L1474.594444444443,1755.5370370370347L1136.1814814814802,1713.1314814814793L1234.2962962962952,1444.562962962961L1236.7907407407395,1444.562962962961Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1489.5611111111095,1474.496296296293L1493.718518518517,1755.5370370370335L1824.6481481481464,1708.1425925925892L1729.0277777777762,1442.0685185185152L1489.5611111111095,1474.496296296293L1489.5611111111095,1474.496296296293Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1746.4888888888854,1435.4166666666665L1842.9407407407373,1702.3222222222219L2118.992592592589,1555.9814814814813L1945.2129629629594,1326.4925925925925L1747.320370370367,1434.5851851851849L1746.4888888888854,1435.4166666666665Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1959.961111111107,1310.9796296296288L2132.5907407407367,1544.3222222222214L2350.572222222218,1314.6370370370362L2122.349999999996,1152.2481481481475L1961.4240740740697,1309.516666666666L1959.961111111107,1310.9796296296288Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M2131.627777777775,1136.624074074073L2362.775925925923,1296.8185185185173L2488.5907407407376,1004.9574074074065L2219.405555555553,927.4203703703696L2132.3592592592563,1135.16111111111L2131.627777777775,1136.624074074073Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M20.861111111109153,687.0055555555542L407.82777777777574,688.1370370370357L444.0351851851832,997.0314814814801L70.64629629629428,1110.1796296296282L20.861111111109153,689.2685185185171L20.861111111109153,687.0055555555542Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M826.4722222222204,1586.7166666666633L565.0999999999981,1917.1092592592556L959.9870370370352,2117.381481481478L1113.868518518516,1734.9407407407373L829.8666666666647,1588.979629629626L826.4722222222204,1586.7166666666633Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M1130.7092592592574,1741.1833333333284L978.9203703703685,2121.987037037032L1468.9055555555535,2184.5666666666616L1468.9055555555535,1779.7962962962913L1133.3722222222202,1738.5203703703655L1130.7092592592574,1741.1833333333284Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M1494.2037037037016,1777.1333333333284L1494.2037037037016,2181.9037037036987L1974.8685185185166,2113.998148148143L1829.737037037035,1737.1888888888839L1495.5351851851833,1778.4648148148099L1494.2037037037016,1777.1333333333284Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M1849.7092592592567,1731.8629629629581L1996.1722222222195,2106.0092592592546L2391.6222222222195,1903.6240740740693L2129.3203703703675,1576.0796296296248L1851.040740740738,1731.8629629629581L1849.7092592592567,1731.8629629629581Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M2544.912962962955,683.5240740740728L2512.9370370370293,988.8425925925912L2901.805555555548,1097.148148148147L2931.718518518511,679.3981481481469L2545.944444444437,683.5240740740728L2544.912962962955,683.5240740740728Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <text x="2298.743460648152" y="1135.6586596842724" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">10</tspan></text>
+	                  <text x="2130.260127314819" y="1379.6586596842726" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">11</tspan></text>
+	                  <text x="1911.5749421296339" y="1558.177178202791" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">12</tspan></text>
+	                  <text x="1623.7138310185226" y="1645.2049559805687" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">13</tspan></text>
+	                  <text x="1322.4638310185228" y="1647.4364374620502" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">14</tspan></text>
+	                  <text x="1045.760127314819" y="1544.7882893139022" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">15</tspan></text>
+	                  <text x="804.7601273148191" y="1368.501252276865" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">16</tspan></text>
+	                  <text x="648.5564236111154" y="1129.7327337583465" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">17</tspan></text>
+	                  <text x="2717.980497685197" y="914.4660670916795" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">27</tspan></text>
+	                  <text x="2073.054571759271" y="1873.0605115361238" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">30</tspan></text>
+	                  <text x="1691.9619791666782" y="2013.7716226472348" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">31</tspan></text>
+	                  <text x="1249.3082754629745" y="2016.7031041287164" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">32</tspan></text>
+	                  <text x="859.4212384259376" y="1881.8549559805683" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">33</tspan></text>
+	                  <text x="229.1527199074194" y="911.5345856101982" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">36</tspan></text>
+	                  <text x="125.7518518518525" y="565.874074074074" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text>
+	                  <path fill="#cccccc" stroke="#000000" d="M430.07962962962984,685.6000000000003L717.9074074074075,685.6000000000003L732.8111111111111,911.9500000000003L464.5444444444446,992.0574074074077L430.07962962962984,693.0518518518521L430.07962962962984,685.6000000000003Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M2239.979629629629,682.205555555556L2520.5870370370367,682.205555555556L2490.0370370370365,977.5222222222226L2223.007407407407,908.5018518518523L2238.8481481481476,684.468518518519L2239.979629629629,682.205555555556Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M74.84444444444358,1129.1962962962966L447.9833333333324,1026.9833333333338L572.362962962962,1313.9185185185188L239.86296296296206,1535.5851851851855L77.30740740740652,1137.816666666667L74.84444444444358,1129.1962962962966Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M255.87222222222138,1558.983333333334L584.6777777777769,1337.3166666666673L806.3444444444435,1567.6037037037042L546.501851851851,1901.3351851851858L260.79814814814733,1567.6037037037042L255.87222222222138,1558.983333333334Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M2368.962962962962,1336.431481481482L2146.064814814814,1559.3296296296303L2409.6018518518513,1885.672222222223L2710.0833333333326,1567.9500000000007L2376.3518518518513,1340.1259259259266L2368.962962962962,1336.431481481482Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M2380.046296296295,1315.4962962962973L2509.351851851851,1015.0148148148157L2897.2685185185173,1120.9222222222231L2722.398148148147,1548.2462962962973L2394.824074074073,1326.5796296296305L2380.046296296295,1315.4962962962973Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <text x="2630.908275462963" y="1285.1123633879781" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">28</tspan></text>
+	                  <text x="2403.8471643518524" y="1627.6697707953854" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">29</tspan></text>
+	                  <text x="545.2490162037043" y="1621.6068078324224" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">34</tspan></text>
+	                  <text x="339.10827546296343" y="1282.0808819064966" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">35</tspan></text>
+	                  <text x="584.6582754629635" y="863.7364374620523" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">18</tspan></text>
+	                  <text x="2367.511342592593" y="857.6734744990894" text-anchor="middle" font-family="Malgun Gothic" font-size="100px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">9</tspan></text>
+	                  <path fill="#bea886" stroke="#000000" d="M945.3296296296296,721.7518518518519L944.1981481481482,1192.4481481481482L1462.4166666666665,1192.4481481481482L1464.6796296296297,857.5296296296297L1383.212962962963,857.5296296296297L1384.3444444444444,536.188888888889L1147.864814814815,535.0574074074076L945.3296296296296,721.7518518518519Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: none;"></path>
+	                  <path fill="#bea886" stroke="#000000" d="M1478.2148148148133,857.4425925925927L1479.4462962962948,1191.1740740740743L1995.4370370370355,1191.1740740740743L1996.668518518517,721.9796296296299L1795.9370370370355,537.2574074074076L1561.955555555554,537.2574074074076L1563.1870370370355,857.4425925925927L1478.2148148148133,857.4425925925927Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <text x="1192.5975115740725" y="932.5102838494236" text-anchor="middle" font-family="Malgun Gothic" font-size="80px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 80px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">스탠딩A</tspan></text>
+	                  <text x="1734.5424189814796" y="935.0732468123866" text-anchor="middle" font-family="Malgun Gothic" font-size="80px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 80px; font-style: normal; font-weight: bold;">
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">스탠딩B</tspan></text>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M467.7907407407408,1018.12037037037L590.537037037037,1298.683333333333L829.8407407407408,1132.6148148148145L740.1018518518517,934.57037037037L467.7907407407408,1015.0259259259255L467.7907407407408,1018.12037037037Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M606.0092592592591,1322.4074074074065L840.1555555555553,1149.1185185185175L1000.0351851851849,1315.1870370370361L816.4314814814812,1542.1129629629618L607.0407407407406,1324.4703703703694L606.0092592592591,1322.4074074074065Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M841.0055555555547,1563.4648148148128L1012.2907407407399,1332.3129629629611L1220.1611111111101,1436.2481481481461L1117.0574074074066,1708.1425925925905L842.6685185185177,1565.127777777776L841.0055555555547,1563.4648148148128Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1236.7907407407395,1444.562962962961L1469.6055555555542,1477.82222222222L1474.594444444443,1755.5370370370347L1136.1814814814802,1713.1314814814793L1234.2962962962952,1444.562962962961L1236.7907407407395,1444.562962962961Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1489.5611111111095,1474.496296296293L1493.718518518517,1755.5370370370335L1824.6481481481464,1708.1425925925892L1729.0277777777762,1442.0685185185152L1489.5611111111095,1474.496296296293L1489.5611111111095,1474.496296296293Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1746.4888888888854,1435.4166666666665L1842.9407407407373,1702.3222222222219L2118.992592592589,1555.9814814814813L1945.2129629629594,1326.4925925925925L1747.320370370367,1434.5851851851849L1746.4888888888854,1435.4166666666665Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#9076ff" stroke="#000000" d="M1959.961111111107,1310.9796296296288L2132.5907407407367,1544.3222222222214L2350.572222222218,1314.6370370370362L2122.349999999996,1152.2481481481475L1961.4240740740697,1309.516666666666L1959.961111111107,1310.9796296296288Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M2131.627777777775,1136.624074074073L2362.775925925923,1296.8185185185173L2488.5907407407376,1004.9574074074065L2219.405555555553,927.4203703703696L2132.3592592592563,1135.16111111111L2131.627777777775,1136.624074074073Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M20.861111111109153,687.0055555555542L407.82777777777574,688.1370370370357L444.0351851851832,997.0314814814801L70.64629629629428,1110.1796296296282L20.861111111109153,689.2685185185171L20.861111111109153,687.0055555555542Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M826.4722222222204,1586.7166666666633L565.0999999999981,1917.1092592592556L959.9870370370352,2117.381481481478L1113.868518518516,1734.9407407407373L829.8666666666647,1588.979629629626L826.4722222222204,1586.7166666666633Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M1130.7092592592574,1741.1833333333284L978.9203703703685,2121.987037037032L1468.9055555555535,2184.5666666666616L1468.9055555555535,1779.7962962962913L1133.3722222222202,1738.5203703703655L1130.7092592592574,1741.1833333333284Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M1494.2037037037016,1777.1333333333284L1494.2037037037016,2181.9037037036987L1974.8685185185166,2113.998148148143L1829.737037037035,1737.1888888888839L1495.5351851851833,1778.4648148148099L1494.2037037037016,1777.1333333333284Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#ff8ab4" stroke="#000000" d="M1849.7092592592567,1731.8629629629581L1996.1722222222195,2106.0092592592546L2391.6222222222195,1903.6240740740693L2129.3203703703675,1576.0796296296248L1851.040740740738,1731.8629629629581L1849.7092592592567,1731.8629629629581Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M2544.912962962955,683.5240740740728L2512.9370370370293,988.8425925925912L2901.805555555548,1097.148148148147L2931.718518518511,679.3981481481469L2545.944444444437,683.5240740740728L2544.912962962955,683.5240740740728Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M430.07962962962984,685.6000000000003L717.9074074074075,685.6000000000003L732.8111111111111,911.9500000000003L464.5444444444446,992.0574074074077L430.07962962962984,693.0518518518521L430.07962962962984,685.6000000000003Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#cccccc" stroke="#000000" d="M2239.979629629629,682.205555555556L2520.5870370370367,682.205555555556L2490.0370370370365,977.5222222222226L2223.007407407407,908.5018518518523L2238.8481481481476,684.468518518519L2239.979629629629,682.205555555556Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M74.84444444444358,1129.1962962962966L447.9833333333324,1026.9833333333338L572.362962962962,1313.9185185185188L239.86296296296206,1535.5851851851855L77.30740740740652,1137.816666666667L74.84444444444358,1129.1962962962966Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M255.87222222222138,1558.983333333334L584.6777777777769,1337.3166666666673L806.3444444444435,1567.6037037037042L546.501851851851,1901.3351851851858L260.79814814814733,1567.6037037037042L255.87222222222138,1558.983333333334Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M2368.962962962962,1336.431481481482L2146.064814814814,1559.3296296296303L2409.6018518518513,1885.672222222223L2710.0833333333326,1567.9500000000007L2376.3518518518513,1340.1259259259266L2368.962962962962,1336.431481481482Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#70d0ea" stroke="#000000" d="M2380.046296296295,1315.4962962962973L2509.351851851851,1015.0148148148157L2897.2685185185173,1120.9222222222231L2722.398148148147,1548.2462962962973L2394.824074074073,1326.5796296296305L2380.046296296295,1315.4962962962973Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#bea886" stroke="#000000" d="M945.3296296296296,721.7518518518519L944.1981481481482,1192.4481481481482L1462.4166666666665,1192.4481481481482L1464.6796296296297,857.5296296296297L1383.212962962963,857.5296296296297L1384.3444444444444,536.188888888889L1147.864814814815,535.0574074074076L945.3296296296296,721.7518518518519Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
+	                  <path fill="#bea886" stroke="#000000" d="M1478.2148148148133,857.4425925925927L1479.4462962962948,1191.1740740740743L1995.4370370370355,1191.1740740740743L1996.668518518517,721.9796296296299L1795.9370370370355,537.2574074074076L1561.955555555554,537.2574074074076L1563.1870370370355,857.4425925925927L1478.2148148148133,857.4425925925927Z" stroke-width="0" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
 	                  
+	                  </svg></div>
 	                  
-	                  <!-- 2층 -->
-	                  <rect x="174.00185185185225" y="1497.677777777778"
-							width="437.88888888888874" height="660.7851851851849" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-							
-							
-						<rect x="626.8000000000004" y="1497.677777777778"
-							width="414.12222222222204" height="658.5222222222219" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-	                  <rect x="1054.5000000000002" y="1497.677777777778"
-							width="409.59629629629626" height="658.5222222222219" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-						<rect x="1484.4629629629635" y="1497.6777777777777"
-							width="416.38518518518526" height="658.5222222222221" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-	                  <rect x="1917.8203703703707" y="1497.6777777777777"
-							width="414.12222222222226" height="658.5222222222221" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-						<rect x="2345.5203703703705" y="1497.677777777778"
-							width="436.15740740740665" height="657.3907407407404" rx="0"
-							ry="0" fill="#bea886" stroke="#000000" stroke-width="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect>
-							
-	                  <text x="392.9625578703701" y="1865.852447632059"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-	                  <tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">가</tspan></text>
-	                  <text x="828.2440393518517" y="1864.0468920765036"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-						<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">나</tspan></text>
-						<text x="1258.518113425926" y="1865.1098550394665"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-						<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">다</tspan></text>
-						<text x="1687.477372685185" y="1862.4820772616886"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-						<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">라</tspan></text>
-						<text x="2122.490335648148" y="1862.030225409837"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-						<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">마</tspan></text>
-						<text x="2566.377372685185" y="1865.3505957802072"
-							text-anchor="middle" font-family="Malgun Gothic"
-							font-size="100px" font-style="normal" font-weight="bold"
-							stroke="none" fill="#ffffff"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 100px; font-style: normal; font-weight: bold;">
-						<tspan dy="0"
-							style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">바</tspan></text>
-						
-				</svg>
-				</div>
-				<div id="ez_canvas"
-					style="width: 682px; height: 526px; display: none;">
-					<svg height="526" version="1.1" width="682"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2950 2214"
-						preserveAspectRatio="xMidYMid meet"
-						style="overflow: hidden; position: relative; background-color: rgb(244, 244, 244);">
-						<desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc>
-						<defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs></svg>
-				</div>
-			</div>
-			<div class="iScrollVerticalScrollbar  iScrollLoneScrollbar"
-				style="position: absolute; z-index: 9999; width: 7px; bottom: 2px; top: 2px; right: 1px; overflow: hidden;">
-				<div class="iScrollIndicator"
-					style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; width: 100%; transition-duration: 0ms; display: none; transform: translate(0px, -6.04553px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); height: 605.046px;"></div>
-			</div>
-			<div class="iScrollHorizontalScrollbar  iScrollLoneScrollbar"
-				style="position: absolute; z-index: 9999; height: 7px; left: 2px; right: 2px; bottom: 0px; overflow: hidden;">
-				<div class="iScrollIndicator"
-					style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; height: 100%; transition-duration: 0ms; display: none; transform: translate(-7.05952px, 0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); width: 686.06px;"></div>
-			</div>
-		</div>
-		<div class="wrap_seat_box">
-			<div class="seat_box ">
-				<!-- on class 컨트롤 -->
-				<div class="seat_btn" id="txtSelectSeatInfo"
-					onclick="$(this).parent().toggleClass('open');return false;">
-					구역을 먼저 선택해주세요<span class="txt_seat_s">(화면을 직접 선택하거나 우측 좌석등급을
-						선택해주세요)</span>
-				</div>
-				<div class="seat_choice">
-					<ul id="partSeatSelected" class="seat_info"></ul>
-				</div>
-				<!-- //seat_choice끝 -->
-			</div>
-		</div>
-	</div>
+	                  <div id="ez_canvas" style="width: 682px; display: none; height: 526px;"><svg height="526" version="1.1" width="682" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2950 2220" preserveAspectRatio="xMidYMid meet" style="overflow: hidden; position: relative; background-color: rgb(244, 244, 244);"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs></svg></div>
+	                </div>
+	            <div class="iScrollVerticalScrollbar iScrollLoneScrollbar" style="position: absolute; z-index: 9999; width: 7px; bottom: 2px; top: 2px; right: 1px; overflow: hidden;"><div class="iScrollIndicator" style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; width: 100%; transition-duration: 0ms; display: none; transform: translate(0px, 0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);"></div></div><div class="iScrollHorizontalScrollbar iScrollLoneScrollbar" style="position: absolute; z-index: 9999; height: 7px; left: 2px; right: 2px; bottom: 0px; overflow: hidden;"><div class="iScrollIndicator" style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; height: 100%; transition-duration: 0ms; display: none; transform: translate(0px, 0px); transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);"></div></div></div>
+	            <div class="wrap_seat_box">
+		            <div class="seat_box "><!-- on class 컨트롤 -->
+		                <div class="seat_btn" id="txtSelectSeatInfo" onclick="$(this).parent().toggleClass('open');return false;"><span>구역을 먼저 선택해주세요<span class="txt_seat_s">(화면을 직접 선택하거나 우측 좌석등급을 선택해주세요)</span></span></div>
+		                <div class="seat_choice">
+		                    <ul id="partSeatSelected" class="seat_info">
+		                    </ul>
+		                </div><!-- //seat_choice끝 -->
+		            </div>
+	            </div>
+	        </div>
+        </div>
 </body>
 </html>
