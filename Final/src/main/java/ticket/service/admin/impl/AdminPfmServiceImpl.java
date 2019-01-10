@@ -931,6 +931,13 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public void updateMainbanner(MainBanner mainbanner) {
 		// 메인배너 update
+		pDao.updateMainbanner(mainbanner);
+	}
+
+	@Override
+	public void saveTabbanner(TabBanner tabbanner) {
+		// 탭 배너 최종 저장
+		pDao.saveTabbanner(tabbanner);
 		
 	}
 

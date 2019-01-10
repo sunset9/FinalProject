@@ -523,6 +523,13 @@ public interface AdminPfmService {
 	public void saveMainbanner(MainBanner mainbanner);
 	
 	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 탭 배너 최종 저장
+	 * @작성자: 김지은
+	 */
+	public void saveTabbanner(TabBanner tabbanner);
+	
+	/**
 	 * @최종수정일: 2019.01.09
 	 * @Method설명: 메인배너 업데이트 
 	 * @작성자: 김지은

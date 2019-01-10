@@ -643,7 +643,7 @@ public class AdminPfmController {
 		
 		if(registList == null && updateList == null) {
 			System.out.println("현재 저장할 메인배너 없음.");
-		}else {
+		}else if(registList != null && updateList == null){
 			System.out.println("저장할 메인 배너 있음");
 			List appendList = new ArrayList();
 			for(int i=0;i<registList.size(); i++) {
@@ -654,6 +654,12 @@ public class AdminPfmController {
 			model.addAttribute("appendList", appendList);
 			model.addAttribute("appendSize", registList.size());
 			model.addAttribute("existSession", "1");
+		}else if(registList == null && updateList != null) {
+			System.out.println("수정할 메인 배너 있음");
+			model.addAttribute("existSession", "1");
+		}else {
+			System.out.println("저장&수정할 메인 배너 있음");
+			
 		}
 		
 		// List mBannerList = pService.getMBannerList
@@ -690,38 +696,47 @@ public class AdminPfmController {
 			) {
 		//세션에 있는 메인배너리스트 디비에 인서트 
 		List list = (List) session.getAttribute("mbannerList");
-		for(int i = 0; i<list.size(); i++) {
-			Map<String,String> map = (Map<String, String>) list.get(i);
+		if(list != null) {
+			for(int i = 0; i<list.size(); i++) {
+				Map<String,String> map = (Map<String, String>) list.get(i);
 
-			MainBanner mainbanner = new MainBanner();
-			mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
-			mainbanner.setThumbImgOri(map.get("thumbOrigin"));
-			mainbanner.setThumbImgStr(map.get("thumbStored"));
-			mainbanner.setBannerImgOri(map.get("bannerOrigin"));
-			mainbanner.setBannerImgStr(map.get("bannerStored"));
-			
-			pService.saveMainbanner(mainbanner);
+				MainBanner mainbanner = new MainBanner();
+				mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
+				mainbanner.setThumbImgOri(map.get("thumbOrigin"));
+				mainbanner.setThumbImgStr(map.get("thumbStored"));
+				mainbanner.setBannerImgOri(map.get("bannerOrigin"));
+				mainbanner.setBannerImgStr(map.get("bannerStored"));
+				
+				pService.saveMainbanner(mainbanner);
+			}
 		}
+		
 		
 		//디비 업데이트
 		List updateList = (List) session.getAttribute("mbannerForUpdate");
-		for(int i = 0; i<updateList.size(); i++) {
-			Map<String, String> map = (Map<String, String>) updateList.get(i);
-			
-			MainBanner mainbanner = new MainBanner();
-			mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
-			mainbanner.setThumbImgOri(map.get("thumbOrigin"));
-			mainbanner.setThumbImgStr(map.get("thumbStored"));
-			mainbanner.setBannerImgOri(map.get("bannerOrigin"));
-			mainbanner.setBannerImgStr(map.get("bannerStored"));
-			
-			pService.updateMainbanner(mainbanner);
+		if(updateList != null) {
+			for(int i = 0; i<updateList.size(); i++) {
+				Map<String, String> map = (Map<String, String>) updateList.get(i);
+				
+				MainBanner mainbanner = new MainBanner();
+				mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
+				mainbanner.setThumbImgOri(map.get("thumbOrigin"));
+				mainbanner.setThumbImgStr(map.get("thumbStored"));
+				mainbanner.setBannerImgOri(map.get("bannerOrigin"));
+				mainbanner.setBannerImgStr(map.get("bannerStored"));
+				
+				pService.updateMainbanner(mainbanner);
+			}
 		}
 		
+		
 		session.removeAttribute("mbannerList");
+		session.removeAttribute("mbannerForUpdate");
 		mbannerList.clear();
+		mbannerForUpdate.clear();
 		
 		System.out.println("세션 최종 저장 후 삭제 "+mbannerList);
+		System.out.println("세션 최종 수정 후 삭제 "+mbannerForUpdate);
 		return "redirect:/admin/mainbannerlist";
 	}
 	
@@ -885,6 +900,7 @@ public class AdminPfmController {
 		// 가나다순 리스트 가져오기
 		// pService.getAlphaSearchList(검색어)
 	}
+	
 
 	/**
 	 * @최종수정일: 2018.12.05
@@ -970,6 +986,51 @@ public class AdminPfmController {
 		return "admin/pfm/tabBannerList";
 	}
 
+	List tabbannerList = new ArrayList<>();
+	@RequestMapping(value="/admin/setsession", method=RequestMethod.POST)
+	@ResponseBody
+	public void setSession(
+			@RequestParam int pfmIdx,
+			@RequestParam int tabGenre,
+			@RequestParam String storedName,
+			HttpSession session
+			) {
+		logger.info("셋 세션 값 확인 : "+pfmIdx);
+		logger.info("셋 세션 값 확인 : "+tabGenre);
+		logger.info("셋 세션 값 확인 : "+storedName);
+	
+		Map<String, String> tBannerInfo = new HashMap<>();
+		tBannerInfo.put("pfmIdx", String.valueOf(pfmIdx));
+		tBannerInfo.put("tabGenre", String.valueOf(tabGenre));
+		tBannerInfo.put("bannerPath", "/resources/image/"+storedName);
+		
+		tabbannerList.add(tBannerInfo);
+		session.setAttribute("tabbannerList", tabbannerList);
+	}
+	
+	@RequestMapping(value="/admin/tbfinalsave", method=RequestMethod.GET)
+	public String tbFinalSave(HttpSession session) {
+		List tbList = (List) session.getAttribute("tabbannerList");
+		if(tbList != null) {
+			for(int i = 0 ; i < tbList.size() ; i++) {
+				Map<String, String> map = (Map<String, String>) tbList.get(i);
+				
+				TabBanner tabbanner = new TabBanner();
+				tabbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
+				tabbanner.setTabGenre(Integer.parseInt(map.get("tabGenre")));
+				tabbanner.setBannerPath(map.get("bannerPath"));
+				
+				pService.saveTabbanner(tabbanner);
+			}
+		}
+		
+		session.removeAttribute("tabbannerList");
+		tabbannerList.clear();
+		
+		System.out.println("탭 배너 세션 최종 저장 후 삭제");
+		return "redirect:/admin/tabBannerList";
+	}
+	
 	/**
 	 * @최종수정일: 2019.01.02
 	 * @Method설명: 탭배너 정렬(최신순/ 가나다순)
@@ -1117,13 +1178,13 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value="/admin/registtbanner", method=RequestMethod.POST)
 	@ResponseBody
-	public void registTBanner(@RequestParam int pfmIdx, @RequestParam int tabGenre, @RequestParam String bannerPath) {
+	public void registTBanner(@RequestParam int pfmIdx, @RequestParam int tabGenre, @RequestParam String storedName) {
 		logger.info("탭 배너 등록 메소드 실행~~");
 		
 		Map<String, String> tabInfo = new HashMap<>();
 		tabInfo.put("pfmIdx", String.valueOf(pfmIdx));
 		tabInfo.put("tabGenre", String.valueOf(tabGenre));
-		tabInfo.put("bannerPath", "/resources/image/"+bannerPath);
+		tabInfo.put("bannerPath", "/resources/image/"+storedName);
 		
 		pService.insertTBanner(tabInfo);
 	}
@@ -1334,6 +1395,7 @@ public class AdminPfmController {
 		return "admin/pfm/updateMainBanner";
 	}
 	
+	List mbannerForUpdate = new ArrayList<>();
 	@RequestMapping(value="/admin/updatemainbanner", method=RequestMethod.POST)
 	public String updateMBanner(
 			@RequestParam(value="pfmIdx") int pfmIdx, 
@@ -1361,8 +1423,8 @@ public class AdminPfmController {
 		mbannerInfo.put("bannerStored", bannerStored);
 
 		// 리스트에 저장 + 세션에 저장
-		mbannerList.add(mbannerInfo);
-		session.setAttribute("mbannerForUpdate", mbannerList);
+		mbannerForUpdate.add(mbannerInfo);
+		session.setAttribute("mbannerForUpdate", mbannerForUpdate);
 		
 		
 		return "redirect:/admin/mainbannerlist";
