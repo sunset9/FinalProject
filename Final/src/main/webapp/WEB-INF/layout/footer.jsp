@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style>
+#footer {
+    margin-top: 75px;
+    margin-bottom: 20px;
+}
 .text-center a:link {
 	color: gray;
 	text-decoration: none;
@@ -17,7 +21,8 @@
 }
 </style>
 
-<div class="text-center">
+<div id="footer" class="text-center">
+	<hr>
 	<p>
 		<a href="#">회사소개</a>&nbsp; | &nbsp;<a href="/ticket/agreement" target="_blank">바나나 이용약관</a>&nbsp; |
 		&nbsp;<a href="/ticket/billing" target="_blank">전자금융약관</a>&nbsp; | &nbsp;<br> 사업자정보확인고객센터(평일/주말
