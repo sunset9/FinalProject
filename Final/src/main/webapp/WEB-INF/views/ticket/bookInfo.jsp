@@ -169,8 +169,10 @@
 	  //예매하기버튼 클릭
 	  $('#bookBtn').click(function() {
 		  
+		  	  
+		  
 			  var date = new Date($('#datepicker').datepicker( "getDate" ));
-			
+			  
 			  var month;
 			  if(date.getMonth()+1 < 10){
 				  month = "0"+(date.getMonth()+1);
@@ -179,24 +181,28 @@
 			  }
 			  
 			  var day;
+			  
 			  if(date.getDate() < 10){
-				  day = "0"+(date.getDate()+1);
+				  day = "0"+(date.getDate());
 			  }else{
-				  day = date.getDate()+1;
+				  day = date.getDate();
 			  }
 			  
 			  var dateStr = date.getFullYear() + "-" + month +"-"+ day;
 			  
-			  $(this).attr("data-date",dateStr);
+// 			  $(this).attr("data-date",dateStr);
 			  
-			  var selectDate = $(this).data("date");
+// 			  var selectDate = $(this).data("date");
+			  var selectDate = dateStr;
+			  
 			  var time = $('#timeList').find(".selected").html();
 			  
 			  if ((selectDate == undefined) || (time == undefined)){
 				  alert('공연날짜,공연시간을 제대로 선택해주세요');
 				  return;
 			  }
-			  var path = "/ticket/book?date="+selectDate+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx}+"&name="+"${pfm.name}";
+			  
+			  var path = "/ticket/book?date="+dateStr+"&"+"time="+time+"&pfmIdx="+${pfm.pfmIdx}+"&hallIdx="+${pfm.hallIdx}+"&name="+"${pfm.name}";
 			  var userwidth = screen.width - 550;
 			  var userheight = screen.height - 170;
 			  
