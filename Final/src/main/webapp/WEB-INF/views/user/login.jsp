@@ -78,6 +78,7 @@
 .title{
 	width: 200px;
 	margin: 0 auto;
+	padding-right: 70px;
 }
 </style>
 
@@ -114,7 +115,9 @@ $(document).ready(function() {
 
 
 <div id = "loginFrom">
-	<div id = "loginlogo"><img style="width: 400px;" src="/resources/image/bananalogo.png"/></div>
+	<div id = "loginlogo" onclick="location.href='/ticket/ticketmain'">
+	<img style="width: 400px;" src="/resources/image/bananalogo.png"/>
+	</div>
 <div class ="title">
 	<img src="/resources/image/login.PNG" class ="title" >
 </div>

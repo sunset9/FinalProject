@@ -40,7 +40,9 @@ td {
 }
 
 .container{
-	margin-top: 100px;
+	width: 1160px;
+	margin: 30px auto;
+	padding-top: 30px;
 }
 #logo{
 	text-align: center;
@@ -57,7 +59,7 @@ tr{
 }
 #joinInfo{
 /* 	text-align: center; */
-	display: inline-block;
+/* 	display: inline-block; */
 	margin: 0 auto;
 }
 
@@ -84,6 +86,9 @@ tr{
 .title{
 	width: 300px;
 	margin: 0 auto;
+}
+table{
+	width: 100%;
 }
 </style>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -587,7 +592,7 @@ function DaumPostcode() {
 
 <head>
 <body>
-	<div id = "logo"><a href="/ticket/ticketmain"><img style="width: 400px;" src="/resources/image/bananalogo.png"/></a></div>
+
 	<div class="container">
 	
 	<div class ="title">
@@ -602,9 +607,6 @@ function DaumPostcode() {
 		  <li id = "completeTab">회원 가입 완료 <span class = "glyphicon glyphicon-ok-circle"/></li>
 		</ol>
 	</div>
-		
-		
-		
 		
 		
 		
@@ -852,8 +854,8 @@ function DaumPostcode() {
 <div style="text-align: center">
 	<h1>회원 가입에 성공했습니다!</h1><br><br>
 	<div><img src="/resources/image/welcome.jpg"/></div>
-	<button id="btnComplete" class="btn btn-warning btn-block" style="width: 500px; onclick="location='/user/login'">로그인 하기</button>
-	<button id="btnComplete" class="btn btn-default btn-block"  style="width: 500px; onclick="location='/ticket/ticketmain'">메인으로 </button>
+	<button id="btnComplete" class="btn btn-warning btn-block" style="width: 500px;" onclick="location.href='/user/login'">로그인 하기</button>
+	<button id="btnComplete" class="btn btn-default btn-block"  style="width: 500px;" onclick="location.href='/ticket/ticketmain'">메인으로 </button>
 </div>	
 </div>
 

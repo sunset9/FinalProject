@@ -126,6 +126,16 @@ public class PreferController {
 		return "redirect:/mypage/mychoice";
 	}
 
+	@RequestMapping(value="/mypage/selectartist", method=RequestMethod.POST)
+	public String selectArtist(@RequestParam(value="artistIdx[]") List<String> artistIdx
+			, HttpSession session) {
+		logger.info(""+artistIdx);
+		
+		User user = (User)session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
+		preferAService.choiceArtist(userIdx,artistIdx);
+		return "redirect:/mypage/prefer";
+	}
 	@ResponseBody
 	@RequestMapping(value="/mypage/searchArtist", method = RequestMethod.POST)
 	public List<Artist> searchArtist(String name) {

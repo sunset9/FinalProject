@@ -589,10 +589,13 @@ public class UserController {
 
 	@RequestMapping(value = "/mypage/pfmchoice", method = RequestMethod.POST)
 	public String pfmchoice(int pfmIdx, HttpSession session) {
+		logger.info("찜 공연 추가");
+		
 		User user = (User) session.getAttribute("loginUser");
 		int userIdx = user.getUserIdx();
-
+		
 		myChoiceService.choice(userIdx, pfmIdx);
+		
 		return "redirect:/mypage/mychoice";
 
 	}

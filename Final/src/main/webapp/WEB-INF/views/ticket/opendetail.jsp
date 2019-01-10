@@ -55,7 +55,8 @@ $(document).ready(function() {
 	
 	
 	// 공연플래너 담기 버튼
-	$('#mychoicebtn').click(function() {
+	$('#choiceBtn').on('click','#mychoicebtn',function(){
+// 	$('#mychoicebtn').click(function() {
 		var userIdx = '${loginUser.userIdx }';
 		console.log("loginUserIdx : " + userIdx);
 		

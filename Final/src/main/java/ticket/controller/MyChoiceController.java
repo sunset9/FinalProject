@@ -1,5 +1,7 @@
 package ticket.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ticket.dto.MyChoice;
+import ticket.dto.User;
 import ticket.service.face.MyChoiceService;
+import ticket.service.face.PfmDetailService;
 import ticket.service.face.PreferAService;
 import ticket.service.face.PreferTService;
 
 @Controller
 public class MyChoiceController {
-
+	@Autowired
+	PfmDetailService detailService;
 	@Autowired
 	private MyChoiceService myChoiceService;
 	
@@ -62,4 +67,27 @@ public class MyChoiceController {
 		
 		return myChoiceService.check(userIdx, pfmIdx); 
 	}
+	
+//	@RequestMapping(value="/mypage/pfmchoice", method=RequestMethod.POST)
+//	public boolean addPfmChoice(String pfmIdx, HttpSession session){
+//		User user = (User)session.getAttribute("loginUser");
+//		String userIdx = String.valueOf(user.getUserIdx());
+//		
+//		boolean res = detailService.mychoiceInsert(userIdx, pfmIdx);
+//		
+//		return res;
+//	}
+//	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
