@@ -628,12 +628,16 @@ public class TicketController {
 			ticketEnd = false;
 		}
 		
+		SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String openDate = trans.format(pfm.getTicketStart()); 
 		
 		
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("jsonView");
 		
+		mav.addObject("openDate", openDate);
 		mav.addObject("ticketOpen",ticketOpen);
 		mav.addObject("ticketEnd",ticketEnd);
 		

@@ -11,38 +11,44 @@
 
 $(document).ready(function() {
 	  
-// 	$.ajax({
-// 		type:"GET",
-// 		url:"/ticket/openTicket",
-// 		data:{
-// 			"pfmIdx":${pfm.pfmIdx}
-// 			},
-// 		dataType:"json",
-// 		success:function(res){
-// 			if(!res.ticketOpen){
-// 				//오픈되었음
-// 				if(res.ticketEnd){
-// 					//오픈중
-// 					$("#ticketNotOpen").hide();
-// 					$("#ticketInfo").show();
-// 				}else{
-// 					//티켓판매끝
-// 					$("#ticketNotOpen").show();
-// 					$("#ticketNotOpen").text("티켓판매가 종료되었습니다.");
-// 					$("#ticketInfo").hide();
-// 				}
-// 			}else{
-// 				//오픈안됨
-// 				$("#ticketNotOpen").show();
-// 				$("#ticketNotOpen").text("아직 티켓오픈이되지 않았습니다.");
-// 				$("#ticketInfo").hide();
+	$.ajax({
+		type:"POST",
+		url:"/ticket/openTicket",
+		data:{
+			"pfmIdx":${pfm.pfmIdx}
+			},
+		dataType:"json",
+		success:function(res){
+			console.log(res);
+			if(res.ticketOpen){
+				console.log(1);
+				//오픈되었음
+				if(res.ticketEnd){
+					//오픈중
+					$("#ticketNotOpen").hide();
+					$("#ticketInfo").show();
+					$("#BookbtnDiv").show();
+				}else{
+					//티켓판매끝
+					$("#ticketNotOpen").show();
+					$("#ticketNotOpen").text("티켓판매가 종료되었습니다.");
+					$("#ticketInfo").hide();
+					$("#BookbtnDiv").hide();
+				}
+			}else{
+				//오픈안됨
+				console.log(2);
+				$("#ticketNotOpen").show();
+				$("#ticketNotOpen").text(res.openDate+" 티켓 오픈! ");
+				$("#ticketInfo").hide();
+				$("#BookbtnDiv").hide();
 				
-// 			}
-// 		},
-// 		error:function(e){
-// 			console.log(e);
-// 		}
-// 	})
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	})
 	
 });
   $( function() {
@@ -322,6 +328,15 @@ $(document).ready(function() {
     font-weight: normal;
     color: #ffffff;
 }
+
+
+#ticketNotOpen{
+	text-align: center;
+    font-size: 30px;
+    color: #F2B134;
+    border: 1px solid #bbccbb59;
+    padding: 20px;
+}
   
 </style>
 </head>
@@ -357,7 +372,7 @@ $(document).ready(function() {
 	</div>
 </div>
 </div>
-<div style="margin-left: 834px; margin-top: 217px;">
+<div id = "BookbtnDiv" style="margin-left: 834px; margin-top: 217px;">
 	<button type="button" id ="bookBtn" style="width: 300px;">
 	  예매하기
 	</button>

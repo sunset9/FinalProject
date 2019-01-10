@@ -205,6 +205,7 @@ public interface TicketService {
 	 * @Method설명: 공연정보가져오기
 	 * @작성자:이상지
 	 */
-	public Performance loadPfmInfo(int pfmIdx); 
+	public Performance loadPfmInfo(int pfmIdx);
+
 }
 
