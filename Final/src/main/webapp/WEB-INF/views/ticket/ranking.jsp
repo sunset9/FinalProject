@@ -36,6 +36,7 @@
 }
 .pfmRanking table{
     margin-top: 30px;
+    border-bottom: 2px solid #ddd !important;
 }
 
 .pfmRanking .table>thead>tr>th{
@@ -43,7 +44,8 @@
 }
 .pfmRanking img {
 	float: left;
-	width: 110px;
+    width: 110px;
+    height: 155.8px;
 	position: relative;
 	left: 35px;
 } 

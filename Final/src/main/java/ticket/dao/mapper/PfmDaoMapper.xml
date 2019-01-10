@@ -774,7 +774,7 @@
 		    LEFT JOIN (
 		        SELECT pfm_idx, COUNT(*) AS book_cnt FROM book
 		        WHERE pfm_idx IN (SELECT pfm_idx FROM pfm_view)
-		        AND book_cate_idx = 2
+		        AND book_cate_idx = 1
 		        AND TRUNC(create_date,'dd') BETWEEN #{start } AND #{end }
 		        GROUP BY pfm_idx
 		        ) b
@@ -782,7 +782,7 @@
             ORDER BY book_cnt DESC, hall_cnt DESC
 		) res
         LEFT JOIN pfm_datebytime dbt
-        ON res.pfm_idx = dbt.pfm_idx  AND dbt.pfm_date BETWEEN TRUNC(#{start },'dd') AND TRUNC(#{end },'dd')
+        ON res.pfm_idx = dbt.pfm_idx  AND dbt.pfm_date >= TRUNC(#{start },'dd')
         GROUP BY res.pfm_idx, res.NAME, genre_idx, pfm_start, pfm_end, ticket_start, ticket_end, hall_idx, age_grade_idx, running_time, res.create_date, poster_name, hall_name, hall_cnt, book_cnt
         ORDER BY booking_rate DESC
 	</select>
