@@ -790,6 +790,7 @@ ul.tabs li.current{
 .expListUserInfo, .revListUserInfo, .qnaListUserInfo {
 	float: left;
 	text-align: center;
+	width: 170px;
 }
 
 #oneExpec, #oneReview, #oneQna {
@@ -822,6 +823,11 @@ td {
 
 #choicePmfInfo {
 	font-size: 20px;
+}
+
+#expectation, #review, #qna, #exptextarea, #revtextarea, #qnatextarea {
+	/* textarea 사이즈 임의로 수정하지 못하도록 */
+	resize: none;
 }
 
 /* #infoTitle { */
@@ -940,6 +946,7 @@ td {
 					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
+
 				<textarea id="expectation" cols="100" rows="4"></textarea>
 					<button type="submit" id="expecBtn">작성</button>
 				</c:if>
@@ -957,6 +964,7 @@ td {
 			<!-- 기대평 출력되는 부분의 전체 감싸는 div -->
 			<div class="ListExp">
 			<c:forEach items="${expecList }" var="list">
+			
 				<!-- 댓글 하나를 감싸는 div -->
 				<div id="oneExpec">
 				<div class="expListUserInfo">
@@ -968,14 +976,11 @@ td {
 				<div class="expListContentInfo">
 					<small id="exptationContent">${list.expContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
-<%-- 					<c:if test="${loginUser.email}"> --%>
-					<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
-<%-- 					</c:if> --%>
+					<c:if test="${loginUser.nick eq list.nick}">
+						<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
+					</c:if>
 <%-- 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button> --%>
 				</div>
-				
-<!-- 				<div id="expdelnup"> -->
-<!-- 				</div> -->
 				
 				<!-- 대댓글 출력 부분 -->
 <%-- 				<c:forEach items="${expRecommList }" var="relist"> --%>
@@ -1034,7 +1039,9 @@ td {
 				<div class="revListContentInfo">
 					<small id="reviewContent">${list.reviewContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
-					<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
+					<c:if test="${loginUser.nick eq list.nick}">
+						<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
+					</c:if>
 <%-- 					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button> --%>
 				</div>
 				
@@ -1093,7 +1100,9 @@ td {
 				<div class="qnaListContentInfo">
 					<small id="QnaContent">${list.qnaContent }</small><br>
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
-					<button id="qnaDeleteBtn" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
+					<c:if test="${loginUser.nick eq list.nick}">
+						<button id="qnaDeleteBtn" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
+					</c:if>
 <!-- 					<input type="text" id="qnaRecomm" name="qnaRecomm"> -->
 <%-- 					<button id="qnaReBtn" type="button" value="${list.qnaIdx }" --%>
 <%-- 						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button> --%>

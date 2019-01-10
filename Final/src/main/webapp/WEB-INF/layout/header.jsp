@@ -133,7 +133,7 @@ img	  {border:none;line-height:0;font-size:0;}
                     <fieldset>
                         <legend>통합검색영역</legend>
                         <form action="/ticket/ticketsearch" method="get">
-                        <input type="text" title="검색 입력 편집창" name="top_searchh" id="top_searchh" class="placeholder">
+                        <input type="text" title="검색 입력 편집창" name="top_search" id="top_search" class="placeholder">
                         <button type="submit" class="btn_icon search_m" id="btn_top_search" title="검색" ><span class="btn_comm">검색</span></button>
                         </form>
                     </fieldset>

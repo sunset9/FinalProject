@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import ticket.dto.HallFile;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
+import ticket.dto.User;
 import ticket.service.face.MainService;
 
 @Controller
@@ -42,7 +44,7 @@ public class MainController {
 	 * @작성자: 배수연, 전해진
 	 */
 	@RequestMapping(value="/ticket/ticketmain", method=RequestMethod.GET)
-	public void ticketmain(Model model) {
+	public void ticketmain(Model model, HttpSession session) {
 		logger.info("MAIN");
 		
 		// 메인 top 배너
@@ -311,38 +313,37 @@ public class MainController {
 	 */
 	@RequestMapping(value="/ticket/ticketsearch", method=RequestMethod.GET)
 	public void search(
-			String top_searchh
-			, HttpServletRequest req
+			HttpServletRequest req
 			, Model model
 		) {
-		top_searchh = req.getParameter("top_searchh");
-		logger.info("top_searchh : " + top_searchh);
+		String top_search = req.getParameter("top_search");
+		logger.info("top_search : " + top_search);
 		
-		// 검색한 단어를 넘겨줌
-		model.addAttribute("top_searchh", top_searchh);
+		// 검색한 단어를 넘겨줌, 확인용
+		model.addAttribute("top_search", top_search);
 		
 		// 공연 검색
-		List<Poster> pfmSearchList = mainService.getSearchPfmList(top_searchh);
+		List<Poster> pfmSearchList = mainService.getSearchPfmList(top_search);
 		model.addAttribute("pfmSearchList", pfmSearchList);
 		
-		int pfmCount = mainService.getPfmCount(top_searchh);
+		int pfmCount = mainService.getPfmCount(top_search);
 		model.addAttribute("pfmCount", pfmCount);
 		
 		// 아티스트 검색
-		List<Artist> artSearchList = mainService.getSearchArtList(top_searchh);
+		List<Artist> artSearchList = mainService.getSearchArtList(top_search);
 		model.addAttribute("artSearchList", artSearchList);
 		
-		int artCount = mainService.getArtCount(top_searchh);
+		int artCount = mainService.getArtCount(top_search);
 		model.addAttribute("artCount", artCount);
 		
 		// 공연장 검색
-		List<HallFile> hallSearchList = mainService.getSearchHallList(top_searchh);
+		List<HallFile> hallSearchList = mainService.getSearchHallList(top_search);
 		model.addAttribute("hallSearchList", hallSearchList);
 		
-		List<Hall> hallNameList = mainService.getSearchHallNameList(top_searchh);
+		List<Hall> hallNameList = mainService.getSearchHallNameList(top_search);
 		model.addAttribute("hallNameList", hallNameList);
 		
-		int hallCount = mainService.getHallCount(top_searchh);
+		int hallCount = mainService.getHallCount(top_search);
 		model.addAttribute("hallCount", hallCount);
 		
 	}

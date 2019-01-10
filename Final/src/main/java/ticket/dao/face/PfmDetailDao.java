@@ -233,6 +233,6 @@ public interface PfmDetailDao {
 	public void insertQnaRecomm(
 			@Param(value="qnaIdx") String qnaIdx
 			, @Param(value="contents") String contents
-		);
+	);
 	
 }

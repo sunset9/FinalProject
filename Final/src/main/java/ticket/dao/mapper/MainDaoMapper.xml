@@ -407,20 +407,17 @@
 	
 	<select id="selectFitPfmList" parameterType="String" resultType="ticket.dto.Poster">
 		SELECT
-			po.origin_name originName
-			, po.stored_name storedName
-			, po.pfm_idx pfmIdx
-		FROM(
-		    SELECT * FROM pfm_theme
-		    WHERE theme_idx IN (
-		        SELECT
-		            pt.theme_idx
-		        FROM prefer_theme pt, prefer_artist pa
-		        WHERE pt.user_idx = pa.user_idx
-		            AND pt.user_idx=${value}
-		))th
-		LEFT JOIN poster_info po
-		ON th.pfm_idx = po.pfm_idx
+		    DISTINCT
+		    p.stored_name as storedName
+		    , p.pfm_idx as pfmIdx
+		FROM poster_info p
+		JOIN pfm_theme pt
+		ON p.pfm_idx = pt.pfm_idx
+		JOIN prefer_theme pr
+		ON pt.theme_idx = pr.theme_idx
+		JOIN userinfo u
+		ON u.user_idx = pr.user_idx
+		WHERE u.user_idx = #{value}
 	</select>
 	
 	<select id="selectSearchPfmList" parameterType="String" resultType="ticket.dto.Poster">

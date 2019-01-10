@@ -13,11 +13,21 @@ public class Expectation {
 	private Date createDate;
 	private String profile; // 유저 프로필
 	private String nick; // 유저 닉네임
+	private int totalExp; // 기대평 총 갯수
 
 	@Override
 	public String toString() {
 		return "Expectation [expIdx=" + expIdx + ", pfmIdx=" + pfmIdx + ", userIdx=" + userIdx + ", expContent="
-				+ expContent + ", createDate=" + createDate + ", profile=" + profile + ", nick=" + nick + "]";
+				+ expContent + ", createDate=" + createDate + ", profile=" + profile + ", nick=" + nick + ", totalExp="
+				+ totalExp + "]";
+	}
+
+	public int getTotalExp() {
+		return totalExp;
+	}
+
+	public void setTotalExp(int totalExp) {
+		this.totalExp = totalExp;
 	}
 
 	public int getExpIdx() {

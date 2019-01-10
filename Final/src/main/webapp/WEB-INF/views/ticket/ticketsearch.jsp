@@ -159,7 +159,7 @@ div#reviewUser {
 <div class="main_wrapper">
 <div class="main_tab">
 
-	<strong style="font-size: 20px; color: #F2B134;">'${top_searchh }'</strong><small style="font-size: 15px;">에 대한 검색 결과</small><br><br>
+	<strong style="font-size: 20px; color: #F2B134;">'${top_search }'</strong><small style="font-size: 15px;">에 대한 검색 결과</small><br><br>
 		
 	<ul class="tabs">
 		<!-- 테이블 명을 넘겨주어 조회 -->
