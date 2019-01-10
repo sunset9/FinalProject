@@ -251,6 +251,39 @@ ul.tabs li.active:hover {
 .tb:hover {
 	border: 2px solid #8da7d3;
 }
+
+#nameDiv {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    font-weight: 700;
+    text-align: left;
+}
+
+#hallDiv {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#dateDiv {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    text-align: left; 
+}
+
+.tbDelete {
+	border-radius: 7px;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -272,7 +305,7 @@ $(document).ready(function(){
 	});
 	
 	/* 삭제버튼 눌렀을 때 */
-	$(document).on('click','.tabBannerDelete',function(){
+	$(document).on('click','.tbDelete',function(){
 		var conf = confirm('정말 삭제하시겠습니까?');
 		var tabIdx = $(this).attr("id");
 		if(conf == true){
@@ -327,9 +360,9 @@ $(document).ready(function(){
 						var tabB = $('<div class="tabB" >');
 						
 						var poster = $('<div><img src="/resources/image/'+storedName+'" style="width: 180px; height: 254px;"/></div>');
-						var name = $('<div>'+pfmName+'</div>');
+						var name = $('<div id="nameDiv">'+pfmName+'</div>');
 						var hall = $('<div>'+hallName+'</div>');
-						var cancelBtn = $('<button id="tabPrependcancel">삭제</button>');
+						var cancelBtn = $('<button id="tabPrependcancel" class="tbDelete">삭제</button>');
 						var tabgenre = $('<input type="hidden" value="'+tabGenre+'" />');
 						var pfmidx = $('<input type="hidden" value="'+pfmIdx+'" />');
 						
@@ -352,9 +385,9 @@ $(document).ready(function(){
 						var tabB = $('<div class="tabB" >');
 						
 						var poster = $('<div><img src="/resources/image/'+storedName+'" style="width: 180px; height: 254px;"/></div>');
-						var name = $('<div>'+pfmName+'</div>');
+						var name = $('<div id="nameDiv">'+pfmName+'</div>');
 						var hall = $('<div>'+hallName+'</div>');
-						var cancelBtn = $('<button id="tabPrependcancel">삭제</button>');
+						var cancelBtn = $('<button id="tabPrependcancel" class="tbDelete">삭제</button>');
 						var tabgenre = $('<input type="hidden" value="'+tabGenre+'" />');
 						var pfmidx = $('<input type="hidden" value="'+pfmIdx+'" />');
 						
@@ -375,9 +408,9 @@ $(document).ready(function(){
 						var tabB = $('<div class="tabB" >');
 						
 						var poster = $('<div><img src="/resources/image/'+storedName+'" style="width: 180px; height: 254px;"/></div>');
-						var name = $('<div>'+pfmName+'</div>');
+						var name = $('<div id="nameDiv">'+pfmName+'</div>');
 						var hall = $('<div>'+hallName+'</div>');
-						var cancelBtn = $('<button id="tabPrependcancel">삭제</button>');
+						var cancelBtn = $('<button id="tabPrependcancel" class="tbDelete">삭제</button>');
 						var tabgenre = $('<input type="hidden" value="'+tabGenre+'" />');
 						var pfmidx = $('<input type="hidden" value="'+pfmIdx+'" />');
 						
@@ -694,15 +727,15 @@ function openList(listName) {
 								<img src="${ntb.bannerPath }"
 									style="width: 180px; height: 254px;">
 							</div>
-							<div>${ntb.name}</div>
-							<div>
+							<div id="nameDiv">${ntb.name}</div>
+							<div id="dateDiv">
 								<fmt:formatDate value="${ntb.pfmStart }" pattern="yyyy.MM.dd" />
 								~
 								<fmt:formatDate value="${ntb.pfmEnd }" pattern="yyyy.MM.dd" />
 							</div>
-							<div>${ntb.hallName }</div>
+							<div id="hallDiv">${ntb.hallName }</div>
 							<div class="upDelBtn">
-								<button id="${ntb.tabIdx}" class="tabBannerDelete">삭제</button>
+								<button id="${ntb.tabIdx}" class="tbDelete">삭제</button>
 							</div>
 						</div>
 					</c:forEach>
@@ -726,15 +759,15 @@ function openList(listName) {
 							<img src="${mtb.bannerPath }"
 								style="width: 180px; height: 254px;">
 						</div>
-						<div>${mtb.name}</div>
-						<div>
+						<div id="nameDiv">${mtb.name}</div>
+						<div id="dateDiv">
 							<fmt:formatDate value="${mtb.pfmStart }" pattern="yyyy.MM.dd" />
 							~
 							<fmt:formatDate value="${mtb.pfmEnd }" pattern="yyyy.MM.dd" />
 						</div>
-						<div>${mtb.hallName }</div>
+						<div id="hallDiv">${mtb.hallName }</div>
 						<div class="upDelBtn">
-							<button id="${mtb.tabIdx}" class="tabBannerDelete">삭제</button>
+							<button id="${mtb.tabIdx}" class="tbDelete">삭제</button>
 						</div>
 					</div>
 				</c:forEach>
@@ -757,15 +790,15 @@ function openList(listName) {
 							<img src="${ctb.bannerPath }"
 								style="width: 180px; height: 254px;">
 						</div>
-						<div>${ctb.name}</div>
-						<div>
+						<div id="nameDiv">${ctb.name}</div>
+						<div id="dateDiv">
 							<fmt:formatDate value="${ctb.pfmStart }" pattern="yyyy.MM.dd" />
 							~
 							<fmt:formatDate value="${ctb.pfmEnd }" pattern="yyyy.MM.dd" />
 						</div>
-						<div>${ctb.hallName }</div>
+						<div id="hallDiv">${ctb.hallName }</div>
 						<div class="upDelBtn">
-							<button id="${ctb.tabIdx}" class="tabBannerDelete">삭제</button>
+							<button id="${ctb.tabIdx}" class="tbDelete">삭제</button>
 						</div>
 					</div>
 				</c:forEach>

@@ -1,5 +1,6 @@
 package ticket.controller.admin;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1003,7 +1004,7 @@ public class AdminPfmController {
 		Map<String, String> tBannerInfo = new HashMap<>();
 		tBannerInfo.put("pfmIdx", String.valueOf(pfmIdx));
 		tBannerInfo.put("tabGenre", String.valueOf(tabGenre));
-		tBannerInfo.put("bannerPath", "/resources/image/"+storedName);
+		tBannerInfo.put("bannerPath", storedName);
 		
 		tabbannerList.add(tBannerInfo);
 		session.setAttribute("tabbannerList", tabbannerList);
@@ -1020,7 +1021,7 @@ public class AdminPfmController {
 				tabbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
 				tabbanner.setTabGenre(Integer.parseInt(map.get("tabGenre")));
 				tabbanner.setBannerPath(map.get("bannerPath"));
-				
+
 				pService.saveTabbanner(tabbanner);
 			}
 		}

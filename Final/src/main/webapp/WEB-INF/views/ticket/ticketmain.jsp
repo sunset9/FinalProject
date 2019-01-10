@@ -92,7 +92,7 @@
 						var a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'">');
 						var span = $('<span class="thumImg">');
 						var img = $('<img class="rankPoster" src="/resources/image/'+pfm.posterName+'"/>');
-						var name = $('<strong>'+pfm.name+'</strong>');
+						var name = $('<span>'+pfm.name+'</span>');
 						
 						span.append(img).append('<br>').append(name);
 						li.append(a.append(span));
@@ -249,22 +249,26 @@ ul.kind li span{
     cursor: pointer;
 }
 .kindDiv {
-	width: 100%;
-    height: 388px;
+    width: 650px;
+    height: 493px;
     float: right;
     position: relative;
+    padding: 15px;
+    border: 1px solid #bdbdbd;
 }
 
 .kindDiv ul.kind {
 	margin-bottom: 0px;
+    padding: 10px;
 }
 
 li.pfmInfo:first-child {
     position: absolute;
     left: 7px;
     top: 8px;
-    border: 1px solid #d8d7d7;
+    border: 1px solid #eee;
     padding: 10px;
+    left: -5px;
 }
 
 li.pfmInfo:nth-child(2),li.pfmInfo:nth-child(3),
@@ -277,30 +281,30 @@ li.pfmInfo:nth-child(4),li.pfmInfo:nth-child(5){
 
 li.pfmInfo:nth-child(2) {
     position: absolute;
-    left: 309px;
+	left: 296px;
     top: 8px;
-    border: 1px solid #d8d7d7;
+    border: 1px solid #eee;
     padding: 10px;
 }
 li.pfmInfo:nth-child(3) {
 	position: absolute;
-    left: 473px;
+    left: 463px;
     top: 8px;
-    border: 1px solid #d8d7d7;
+    border: 1px solid #eee;
     padding: 10px;
 }
 li.pfmInfo:nth-child(4) {
     position: absolute;
-    left: 309px;
-    top: 217px;
-    border: 1px solid #d8d7d7;
+	left: 296px;
+	top: 216px;
+    border: 1px solid #eee;
     padding: 10px;
 }
 li.pfmInfo:nth-child(5) {
     position: absolute;
-    left: 473px;
-    top: 217px;
-    border: 1px solid #d8d7d7;
+    left: 463px;
+    top: 216px;
+    border: 1px solid #eee;
     padding: 10px;
 }
 
@@ -319,7 +323,8 @@ li.pfmInfo {
 
 .rankPoster {
     width: 120px;
-    height: 130px;
+    height: 156px;
+    margin-bottom: 10px;
 }
 
 /* 메인 하단 */
@@ -332,7 +337,6 @@ li.pfmInfo {
     width: 640px;
     height: 520px;
 	margin: 10px 0 20px 10%;
-	border: 1px solid silver;
 	float: left;
 	margin-left: 87px;
 }
@@ -341,7 +345,6 @@ li.pfmInfo {
 	width: 30%;
 	height: 520px;
 	margin: 10px 10% 20px 0;
-	border: 1px solid silver;
 	float: left;
 	margin: 10px;
 }
@@ -376,10 +379,10 @@ div>h4 {
 }
 
 .rankBox {
-	width: 630px;
+    width: 610px;
     height: 450px;
     position: absolute;
-    top: 30px;
+    top: 48px;
 }
 
 .kind span {
@@ -389,6 +392,25 @@ div>h4 {
 .kind span:hover {
 	color: #f1c40f;
 }
+
+li.pfmInfo:first-child span span {
+    font-size: 16px;
+    display: block;
+    width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 400;
+}
+
+li.pfmInfo:nth-child(2) span span, li.pfmInfo:nth-child(3) span span,
+li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
+    display: block;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
 
 #sliderbox {
 	position: relative;
@@ -425,7 +447,7 @@ div>h4 {
 		<c:forEach items="${bannerList }" var="list">
 			<li>
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.bannerImgStr}" />
+				<img src="/resources/image/${list.bannerImgOri}" />
 			</a>
 			</li>
 		</c:forEach>
@@ -435,7 +457,7 @@ div>h4 {
 	<div id="mainThumb">
 		<c:forEach items="${bannerList }" var="list">
 			<a data-slide-index="${list.mainbanIdx }" href="">
-				<img id="thumbImg" src="/resources/image/${list.thumbImgStr}" />
+				<img id="thumbImg" src="/resources/image/${list.thumbImgOri}" />
 			</a>
 		</c:forEach>
 	</div>
@@ -488,8 +510,9 @@ div>h4 {
 </div>
 
 <div class="mainbottom">
+
 <div class="ranking">
-	<h4>랭킹</h4>
+<div><h4>랭킹</h4></div>
 	<div class="kindDiv">
 		<ul class="kind">
 			<li><span id="CON">콘서트</span></li>
@@ -504,7 +527,7 @@ div>h4 {
 					<a href="/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx}">
 					<span class="thumImg">
 						<img class="rankPoster" src="/resources/image/${pfm.posterName}" /><br>
-						<strong>${pfm.name }</strong>
+						<span>${pfm.name }</span>
 					</span>
 					</a>
 				</li>
@@ -516,6 +539,11 @@ div>h4 {
 
 <script type="text/javascript">loginFitPfm();</script>
 <div class="alignPfm">
+
+<h4>맞춤 공연</h4>
+	슬라이드만 추가하기
+	<div class="fitPfmbox" onload="loginFitPfm();">
+
 	<h4 style="padding-bottom: 25px;">맞춤 공연</h4>
 	<c:if test="${login }">
 		<div id="sliderbox">
@@ -524,6 +552,7 @@ div>h4 {
 			</ul>
 		</div>
 	</c:if>
+
 		
 	<c:if test="${not login }">
 		<div class="fitPfmbox">

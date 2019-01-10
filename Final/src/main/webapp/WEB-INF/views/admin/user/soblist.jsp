@@ -18,6 +18,24 @@
 th {
 	text-align: center;
 }
+
+.table-condensed>tbody>tr>td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.pfmInfo>span{
+	display: block;
+	text-align: left;
+}
+
+.table-condensed>tbody>tr>td>span{
+	display: block;
+}
+
+.bookState{
+	font-weight: 600;
+}
 </style>
 
 <div class="sobBox">
@@ -45,22 +63,22 @@ th {
 <tbody>
 <c:forEach items="${sobList}" var="sob" varStatus="status">
 	<tr>
-		<td>${sob.no}</td>
+		<td style="font-weight: 800; font-size: 17px;">${sob.no}</td>
 		<td>${sob.nick}(${sob.email})</td>
 		<td><fmt:formatDate value="${sob.createDate}" pattern="yyyy.MM.dd" /></td>
 		<td style="width: 1%;"><img src="/resources/image/${sob.storedName}" style="width: 100px;"></td>
-		<td>
-		${sob.name}<br>
-		<fmt:formatDate value="${sob.pfmStart}" pattern="yyyy.MM.dd" />
-		~ <fmt:formatDate value="${sob.pfmEnd}" pattern="yyyy.MM.dd" /><br>
-		${sob.hallName}
+		<td class="pfmInfo">
+		<span style="font-weight: 600; font-size: 16px;">${sob.name}</span>
+		<span><fmt:formatDate value="${sob.pfmStart}" pattern="yyyy.MM.dd" />
+		~ <fmt:formatDate value="${sob.pfmEnd}" pattern="yyyy.MM.dd" /></span>
+		<span>${sob.hallName}</span>
 		</td>
 		<td>
-		예약번호   ${sob.bookGroup}<br>
-		관람일   <fmt:formatDate value="${sob.pfmDate}" pattern="yyyy.MM.dd" />  ${sob.pfmTime}<br>
-		매수   ${sob.ea}매 
+		<span>예약번호   ${sob.bookGroup}</span>
+		<span>관람일   <fmt:formatDate value="${sob.pfmDate}" pattern="yyyy.MM.dd" />  ${sob.pfmTime}</span>
+		<span>매수   ${sob.ea}매</span> 
 		</td>
-		<td>${sob.state }</td>
+		<td class="bookState">${sob.state }</td>
 	</tr>
 </c:forEach>
 </tbody>

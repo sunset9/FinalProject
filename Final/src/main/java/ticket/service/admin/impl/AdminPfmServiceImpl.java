@@ -763,7 +763,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		String uId = UUID.randomUUID().toString().split("-")[0];
 
 		// 파일이 저장될 경로(서버에 저장해야함, 로컬저장x)
-		String stored = context.getRealPath("upload");
+		String stored = context.getRealPath("resources/image");
 
 		// 저장될 파일의 이름
 		String thumbFileName = thumbFile.getOriginalFilename() + "_" + uId;

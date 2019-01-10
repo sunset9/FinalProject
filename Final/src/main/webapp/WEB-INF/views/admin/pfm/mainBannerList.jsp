@@ -90,6 +90,39 @@
     color: white;
     font-weight: 700;
 }
+
+#nameDiv {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    font-weight: 700;
+    text-align: left;
+}
+
+#hallDiv {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#dateDiv {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    text-align: left; 
+}
+
+.mbUpdate, .mbDelete {
+    border-radius: 7px;
+}
 </style>
 <script type="text/javascript">
 
@@ -131,17 +164,17 @@ $(document).ready(function(){
 					var pfmStart = pfmInfo['pfmStart'];
 					var pfmEnd = pfmInfo['pfmEnd'];
 					var hallName = pfmInfo['hallName'];
-					
+					 
 					var div = $('.mainBannerBox');
 					var pfmDiv = $('<div id="appendDiv" style="display:inline-block; width:180px; margin-right:15px; padding:15px; border: 1px solid #edeeef;">');
 					var pfmIdxDiv = $('<input type="hidden" value="'+pfmIdx+'" />');
 					var imgDiv = $('<div><img src="/resources/image/'+storedName+'" style="width:180px; height: 254px;"/></div>');
 					var nameDiv = $('<div id="nameDiv">'+name+'</div>');
 					var dateDiv = $('<div id="dateDiv">'+pfmStart+' ~ '+pfmEnd+'</div>');
-					var hallNameDiv = $('<div id="hallNameDiv">'+hallName+'</div>');
+					var hallNameDiv = $('<div id="hallDiv">'+hallName+'</div>');
 					var btnDiv = $('<div class="upDelBtn">');
-					var upBtn = $('<input type="button" id="upBtn" value="수정" style="margin-right: 5px;"/>');
-					var delBtn = $('<input type="button" id="delBtn" value="삭제" />');
+					var upBtn = $('<input type="button" id="upBtn" class="mbUpdate" value="수정" style="margin-right: 5px;"/>');
+					var delBtn = $('<input type="button" id="delBtn" class="mbDelete" value="삭제" />');
 					btnDiv.append(upBtn);
 					btnDiv.append(delBtn);
 					
@@ -204,7 +237,7 @@ $(document).ready(function(){
 	
 	/* 수정 버튼 눌렀을 때 */
 	$(document).on('click','#mbUpdate', function(){
-		console.log("수정 버튼 누름 mainbanIdx : "+$(this).val());
+		console.log("수정 버튼 누름 :"+$(this).val());
 		var mainbanIdx = $(this).val();
 		location.href="/admin/updatemainbanner?mainbanIdx="+mainbanIdx;
 	});
@@ -232,12 +265,12 @@ $(document).ready(function(){
 				<div class="mainB">	
 					<input type="hidden" value="${mb.mainbanIdx}" name="pfmIdx" />
 					<div><img src="/resources/image/${mb.storedName }" style="width: 180px; height: 254px;"></div>
-					<div >${mb.name}</div>
-					<div><fmt:formatDate value="${mb.pfmStart }" pattern="yyyy.MM.dd" />
+					<div id="nameDiv">${mb.name}</div>
+					<div id="dateDiv"><fmt:formatDate value="${mb.pfmStart }" pattern="yyyy.MM.dd" />
 					     ~ <fmt:formatDate value="${mb.pfmEnd }" pattern="yyyy.MM.dd" /></div>
-					    <div>${mb.hallName }</div> 
+					    <div id="hallDiv">${mb.hallName }</div> 
 					<div class="upDelBtn">
-						<button id="mbUpdate" value="${mb.mainbanIdx}">수정</button>
+						<button id="mbUpdate" class="mbUpdate" value="${mb.mainbanIdx}">수정</button>
 						<input type="button" id="${mb.mainbanIdx}" class="mbDelete" value="삭제" />
 					</div>
 				</div>

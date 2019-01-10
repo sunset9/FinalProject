@@ -1,5 +1,7 @@
 package ticket.controller.admin;
 
+import javax.servlet.ServletContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,7 @@ public class AdminHomeController {
 		
 		//1:1 문의 미답변수 불러오기 uService.getUnanswered()
 		int unansweredInq = pService.getUnanswered();
+		
 		
 		//뷰에전달
 		model.addAttribute("todayBook", todayBook);
