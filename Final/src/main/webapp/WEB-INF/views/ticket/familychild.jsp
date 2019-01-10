@@ -184,7 +184,8 @@ li.pfmInfo {
 }
 
 .container {
-	margin-bottom: 50px;
+	margin-top: 50px;
+	margin-bottom: 30px;
 }
 </style>
 <div class="container">

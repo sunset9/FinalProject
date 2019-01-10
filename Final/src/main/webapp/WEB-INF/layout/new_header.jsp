@@ -14,7 +14,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 }
 #header {
 /*     width: 1130px; */
-    height: 185px;
+    height: 204px;
     margin: 0 auto;
     padding: 20px 0 0 0;
 }

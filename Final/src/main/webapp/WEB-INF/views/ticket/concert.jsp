@@ -187,10 +187,11 @@ li.pfmInfo {
 }
 
 .container {
-	margin-bottom: 50px;
+	margin-top: 50px;
+	margin-bottom: 30px;
 }
 </style>
-<div class="container">
+<div class="container ">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->
 	<h3 style="font-size: 40px;">콘서트</h3><br>
 	<div class="topbannerimg">
