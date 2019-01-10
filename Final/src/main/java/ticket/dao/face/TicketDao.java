@@ -198,5 +198,5 @@ public interface TicketDao {
 	 * @작성자:이상지
 	 */
 	public Performance selectPfmByPfmIdx(int pfmIdx);
-	
+
 }
