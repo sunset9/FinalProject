@@ -26,6 +26,7 @@ var basepay=0;
 var fee=0;
 var rp =0;
 var delvyTypeCode = 1;
+var isTempSeat = false;
 $(document).ready(function() {
 
 
@@ -221,10 +222,9 @@ $(document).ready(function() {
 	
 	//다음단계 혹은 이전단계 
 	  $('.stepBtn').on('click', function () {
-		  var isTempSeat = false;
+		  isTempSeat = false;
 		  //선택된 좌석들
 		  var IsSeatSelect = $('#seat-map').find('.selected');
-		  
 		 
 		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
 		  if (IsSeatSelect.size() == 0){
@@ -232,67 +232,7 @@ $(document).ready(function() {
 			  return;
 		  }
 
-		  $('#seat-map').find('.selected').each(function() {
-			  var str = $(this).attr('id');
-			  var array = new Array(); 
-			  array = str.split("_");
-			  
-			  $.ajax({
-					type:"GET",
-					url:"/ticket/tempTicketing",
-					async: false,
-					data:{
-						"pfmIdx":${param.pfmIdx}
-			             , "hallIdx" : ${param.hallIdx}
-			             , "secName" : array[0]
-			             , "seatRow" : array[1]
-			             , "seatCol" : array[2]
-						},
-					dataType:"json",
-					success:function(res){
-						if (res.isTempSeat){
-							isTempSeat = true;
-						}
-					},
-					error:function(e){
-						console.log(e);
-					}
-				})
-			  
-		  });
-		  
-		  if (isTempSeat){
-			  alert("이미 선택된 좌석 입니다.");
-			  return;
-		  }else{
-			  $('#seat-map').find('.selected').each(function() {
-				  
-				  var str = $(this).attr('id');
-				  var array = new Array(); 
-				  array = str.split("_");
-				  
-				  $.ajax({
-						type:"POST",
-						url:"/ticket/tempTicketing",
-						data:{
-							"pfmIdx":${param.pfmIdx}
-				             , "hallIdx" : ${param.hallIdx}
-				             , "secName" : array[0]
-				             , "seatRow" : array[1]
-				             , "seatCol" : array[2]
-							},
-						dataType:"json",
-						success:function(res){
-						},
-						error:function(e){
-							console.log(e);
-						}
-					})
-				  
-			  });
-			  
-		  }
-		  
+		 
 		  
 		  var lastCompletedTab = $('.completeStep').last().attr('id');
 		  var curStep = 0;
@@ -316,11 +256,47 @@ $(document).ready(function() {
 		  if($(this).is($('.nextBtn'))){
 			  if(curStep == 1){
 				  //이전단계 버튼 활성화
+				   tempSeatAdd();
+				  if (isTempSeat){
+					  $('#stepInfo').hide();
+					  $('#seatBtn').show();
+					  alert("이미 선택된 좌석 입니다.");
+					  return;
+				  }else{
+					  $('#seat-map').find('.selected').each(function() {
+						  
+						  var str = $(this).attr('id');
+						  var array = new Array(); 
+						  array = str.split("_");
+						  
+						  $.ajax({
+								type:"POST",
+								url:"/ticket/tempTicketing",
+								data:{
+									"pfmIdx":${param.pfmIdx}
+						             , "hallIdx" : ${param.hallIdx}
+						             , "secName" : array[0]
+						             , "seatRow" : array[1]
+						             , "seatCol" : array[2]
+									},
+								dataType:"json",
+								success:function(res){
+								},
+								error:function(e){
+									console.log(e);
+								}
+							})
+						  
+					  });
+					  
+				  }
+				  
 				  $('#prevBtn').show();
 				  $('#bookStep_2_tb').html("");
 				  $('.wrap_ticket_info').show();
 				  $('#step2and3').show();
 				  getSeatInfo();
+				 
 			  } 
 			  else if(curStep == 2){ // 현재 STEP 3 단계라면(=다음이 4단계)
 					// '다음 단계' 버튼 비활성화
@@ -349,6 +325,8 @@ $(document).ready(function() {
 					$('.wrap_ticket_info').hide();
 					$('#step2and3').hide();
 					$('#seatBtn').show();
+					deletTemp();
+					
 				} else if(curStep == 3){ // 현재 STEP4 단계라면 ( =전환될 화면이 3단계)
 					// '다음 단계' 버튼 활성화
 					$('.nextBtn').show();
@@ -619,6 +597,11 @@ $(window).bind("beforeunload", function (e){
 	  if (IsSeatSelect.size() == 0){
 	  }
 
+	  deletTemp();
+});
+
+function deletTemp(){
+	
 	  $('#seat-map').find('.selected').each(function() {
 		  var str = $(this).attr('id');
 		  var array = new Array(); 
@@ -636,7 +619,6 @@ $(window).bind("beforeunload", function (e){
 					},
 				dataType:"json",
 				success:function(res){
-					alert("삭제완료");
 				},
 				error:function(e){
 					console.log(e);
@@ -644,9 +626,42 @@ $(window).bind("beforeunload", function (e){
 			})
 	
 	  });
-});
+	
+}
 
 	  
+function tempSeatAdd(){
+	  $('#seat-map').find('.selected').each(function() {
+		  var str = $(this).attr('id');
+		  var array = new Array(); 
+		  array = str.split("_");
+		  
+		  $.ajax({
+				type:"GET",
+				url:"/ticket/tempTicketing",
+				async: false,
+				data:{
+					"pfmIdx":${param.pfmIdx}
+		             , "hallIdx" : ${param.hallIdx}
+		             , "secName" : array[0]
+		             , "seatRow" : array[1]
+		             , "seatCol" : array[2]
+					},
+				dataType:"json",
+				success:function(res){
+					if (res.isTempSeat){
+						isTempSeat = true;
+					}
+				},
+				error:function(e){
+					console.log(e);
+				}
+			})
+		  
+	  });
+
+	
+}
 	
 
 </script>
@@ -913,11 +928,16 @@ $(window).bind("beforeunload", function (e){
 }
 
 #pfmNameInfo{
-    margin-left: -38px;
-/*     margin-left: 174px; */
     font-size: 20px;
 }
 
+#pfmNameDateInfoDiv{
+	float: left;
+    border-bottom: 1px solid #BCBC !important;
+    margin-left: -37px !important;
+    width: 649px !important;
+    
+}
 </style>
 </head>
 <body>
@@ -931,8 +951,8 @@ $(window).bind("beforeunload", function (e){
 </div>
 <!-- STEP 1. 좌석선택 -->
 <div id ="bookStep_1">
-<div style="float: left">
-	<div style="width: 611px;">
+<div>
+	<div id = "pfmNameDateInfoDiv" style="width: 611px;">
 		<div id ="pfmNameInfo" style="display: inline;"><b>좌석 선택</b> <span> ${param.name}</span></div>
 		<div id ="pfmDateInfo" style="display: inline; float: right; font-size: 16px;">
 		${param.date} ${param.time}
