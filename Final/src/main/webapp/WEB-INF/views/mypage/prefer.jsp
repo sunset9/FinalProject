@@ -299,8 +299,6 @@ $(document).ready(function(){
 			}; 
 			
 
-			
-		
 
 		});
 	
@@ -480,12 +478,12 @@ function artChoice(artistIdx, name){
 	}
 	
 	// 선택한 결과 태그 추가하기
-	var  selected = $("<div>");
+	var  selected = $("<div class='selectedInner'>");
 	selected.data('paidx', artistIdx );
 	selected.data('artistName', name);
 	console.log("선택한 아티스트paidx:"+selected.data('paidx'));
 	
-	var aName =$('<span>');
+	var aName =$('<span class="newChoice selectedName">');
 	aName.text(name);
 	selected.append(aName);
 	selected.append("<span class='glyphicon glyphicon-remove' ></span>")

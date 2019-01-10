@@ -40,6 +40,7 @@
     border: 2px solid #F2B134;
     background: #F2B134;
     font-weight: bold;
+    color: #FFF;
 }
 
 #cancelBtn{
@@ -49,6 +50,7 @@
     border: 2px solid #CCC;
     background: #CCC;
     font-weight: bold;
+    color: #FFF;
 }
 .btnDiv{
 	text-align: center;
@@ -97,6 +99,29 @@ $(document).ready(function(){
 			return;
 		}
 	}); // click end
+	$('#submitBtn').click(function() {
+		
+		if($("#title").val().length < 1){
+			console.log("제목 확인 안함");
+			alert("제목을 입력해 주세요.");
+			$('#title').focus();
+		
+			return;
+		
+		} // end if 
+		
+		if($("#contents").froalaEditor('html.get') ==""){
+			console.log("내용 확인 안함");
+			alert("내용을 입력해 주세요.");
+			$('#contents').focus();
+		
+			return;
+		
+		} // end if 
+		
+		$('form').submit();
+		
+	}) // end click
 });
 </script>
 <div class ="main_wrapper">
@@ -109,7 +134,7 @@ $(document).ready(function(){
 <table id="detailTable" class="table" >
 <tr>
 	<th>제목</th>
-	<td><input type="text" name="title" class="form-control"></td>
+	<td><input type="text" id ="title"name="title" class="form-control"></td>
 </tr>
 <tr>
 	<th>작성자</th>
@@ -119,12 +144,12 @@ $(document).ready(function(){
 	<th colspan=2>내용</th>
 </tr>
 <tr id="inqContents">
-	<td colspan=2><textarea name="contents"></textarea><td>
+	<td colspan=2><textarea id = "contents" name="contents"></textarea><td>
 </tr>
 
 </table>
 <div class ="btnDiv">
-	<button class="submitBtn" id="submitBtn" >문의 하기</button>
+	<button type="button" class="submitBtn" id="submitBtn" >문의 하기</button>
 	<button type="button" id="cancelBtn"  >취소</button>
 </div>
 </form>

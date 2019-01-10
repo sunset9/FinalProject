@@ -17,7 +17,7 @@ public interface InquiryService {
 	 * @작성자: 전해진
 	 * @수정자: 홍나영->이름 변경
 	 */
-	public List<Inquiry> getInqList(Paging paging);
+	public List<Inquiry> getInqList(int userIdx, Paging paging);
 
 	
 	/**

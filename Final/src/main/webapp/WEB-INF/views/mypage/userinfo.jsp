@@ -6,7 +6,7 @@
 <style type="text/css">
 #userProfile{
 	width: 150px;
-	
+	height: 152px;
 }
 #userinfo{
 	height:175px;
@@ -16,6 +16,7 @@
 	grid-gap :10px;
 	margin: 0 auto;
 	text-align: center;
+	border-radius: 10px;
 }
 
 #userNick{
@@ -74,6 +75,9 @@
 	color: #fff;
 	font-size: 1.2em;
 }
+.overDiv{
+	display: none;
+}
 </style>
 
 <script type="text/javascript">
@@ -107,7 +111,8 @@ $(document).ready(function() {
 	
 	
 	// 프로필 사진 클릭시 파일업로드창 실행 
-	$('#userProfile').click(function() {
+// 	$('#userProfile').click(function() {
+	$('#profileDiv').on('click','.cover',function(){
 		console.log('addchange');
 		$("#profileFile").click();
 	}); //end click
@@ -158,25 +163,27 @@ $(document).ready(function() {
 	
     // 프로필사진 구역에 마우스 over 시  
 //     $('#profileDiv').on('mouseover','#userProfile', function(){
-	 $('#profileDiv').mouseover(function(){
+	 $('#profileDiv').mouseenter(function(){
 		 console.log("마우스 over");
-		 // 초기화
-    	$('.cover').remove();
+// 		 // 초기화
+// //     	$('.cover').remove();
     	
-    	// 자신에게 cover 없으면, cover 생성
-		if($(this).find('.cover').length == 0){
-			var cover = $('<div class="cover">');
-			var span = $('<span class="changeSpan">변경</spna>');
-			cover.append(span);
-			$(this).prepend(cover);
+//     	// 자신에게 cover 없으면, cover 생성
+// 		if($(this).find('.cover').length == 0){
+// 			var cover = $('<div class="cover">');
+// 			var span = $('<span class="changeSpan">변경</spna>');
+// 			$(this).prepend(cover);
+
+		$('.overDiv').show();
 			
-		}
     });
 	  // 마우스 leave시
-	    $('#profileDiv').on('mouseleave','.cover', function(){
+// 	    $('#profileDiv').on('mouseleave','.cover', function(){
+	$('#profileDiv').mouseleave(function() {
 	    	console.log("마우쓰가 떠났다");
 	    
-	   		$(this).remove();
+	    	$('.overDiv').hide();		
+	    	
 	    });
 	
 }); // end ready
@@ -185,6 +192,12 @@ $(document).ready(function() {
 
 <div id = "userinfo">
 	<div id = profileDiv>
+		<div class="overDiv cover">
+			<span class="changeSpan">
+				변경
+			</span>		
+		</div>
+		
 		<img id = "userProfile" src="${loginUser.profile }"  class="img-circle"/>
 		</div>
 		

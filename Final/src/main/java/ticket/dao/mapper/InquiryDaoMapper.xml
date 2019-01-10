@@ -30,18 +30,17 @@
 		SELECT COUNT(*) FROM inquiry
 	</select>
 
-	<select id="selectInquiryList" parameterType="ticket.utils.Paging" resultMap="Inquiry">
-		SELECT 
-			ii.*
+	<select id="selectInquiryList" parameterType="hashmap" resultMap="Inquiry">
+	
+		SELECT ii.*
 		FROM (
     		SELECT ROWNUM as rnum, iq.* FROM (
-       			SELECT  i.*, u.name  FROM inquiry i
-                LEFT JOIN userinfo u
-                ON i.user_idx = u.user_idx
-                ORDER BY i.create_date desc
-    		) iq
+       		   SELECT * FROM inquiry 
+                WHERE user_idx= #{userIdx } 
+   		) iq
+              ORDER BY create_date desc
 		) ii
-		WHERE rnum BETWEEN #{startNo } AND #{endNo }
+		WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
 		ORDER BY rnum
 	</select>
 

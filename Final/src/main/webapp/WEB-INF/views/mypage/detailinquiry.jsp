@@ -20,7 +20,9 @@
 
 <style>
 #detailTable{
-	width: 70%;
+	width: 80%;
+	margin: 0 auto;
+	height: 400px;
 }
 
 .waiting {
@@ -30,39 +32,74 @@
 #inqContents td{
     padding: 15px;
 }
-
+.inqInfo{
+	font-weight: bolder;
+	background: #f2b1349c;
+/* 	color : #FFF; */
+}
+.previous{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+/*     border: 2px solid #F2B134; */
+	border: none;
+    color:#fff;
+    font-weight: bold;
+}
+.cancel{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    color:#fff;
+    background: #F2B134;
+    font-weight: bold;
+}
+.inqWrap{
+	text-align: center;
+	margin: 20px;
+}
+.btnDiv{
+	margin: 20px auto;
+	text-align: center;
+}
+.infoTr{
+	height: 7%;
+}
 </style>
-<div>
-<!-- 유저 정보 담고 있는 jsp -->
-<jsp:include page="userinfo.jsp" />
-</div>
+<div class="main_wrapper">
+
 <div class="contents-wrapper">
-<h1> 1:1 문의 확인</h1>
+<h1 style="text-align: center"> 1:1 문의 상세보기</h1>
 
-<button onclick="location.href='/mypage/deleteInquiry?inqIdx=${inq.inqIdx }'">삭제</button>
-
+<div class = "inqWrap">
 <table id="detailTable" class="table table-bordered" >
-<tr>
-	<th>제목</th>
+<tr class="infoTr">
+	<th class ="inqInfo" style="border-top-left-radius:5px; ">제목</th>
 	<td>${inq.title }</td>
-	<th>답변 상태</th>
+	<th class ="inqInfo">답변 상태</th>
 	<c:if test="${inq.replyStatus eq 0}"><td class="waiting">답변 대기</td></c:if>
-	<c:if test="${inq.replyStatus eq 1}"><td>답변 완료</td></c:if>
+	<c:if test="${inq.replyStatus eq 1}"><td style="border-top-right-radius:5px; ">답변 완료</td></c:if>
 </tr>
-<tr>
-	<th>작성자</th>
+<tr class="infoTr">
+	<th class ="inqInfo">작성자</th>
 	<td>${inq.userName }</td>
-	<th>작성일</th>
+	<th class ="inqInfo">작성일</th>
 	<td>
 	<fmt:formatDate value="${inq.createDate }" pattern="yyyy-MM-dd HH:mm"/>
 	</td>
 </tr>
-<tr id="inqContents">
+<tr id="inqContents" style="border-bottom-radius:5px; ">
 	<td colspan=4><div class="fr-view">${inq.contents }</div></td>
 </tr>
 
 </table>
 
 
-
+	<div class="btnDiv">
+	<button class ="previous"onclick="location.href='/mypage/viewinquiry'">목록</button>
+	<button class ="cancel"onclick="location.href='/mypage/deleteInquiry?inqIdx=${inq.inqIdx }'">삭제</button>
+	</div>
+</div>
+</div>
 </div>
