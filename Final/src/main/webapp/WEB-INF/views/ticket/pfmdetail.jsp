@@ -522,11 +522,18 @@ $(document).ready(function() {
 		var small1 = $('<small id="exptationContent">' + list.expContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
 		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
-		var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">삭제</button>');
-		var input = $('<input type="text" id="expRecomm">');
-		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
 		
-		div2.append(small1).append(small2).append(btn1);
+		if(list.nick == '${loginUser.nick }') {
+			var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">삭제</button>');
+		}
+		
+// 		var input = $('<input type="text" id="expRecomm">');
+// 		var btn2 = $('<button id="expReBtn" value="' + list.expIdx + '">답글</button>');
+		
+		div2.append(small1).append(small2);
+		if(list.nick == '${loginUser.nick }') {
+			div2.append(btn1);
+		}
 // 		div2.append(input).append(btn2);
 		
 		div3.append(div1).append(div2);
@@ -554,11 +561,18 @@ $(document).ready(function() {
 		var small1 = $('<small id="reviewContent">' + list.reviewContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
 		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
-		var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">삭제</button>');
-		var input = $('<input type="text" id="revRecomm">');
-		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
+
+		if(list.nick == '${loginUser.nick }') {
+			var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">삭제</button>');
+		}
 		
-		div2.append(small1).append(small2).append(btn1);
+// 		var input = $('<input type="text" id="revRecomm">');
+// 		var btn2 = $('<button id="revReBtn" value="' + list.reviewIdx + '">답글</button>');
+
+		div2.append(small1).append(small2);
+		if(list.nick == '${loginUser.nick }') {
+			div2.append(btn1);
+		}
 // 		div2.append(input).append(btn2);
 		
 // 		console.log(list.reviewIdx);
@@ -589,11 +603,18 @@ $(document).ready(function() {
 		var small1 = $('<small id="qnaContent">' + list.qnaContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
 		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
-		var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
-		var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
-		var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
+		
+		if(list.nick == '${loginUser.nick }') {
+			var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
+		}
+		
+// 		var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
+// 		var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
 
-		div2.append(small1).append(small2).append(btn1);
+		div2.append(small1).append(small2);
+		if(list.nick == '${loginUser.nick }') {
+			div2.append(btn1);
+		}
 // 		div2.append(input).append(btn2);
 			
 		div3.append(div1).append(div2);
@@ -978,6 +999,7 @@ td {
 					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<c:if test="${loginUser.nick eq list.nick}">
 						<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
+<%-- 						<button id="expUpdateBtn" onclick="updateExp(${list.expIdx});">수정</button> --%>
 					</c:if>
 <%-- 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button> --%>
 				</div>
@@ -1108,16 +1130,16 @@ td {
 <%-- 						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button> --%>
 				</div>
 				
-				<c:forEach items="${qnaRecommList }" var="relist">
-				<div id="qnaRecomm">
-					<c:if test="${relist.qnaIdx eq list.qnaIdx}">
-					<div id="qRecomm">
-					<!-- 관리자 부분 변경하기 -->
-						<small>-> 관리자 : ${relist.contents }</small><br>
-					</div> 
-					</c:if>
- 				</div> 
-				</c:forEach>
+<%-- 				<c:forEach items="${qnaRecommList }" var="relist"> --%>
+<!-- 				<div id="qnaRecomm"> -->
+<%-- 					<c:if test="${relist.qnaIdx eq list.qnaIdx}"> --%>
+<!-- 					<div id="qRecomm"> -->
+<!-- 					관리자 부분 변경하기 -->
+<%-- 						<small>-> 관리자 : ${relist.contents }</small><br> --%>
+<!-- 					</div>  -->
+<%-- 					</c:if> --%>
+<!--  				</div>  -->
+<%-- 				</c:forEach> --%>
 				</div>
 			</c:forEach>			
 			</div>
@@ -1130,7 +1152,8 @@ td {
 				 <img style="width: 200px; height: 200px;" src="/resources/image/${hallImg.storedName }">
 			</div>
 			<div id="hallInfo">
-			 공연장 이름 및 구역 : ${hallInfoList.hallName }, ${hallInfoList.hallLoc }<br>
+			 공연장 이름 : ${hallInfoList.hallName }<br><br>
+			 공연장 위치 : ${hallInfoList.hallLoc }<br><br>
 			 전화번호 : ${hallInfoList.hallPhone }
 			</div>
 			 
