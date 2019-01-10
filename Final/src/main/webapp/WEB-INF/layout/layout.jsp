@@ -77,8 +77,8 @@ h1 {
 	$(document).ready(function() {
 		// 검색
 		$("#btn_top_search").click(function() {
-			var top_searchh = $('#top_searchh').val();
-			console.log("검색어 확인 : " + top_searchh);
+// 			var top_searchh = $('#top_search').val();
+// 			console.log("검색어 확인 : " + top_search);
 			
 // 			$("#btn_top_search").submit();
 			

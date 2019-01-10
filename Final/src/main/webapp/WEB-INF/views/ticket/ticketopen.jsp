@@ -148,6 +148,7 @@ li.pfmbanInfo {
 	list-style: none;
 	float: left;
 	margin-bottom: 20px;
+    text-align: center;
 }
 
 li.pfmInfo {

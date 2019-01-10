@@ -75,52 +75,50 @@
 			});
 		});
 		
-		// 맞춤 공연
-		function loginFitPfm() {
-			var userIdx = '${loginUser.userIdx }';
-			console.log("loginUserIdx : " + userIdx);
-			
-			$.ajax({
-				type:"get",
-				url:"/ticket/fit",
-				data:{
-					"userIdx" : userIdx
-				},
-				dataType:"json",
-				success:function(d){
-					console.log('성공');
-					
-					insertFitPfm(d.fitPfmList);
-				}
-				, error:function(e) {
-					console.log('로그인 되어있지 않음 - 맞춤 공연 x');
-				}
-			});
-		};
-		
-		// 맞춤 공연
-// 		$('.bxslider').bxSlider({
-// 		  infiniteLoop: false,
-// 		  hideControlOnEnd: true
-// 		});
-		
-		function insertFitPfm(fitPfmList) {
-			
-			$('.fitPfmbox').html('');
-			fitPfmList.forEach(function(list) {
-
-// 				var ul = $('<ul class="bxslider">');
-				
-// 				var li = $('<li>');
-				var img = $('<img id="fitImg" src="/resources/image/' + list.storedName + '" />');
-
-// 				li.append(img);
-// 				ul.append(li);
-				
-				$('.fitPfmbox').append(img);
-			});
-		};
 	});
+
+	// 맞춤 공연
+	function loginFitPfm() {
+		var userIdx = '${loginUser.userIdx }';
+		console.log("loginUserIdx : " + userIdx);
+		
+		$.ajax({
+			type:"get",
+			url:"/ticket/fit",
+			data:{
+				"userIdx" : userIdx
+			},
+			dataType:"json",
+			success:function(d){
+				console.log('+ + + 맞춤공연 불러오기 성공 + + +');
+				
+				insertFitPfm(d.fitPfmList);
+			}
+			, error:function(e) {
+				console.log('로그인 되어있지 않음 - 맞춤 공연 x');
+			}
+		});
+	};
+	
+	// 맞춤 공연
+// 	$('.fitPfmbox').bxSlider({
+// 		mode: 'fade', // 옵션들을 다중으로 쓸경우 , 로 옵션들을 구분시켜줍니다. 중요포인트입니다.
+// 		captions: true  // 설명글 추가하기 옵션
+// 	});
+	
+	function insertFitPfm(fitPfmList) {
+		
+		$('.fitPfmbox').html('');
+		fitPfmList.forEach(function(list) {
+
+// 			var li = $('<li>');
+			var img = $('<img id="fitImg" src="/resources/image/' + list.storedName + '"/>');
+
+// 			li.append(img);
+			
+			$('.fitPfmbox').append(img);
+		});
+	};
 </script>
  
 <style type="text/css">
@@ -163,6 +161,7 @@
 #fitImg {
 	width: 50px;
 	height: 100px;
+	border: 1px solid black;
 }
 
 /* 탭 메뉴 */
@@ -458,26 +457,19 @@ div>h4 {
 	</div>
 </div>
 
+<script type="text/javascript">loginFitPfm()</script>
 <div class="alignPfm">
 	<h4>맞춤 공연</h4>
-	<div>
-		<c:if test="${login }" >
-<!--  		<script>loginFitPfm();</script> -->
-			<ul class="fitPfmbox" onload="loginFitPfm();">
-			<c:forEach items="${fitPfmList }" var="list">
-				<li>
-				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-					<img src="/resources/image/${list.posterName}" />
-				</a>
-				</li>
-			</c:forEach>
-			</ul>
-		</c:if>
-		
-		<c:if test="${not login }">
-			<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
-		</c:if>
+	슬라이드만 추가하기
+	<div class="fitPfmbox" onload="loginFitPfm();">
+	
 	</div>
+		
+	<c:if test="${not login }">
+	<div class="fitPfmbox">
+		<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
+	</div>
+	</c:if>
 </div>
 </div>
 
