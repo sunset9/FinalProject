@@ -10,16 +10,38 @@
 <script
 	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-
-<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-
-<script
-	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		// 모든 이미지 리스트
+		var $slider_list = $("#slider li");
+
+		// 모든 이미지를 "left: 300px"으로 보내기(숨기기)
+		$slider_list.css("left", "00px");
+
+		// 첫번째 이미지를 div 안쪽으로 보내기(첫 이미지 보이기)
+		$("#slider li:first-child").css("left", 0);
+
+		// 클릭이 될 때마다 이미지 한 장씩 교체하기
+		var curSlide = 0; // 현재 이미지 인덱스
+
+		setInterval(function() { // 시간 이용하여 슬라이드
+			// 		$("#sliderbox").on("click", function() { // 클릭으로 슬라이드
+			var nextSlide = (curSlide + 1) % $slider_list.length; // 다음 이미지 인덱스
+
+			// 보여져야 할 이미지 오른쪽으로 이동시키기
+			$slider_list.eq(nextSlide).css("left", "300px");
+
+			// 현재 이미지 숨기기
+			$slider_list.eq(curSlide).animate({ "left" : "-=300px" }); // -= : 현재 위치로부터 -600px
+
+			// 다음 이미지 보여주기
+			$slider_list.eq(nextSlide).animate({ "left" : "-=300px" });
+
+			// 순환구조 만들기
+			curSlide++;
+			curSlide = curSlide % $slider_list.length;
+		}, 1000);
 
 		// 메인 배너 슬라이드
 // 		$('.mainbanner').bxSlider({
@@ -31,6 +53,15 @@
 		$('.mainbanner').bxSlider({
 			pagerCustom : '#mainThumb'
 		});
+		
+		// 맞춤 공연
+		//	적용 안돼,,
+// 		$('.fitPfmSlider').bxSlider({
+// 			 minSlides: 1,
+// 			 maxSlides: 1,
+// 			 slideWidth: 360,
+// 			 slideMargin: 10
+// 		});
 		
 		// 메인배너 아래 탭
 		$('ul.tabs li').click(function(){
@@ -100,28 +131,29 @@
 		});
 	};
 	
-	// 맞춤 공연
-// 	$('.fitPfmbox').bxSlider({
-// 		mode: 'fade', // 옵션들을 다중으로 쓸경우 , 로 옵션들을 구분시켜줍니다. 중요포인트입니다.
-// 		captions: true  // 설명글 추가하기 옵션
-// 	});
-	
 	function insertFitPfm(fitPfmList) {
 		
-		$('.fitPfmbox').html('');
+		$('#slider').html('');
+		
 		fitPfmList.forEach(function(list) {
-
-// 			var li = $('<li>');
-			var img = $('<img id="fitImg" src="/resources/image/' + list.storedName + '"/>');
-
-// 			li.append(img);
+			var li = $('<li>');
+			var a = $('<a href="/ticket/pfmdetail?pfmIdx=' + list.pfmIdx + '">');
+			var img = $('<img id="fitImg" src="/resources/image/' + list.posterName + '"/>');
 			
-			$('.fitPfmbox').append(img);
+			a.append(img);
+			li.append(a);
+			
+			$('#slider').append(li);
+			
 		});
 	};
 </script>
  
 <style type="text/css">
+.fitPfmSlider {
+	padding: 5px;;
+}
+
 /* 메인 배너 */
 #mainbannerbox {
 	position: relative;
@@ -159,9 +191,8 @@
 }
 
 #fitImg {
-	width: 50px;
-	height: 100px;
-	border: 1px solid black;
+	width: 200px;
+	height: 300px;
 }
 
 /* 탭 메뉴 */
@@ -188,9 +219,7 @@ ul.tabs li{
 ul.tabs li.current{
 /* 	background: #ededed; */
 /* 	color: #222; */
-    border: 1px solid #eee;
 	border-bottom: 5px solid #F2B134;
-	font-weight: 600;
 }
  
 .tab-content{
@@ -360,6 +389,34 @@ div>h4 {
 .kind span:hover {
 	color: #f1c40f;
 }
+
+#sliderbox {
+	position: relative;
+	width: 300px;
+	height: 400px;
+	border: 1px solid black;
+	/* div 영역을 벗어난 내용물 숨기기 */
+	overflow: hidden;
+	/* 옆으로 넘어가는거 확인시 주석 후 확인 */
+	/* div 박스를 화면 가운데로 정렬 */
+	margin: 0 auto;
+}
+
+/* ul의 기본 스타일 없애기 */
+#slider {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#slider li { /* 한 곳으로 모임 */
+	position: absolute;
+}
+
+#slider li img {
+	width: 300px;
+	height: 400px;
+}
 </style>
 
 <!-- 메인 배너 -->
@@ -457,18 +514,21 @@ div>h4 {
 	</div>
 </div>
 
-<script type="text/javascript">loginFitPfm()</script>
+<script type="text/javascript">loginFitPfm();</script>
 <div class="alignPfm">
-	<h4>맞춤 공연</h4>
-	슬라이드만 추가하기
-	<div class="fitPfmbox" onload="loginFitPfm();">
-	
-	</div>
+	<h4 style="padding-bottom: 25px;">맞춤 공연</h4>
+	<c:if test="${login }">
+		<div id="sliderbox">
+			<ul id="slider" onload="loginFitPfm();">
+			
+			</ul>
+		</div>
+	</c:if>
 		
 	<c:if test="${not login }">
-	<div class="fitPfmbox">
-		<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
-	</div>
+		<div class="fitPfmbox">
+			<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
+		</div>
 	</c:if>
 </div>
 </div>
