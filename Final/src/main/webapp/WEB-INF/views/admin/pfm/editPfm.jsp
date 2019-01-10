@@ -130,6 +130,10 @@ table button {
     position: relative;
 }
 
+#themeContent label {
+	margin-left: 6px;
+}
+
 .resSelect {
     margin-top: 5px;
 }
@@ -342,8 +346,10 @@ $(document).ready(function(){
 	console.log(completeSetSec);
 	
 	// 좌석정보 란 그려주기
-	console.log(!secNamePay);
-	if(secNamePay){
+	console.log(secNamePay);
+	if(secNamePay.length > 0){
+		// 가격순으로 내림차순 정렬
+		
 		secNamePay.forEach(function(secInfo){
 			addSeatInput();
 			$('.tempSecName').last().val(secInfo.secName);
@@ -411,13 +417,35 @@ $(document).ready(function(){
 		// 다음 단계 클릭 시
 		if($(this).is($('#nextBtn'))){
 			// 유효성 검사
-// 			if(curStep == 1){
-// 				console.log($('#posterBtn').val().length);
-// 				if($('#posterBtn').val().length == 0 ){
-// 					alert("포스터를 선택해주세요.");
-// 					return;
-// 				} 
-// 			}
+			if(curStep == 1){
+				if($('#posterBtn').val().length == 0 ){
+					alert("포스터를 선택해주세요."); return;
+				} else if($('input[name="name"]').val().length == 0){
+		 			alert("공연 제목을 입력해주세요."); return;
+		 		} else if($('select[name="genreIdx"]').val() == 0){
+		 			alert('공연 분류를 선택해주세요.'); return;
+		 		} else if($('input[name^="thmList"]:checked').length == 0){
+		 			alert('공연 테마를 선택해주세요.'); return;
+		 		} else if($('#ticketStartDate').val() == '' || $('#ticketEndDate').val() == ''){
+		 			alert('티켓 오픈일을 입력해주세요.'); return;
+		 		} else if($('select[name="ageGradeIdx"]').val() == 0){
+		 			alert('관람 등급을 선택해주세요.'); return;
+		 		} else if(!checkEmptyArtist){
+		 			alert('출연진을 선택해주세요.'); return;
+		 		} else if($('select[name="hallIdx"]').val() == 0){
+		 			alert('공연장을 선택해주세요.'); return;
+		 		} 
+			
+			} else if(curStep == 2){
+				var pfmStartDate = $('#registTimeRes').last('p').find('span').text();
+				if(pfmStartDate == ""){
+					alert("공연일을 추가해주세요.")
+					return;
+				}
+			}
+			
+			// 화면 맨 위로 올리기
+			$("html").scrollTop(0);
 			
 			// 다음,이전 버튼 활성화 조정
 			if(curStep == 1){ // 현재 STEP1 단계라면
@@ -442,6 +470,9 @@ $(document).ready(function(){
 			$('#registStep-'+nextStep).show("slide", {direction: "right"}, 'fast');
 			
 		} else { // 이전 단계 클릭 시
+			// 화면 맨 위로 올리기
+			$("html").scrollTop(0);
+		
 			if(curStep == 2){ // 현재 STEP2 단계라면 ( =전환될 화면이 1단계)
 				// '이전 단계' 버튼 비활성화
 				$('#prevBtn').hide();
@@ -497,8 +528,7 @@ $(document).ready(function(){
 	// 장르 변경 시
 	$("select[name='genreIdx']").on("change",function(){
 		// 테마 체크 박스 창 초기화
-		$('#themeModal').fi
-		nd('.modal-body').html('');
+		$('#themeModal').find('#themeContent').html('');
 		// 선택한 테마목록들도 함께 초기화
 		$('#themeSelBtn').next().html('');
 		
@@ -521,19 +551,23 @@ $(document).ready(function(){
 			, dataType: "json"
 			, data: {"genreIdx": genreIdx }
 			, success : function(d){
-				var thmDiv = $('#themeModal').find('.modal-body');
+				var thmTable = $('#themeModal').find('#themeContent');
 				var idx = 0;
-				if(thmDiv.find("input").length == 0){
-					d.forEach(function(theme){
+				if(thmTable.find("input").length == 0){
+					var tr = $("<tr>");
+					for(var i = 1; i <= d.length ; i++) {
+						var theme = d[i-1];  
 						var inputTag = $("<input type='checkbox'/>") ;
 						var id = 'thmList['+ (idx++) + '].themeIdx';
 						inputTag.attr('id', id);
 						inputTag.attr('name', id);
 						inputTag.attr('value', theme.themeIdx);
 						var labelTag = ("<label for='"+id+"'>"+theme.themeName+"</label>");
-						thmDiv.append(inputTag);
+						
+						if(i%5 == 1) tr = $("<tr>"); 
+						thmTable.append(tr.append($("<td>").append(inputTag)));
 						inputTag.after(labelTag);
-					});
+					};
 				}
 				$('#themeModal').modal('show');
 			}
@@ -1579,12 +1613,9 @@ function setComma(inNum){
         <h4 class="modal-title">테마 선택</h4>
       </div>
       <div class="modal-body">
+     	<table id="themeContent">
 	      <!-- 테마 선택 checkbox 란 -->
-		  <c:forEach var="theme" items="${thmAllList }" varStatus="status">
-				<input type='checkbox' id='thmList[${status.index }].themeIdx'
-					name='thmList[${status.index }].themeIdx' value='${theme.themeIdx }'>
-				<label for='thmList[${status.index }].themeIdx'>${theme.themeName }</label>
-		  </c:forEach>
+      	</table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">선택</button>
@@ -1630,7 +1661,7 @@ function setComma(inNum){
 <!-- 공연등록 2st Tab : 공연일 등록-->
 <div class='registPfmTab' id='registStep-2' style="display:none">
 	<div id='registTimeForm'>
-	<input type="checkbox"><label for='onceRegist'>날짜/시간 일괄등록 하기</label> 
+	<input type="checkbox" id='onceRegist'><label for='onceRegist'>날짜/시간 일괄등록 하기</label> 
 	<table>
 	<tr>
 		<th>공연 날짜</th>

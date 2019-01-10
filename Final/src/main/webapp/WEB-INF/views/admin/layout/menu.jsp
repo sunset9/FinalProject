@@ -75,7 +75,8 @@ h1, h2, h3 {
 
 .contents-wrapper{
  	float: left;
-    width: 1000px;
+    width: 75%;
+/*     width: calc(100% - 275px); */
     position: absolute;
     left: 260px;
 }

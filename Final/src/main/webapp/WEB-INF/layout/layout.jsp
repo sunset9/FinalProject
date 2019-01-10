@@ -20,7 +20,6 @@ h1 {
     font-weight: 700;
 }
 
-
 /* 모든 페이지에 적용되는 스타일 */
 #searchBox {
 	margin-top: 10px;

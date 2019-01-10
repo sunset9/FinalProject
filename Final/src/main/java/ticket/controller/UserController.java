@@ -144,12 +144,16 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
-	public void login() {
+	public void login(String targetUrl, Model model) {
+		// 로그인 이후 보내줄 url 지정
+		model.addAttribute("targetUrl", targetUrl);
+		
 		logger.info("로그인 폼");
 	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public String loginProc(User user
+			, String targetUrl // 로그인 처리 후 보내줄 url
 			, HttpSession session
 			, Model model) {
 		logger.info("로그인 처리");
@@ -162,7 +166,8 @@ public class UserController {
 			return "redirect:/user/alert";
 		}
 		
-		return "redirect:/ticket/ticketmain";
+		if(!"".equals(targetUrl)) return "redirect:"+targetUrl;
+		else return "redirect:/ticket/ticketmain";
 	}
 	
 	/**
