@@ -102,17 +102,13 @@ ul.tabs li a:hover {
 
 ul.tabs li.active,
 ul.tabs li.active:hover {
-	/*--Makes sure that the active tab does not listen to the hover properties--*/
+	
 	background: #fff;
-	/*--Makes the active tab look like it's connected with its content--*/
+	
 	border-bottom: 1px solid #fff;
 }
 
-/* .tab>button:hover { */
-/* 	transform:scale(1.2,1.2); */
-/* 	color: black; */
-/* 	background-color: rgba( 227, 228, 229, 0); */
-/* } */
+
 .tabbannerWrap {
 	float: left;
 	width: 80%;
@@ -216,6 +212,30 @@ ul.tabs li.active:hover {
     font-weight: 700;
 }
 
+.finalSave[disabled] {
+	position: absolute;
+    right: 137px;
+    width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #b8b9ba;
+    border: 1px solid #b8b9ba;
+    color: white;
+    font-weight: 700;
+}
+
+.finalSave:not([disabled]) {
+	position: absolute;
+    right: 137px;
+    width: 85px;
+    height: 38px;
+    border-radius: 10px;
+    background: #e27d24;
+    border: 1px solid #e27d24;
+    color: white;
+    font-weight: 700;
+}
+
 .tabbanRegistBtn{
 	position: relative;
     top: 100px;
@@ -280,7 +300,11 @@ $(document).ready(function(){
 		var np = $(this);
 		var pfmIdx = $(this).attr('id');
 		var tabGenre = $(this).find('#tabGenre').val();
-		var bannerPath = $(this).find('#bannerPath').val();
+		var storedName = $(this).find('#storedName').val();
+		var pfmName = $(this).find('#pfmName').attr('class');
+		var pfmStart = $(this).find('#pfmStart').val();
+		var pfmEnd = $(this).find('#pfmEnd').val();
+		var hallName = $(this).find('#hallName').attr('class');
 		
 		/* 이미 등록된 공연인지 확인하기 */
 		$.ajax({
@@ -294,15 +318,113 @@ $(document).ready(function(){
 				if(e == 0){
 					/* 중복아닌경우 append */
 					/* np.parent().submit(); */
-					submitAjax();
+					/* submitAjax(); */
+					
+					if(tabGenre == 3){
+						/* New 탭 */
+						var newTabList = $('#NewTabList');
+						
+						var tabB = $('<div class="tabB" >');
+						
+						var poster = $('<div><img src="/resources/image/'+storedName+'" style="width: 180px; height: 254px;"/></div>');
+						var name = $('<div>'+pfmName+'</div>');
+						var hall = $('<div>'+hallName+'</div>');
+						var cancelBtn = $('<button id="tabPrependcancel">삭제</button>');
+						var tabgenre = $('<input type="hidden" value="'+tabGenre+'" />');
+						var pfmidx = $('<input type="hidden" value="'+pfmIdx+'" />');
+						
+						tabB.append(poster);
+						tabB.append(name);
+						tabB.append(hall);
+						tabB.append(cancelBtn);
+						tabB.append(tabgenre);
+						tabB.append(pfmidx);
+						
+						newTabList.prepend(tabB);
+						
+						setSession(pfmIdx,tabGenre, storedName);
+						
+						
+					}else if(tabGenre == 1){
+						/* 콘서트 탭 */
+						var conTabList = $('#ConTabList');
+						
+						var tabB = $('<div class="tabB" >');
+						
+						var poster = $('<div><img src="/resources/image/'+storedName+'" style="width: 180px; height: 254px;"/></div>');
+						var name = $('<div>'+pfmName+'</div>');
+						var hall = $('<div>'+hallName+'</div>');
+						var cancelBtn = $('<button id="tabPrependcancel">삭제</button>');
+						var tabgenre = $('<input type="hidden" value="'+tabGenre+'" />');
+						var pfmidx = $('<input type="hidden" value="'+pfmIdx+'" />');
+						
+						tabB.append(poster);
+						tabB.append(name);
+						tabB.append(hall);
+						tabB.append(cancelBtn);
+						tabB.append(tabgenre);
+						tabB.append(pfmidx);
+						
+						conTabList.prepend(tabB);
+						
+						setSession(pfmIdx,tabGenre, storedName);
+					}else {
+						/* 뮤지컬 탭 */
+						var muTabList = $('#MuTabList');
+						
+						var tabB = $('<div class="tabB" >');
+						
+						var poster = $('<div><img src="/resources/image/'+storedName+'" style="width: 180px; height: 254px;"/></div>');
+						var name = $('<div>'+pfmName+'</div>');
+						var hall = $('<div>'+hallName+'</div>');
+						var cancelBtn = $('<button id="tabPrependcancel">삭제</button>');
+						var tabgenre = $('<input type="hidden" value="'+tabGenre+'" />');
+						var pfmidx = $('<input type="hidden" value="'+pfmIdx+'" />');
+						
+						tabB.append(poster);
+						tabB.append(name);
+						tabB.append(hall);
+						tabB.append(cancelBtn);
+						tabB.append(tabgenre);
+						tabB.append(pfmidx);
+						
+						muTabList.prepend(tabB);
+						
+						setSession(pfmIdx,tabGenre, storedName);
+					}
+					
 					
 				} else {
 					/* 중복인 경우 경고창 + 리로드 */
 					alert("이미 등록된 공연입니다.");
-					location.reload();
+					
 				}
 			}
+			
+			
 		});
+		
+		/* 세션 등록 */
+		function setSession(a, b, c){
+			var pfmIdx = a;
+			var tabGenre = b;
+			var storedName = c;
+			
+			$.ajax({
+				url: "/admin/setsession",
+				method: "POST",
+				data: {
+					"pfmIdx" : pfmIdx,
+					"tabGenre" : tabGenre,
+					"storedName" : storedName
+				},
+				success: function(){
+					console.log("세션 등록 성공");
+					activeSaveBtn(true);
+				}
+			});
+		}
+		
 		
 		function submitAjax() {
 			/* 탭 배너 추가하기 */
@@ -321,6 +443,15 @@ $(document).ready(function(){
 			});
 		}
 	});
+	
+	/* 최종저장 버튼 활성화 */
+	function activeSaveBtn(isActive){
+		if(isActive){
+			$(".finalSave").removeAttr("disabled"); //활성화
+		}else{ 
+			$(".finalSave").attr("disabled", 'disabled'); //비활성화 
+		}
+	}
 	
 	/* 검색처리 */
 	$(document).on('click', '.tbSearchBtn', function() {
@@ -382,6 +513,12 @@ $(document).ready(function(){
 				}
 			});
 		}
+	});
+	
+	/* prepend된 포스터의 삭제 버튼 눌렀을 때 */
+	$(document).on('click','#tabPrependcancel',function(){
+		$(this).parents('.tabB').remove();
+		/* 세션에서 해당값 삭제 */
 	});
 	
 	/* 검색어 입력후 엔터치면 검색 버튼 눌리게 트리거 */
@@ -513,10 +650,15 @@ $(document).ready(function(){
   			+ ((day < 10) ? '0' + day : day);
   	}
 	
-	
-	
+	/* 최종저장 눌렀을 때 */
+    $(document).on('click','.finalSave',function(){
+		
+		activeSaveBtn(false);
+		location.href="/admin/tbfinalsave";
+	});
 });
 
+/* 탭 클릭했을 때 */
 function openList(listName) {
 	var i;
 	var x = document.getElementsByClassName("list");
@@ -532,7 +674,7 @@ function openList(listName) {
 		<hr>
 
 		<p>최대 5개 까지만 등록이 가능합니다.</p>
-		<button class="finalSave">최종저장</button>
+		<button class="finalSave" disabled="disabled">최종저장</button>
 		<br>
 
 		<!-- 탭 버튼!! -->
@@ -671,18 +813,21 @@ function openList(listName) {
 							<div class="tb" data-dismiss="modal" id="${apl.pfmIdx}">
 								<input type="hidden" value="${apl.pfmIdx }" name="pfmIdx" id="pfmIdx" />
 								<input type="hidden" value="3" name="tabGenre" id="tabGenre"/>
-								<input type="hidden" value="${apl.storedName}" name="bannerPath" id="bannerPath"/>
+								<input type="hidden" value="${apl.storedName}" name="storedName" id="storedName"/>
+								<input type="hidden" value="${apl.pfmStart }" id="pfmStart" />
+								<input type="hidden" value="${apl.pfmEnd }" id="pfmEnd" />
+								
 								<div>
 									<img src="/resources/image/${apl.storedName}"
 										style="width: 140px; height: 198px;">
 								</div>
-								<div>${apl.name }</div>
-								<div>
+								<div id="pfmName" class="${apl.name}">${apl.name }</div>
+								<div id="pfmDate">
 									<fmt:formatDate value="${apl.pfmStart }" pattern="yyyy.MM.dd" />
 									~
 									<fmt:formatDate value="${apl.pfmEnd }" pattern="yyyy.MM.dd" />
 								</div>
-								<div>${apl.hallName }</div>
+								<div id="hallName" class="${apl.hallName }">${apl.hallName }</div>
 							</div>
 						</form>
 						</c:forEach>
@@ -725,18 +870,21 @@ function openList(listName) {
 							<div class="tb" data-dismiss="modal" id="${acpl.pfmIdx}">
 								<input type="hidden" value="${acpl.pfmIdx }" name="pfmIdx" id="pfmIdx"/>
 								<input type="hidden" value="1" name="tabGenre" id="tabGenre"/>
-								<input type="hidden" value="${acpl.storedName}" name="bannerPath" id="bannerPath"/>
+								<input type="hidden" value="${acpl.storedName}" name="storedName" id="storedName"/>
+								<input type="hidden" value="${acpl.pfmStart }" id="pfmStart" />
+								<input type="hidden" value="${acpl.pfmEnd }" id="pfmEnd" />
+								
 								<div>
 									<img src="/resources/image/${acpl.storedName}" 
 										style="width: 140px; height: 198px;">
 								</div>
-								<div>${acpl.name }</div>
-								<div>
+								<div id="pfmName" class="${acpl.name }">${acpl.name }</div>
+								<div id="pfmDate">
 									<fmt:formatDate value="${acpl.pfmStart }" pattern="yyyy.MM.dd" />
 									~
 									<fmt:formatDate value="${acpl.pfmEnd }" pattern="yyyy.MM.dd" />
 								</div>
-								<div>${acpl.hallName }</div>
+								<div id="hallName" class="${acpl.hallName }">${acpl.hallName }</div>
 							</div>
 						</form>
 						</c:forEach>
@@ -778,18 +926,20 @@ function openList(listName) {
 							<div class="tb" data-dismiss="modal" id="${ampl.pfmIdx}">
 								<input type="hidden" value="${ampl.pfmIdx }" name="pfmIdx" id="pfmIdx"/>
 								<input type="hidden" value="2" name="tabGenre" id="tabGenre"/> 
-								<input type="hidden" value="${ampl.storedName}" name="bannerPath" id="bannerPath"/>
+								<input type="hidden" value="${ampl.storedName}" name="storedName" id="storedName"/>
+								<input type="hidden" value="${ampl.pfmStart }" id="pfmStart" />
+								<input type="hidden" value="${ampl.pfmEnd }" id="pfmEnd" />
 								<div>
 									<img src="/resources/image/${ampl.storedName}"  
 										style="width: 140px; height: 198px;">
 								</div>
-								<div>${ampl.name }</div>
-								<div>
+								<div id="pfmName" class="${ampl.name }">${ampl.name }</div>
+								<div id="pfmDate">
 									<fmt:formatDate value="${ampl.pfmStart }" pattern="yyyy.MM.dd" />
 									~
 									<fmt:formatDate value="${ampl.pfmEnd }" pattern="yyyy.MM.dd" />
 								</div>
-								<div>${ampl.hallName }</div>
+								<div id="hallName" class="${ampl.hallName }">${ampl.hallName }</div>
 							</div>
 						</form>
 						</c:forEach>
