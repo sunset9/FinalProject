@@ -32,6 +32,7 @@ import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
+import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
 import ticket.dto.SectionInfo;
 import ticket.dto.Shipment;
@@ -233,6 +234,14 @@ public class TicketController {
 			
 			//예매정보 저장하기
 			ticketService.storedBook(book);
+			
+			//임시티켓 삭제하기
+			SeatCurrent seatCurr = new SeatCurrent();
+			
+			seatCurr.setPfmIdx(pfmIdx);
+			seatCurr.setSeatIdx(seatIdx.get(i));
+			
+			ticketService.deleteSeatCurr(seatCurr);
 		}
 		
 		
@@ -259,10 +268,53 @@ public class TicketController {
 	}
 	/**
 	 * @최종수정일: 2018.12.05
+	 * @Method설명: 좌석임시저장된 좌석있는지 확인
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="ticket/tempTicketing", method=RequestMethod.GET)
+	public ModelAndView cntTempTicketing(int pfmIdx, int hallIdx, String secName, int seatRow, int seatCol) {
+		
+		int oriSecIdx = ticketService.loadOriginSecIdx(hallIdx, secName);
+		
+		int seatIdx = ticketService.loadSeatIdx(hallIdx, oriSecIdx, seatRow, seatCol);
+		
+		int cnt = ticketService.countTemp(pfmIdx, seatIdx);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("jsonView");
+		
+		if (cnt > 0) {
+			logger.info("cnt:"+cnt);
+			mav.addObject("isTempSeat", true);
+		}
+		
+		return mav;
+	}
+	
+	/**
+	 * @최종수정일: 2019.01.10
 	 * @Method설명: 좌석임시저장
 	 * @작성자:이상지
 	 */
-	public void tempTicketing() {
+	@RequestMapping(value="ticket/tempTicketing", method=RequestMethod.POST)
+	public ModelAndView tempTicketing(int pfmIdx, int hallIdx, String secName, int seatRow, int seatCol) {
+		int oriSecIdx = ticketService.loadOriginSecIdx(hallIdx, secName);
+		int seatIdx = ticketService.loadSeatIdx(hallIdx, oriSecIdx, seatRow, seatCol);
+		
+		SeatCurrent seatCurr = new SeatCurrent();
+		
+		
+		seatCurr.setPfmIdx(pfmIdx);
+		seatCurr.setSeatIdx(seatIdx);
+		seatCurr.setStatus(1);
+		
+		ticketService.tempTicketing(seatCurr);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("jsonView");
+		return mav;
 		
 	}
 	
@@ -275,6 +327,7 @@ public class TicketController {
 	public void tempTicketRemove() {
 		
 	}
+	
 	
 	/**
 	 * @최종수정일: 2018.12.05
@@ -516,6 +569,76 @@ public class TicketController {
 		return mav;
 	}
 	
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 임시좌석저장 삭제
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/deleteTemp", method=RequestMethod.POST)
+	public ModelAndView deleteTemp(int pfmIdx, int hallIdx, String secName, int seatRow, int seatCol) {
+		int oriSecIdx = ticketService.loadOriginSecIdx(hallIdx, secName);
+		int seatIdx = ticketService.loadSeatIdx(hallIdx, oriSecIdx, seatRow, seatCol);
+		SeatCurrent seatCurr = new SeatCurrent();
+		
+		seatCurr.setPfmIdx(pfmIdx);
+		seatCurr.setSeatIdx(seatIdx);
+		
+		ticketService.deleteSeatCurr(seatCurr);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
+	
+	
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 티켓오픈이 되었는지 확인
+	 * @작성자:이상지
+	 */
+	@RequestMapping(value="/ticket/openTicket", method=RequestMethod.POST)
+	public ModelAndView isOpenTicket(int pfmIdx) {
+		
+		Performance pfm = new Performance();
+		pfm = ticketService.loadPfmInfo(pfmIdx);
+		
+		Date today = new Date();
+		
+		Date start = pfm.getPfmStart();
+		
+		Date end = pfm.getPfmEnd();
+		
+		Boolean ticketOpen;
+		
+		Boolean ticketEnd;
+		
+		if (start.compareTo(today) > 0) {
+			//날짜가 느리다 (아직오픈되지 않았음)
+			ticketOpen = false;
+		}else {
+			ticketOpen = true;
+		}
+		
+		if (end.compareTo(today) >= 0) {
+			//날짜가 느리다 (오픈 중)
+			ticketEnd = true;
+		}else {
+			ticketEnd = false;
+		}
+		
+		
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("jsonView");
+		
+		mav.addObject("ticketOpen",ticketOpen);
+		mav.addObject("ticketEnd",ticketEnd);
+		
+		return mav;
+	}
 
 }
 
