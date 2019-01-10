@@ -31,10 +31,14 @@ table{
 	height: 40px;
 }
 .title{
-	font-size: 3em;
-	margin: 0 auto;
-	display: inline;
+	text-align:center;
+	margin: 30px auto;
+
 	
+}
+#titleSpan{
+	font-size: 2em;
+	font-weight: bold;
 }
 </style>
     
@@ -63,8 +67,9 @@ $(document).ready(function() {
 }); // ready end
 </script>
     
-<div class ="title"><span class ="title">비밀번호 체크</span></div>
-<br><br><br>
+<div class ="title"><span id="titleSpan">비밀번호 체크</span></div>
+
+
 <div id = "checkDiv">
 	<form id = "checkform" class="form-horizontal">
 	<table>

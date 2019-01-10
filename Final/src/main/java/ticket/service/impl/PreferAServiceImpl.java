@@ -65,4 +65,6 @@ public class PreferAServiceImpl implements PreferAService{
 		return preferADao.selectArtistByUserIdx(map);
 	}
 
+
+
 }

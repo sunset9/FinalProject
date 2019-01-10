@@ -9,7 +9,7 @@
 	
 }
 #userinfo{
-
+	height:175px;
 	display : grid;
 	grid-template-columns:200px  500px 200px 200px;
 	background-color: #CCC;
@@ -37,10 +37,12 @@
 #bookDiv{
 	grid-column:3/4;
 	vertical-align:middle;
+	padding-top:20px;
 }
 #cancelDiv{
 	grid-column:4/5;
 	vertical-align:middle;
+	padding-top:20px;
 }
 
 #nickSec{
@@ -55,6 +57,22 @@
 .info{
 	font-size: 1.3em;
 	font-weight: bold;
+}
+.cover {
+	z-index: 10;
+	left:104px;
+    background-color: #33333352;
+    height: 152px;
+    width: 150px;
+    position: absolute;
+    
+}
+.changeSpan{
+	display: block;
+	margin: 50% auto;
+	font-weight: bold;
+	color: #fff;
+	font-size: 1.2em;
 }
 </style>
 
@@ -135,6 +153,31 @@ $(document).ready(function() {
 
 		$("#imageForm").submit();
 	});//end change
+	
+	
+	
+    // 프로필사진 구역에 마우스 over 시  
+//     $('#profileDiv').on('mouseover','#userProfile', function(){
+	 $('#profileDiv').mouseover(function(){
+		 console.log("마우스 over");
+		 // 초기화
+    	$('.cover').remove();
+    	
+    	// 자신에게 cover 없으면, cover 생성
+		if($(this).find('.cover').length == 0){
+			var cover = $('<div class="cover">');
+			var span = $('<span class="changeSpan">변경</spna>');
+			cover.append(span);
+			$(this).prepend(cover);
+			
+		}
+    });
+	  // 마우스 leave시
+	    $('#profileDiv').on('mouseleave','.cover', function(){
+	    	console.log("마우쓰가 떠났다");
+	    
+	   		$(this).remove();
+	    });
 	
 }); // end ready
 </script>

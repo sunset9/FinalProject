@@ -79,6 +79,14 @@ table{
 	margin: 20px auto;
 	text-align: center;
 }
+.previous{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    color:#fff;
+    font-weight: bold;
+}
 
 #bookCancel{
 	width: 140px;
@@ -372,6 +380,7 @@ $(document).ready(function() {
 <!-- //좌석정보 -->
 	<div class ="btnDiv">
 		<button id = "bookCancel">취소 요청</button>
+		<button class ="previous" onclick="location.href='/mypage/myticket'">목록</button>
 	</div>
 
 

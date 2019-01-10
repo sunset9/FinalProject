@@ -467,7 +467,7 @@ div>h4 {
 			<c:forEach items="${fitPfmList }" var="list">
 				<li>
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-					<img src="/resources/image/${list.storedName}" />
+					<img src="/resources/image/${list.posterName}" />
 				</a>
 				</li>
 			</c:forEach>

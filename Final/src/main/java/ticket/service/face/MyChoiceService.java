@@ -34,4 +34,10 @@ public interface MyChoiceService {
 	public int check(int userIdx, int pfmIdx);
 	
 	
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명:공연 찜한거 추가하기
+	 * @작성자:홍나영
+	 */
+//	public boolean addPfmChoice(int userIdx, int pfmIdx);
 }

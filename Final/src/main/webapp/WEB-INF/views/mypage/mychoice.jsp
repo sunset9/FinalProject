@@ -52,6 +52,7 @@
 
 .recomImg {
 	width: 250px;
+	height: 365px;
 }
 
 #recomPfm{
@@ -230,13 +231,14 @@ $(document).ready(function() {
 
 // 찜하기 버튼 눌렀을 때 반응할 메소드
 function pfmChoice(pfmIdx){
-	
+	console.log("함수 실행 되나용");
 	// form 태그 만들어서 공연IDX 보내기 
 	var form = $("<form>");
 	form.attr('action' , "/mypage/pfmchoice");
 	form.attr('method', "post");
+	form.appendTo('body');
 	
-	form.append('<input type="hidden" name ="pfmIdx" value="pfmIdx"/>');
+	form.append('<input type="hidden" name ="pfmIdx" value="'+pfmIdx+'"/>');
 	
 	form.submit();
 }
