@@ -1,10 +1,10 @@
 package ticket.dao.face;
 
 import java.util.List;
+import java.util.Map;
 
 import ticket.dto.Inquiry;
 import ticket.dto.InquiryAnswer;
-import ticket.utils.Paging;
 
 public interface InquiryDao {
 
@@ -20,7 +20,7 @@ public interface InquiryDao {
 	 * @Method설명: 1:1 문의 게시글 조회
 	 * @작성자: 전해진
 	 */
-	public List<Inquiry> selectInquiryList(Paging paging);
+	public List<Inquiry> selectInquiryList(Map map);
 
 	/**
 	 * @최종수정일: 2019.01.02

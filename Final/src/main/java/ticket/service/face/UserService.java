@@ -93,7 +93,7 @@ public interface UserService {
 	 * @Method설명: 유저가 선택한 테마를 가지고 있는 공연 리스트 조회
 	 * @작성자:홍나영
 	 */
-	public List<Performance> recommendPfm(List<PreferTheme> ptList);
+	public List<Performance> recommendPfm(int userIdx, List<PreferTheme> ptList);
 	
 	
 	/**

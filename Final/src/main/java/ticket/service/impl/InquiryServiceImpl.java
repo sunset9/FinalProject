@@ -28,8 +28,12 @@ public class InquiryServiceImpl implements InquiryService {
 	ServletContext context;
 	
 	@Override
-	public List<Inquiry> getInqList(Paging paging) {
-		return inquiryDao.selectInquiryList(paging);
+	public List<Inquiry> getInqList(int userIdx, Paging paging) {
+		Map map = new HashMap();
+		map.put("paging", paging);
+		map.put("userIdx", userIdx);
+		
+		return inquiryDao.selectInquiryList(map);
 	}
 
 	@Override

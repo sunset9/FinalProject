@@ -325,7 +325,7 @@ function pfmChoice(pfmIdx){
 	<c:if test ="${! empty recom}">
 	<div  data-pfmidx="${recom.pfmIdx }" >
 		
-		<span >
+		<span>
 		<img class = "recomImg" src="/resources/image/${recom.posterName }" />
 		</span>
 	</div>

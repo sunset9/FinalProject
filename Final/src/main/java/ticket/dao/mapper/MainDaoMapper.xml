@@ -410,6 +410,7 @@
 		    DISTINCT
 		    p.stored_name as storedName
 		    , p.pfm_idx as pfmIdx
+		    , rownum as no
 		FROM poster_info p
 		JOIN pfm_theme pt
 		ON p.pfm_idx = pt.pfm_idx
@@ -418,6 +419,7 @@
 		JOIN userinfo u
 		ON u.user_idx = pr.user_idx
 		WHERE u.user_idx = #{value}
+		ORDER BY rownum
 	</select>
 	
 	<select id="selectSearchPfmList" parameterType="String" resultType="ticket.dto.Poster">

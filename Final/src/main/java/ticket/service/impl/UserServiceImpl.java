@@ -119,8 +119,9 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public List<Performance> recommendPfm(List<PreferTheme> ptList) {
+	public List<Performance> recommendPfm(int userIdx , List<PreferTheme> ptList) {
 		Map map = new HashMap<>();
+		map.put("userIdx", userIdx);
 		map.put("ptList", ptList);
 		
 		return pfmDao.selectPfmByPreferTheme(map);

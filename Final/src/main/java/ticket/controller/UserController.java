@@ -553,8 +553,10 @@ public class UserController {
 		model.addAttribute("ptList", ptList);
 
 		// 테마에 맞는 추천공연 리스트 불러오기
-		List<Performance> recomList = userService.recommendPfm(ptList);
+		List<Performance> recomList = userService.recommendPfm(userIdx,ptList);
 		logger.info("선호 테마에 대한 공연추천" + recomList);
+		List<Performance> lastList ;
+		
 		model.addAttribute("recomList", recomList);
 
 		return null;
@@ -608,15 +610,19 @@ public class UserController {
 	@RequestMapping(value = "/mypage/viewinquiry", method = RequestMethod.GET)
 	public void viewInquiry(
 			@RequestParam(defaultValue="1") int curPage
-			,Model model) {
+			,Model model
+			, HttpSession session) {
 		logger.info("내 문의 리스트 페이지 ");
+		
+		User user = (User) session.getAttribute("loginUser");
+		int userIdx = user.getUserIdx();
 		
 		// 페이징 정보
 		int totalCnt  = inquiryService.getCntInquiry();
 		Paging paging = new Paging(totalCnt, curPage);
 		
 		// 리스트 가져오기 
-		List<Inquiry> inqList = inquiryService.getInqList(paging);
+		List<Inquiry> inqList = inquiryService.getInqList(userIdx, paging);
 		
 		model.addAttribute("inqList", inqList);
 		

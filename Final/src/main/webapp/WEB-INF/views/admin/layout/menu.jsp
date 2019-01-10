@@ -42,7 +42,7 @@
 	float: left;
 	width : 240px;
 	height: 2000px;
-	background: #e0e0e0;
+	background: #222c3c;
 	margin-right: 20px;
 }
 
@@ -113,33 +113,26 @@ h1, h2, h3 {
 	height: 100px;  
 }
 
-.menuUl a{
+.menuUl a, .menuUl li{
 	text-decoration: none;
-	color: #333333;
-	font-size: 20px;
+	color: #b7c0cd;
+	font-size: 18px;
 	font-weight: 600;
+	margin-bottom: 20px;
 }
 
 .menuUl a:hover{
-	color: #747475;
+	color: #fff;
 }
 
-.dropdown, .dropdown2 {
-	color: #333333;
-}
-.dropdown:hover, .dropdown2:hover{
-	
+.dropdown ul li, .dropdown2 ul li {
+	margin-bottom: 7px;
 }
 
 .menuUl ul {
 	list-style: none;
 }
 
-.menuUl li {
-	font-size: 20px;
-	font-weight: 600;
-	margin-bottom: 7px;
-}
 </style>
 </head>
 <body>

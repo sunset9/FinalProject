@@ -169,6 +169,7 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/admin/editpfm", method = RequestMethod.GET)
 	public String editForm(Performance pfmParam, Model model) {
+		if(pfmParam.getPfmIdx() == 0) return "redirect:/admin/main";
 		// 공연 기본 정보 가져오기
 		Performance pfm = pService.getPfm(pfmParam);
 		model.addAttribute("pfm", pfm);
