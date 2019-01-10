@@ -159,13 +159,13 @@
 	    LEFT JOIN seat ON book.seat_idx = seat.seat_idx
 	    LEFT JOIN originsection ON seat.ori_sec_idx = originsection.ori_sec_idx
 	WHERE
-	    book.pfm_idx = #{pfm.pfmIdx} 
+	    (book.pfm_idx = #{pfm.pfmIdx} 
 	    AND
 	    originsection.sec_name = #{secName}
 	    AND
 	    book.pfm_dbt_idx = #{dateByTimeIdx}
-	    AND
-	    book.book_cate_idx = 1
+	    )AND
+	    (book.book_cate_idx = 1 OR book.book_cate_idx = 2)
 </select>
 
 <select id="selectCntBookedSeats" resultType="ticket.dto.NumBookedSeat">
