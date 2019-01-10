@@ -306,4 +306,12 @@ public interface UserDao {
 	 * @작성자:홍나영
 	 */
 	public int selectCntCancel(String bookGroup);
+	
+	
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명:방금 취소한 좌석 불러오기 
+	 * @작성자:홍나영
+	 */
+	public List<Seat> selectSeatInfo(String names);
 }

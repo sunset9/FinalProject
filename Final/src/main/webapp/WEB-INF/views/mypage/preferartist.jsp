@@ -28,6 +28,12 @@ ul{
 }
 .artistImg{
 /* 	display: block; */
+	margin-top: 3px;
+	font-weight: bol
+}
+.preArtistName{
+	display: block;
+	margin-top: 10px;
 }
 </style>
 
@@ -86,7 +92,7 @@ ul{
 
 	<c:forEach items="${aList }" var ="a"> 
 		<li class ="alist"><img src="${a.imgUri }"  class="img-circle artistImg"/><br>
-			<span class="artistName">${a.name }</span>
+			<span class="preArtistName">${a.name }</span>
 		</li>	  
 	</c:forEach>
 </ul>

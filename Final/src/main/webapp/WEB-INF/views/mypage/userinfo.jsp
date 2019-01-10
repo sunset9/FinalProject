@@ -62,10 +62,11 @@
 .cover {
 	z-index: 10;
 	left:104px;
-    background-color: #33333352;
+    background-color: #33333399;
     height: 152px;
     width: 150px;
     position: absolute;
+    border-radius: 72px;
     
 }
 .changeSpan{
@@ -165,14 +166,6 @@ $(document).ready(function() {
 //     $('#profileDiv').on('mouseover','#userProfile', function(){
 	 $('#profileDiv').mouseenter(function(){
 		 console.log("마우스 over");
-// 		 // 초기화
-// //     	$('.cover').remove();
-    	
-//     	// 자신에게 cover 없으면, cover 생성
-// 		if($(this).find('.cover').length == 0){
-// 			var cover = $('<div class="cover">');
-// 			var span = $('<span class="changeSpan">변경</spna>');
-// 			$(this).prepend(cover);
 
 		$('.overDiv').show();
 			
