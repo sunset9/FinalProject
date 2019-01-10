@@ -13,7 +13,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 	border-bottom: 1px solid #676767;
 }
 #header {
-    width: 1130px;
+/*     width: 1130px; */
     height: 185px;
     margin: 0 auto;
     padding: 20px 0 0 0;
@@ -24,6 +24,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 #util_menu{
      display: flex; 
      float: right; 
+     margin-right: 245px;
 }
 #util_menu li:not(.last_child):after{
 	content: '|';
@@ -88,10 +89,12 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 }
 .tap_menu {
 	display: inline-block;
-	margin-top: 13px;
+	margin-top: 31px;
 	position: relative;
     border-top: 1px solid #eee;
     width: 100%;
+    height: 54px;
+    background: #222c3a;
 }
 .tap_menu ul {
 	display: inline-block;
@@ -115,7 +118,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 	 padding:0px 25px; 
 	 text-align:center; 
 	 text-decoration:none; 
-	 color: #1a1a1a;
+     color: #e6ecf5;
 	 font-size: 17px;
 	 font-weight: 600;
 } 
@@ -143,7 +146,7 @@ float:none;
 margin:0px;
 padding:0px;
 width:200px;
-background: #f9f9f9;
+background: #222c3a;
 }
 
 .tap_menu li ul a{
