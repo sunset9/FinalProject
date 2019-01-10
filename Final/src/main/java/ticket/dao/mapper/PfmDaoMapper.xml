@@ -787,4 +787,14 @@
 		WHERE mainban_idx = #{value}	
 	</select>
 	
+	<update id="updateMainbanner" parameterType="ticket.dto.MainBanner">
+		UPDATE main_banner 
+		SET banner_img_ori = #{bannerImgOri}, banner_img_str = #{bannerImgStr}, thumb_img_ori = #{thumbImgOri}, thumb_img_str = #{thumbImgStr}
+		WHERE pfm_idx = #{pfmIdx}
+	</update>
+	
+	<insert id="saveTabbanner" parameterType="ticket.dto.TabBanner">
+		INSERT INTO tab_banner
+		VALUES(tab_banner_seq.nextval, #{pfmIdx}, #{tabGenre}, #{bannerPath}, sysdate)
+	</insert>
 </mapper>

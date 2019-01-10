@@ -23,13 +23,20 @@ import ticket.dto.MainBanner;
 import ticket.dto.Performance;
 import ticket.dto.Poster;
 import ticket.dto.User;
+import ticket.dto.PreferTheme;
 import ticket.service.face.MainService;
+import ticket.service.face.PreferTService;
+import ticket.service.face.UserService;
 
 @Controller
 public class MainController {
 	// 메인
 	
 	@Autowired MainService mainService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private PreferTService preferTService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -73,14 +80,24 @@ public class MainController {
 	@RequestMapping(value="/ticket/fit", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, Object> fitPfm(
 			String userIdx
+			
 		) {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		logger.info("맞춤 공연");
 		logger.info(userIdx);
+		int idx = Integer.parseInt(userIdx);
 		
-		List<Poster> fitPfmList = mainService.getFitPfmList(userIdx);
-		map.put("fitPfmList", fitPfmList);
+//		List<Poster> fitPfmList = mainService.getFitPfmList(userIdx);
+//		map.put("fitPfmList", fitPfmList);
+		
+		// 유저가 선택한 테마 리스트 불러오기
+		List<PreferTheme> ptList = preferTService.choiceList(idx);
+
+		// 테마에 맞는 추천공연 리스트 불러오기
+		List<Performance> recomList = userService.recommendPfm(ptList);
+		logger.info("선호 테마에 대한 공연추천" + recomList);
+		map.put("fitPfmList", recomList);
 		
 		return map;
 	}

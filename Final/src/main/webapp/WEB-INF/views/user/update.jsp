@@ -467,7 +467,7 @@ function DaumPostcode() {
       </div>
       <div class="modal-footer form-inline">
         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-        <div data-toggle="tooltip" data-placement="left" title="주소를 입력 해주세요.">
+        <div class="tip" data-toggle="tooltip" data-placement="left" title="주소를 입력 해주세요.">
         <button type="button" id = "Aconfirm" class="btn btn-primary"  data-dismiss="modal" disabled="disabled" >변경하기</button></div>
       </div>
     </div>

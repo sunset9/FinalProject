@@ -29,7 +29,7 @@ public class AdminInterceptor
 		if( session.getAttribute("login") == null ) {
 			logger.info(" >> 접속불가 : 비로그인 상태");
 			
-			response.sendRedirect("/user/login");
+			response.sendRedirect("/user/login?targetUrl="+request.getRequestURI());
 			return false; //컨트롤러 접근 금지
 		} else {
 			logger.info(" >> 로그인 상태");

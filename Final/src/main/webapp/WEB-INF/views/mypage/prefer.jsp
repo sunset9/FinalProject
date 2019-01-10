@@ -4,24 +4,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style type="text/css">
-#userinfo{
-	background-color: #CCC;
-}
-
-#userProfile{
-	width: 150px;
-
-	
-}
-#userNick{
-	font-weight: bolder;
-	font-size: 2em;
-}
 
 #preferTheme{
 
-	border: 1px solid #CCC;
-	
+	background: #EEE;
+	border: 1px solid #EEE;
 	/*아티스트 리스트 뽑을 때 사용했던 float 해제  */
 	clear: left;
 }
@@ -33,17 +20,20 @@
 #selectedArt {
 	/*아티스트 리스트 뽑을 때 사용했던 float 해제  */
 	clear: left;
-	
+	height: 200px;
 	border: 1px solid #CCC;
+	background: #EEE;
 }
 #searchArtist{
 	display: none;
-	border: 1px solid #CCC;
-	float: right;
+	border: 3px solid #CCC;
 	
 	position: absolute;
     top: 410px;
-    right: 200px;
+    right: 400px;
+    
+    background: white;
+    border-radius: 10px;
 }
 
 .alist{
@@ -60,6 +50,7 @@
 .preferTitle{
 	font-size: 2em;
 	font-weight: bolder;
+	margin: 20px;
 }
 #artist_text{
 	border-bottom: 2px solid  #F2B134;
@@ -79,17 +70,133 @@
 	text-align: right;
 }
 .searchList{
-	font-size: 2em;
+	font-size: 1.5em;
 	margin-right: 20px;
 	vertical-align: middle;
+	list-style: none;
 	
 }
 .searchImg{
 	width: 80px;
 	height: 80px;
 }
+
+.listA{
+	position: relative;
+	display: block;
+	text-decoration: none !important;
+}
+.listA:hover{
+/* 	color: black; */
+	text-decoration: none ;
+	cursor: pointer;
+}
+
 .glyphicon-ok-circle{
+	
 	font-size : 3em;
+	position: absolute;
+ 	right:2px; 
+ 	top:22px;
+}
+.searchArtistName{
+	display: inline-block;
+	width: 120px;
+	height:30px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-left: 5px;
+	
+}
+#preferChoice{
+	width: 120px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #F2B134;
+    color: #fff;
+    margin: 5px;
+}
+#cancelPrefer{
+	width: 120px;
+  	height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #FFF;
+    color:#AAA;
+    margin: 5px;
+}
+
+#selecting{
+	width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #F2B134;
+    color: #fff;
+    margin: 5px;
+}
+
+.cancel{
+	width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    background: #FFF;
+    color:#AAA;
+    margin: 5px;
+}
+.btnDiv{
+	text-align: center;
+	border-top: 1px solid #CCC;
+	padding : 10px;
+}
+
+.resUnit{
+	width:300px;
+	height: 500px;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+.searchLi{
+	border-bottom: 1px solid #DDD;
+	
+}
+li{
+	list-style: none;
+	margin-top:5px;
+	margin-bottom: 5px;
+}
+.changeColor {
+	color: #F2B134;
+}
+
+/* 선택한 아티스트 이름 나오는 부분 */
+.selectedInner{
+	display: inline;
+	margin: 20px;
+}
+
+.selectedName{
+	font-size: 1.2em;
+}
+.checkbox-inline{
+/* 체크박스 위치 조정 */
+	font-size: 1.2em;
+	margin: 10px;
+
+	
+}
+
+#themeSec{
+	margin: 0 auto;
+	width : 900px;
+	
+	
+}
+.newChoice{
+	color: #F2B134;
 }
 </style>
 
@@ -97,12 +204,126 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
+		var artistIdx=[];
+		var artistName =[];
+	// 검색후 클릭 하면 표시해주기
+	
+	$('#searchArtist').on('click','.searchLi', function(){
+		
+		
+		var idx = $(this).data('aIdx');
+		var name = $(this).data('aName');
+		
+		console.log("클릭함수 실행");
+		if($(this).children($('.icon')).hasClass("changeColor") === true) {
+
+			$(this).children($('.icon')).removeClass('changeColor');
+			// 안에 값 취소하는거 물어보기
+		}else{
+			$(this).children($('.icon')).addClass('changeColor');
+			
+			artistIdx.push(idx);
+			artistName.push(name);
+		}
+		console.log("artistIdx:"+typeof(artistIdx));
+		console.log(artistIdx);
+		console.log("artistIdx:"+artistIdx);
+		
+	});//end on
+	
+	// 선택완료 누르면 최종 추가
+		$('#searchArtist').on('click','#selecting', function(){
+			console.log("완료버튼 누르으응" );
+			console.log("selectList:"+typeof(selectedList));
+			console.log("artistIdx:"+typeof(artistIdx));
+			// 최종 결과 저장할 배열
+			var lastIdx = [];
+			var lastName =[];
+			
+// 			var isExist = false ;
+			
+			var selectedList = $('#selectedArt').find('div');
+			
+// 			selectedList.each(function(i) {
+// 				var cnt = 0;
+// 				artistIdx.each(function(i){
+					
+// 					if($(selectedList[i]).data('paidx')==artistIdx[i]){
+						
+// 						isExist = true;
+// 						cnt ++;
+// 						return false ; // each 문 종료
+
+// 					}; // end if
+// 			}); // end j
+			
+// 			// 같은 값이 하나도 없으면 최종 결과에 저장
+// 			if (cnt==0){
+// 				lastIdx.push(idx);
+// 				lastName.push(name);
+// 			}
+// 		}) // end i
+		
+		
+		for (var i =0; i<artistIdx.length; i ++){
+			var cnt = 0;
+			for (var j =0; j<selectedList.length; j ++){
+				if($(selectedList[i]).data('paidx')==artistIdx[i]){
+					
+					isExist = true;
+					cnt ++;
+					break ; // each 문 종료
+
+				}; // end if
+			}; // end j
+			if (cnt==0){
+				lastIdx.push(artistIdx[i]);
+				lastName.push(artistName[i]);
+				console.log("name:"+artistName[i])
+			}
+		}; // end i
+			
+			// 선택한 결과 태그 추가하기
+			for (var i =0; i<lastIdx.length; i ++) {
+				var  selected = $("<div class='selectedInner'>");
+				selected.data('paidx', lastIdx[i] );
+				selected.data('artistName', lastName[i]);
+				console.log("선택한 아티스트paidx:"+selected.data('paidx'));
+				
+				var aName =$('<span class="newChoice selectedName">');
+				aName.text(lastName[i]);
+				selected.append(aName);
+				selected.append("<span class='glyphicon glyphicon-remove' ></span>")
+				
+				$('#selectedArt').append(selected);
+			}; 
+			
+
+			
+		
+
+		});
+	
+	
+	// 취소하면 창 닫기
+		$('#searchArtist').on('click','#cancelSearch', function(){
+			$('#searchArtist').hide();	
+		});
+	
 	
 	// 추가한 아티스트에서 X 클릭시 삭제하기
 	$('#selectedArt').on('click', '.glyphicon-remove', function(){
 		$(this).parent().remove();
 	});
 
+	// 설정 화면에서 취소 버튼 눌렀을 때 반응 할 메소드 
+	$('#cancelPrefer').click(function() {
+		if(confirm('변경한 정보를 저장되지 않습니다.')==true){
+			location.href='/mypage/mychoice';
+		} else{
+			return ;
+		}
+	})
 	
 	// 취향설정 완료 버튼 눌렀을 때 
 	$('#preferChoice').click(function() {
@@ -190,11 +411,14 @@ $(document).ready(function(){
 				artists.forEach(function(artist){
 // 					console.log(artist)
 				
-					// 하나의 검색 결과 저장할 div
+					// 하나의 검색 결과 저장할 li
 					var resLi = $('<li>');
+					var resA = $('<a>');
+					resA.addClass('listA');
+					
 					resLi.data('aIdx', artist.artistIdx); // 커스텀 태그로 artist 정보 삽입
 					resLi.data('aName', artist.name); // 커스텀 태그로 artist 정보 삽입
-					resLi.addClass('searchArtist');
+					resLi.addClass('searchLi');
 					
 					// 아티스트 이미지 띄울 태그
 					var img = $('<img>');
@@ -207,17 +431,23 @@ $(document).ready(function(){
 					var name = $('<span>');
 					name.text(artist.name);
 					name.addClass('searchList');
+					name.addClass('searchArtistName');
 
-					resLi.append(img);
-					resLi.append(name);
+					resA.append(img);
+					resA.append(name);
 
 // 					resLi.append("<input type='button' class='addArtist' value='추가'>")
-					resLi.append("<span class='glyphicon glyphicon-ok-circle searchList'/>")
+					resA.append("<span class='glyphicon glyphicon-ok-circle searchList icon'/>")
 					
 					// 모달의 검색 결과 창에 결과 태그들 추가
-					$('#searchArtist').append(unitDiv.append(resLi));
-					
-				}); // foreach end 
+					$('#searchArtist').append(unitDiv.append(resLi.append(resA)));
+				}); // foreach end
+				var btnDiv = $('<div class="btnDiv">');
+				
+				btnDiv.append('<button id = "cancelSearch" class ="cancel">취소</button>');
+				btnDiv.append('<button id = "selecting">선택완료</button>');
+				$('#searchArtist').append(btnDiv);	
+				
 			} // success end
 			, error: function(){
 				console.log("아티스트 검색 실패");
@@ -268,6 +498,7 @@ function artChoice(artistIdx, name){
 
 
 
+
 </script>
 
 
@@ -290,10 +521,11 @@ function artChoice(artistIdx, name){
 
 
 <!-- 아티스트 검색결과 보여줄 Div -->
-	<div id="searchArtist">
-		
-	</div>
-	<div class="floatFix"></div>
+<div id="searchArtist">
+	
+	
+</div>
+
 
 <div class ="heightFix">
 <c:forEach items="${list }" var="a">
@@ -305,10 +537,11 @@ function artChoice(artistIdx, name){
 
 
 <div id = "selectedArt">
+	<h3 style="margin: 10px;">${loginUser.nick }님이 선택한 아티스트</h3>
 	<c:forEach items="${paList }" var ="pa">
 	<c:if test ="${! empty  pa}">
-	<div data-paidx="${pa.artistIdx }">
-		<span>${pa.artistName } </span>
+	<div class="selectedInner" data-paidx="${pa.artistIdx }">
+		<span class="selectedName">${pa.artistName } </span>
 		<span class='glyphicon glyphicon-remove' ></span>
 	</div>
 	</c:if>
@@ -317,11 +550,10 @@ function artChoice(artistIdx, name){
 
 </div>
 
-<div id ="preferTheme">
-<hr>
-
 <span class="preferTitle">테마/장르 선택</span>
+<div id ="preferTheme">
 
+<div id="themeSec">
 <c:forEach items="${tList }" var="t">
 	<label class="checkbox-inline" style ="width:30%">
 		<input type="checkbox" name ="themeIdx" value="${t.themeIdx}" <c:forEach items="${ptList }" var="p">
@@ -331,9 +563,9 @@ function artChoice(artistIdx, name){
 		 </c:forEach> /> ${t.themeName }
 	</label>
 </c:forEach>
-
 </div>
-
-<button id="cancel" class="btn btn-default"> 취소 </button><button id="preferChoice" class="btn btn-default"> 취향 설정 완료 </button>
-
+</div>
+<div style="text-align: center; margin: 20px;">
+<button id="preferChoice" class="btn btn-default"> 취향 설정 완료 </button><button id="cancelPrefer" class="cancel btn btn-default"> 취소 </button>
+</div>
 </div>

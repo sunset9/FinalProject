@@ -437,6 +437,8 @@ public interface PfmDao {
 	 */
 	public void insertMainBanner(MainBanner mainBanner);
 	
+	public void saveTabbanner(TabBanner tabbanner);
+	
 	/**
 	 * @최종수정일: 2019.01.01
 	 * @Method설명: 탭배너 등록하기
@@ -536,5 +538,12 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public MainBanner selectMbBymainbanIdx(int mainbanIdx);
+	
+	/**
+	 * @최종수정일: 2019.01.09
+	 * @Method설명: 메인 배너 수정하기
+	 * @작성자: 김지은
+	 */
+	public void updateMainbanner(MainBanner mainbanner);
 	
 }

@@ -22,7 +22,10 @@
 	display: inline-block;
 	grid-area: 1 / 1 / 3 / 2  ;
 }
-
+.btnDiv{
+	margin: 20px auto;
+	text-align: center;
+}
 #title{
 	
 	grid-area: 1/ 2 / 2 /3 ;
@@ -73,6 +76,18 @@ table{
 }
 .fontSize{
 	font-size: 1.2em;
+}
+.previous{
+	width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #F2B134;
+    color:#FFF;
+    font-weight: bold;
+}
+.btnDiv{
+	margin: 20px auto;
+	text-align: center;
 }
 </style>
 
@@ -176,7 +191,9 @@ table{
 <!-- //좌석정보 -->
 </div>
 
-
+	<div class="btnDiv">
+		<button class ="previous" onclick="location.href='/mypage/myticket'">목록</button>
+	</div>
 
 
 </div> 

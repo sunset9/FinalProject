@@ -45,4 +45,7 @@ public interface PreferAService {
 	 * @작성자:홍나영
 	 */
 	public List<Artist> choiceArtistList(int userIdx, Paging paging);
+
+
+	
 }
