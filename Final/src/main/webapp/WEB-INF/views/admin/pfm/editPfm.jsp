@@ -349,7 +349,12 @@ $(document).ready(function(){
 	console.log(secNamePay);
 	if(secNamePay.length > 0){
 		// 가격순으로 내림차순 정렬
-		
+		secNamePay.sort(function(a,b){
+			if (a.secPay < b.secPay) { return 1;}
+			  if (a.secPay> b.secPay) { return -1;}
+			  return 0;
+		});
+		console.log(secNamePay);
 		secNamePay.forEach(function(secInfo){
 			addSeatInput();
 			$('.tempSecName').last().val(secInfo.secName);
