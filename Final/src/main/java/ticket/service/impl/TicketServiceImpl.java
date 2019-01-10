@@ -14,6 +14,7 @@ import ticket.dto.OriginSection;
 import ticket.dto.Performance;
 import ticket.dto.PfmDateByTime;
 import ticket.dto.Seat;
+import ticket.dto.SeatCurrent;
 import ticket.dto.SeatSection;
 import ticket.dto.SectionInfo;
 import ticket.dto.Shipment;
@@ -153,6 +154,31 @@ public class TicketServiceImpl implements TicketService {
 	public List<SectionInfo> loadsecInfo(int pfmIdx) {
 		// TODO Auto-generated method stub
 		return ticketDao.selectSecInfo(pfmIdx);
+	}
+
+	@Override
+	public int countTemp(int pfmIdx, int seatIdx) {
+		return ticketDao.selectCntTemp(pfmIdx, seatIdx);
+	}
+
+	@Override
+	public void tempTicketing(SeatCurrent seatCurr) {
+		
+		ticketDao.insertTempSeats(seatCurr);
+		
+	}
+
+	@Override
+	public void deleteSeatCurr(SeatCurrent seatCurr) {
+		
+		ticketDao.DeleteTempSeat(seatCurr);
+		
+	}
+
+	@Override
+	public Performance loadPfmInfo(int pfmIdx) {
+		// TODO Auto-generated method stub
+		return ticketDao.selectPfmByPfmIdx(pfmIdx);
 	}
 	
 	

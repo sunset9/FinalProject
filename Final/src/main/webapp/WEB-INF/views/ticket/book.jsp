@@ -28,6 +28,7 @@ var rp =0;
 var delvyTypeCode = 1;
 $(document).ready(function() {
 
+
 	$('#buyer_name').val("${sessionScope.loginUser.name}");
 	$('#buyer_tel').val("${sessionScope.loginUser.phone}");
 	$('#buyer_email').val("${sessionScope.loginUser.email}");
@@ -220,7 +221,7 @@ $(document).ready(function() {
 	
 	//다음단계 혹은 이전단계 
 	  $('.stepBtn').on('click', function () {
-		  
+		  var isTempSeat = false;
 		  //선택된 좌석들
 		  var IsSeatSelect = $('#seat-map').find('.selected');
 		  
@@ -230,6 +231,68 @@ $(document).ready(function() {
 			  alert("좌석 선택이 되지 않았습니다");
 			  return;
 		  }
+
+		  $('#seat-map').find('.selected').each(function() {
+			  var str = $(this).attr('id');
+			  var array = new Array(); 
+			  array = str.split("_");
+			  
+			  $.ajax({
+					type:"GET",
+					url:"/ticket/tempTicketing",
+					async: false,
+					data:{
+						"pfmIdx":${param.pfmIdx}
+			             , "hallIdx" : ${param.hallIdx}
+			             , "secName" : array[0]
+			             , "seatRow" : array[1]
+			             , "seatCol" : array[2]
+						},
+					dataType:"json",
+					success:function(res){
+						if (res.isTempSeat){
+							isTempSeat = true;
+						}
+					},
+					error:function(e){
+						console.log(e);
+					}
+				})
+			  
+		  });
+		  
+		  if (isTempSeat){
+			  alert("이미 선택된 좌석 입니다.");
+			  return;
+		  }else{
+			  $('#seat-map').find('.selected').each(function() {
+				  
+				  var str = $(this).attr('id');
+				  var array = new Array(); 
+				  array = str.split("_");
+				  
+				  $.ajax({
+						type:"POST",
+						url:"/ticket/tempTicketing",
+						data:{
+							"pfmIdx":${param.pfmIdx}
+				             , "hallIdx" : ${param.hallIdx}
+				             , "secName" : array[0]
+				             , "seatRow" : array[1]
+				             , "seatCol" : array[2]
+							},
+						dataType:"json",
+						success:function(res){
+						},
+						error:function(e){
+							console.log(e);
+						}
+					})
+				  
+			  });
+			  
+		  }
+		  
 		  
 		  var lastCompletedTab = $('.completeStep').last().attr('id');
 		  var curStep = 0;
@@ -248,11 +311,9 @@ $(document).ready(function() {
 		  }else{
 			  $('#stepInfo').show();
 			  $('#seatBtn').hide();
-			  
 		  }
 		  
 		  if($(this).is($('.nextBtn'))){
-			  
 			  if(curStep == 1){
 				  //이전단계 버튼 활성화
 				  $('#prevBtn').show();
@@ -260,7 +321,6 @@ $(document).ready(function() {
 				  $('.wrap_ticket_info').show();
 				  $('#step2and3').show();
 				  getSeatInfo();
-				  
 			  } 
 			  else if(curStep == 2){ // 현재 STEP 3 단계라면(=다음이 4단계)
 					// '다음 단계' 버튼 비활성화
@@ -550,45 +610,44 @@ function getSeatInfo(){
 			  }
 		  }
 		  location.reload();
-// 	      //미니화면 선택된거 리셋
-// 		  $('path').removeClass('clicked');
-// 		  $('rect').removeClass('clicked');
-// 		  //선택된 좌석들
-// 		  var IsSeatSelect = $('#seat-map').find('.selected');
-// 		  var pfmIdx =${param.pfmIdx };
-// 		  var hallIdx=${param.hallIdx };
-// 		  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
-// 		  if (IsSeatSelect.size() != 0){
-// 			  if(confirm("선택한 좌석 정보를 삭제하고 이동하시겠습니까?")){
-// 			  }else{
-// 				  return;
-// 			  }
-// 		  }
-		  
-// 			$.ajax({
-// 				type:"get",
-// 				url:"/ticket/seatSection",
-// 				data:{
-// 					"pfmIdx":pfmIdx,
-// 					  "hallIdx":hallIdx
-// 					  },
-// 				async: false,
-// 				dataType:"html",
-// 				success:function(res){
-// 					$('#selectedSeats').html(res);
-// 					$('#selected-seats').html("");
-// 					$(".nth2_1").html("");
-// 					$('#total').html("0");
-// 					$('#counter').html("0");
-// 					$('#selectedSeats svg').css("width","650px");
-// 					$('#selectedSeats svg').css("height","530px");
-// 					loadSectionData();
-				
-// 				}
-// 			});	
-	
 	}
 	 
+$(window).bind("beforeunload", function (e){
+	 var IsSeatSelect = $('#seat-map').find('.selected');
+	  
+	  //선택된 좌석이 있는지 확인, 없으면 알림창 띄워주기
+	  if (IsSeatSelect.size() == 0){
+	  }
+
+	  $('#seat-map').find('.selected').each(function() {
+		  var str = $(this).attr('id');
+		  var array = new Array(); 
+		  array = str.split("_");
+		 $.ajax({
+				type:"POST",
+				url:"/ticket/deleteTemp",
+				async: false,
+				data:{
+					"pfmIdx":${param.pfmIdx}
+		             , "hallIdx" : ${param.hallIdx}
+		             , "secName" : array[0]
+		             , "seatRow" : array[1]
+		             , "seatCol" : array[2]
+					},
+				dataType:"json",
+				success:function(res){
+					alert("삭제완료");
+				},
+				error:function(e){
+					console.log(e);
+				}
+			})
+	
+	  });
+});
+
+	  
+	
 
 </script>
 

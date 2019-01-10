@@ -148,6 +148,14 @@ div.seatCharts-cell {
                                     click : function() {
                                        if (this.status() == 'available') {
                                           //let's create a new <li> which we'll add to the cart items
+                                          
+                                          var IsSeatSelect = $('#seat-map').find('.selected');
+                                          
+                                          if (IsSeatSelect.size() == 4){
+                                        	  alert ("좌석은 최대 4개만 선택 가능합니다");
+                                    		  return " ";
+                                    	  }
+                                          
                                             var seatArr = new Array();
                                             var id= this.settings.id;
     		  								seatArr= id.split("_");
@@ -177,8 +185,7 @@ div.seatCharts-cell {
                                            */
                                           $counter.text(sc.find('selected').length + 1);
                                           $total.text(recalculateTotal(sc)+ this.data().price);
-                                        console.log("2");
-                                        console.log(sc);
+                                        
                                           return 'selected';
                                        } else if (this.status() == 'selected') {
                                           //update the counter

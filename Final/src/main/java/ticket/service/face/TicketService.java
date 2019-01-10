@@ -177,6 +177,34 @@ public interface TicketService {
 	 * @Method설명: 공연별 세션이름, 가격 정보 받아오기
 	 * @작성자:이상지
 	 */
-	public List<SectionInfo> loadsecInfo(int pfmIdx); 
+	public List<SectionInfo> loadsecInfo(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 선택한좌석이 임시저장되어 있는지 확인
+	 * @작성자:이상지
+	 */
+	public int countTemp(int pfmIdx, int seatIdx);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 선택한좌석 임시저장
+	 * @작성자:이상지
+	 */
+	public void tempTicketing(SeatCurrent seatCurr);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 임시좌석삭제
+	 * @작성자:이상지
+	 */
+	public void deleteSeatCurr(SeatCurrent seatCurr);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 공연정보가져오기
+	 * @작성자:이상지
+	 */
+	public Performance loadPfmInfo(int pfmIdx); 
 }
 

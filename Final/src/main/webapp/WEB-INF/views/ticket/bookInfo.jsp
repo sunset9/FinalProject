@@ -7,7 +7,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-  <script>
+<script>
+
+$(document).ready(function() {
+	
+	  
+	$.ajax({
+		type:"GET",
+		url:"/ticket/openTicket",
+		data:{
+			"pfmIdx":${pfm.pfmIdx}
+			},
+		dataType:"json",
+		success:function(res){
+			if(!res.ticketOpen){
+				//오픈되었음
+				if(res.ticketEnd){
+					//오픈중
+				}else{
+					//티켓판매끝
+				}
+			}else{
+				//오픈안됨
+				
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	})
+	
+}
   $( function() {
 	  //활성화 시킬 날짜들
 	  var enableDay = ${dates};
@@ -113,10 +143,6 @@
 	  }
 	  
 	  //ajax 작동
-	  
-	  console.log($("#datepicker").val());
-	  console.log(obj.text());
-	  
 		$.ajax({
 			type:"POST",
 			url:"/ticket/cntBookedSeats",
@@ -168,11 +194,7 @@
 	  
 	  //예매하기버튼 클릭
 	  $('#bookBtn').click(function() {
-		  
-		  	  
-		  
 			  var date = new Date($('#datepicker').datepicker( "getDate" ));
-			  
 			  var month;
 			  if(date.getMonth()+1 < 10){
 				  month = "0"+(date.getMonth()+1);
@@ -208,16 +230,9 @@
 			  
 			  
 // 			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
-			  window.open(path, "_blank", "width=1075px,height=710px");
-
-
+			  var win = window.open(path, "_blank", "width=1100px,height=710px");
+			  
 		});
-
-
-	  
-	  
-
-	  
 	
 });
   
@@ -304,6 +319,9 @@
 </style>
 </head>
 <body>
+<div id = "ticketNotOpen">
+
+</div>
 <div id = "ticketInfo">
 <div id = "infoTitle" style="float: top"> 
 <ul class="nav nav-pills" style="font-size: 27px;text-align: center;">
@@ -317,7 +335,6 @@
 	style="float: left;
     width: 30%;">
     </div>
-	
 	<div id = "timeDiv" style="float: left; width: 40%;">
 		<ul id = "timeList" class="list-group">
 		</ul>
@@ -330,12 +347,13 @@
 			<ul id ="ResidualSeatList" style="padding:0px; width: 100%;">
 			</ul>
 		</div>
-		<button type="button" id ="bookBtn" style="width: 300px;">
-		  예매하기
-		</button>
 	</div>
 </div>
-
+</div>
+<div style="margin-left: 834px; margin-top: 217px;">
+	<button type="button" id ="bookBtn" style="width: 300px;">
+	  예매하기
+	</button>
 </div>
 <!-- <a href="" target="_blank"></a> -->
 

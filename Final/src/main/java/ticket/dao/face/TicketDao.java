@@ -59,14 +59,6 @@ public interface TicketDao {
 	
 	/**
 	 * @최종수정일: 2018.12.05
-	 * @Method설명:좌석선택후 다음스탭 넘어갔을때 좌석 임시저장하기
-	 * @작성자:이상지
-	 */
-	public void insertTempSeats(Seat seat, Performance pfm);
-	
-	
-	/**
-	 * @최종수정일: 2018.12.05
 	 * @Method설명:공연의 좌석 섹션 불러오기
 	 * @작성자:이상지
 	 */
@@ -84,7 +76,7 @@ public interface TicketDao {
 	 * @Method설명:임시저장했던 좌석 삭제
 	 * @작성자:이상지
 	 */
-	public void DeleteTempSeat(Seat seat);
+	public void DeleteTempSeat(SeatCurrent seatCurr);
 	
 	/**
 	 * @최종수정일: 2018.12.12
@@ -185,5 +177,26 @@ public interface TicketDao {
 	 * @작성자:이상지
 	 */
 	public List<SectionInfo> selectSecInfo(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 좌석선택후 다음스탭 넘어갔을때 좌석 선택한게 선택되어있는지 확인
+	 * @작성자:이상지
+	 */
+	public int selectCntTemp(@Param(value="pfmIdx") int pfmIdx, @Param(value="seatIdx")int seatIdx);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 좌석선택후 다음스탭 넘어갔을때 좌석 임시저장하기
+	 * @작성자:이상지
+	 */
+	public void insertTempSeats(SeatCurrent seatCurr);
+
+	/**
+	 * @최종수정일: 2019.01.10
+	 * @Method설명: 공연정보 얻어오기
+	 * @작성자:이상지
+	 */
+	public Performance selectPfmByPfmIdx(int pfmIdx);
 	
 }

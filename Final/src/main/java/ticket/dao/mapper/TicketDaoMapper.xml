@@ -52,6 +52,24 @@
 	<result column="cancel_date" property="cancelDate"/>
 </resultMap>
 
+<resultMap type="ticket.dto.Performance" id="performanceMap">
+		<result column="pfm_idx" property="pfmIdx"/>
+		<result column="name" property="name"/>
+		<result column="genre_idx" property="genreIdx"/>
+		<result column="pfm_start" property="pfmStart"/>
+		<result column="pfm_end" property="pfmEnd"/>
+		<result column="ticket_start" property="ticketStart"/>
+		<result column="ticket_end" property="ticketEnd"/>
+		<result column="hall_idx" property="hallIdx"/>
+		<result column="age_grade_idx" property="ageGradeIdx"/>
+		<result column="running_time" property="runningTime"/>
+		<result column="create_date" property="createDate"/>
+		<result column="poster_name" property="posterName"/>
+		<result column="stored_name" property="storedName"/>
+		<result column="hall_name" property="hallName"/>
+		<result column="booking_rate" property="bookingRate"/>
+		<result column="dday" property="dday"/>
+	</resultMap>
 
 <select id="selectDates" parameterType="ticket.dto.Performance" resultMap="dateTimeMap">
 	select pfm_date from pfm_dateBytime WHERE pfm_idx = #{pfmIdx} GROUP BY pfm_date
@@ -212,5 +230,28 @@ select app_sec,sec_pay from seatsection where pfm_idx = #{pfmIdx} group by app_s
 	    pfm_idx = #{pfmIdx}
 </select>
 
+<select id="selectCntTemp" resultType="int">
+	select count(*) from SEAT_CURRENT where pfm_idx = #{pfmIdx} and seat_idx = #{seatIdx}
+</select>
+
+<insert id="insertTempSeats" parameterType="ticket.dto.SeatCurrent">
+	<selectKey  resultType="int" keyProperty="seatCurrentIdx" order="BEFORE">
+  		SELECT SEAT_CURRENT_SEQ.nextval FROM dual
+  	</selectKey>
+	INSERT INTO seat_current(
+	  	seat_current_idx,
+	  	pfm_idx,
+	  	status,
+	  	seat_idx
+	) VALUES(#{seatCurrentIdx},#{pfmIdx},#{status},#{seatIdx})
+</insert>
+
+<delete id="DeleteTempSeat" parameterType="ticket.dto.SeatCurrent">
+	delete from seat_current where pfm_idx = #{pfmIdx} and seat_idx = #{seatIdx}
+</delete>
+
+<select id="selectPfmByPfmIdx" parameterType="int" resultMap="performanceMap">
+	select * from performance where pfm_idx = #{pfmIdx}
+</select>
 
 </mapper>
