@@ -10,34 +10,41 @@
 <script>
 
 $(document).ready(function() {
-	
 	  
-	$.ajax({
-		type:"GET",
-		url:"/ticket/openTicket",
-		data:{
-			"pfmIdx":${pfm.pfmIdx}
-			},
-		dataType:"json",
-		success:function(res){
-			if(!res.ticketOpen){
-				//오픈되었음
-				if(res.ticketEnd){
-					//오픈중
-				}else{
-					//티켓판매끝
-				}
-			}else{
-				//오픈안됨
+// 	$.ajax({
+// 		type:"GET",
+// 		url:"/ticket/openTicket",
+// 		data:{
+// 			"pfmIdx":${pfm.pfmIdx}
+// 			},
+// 		dataType:"json",
+// 		success:function(res){
+// 			if(!res.ticketOpen){
+// 				//오픈되었음
+// 				if(res.ticketEnd){
+// 					//오픈중
+// 					$("#ticketNotOpen").hide();
+// 					$("#ticketInfo").show();
+// 				}else{
+// 					//티켓판매끝
+// 					$("#ticketNotOpen").show();
+// 					$("#ticketNotOpen").text("티켓판매가 종료되었습니다.");
+// 					$("#ticketInfo").hide();
+// 				}
+// 			}else{
+// 				//오픈안됨
+// 				$("#ticketNotOpen").show();
+// 				$("#ticketNotOpen").text("아직 티켓오픈이되지 않았습니다.");
+// 				$("#ticketInfo").hide();
 				
-			}
-		},
-		error:function(e){
-			console.log(e);
-		}
-	})
+// 			}
+// 		},
+// 		error:function(e){
+// 			console.log(e);
+// 		}
+// 	})
 	
-}
+});
   $( function() {
 	  //활성화 시킬 날짜들
 	  var enableDay = ${dates};
