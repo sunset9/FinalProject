@@ -160,10 +160,7 @@
 	font-size: 1.5em;
 	font-weight: bold;	
 }
-.main_wrapper{
 
-	border: 1px solid #CCC;
-}
 
 .clearFloat{
 	clear:both;
