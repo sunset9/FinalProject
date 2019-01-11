@@ -101,7 +101,7 @@
 						alert('jpg, gif, png, bmp 확장자만 업로드 가능합니다.');
 						return false;
 					} else if(fileInfo.result===-2){ 	// 이미지 파일 용량 확인 (OK)
-						alert('1MB 초과');
+						alert('10MB 초과');
 						return false;					
 					} else {
 						done(fileInfo);
@@ -159,7 +159,7 @@
 			var fileNameExtension = fileName.toLowerCase().substring(fileNameExtensionIndex, fileName.length); // 확장자 자르기
 		
 			if(!((fileNameExtension ==='jpg')||(fileNameExtension ==='gif')||(fileNameExtension === 'png')||(fileNameExtension==='bmp'))){
-				alert('validation validation validation jpg, gif, png, bmp 확장자만 가능합니다');
+				alert('jpg, gif, png, bmp 확장자만 가능합니다');
 				return true;
 			} else {
 				return false;

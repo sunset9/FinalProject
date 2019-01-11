@@ -32,7 +32,7 @@ text-align: center;
     left: 140px;
     font-size: 30px;
     bottom: 0px;
-    color: black;
+    color: #626262;
 }
 
 .section_onestop {

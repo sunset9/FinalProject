@@ -638,8 +638,12 @@ function insertQnaRecommList(qnaRecommList) {
 </script>
 
 <style>
+  
 #contentDay {
 	color: #A4A4A4;
+  
+.top-wrapper {
+	border: 1px solid #e6e6e6;
 }
 
 .expListContentInfo, .revListContentInfo, .qnaListContentInfo  {
@@ -647,24 +651,36 @@ function insertQnaRecommList(qnaRecommList) {
 	font-size: 18px;
 }
 
+#choiceBtn {
+    float: right;
+    position: relative;
+    bottom: 245px;
+    right: 25px;
+}
 #mychoiceBtn{
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #F2B134;
-    background: #F2B134;
+    border: 1.2px solid #a9a9a9;
+    background: #fbfbfb;
     font-weight: bold;
-    color: #fff;
+    color: #8c8c8c;
+}
+#mychoiceBtn:hover {
+	background: #ededed;
+}
+#mychoiceBtn span {
+	margin-right: 10px;
 }
 
 #cancelBtn{
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #F2B134;
-    background: #FFF;
-    color:#AAA;
+    border: 1.2px solid #ffffff;
+    background: #f2b133;
     font-weight: bold;
+    color: #ffffff;
 }
 
 .expListContentInfo {
@@ -690,7 +706,7 @@ function insertQnaRecommList(qnaRecommList) {
 .posterInfoDiv {
 	float: left;
 	height: auto;
-	margin: 10px 0px 0px 60px;
+	margin: 27px 0px 0px 60px;
 }
 
 /* 하단 탭 */
@@ -734,7 +750,9 @@ ul.tabs li.current{
 }
 
 .topDiv {
-	margin-bottom: 40px;
+	margin-top: 40px;
+	margin-bottom: 30px;
+    padding: 0px 30px;
 }
 
 /* 기대평, 관람후기, qna */
@@ -852,7 +870,12 @@ td {
 }
 
 #choicePmfInfo {
-	font-size: 20px;
+	font-size: 18px;
+	margin-top: 50px;
+}
+
+#choicePmfInfo tr td:nth-child(3){
+    padding-left: 45px;
 }
 
 #expectation, #review, #qna, #exptextarea, #revtextarea, #qnatextarea {
@@ -870,6 +893,7 @@ td {
 </style>
 
 <div class="main_wrapper">
+	<div class="top-wrapper">
 	<div class="topDiv ddiv">
 		<div class="posterImgDiv">
 			<img class="choicePosterImg" src="/resources/image/${posterList.storedName}" />
@@ -928,12 +952,13 @@ td {
 		</div>
 		
 		<div id = "choiceBtn">
-			<button id = "mychoiceBtn">내 공연 담기</button>
+			<button id = "mychoiceBtn"><span class="glyphicon glyphicon-ok"></span>내 공연 담기</button>
 		</div>
 		
 	</div>
 	
 	<div id = "bookInfo">
+	</div>
 	</div>
 	
 	<div class="bottomDiv ddiv">

@@ -7,17 +7,17 @@
 
  
 <!-- 부트스트랩 -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!-- <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script> -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <style>
 
-.con {
+.container {
 	display: inline-block;
-	width: 500px;
+	width: 1000px;
 }
 
 /* body { */
@@ -45,32 +45,52 @@ $(document).ready(function(){
 				// 그렇지 않으면 false로 (체크off)
 		};
 	});
-	
+
 });
 </script>
 
 
-<!-- conta = container -->
+ 	 
+<div class="container">
 
-<div class="con">
+<a href="/admin/noticelist">
+<h1> 공지사항 </h1></a>
+<br><br>
 
+<div class="search row">
+	<div class="col-xs-2 col-sm-2">
+	
+ <select name="searchType" class="form-control">
+<%--   <option value="n"<c:out value="${searchpagingt.searchType == null ? 'selected' : ''}"/>>-----</option> --%>
+  <option value="t"<c:out value="${searchpagingt.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+  <option value="c"<c:out value="${searchpagingt.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+  <option value="tc"<c:out value="${searchpagingt.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+ </select>
+</div>
 
-<div class="form-inline">
-	<select id="searchTypeSel" name="searchType">
-		<option value="">검색조건</option>
-		<option value="all"><c:out value="${map.searchOption == 'all'?'selected':'' }"/> 제목+내용 </option>		
-		<option value="title"><c:out value="${map.searchOption == 'title'?'selected':'' }"/>제목</option>
-		<option value="content"><c:out value="${map.searchOption == 'content'?'selected':'' }"/>내용</option>
-	</select>
-
-	<input class="form-control" type="text" id="keyword" name="keyword"
-		value="${cri.keyword }" placeholder="검색어를 입력하세요"/>
+<div class="col-xs-10 col-sm-10">
+	<div class="input-group">
 		
-	<button id="searchBtn" class="btn btn-primary">Search</button>
+		 <input type="text" name="keyword" id="keywordInput" value="${searchpagingt.keyword}" class="form-control"/>
+		<span class="input-group-btn">
+			 <button id="searchBtn" class="btn btn-default">검색</button>
+		</span>
 
 	</div>
-
-
+</div>
+	 <script>
+	 $(function(){
+	  $('#searchBtn').click(function() {
+	   self.location = "noticelistsearch"
+	     + '${pageMaker.makeQuery(1)}'
+	     + "&searchType="
+	     + $("select option:selected").val()
+	     + "&keyword="
+	     + encodeURIComponent($('#keywordInput').val());
+	    });
+	 });   
+ 	 </script> 
+</div>
 
 <div class="list">
 <form action="/admin/noticedelete" method="post">
@@ -85,7 +105,6 @@ $(document).ready(function(){
 		<th>분류</th>
 		<th>제목</th>
 		<th>등록일</th>	
-<!-- 		<th> <img src="../../../../../test.PNG"> </th> -->
 	</tr>
 
   
@@ -96,24 +115,25 @@ $(document).ready(function(){
 		<td>${noli.noticeIdx }</td>
 		<td>${noli.NTypeIdx }</td>
 		<td><a href="/admin/noticeview?noticeIdx=${noli.noticeIdx }"> ${noli.noticeTitle }</a></td>
-		<td><fmt:formatDate value="${noli.createDate }" pattern="yyyy-MM-dd"/></td>
+		<td><fmt:formatDate value="${noli.createDate }" /></td>
 	</tr>	
 	</c:forEach>
 
 </table>
 
-<div>
- <ul>
+<div class="col-md-offset-3">
+ <ul class="pagination">
   <c:if test="${pageMaker.prev}">
-   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+  	<li><a href="noticelistsearch${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전 목록</a></li> 
   </c:if> 
   
   <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-   <li><a href="noticelist${pageMaker.makeQuery(idx)}">${idx}</a></li>
+   	<li <c:out value="${pageMaker.pagingt.page == idx ? 'class=active': '' }"/>>
+   	<a href="noticelistsearch${pageMaker.makeSearch(idx)}">${idx}</a>
   </c:forEach>
     
   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+   <li><a href="noticelistsearch${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음 목록</a></li>
   </c:if> 
  </ul>
 </div>
@@ -129,9 +149,12 @@ $(document).ready(function(){
 <div class="btnwrite">
 <a href="/admin/noticewrite"><button> 글쓰기 </button></a>
 </div>
-<a href="/admin/noticelist">페이징 테스트</a>
+<!-- <a href="/admin/noticelist">페이징 테스트</a> -->
 <%-- <jsp:include page="../../utils/noticepaging.jsp"/> --%>
 </div>
 </div>
+
+
+ 	 
 </body>
 </html>

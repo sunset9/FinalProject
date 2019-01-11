@@ -31,13 +31,16 @@
 	width:100px;
 }
 .num{
-	width:10px;
+	width:100px;
 }
 .title{
-	width:70%;
+	width:500px;
 }
 .content{
-	width:90%;
+	width:90px;
+}
+.date {
+	width:90px;
 }
 
 </style>
@@ -58,15 +61,17 @@ $(document).ready(function(){
 </head>
 <body>
 
-<h1>상세보기</h1>
+<!-- <h1>공지 상세보기</h1> -->
 
-<div class="conta">
+<div class="container">
 
 <table class="table table-striped table-hover">	
-	<tr>	
-		<td id="num">${noticeView.noticeIdx }</td>
+	<tr>
+		<div class="form-group"></div>	
+		<td class="num">${noticeView.noticeIdx }</td>
+<%-- 		<td class="type">${noticeView.noticeIdx }</td> --%>
 		<td class="title">${noticeView.noticeTitle }</td>	
-		<td><fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
+		<td class="date"><fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
 	</tr>
 	<tr>
 		<td></td>

@@ -48,10 +48,16 @@ public interface AdminBoardDao {
 	
 	
 	// Faq 전체 글 리스트
-	public List<Faq> selectFaqList(Paging paging);
+	public List<Faq> selectFaqList(PagingT pagingt);
 	
-	// Faq 전체 글 조회
+	// Faq 전체 글 조회(글 개수)
 	public int selectCntAllFaq();
+	
+	// 목록+페이징+검색
+	public List<Faq> faqListSearch(SearchPagingT searchpagingt);
+	
+	// 검색 결과 개수
+	public int faqCountSearch(SearchPagingT searchpagingt);
 	
 	// FAQ 상세보기
 	public Faq faqView(int faqIdx);

@@ -51,6 +51,8 @@ public class AdminBoardController {
 	 * @Method설명: 공지사항 목록 페이징 리스트
 	 * @작성자: 조요한
 	 */
+	
+	// 글 목록 + 페이징
 	@RequestMapping(value="/admin/noticelist", method=RequestMethod.GET)	
 	public String notiList(@ModelAttribute("pagingt") PagingT pagingt, Model model) {
 	
@@ -71,15 +73,15 @@ public class AdminBoardController {
 	public String notiList(@ModelAttribute("searchpagingt")SearchPagingT searchpagingt, Model model) {
 	
 		
-		List<Notice> list = adminBoardService.getNotiList(searchpagingt);
+		List<Notice> list = adminBoardService.noticeListSearchService(searchpagingt);
 		model.addAttribute("noticelist", list);
 
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setPagingt(searchpagingt);
-		pageMaker.setTotalCount(adminBoardService.selectCountAll());
+		pageMaker.setTotalCount(adminBoardService.noticeCountSearchService(searchpagingt));
 		model.addAttribute("pageMaker", pageMaker);
 		
-		return "/admin/notice/list";
+		return "/admin/notice/listSearch";
 	}
 	
 	
@@ -347,26 +349,47 @@ public class AdminBoardController {
 	
 	/**
 	 * 2018.12.05
-	 * @Method설명: FAQ 목록 페이징 리스트
+	 * @Method설명: FAQ 글목록 + 페이징
 	 * @작성자: 조요한
 	 */
 	@RequestMapping(value="/admin/faqlist", method=RequestMethod.GET)
-	public String faqList(Model model,
-			@RequestParam(required=false, defaultValue="0")int curPage,
-			@RequestParam(required=false, defaultValue="10")int listCount,
-			@RequestParam(required=false, defaultValue="10")int pageCount) {
+	public String faqList(@ModelAttribute("pagingt") PagingT pagingt, Model model) {
 		
 
-		Paging paging = adminBoardService.getPaging(curPage, listCount, pageCount);
-		model.addAttribute("paging", paging);
-		
-		
-		List<Faq> list = adminBoardService.getFaqList(paging);
+		List<Faq> list = adminBoardService.getFaqList(pagingt);
 		model.addAttribute("faqlist", list);
-
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPagingt(pagingt);
+		pageMaker.setTotalCount(adminBoardService.selectCountAllFaq());
+		model.addAttribute("pageMaker", pageMaker);
 		return "/admin/faq/list";
 		
 	}
+	
+	
+	
+	// FAQ 글 목록 + 페이징 + 검색
+	@RequestMapping(value="/admin/faqlistsearch", method=RequestMethod.GET)	
+	public String faqList(@ModelAttribute("searchpagingt")SearchPagingT searchpagingt, Model model) {
+	
+		
+		List<Faq> list = adminBoardService.faqListSearchService(searchpagingt);
+		model.addAttribute("faqlist", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setPagingt(searchpagingt);
+		pageMaker.setTotalCount(adminBoardService.faqCountSearchService(searchpagingt));
+		model.addAttribute("pageMaker", pageMaker);
+		
+		return "/admin/faq/listSearch";
+	}
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value="/admin/faqview", method=RequestMethod.GET)
 	public String faqView(Model model, int faqIdx) {

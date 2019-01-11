@@ -22,7 +22,7 @@ public interface AdminBoardService {
 	// 공지사항 글 리스트 가져오기
 	public List<Notice> getNotiList(PagingT pagingt);
 		 
-	// 게시글 전체 수
+	// 공지 게시글 전체 수(검색전)
 	public int selectCountAll();
 	
 	// 목록+페이징+검색
@@ -54,10 +54,18 @@ public interface AdminBoardService {
 	public Notice postNotiSer(int noticeIdx);
 	
 	// FAQ 글 리스트 가져오기
-	public List<Faq> getFaqList(Paging paging);
+	public List<Faq> getFaqList(PagingT pagingt);
 	
 	// FAQ 게시글 전체 수
 	public int selectCountAllFaq();
+	
+	
+	// 목록+페이징+검색
+	public List<Faq> faqListSearchService(SearchPagingT searchpagingt);
+	
+	// 검색 결과 개수
+	public int faqCountSearchService(SearchPagingT searchpagingt);
+	
 	
 	//현재 페이지 얻기
 	public int getCurPage(HttpServletRequest req);
