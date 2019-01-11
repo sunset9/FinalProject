@@ -13,7 +13,7 @@ $(document).ready(function () {
 	$.ajax({
 		type:"GET",
 		url:"/ticket/oriSec",
-		data:{},
+		data:{"hallIdx": 2},
 		dataType:"json",
 		success:function(res){
 			
@@ -21,7 +21,6 @@ $(document).ready(function () {
 				var str = 'path.'+res.hashMap.oriSecMap[i].secName; 
 				var path = $('.seat_block').find(str); //seat_block 하위요소중 path중에 불러온 이름중 원본섹션이름을 가진걸 불러와라
 				path.data("secIdx",res.hashMap.oriSecMap[i].oriSecIdx); //path에다가 커스텀 데이터 secIdx를 저장하라
-				
 				if(path.data("secIdx") == undefined){ // 만약 path를 찾을수 없다면 rect로 찾자
 					var str_rect='rect.'+res.hashMap.oriSecMap[i].secName;
 					var rect=$('html').find(str_rect);

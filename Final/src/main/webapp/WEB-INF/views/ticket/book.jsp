@@ -177,6 +177,8 @@ $(document).ready(function() {
 		  
 		  var secNameArr = secName.split(" ");
 		  
+		  console.log($(this).data("secIdx"));
+		  
 			$.ajax({
 				type:"GET",
 				url:"/hall/hall_2_seats/seat",
@@ -192,6 +194,7 @@ $(document).ready(function() {
 					},
 				dataType:"html",
 				success:function(res){
+					
 					$('#selectedSeats').html(res);
 				}
 				
@@ -796,6 +799,8 @@ function tempSeatAdd(){
     border-radius: 6px;
     color: #F2B134;
     border: 1px solid #F2B134;
+    margin-top: 22px;
+}
 }
 /*좌석도 전체보기 버튼 hover*/
  #seatAllViewBtn:hover{

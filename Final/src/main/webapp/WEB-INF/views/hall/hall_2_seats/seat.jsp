@@ -244,10 +244,22 @@ div.seatCharts-cell {
                      var col = ${seatMap.maxCol};
                      
                      if(row <= 15 || col <= 15 ){
-                    	 
                     	 $("div.seatCharts-cell").css("height","30px");
                     	 $("div.seatCharts-cell").css("width","30px");
                     	 $("div.seatCharts-row").css("margin","-15px");
+                     }
+                     
+                     if(row >=25 || col > 25){
+                    	 $("div.seatCharts-cell").css("height","20px");
+                    	 $("div.seatCharts-cell").css("width","20px");
+                    	 $("div.seatCharts-row").css("margin","-25px");
+                    	 
+                     }
+                     
+                     if(row >=30 || col >= 30 ){
+                    	 $("div.seatCharts-cell").css("height","13px");
+                    	 $("div.seatCharts-cell").css("width","13px");
+                    	 $("div.seatCharts-row").css("margin","-35px");
                     	 
                      }
                      
