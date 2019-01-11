@@ -86,6 +86,10 @@ public class MainController {
 		
 		logger.info("맞춤 공연");
 		logger.info(userIdx);
+		
+		// 로그인 정보 없는 경우 null 반환
+		if("".equals(userIdx)) return null;
+		
 		int idx = Integer.parseInt(userIdx);
 		
 //		List<Poster> fitPfmList = mainService.getFitPfmList(userIdx);
