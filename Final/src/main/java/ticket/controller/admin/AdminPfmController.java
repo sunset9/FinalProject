@@ -1198,12 +1198,7 @@ public class AdminPfmController {
 	 */
 	@RequestMapping(value = "/admin/tBannerfinalSave", method = RequestMethod.POST)
 	public void tBannerfinalSave() {
-		// 질문 : 탭배너에는 New/콘서트/뮤지컬 3분류가 있는데
-		// 디비에 저장될때는 분류 상관없이 그냥 등록된 순서대로 저장되는 것인지
-
-		// 뉴 탭 배너 리스트 가져오기
-		// 콘서트 배너 리스트 가져오기
-		// 뮤지컬 배너 리스트 가져오기
+		   
 
 		// 디비에 인서트
 	}
