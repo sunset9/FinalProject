@@ -120,10 +120,10 @@ $(document).ready(function() {
 				$('#selectedSeats_small #ez_canvas_zone').css("height","100px");
 				$('#selectedSeats_small #scroller').css("width","100px");
 				$('#selectedSeats_small #scroller').css("height","100px");
-				$('#selectedSeats_small svg').width('300px');
+				$('#selectedSeats_small svg').width('293px');
 				$('#selectedSeats_small #wrapper').css("width","10px");
 				$('#selectedSeats_small #wrapper').css("height","10px");
-				$('#selectedSeats_small .stage_img').height('213px');
+				$('#selectedSeats_small .stage_img').height('207px');
 				
 				loadSectionData($('#selectedSeats_small'));
 
@@ -720,11 +720,15 @@ function tempSeatAdd(){
 <style type="text/css">
 .progressbar {
 	counter-reset: step;
+    margin-top: 11px;
+    margin-left: -139px;
+    display: flex;
+    width: 1000px;
 }
 .progressbar li {
 	list-style-type: none;
 	float:left;
-	width: 25%;
+	width: 300px;
 	position: relative;
 	text-align: center;
     color: #7d7d7d;
@@ -784,12 +788,11 @@ function tempSeatAdd(){
      background-color: #F2B134; 
 }
 
-
 /*결제버튼*/
 .btn_onestop {
     position: absolute;
-    left: 15px;
-    bottom: 10px;
+    left: 18px;
+    margin-top: 10px;
 }
 
 .clicked {
@@ -799,18 +802,19 @@ function tempSeatAdd(){
  
  #userSelect {
     height: 110px;
-    /* border: 1px solid #bebebe; */
+    border: 1px solid #d8d8d8;
     border-radius: 3px;
     padding: 14px 12px;
     overflow: hidden;
-    background: #fafafa;
+    background: #fff;
  }
  
  #selectedSeatInfo>h3, #payInfo>h3 {
  	color: #565656;
  }
  #selectedSeatInfo {
-    margin-bottom: 20px;
+    padding-top: 9px;
+    margin-bottom: 38px;
  }
  
  #selectedSeats_small>#wrapper{
@@ -818,13 +822,17 @@ function tempSeatAdd(){
 	 width: 10px;
  }
  
+ #payInfo h3 {
+    margin-top: 13px;
+ }
  #booking-detail {
-    padding-left: 20px;
-    width: 320px;
-    height: 645px;
+    padding: 10px 20px;
+    width: 332px;
+    height: 684px;
     position: absolute;
-    left: 690px;
-    top: 71px;
+    left: 715px;
+    top: 18px;
+    background: #f9f9f9;
  }
  
  #booking-detail h3 {
@@ -843,7 +851,9 @@ function tempSeatAdd(){
  
  #legend2{
     list-style: none;
-    margin-left: -38px;
+    padding: 5px 10px;
+    background: #fff;
+    border: 1px solid #d8d8d8;	
  }
  
  #legend2 li {
@@ -856,7 +866,7 @@ function tempSeatAdd(){
  }
  /*다음단계*/
  #seatBtn{
-    width: 300px !important;
+    width: 294px !important;
     background-color: #F2B134;
     padding: 10px 16px;
     font-size: 18px;
@@ -873,7 +883,7 @@ function tempSeatAdd(){
 
 /*좌석도 전체보기 버튼*/
 #seatAllViewBtn{
-    width: 300px;
+    width: 293px;
     background-color: #fff;
     padding: 5px;
     font-size: 14px;
@@ -918,11 +928,13 @@ function tempSeatAdd(){
 /*티켓정보*/
 .wrap_ticket_info{
     position: absolute !important;
-    width: 269px;
+    width: 269px !important;
     padding: 14px 10px 14px 13px; 
-    height: 624px;
+    height: 647px;
     left: 814px ;
+    top: 24px;
     float: none !important;
+    background: #f9f9f9;
 }
 
 
@@ -931,18 +943,24 @@ function tempSeatAdd(){
 	margin-left: -35px !important;
 }
 
-#bookStep_2{
+#bookStep_2, #bookStep_3{
     width: 760px;
-    padding: 50px 50px 50px 70px;
+    padding: 50px 50px 50px 55px;
     margin-left: -30px;
-    margin-top: 38px;
+    margin-top: 21px;
     border: 1px solid #d6d6d6;
 }
+#bookStep_3 {
+	display: flex;
+}
 
+.logo_onestop {
+	height: 59px !important;
+	margin-top: 0px !important; 
+}
 .logo_onestop img {
 	margin-left: -50px;
     height: 58px;
-    margin-top: 30px;
 }
 
 /*스탭버튼*/
@@ -961,8 +979,8 @@ function tempSeatAdd(){
   background-color: #F2B134;
   color: #fff !important;
 }
-.box_info{
-    margin-top: 58px;
+.box_info:first-child{
+	padding-top: 5px !important;
 }
 
 .select_tit{
@@ -992,10 +1010,8 @@ function tempSeatAdd(){
     padding-left: -9px;
     padding-top: -6px;
     padding-bottom: 20px;
-    margin-left: -38px;
-/*     margin-left: 170px; */
-    /* border: 1px solid #BCBC; */
-    /* margin-left: 22px; */
+    position: absolute;
+    top: 73px;
 }
 
 #detailStep {
@@ -1016,15 +1032,6 @@ function tempSeatAdd(){
 #payment:hover{
  background-color: #F2B134;
   color: #fff !important;
-}
-
-.box_r{
-      margin-top: -533px !important;
-/*     margin-left: 24px; */
-     margin-left: -120px; 
-    width: 760px !important;
-    border: 1px solid #BCBC !important;
-    height: 531px !important;
 }
 
 #pfmNameInfo{
@@ -1048,7 +1055,7 @@ function tempSeatAdd(){
 <body>
 <div id = allDiv>
 <div id ="stepInfo">
-<ul class="progressbar" style="margin-left: -38px;">
+<ul class="progressbar"">
 	<li id="step-1" class='inProgress'>좌석선택</li>
 	<li id="step-2">가격/수령방법</li>
 	<li id="step-3">결제방법</li>
@@ -1118,7 +1125,7 @@ function tempSeatAdd(){
 				</ul>
 			</div> <!-- box_ticket -->
 		</div><!-- box_info -->
-		<div class="box_info" style="margin-top: 20px;">
+		<div class="box_info">
 		<h3 class="select_tit">결제금액</h3>
 		<div class="box_ticket">
 				<div class="box_total_inner">

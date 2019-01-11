@@ -253,7 +253,7 @@ $(document).ready(function() {
 				 
 			 }else{
 				  var win = window.open(path,"test", "width=500px,height=599px");
-			
+
 			 }
 			  
 		});
