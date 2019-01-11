@@ -25,10 +25,9 @@
 }
 #profileDiv{
 	grid-column:1/2;
-	padding-left: 20px;
-	padding-top: 10px;
+ 	margin-top: 10px;
 }
-#nickDiv{
+#nickDiv{	
 	grid-column:2/3;
 	display: inline-block;
 	text-align: center;
@@ -60,8 +59,8 @@
 	font-weight: bold;
 }
 .cover {
+	display: inline-block;
 	z-index: 10;
-	left:104px;
     background-color: #33333399;
     height: 152px;
     width: 150px;
@@ -167,7 +166,13 @@ $(document).ready(function() {
 	 $('#profileDiv').mouseenter(function(){
 		 console.log("마우스 over");
 
-		$('.overDiv').show();
+// 		var cover = $('<div class="cover">');
+// 		var cSpan = $('<span class="changeSpan">변경</span>');
+// 		cover.append(cSpan);
+// 		$(this).parent('#profileDiv').append(cover);
+// 		$(this).parent.append(cover);
+// 		$('.overDiv').show();
+		$('.overDiv').css("display", "inline-block");
 			
     });
 	  // 마우스 leave시
@@ -175,7 +180,9 @@ $(document).ready(function() {
 	$('#profileDiv').mouseleave(function() {
 	    	console.log("마우쓰가 떠났다");
 	    
-	    	$('.overDiv').hide();		
+// 	    	$('.overDiv').hide();		
+		$('.overDiv').css("display", "none");
+// 	    	$(this).remove();
 	    	
 	    });
 	
@@ -185,39 +192,42 @@ $(document).ready(function() {
 
 <div id = "userinfo">
 	<div id = profileDiv>
-		<div class="overDiv cover">
-			<span class="changeSpan">
-				변경
-			</span>		
-		</div>
-		
-		<img id = "userProfile" src="${loginUser.profile }"  class="img-circle"/>
-		</div>
-		
-<!-- 		수정할 사진 업로드 할 input 안보이게 숨겨 놓고 사진 누르면 반응 -->
-		<div style="display: none;">
-		<form id="imageForm" action ="/user/profile"method="POST" enctype="multipart/form-data">
-			<input type="file" id ="profileFile" name="profileFile"/>
-		</form>
-		</div>
-		
-		<div id="nickDiv">
-			<div id ="nickSec">
-			<span id="userNick">${loginUser.nick }</span> <small>님 안녕하세요</small><br><br>
-			<button id="userInfoChange" onclick ="location.href='/user/pwcheck'" class="btn btn-default">정보 변경</button>
+		<div>
+			<div class="overDiv cover">
+				<span class="changeSpan">
+					변경
+				</span>		
 			</div>
-		</div>
 		
-		<div id="bookDiv">
-			<span id ="bookCnt" class ="cnt"></span><br>
-			<span class="info">예매 완료</span>
-		</div>
-		
-		<div id ="cancelDiv">
-			<span id ="cancelCnt"  class ="cnt"></span><br>
-			<span class="info">취소 현황</span>
+			<img id = "userProfile" src="${loginUser.profile }"  class="img-circle"/>
 		</div>
 	</div>
+	
+	
+<!-- 		수정할 사진 업로드 할 input 안보이게 숨겨 놓고 사진 누르면 반응 -->
+	<div style="display: none;">
+	<form id="imageForm" action ="/user/profile"method="POST" enctype="multipart/form-data">
+		<input type="file" id ="profileFile" name="profileFile"/>
+	</form>
+	</div>
+	
+	<div id="nickDiv">
+		<div id ="nickSec">
+		<span id="userNick">${loginUser.nick }</span> <small>님 안녕하세요</small><br><br>
+		<button id="userInfoChange" onclick ="location.href='/user/pwcheck'" class="btn btn-default">정보 변경</button>
+		</div>
+	</div>
+	
+	<div id="bookDiv">
+		<span id ="bookCnt" class ="cnt"></span><br>
+		<span class="info">예매 완료</span>
+	</div>
+	
+	<div id ="cancelDiv">
+		<span id ="cancelCnt"  class ="cnt"></span><br>
+		<span class="info">취소 현황</span>
+	</div>
+</div>
 	
 	
 	

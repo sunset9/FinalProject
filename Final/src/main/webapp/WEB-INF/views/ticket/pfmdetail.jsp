@@ -46,7 +46,7 @@ $(document).ready(function() {
 		, success: function(data){
 			console.log("check 성공");
 			if(parseInt(data)=="1"){
-				$('#choiceBtn').html('<button class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+				$('#choiceBtn').html('<button class="btn" id="cancelBtn" >담기 취소</button>')
 			}
 		}
 		, error: function(e){
@@ -58,8 +58,8 @@ $(document).ready(function() {
 	
 	
 	// 공연플래너 담기 버튼
-	$('#choiceBtn').on('click','#cancelBtn',function(){
-// 	$('#mychoiceBtn').click(function() {
+	$('#choiceBtn').on('click','#mychoiceBtn',function(){
+// 	$(tn').click(function() {
 		var userIdx = '${loginUser.userIdx }';
 		console.log("loginUserIdx : " + userIdx);
 		
@@ -80,7 +80,7 @@ $(document).ready(function() {
 				
 				if(choice)
 					alert('공연플래너 담기가 완료되었습니다.');
-					$('#choiceBtn').html('<button  class="btn btn-default" id="cancelBtn" >담기 취소</button>')
+					$('#choiceBtn').html('<button  class="btn" id="cancelBtn" >담기 취소</button>')
 			}
 			, error: function(e) {
 				console.log('실패');
@@ -123,7 +123,7 @@ $(document).ready(function() {
 					
 					if(data)
 						alert('찜 한 공연이 취소되었습니다.');
-						$('#choiceBtn').html('<button  class="btn btn-warning" id="mychoiceBtn">공연 담기</button>')
+						$('#choiceBtn').html('<button  class="btn" id="mychoiceBtn">공연 담기</button>')
 					
 				}
 				, error: function(e) {
