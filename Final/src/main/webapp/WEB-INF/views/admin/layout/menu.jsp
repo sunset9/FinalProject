@@ -115,14 +115,14 @@ h1, h2, h3 {
 
 .menuUl a, .menuUl li{
 	text-decoration: none;
-	color: #b7c0cd;
+	color: #b7c0cd !important;
 	font-size: 18px;
 	font-weight: 600;
 	margin-bottom: 20px;
 }
 
 .menuUl a:hover{
-	color: #fff;
+	color: #fff !important;
 }
 
 .dropdown ul li, .dropdown2 ul li {

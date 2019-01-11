@@ -2,8 +2,6 @@
 .section_onestop{width:950px;heigth:652px;position: relative;}
 .section_onestop:after{content: ""; display: block;clear: both;}
 .wrap_select{float:left;width:682px;}
-.wrap_ticket_info{position:relative;float: left;width: 245px;padding: 14px 10px 14px 13px;height: 624px;background-color: #fafafa;}
-.box_r {overflow-y:auto; width:636px;height:574px;padding:29px 16px 0 30px;}
 .box_gray{width:580px;margin-top:20px;padding:14px 20px 22px;background-color:#fafafa;line-height:30px;}
 .box_gray input, .box_gray select{height:22px}
 .wrap_sel .btn_sel .sel_cate{padding-left:5px;line-height:24px;text-align:left;border: 1px solid #ddd;}	
@@ -17,10 +15,6 @@
 .txt_mid{font-size:17px;color:#333;}
 .txt_lst{display:inline-block;margin-right:10px;font-size:18px;}
 .txt_suc{font-size:18px;}
-
-/* UX-1309 */
-.box_r .time_out {padding: 8px 0; margin-bottom: 15px; background-color: #fafafa; color: #f22664; font-size: 15px; text-align: center;}
-/* //UX-1309 */
 
 /* TICKET-3426  자라섬 캠핑장 시설안내도 버튼 과 레이어팝업 START */
 .box_select_t {position: relative;}
@@ -40,7 +34,6 @@
 .one_list li{position:relative; ont-size:12px;}
 .one_list .btn_detail{margin-left:0}
 .one_list .specCancel:hover + .floating_hover_box{display:block;}
-.btn_onestop{position:absolute;left:15px;bottom:10px;}
 .btn_onestop .button{display: inline-block;position:relative;line-height:48px;font-size: 14px;}
 .btn_onestop .buttonOne{width:243px;padding:0;text-align:center;}
 .btn_onestop .button.frt{ margin-right:-3px;}
