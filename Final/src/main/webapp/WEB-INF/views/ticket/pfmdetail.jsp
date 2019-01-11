@@ -46,7 +46,7 @@ $(document).ready(function() {
 		, success: function(data){
 			console.log("check 성공");
 			if(parseInt(data)=="1"){
-				$('#choiceBtn').html('<button class="btn" id="cancelBtn" >담기 취소</button>')
+				$('#choiceBtn').html('<button class="btn" id="cancelBtn" ><span class="glyphicon glyphicon-ok"></span>담기 취소</button>')
 			}
 		}
 		, error: function(e){
@@ -80,7 +80,7 @@ $(document).ready(function() {
 				
 				if(choice)
 					alert('공연플래너 담기가 완료되었습니다.');
-					$('#choiceBtn').html('<button  class="btn" id="cancelBtn" >담기 취소</button>')
+					$('#choiceBtn').html('<button  class="btn" id="cancelBtn" ><span class="glyphicon glyphicon-ok"></span>담기 취소</button>')
 			}
 			, error: function(e) {
 				console.log('실패');
@@ -123,7 +123,7 @@ $(document).ready(function() {
 					
 					if(data)
 						alert('찜 한 공연이 취소되었습니다.');
-						$('#choiceBtn').html('<button  class="btn" id="mychoiceBtn">공연 담기</button>')
+						$('#choiceBtn').html('<button  class="btn" id="mychoiceBtn"><span class="glyphicon glyphicon-ok"></span>내 공연 담기</button>')
 					
 				}
 				, error: function(e) {
@@ -681,7 +681,9 @@ function insertQnaRecommList(qnaRecommList) {
 #mychoiceBtn span {
 	margin-right: 10px;
 }
-
+#cancelBtn span {
+	margin-right: 10px;
+}
 #cancelBtn{
 	width: 140px;
     height: 40px;

@@ -8,7 +8,8 @@
 	color:red;
 }
 #inqList { 
-	width: 95%;
+	margin: 0 auto;
+	width: 90%;
 }
 
 /* 탭 메뉴 설정 */
@@ -77,11 +78,11 @@
 <table class="table" id="inqList">
 <thead>
 <tr>
-	<th>글번호</th>
-	<th>제목</th>
-	<th>답변 상태</th>
-	<th>작성자</th>
-	<th>작성일</th>
+	<th style="width: 10%">글번호</th>
+	<th style="width: 50%;">제목</th>
+	<th style="width: 10%">답변 상태</th>
+	<th style="width: 15%">작성자</th>
+	<th style="width: 20%">작성일</th>
 </tr>
 </thead>
 <tbody>

@@ -128,7 +128,7 @@
    </select>
   
   <insert id="insert" parameterType="ticket.dto.User">
- <selectKey  resultType="int" keyProperty="userIdx" order="BEFORE">
+ 	<selectKey  resultType="int" keyProperty="userIdx" order="BEFORE">
   		SELECT USERINFO_SEQ.nextval FROM dual
   	</selectKey>
   

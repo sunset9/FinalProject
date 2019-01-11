@@ -19,7 +19,7 @@
 
 
 <style>
-#detailTable{
+.detailTable{
 	width: 80%;
 	margin: 0 auto;
 	height: 400px;
@@ -73,33 +73,60 @@
 <h1 style="text-align: center"> 1:1 문의 상세보기</h1>
 
 <div class = "inqWrap">
-<table id="detailTable" class="table table-bordered" >
-<tr class="infoTr">
-	<th class ="inqInfo" style="border-top-left-radius:5px; ">제목</th>
-	<td>${inq.title }</td>
-	<th class ="inqInfo">답변 상태</th>
-	<c:if test="${inq.replyStatus eq 0}"><td class="waiting">답변 대기</td></c:if>
-	<c:if test="${inq.replyStatus eq 1}"><td style="border-top-right-radius:5px; ">답변 완료</td></c:if>
-</tr>
-<tr class="infoTr">
-	<th class ="inqInfo">작성자</th>
-	<td>${inq.userName }</td>
-	<th class ="inqInfo">작성일</th>
-	<td>
-	<fmt:formatDate value="${inq.createDate }" pattern="yyyy-MM-dd HH:mm"/>
-	</td>
-</tr>
-<tr id="inqContents" style="border-bottom-radius:5px; ">
-	<td colspan=4><div class="fr-view">${inq.contents }</div></td>
-</tr>
-
-</table>
-
-
-	<div class="btnDiv">
-	<button class ="previous"onclick="location.href='/mypage/viewinquiry'">목록</button>
-	<button class ="cancel"onclick="location.href='/mypage/deleteInquiry?inqIdx=${inq.inqIdx }'">삭제</button>
-	</div>
+	<h3>&lt;문의내용&gt;</h3>
+	<table class="detailTable table table-bordered" >
+		<tr class="infoTr">
+			<th class ="inqInfo" >제목</th>
+			<td>${inq.title }</td>
+			<th class ="inqInfo">답변 상태</th>
+			<c:if test="${inq.replyStatus eq 0}"><td class="waiting">답변 대기</td></c:if>
+			<c:if test="${inq.replyStatus eq 1}"><td style="border-top-right-radius:5px; ">답변 완료</td></c:if>
+		</tr>
+		<tr class="infoTr">
+			<th class ="inqInfo">작성자</th>
+			<td>${inq.userName }</td>
+			<th class ="inqInfo">작성일</th>
+			<td>
+			<fmt:formatDate value="${inq.createDate }" pattern="yyyy-MM-dd HH:mm"/>
+			</td>
+		</tr>
+		<tr id="inqContents" style="border-bottom-radius:5px; ">
+			<td colspan=4><div class="fr-view">${inq.contents }</div></td>
+		</tr>
+	
+	</table>
+	
+	
 </div>
+<%-- <c:if test='${inqAns.title != ""|| inqAns.title ne null }'> --%>
+<c:if test='${!empty inqAns }'>
+	<div class = "inqWrap">
+	${empty inqAns }
+	
+	<h3>&lt;답변&gt;</h3>
+		<table class="detailTable table table-bordered" >
+			<tr class="infoTr">
+				<th class ="inqInfo" >제목</th>
+				<td colspan="3">${inqAns.title }</td>
+			</tr>
+			<tr class="infoTr">
+				<th class ="inqInfo">작성자</th>
+				<td>${inqAns.userName }</td>
+				<th class ="inqInfo">작성일</th>
+				<td>
+				<fmt:formatDate value="${inqAns.createDate }" pattern="yyyy-MM-dd HH:mm"/>
+				</td>
+			</tr>
+			<tr id="inqContents" style="border-bottom-radius:5px; ">
+				<td colspan=4><div class="fr-view">${inqAns.contents }</div></td>
+			</tr>
+		
+		</table>
+	</div>
+	</c:if>
+	<div class="btnDiv">
+		<button class ="previous"onclick="location.href='/mypage/viewinquiry'">목록</button>
+		<button class ="cancel"onclick="location.href='/mypage/deleteInquiry?inqIdx=${inq.inqIdx }'">문의삭제</button>
+	</div>
 </div>
 </div>
