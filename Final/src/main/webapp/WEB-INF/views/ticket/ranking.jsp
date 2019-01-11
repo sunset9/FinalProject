@@ -71,6 +71,15 @@ tbody tr:nth-child(-n+3)>.ranking {
     padding-top: 40px;
 /*     padding-left: 10px; */
 }
+.pfmname {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 225px; 
+    white-space: nowrap;
+    text-align: left;
+    padding-top: 65px;
+    padding-left: 50px; 
+}
 
 
 </style>
@@ -224,7 +233,7 @@ function viewRank(pfmList){
 		var mainInfo = $('<div class="pfmInfo">'); // 주요 정보(포스터, 이름)
 		var mainInfo_a = $('<a href="/ticket/pfmdetail?pfmIdx='+pfm.pfmIdx+'" style="text-decoration:none">');
 		mainInfo_a.append($('<img src="/resources/image/'+ pfm.posterName + '">'));
-		mainInfo_a.append($('<p>'+ pfm.name +'</p>'));
+		mainInfo_a.append($('<div class="pfmname">'+ pfm.name +'</div>'));
 		mainInfo.append(mainInfo_a);	
 		
 		tr.append($('<td>').append(mainInfo));
@@ -252,10 +261,10 @@ function viewRank(pfmList){
 <div class="pfmRanking">
 <strong>주간 TOP10</strong>
 <table class="table">
-<thead>
-	<tr>
+<thead> 
+	<tr>  
 		<th width="10%">랭킹</th>
-		<th width="20%">공연명</th>
+		<th width="24%">공연명</th>
 		<th width="15%">공연일시</th>
 		<th width="15%">공연장소</th>
 		<th width="15%">예매</th>
