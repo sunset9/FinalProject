@@ -27,6 +27,12 @@
 	<beans:bean
 	class="ticket.interceptor.MypageInterceptor" />
 	</interceptor>
+	
+	<interceptor>
+	<mapping path="/ticket/book" />
+	<beans:bean
+		class="ticket.interceptor.BookInterceptor" />
+	</interceptor>
 	</interceptors>
  
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 

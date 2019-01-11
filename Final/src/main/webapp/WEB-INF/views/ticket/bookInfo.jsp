@@ -243,7 +243,17 @@ $(document).ready(function() {
 			  
 			  
 // 			  window.open(path, "_blank", "width="+userwidth+",height="+userheight);
-			  var win = window.open(path, "_blank", "width=1100px,height=710px");
+
+			var login = "${sessionScope.loginUser}";
+			console.log(login.length)
+			 if(login.length == 0){
+				 
+// 				 location.href="/ticket/pfmdetail?pfmIdx="+${pfm.pfmIdx};
+				 location.href=path;
+				 
+			 }else{
+				  window.open(path, "_blank", "width=1100px,height=710px");
+			 }
 			  
 		});
 	

@@ -604,9 +604,9 @@ public class TicketController {
 		
 		Date today = new Date();
 		
-		Date start = pfm.getPfmStart();
+		Date start = pfm.getTicketStart();
 		
-		Date end = pfm.getPfmEnd();
+		Date end = pfm.getTicketEnd();
 		
 		Boolean ticketOpen;
 		
@@ -625,6 +625,10 @@ public class TicketController {
 		}else {
 			ticketEnd = false;
 		}
+		
+		logger.info(""+today);
+		logger.info(""+start);
+		logger.info(""+ticketOpen);
 		
 		SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
 		
