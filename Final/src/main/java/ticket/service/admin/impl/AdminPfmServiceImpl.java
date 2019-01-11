@@ -99,13 +99,13 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<TabBanner> getConTabBanner() {
-		//콘서트 탭배너 목록 가져오기
+		// 콘서트 탭배너 목록 가져오기
 		return pDao.selectConTabBanner();
 	}
 
 	@Override
 	public List<TabBanner> getMuTabBanner() {
-		//뮤지컬&연극 탭배너 목록 가져오기
+		// 뮤지컬&연극 탭배너 목록 가져오기
 		return pDao.selectMuTabBanner();
 	}
 
@@ -165,9 +165,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList
-			, CastList castList, SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList
-			, String pfmDetailContents, String pfmBookinfoContents) {
+	public void registPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
+			SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList, String pfmDetailContents,
+			String pfmBookinfoContents) {
 		int pfmIdx = 0;
 		// 공연 기본 정보 등록
 		pDao.insertPfm(pfm);
@@ -205,9 +205,9 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		}
 
 		// 좌석 정보 등록
-		if(seatSecList.getSeatSecList() != null) {
-			for(SeatSection seatSec : seatSecList.getSeatSecList()) {
-				if(seatSec.getOriSecName() != "") {
+		if (seatSecList.getSeatSecList() != null) {
+			for (SeatSection seatSec : seatSecList.getSeatSecList()) {
+				if (seatSec.getOriSecName() != "") {
 					// 공연 idx 지정
 					seatSec.setPfmIdx(pfmIdx);
 					seatSec.setHallIdx(pfm.getHallIdx());
@@ -215,7 +215,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
-		
+
 		// 공연 일정들(날짜, 시간) 등록
 		if (pfmDbtList.getPfmDbtList() != null) {
 			for (PfmDateByTime pfmDbt : pfmDbtList.getPfmDbtList()) {
@@ -488,7 +488,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public int getPfmCntByGenre(String genre) {
-		// 검색하려는 장르 인덱스 
+		// 검색하려는 장르 인덱스
 		int genreIdx = GenreEnum.valueOf(genre).getIdx();
 
 		return pDao.selectAllCntPfmByGenre(genreIdx);
@@ -496,34 +496,34 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Performance> getPfmListByGenreNOrder(String genre, String order, Paging paging) {
-		// 검색하려는 장르 인덱스 
+		// 검색하려는 장르 인덱스
 		int genreIdx = GenreEnum.valueOf(genre).getIdx();
 
 		// 반환할 결과 리스트
 		List<Performance> resPfmList = new ArrayList<>();
-		
+
 		// 최신순으로 가져오는 경우
-		if("LATEST".equals(order)) {
+		if ("LATEST".equals(order)) {
 			// 장르 일치하는 공연 목록 가져옴(페이징만 신경써서 조회)
 			return resPfmList = pDao.selectPfmByGenre(genreIdx, paging);
-			
-		// 예매순으로 가져오는 경우
-		} else if("RANK".equals(order)){
+
+			// 예매순으로 가져오는 경우
+		} else if ("RANK".equals(order)) {
 			// 오늘 날짜
 			Date today = new Date();
-			
+
 			// 조회 구간 설정
 			// 시작 구간: 30일 전
-			Date start = new Date(today.getTime()); 
-			start.setTime((long) (start.getTime() - (double)30 * 24 * 60 * 60 * 1000));
+			Date start = new Date(today.getTime());
+			start.setTime((long) (start.getTime() - (double) 30 * 24 * 60 * 60 * 1000));
 			// 끝 구간: 오늘
-			Date end = today; 
-			
+			Date end = today;
+
 			resPfmList = pDao.selectAllRankByGenre(start, end, genreIdx);
-			
+
 			return resPfmList;
 		}
-		
+
 		return null;
 	}
 
@@ -543,8 +543,8 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 		hallDao.insert(hall);
 
 		hallIdx = hall.getHallIdx();
-		
-		if(file.getSize()!=0) {
+
+		if (file.getSize() != 0) {
 			HallFile hallFile = uploadHallPic(file);
 			hallFile.setHallIdx(hallIdx);
 			hallFileDao.insert(hallFile);
@@ -623,11 +623,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public void editPfm(Performance pfm, MultipartFile posterUpload, PfmThemeList themeList, CastList castList,
-			SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList, String pfmDetailContents, String pfmBookinfoContents) {
+			SeatSectionList seatSecList, PfmDateByTimeList pfmDbtList, String pfmDetailContents,
+			String pfmBookinfoContents) {
 		int pfmIdx = pfm.getPfmIdx();
 		// 공연 기본 정보 수정
 		pDao.updatePfm(pfm);
-		
+
 		// 포스터 수정
 		if (posterUpload.getSize() != 0) {
 			Poster poster = uploadPoster(posterUpload);
@@ -635,7 +636,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			// 포스터 업로드 정보 DB 저장
 			pDao.updatePoster(poster);
 		}
-		
+
 		// 테마들 수정
 		if (themeList.getThmList() != null) {
 			pDao.deletePfmTheme(pfmIdx); // 이전 테마 정보 모두 삭제하고 다시 등록
@@ -647,7 +648,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
-		
+
 		// 출연진들 수정
 		if (castList.getCastList() != null) {
 			pDao.deleteCast(pfmIdx); // 이전 출연진 정보 모두 삭제
@@ -659,12 +660,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
-		
+
 		// 좌석 정보 수정
-		if(seatSecList.getSeatSecList() != null) {
+		if (seatSecList.getSeatSecList() != null) {
 			pDao.deleteSeatSec(pfmIdx); // 이전 좌석 정보 모두 삭제
-			for(SeatSection seatSec : seatSecList.getSeatSecList()) {
-				if(seatSec.getOriSecName() != null && !"".equals(seatSec.getOriSecName())) {
+			for (SeatSection seatSec : seatSecList.getSeatSecList()) {
+				if (seatSec.getOriSecName() != null && !"".equals(seatSec.getOriSecName())) {
 					// 공연 idx 지정
 					seatSec.setPfmIdx(pfmIdx);
 					seatSec.setHallIdx(pfm.getHallIdx());
@@ -672,7 +673,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 				}
 			}
 		}
-		
+
 		// 공연 일정들(날짜, 시간) 등록
 		if (pfmDbtList.getPfmDbtList() != null) {
 			pDao.deletePfmDbt(pfmIdx);
@@ -700,7 +701,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			pfmBookinfo.setContents(pfmBookinfoContents);
 			pDao.updatePfmBookinfo(pfmBookinfo);
 		}
-		
+
 	}
 
 	@Override
@@ -711,28 +712,28 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public void deletePfm(Performance pfm) {
 		int pfmIdx = pfm.getPfmIdx();
-		
+
 		// 공연 예약정보 삭제
 		pDao.deletePfmBookinfo(pfmIdx);
-		
+
 		// 공연 상제정보 삭제
 		pDao.deletePfmDetail(pfmIdx);
-		
+
 		// 공연 일정 삭제
 		pDao.deletePfmDbt(pfmIdx);
-		
+
 		// 좌석 정보 삭제
 		pDao.deleteSeatSec(pfmIdx);
-		
+
 		// 출연진 목록 삭제
 		pDao.deleteCast(pfmIdx);
-		
+
 		// 테마 삭제
 		pDao.deletePfmTheme(pfmIdx);
-		
+
 		// 포스터 삭제
 		pDao.deletePoster(pfmIdx);
-		
+
 		// 공연 기본 정보 삭제
 		pDao.deletePfm(pfmIdx);
 	}
@@ -740,7 +741,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public void deleteMainBanner(int mainbanIdx) {
 		pDao.deleteMainBanner(mainbanIdx);
-		
+
 	}
 
 	@Override
@@ -758,8 +759,8 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	@Override
 	public void fileUpload(int pfmIdx, ServletContext context, MultipartFile thumbFile, MultipartFile bannerFile) {
 		// 파일 업로드하기
-		
-		//UUID, 고유 식별자 
+
+		// UUID, 고유 식별자
 		String uId = UUID.randomUUID().toString().split("-")[0];
 
 		// 파일이 저장될 경로(서버에 저장해야함, 로컬저장x)
@@ -790,50 +791,50 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 		// 파일번호(PK) fileno NUMBER
 		// 제목 pfmIdx NUMBER
-		
+
 		// 썸네일 원본파일명 thumb_img_ori VARCHAR2(200)
 		// 썸네일 저장된 파일명 thumb_img_str VARCHAR2(200)
-		
+
 		// 배너 원본파일명 banner_img_ori VARCHAR2(200)
 		// 배너 저장된 파일명 banner_img_str VARCHAR2(200)
 
 		// 시퀀스명 main_banner_seq
 
-		// DTO class MainBanner 
+		// DTO class MainBanner
 //		Filetest filetest = new Filetest();
 		MainBanner mainBanner = new MainBanner();
 
 //		mainBanner.setTitle(title);
 //		mainBanner.setOrigin_name(fileupload.getOriginalFilename());
 //		mainBanner.setStored_name(name);
-		
+
 		mainBanner.setPfmIdx(pfmIdx);
 		mainBanner.setThumbImgOri(thumbFile.getOriginalFilename());
 		mainBanner.setThumbImgStr(thumbFileName);
 		mainBanner.setBannerImgOri(bannerFile.getOriginalFilename());
 		mainBanner.setBannerImgStr(bannerFileName);
-		
+
 //		fileDao.uploadInfoSave(filetest);
 		pDao.insertMainBanner(mainBanner);
 	}
-	
+
 	@Override
 	public void saveMainbanner(MainBanner mainbanner) {
 		// 메인배너저장
 		pDao.insertMainBanner(mainbanner);
-		
+
 	}
 
 	@Override
 	public boolean checkPfmIdxDup(int pfmIdx) {
 		// pfmIdx로 메인 배너 중복 확인하기
-		if(pDao.selectPfmIdxDup(pfmIdx) == 0) {
+		if (pDao.selectPfmIdxDup(pfmIdx) == 0) {
 			// 중복 x
-			
+
 			return true;
 		} else {
 			// 중복 o
-			
+
 			return false;
 		}
 	}
@@ -842,10 +843,12 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public List<Performance> getAllPfmList(Paging paging) {
 		return pDao.selectAllPfmList(paging);
 	}
+
 	@Override
 	public List<Performance> getAllConPfmList(Paging paging) {
 		return pDao.selectAllConPfm(paging);
 	}
+
 	@Override
 	public List<Performance> getAllMuPfmList(Paging paging) {
 		return pDao.selectAllMuPfm(paging);
@@ -859,13 +862,13 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public List<Performance> getNewestPfmList(String mbPfmSearch) {
-		// 정렬 종류별 공연 목록 가져오기 
+		// 정렬 종류별 공연 목록 가져오기
 		return pDao.selectNewestPfmList(mbPfmSearch);
 	}
 
 	@Override
 	public List<Performance> getAlphaPfmList() {
-		// 정렬 종류별 공연 목록 가져오기 
+		// 정렬 종류별 공연 목록 가져오기
 		return pDao.selectAlpahPfmList();
 	}
 
@@ -918,7 +921,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 
 	@Override
 	public int getTotalPfmCnt() {
-		// 총 누적공연수 가져오기 
+		// 총 누적공연수 가져오기
 		return pDao.selectTotalPfmCnt();
 	}
 
@@ -938,9 +941,37 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	public void saveTabbanner(TabBanner tabbanner) {
 		// 탭 배너 최종 저장
 		pDao.saveTabbanner(tabbanner);
-		
+
 	}
 
-	
+	@Override
+	public void mainbannerfileupload(MultipartFile thumbFile, MultipartFile bannerFile, String thumbStored,
+			String bannerStored) {
+		// 메인 배너 서버 업로드
+
+		// 파일이 저장될 경로
+		String stored = context.getRealPath("resources/image");
+		
+		// 서버에 저장될 파일의 이름
+		String tStoredName = thumbStored;
+		String bStoredName = bannerStored;
+		
+		// 파일 객체
+		File dest = new File(stored, tStoredName);
+		File dest2 = new File(stored, bStoredName);
+		
+		// 파일 업로드
+		try {
+			thumbFile.transferTo(dest);
+			bannerFile.transferTo(dest2);
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

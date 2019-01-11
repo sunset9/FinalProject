@@ -617,4 +617,11 @@ public interface AdminPfmService {
 	public MainBanner getMbBymainbanIdx(int mainbanIdx);
 	
 	
+	/**
+	 * @최종수정일: 2019.01.11
+	 * @Method설명: 메인 배너 이미지 서버 업로드
+	 * @작성자: 김지은
+	 */
+	public void mainbannerfileupload(MultipartFile thumbFile, MultipartFile bannerFile, String thumbStored, String bannerStored);
+	
 }
