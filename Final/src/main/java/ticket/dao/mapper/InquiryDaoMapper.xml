@@ -32,16 +32,16 @@
 
 	<select id="selectInquiryList" parameterType="hashmap" resultMap="Inquiry">
 	
-		SELECT ii.*
-		FROM (
-    		SELECT ROWNUM as rnum, iq.* FROM (
-       		   SELECT * FROM inquiry 
-                WHERE user_idx= #{userIdx } 
-   		) iq
-              ORDER BY create_date desc
-		) ii
-		WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
-		ORDER BY rnum
+	SELECT ii.* FROM (
+	    SELECT ROWNUM as rnum, iq.* FROM ( 
+	        SELECT inq_idx, title, contents, reply_status, create_date,
+		        (SELECT name FROM userinfo U WHERE U.user_idx = I.user_idx) name
+		        FROM inquiry I WHERE user_idx= #{userIdx }  ) iq 
+	    ORDER BY create_date desc ) ii 
+	WHERE rnum BETWEEN #{paging.startNo } AND #{paging.endNo }
+	ORDER BY rnum
+	
+
 	</select>
 
 	<select id="selectInquiryByInqIdx" parameterType="ticket.dto.Inquiry" resultMap="Inquiry">

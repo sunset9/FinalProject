@@ -320,8 +320,8 @@ function pfmChoice(pfmIdx){
   <div class="carousel-inner" role="listbox">
   
 <!--   초기 활성화 하기 위한 div  -->
-   <div class="item active">
-   </div>
+<!--    <div class="item active"> -->
+<!--    </div> -->
     
      <c:forEach items="${recomList }" var ="recom"  varStatus="index">
      
