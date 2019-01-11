@@ -7,7 +7,8 @@
 
 <style>
 a {color:#1a1a1a; text-decoration:none;}
-a:link	{color:#1a1a1a; text-decoration:none;}
+a:hover {color:#1a1a1a; text-decoration:none;}
+/* a:link	{color:#1a1a1a; text-decoration:none;} */
 
 #registBtn {
     float: right;

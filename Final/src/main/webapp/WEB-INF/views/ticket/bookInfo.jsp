@@ -129,16 +129,16 @@ $(document).ready(function() {
 	  });
 	  });
   function overm(obj) {
-	  obj.css("border","2px solid #F2B134");
-	  obj.css("color","#F2B134");
+// 	  obj.css("border","2px solid #F2B134");
+// 	  obj.css("color","#F2B134");
   }
   
   function leavem(obj) {
-	  obj.css("border-top"," 0px solid #f6f6f6");
-	  obj.css("border-left","0px solid #f6f6f6");
-	  obj.css("border-right","0px solid #f6f6f6");
-	  obj.css("border-bottom","3px solid #f6f6f6");
-	  obj.css("color","#666");
+// 	  obj.css("border-top"," 0px solid #f6f6f6");
+// 	  obj.css("border-left","0px solid #f6f6f6");
+// 	  obj.css("border-right","0px solid #f6f6f6");
+// 	  obj.css("border-bottom","3px solid #f6f6f6");
+// 	  obj.css("color","#666");
   }
   
   function downm(obj) {
@@ -256,17 +256,21 @@ $(document).ready(function() {
 	margin-bottom: 1px !important;
 }
 .selected{
-	 border: 2px solid #3E4982 !important;
-	 color: #F2B134 !important;
-    margin-bottom: 0px !important;
+/* 	 border: 2px solid #3E4982 !important; */
+	border: 2px solid #F2B134 !important;
+	color: #F2B134 !important;
+	margin-bottom: 0px !important;
+	background: #fff !important;
+	margin-bottom: 0px !important;
+	font-weight: 600;
 }
 .times{
-    width: 105%;
+/*     width: 105%; */
     height: 59px;
     font-size: 19px;
     text-align: center;
     background-color: #fff;
-    margin-left: 7px;
+/*     margin-left: 7px; */
     border-top: 0px solid #f6f6f6;
     border-left: 0px solid #f6f6f6;
     border-right: 0px solid #f6f6f6;
@@ -274,49 +278,98 @@ $(document).ready(function() {
     color: #666;
   }
   
+#ticketInfo {
+    border-bottom: 1px solid #ddd;
+}
+#ticketInfo>#infoTitle {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 5px 0;
+}
+#info {
+	display: flex;
+	margin-top: 20px;
+	margin-bottom: 15px;
+}
 
+.ui-datepicker-calendar {
+    width: 85% !important;
+    margin-left: calc(15% /2) !important;
+}
+#timeList {
+	width: 80%;
+    margin: 0 auto;
+}
+
+#timeList li {
+	border: 1px solid #eee;
+	border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    user-select: none;
+    background: #fbfbfb;
+    line-height: 38px;
+}
+
+#timeList li:hover {
+	border: 2px solid #F2B134;
+	color: #F2B134;
+}
 .list-group{
     -webkit-box-shadow: 0 0px 0px rgba(0,0,0,.075) !important;
     /* border-radius: 4px; */
     box-shadow: 0 0px 0px rgba(0,0,0,.075);
 }
+#BookbtnDiv {
+    height: 67px;
+    padding: 0 10px;
+}
 
 #bookBtn{
+   float: right;
    width: 300px;
-   background-color: #FFF;
    padding: 10px 16px;
-   font-size: 18px;
+   margin: 10px 0px;
+/*    border: 2px solid #F2B134; */
+   border: none;
+/*    border-radius: 6px; */
+/*    background-color: #FFF; */
+	background-color: #F2B134;
+	color: #fff;
+/*    color: #F2B134; */
    line-height: 1.3333333;
-   border-radius: 6px;
-   color: #F2B134;
-   border: 2px solid #F2B134;
-   margin-left: 15px;
+   font-size: 18px;
 }
 
 #bookBtn:hover{
- background-color: #F2B134;
-  color: #fff;
+	background-color: #eca10f;
+	color: #fff;
 }
 .ui-widget.ui-widget-content {
-    border: 1px solid #F2B134;
+/*     border: 1px solid #F2B134; */
+     border: none; 
 }
 .ui-datepicker{ 
 	font-size: 14px;
-    width: 100%;
+    width: 95%;
     height: 100%;
     color: #F2B134;
+    margin: 0 auto;
     background: 1px solid #F2B134; 
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
-    border: 1px solid #F2b134;
+/*     border: 1px solid #F2b134; */
+    border: 1px solid #eee;
     background: #ffdc9aa8;
+    background: #eee;
     font-weight: normal;
     color: #454545;
 }
 
 .ui-widget-header {
-    border: 2px solid #ffc6585e;
+    border: 1.5px solid #ffc6585e;
     background: #ffe7b900;
     color: #F2B134;
     font-weight: bold;
@@ -329,6 +382,13 @@ $(document).ready(function() {
     color: #ffffff;
 }
 
+.ui-corner-all>span {
+	opacity: 0.3;
+}
+
+#ResidualSeatList td {
+	border: none;
+}
 
 #ticketNotOpen{
 	text-align: center;
@@ -352,7 +412,7 @@ $(document).ready(function() {
   <li role="presentation" style="width: 28%; color:#4a4a4a ">잔여석</li>
 </ul>
 </div>
-<div id = "info" style="float: bottom">
+<div id = "info">
 	<div id = "datepicker" 
 	style="float: left;
     width: 30%;">
@@ -372,8 +432,8 @@ $(document).ready(function() {
 	</div>
 </div>
 </div>
-<div id = "BookbtnDiv" style="margin-left: 834px; margin-top: 217px;">
-	<button type="button" id ="bookBtn" style="width: 300px;">
+<div id = "BookbtnDiv"">
+	<button type="button" id ="bookBtn">
 	  예매하기
 	</button>
 </div>
