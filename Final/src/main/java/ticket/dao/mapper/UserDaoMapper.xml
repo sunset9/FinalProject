@@ -323,10 +323,9 @@
 	 </update>
 
 	<delete id="deleteBook" parameterType="ticket.dto.PaymentInfo">
-		DELETE book
-		WHERE seat_idx = #{seatIdx}
-	</delete>
-
+		UPDATE book SET book_cate_idx = 4 WHERE seat_idx = #{seatIdx}
+	</delete> 
+ 
 	<delete id="deleteSeat" parameterType="ticket.dto.PaymentInfo">
 		DELETE seat
 		WHERE seat_idx = #{seatIdx}

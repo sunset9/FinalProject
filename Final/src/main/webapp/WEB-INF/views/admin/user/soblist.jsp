@@ -59,12 +59,12 @@ th {
 	<th >예매상태</th>
 </tr>
 
-
+ 
 <tbody>
 <c:forEach items="${sobList}" var="sob" varStatus="status">
 	<tr>
 		<td style="font-weight: 800; font-size: 17px;">${sob.no}</td>
-		<td>${sob.nick}(${sob.email})</td>
+		<td>${sob.nick}<br>(${sob.email})</td>
 		<td><fmt:formatDate value="${sob.createDate}" pattern="yyyy.MM.dd" /></td>
 		<td style="width: 1%;"><img src="/resources/image/${sob.storedName}" style="width: 100px;"></td>
 		<td class="pfmInfo">
