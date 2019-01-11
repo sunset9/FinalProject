@@ -66,8 +66,8 @@ public class PfmDetailController {
 		model.addAttribute("expecList", expecList);
 
 		// 기대평 대댓글 리스트 출력하기
-		List<ExpectRecomm> expRecommList = detailService.getExpRecommList();
-		model.addAttribute("expRecommList", expRecommList);
+//		List<ExpectRecomm> expRecommList = detailService.getExpRecommList();
+//		model.addAttribute("expRecommList", expRecommList);
 
 		// 관람후기 리스트 출력해주기
 		List<Review> reviewList = detailService.getReviewList(pfm);

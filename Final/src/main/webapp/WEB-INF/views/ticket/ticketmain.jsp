@@ -11,38 +11,19 @@
 	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 <script type="text/javascript">
+$(window).load(function() {
+	/* 모두 로드된 후에 실행 */
+	
+	// 맞춤 공연
+	$('#slider').bxSlider({
+		 minSlides: 1,
+		 maxSlides: 1
+	});
+	
+});
+
 	$(document).ready(function() {
 		
-		// 모든 이미지 리스트
-		var $slider_list = $("#slider li");
-
-		// 모든 이미지를 "left: 300px"으로 보내기(숨기기)
-		$slider_list.css("left", "00px");
-
-		// 첫번째 이미지를 div 안쪽으로 보내기(첫 이미지 보이기)
-		$("#slider li:first-child").css("left", 0);
-
-		// 클릭이 될 때마다 이미지 한 장씩 교체하기
-		var curSlide = 0; // 현재 이미지 인덱스
-
-		setInterval(function() { // 시간 이용하여 슬라이드
-			// 		$("#sliderbox").on("click", function() { // 클릭으로 슬라이드
-			var nextSlide = (curSlide + 1) % $slider_list.length; // 다음 이미지 인덱스
-
-			// 보여져야 할 이미지 오른쪽으로 이동시키기
-			$slider_list.eq(nextSlide).css("left", "300px");
-
-			// 현재 이미지 숨기기
-			$slider_list.eq(curSlide).animate({ "left" : "-=300px" }); // -= : 현재 위치로부터 -600px
-
-			// 다음 이미지 보여주기
-			$slider_list.eq(nextSlide).animate({ "left" : "-=300px" });
-
-			// 순환구조 만들기
-			curSlide++;
-			curSlide = curSlide % $slider_list.length;
-		}, 1000);
-
 		// 메인 배너 슬라이드
 // 		$('.mainbanner').bxSlider({
 // 			minSlides: 1,
@@ -53,15 +34,6 @@
 		$('.mainbanner').bxSlider({
 			pagerCustom : '#mainThumb'
 		});
-		
-		// 맞춤 공연
-		//	적용 안돼,,
-// 		$('.fitPfmSlider').bxSlider({
-// 			 minSlides: 1,
-// 			 maxSlides: 1,
-// 			 slideWidth: 360,
-// 			 slideMargin: 10
-// 		});
 		
 		// 메인배너 아래 탭
 		$('ul.tabs li').click(function(){
@@ -411,6 +383,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 12px;
+}
 
 #sliderbox {
 	position: relative;
@@ -541,10 +514,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 <div class="alignPfm">
 
 <h4>맞춤 공연</h4>
-	슬라이드만 추가하기
-	<div class="fitPfmbox" onload="loginFitPfm();">
-
-	<h4 style="padding-bottom: 25px;">맞춤 공연</h4>
+<!-- 	<div class="fitPfmbox" onload="loginFitPfm();"> -->
 	<c:if test="${login }">
 		<div id="sliderbox">
 			<ul id="slider" onload="loginFitPfm();">
