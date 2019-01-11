@@ -12,10 +12,6 @@
 	display: table-cell;
 	height: 400px;
 }
-
-/* #mbdiv {
-	
-} */
 .mainBanModal {
 	display: none;
 	position: fixed;
@@ -29,159 +25,111 @@
 	background-color: rgb(0, 0, 0);
 	background-color: rgba(0, 0, 0, 0.4);
 }
-
-/* Modal Content */
-.mainBanModalContent {
-	background-color: #fefefe;
-	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 650px;
-}
-
-/* The Close Button */
-.mainBanModalClose {
-	color: #aaaaaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.mainBanModalClose:hover, .mainBanModalClose:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-
 .mainBanSearch {
 	position: relative;
 }
-
 .sp1 {
 	position: absolute;
 	right: 70px;
 }
-
 .sp2 {
 	position: absolute;
 	right: 10px;
 }
-
 .newpfmListBox {
 	display: grid;
 	grid-template-columns: 33% 33% 33%;
 }
-
 .np {
 	padding-top: 22px;
 	padding-bottom: 15px;
 	border: 1px solid #d4dae4;
 	margin: 8px;
 }
-
 .np:hover {
 	border: 2px solid #8da7d3;
 }
-
 .ordering {
 	display: inline-block;
 }
-
 .newest {
 	position: absolute;
 	right: 90px;
 	top: 77px;
 }
-
 .alphabet {
 	position: absolute;
 	right: 25px;
 	top: 77px;
 }
-
 .modal-content {
 	width: 800px;
 }
-
 .forEach {
 	display: grid;
 	grid-template-columns: 33% 33% 33%;
 	text-align: -webkit-center;
 }
-
 .modal-footer {
 	text-align: center;
 }
-
 #pfmName {
 	font-size: 20px;
 	font-weight: 800;
 }
-
 #hallName {
 	font-size: 17px;
 	font-weight: 700;
 }
-
 #mbPfmInfo {
 	width: max-content;
 	height: 100px;
 }
-
 .pfmtd {
 	padding: 20px;
 	padding-right: 80px;
 	font-weight: 900;
 	font-size: 20px;
 }
-
 .thumbtd {
 	padding: 20px;
 	padding-right: 35px;
 	font-weight: 900;
 	font-size: 20px;
 }
-
 .bannertd {
 	padding: 20px;
 	padding-right: 35px;
 	font-weight: 900;
 	font-size: 20px;
 }
-
 .pfminfotd, .bannerimgtd, .thumbimgtd {
 	height: 100px;
 }
-
 .thumbinputtd {
 	padding-right: 54px;
 }
-
 .mainbannerbtn {
 	position: absolute;
 	left: 600px;
 	top: 580px;
 }
-
 .mainbannercancelbtn {
 	position: absolute;
 	left: 680px;
 	top: 580px;
 }
-
 #nameDiv, #dateDiv, #hallNameDiv {
 	font-size: 18px;
 	font-weight: 900;
 	width: max-content;
 }
-
 #mbThumbImg {
 	height: 130px;
 	width: 130px;
 	padding: 5px;
 	padding-bottom: 25px;
 }
-
 #mbBannerImg {
 	height: 130px;
 	width: 320px;
@@ -493,7 +441,10 @@ $(document).ready(function(){
 		</div>
 	</form>
 
-	<!-- Modal -->
+
+
+
+	<!-- 모달 모달 -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
 

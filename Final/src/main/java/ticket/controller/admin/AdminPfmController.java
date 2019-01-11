@@ -696,18 +696,22 @@ public class AdminPfmController {
 	public String mbFinalSave(
 			HttpSession session
 			) {
-		//세션에 있는 메인배너리스트 디비에 인서트 
+		//세션에 있는 메인배너리스트 디비에 인서트 & 서버에 사진 저장
 		List list = (List) session.getAttribute("mbannerList");
 		if(list != null) {
 			for(int i = 0; i<list.size(); i++) {
-				Map<String,String> map = (Map<String, String>) list.get(i);
+				Map<Object, Object> map = (Map<Object, Object>) list.get(i);
 
 				MainBanner mainbanner = new MainBanner();
-				mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
-				mainbanner.setThumbImgOri(map.get("thumbOrigin"));
-				mainbanner.setThumbImgStr(map.get("thumbStored"));
-				mainbanner.setBannerImgOri(map.get("bannerOrigin"));
-				mainbanner.setBannerImgStr(map.get("bannerStored"));
+				String pfmIdx = (String)map.get("pfmIdx");
+				mainbanner.setPfmIdx(Integer.parseInt(pfmIdx));
+				mainbanner.setThumbImgOri((String)map.get("thumbOrigin"));
+				mainbanner.setThumbImgStr((String)map.get("thumbStored"));
+				mainbanner.setBannerImgOri((String)map.get("bannerOrigin"));
+				mainbanner.setBannerImgStr((String)map.get("bannerStored"));
+				
+				// 파일 서버에 업로드
+				pService.mainbannerfileupload((MultipartFile)map.get("thumbFile"), (MultipartFile)map.get("bannerFile"), (String)map.get("thumbStored"), (String)map.get("bannerStored"));
 				
 				pService.saveMainbanner(mainbanner);
 			}
@@ -718,14 +722,18 @@ public class AdminPfmController {
 		List updateList = (List) session.getAttribute("mbannerForUpdate");
 		if(updateList != null) {
 			for(int i = 0; i<updateList.size(); i++) {
-				Map<String, String> map = (Map<String, String>) updateList.get(i);
+				Map<Object, Object> map = (Map<Object, Object>) updateList.get(i);
 				
 				MainBanner mainbanner = new MainBanner();
-				mainbanner.setPfmIdx(Integer.parseInt(map.get("pfmIdx")));
-				mainbanner.setThumbImgOri(map.get("thumbOrigin"));
-				mainbanner.setThumbImgStr(map.get("thumbStored"));
-				mainbanner.setBannerImgOri(map.get("bannerOrigin"));
-				mainbanner.setBannerImgStr(map.get("bannerStored"));
+				String pfmIdx = (String)map.get("pfmIdx");
+				mainbanner.setPfmIdx(Integer.parseInt(pfmIdx));
+				mainbanner.setThumbImgOri((String)map.get("thumbOrigin"));
+				mainbanner.setThumbImgStr((String)map.get("thumbStored"));
+				mainbanner.setBannerImgOri((String)map.get("bannerOrigin"));
+				mainbanner.setBannerImgStr((String)map.get("bannerStored"));
+				
+				// 파일 서버에 업로드
+				pService.mainbannerfileupload((MultipartFile)map.get("thumbFile"), (MultipartFile)map.get("bannerFile"), (String)map.get("thumbStored"), (String)map.get("bannerStored"));
 				
 				pService.updateMainbanner(mainbanner);
 			}
@@ -825,8 +833,10 @@ public class AdminPfmController {
 		String bannerStored = bannerOrigin + "_" + uId;
 		
 		// Map에 저장하기
-		Map<String, String> mbannerInfo = new HashMap<>();
+		Map<Object, Object> mbannerInfo = new HashMap<>();
 		mbannerInfo.put("pfmIdx", String.valueOf(pfmIdx));
+		mbannerInfo.put("thumbFile", thumbFile);
+		mbannerInfo.put("bannerFile", bannerFile);
 		mbannerInfo.put("thumbOrigin", thumbOrigin);
 		mbannerInfo.put("thumbStored", thumbStored);
 		mbannerInfo.put("bannerOrigin", bannerOrigin);
@@ -1412,8 +1422,10 @@ public class AdminPfmController {
 		String bannerStored = bannerOrigin + "_" + uId;
 
 		// Map에 저장하기
-		Map<String, String> mbannerInfo = new HashMap<>();
+		Map<Object, Object> mbannerInfo = new HashMap<>();
 		mbannerInfo.put("pfmIdx", String.valueOf(pfmIdx));
+		mbannerInfo.put("thumbFile", thumbFile);
+		mbannerInfo.put("bannerFile", bannerFile);
 		mbannerInfo.put("thumbOrigin", thumbOrigin);
 		mbannerInfo.put("thumbStored", thumbStored);
 		mbannerInfo.put("bannerOrigin", bannerOrigin);
