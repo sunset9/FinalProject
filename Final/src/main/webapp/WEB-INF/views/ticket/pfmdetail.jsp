@@ -475,8 +475,8 @@ $(document).ready(function() {
 				, pfmIdx : pfmIdx
 			}
 			, success: function(d){			
-				insertQnaContent(d.qnaList);
-	// 			insertQnaRecommList(d.qnaRecommList);
+// 				insertQnaContent(d.qnaList);
+				insertQnaRecommList(d.qnaRecommList);
 			}
 			, error: function() {
 				console.log("error");
@@ -484,24 +484,27 @@ $(document).ready(function() {
 		});
 	};
 
-// function insertQnaRecommList(qnaRecommList) {
-// 	$('#qnaRecomm').html('');
+function insertQnaRecommList(qnaRecommList) {
+	console.log('+ + + insertQnaRecommList 호출 + + +');
 	
-// 	qnaRecommList.forEach(function(list) {
-// 		var qnaIdx = $('#qnaReBtn').val();
-// 		console.log(qnaIdx);
+	$('#qnaRecomm').html('');
+	
+	qnaRecommList.forEach(function(list) {
+		var qnaIdx = $('#qnaReBtn').val();
+// 		console.log('qnaIdx : ' + qnaIdx);
+// 		consoel.log('list.qnaIdx : ' + list.qnaIdx);
 		
-// 		if(list.qnaIdx == qnaIdx) {
-// 			var div = $('<div id="qRecomm">');
-// 			var small = $('<small>-> 관리자 : ' + list.contents + '</small><br>');
+		if(list.qnaIdx == qnaIdx) {
+			var div = $('<div id="qRecomm">');
+			var small = $('<small>-> 관리자 : ' + list.contents + '</small><br>');
 			
-// 			div.append(small);
+			div.append(small);
 			
-// 			$('#qnaRecomm').append(div);
-// 		}
+			$('#qnaRecomm').append(div);
+		}
 		
-// 	});
-// };
+	});
+};
 
 	// 기대평 출력부
 	function insertExpContent(expecList) {
@@ -521,7 +524,7 @@ $(document).ready(function() {
 		var div2 = $('<div class="expListContentInfo">');
 		var small1 = $('<small id="exptationContent">' + list.expContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
-		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
+		var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
 		
 		if(list.nick == '${loginUser.nick }') {
 			var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">삭제</button>');
@@ -560,7 +563,7 @@ $(document).ready(function() {
 		var div2 = $('<div class="revListContentInfo">');
 		var small1 = $('<small id="reviewContent">' + list.reviewContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
-		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
+		var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
 
 		if(list.nick == '${loginUser.nick }') {
 			var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">삭제</button>');
@@ -602,7 +605,7 @@ $(document).ready(function() {
 		var div2 = $('<div class="qnaListContentInfo">');
 		var small1 = $('<small id="qnaContent">' + list.qnaContent + '</small><br>');
 		var createDate = getDateSimpleString(list.createDate);
-		var small2 = $('<small id="contentDay">등록일 : ' + createDate + '</small>');
+		var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
 		
 		if(list.nick == '${loginUser.nick }') {
 			var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
@@ -635,12 +638,17 @@ $(document).ready(function() {
 </script>
 
 <style>
+  
+#contentDay {
+	color: #A4A4A4;
+  
 .top-wrapper {
 	border: 1px solid #e6e6e6;
 }
 
 .expListContentInfo, .revListContentInfo, .qnaListContentInfo  {
 	margin-left: 30px;
+	font-size: 18px;
 }
 
 #choiceBtn {
@@ -844,10 +852,11 @@ ul.tabs li.current{
 	text-align: center;
 }
 
-#expDeleteBtn, #revDeleteBtn, #qnaDeleteBtn {
+#expDeleteBtn, #revDeleteBtn, #qnaDeleteBtn, #qnaReBtn, #revReBtn, #expReBtn {
 	border: none;
 	background-color: #FFFFFF;
-	color: #BDBDBD;
+	color: #6E6E6E;
+	font-size: 15px;
 }
 
 table {
@@ -1021,7 +1030,7 @@ td {
 				<!-- 기대평 내용 출력 div -->
 				<div class="expListContentInfo">
 					<small id="exptationContent">${list.expContent }</small><br>
-					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<c:if test="${loginUser.nick eq list.nick}">
 						<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
 <%-- 						<button id="expUpdateBtn" onclick="updateExp(${list.expIdx});">수정</button> --%>
@@ -1085,7 +1094,7 @@ td {
 				<!-- 관람후기 내용 출력 div -->
 				<div class="revListContentInfo">
 					<small id="reviewContent">${list.reviewContent }</small><br>
-					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<c:if test="${loginUser.nick eq list.nick}">
 						<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
 					</c:if>
@@ -1146,25 +1155,24 @@ td {
 				<!-- QNA 내용 출력 div -->
 				<div class="qnaListContentInfo">
 					<small id="QnaContent">${list.qnaContent }</small><br>
-					<small id="contentDay">등록일 : <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<c:if test="${loginUser.nick eq list.nick}">
 						<button id="qnaDeleteBtn" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
 					</c:if>
-<!-- 					<input type="text" id="qnaRecomm" name="qnaRecomm"> -->
-<%-- 					<button id="qnaReBtn" type="button" value="${list.qnaIdx }" --%>
-<%-- 						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button> --%>
-				</div>
+					<input type="text" id="qnaRecomm" name="qnaRecomm">
+					<button id="qnaReBtn" type="button" value="${list.qnaIdx }"
+						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button>
 				
-<%-- 				<c:forEach items="${qnaRecommList }" var="relist"> --%>
-<!-- 				<div id="qnaRecomm"> -->
-<%-- 					<c:if test="${relist.qnaIdx eq list.qnaIdx}"> --%>
-<!-- 					<div id="qRecomm"> -->
-<!-- 					관리자 부분 변경하기 -->
-<%-- 						<small>-> 관리자 : ${relist.contents }</small><br> --%>
-<!-- 					</div>  -->
-<%-- 					</c:if> --%>
-<!--  				</div>  -->
-<%-- 				</c:forEach> --%>
+				<div id="qnaRecomm">
+				<c:forEach items="${qnaRecommList }" var="relist">
+					<c:if test="${relist.qnaIdx eq list.qnaIdx}">
+					<div id="qRecomm">
+						<small>-> 관리자 : ${relist.contents }</small><br>
+					</div> 
+					</c:if>
+				</c:forEach>
+ 				</div> 
+				</div>
 				</div>
 			</c:forEach>			
 			</div>
