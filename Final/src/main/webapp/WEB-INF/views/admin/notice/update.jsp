@@ -24,7 +24,7 @@
 <input type="hidden" name="noticeIdx" value="${update.noticeIdx }"/>
 
 <table>
-<tr> <td>작성자</td><td>${update.userIdx }</td> </tr>
+<%-- <tr> <td>작성자</td><td>${update.userIdx }</td> </tr> --%>
 <tr> <td>분류</td><td><input type="text" name="NTypeIdx" value="${update.NTypeIdx }"></td> </tr>
 <tr> <td>제목</td><td><input type="text" name="noticeTitle" value="${update.noticeTitle }"></td></tr>
 </table>

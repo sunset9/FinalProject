@@ -19,6 +19,9 @@
 
 <style type="text/css">
 
+.container{
+	width:2000px;
+}
 .preNext{
 	width:50px;
 }
@@ -30,17 +33,17 @@
 .preNextTitle{
 	width:100px;
 }
-.num{
-	width:100px;
+.num {
+	width:70px;
 }
 .title{
 	width:500px;
 }
-.content{
-	width:90px;
-}
 .date {
-	width:90px;
+	width:150px;
+}
+.type {
+	width:100px;
 }
 
 </style>
@@ -67,15 +70,16 @@ $(document).ready(function(){
 
 <table class="table table-striped table-hover">	
 	<tr>
-		<div class="form-group"></div>	
-		<td class="num">${noticeView.noticeIdx }</td>
-<%-- 		<td class="type">${noticeView.noticeIdx }</td> --%>
-		<td class="title">${noticeView.noticeTitle }</td>	
-		<td class="date"><fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
+		<td class="num">번호 : ${noticeView.noticeIdx }</td>
+		<td class="type">분류 ㅇㅇㅇㅇ : ${noticeView.NTypeIdx }</td>
+		<td class="title">제목 : ${noticeView.noticeTitle }</td>	
+		<td class="date">작성일 : <fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
 	</tr>
 	<tr>
 		<td></td>
+		<td></td>		
 		<td class="content"> ${noticeView.noticeContent }</td>
+		<td></td>
 	</tr>	
 </table>
 <hr>
