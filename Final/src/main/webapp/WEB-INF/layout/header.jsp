@@ -8,6 +8,7 @@ ul{	list-style:none;}
 
 a {color:#1a1a1a; text-decoration:none;}
 a:link	{color:#1a1a1a; text-decoration:none;}
+a:hover	{color:#1a1a1a; text-decoration:none;}
 
 #wrap {
 	border-bottom: 1px solid #676767;
