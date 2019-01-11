@@ -28,11 +28,12 @@
 .cover {
 	z-index: 10;
     background-color: #33333352;
-    height:150px;
-    width: 103px;
-    right: 15px;
+    height:200px;
+    width: 150px;
+    right: 14px;   
     position: absolute;
 }
+
 .cover2 {
 	z-index: 10;
     background-color: #33333352;
@@ -41,11 +42,49 @@
     right: 15px;
     position: absolute;
 }
+
 .removeBtn {
-	margin-top: 60px;
+	margin-top: 80px;
 }
+
 .deleteBtn {
-	margin-top: 60px;
+	margin-top: 80px; 
+}
+
+.pfmIdx > img {
+    height: 200px;
+    width: 150px;
+    margin-bottom: 5px; 
+}
+.pfmIdx {
+    width: 150px;
+    height: 220px; 
+}
+.pfmName { 
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 148px;
+    white-space: nowrap;  
+}
+.thumbnail {
+	width: 178px;
+	height: 248px;
+}
+.caption > img {
+    height: 200px;
+    width: 150px;
+    margin-bottom: 3px;
+} 
+
+.modal-content {
+    width: 577px;
+}
+
+#resultposter {
+	display: inline-flex;
+    text-align: center;
+    flex-flow: wrap;
+    width: 600px;
 }
 </style>
 
@@ -98,13 +137,17 @@ function ajax(url){
 				var paging = d.paging;
 				$('#resultposter').html('');
 		  		list.forEach(function(item){
-				  	var input = $('<input type="radio" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
-				    var div =  $('<div class="thumbnail">');
+		  			var div =  $('<div class="thumbnail" style="width: 178px; height:278px;">');
+				  	var input = $('<input type="radio" style="margin: 1px 0px 10px;" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
+				  	var caption = $('<div class="caption">');
 				  	var img = $('<img src="/resources/image/'+item.storedName+'">');
-				  	var h3 = $('<h3 style="text-align :center;">'+item.name+'</h3>');
-				  	div.append(input);
-				  	div.append(img);
-				  	div.append(h3);	
+				  	var h3 = $('<div class="pfmName">'+item.name+'</div>');
+				  	caption.append(input);
+				  	caption.append(img);
+				  	caption.append(h3);
+				  	div.append(caption);
+				  	
+				  
 			  	 	$('#resultposter').append(div);
 			  	});
 		  		
@@ -245,7 +288,7 @@ $('#myModal').find('.btn').on('click',function() {
 	var image =$('<img>');
 	image.attr('src','/resources/image/'+ labelName);
 	var atag = $('<a>');
-	var htag= $('<h3>'+name+'</h3>');
+	var htag= $('<div class="pfmName">'+name+'</div>');
 	//htag.text(name);
 	atag.attr('href','"/admin/deletecatecon/'+selectedId+'/>"');
 	//삭제 버튼 (div5) 현재는 바뀐 removeBtn으로 쓰고 있어서 주석처리
@@ -324,7 +367,7 @@ $('.caption').on('mouseleave','.cover',function(){
 </h1>
 </div>
 <hr>
-
+ 
 <!-- 카테고리 부분 FORM 시작  -->
 <%-- <%= CountManager.getCount() %> --%>
 <form action="/admin/registcatecon" method="post">
@@ -337,17 +380,16 @@ $('.caption').on('mouseleave','.cover',function(){
 			<div class="pfmIdx" id="${item.pfmIdx }">
 					<img src="/resources/image/${item.storedName }"> 
 <%-- 					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a> --%>
-								<h3>${item.name } <!--,  ${item.pfmIdx }--></h3>
+						<div class="pfmName">${item.name }</div>    
 						</div>
 			</div>
 		</div>
 	</div>
 
-</c:forEach>
-		<div class="" id="draw" style="width:137px; height: 224px;">
+</c:forEach> 
+		<div class="" id="draw" style="width:178px; height: 248px;">
 			<div class="thumbnail" style=" text-align: center;" id="thum">
-				<div class="glyphicon glyphicon-plus-sign" id="add_poster"
-				style="position:initial; left:50%; height:118px; margin:96px 0 0 0px;">
+				<div class="glyphicon glyphicon-plus-sign" id="add_poster" style="position:initial; left:50%; height:118px; margin:96px 0 0 0px;">
 			</div>
 		</div>
 		</div>		
@@ -370,7 +412,7 @@ $('.caption').on('mouseleave','.cover',function(){
 					<input type="text" name="searchposter" id="searchposter" />
 					<button type="button" id="searchbtn">검색하기</button>
 					</div>
-					<div class="row" style="margin-left: 25px; margin-right: 25px;">
+					<div class="row">
 						<div id="resultposter" style="display: inline-flex;text-align: center;flex-flow: wrap;">
 						</div>
 						<div class="text-center">
