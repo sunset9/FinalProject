@@ -129,7 +129,7 @@ public class TicketController {
 		
 		//예매한 좌석갯수
 		List<NumBookedSeat> BookedSeats = new ArrayList<>();
-		BookedSeats =  ticketService.countBookedSeats(pfm,2,pfmDbtIdx);
+		BookedSeats =  ticketService.countBookedSeats(pfm,1,pfmDbtIdx);
 		
 //		System.out.println("BookedSeats : " + BookedSeats);
 	
@@ -349,7 +349,6 @@ public class TicketController {
 				, String time
 				) 
 	{
-		
 		//최대 행값과 열값 구하기
 		int maxRow = ticketService.maxRow(oriSecIdx);
 		int maxCol = ticketService.maxCol(oriSecIdx);
@@ -459,12 +458,11 @@ public class TicketController {
 	 * @작성자:이상지
 	 */
 	@RequestMapping(value="/ticket/oriSec", method=RequestMethod.GET)
-	public ModelAndView loadOriginSection() {
+	public ModelAndView loadOriginSection(int hallIdx) {
 
 		Hall hall = new Hall();
 		
-		hall.setHallIdx(2);
-		
+		hall.setHallIdx(hallIdx);
 		
 		List<OriginSection> oriSecList = new ArrayList<OriginSection>();
 		
@@ -642,6 +640,11 @@ public class TicketController {
 		mav.addObject("ticketEnd",ticketEnd);
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="/hall/hall_1")
+	public void test(){
+		
 	}
 
 }
