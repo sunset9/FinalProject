@@ -20,11 +20,11 @@
 	width: 1000px;
 }
 
-/* body { */
-/*   	position:relative;   */
-/*  	background-color:blue; */
-/*   	z-index:100;  */
-/*  } */
+.btnwrite {
+ position:fixed;
+ right:20px;
+ bottom:50px;
+}
 
 </style>
 
@@ -137,6 +137,11 @@ $(document).ready(function(){
 </div>
 
 
+<!-- <div class="btndel"> -->
+<!-- <a href="/admin/noticedelete"> <button> -->
+<!-- <img src="/resources/image/notidelete.png"></button></a> -->
+<!-- </div> -->
+
 
 
 <div class="btndel">
@@ -144,12 +149,13 @@ $(document).ready(function(){
 </div>
 
 </form>
+
 <div class="btnwrite">
-<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
+<a href="/admin/noticewrite">
+<img src="/resources/image/notiwrite.png"></a>
+
 </div>
-<!-- <a href="/admin/noticelist">글목록 + 페이지</a><br> -->
-<%-- <jsp:include page="../../utils/noticepaging.jsp"/> --%>
-<!-- <a href="/admin/noticelistsearch">글목록 + 페이지 + 목록 ( 검색 )</a> -->
+
 </div>
 </div>
 </body>
