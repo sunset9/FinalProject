@@ -252,7 +252,8 @@ $(document).ready(function() {
 				 location.href=path;
 				 
 			 }else{
-				  window.open(path, "test","_blank", "width=1100px,height=710px");
+				  var win = window.open(path,"test", "width=500px,height=599px");
+
 			 }
 			  
 		});
