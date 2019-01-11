@@ -739,7 +739,6 @@ function tempSeatAdd(){
 
 /*결제버튼*/
 .btn_onestop {
-    margin-bottom: -50px;
     position: absolute;
     left: 15px;
     bottom: 10px;
@@ -752,17 +751,18 @@ function tempSeatAdd(){
  
  #userSelect {
     height: 110px;
-    border: 1px solid #bebebe;
+    /* border: 1px solid #bebebe; */
     border-radius: 3px;
     padding: 14px 12px;
     overflow: hidden;
+    background: #fafafa;
  }
  
  #selectedSeatInfo>h3, #payInfo>h3 {
  	color: #565656;
  }
  #selectedSeatInfo {
-    margin-bottom: 14px;
+    margin-bottom: 20px;
  }
  
  #selectedSeats_small>#wrapper{
@@ -775,8 +775,12 @@ function tempSeatAdd(){
     width: 320px;
     height: 645px;
     position: absolute;
-    left: 700px;
+    left: 690px;
     top: 71px;
+ }
+ 
+ #booking-detail h3 {
+     font-size: 20px;
  }
  
  /*가격정보 네모*/
@@ -805,19 +809,18 @@ function tempSeatAdd(){
  /*다음단계*/
  #seatBtn{
     width: 300px !important;
-    background-color: #FFF;
+    background-color: #F2B134;
     padding: 10px 16px;
     font-size: 18px;
     line-height: 1.3333333;
     border-radius: 3px;
-    color: #F2B134;
-    border: 2px solid #F2B134;
+    color: #FFF !important;
+    border: none !important;
     margin-top: 15px;
  }
  /* 다음단계버튼 hover*/
  #seatBtn:hover{
- background-color: #F2B134;
-  color: #fff !important;
+ background-color: #e6a03b;
 }
 
 /*좌석도 전체보기 버튼*/
@@ -861,13 +864,17 @@ function tempSeatAdd(){
 	padding-left: 4px;
     list-style: none;
     font-size: 15px;
+    color: #333333;
 }
 
 /*티켓정보*/
 .wrap_ticket_info{
-	float: right;
-    top: -50px;
-    background-color: #FFF !important;
+    position: absolute !important;
+    width: 269px;
+    padding: 14px 10px 14px 13px; 
+    height: 624px;
+    left: 814px ;
+    float: none !important;
 }
 
 
@@ -879,10 +886,15 @@ function tempSeatAdd(){
 #bookStep_2{
     width: 760px;
     padding: 50px 50px 50px 70px;
-    margin-top: -533px;
     margin-left: -30px;
-/*     margin-left: 114px; */
-    border: 1px solid #BCC;
+    margin-top: 38px;
+    border: 1px solid #d6d6d6;
+}
+
+.logo_onestop img {
+	margin-left: -50px;
+    height: 58px;
+    margin-top: 30px;
 }
 
 /*스탭버튼*/
@@ -936,6 +948,10 @@ function tempSeatAdd(){
 /*     margin-left: 170px; */
     /* border: 1px solid #BCBC; */
     /* margin-left: 22px; */
+}
+
+#detailStep {
+	float: left;
 }
 
 /*결제하기버튼*/
@@ -1037,7 +1053,7 @@ function tempSeatAdd(){
 <div id = "step2and3" style="display:none;">
 <div class="wrap_ticket_info">
 		<h2 class="logo_onestop">
-			<a href="#none"><img src="/resources/image/bananalogo2.png" alt="바나나 티켓" style="margin-left: -50px; height: 58px; margin-top: 24px;"></a>
+			<a href="#none"><img src="/resources/image/bananalogo2.png" alt="바나나 티켓"></a>
 		</h2>
 		<div class="box_info">
 		<h3 class="select_tit select_t txt_prod_name" title="공연제목">${param.name}</h3>
@@ -1106,7 +1122,7 @@ function tempSeatAdd(){
 </div>
 
 
-<div id="detailStep" style="float: left">
+<div id="detailStep">
 
 	<!-- STEP 2. 가격/수령방법 -->
 	<div id ="bookStep_2" style=" display: none;">
