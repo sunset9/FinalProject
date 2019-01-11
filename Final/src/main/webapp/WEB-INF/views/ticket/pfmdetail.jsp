@@ -634,13 +634,14 @@ function insertQnaRecommList(qnaRecommList) {
 		return date.getFullYear() + "."
 			+ ((month < 10)? '0' + month : month) + "."
 			+ ((day < 10) ? '0' + day : day);
-	}
+	};
 </script>
 
 <style>
   
 #contentDay {
 	color: #A4A4A4;
+}
   
 .top-wrapper {
 	border: 1px solid #e6e6e6;
