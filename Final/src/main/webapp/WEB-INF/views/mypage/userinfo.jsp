@@ -9,14 +9,16 @@
 	height: 152px;
 }
 #userinfo{
-	height:175px;
+	height:185px;
 	display : grid;
-	grid-template-columns:200px  500px 200px 200px;
-	background-color: #CCC;
-	grid-gap :10px;
+	grid-template-columns:260px 450px 200px 200px;
+	grid-template-rows: 153px;
+	background-color: #f6f6f6;
+	grid-gap :6px;
 	margin: 0 auto;
 	text-align: center;
-	border-radius: 10px;
+	border-radius: 4px;
+    padding: 16px;
 }
 
 #userNick{
@@ -25,29 +27,33 @@
 }
 #profileDiv{
 	grid-column:1/2;
- 	margin-top: 10px;
+/*  	margin-top: 10px; */
 }
 #nickDiv{	
 	grid-column:2/3;
 	display: inline-block;
-	text-align: center;
+	text-align: left;
 	vertical-align:middle;
-	
+	border-right: 2px solid #eee;
+}
+#userInfoChange {
+	background: #fff;
+    width: 109px;
 }
 #bookDiv{
 	grid-column:3/4;
 	vertical-align:middle;
-	padding-top:20px;
+ 	padding-top:14px; 
 }
 #cancelDiv{
 	grid-column:4/5;
 	vertical-align:middle;
-	padding-top:20px;
+	padding-top:14px; 
 }
 
 #nickSec{
 	display: inline-block;
-	margin: 30px auto;
+	margin-top: 30px;
 }
 .cnt{
 	font-size:5em;
@@ -57,6 +63,7 @@
 .info{
 	font-size: 1.3em;
 	font-weight: bold;
+    color: #828282;
 }
 .cover {
 	display: inline-block;
@@ -66,6 +73,7 @@
     width: 150px;
     position: absolute;
     border-radius: 72px;
+    cursor:pointer;
     
 }
 .changeSpan{

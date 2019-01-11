@@ -44,10 +44,14 @@
 }
 
 
-#recommendPfm{
+#recommend-wrapper{
 	float : right;
 	width: 250px;
-	
+    margin-top: 50px;
+}
+
+#recommendPfm{
+	background: #f8f8f8;
 }
 
 .recomImg {
@@ -66,6 +70,7 @@
 	margin-top: 20px;
 	padding-top: 20px;
 	text-align: center;
+	background: #f8f8f8;
 }
 
 .preferTitle{
@@ -74,16 +79,28 @@
 	font-size: 1.5em;
 	font-weight: bold;	
 }
+.artist .preferTitle{
+    width: 255px;
+    left: 33px;
+    position: relative;
+    background: #fff;
+    z-index: 5;
+}
 /* 탭 메뉴 설	정 */
 .tabSec{
-/* 	border: 1px solid #CCC; */
+	border: 1px solid #e1e1e1; 
 	width: 33%;
 	display: inline-block;	
-/* 	height: 40px; */
+ 	height: 45px; 
 	text-align: center;
 	font-size: 1.5em;
 	font-weight: bold;
+    line-height: 2;
 	vertical-align:middle;
+	float: left;
+    border-bottom: 2px solid #f2b133;
+    color: #5f5f5f;
+    background: #f6f6f6;
 }
 /* 화면 사용 범위 */
 
@@ -91,31 +108,36 @@
 	width: 95%;
 	margin: 0 auto;
 	margin-bottom: 30px;
-	border-bottom: 1px solid #CCC;
 	text-align: center;
 }
 
 #tabDiv{
 	margin-top: 20px; 
+	width: 100%;
+    height: 45px;
 }
 
 /* 활성화된 탭 */
 
 #choice{
-	border-left: 1px solid #CCC;
-	border-right: 1px solid #CCC;
-	color :#F2B134;
-	border-bottom: 3px solid #F2B134;
+	color: #f2b133;
+    /* border-bottom: none; */
+    /* border-left: 3px solid #fcd303; */
+    border: 2px solid #f2b133;
+    border-bottom: none;
+    background: #fff;
 }	
 
 /* 선택한 아티스트 목록 리스트	 */
-
 #selectedArt{
-	clear: left;
- 	display: inline-block;
-	width: 750px;
-	border-bottom: 3px solid #F2B134;
-
+    clear: left;
+    display: inline-block;
+    width: 818px;
+    border: 1px solid #cdcdcd;
+    position: relative;
+    top: -26px;
+    z-index: 1;
+    padding: 5px 35px 5px 5px;
 }
 .btnDiv{
 	text-align: center;
@@ -154,6 +176,7 @@
 .artist{
 	display: inline;
 	float : left;
+	margin-top: 50px;
 }
 #mypreferSpan{
 	display: inline;
@@ -175,10 +198,7 @@
     font-weight: bold;
     margin-bottom: 5px;
 }
-.artistImg{
-	width: 120px;
-	height: 120px;
-}
+
 .carousel-control{
 	background: none !important;
 }
@@ -227,8 +247,6 @@ $(document).ready(function() {
 // 	$('.date').append("<span>"+today);
 	
 	
-
-	
 	
 });  // ready end
 
@@ -274,8 +292,8 @@ function pfmChoice(pfmIdx){
 	<ul>
 		<c:forEach items="${aList }" var ="a">
 		<c:if test ="${! empty  a}">
-		<li  data-paidx="${a.artistIdx }" class = "artistSec">
-			<img class = "artistImg" src="${a.imgUri }"  class="img-circle"/>
+		<li data-paidx="${a.artistIdx }" class = "artistSec">
+			<img class = "artistImg" src="${a.imgUri }" />
 			<span>${a.name } </span>
 		</li>
 		</c:if>
@@ -310,7 +328,7 @@ function pfmChoice(pfmIdx){
 </div>
 
 <!-- 선택한 테마와 유저에 관한 추천공연  -->
-<div id ="recommendPfm">
+<div id ="recommend-wrapper">
 <div class ="preferTitle"><span>맞춤 공연</span></div>
 <div id ="recommendPfm">
 <div id="recomPfm" class="carousel slide" data-ride="carousel">

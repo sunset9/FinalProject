@@ -14,34 +14,34 @@
 
 /* 탭 메뉴 설정 */
 .tabSec{
-/* 	border: 1px solid #CCC; */
+	border-top: 1px solid #e1e1e1; 
+ 	border-left: 1px solid #e1e1e1; 
 	width: 33%;
 	display: inline-block;	
-/* 	height: 40px; */
+ 	height: 45px; 
 	text-align: center;
 	font-size: 1.5em;
 	font-weight: bold;
+    line-height: 2;
 	vertical-align:middle;
-}
-/* 화면 사용 범위 */
-
-.temp{
-	width: 95%;
-	margin: 0 auto;
-	margin-bottom: 30px;
-	border-bottom: 1px solid #CCC;
-	text-align: center;
+	float: left;
+    border-bottom: 2px solid #f2b133;
+    color: #5f5f5f;
+    background: #f6f6f6;
 }
 
 #tabDiv{
 	margin-top: 20px; 
+	width: 100%;
+    height: 45px;
 }
 
 /* 활성화된 탭 */
 #inquiry{
-
-	color :#fcd303;
-	border-bottom: 3px solid #F2B134;
+	color: #f2b133;
+    border: 2px solid #f2b133;
+    border-bottom: none;
+    background: #fff;
 }	
 #choice{
 	border-left: 1px solid #CCC;
@@ -57,7 +57,6 @@
 }
 
 </style>
-<hr>
 <div class ="main_wrapper">
 <div>
 <!-- 유저 정보 담고 있는 jsp -->

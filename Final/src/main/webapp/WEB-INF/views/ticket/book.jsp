@@ -795,9 +795,11 @@ function tempSeatAdd(){
 .btn_onestop {
     position: absolute;
     left: 18px;
-    margin-top: 10px;
+    margin-top: 25px;
 }
-
+.btn_onestop span.button {
+	float:left; 
+}
 .clicked {
  	stroke: #222; 
  	stroke-width: 25; 
@@ -973,9 +975,10 @@ function tempSeatAdd(){
     padding: 10px 16px;
     font-size: 15px;
     line-height: 1.3333333;
-    border-radius: 6px;
+/*     border-radius: 6px; */
     color: #F2B134 !important;
-    border: 2px solid #F2B134;
+    font-weight: bold;
+    border: 1.5px solid #F2B134;
 }
 
 .stepBtn:hover{
@@ -997,7 +1000,7 @@ function tempSeatAdd(){
 }
 
 .btn_onestop .button.btNext {
-    border: 1px solid #FFF !important;
+/*     border: 1px solid #FFF !important; */
     background: #FFF !important;
 }
 
