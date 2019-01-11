@@ -167,15 +167,28 @@ public class AdminBoardServiceImpl implements AdminBoardService{
 	
 	// FAQ 전체 조회 리스트
 	@Override
-	public List<Faq> getFaqList(Paging paging) {
-		return adminBoardDao.selectFaqList(paging);
+	public List<Faq> getFaqList(PagingT pagingt) {
+		return adminBoardDao.selectFaqList(pagingt);
 	}
-
+	
+	// FAQ 전체 글 개수
 	@Override
 	public int selectCountAllFaq() {
 		return adminBoardDao.selectCntAllFaq();
 	}
 
+	// FAQ 검색 조회 리스트
+	@Override
+	public List<Faq> faqListSearchService(SearchPagingT searchpagingt) {
+		return adminBoardDao.faqListSearch(searchpagingt);
+	}
+
+	// FAQ 검색 결과 글 개수
+	@Override
+	public int faqCountSearchService(SearchPagingT searchpagingt) {
+		return adminBoardDao.faqCountSearch(searchpagingt);
+	}
+	
 
 	@Override
 	public Faq getViewFaq(int faqIdx) {

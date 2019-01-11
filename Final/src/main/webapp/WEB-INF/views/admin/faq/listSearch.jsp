@@ -17,7 +17,7 @@
 
 /*     *{padding:0;margin: 0;} */
     ul li{list-style: none;}
-    .clearfix:after{content: "";display: block;clear: both;width:900px;}
+    .clearfix:after{content: "";display: block;clear: both;}
     h1{text-align: center;padding: 20px 0;}
     .f_question1>ul>li,.f_answer1>ul>li{float: left;}
     .fnq{width: 70%;line-height:300%;margin: 0 auto;}
@@ -33,12 +33,12 @@
     
     .container {
     	display:inline-block;
-    	width:1000px;
+    	width:500px;
     }
     
-/*       .faqCotent {   */
-/*       	width:500px;   */
-/*       }   */
+     .faqCotent { 
+     	width:1500px; 
+     } 
 </style>
 
 
@@ -117,22 +117,20 @@
 <div class="col-md-offset-3">
  <ul class="pagination">
   <c:if test="${pageMaker.prev}">
-   <li><a href="faqlist${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전 목록</a></li>
+   <li><a href="faqlistsearch${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전 목록</a></li>
   </c:if> 
   
   <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
    <li <c:out value="${pageMaker.pagingt.page == idx ? 'class=active': '' }"/>>
-   <a href="faqlist${pageMaker.makeQuery(idx)}">${idx}</a></li>
+   <a href="faqlistsearch${pageMaker.makeSearch(idx)}">${idx}</a></li>
   </c:forEach>
     
   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-   <li><a href="faqlist${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음 목록</a></li>
+   <li><a href="faqlistsearch${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음 목록</a></li>
   </c:if> 
  </ul>
 </div>
 
-
-<%-- <jsp:include page="../../utils/faqpaging.jsp"/> --%>
 
 <a href="/admin/faqwrite"><button> 글쓰기 </button></a>
 
