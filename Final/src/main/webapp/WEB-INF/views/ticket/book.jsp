@@ -27,6 +27,45 @@ var fee=0;
 var rp =0;
 var delvyTypeCode = 1;
 var isTempSeat = false;
+$(window).load(function() {
+
+	  var strWidth;
+	  var strHeight;
+	  
+	  
+	  $('#allDiv').css("width","800px");
+	  $('body').css('width',"800")
+	  $('html').css("height","800");
+	  $('html').css("width","1100");
+	  //innerWidth / innerHeight / outerWidth / outerHeight 지원 브라우저 
+	  if ( window.innerWidth && window.innerHeight && window.outerWidth && window.outerHeight ) {
+	    strWidth = $('html').outerWidth() + (window.outerWidth - window.innerWidth);
+	    strHeight = $('html').outerHeight() + (window.outerHeight - window.innerHeight);
+	  }
+
+	  else {
+	    var strDocumentWidth = $(document).outerWidth();
+	    var strDocumentHeight = $(document).outerHeight();
+
+	    window.resizeTo ( strDocumentWidth, strDocumentHeight );
+
+	    var strMenuWidth = strDocumentWidth - $(window).width();
+	    var strMenuHeight = strDocumentHeight - $(window).height();
+
+
+	    strWidth = $('html').outerWidth() + strMenuWidth;
+	    strHeight = $('html').outerHeight() + strMenuHeight;
+
+	  }
+
+	 
+
+	  //resize 
+
+	  window.resizeTo( strWidth, strHeight );
+	 
+
+	}); 
 $(document).ready(function() {
 
 
@@ -323,6 +362,15 @@ $(document).ready(function() {
 			  $('#payment').hide();
 			  if(curStep == 2){ // 현재 STEP2 단계라면 ( =전환될 화면이 1단계)
 					// '이전 단계' 버튼 비활성화
+	
+				  if (confirm("선택된 좌석정보가 취소됩니다.") == true){    //확인
+
+				  
+				  }else{   //취소
+				      return;
+				  }
+
+					
 					$('#stepInfo').hide();
 					$('#prevBtn').hide();
 					$('.wrap_ticket_info').hide();
