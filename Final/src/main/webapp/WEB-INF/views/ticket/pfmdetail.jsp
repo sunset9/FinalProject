@@ -140,12 +140,20 @@ $(document).ready(function() {
 	// 탭
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
- 
+ 		console.log('tab_id : ' + tab_id);
+		
 		$('ul.tabs li').removeClass('current');
 	    $('.tab-content').removeClass('current');
 		 
 		$(this).addClass('current');
 		$("#"+tab_id).addClass('current');
+		
+		// tab-5 : 공연장 정보
+		if(tab_id == "tab-5") {
+			// 지도의 사이즈를 변경해줄 경우 일부만 영역만 확인됨
+			// 전체 영역을 보기위해 relayout함수 호출하여 사용한다.
+			relayout();
+		}
 	});
 		
 	$.ajax({
@@ -803,11 +811,6 @@ ul.tabs li.current{
 }
 
 /* 다음 맵 */
-#map {
-	height: 400px;
-	width: 100%;
-}
-
 #hallImg {
 /* 	background-color: red;  */
 	float: left;
@@ -1195,7 +1198,7 @@ td {
 			 <!-- 지도가 붙을 위치 -->
 			 <div id="hallmap">
 				<strong>공연장 위치</strong><br>
-	       		<div id="map"></div>
+	       		<div id="map" style="width: 100%; height: 500px;"></div>
 	       		
 	       		<!-- 위에 설정 시 지도 확인되지 않아 여기에 설정 -->
 	       		<script>
@@ -1217,7 +1220,21 @@ td {
 				
 				// 주소-좌표 변환 객체를 생성합니다
 				var geocoder = new daum.maps.services.Geocoder();
+
+				// 지도를 표시하는 div 크기를 변경하는 함수입니다
+				function resizeMap() {
+				    var mapContainer = document.getElementById('map');
+				    mapContainer.style.width = '1000px';
+				    mapContainer.style.height = '500px'; 
+				}
 				
+				function relayout() {    
+				    
+				    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+				    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+				    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+				    map.relayout();
+				}
 				// 주소로 좌표를 검색합니다
 				geocoder.addressSearch(hallAddress, function(result, status) {
 				
@@ -1247,7 +1264,7 @@ td {
 				    } 
 				});    
 				</script>
-       		 </div>
+        </div>
         </div>
 		</div>
 		

@@ -123,7 +123,7 @@ $(window).load(function() {
  
 <style type="text/css">
 .fitPfmSlider {
-	padding: 5px;;
+	padding: 5px;
 }
 
 /* 메인 배너 */
@@ -389,7 +389,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 	position: relative;
 	width: 300px;
 	height: 400px;
-	border: 1px solid black;
+/* 	border: 1px solid black; */
 	/* div 영역을 벗어난 내용물 숨기기 */
 	overflow: hidden;
 	/* 옆으로 넘어가는거 확인시 주석 후 확인 */
