@@ -252,7 +252,7 @@ $(document).ready(function() {
 				 location.href=path;
 				 
 			 }else{
-				  window.open(path, "_blank", "width=1100px,height=710px");
+				  window.open(path, "test","_blank", "width=1100px,height=710px");
 			 }
 			  
 		});

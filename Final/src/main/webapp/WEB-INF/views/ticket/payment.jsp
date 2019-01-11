@@ -37,7 +37,6 @@ text-align: center;
 
 .section_onestop {
     width: 720px;
-    margin-left: 90px;
     heigth: 652px;
     position: relative;
     float: left;
@@ -320,7 +319,6 @@ function openZipSearch() { //다음 우편번호 API
 <div class="section_onestop">
 <div class="wrap_select">
 
-<div class="box_r">
 <!-- 수령방법  -->
 
 <!--결제방법  -->
@@ -420,7 +418,6 @@ function openZipSearch() { //다음 우편번호 API
 </div><!-- end class="box_cont box_receipt" -->
 <!-- 결제 동의 -->
 
-</div><!-- end class="box_r" -->
 </div><!-- end class="wrap_select" -->
 <!-- 티켓 정보 -->
 
