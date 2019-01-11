@@ -653,10 +653,13 @@ $(document).ready(function() {
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #F2B134;
-    background: #F2B134;
+    border: 1.2px solid #a9a9a9;
+    background: #fbfbfb;
     font-weight: bold;
-    color: #fff;
+    color: #8c8c8c;
+}
+#mychoiceBtn:hover {
+	background: #ededed;
 }
 #mychoiceBtn span {
 	margin-right: 10px;
@@ -666,10 +669,10 @@ $(document).ready(function() {
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #F2B134;
-    background: #FFF;
-    color:#AAA;
+    border: 1.2px solid #ffffff;
+    background: #f2b133;
     font-weight: bold;
+    color: #ffffff;
 }
 
 .expListContentInfo {

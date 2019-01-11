@@ -750,16 +750,33 @@ function tempSeatAdd(){
  	stroke-width: 25; 
  } 
  
- #userSelect{
-    height: 130px;
-    overflow: auto;
-    border: 1px solid #F2B134;
+ #userSelect {
+    height: 110px;
+    border: 1px solid #bebebe;
     border-radius: 3px;
+    padding: 14px 12px;
+    overflow: hidden;
+ }
+ 
+ #selectedSeatInfo>h3, #payInfo>h3 {
+ 	color: #565656;
+ }
+ #selectedSeatInfo {
+    margin-bottom: 14px;
  }
  
  #selectedSeats_small>#wrapper{
 	 height: 10px;
 	 width: 10px;
+ }
+ 
+ #booking-detail {
+    padding-left: 20px;
+    width: 320px;
+    height: 645px;
+    position: absolute;
+    left: 700px;
+    top: 71px;
  }
  
  /*가격정보 네모*/
@@ -772,16 +789,30 @@ function tempSeatAdd(){
 	 width:22px;
  }
  
+ #legend2{
+    list-style: none;
+    margin-left: -38px;
+ }
+ 
+ #legend2 li {
+ 	margin-bottom: 2px;
+ }
+ #totalPrice {
+ 	font-size:24px; 
+ 	color:#565656; 
+ 	display:inline
+ }
  /*다음단계*/
  #seatBtn{
-     width: 300px !important;
+    width: 300px !important;
     background-color: #FFF;
     padding: 10px 16px;
     font-size: 18px;
     line-height: 1.3333333;
-    border-radius: 6px;
+    border-radius: 3px;
     color: #F2B134;
     border: 2px solid #F2B134;
+    margin-top: 15px;
  }
  /* 다음단계버튼 hover*/
  #seatBtn:hover{
@@ -791,22 +822,22 @@ function tempSeatAdd(){
 
 /*좌석도 전체보기 버튼*/
 #seatAllViewBtn{
-	width: 300px;
-    background-color: #FFF;
+    width: 300px;
+    background-color: #fff;
     padding: 5px;
     font-size: 14px;
     line-height: 1.3333333;
-    border-radius: 6px;
-    color: #F2B134;
-    border: 1px solid #F2B134;
-    margin-top: 22px;
+    border-radius: 1px;
+    color: #717171;
+    border: 1px solid #bebebe;
 }
-}
+
 /*좌석도 전체보기 버튼 hover*/
  #seatAllViewBtn:hover{
- background-color: #F2B134;
-  color: #fff;
+	border: 1px solid #d8d8d8;
+	background-color: #f4f4f4;
 }
+
 ::-webkit-scrollbar {
       width: 15px;
 } /* this targets the default scrollbar (compulsory) */
@@ -890,9 +921,9 @@ function tempSeatAdd(){
 }
 
 #allDiv{
-    padding: 35px;
+    padding: 70px;
     padding-left: 73px;
-    padding-top: 45px;
+    padding-top: 20px;
 }
 
 #selectedSeats{
@@ -936,12 +967,17 @@ function tempSeatAdd(){
     font-size: 20px;
 }
 
+#pfmNameInfo span{
+    margin-left: 10px; 
+}
+
 #pfmNameDateInfoDiv{
-	float: left;
+    float: left;
+    padding-bottom: 7px;
     border-bottom: 1px solid #BCBC !important;
     margin-left: -37px !important;
     width: 649px !important;
-    
+    margin-bottom: 15px;
 }
 </style>
 </head>
@@ -966,12 +1002,12 @@ function tempSeatAdd(){
 	<br>
 	<div id = "selectedSeats"></div>
 </div>
-	<div id="booking-detail"style="float: right; padding-left: 20px;">
+	<div id="booking-detail">
 	<div id="selectedSeats_small"></div> 
 	<button id = "seatAllViewBtn" onclick="seatAllView()">좌석도 전체보기</button>
 	
 	<div id ="selectedSeatInfo">
-	<h3 style="color: #F2B134;">선택된 좌석 (<span id="counter">0</span>)</h3>
+	<h3>선택된 좌석 (<span id="counter">0</span>)</h3>
 	<div id = "userSelect">
 		<div class="allScreen"></div>
 		<ul id="selected-seats"></ul>
@@ -980,15 +1016,15 @@ function tempSeatAdd(){
 	</div>
 	<div id ="payInfo">
 		<!-- 좌석별 가격표 -->
-		<h3 style="color: #F2B134;">좌석등급/가격</h3>
-		<ul id ="legend2" style="list-style:none; margin-left: -38px;">
+		<h3>좌석등급/가격</h3>
+		<ul id ="legend2">
 		
 		</ul>
 	</div>	
 
 	</div>
 	
-	<div style="font-size:24px; color:#F2B134; display:inline" >총 결제금액 : </div> 
+	<div id="totalPrice">총 결제금액 : </div> 
 	<b style="font-size: 25px"><span id="total">0</span> 원</b><br>
 
 	<button id = "seatBtn" class="stepBtn nextBtn">다음단계</button>
