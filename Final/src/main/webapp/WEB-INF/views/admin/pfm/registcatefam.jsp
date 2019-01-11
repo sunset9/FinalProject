@@ -28,10 +28,10 @@
 .cover {
 	z-index: 10;
     background-color: #33333352;
-    height:150px;
-    width: 103px;
-    right: 15px;
-    position: absolute;
+    height:200px;
+    width: 150px;
+    right: 14px;   
+    position: absolute; 
 }
 .cover2 {
 	z-index: 10;
@@ -42,11 +42,37 @@
     position: absolute;
 }
 .removeBtn {
-	margin-top: 60px;
+	margin-top: 80px;
 }
 .deleteBtn {
-	margin-top: 60px;
+	margin-top: 80px; 
 }
+.pfmIdx > img {
+    height: 200px;
+    width: 150px;
+    margin-bottom: 5px;
+}
+.pfmIdx {
+    width: 150px;
+    height: 220px; 
+}
+.pfmName { 
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 148px;
+    white-space: nowrap;  
+}
+.thumbnail {
+	width: 178px;
+    height: 248px;    
+}
+
+.caption > img {
+    height: 200px;
+    width: 150px;
+    margin-bottom: 3px;
+}
+
 </style>
 
 <script>
@@ -97,14 +123,17 @@ function ajax(url){
 				var list = d.list;
 				var paging = d.paging;
 				$('#resultposter').html('');
-		  		list.forEach(function(item){
-				  	var input = $('<input type="radio" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
-				    var div =  $('<div class="thumbnail">');
+		  		list.forEach(function(item){ 
+				    var div =  $('<div class="thumbnail" style="width: 178px; height:278px;">');
+				  	var input = $('<input type="radio" style="margin: 1px 0px 10px;" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
+				  	var caption = $('<div class="caption">');
 				  	var img = $('<img src="/resources/image/'+item.storedName+'">');
-				  	var h3 = $('<h3 style="text-align :center;">'+item.name+'</h3>');
-				  	div.append(input);
-				  	div.append(img);
-				  	div.append(h3);	
+				  	var h3 = $('<div class="pfmName">'+item.name+'</div>');
+				  	caption.append(input);
+				  	caption.append(img);
+				  	caption.append(h3);
+				  	div.append(caption);
+				  	
 			  	 	$('#resultposter').append(div);
 			  	});
 		  		
@@ -245,7 +274,7 @@ $('#myModal').find('.btn').on('click',function() {
 	var image =$('<img>');
 	image.attr('src','/resources/image/'+ labelName);
 	var atag = $('<a>');
-	var htag= $('<h3>'+name+'</h3>');
+	var htag= $('<div class="pfmName">'+name+'</div>');
 	//htag.text(name);
 	atag.attr('href','"/admin/deletecatefam/'+selectedId+'/>"');
 	//삭제 버튼 (div5) 현재는 바뀐 removeBtn으로 쓰고 있어서 주석처리
@@ -338,7 +367,7 @@ $('.caption').on('mouseleave','.cover',function(){
 			<div class="pfmIdx" id="${item.pfmIdx }">
 					<img src="/resources/image/${item.storedName }"> 
 <%-- 					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a> --%>
-								<h3>${item.name } <!--,  ${item.pfmIdx }--></h3>
+								<div class="pfmName">${item.name } <!--,  ${item.pfmIdx }--></div>
 						</div>
 			</div>
 		</div>
@@ -371,11 +400,11 @@ $('.caption').on('mouseleave','.cover',function(){
 					<input type="text" name="searchposter" id="searchposter" />
 					<button type="button" id="searchbtn">검색하기</button>
 					</div>
-					<div class="row">
+					<div class="row"> 
 						<div id="resultposter" style="display: inline-flex;text-align: center;flex-flow: wrap;">
 						</div>
 						<div class="text-center">
-							<ul class="pagination">
+							<ul class="pagination">      
 			 				</ul>
 						</div>
 					</div>
@@ -386,5 +415,5 @@ $('.caption').on('mouseleave','.cover',function(){
 			</div>
 		</div>
 	</div>
-</form>
+</form> 
 </div>
