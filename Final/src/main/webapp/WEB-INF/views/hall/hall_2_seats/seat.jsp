@@ -162,6 +162,10 @@ div.seatCharts-cell {
                                          	var area = seatArr[0];
                                           	var row = seatArr[1];
                                           	var col = seatArr[2];
+                                          	
+                                          	var price =  this.data().price;
+                                          	
+                                          	price=price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                           
                                           $(
                                                 '<li>'
@@ -171,7 +175,7 @@ div.seatCharts-cell {
 //                                                       + this.settings.id
                                                       + area + "구역 " +row+"행 "+col+"열"
                                                       + ' : '
-                                                      + this.data().price
+                                                      + price
                                                       + '<b> 원'
                                                       + '</b> <a href="#" class="cancel-cart-item"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #F2B134"></span></a></li>')
                                                 .attr('id','cart-item-'+ this.settings.id)
@@ -184,7 +188,12 @@ div.seatCharts-cell {
                                            * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
                                            */
                                           $counter.text(sc.find('selected').length + 1);
-                                          $total.text(recalculateTotal(sc)+ this.data().price);
+                                          
+                                          var total = recalculateTotal(sc)+ this.data().price;
+                                          
+                                          total=total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                          
+                                          $total.text(total);
                                         
                                           return 'selected';
                                        } else if (this.status() == 'selected') {
@@ -274,7 +283,8 @@ div.seatCharts-cell {
             total += this.data().price;
             
          });
-
+    
+         
          return total;
       }
       
@@ -291,7 +301,10 @@ div.seatCharts-cell {
     		  array = str.split(" ");
     		  
     		  console.log(array);
-    		  $(".nth2_1").append("<li class='seatInfo "+seat+"'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+${seatMap.pay}+"</li>")
+    		  
+    		  var pay = ${seatMap.pay};
+    		  pay=pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    		  $(".nth2_1").append("<li class='seatInfo "+seat+"'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+pay+"</li>")
 
     		  
     	  }else{
