@@ -108,11 +108,13 @@ $(document).ready(function() {
 		}
 	});// click 
 	
-	function enterkey(){
-		if(window.event.keyCode==13){
-			$('#loginBtn').click();
-		} // if end
-	}
+    $("#inputPassword3").keydown(function (key) {
+    	 
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+        	$('#loginBtn').click();
+        }
+ 
+    });
 });
 
 </script>
@@ -138,8 +140,7 @@ $(document).ready(function() {
 		  <div class="form-group">
 		    <div class="col-sm-10">
 		      <input type="password" class="form-control login-input" id="inputPassword3"  name="password" 
-		      onkeyup="enterkey();"
-		       placeholder="비밀번호">
+		      onkeyup="enterkey();"placeholder="비밀번호">
 		    </div>
 		  </div>
 		  <div class="form-group">
