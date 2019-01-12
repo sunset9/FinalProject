@@ -13,6 +13,7 @@
 .info{
 	padding-right: 10px;
 	font-weight: bold;
+	width: 20%;
 }
 td{
 	padding: 10px;
@@ -97,8 +98,8 @@ $("#nickCheck").click(function() {
 				} 
 				, success: function(data){
 					console.log("닉네임 변경 성공");
-					$('#nickModal').find('form')[0].reset();
 					$('#oriNick').html($('#nick').val());
+					$('#nickModal').find('form')[0].reset();
 					close();
 				}
 			}); // end ajax

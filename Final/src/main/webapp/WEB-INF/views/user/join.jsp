@@ -24,12 +24,22 @@
 <script
 	src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 	
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css">
+<!-- 폰트 : https://github.com/innks/NanumSquareRound 참고 -->
+
 
 
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 
 <style type="text/css">
+* {
+	font-family: 'NanumSquareRound',Segoe UI, sans-serif;
+}
+
+h1 {
+    font-weight: 700;
+}
 
 td {
 	padding: 5px;
@@ -80,8 +90,9 @@ tr{
 }
 
 #themeSec{
-	border: 1px solid #CCC;
-	background: #DDD;
+	border: 1px solid #EEE;
+	background: #EEE;
+	border-radius: 10px;
 }
 .title{
 	width: 300px;
@@ -89,6 +100,9 @@ tr{
 }
 table{
 	width: 100%;
+}
+.pageInfo{
+	text-align: center;
 }
 </style>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -295,7 +309,7 @@ $(document).ready(function() {
 			console.log(checkboxes.length);
 			
 		if (checkboxes.length < 1) {
-			alert ("하나는 선택해야함");
+			alert ("한 가지는 꼭 선택하셔야 합니다.");
 			
 			return;
 			
@@ -849,7 +863,7 @@ function DaumPostcode() {
 
 <!-- 회원가입 완료! 선택 -->
 <div id = "complete" style="display: none;">
-<h1 class = "pageInfo">회원가입 완료</h1>
+<!-- <h1 class = "pageInfo">회원가입 완료</h1> -->
 
 <div style="text-align: center">
 	<h1>회원 가입에 성공했습니다!</h1><br><br>
@@ -859,9 +873,9 @@ function DaumPostcode() {
 </div>	
 </div>
 
+
+
 </div>
-
-
 
 
 <!-- footer -->

@@ -214,22 +214,21 @@ li{
 <script type="text/javascript">
 $(document).ready(function(){
 
-		var artistIdx=[];
-		var artistName =[];
-	// 검색후 클릭 하면 표시해주기
+	// 최종 아티스트 정보 담을 배열 
+	var artistIdx=[];
+	var artistName =[];
 	
+	// 검색후 클릭 하면 표시해주기
 	$('#searchArtist').on('click','.searchLi', function(){
-		
-		
 		var idx = $(this).data('aIdx');
 		var name = $(this).data('aName');
 		
 		console.log("클릭함수 실행");
 		if($(this).children($('.icon')).hasClass("changeColor") === true) {
-
 			$(this).children($('.icon')).removeClass('changeColor');
-			// 안에 값 취소하는거 물어보기
+
 		}else{
+			
 			$(this).children($('.icon')).addClass('changeColor');
 			
 			artistIdx.push(idx);
@@ -238,7 +237,6 @@ $(document).ready(function(){
 		console.log("artistIdx:"+typeof(artistIdx));
 		console.log(artistIdx);
 		console.log("artistIdx:"+artistIdx);
-		
 	});//end on
 	
 	// 선택완료 누르면 최종 추가
@@ -250,31 +248,8 @@ $(document).ready(function(){
 			var lastIdx = [];
 			var lastName =[];
 			
-// 			var isExist = false ;
-			
 			var selectedList = $('#selectedArt').find('div');
 			
-// 			selectedList.each(function(i) {
-// 				var cnt = 0;
-// 				artistIdx.each(function(i){
-					
-// 					if($(selectedList[i]).data('paidx')==artistIdx[i]){
-						
-// 						isExist = true;
-// 						cnt ++;
-// 						return false ; // each 문 종료
-
-// 					}; // end if
-// 			}); // end j
-			
-// 			// 같은 값이 하나도 없으면 최종 결과에 저장
-// 			if (cnt==0){
-// 				lastIdx.push(idx);
-// 				lastName.push(name);
-// 			}
-// 		}) // end i
-		
-		
 		for (var i =0; i<artistIdx.length; i ++){
 			var cnt = 0;
 			for (var j =0; j<selectedList.length; j ++){

@@ -32,7 +32,7 @@
 	INNER JOIN performance P
 	ON M.pfm_idx = P.pfm_idx
 	WHERE user_idx = #{userIdx }
-	ORDER BY ticket_start
+	ORDER BY ticket_start DESC                
   </select>
   
   <insert id="insert" parameterType="ticket.dto.MyChoice">
