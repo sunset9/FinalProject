@@ -43,7 +43,7 @@ td{
 }
 
 .findUl{
-	padding-left: 550px;
+	padding-left: 700px;
 }
 
 .nav-tabs>li.active>a{
@@ -99,7 +99,7 @@ $(document).ready(function() {
 			}
 			, success: function(data){
 				if(data!=null) {
-					alert("입력하신 이메일로 임시 비밀번호를 보내드렸습니다." +data);
+					alert("입력하신 이메일로 임시 비밀번호를 보내드렸습니다.");
 					$('#ename').val("");
 					$('#phone').val("");
 					$('#email').val("");
