@@ -89,6 +89,14 @@ table{
 	margin: 20px auto;
 	text-align: center;
 }
+.cancelBookGroup{
+
+	color: #F2B134;
+ 
+}
+.cancelBookGroup span{
+   text-decoration-line: line-through;
+}
 </style>
 
 <div class="main_wrapper">
@@ -112,7 +120,7 @@ table{
 	<div id="bookDetail">
 		<div class = "innerBox">
 			<dl>
-			<dt>예매번호</dt> <dd>${sob.bookGroup }</dd>
+			<dt>예매번호</dt> <dd class="cancelBookGroup">[취소]<span>${sob.bookGroup }</span></dd>
 			<dt>공연장</dt> <dd>${sob.hallName }</dd>
 			</dl>
 			<dl>

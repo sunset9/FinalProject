@@ -197,10 +197,16 @@ li{
 }
 .newChoice{
 	color: #F2B134;
+	margin-right: 5px;
 }
 .artistImg{
 	width: 120px;
 	height: 120px;
+}
+.searchArtistImg{
+	width: 60px;
+	height: 60px;
+	margin: 10px;
 }
 </style>
 
@@ -302,7 +308,8 @@ $(document).ready(function(){
 				$('#selectedArt').append(selected);
 			}; 
 			
-
+			// 창 닫기
+			$('#searchArtist').hide();	
 
 		});
 	
@@ -426,7 +433,7 @@ $(document).ready(function(){
 					// 아티스트 이미지 띄울 태그
 					var img = $('<img>');
 					img.attr('src', artist.imgUri);
-					img.addClass('artistImg');
+					img.addClass('searchArtistImg');
 					img.addClass('img-circle');
 					img.addClass('searchImg');
 					
