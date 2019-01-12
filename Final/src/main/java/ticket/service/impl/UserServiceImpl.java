@@ -240,10 +240,17 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public void cancelBook(String names) {
+	public void cancelBook(String names,String bookGroup) {
 		userDao.updateStateCancel(names);
-		userDao.updateState(names);
+		
+		Map map = new HashMap<>();
+		map.put("names", names);
+		map.put("bookGroup", bookGroup);
+		
+		userDao.updateState(map);
+//		userDao.updateState(names, bookGroup);
 	}
+	
 
 
 	@Override

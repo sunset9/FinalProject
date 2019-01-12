@@ -188,7 +188,7 @@ public interface UserService {
 	 * @Method설명:BookIdx를 문자열로 만들어서 업데이트하기
 	 * @작성자:홍나영
 	 */
-	public void cancelBook(String names);
+	public void cancelBook(String names,String bookGroup);
 
 
 	/**
