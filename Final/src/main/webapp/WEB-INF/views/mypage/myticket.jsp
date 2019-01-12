@@ -152,6 +152,14 @@ td{
 	width: 88px;
     height: 121px;
 }
+.cancelBookGroup{
+
+	color: #F2B134;
+}
+.cancelBookGroup span{
+
+    text-decoration-line: line-through;
+}
 </style>
 
 <script type="text/javascript">
@@ -210,10 +218,11 @@ $(document).ready(function(){
 	<th style="width: 15%">예매일</th>
 	<th style="width: 35%">공연정보</th>
 	<th style="width: 35%">예매정보</th>
-	<th style="width: 15%">상태</th>
+	<th style="width: 20%">상태</th>
 </tr>
 </thead>
 
+<!-- 예매완료된 예약 -->
 <tbody>
 <c:forEach items="${sob }" var="sob"  >
 	<c:if test='${sob.state eq "예매완료(결제완료)"||sob.state eq "예매완료(부분취소)"}'>
@@ -263,13 +272,14 @@ $(document).ready(function(){
 <table class="table">
 <thead>
 <tr>
-	<th style="width: 10%">예매일</th>
+	<th style="width: 15%">예매일</th>
 	<th style="width: 35%">공연정보</th>
 	<th style="width: 35%">예매정보</th>
 	<th style="width: 20%">상태</th>
 </tr>
 </thead>
 
+<!-- 취소된 예매 -->
 <tbody>
 <c:forEach items="${csob }" var="sob"  >
 	<c:if test='${sob.state eq "취소중"||sob.state eq "취소완료"}'>
@@ -292,7 +302,7 @@ $(document).ready(function(){
 		<td><div>
 		<dl>
 			<dt>예약번호</dt>
-			<dd>${sob.bookGroup }</dd>
+			<dd class="cancelBookGroup">[취소]<span>${sob.bookGroup }</span></dd>
 			<dt>관람일</dt>
 			<dd>
 			<fmt:formatDate value="${sob.pfmDate}" pattern="yyyy-MM-dd"/>
