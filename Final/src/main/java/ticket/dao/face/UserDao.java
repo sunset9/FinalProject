@@ -251,8 +251,8 @@ public interface UserDao {
 	 * @Method설명: 취소되지 않은 좌석 예매완료 (부분취소)로 바꾸기
 	 * @작성자:홍나영
 	 */
-	public void updateState(String names);
-
+	public void updateState(Map map);
+//	public void updateState(String names, String bookGroup);
 	
 	/**
 	 * @최종수정일: 2018.12.28

@@ -372,6 +372,7 @@ $(document).ready(function(){
 			}
 			, success:function(data) {
 				console.log ("성공");
+				location.href="/mypage/mychoice";
 			}
 		
 		}); // ajax end

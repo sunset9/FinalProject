@@ -125,20 +125,24 @@ public class UserController {
 		user.setProfile(profile);
 		user.setBirth(birth);
 		logger.info("" + user);
-
-		// 회원 가입
-		userService.join(user);
-		int userIdx = user.getUserIdx();
-
-		logger.info("가입한 user idx = " + userIdx);
-
+		
 		// 결과 담을 변수
 		int res = 1;
+		
+		// 회원 가입
+		res = userService.join(user);
+		
+		int userIdx = user.getUserIdx();
 
 		logger.info("선호 선택 처리");
 		logger.info("" + themeIdx);
-
+		
 		preferTService.choiceTheme(userIdx, themeIdx);
+
+		logger.info("가입한 user idx = " + userIdx);
+
+		
+		
 
 		return String.valueOf(res);
 	}
@@ -275,6 +279,7 @@ public class UserController {
 
 		user = (User) session.getAttribute("loginUser");
 		logger.info(password);
+		
 		user.setPassword(password);
 		logger.info("비밀번호 들어갔는지 체크? : " + user);
 
@@ -385,8 +390,8 @@ public class UserController {
 
 		// 회원 번호로 예약한 것들 불러오기
 		List<StateOfBook> sob = new ArrayList<>();
-
 		sob = userService.userTicket(user);
+		
 		logger.info("" + sob);
 		model.addAttribute("sob", sob);
 		
@@ -467,7 +472,7 @@ public class UserController {
 		logger.info(names);
 		
 		// 예매 상태 변환해 놓기 !
-		userService.cancelBook(names);
+		userService.cancelBook(names, bookGroup);
 		
 		logger.info(bookGroup);
 		

@@ -204,7 +204,7 @@
 		GROUP BY
 		    create_date, name, user_idx, pfm_start, pfm_end, book_group, cancel_date,
 		    state, stored_name, hall_name, pfm_date, pfm_time,pfm_idx
-		ORDER BY create_date
+		ORDER BY create_date DESC
   </select>
   
   <select id="selectUserGrade" parameterType="ticket.dto.User" resultMap="UserMap">
@@ -458,11 +458,11 @@
 		WHERE book_idx IN (${_parameter })
 	</update>
 	
-	<update id="updateState" parameterType="String">
+	<update id="updateState" parameterType="hashmap">
 		UPDATE book 
 		SET book_cate_idx =2 
-		WHERE book_idx NOT IN (${_parameter }) AND book_cate_idx =1
-	</update>
+		WHERE book_idx NOT IN (${names}) AND book_cate_idx =1 AND book_group = #{bookGroup}
+	</update>       
 	
 	<select id ="selectCancelSeat" resultMap="SeatSection" parameterType="String">
 		SELECT app_sec, sec_pay, A.pfm_idx
