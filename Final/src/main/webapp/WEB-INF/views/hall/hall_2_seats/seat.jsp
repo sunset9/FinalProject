@@ -179,7 +179,7 @@ div.seatCharts-cell {
                                                       + '석</td><td class="selectSeatsList">'
 //                                                       + this.settings.label 
 //                                                       + this.settings.id
-                                                      + area + "구역 </td><td class='selectSeatsList' style='width:40px;'>" +row+"행</td><td class='selectSeatsList' style='width:40px;'>"+col+"열</td><td class='selectSeatsList'>"
+                                                      + area + "구역 </td><td class='selectSeatsList' style='width:40px; padding-right: 0px;'>" +row+"행</td><td class='selectSeatsList' style='width:40px; padding-right: 0px;'>"+col+"열</td><td class='selectSeatsList'>"
                                                       + '  </td><td class="selectSeatsList">'
                                                       + price
                                                       + ' 원'
