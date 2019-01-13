@@ -670,7 +670,7 @@ function insertQnaRecommList(qnaRecommList) {
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 1.2px solid #a9a9a9;
+    border: 1.1px solid #a9a9a9;
     background: #fbfbfb;
     font-weight: bold;
     color: #8c8c8c;
@@ -688,7 +688,7 @@ function insertQnaRecommList(qnaRecommList) {
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 1.2px solid #ffffff;
+    border: 1.1px solid #ffffff;
     background: #f2b133;
     font-weight: bold;
     color: #ffffff;

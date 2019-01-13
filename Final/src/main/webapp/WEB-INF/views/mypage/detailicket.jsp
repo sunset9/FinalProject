@@ -4,17 +4,25 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 
 <style type="text/css">
+h2 {
+	font-size: 21px;
+	font-weight: 900;
+	margin-top: 35px;
+}
+
 .boxDiv{
- 	border: 1px solid #CCC;
- 	padding :10px;
+ 	border: 1px solid #EEE;
+/*  	padding :10px; */
 }
 #warpTicket{
+	border: 1px solid #ddd;
 	display: grid;
 	width:1160px;
-	margin: 20px auto;
-/* 	padding :10px; */
+	margin: 50px auto;
+	padding: 23px 50px;
 	grid-template-columns: 200px auto ;
- 	grid-gap: 10px;
+ 	grid-gap: 90px;
+ 	grid-row-gap: 10px;
  	grid-template-rows:50px, auto; 
 
 }
@@ -24,13 +32,11 @@
 }
 
 #title{
-	
 	grid-area: 1/ 2 / 2 /3 ;
-	text-align : center;
+	text-align : left;
 /* 	border: 1px solid black; */
-	font-weight: bolder;
 	font-size: 3em;
-	
+    padding-top: 17px;
 }
 
 
@@ -39,14 +45,70 @@
 	text-align: center;
 	
 }
+
+#bookDetail dt {
+    width: 100px;
+}
+#bookDetail dd {
+	margin-bottom: 5px;
+}
 .innerBox{
 /* 	북 디테일 담고 있는 div */
 	width: 500px;
-	margin: 0 auto;
+}
+
+#receive p {
+	margin: 0;
+}
+
+#buy dt {
+    width: 132px;
+    font-size: 14px;
+    font-weight: normal;
+}
+#buy td {
+    padding-top: 23px; 
+    padding-left: 30px;
+    vertical-align: text-bottom;
+}
+#buy td:last-child {
+    background: #f7f7f7;
+    vertical-align: middle;
+    padding-left: 55px;
+}
+#buy td:last-child dt {
+    width: 80px;
+    font-size: 14px;
+    font-weight: bold;
+}
+#buy dd {
+	margin-bottom: 5px;
+}
+
+#totalFee {
+    color: #f2b133;
+    font-weight: 900;
+}
+.buy-cover {
+	position: relative;
+	width: 132px;
+	height: 100%;
+	background: #eee;
+}
+#payInfo td:nth-child(2n) {
+    text-align: left;
+    padding-left: 65px;
+}
+dl {
+	margin-bottom: 0;
 }
 dt{
+	text-align: left;
 	float: left;
 	margin-right: 10px;
+}
+dd {
+	text-align: left;
 }
 th{
 	text-align: center !important;
@@ -58,17 +120,13 @@ th{
 
  }
  
-dd{
-	padding:5xp ;
- 	text-align: center;
- } 
 table{
 	width: 100%;
 	text-align: center;
 }
 .pfmInfo{
 	width: 20%;
-	background: #EEE;
+	background: #f7f7f7;
 	border-bottom: #fff;
 }
 .fontSize{
@@ -76,27 +134,43 @@ table{
 }
 
 .btnDiv{
-	margin: 20px auto;
+	margin: 55px auto;
 	text-align: center;
 }
+
+#seat tr:first-child {
+    background: #f7f7f7;
+    height: 43px;
+}
+#seat th {
+	font-size: 14px;
+    font-weight: normal;
+}
+#cancelCkb {
+	margin-left: 3px;
+}
+
 .previous{
 	width: 140px;
     height: 40px;
-    border-radius: 10px;
-    border: 2px solid #F2B134;
-    color:#fff;
-    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid #cdcdcd;
+    background: #FFF;
+    font-size: 15px;
+    color: #AAA;
 }
 
 #bookCancel{
 	width: 140px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 3px;
     border: 2px solid #F2B134;
     color:#fff;
     background: #F2B134;
-    font-weight: bold;
+    font-size: 15px;
 }
+
+
 </style>
 
 <script type="text/javascript">
@@ -111,7 +185,7 @@ $(document).ready(function() {
 	var totalTicket= ${ss.secPay * sob.ea };
 	console.log (totalTicket);
 	
-	$('#ticketPrice').text(totalTicket.toString().replace(regexp, ','));
+	$('#ticketPrice').text(totalTicket.toString().replace(regexp, ',')+' 원');
 	
 	// 배송비 
 	var delivery =0;
@@ -119,7 +193,7 @@ $(document).ready(function() {
 	if ('${receive }' == 2){
 		delivery =2500 ;
 	}
-	$('#delivery').text(delivery.toString().replace(regexp, ','));
+	$('#delivery').text(delivery.toString().replace(regexp, ',')+' 원');
 	
 	// 추가 금액(수수료)
 	var fee =${sob.ea * 1000 };
@@ -131,12 +205,12 @@ $(document).ready(function() {
 	
 	// 총 추가비용
 	var extraFee = fee + delivery;
-	$('#extraFee').text(extraFee.toString().replace(regexp, ','));
+	$('#extraFee').text(extraFee.toString().replace(regexp, ',')+' 원');
 	
 	var totalFee = fee + parseInt(delivery)+ parseInt(totalTicket) ;
 	console.log("총 결제 금액 : " +totalFee);
 	
-	$('#totalFee').text(totalFee.toString().replace(regexp, ','));
+	$('#totalFee').text(totalFee.toString().replace(regexp, ',')+' 원');
 	
 	
 	// 예매좌석중에 취소하고싶은 좌석 체크박스에 체크하고 삭제요청 버튼 누를 때 메소드
@@ -198,7 +272,7 @@ $(document).ready(function() {
 <!-- 구매 티켓 정보 -->
 <div id = "warpTicket" class ="boxDiv">
 	<div id = "poster">
-	<img style ="width: 180px;" src="/resources/image/${sob.storedName }">
+	<img style ="width: 200px;" src="/resources/image/${sob.storedName }">
 	</div>
 	
 <!-- 	공연 타이틀 -->
@@ -243,14 +317,14 @@ $(document).ready(function() {
 	<table>
 	<c:if test="${receive eq 1 }">
 	<tr>
-		<td class="pfmInfo">수량 방법</td>
-		<td class="fontSize"><p>현장수령 | 공연 당일 현장 교부처에서 예매번호 및 본인 확인 후 티켓을 수령하여 입장이 가능합니다.</p></td>
+		<td class="pfmInfo">수령 방법</td>
+		<td class="fontSize"><p>현장수령 | &nbsp;&nbsp;&nbsp;공연 당일 현장 교부처에서 예매번호 및 본인 확인 후 티켓을 수령하여 입장이 가능합니다.</p></td>
 	</tr>
 	</c:if>
 	<c:if test="${receive eq 2 }">
 	<tr>
 		<td class="pfmInfo">수량 방법</td>
-		<td class="fontSize"><p>배송 | 예매완료(결제익일) 기준으로 4~5일 이내 배송됩니다.(주말/공휴일을 제외한 영업일 기준)</p></td>
+		<td class="fontSize"><p>배송 | &nbsp;&nbsp;&nbsp;예매완료(결제익일) 기준으로 4~5일 이내 배송됩니다.(주말/공휴일을 제외한 영업일 기준)</p></td>
 	</tr>
 	<tr>
 		<td class="pfmInfo">받으시는 분</td>
@@ -280,32 +354,32 @@ $(document).ready(function() {
 <div id = "buy" class="boxDiv">
 <table>
 <tr>
-	<td>
+	<td style="width: 35%;">
+		<div class="buy-cover"></div>
 <!-- 		티켓 금액 -->
 		<dl class="fontSize">
-			<dt>총 티켓 가격</dt>
+			<dt>티켓 가격</dt>
 			<dd id = "ticketPrice" ></dd>
-			<dt>좌석 가격</dt>
+			<dt>좌석당 티켓 가격</dt>
 			<dd>${ss.appSec }석 : 
-			<fmt:formatNumber value="${ss.secPay }" pattern="##,###"/> * ${sob.ea }</dd>
+			<fmt:formatNumber value="${ss.secPay }" pattern="##,###"/> x ${sob.ea } 장</dd>
 		</dl>
 	</td>	
 <!-- 		예매 수수료, 배송료 -->
-	<td style="border-left: 1px solid #CCC;border-right: 1px solid #CCC;">	
+	<td style="width: 35%; border-left: 1px solid #f1f1f1;">	
 		<dl class="fontSize">
 			<dt>추가 비용</dt>
 			<dd id="extraFee"> </dd>
 			
 			<dt>예매 수수료</dt>
-			<dd id ="bookFee">1,000 * ${sob.ea } = 
-			<fmt:formatNumber value="${sob.ea * 1000 }" pattern="#,###"/></dd>
+			<dd id ="bookFee">1,000 x ${sob.ea } 장 = 
+			<fmt:formatNumber value="${sob.ea * 1000 }" pattern="#,###"/> 원</dd>
 			
 			<dt>배송료</dt>
 			<dd id="delivery">	</dd>
 		</dl>
 	</td>	
-		
-	<td>	
+	<td style="width: 30%;">	
 		<dl class="fontSize">
 			<dt>총 금액</dt>
 			<dd id="totalFee"></dd>
@@ -323,7 +397,7 @@ $(document).ready(function() {
 
 <!-- 결제내역 -->
 <h2>결제내역</h2>
-<div class="boxDiv">
+<div id="payInfo" class="boxDiv">
 <table>
 	<tr>
 		<td class="pfmInfo">
@@ -357,12 +431,12 @@ $(document).ready(function() {
 
 <!-- 좌석정보  -->
 <h2>좌석정보</h2>
-<div class="boxDiv"><table class="fontSize">
-<tr >
-<th>좌석등급</th>
-<th>좌석번호</th>
-<th>좌석 구매 가격</th>
-<th>예매/취소</th>
+<div id="seat" class="boxDiv"><table class="fontSize">
+<tr>
+<th style="width:15%">좌석등급</th>
+<th style="width:20%">좌석번호</th>
+<th style="width:20%">좌석 구매 가격</th>
+<th style="width:25%">예매/취소</th>
 </tr>
 <c:forEach items="${seatList }" var="s">
 <tr>
@@ -373,7 +447,7 @@ $(document).ready(function() {
 	<td>${s.state }
 <%-- 	${s.state eq '예매완료(결제완료)' || s.state eq '예매완료(부분취소)'} --%>
 		<c:if test='${s.state eq "예매완료(결제완료)" || s.state eq "예매완료(부분취소)"}'>
-			<input type="checkbox" value="${s.bookIdx}" name="cancelCheck"/>취소 가능
+			<span id="cancelCkb"><input type="checkbox" value="${s.bookIdx}" name="cancelCheck"/>취소 가능</span>
 		</c:if>
 	</td>
 </tr>

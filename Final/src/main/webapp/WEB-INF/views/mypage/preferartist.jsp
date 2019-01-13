@@ -58,7 +58,6 @@ ul{
 <script>
 $(document).ready(function() {
 	// 선택된 아티스트 없는 경우
-	console.log("dddd: " + $('li.alist').length);
 	console.log($('.alist'));
 	if( $('.alist').length == 1 ) {
 		$('.alist').after($('<span id="noArtist"> 선호 아티스트가 없습니다. </span>'));		

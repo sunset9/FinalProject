@@ -56,17 +56,14 @@
 #completeBtn, #cancelBtn{
     width: 140px;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #cdcdcd;
     background: #FFF;
-    font-weight: bold;
+	font-size: 15px;
     color: #AAA;
 }
 
 #completeBtn.clicked, #cancelBtn.clicked{
-	width: 140px;
-    height: 40px;
-    border-radius: 10px;
     border: 2px solid #F2B134;
     background: #F2B134;
     color: #fff;
@@ -105,6 +102,7 @@ dd{
 }
 .table {
 	margin-bottom: 0;
+	border-bottom: 1px solid #e1e1e1;
 }
 .poster{
 	display: inline-block;
@@ -236,10 +234,12 @@ $(document).ready(function(){
 			<a href='/ticket/pfmdetail?pfmIdx=${sob.pfmIdx }'><img class = "posterImg" src="/resources/image/${sob.storedName }"></a> <!-- 포스터 -->
 		</div>
 		<div class ="pfminfo">
+			<a href='/ticket/pfmdetail?pfmIdx=${sob.pfmIdx }'>
 			<span>${sob.name }</span> <!-- 공연제목 --><br>
 			<span><fmt:formatDate value="${sob.pfmStart }" pattern="yyyy-MM-dd"/> ~ 
 			<fmt:formatDate value="${sob.pfmEnd }" pattern="yyyy-MM-dd"/></span><br>
 			<span>${sob.hallName }</span>
+			</a>
 		</div>
 		</div>
 		</td>
