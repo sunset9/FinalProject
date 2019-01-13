@@ -463,7 +463,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		<c:forEach items="${bannerList }" var="list">
 			<li>
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.bannerImgOri}" />
+				<img src="/resources/image/${list.bannerImgStr}" style="width:1440px; height: 380px;" />
 			</a>
 			</li>
 		</c:forEach>
@@ -473,7 +473,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 	<div id="mainThumb">
 		<c:forEach items="${bannerList }" var="list">
 			<a data-slide-index="${list.mainbanIdx }" href="">
-				<img id="thumbImg" src="/resources/image/${list.thumbImgOri}" />
+				<img id="thumbImg" src="/resources/image/${list.thumbImgStr}" style="width:100px; height: 100px;" />
 			</a>
 		</c:forEach>
 	</div>

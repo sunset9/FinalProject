@@ -711,8 +711,8 @@ public class AdminPfmController {
 				mainbanner.setBannerImgStr((String)map.get("bannerStored"));
 				
 				// 파일 서버에 업로드
-				pService.mainbannerfileupload((MultipartFile)map.get("thumbFile"), (MultipartFile)map.get("bannerFile"), (String)map.get("thumbStored"), (String)map.get("bannerStored"));
-				
+				pService.mainbannerfileupload((MultipartFile)map.get("thumbFile"), (String)map.get("thumbStored"));
+				pService.mainbannerfileupload((MultipartFile)map.get("bannerFile"),(String)map.get("bannerStored"));
 				pService.saveMainbanner(mainbanner);
 			}
 		}
@@ -733,8 +733,8 @@ public class AdminPfmController {
 				mainbanner.setBannerImgStr((String)map.get("bannerStored"));
 				
 				// 파일 서버에 업로드
-				pService.mainbannerfileupload((MultipartFile)map.get("thumbFile"), (MultipartFile)map.get("bannerFile"), (String)map.get("thumbStored"), (String)map.get("bannerStored"));
-				
+				pService.mainbannerfileupload((MultipartFile)map.get("thumbFile"), (String)map.get("thumbStored"));
+				pService.mainbannerfileupload((MultipartFile)map.get("bannerFile"),(String)map.get("bannerStored"));
 				pService.updateMainbanner(mainbanner);
 			}
 		}
