@@ -670,7 +670,7 @@ function insertQnaRecommList(qnaRecommList) {
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 1.2px solid #a9a9a9;
+    border: 1.1px solid #a9a9a9;
     background: #fbfbfb;
     font-weight: bold;
     color: #8c8c8c;
@@ -688,7 +688,7 @@ function insertQnaRecommList(qnaRecommList) {
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 1.2px solid #ffffff;
+    border: 1.1px solid #ffffff;
     background: #f2b133;
     font-weight: bold;
     color: #ffffff;
@@ -704,8 +704,8 @@ function insertQnaRecommList(qnaRecommList) {
 }
 
 .choicePosterImg {
-	width: 250px;
-	height: 300px;
+	width: 231px;
+    height: 320px;
 }
 
 .posterImgDiv {
@@ -763,7 +763,7 @@ ul.tabs li.current{
 .topDiv {
 	margin-top: 40px;
 	margin-bottom: 30px;
-    padding: 0px 30px;
+    padding: 0px 47px;
 }
 
 /* 기대평, 관람후기, qna */

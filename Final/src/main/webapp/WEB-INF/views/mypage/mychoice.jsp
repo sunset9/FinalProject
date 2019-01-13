@@ -5,9 +5,9 @@
 <style type="text/css">
 
 .artistName{
-	color: green;
+/* 	color: green; */
 	margin-right:5px;
-	text-decoration: underline;
+/* 	text-decoration: underline; */
 }
 .artistSec {
 /* 	display: inline-block; */
@@ -23,10 +23,12 @@
 	margin: 10px;
 	width: 150px;
 	height: 220px;
+	cursor: pointer;
+	margin-left: 30px;
 }
 .frame{
 	float: left;
-    margin-right: 50px;
+    margin-right: 20px;
 }
 .frametextbox {
 	list-style: disc;
@@ -37,21 +39,23 @@
 	font-size: 1.4em;
 	font-weight: bold;
 	color: #888;
-	
 }
 .frame_right {
-    padding-top: 140px;
+    top: 93px;
+    position: relative;
+    display: inline-block;
+    line-height: 2;
 }
-
 
 #recommend-wrapper{
 	float : right;
 	width: 250px;
-    margin-top: 50px;
+    margin-top: 14px;
 }
 
 #recommendPfm{
 	background: #f8f8f8;
+	margin-top: 10px;
 }
 
 .recomImg {
@@ -60,23 +64,46 @@
 }
 
 #recomPfm{
-	border: 1px solid #CCC;
+	border: 1px solid #ebebeb;
 }
 
+#noRecPfm {
+	width: 250px;
+	height: 365px;
+    display: table;
+    text-align: center;
+    padding: 18px;
+	border: 1px solid #ebebeb;
+}
+#noRecPfm span {
+	display:table-cell;
+	vertical-align:middle;
+}
+
+.prefer-wrapper{
+    position: relative;
+    top: -26px;
+    z-index: 1;
+    border: 1px solid #cdcdcd;
+    padding: 24px;
+    padding-top: 33px;
+    padding-bottom: 40px;
+}
 #myprefer {
 	float : right;
-	border: 1px solid #CCC;
+	border: 1px solid #ebebeb;
 	width: 250px;
 	margin-top: 20px;
 	padding-top: 20px;
 	text-align: center;
 	background: #f8f8f8;
+    padding: 20px;
 }
 
 .preferTitle{
 	margin-left:10px;
 	width:700px;
-	font-size: 1.5em;
+	font-size: 31.5px;
 	font-weight: bold;	
 }
 .artist .preferTitle{
@@ -142,35 +169,36 @@
 .btnDiv{
 	text-align: center;
 	margin: 15px auto;
+    margin-top: 5px;
 }
 
 .cateinfo{
 	font-weight: bold;
+    text-align: left;
+    margin-top: 20px;
 }
 
 /* 공연 제목 */
 .pfmName{
-	display:block;
 	font-size:1.7em;	
-	font-weight: bold;
+/* 	font-weight: bold; */
+	cursor: pointer;
 }
 /* 공연 티케팅 날짜 */
 .pfmDate{
-	display:block;
 	font-size: 1.2em;
 	color: #777;
-	
+	cursor: pointer;
+    font-weight: 100;
 }
 .pfmSec{
 	margin: 5px;
-	cursor: pointer;
-	border: 2px solid white;
-/* 	position: relative; */
 }
-/* .pfmSec:hover{ */
-/* 	border-color: #F2B134; */
-/* } */
 
+#noPfm {
+	padding-left: 30px;
+	font-size: 18px;
+}
 
 /* 왼쪽 정렬할 아이들  */
 .artist{
@@ -191,17 +219,36 @@
 .choiceBtn{
 	width: 140px;
     height: 40px;
-    border-radius: 10px;
-    border: 2px solid #F2B134;
+    border-radius: 6px;
+	border: 1px solid #a5a5a5;
     background: #FFF;
     color:#888;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
+.choiceBtn:hover {
+	border: 1px solid #acacac; 
+	background: #f9f9f9;
+}
+
 .carousel-control{
 	background: none !important;
 }
+
+.pfmSec:before {
+	content: " ";
+	float: left;
+	width: 2px;
+	height: 290px;
+	background-color: #d8d8d8;
+	display: inline-block;
+    position: relative;
+    top: 22px;
+    right: 3px;
+    z-index: -1;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -246,8 +293,18 @@ $(document).ready(function() {
 	console.log($('.frametext'));
 // 	$('.date').append("<span>"+today);
 	
+	// 선택된 아티스트 없는 경우
+	console.log($('#pfmUl li'));
+	if( $('#pfmUl li').length == 0 ) {
+		$('#pfmUl').after($('<li style="list-style-type:none"><span id="noPfm"> 찜한 공연이 없습니다. </span>'));		
+// 		$('.alist').after($('<li class="alist"><p> 선호 아티스트가 없습니다. </p></li>'));		
+	}
 	
-	
+	// 맞춤 공연이 없는 경우
+	if( $('.recomImg').length == 0 ) {
+		$('#recomPfm').hide();
+		$('#noRecPfm').show();
+	}
 });  // ready end
 
 
@@ -304,19 +361,22 @@ function pfmChoice(pfmIdx){
 
 <!-- 유저가 찜해 놓은 공연 목록 보여주기 -->
 <div id ="choicePfm">
+<div class ="preferTitle"><span class ="preferTitle">찜한 공연</span></div>
+<div class="prefer-wrapper">
 <ul id = "pfmUl">
 	<c:forEach items="${pfmList }" var ="pfm">
 	<c:if test ="${! empty pfm}">
-	<li  data-pfmidx="${pfm.pfmIdx }" class = "pfmSec pfmdate" onclick="location.href='/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx }'">
+	<li  data-pfmidx="${pfm.pfmIdx }" class = "pfmSec pfmdate">
 		<div class = "innerBox">
 			<div class="frame">
 			<div class="frametextbox"><span class="frametext">${pfm.saleState }</span></div>
-			<img class = "posterImg" src="/resources/image/${pfm.posterImg }" />
+			<img class = "posterImg" src="/resources/image/${pfm.posterImg }"
+				onclick="location.href='/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx }'" />
 			</div>
 			<div class="frame_right">
-			<span class="pfmDate"> 티켓판매기간 : ~ 
+			<span class="pfmDate" onclick="location.href='/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx }'"> 티켓판매기간 : ~ 
 			<fmt:formatDate  value="${pfm.ticketEnd }" pattern="yyyy-MM-dd"/>(<fmt:formatDate value="${pfm.ticketEnd }" pattern="E"/>)</span><br>
-			<span class="pfmName">${pfm.pfmName }</span>
+			<span class="pfmName" onclick="location.href='/ticket/pfmdetail?pfmIdx=${pfm.pfmIdx }'">${pfm.pfmName }</span>
 			</div>
 		</div>
 	<div class="clearfix"></div>
@@ -326,13 +386,19 @@ function pfmChoice(pfmIdx){
 </ul>
 </div>
 </div>
+</div>
 
 <!-- 선택한 테마와 유저에 관한 추천공연  -->
 <div id ="recommend-wrapper">
 <div class ="preferTitle"><span>맞춤 공연</span></div>
 <div id ="recommendPfm">
-<div id="recomPfm" class="carousel slide" data-ride="carousel">
 
+<!-- 추천 공연 없는 경우 활성화 -->
+<div id="noRecPfm" style="display:none">
+	<span>취향에 맞는 공연이 등록되면 <br>알려드릴게요</span>
+</div>
+
+<div id="recomPfm" class="carousel slide" data-ride="carousel">
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
@@ -344,17 +410,17 @@ function pfmChoice(pfmIdx){
      <c:forEach items="${recomList }" var ="recom"  varStatus="index">
      
      <div class="item <c:if test="${index.first }"> active </c:if>">
-	<c:if test ="${! empty recom}">
-	<div  data-pfmidx="${recom.pfmIdx }" >
+		<c:if test ="${! empty recom}">
+		<div  data-pfmidx="${recom.pfmIdx }" >
+			<span>
+			<img class = "recomImg" src="/resources/image/${recom.posterName }" />
+			</span>
+		</div>
+		</c:if>
 		
-		<span>
-		<img class = "recomImg" src="/resources/image/${recom.posterName }" />
-		</span>
-	</div>
-	</c:if>
-	<div class ="btnDiv">
-	<hr>
-	<button onclick="pfmChoice(${recom.pfmIdx });" class="choiceBtn" >내 공연에 담기</button></div>
+		<div class ="btnDiv">
+		<hr>
+		<button onclick="pfmChoice(${recom.pfmIdx });" class="choiceBtn" >내 공연에 담기</button></div>
 	</div>
 	</c:forEach>
 	  
@@ -380,7 +446,7 @@ function pfmChoice(pfmIdx){
 	<button id="changePrefer" onclick="location.href='/mypage/prefer'" class="choiceBtn " >취향 변경하기</button></div>
 
 <div>
-	<h5 class ="cateinfo">&lt;아티스트&gt;</h5>
+	<h5 class ="cateinfo">선호 아티스트</h5>
 	<c:forEach items="${aNameList }" var ="a" varStatus="status">
 	<c:if test ="${! empty  a}">
 		<c:if test="${status.count%4 == 0 }"><br></c:if>
@@ -388,7 +454,7 @@ function pfmChoice(pfmIdx){
 	</c:if>
 	</c:forEach>
 	
-	<h5 class ="cateinfo">&lt;테마&gt;</h5>
+	<h5 class ="cateinfo">선호 테마</h5>
 	<c:forEach items="${ptList }" var ="pt" varStatus="status">
 	<c:if test ="${! empty  pt}">
 		<c:if test="${status.count%4 == 0 }"><br></c:if>
