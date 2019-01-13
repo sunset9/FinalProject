@@ -646,10 +646,6 @@ public class TicketController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/hall/hall_1")
-	public void test(){
-		
-	}
 
 }
 
