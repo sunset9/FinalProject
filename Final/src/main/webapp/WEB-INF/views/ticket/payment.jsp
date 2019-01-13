@@ -326,6 +326,7 @@ function openZipSearch() { //다음 우편번호 API
 <!-- 결제 수단 -->
 <div id="partPaymentInfo" class="box_payment" style="">
 <h3 class="select_tit">결제수단을 선택하세요</h3>
+<hr style="margin-top: 0px; margin-bottom: 0px;">
 <ul class="list_receipt_how">
 <li id="payMethod001">
 	<label>

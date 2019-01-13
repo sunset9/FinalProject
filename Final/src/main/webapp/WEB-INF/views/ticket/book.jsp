@@ -1087,7 +1087,7 @@ function tempSeatAdd(){
 	<h3>선택된 좌석 (<span id="counter">0</span>)</h3>
 	<div id = "userSelect">
 		<div class="allScreen"></div>
-		<ul id="selected-seats"></ul>
+		<table id="selected-seats"></table>
 		
 <!-- 		<div id="legend"></div> -->
 	</div>
@@ -1190,6 +1190,7 @@ function tempSeatAdd(){
 		<table id ="bookStep_2_tb" class="table">
 		</table>
 		<h3 class="select_tit">수령방법을 선택하세요</h3>
+		<hr style="margin-top: 0px; margin-bottom: 0px;">
 		<ul class="list_receipt_how" id="partDeliveryType" style="">
 			<li id="delvyType02">
 			<label>
@@ -1212,6 +1213,7 @@ function tempSeatAdd(){
 	<div class="box_info_use box_gray" style="background-color: #FFF">
 	<!-- 현장수령 선택시-->
 		<h3 class="tit_receipt">주문자정보</h3>
+		<hr style="margin-top: 0px; margin-bottom: 0px;">
 		<div class="box_inp_opt">
 			<table class="tbl">
 				<caption class="hide"></caption>
