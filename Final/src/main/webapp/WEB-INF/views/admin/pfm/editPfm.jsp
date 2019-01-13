@@ -427,13 +427,13 @@ $(document).ready(function(){
 		 			alert("공연 제목을 입력해주세요."); return;
 		 		} else if($('select[name="genreIdx"]').val() == 0){
 		 			alert('공연 분류를 선택해주세요.'); return;
-		 		} else if($('.resSelect span').text().length == 0){
+		 		} else if($('.resSelect:first span').text().length == 0){
 		 			alert('공연 테마를 선택해주세요.'); return;
 		 		} else if($('#ticketStartDate').val() == '' || $('#ticketEndDate').val() == ''){
 		 			alert('티켓 오픈일을 입력해주세요.'); return;
 		 		} else if($('select[name="ageGradeIdx"]').val() == 0){
 		 			alert('관람 등급을 선택해주세요.'); return;
-		 		} else if(!checkEmptyArtist){
+		 		} else if($('.resSelect:last span').text().length == 0){
 		 			alert('출연진을 선택해주세요.'); return;
 		 		} else if($('select[name="hallIdx"]').val() == 0){
 		 			alert('공연장을 선택해주세요.'); return;
