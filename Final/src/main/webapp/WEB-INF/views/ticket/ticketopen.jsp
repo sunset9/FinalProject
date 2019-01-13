@@ -251,7 +251,7 @@ a {
 	<ul id="posterList">
 		<c:forEach items="${openList }" var="list">
 			<li class="pfmbanInfo">
-				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
+				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
 					<img class="TopBannerImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
@@ -301,7 +301,7 @@ a {
 				</li>
 				
 				<li class="ticketOpenInfo ticketOpenLI">
-				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
+				<a href="/ticket/pfmdetail??pfmIdx=${list.pfmIdx}">
 				<span>
 					<strong id="pfmName">${list.name } 오픈 안내<br></strong>
 					<small style="color: #666;">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
@@ -310,7 +310,7 @@ a {
 				</li>
 				
 				<li class="ticketOpenImg">
-				<a href="/ticket/opendetail?pfmIdx=${list.pfmIdx}">
+				<a href="/ticket/pfmdetail??pfmIdx=${list.pfmIdx}">
 				<span>
 					<img class="bannerImg" src="/resources/image/${list.posterName}" />
 				</span>

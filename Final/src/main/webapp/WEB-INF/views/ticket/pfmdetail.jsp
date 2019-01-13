@@ -17,14 +17,16 @@ $(document).ready(function() {
 // 	console.log('LOGIN USER IDX : ' + ${loginUser.userIdx});
 
 	$('.castImgUl').bxSlider({
-		// 무한 루프가 아닌 처음과 끝으로 표현
+		// 슬라이드 아래의 동그라미 버튼 여부
+		pager: false,
+		// 무한 루프 설정
 		infiniteLoop: false,
 		hideControlOnEnd: true,
-		pager: false,
-		minSlides : 7,
+		moveSlides : 1,
 		maxSlides : 7,
-		slideWidth : 1130,
-		slideMargin : 10
+		slideWidth : 150,
+		minSlides : 1,
+		slideMargin : 5
 	});
 	
 	
@@ -790,9 +792,10 @@ ul.tabs li.current{
 }
 
 .imgli {
-	list-style: none;
-	float: left;
+/* 	list-style: none; */
+/* 	float: left; */
 	margin: 5px;
+	width: 150px;
 }
 
 .castInfo {
@@ -990,6 +993,7 @@ td {
 			</ul>
 			</div>
 			
+			<h3 style="font-size: 27px;">상세 정보</h3><br>
 			<div class="pfmInfo tabarray" style="display: inline-block;">
 				${detailList.contents }
 			</div>
@@ -1200,7 +1204,7 @@ td {
 			 <!-- 지도가 붙을 위치 -->
 			 <div id="hallmap">
 				<strong>공연장 위치</strong><br>
-	       		<div id="map" style="width: 100%; height: 500px;"></div>
+	       		<div id="map" style="width: 1000px; height: 500px;"></div>
 	       		
 	       		<!-- 위에 설정 시 지도 확인되지 않아 여기에 설정 -->
 	       		<script>
@@ -1211,8 +1215,6 @@ td {
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				    mapOption = {
 				        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-				        // 잠실 종합 운동장 좌표  : 37.515890, 127.072669
-				        //	설정해도 중심으로 오지않음..
 				        
 				        level: 3 // 지도의 확대 레벨
 				    };  
@@ -1237,6 +1239,7 @@ td {
 				    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
 				    map.relayout();
 				}
+				
 				// 주소로 좌표를 검색합니다
 				geocoder.addressSearch(hallAddress, function(result, status) {
 				
@@ -1244,7 +1247,10 @@ td {
 				     if (status === daum.maps.services.Status.OK) {
 				
 				        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-				
+				       	
+				        y = result[0].x;
+				        x = result[0].y;
+				        
 				        // 결과값으로 받은 위치를 마커로 표시합니다
 				        var marker = new daum.maps.Marker({
 				            map: map,
@@ -1257,7 +1263,6 @@ td {
 				        // 인포윈도우로 장소에 대한 설명을 표시합니다
 				        var infowindow = new daum.maps.InfoWindow({
 				            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + hallName + '</div>'
-				            , disableAutoPan: true
 				        });
 				        infowindow.open(map, marker);
 				
