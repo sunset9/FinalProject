@@ -467,7 +467,7 @@ $(document).ready(function() {
 		var pfmIdx = ${pfmInfoList.pfmIdx };
 		console.log('pfmIdx : ' + pfmIdx);
 		
-		var contents = $('#qnaRecomm').val();
+		var contents = $('#qnaRecomm'+qnaIdx).val();
 	// 	var contents = $('input[name=qnaRecomm]').val();
 		console.log('contents : ' + contents);
 		
@@ -484,7 +484,7 @@ $(document).ready(function() {
 			}
 			, success: function(d){			
 // 				insertQnaContent(d.qnaList);
-				insertQnaRecommList(d.qnaRecommList);
+				insertQnaRecommList(d.qnaRecommList,qnaIdx);
 			}
 			, error: function() {
 				console.log("error");
@@ -492,23 +492,26 @@ $(document).ready(function() {
 		});
 	};
 
-function insertQnaRecommList(qnaRecommList) {
+function insertQnaRecommList(qnaRecommList,qnaIdx) {
 	console.log('+ + + insertQnaRecommList 호출 + + +');
 	
-	$('#qnaRecomm').html('');
+	console.log(qnaIdx);
+	$('#qnaRecomm_2'+qnaIdx).html('');
 	
 	qnaRecommList.forEach(function(list) {
-		var qnaIdx = $('#qnaReBtn').val();
+// 		var qnaIdx = $('#qnaReBtn'+list.qnaIdx).val();
 // 		console.log('qnaIdx : ' + qnaIdx);
 // 		consoel.log('list.qnaIdx : ' + list.qnaIdx);
 		
 		if(list.qnaIdx == qnaIdx) {
-			var div = $('<div id="qRecomm">');
+			var div = $('<div id="qRecomm'+list.qnaIdx+'">');
 			var small = $('<small>-> 관리자 : ' + list.contents + '</small><br>');
 			
 			div.append(small);
+				
+			$('#qnaRecomm_2'+qnaIdx).append(div);
 			
-			$('#qnaRecomm').append(div);
+			console.log($('#qnaRecomm_2'));
 		}
 		
 	});
@@ -602,35 +605,41 @@ function insertQnaRecommList(qnaRecommList) {
 		
 		qnaList.forEach(function(list) {
 			
-		var div3 = $('<div id="oneQna">');
+			var div3 = $('<div id="oneQna">');
+				
+			var div1 = $('<div class="qnaListUserInfo">');
+			var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+			var strong = $('<strong>' + list.nick + '</strong>');
+				
+			div1.append(img).append(strong);
+				
+			var div2 = $('<div class="qnaListContentInfo">');
+			var small1 = $('<small id="qnaContent">' + list.qnaContent + '</small><br>');
+			var createDate = getDateSimpleString(list.createDate);
+			var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
 			
-		var div1 = $('<div class="qnaListUserInfo">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
-		var strong = $('<strong>' + list.nick + '</strong>');
+			if(list.nick == '${loginUser.nick }') {
+				var btn1 = $('<button id="qnaDeleteBtn'+list.qnaIdx+'" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
+			}
 			
-		div1.append(img).append(strong);
+			var input = $('<input type="text" id="qnaRecomm'+list.qnaIdx+'"name="qnaRecomm">');
+			var btn2 = $('<button id="qnaReBtn'+list.qnaIdx+'" type="button" value="'+list.qnaIdx+'" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
+	
+			div2.append(small1).append(small2);
 			
-		var div2 = $('<div class="qnaListContentInfo">');
-		var small1 = $('<small id="qnaContent">' + list.qnaContent + '</small><br>');
-		var createDate = getDateSimpleString(list.createDate);
-		var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
-		
-		if(list.nick == '${loginUser.nick }') {
-			var btn1 = $('<button id="qnaDeleteBtn" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
-		}
-		
-// 		var input = $('<input type="text" id="qnaRecomm" name="qnaRecomm">');
-// 		var btn2 = $('<button id="qnaReBtn" type="button" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
-
-		div2.append(small1).append(small2);
-		if(list.nick == '${loginUser.nick }') {
-			div2.append(btn1);
-		}
-// 		div2.append(input).append(btn2);
+			if(list.nick == '${loginUser.nick }') {
+				div2.append(btn1);
+			}
 			
-		div3.append(div1).append(div2);
+			var div4 = $('<div id = "qnaRecomm_2'+list.qnaIdx+'" style="display: inline;">');
 			
-		$('.ListQna').append(div3);
+			div4.append(input).append(btn2);
+			
+			div2.append(div4);
+			
+			div3.append(div1).append(div2);
+				
+			$('.ListQna').append(div3);
 		
 		});
 	};
@@ -1163,16 +1172,16 @@ td {
 					<small id="QnaContent">${list.qnaContent }</small><br>
 					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
 					<c:if test="${loginUser.nick eq list.nick}">
-						<button id="qnaDeleteBtn" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
+						<button id="qnaDeleteBtn${list.qnaIdx }" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
 					</c:if>
-					<input type="text" id="qnaRecomm" name="qnaRecomm">
-					<button id="qnaReBtn" type="button" value="${list.qnaIdx }"
+					<input type="text" id="qnaRecomm${list.qnaIdx}" name="qnaRecomm">
+					<button id="qnaReBtn${list.qnaIdx}" type="button" value="${list.qnaIdx }"
 						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button>
 				
-				<div id="qnaRecomm">
+				<div id="qnaRecomm_2${list.qnaIdx}">
 				<c:forEach items="${qnaRecommList }" var="relist">
 					<c:if test="${relist.qnaIdx eq list.qnaIdx}">
-					<div id="qRecomm">
+					<div id="qRecomm${relist.qnaIdx}">
 						<small>-> 관리자 : ${relist.contents }</small><br>
 					</div> 
 					</c:if>
