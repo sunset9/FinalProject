@@ -220,8 +220,6 @@ $(document).ready(function(){
 	
 	// 검색후 클릭 하면 표시해주기
 	$('#searchArtist').on('click','.searchLi', function(){
-		var idx = $(this).data('aIdx');
-		var name = $(this).data('aName');
 		
 		console.log("클릭함수 실행");
 		if($(this).children($('.icon')).hasClass("changeColor") === true) {
@@ -231,19 +229,27 @@ $(document).ready(function(){
 			
 			$(this).children($('.icon')).addClass('changeColor');
 			
-			artistIdx.push(idx);
-			artistName.push(name);
 		}
-		console.log("artistIdx:"+typeof(artistIdx));
-		console.log(artistIdx);
-		console.log("artistIdx:"+artistIdx);
 	});//end on
 	
 	// 선택완료 누르면 최종 추가
 		$('#searchArtist').on('click','#selecting', function(){
 			console.log("완료버튼 누르으응" );
-			console.log("selectList:"+typeof(selectedList));
-			console.log("artistIdx:"+typeof(artistIdx));
+			
+			var searchSelectList = $('#searchArtist').find('.changeColor');
+			console.log("searchSelectList");
+			console.log(searchSelectList);
+			
+			searchSelectList.each(function(i){
+				var idx = $(this).parent().data('aIdx');
+				var name = $(this).parent().data('aName');
+				
+				artistIdx.push(idx);
+				artistName.push(name);
+				
+			}); // end each
+			
+			
 			// 최종 결과 저장할 배열
 			var lastIdx = [];
 			var lastName =[];
