@@ -1027,13 +1027,13 @@ function tempSeatAdd(){
 /*결제하기버튼*/
 #payment{
   	width: 113px !important;
-    background-color: #FFF;
+    background-color: #F2B134;
     padding: 10px 16px;
     font-size: 15px;
     line-height: 1.3333333;
-    border-radius: 6px;
-    color: #F2B134 !important;
-    border: 2px solid #F2B134;
+    color: #ffffff !important;
+    border: 1.5px solid #F2B134;
+    font-weight: bold;
 }
 #payment:hover{
  background-color: #F2B134;
