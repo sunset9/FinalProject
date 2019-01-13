@@ -57,6 +57,14 @@
 }
 
 </style>
+
+<<script type="text/javascript">
+
+if($('#inqList tbody').find('tr').length == 0 ){
+	$('#inqList tbody').append('<tr><td colspan=5>문의 내역이 없습니다.</td></tr>');
+}
+</script>
+
 <div class ="main_wrapper">
 <div>
 <!-- 유저 정보 담고 있는 jsp -->
