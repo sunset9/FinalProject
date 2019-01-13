@@ -325,7 +325,7 @@ $(document).ready(function() {
 		var userIdx = '${loginUser.userIdx }';
 		
 		console.log(qnaContent);
-		console.log(userIdx);
+		console.log("userIdx: "+userIdx);
 		
 		$.ajax({
 			url: '/pfmdetail/qnainsert'
@@ -341,7 +341,19 @@ $(document).ready(function() {
 					
 				// 성공할 경우 리스트에 출력해주기
 				insertQnaContent(d.qnaList);
-
+				
+				console.log(d.qnaRecommList);
+				// 대댓글 출력해주기
+				d.qnaList.forEach(function(list){
+					var qnaRecommList = [];
+					d.qnaRecommList.forEach(function(relist){
+						if(relist.qnaIdx == list.qnaIdx){
+							qnaRecommList.push(relist);
+						}
+						insertQnaRecommList(qnaRecommList, list.qnaIdx);
+					});
+				});
+				
 				// 작성 성공시 textarea 초기화해주기
 				$('#qna').val("");
 			}
@@ -453,7 +465,19 @@ $(document).ready(function() {
 	// 				console.log('삭제 취소');
 				}
 				
+				// 댓글 리스트 출력해주기
 				insertQnaContent(d.qnaList);
+				
+				// 대댓글 출력해주기
+				d.qnaList.forEach(function(list){
+					var qnaRecommList = [];
+					d.qnaRecommList.forEach(function(relist){
+						if(relist.qnaIdx == list.qnaIdx){
+							qnaRecommList.push(relist);
+						}
+						insertQnaRecommList(qnaRecommList, list.qnaIdx);
+					});
+				});
 			}
 			, error: function() {
 				console.log("error");
@@ -475,6 +499,9 @@ $(document).ready(function() {
 		
 		console.log('qnaIdx : ' + qnaIdx);
 		
+		// 입력창 초기화
+		$('#qnaRecomm'+qnaIdx).val('');
+		
 		$.ajax({
 			type: "get"
 			, url: "/pfmdetail/qnarecomm"
@@ -494,10 +521,10 @@ $(document).ready(function() {
 		});
 	};
 
+// QnA 대댓글 그려주기
 function insertQnaRecommList(qnaRecommList,qnaIdx) {
 	console.log('+ + + insertQnaRecommList 호출 + + +');
 	
-	console.log(qnaIdx);
 	$('#qnaRecomm_2'+qnaIdx).html('');
 	
 	qnaRecommList.forEach(function(list) {
@@ -513,7 +540,6 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 				
 			$('#qnaRecomm_2'+qnaIdx).append(div);
 			
-			console.log($('#qnaRecomm_2'));
 		}
 		
 	});
@@ -602,7 +628,6 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 	
 	// QNA 출력부
 	function insertQnaContent(qnaList) {
-		
 		$('.ListQna').html('');
 		
 		qnaList.forEach(function(list) {
@@ -616,7 +641,7 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 			div1.append(img).append(strong);
 				
 			var div2 = $('<div class="qnaListContentInfo">');
-			var small1 = $('<small id="qnaContent">' + list.qnaContent + '</small><br>');
+			var small1 = $('<small id="QnaContent">' + list.qnaContent + '</small><br>');
 			var createDate = getDateSimpleString(list.createDate);
 			var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
 			
@@ -624,10 +649,16 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 				var btn1 = $('<button id="qnaDeleteBtn'+list.qnaIdx+'" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
 			}
 			
-			var input = $('<input type="text" id="qnaRecomm'+list.qnaIdx+'"name="qnaRecomm">');
+			// 대댓 관련
+			var recommDiv =  $('<div class="inputRecomm">');
+			var recInput = $('<input type="text" id="qnaRecomm'+list.qnaIdx+'" name="qnaRecomm">');
 			var btn2 = $('<button id="qnaReBtn'+list.qnaIdx+'" type="button" value="'+list.qnaIdx+'" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
-	
-			div2.append(small1).append(small2);
+			recommDiv.append(recInput).append(btn2);
+			console.log(recommDiv);
+			console.log(recInput);
+			console.log(btn2);
+			
+			div2.append(small1).append(small2).append(recommDiv);
 			
 			if(list.nick == '${loginUser.nick }') {
 				div2.append(btn1);
@@ -635,9 +666,7 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 			
 			var div4 = $('<div id = "qnaRecomm_2'+list.qnaIdx+'" style="display: inline;">');
 			
-			div4.append(input).append(btn2);
-			
-			div2.append(div4);
+			div2.append(recommDiv).append(div4);
 			
 			div3.append(div1).append(div2);
 				
@@ -1178,19 +1207,24 @@ td {
 					<c:if test="${loginUser.nick eq list.nick}">
 						<button id="qnaDeleteBtn${list.qnaIdx }" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
 					</c:if>
+					
+					<!-- 대댓글 입력 -->
+					<div class="inputRecomm">
 					<input type="text" id="qnaRecomm${list.qnaIdx}" name="qnaRecomm">
 					<button id="qnaReBtn${list.qnaIdx}" type="button" value="${list.qnaIdx }"
 						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button>
-				
-				<div id="qnaRecomm_2${list.qnaIdx}">
-				<c:forEach items="${qnaRecommList }" var="relist">
-					<c:if test="${relist.qnaIdx eq list.qnaIdx}">
-					<div id="qRecomm${relist.qnaIdx}">
-						<small>-> 관리자 : ${relist.contents }</small><br>
-					</div> 
-					</c:if>
-				</c:forEach>
- 				</div> 
+					</div>
+					
+					<!-- 대댓글 리스트 -->
+					<div id="qnaRecomm_2${list.qnaIdx}">
+					<c:forEach items="${qnaRecommList }" var="relist">
+						<c:if test="${relist.qnaIdx eq list.qnaIdx}">
+						<div id="qRecomm${relist.qnaIdx}">
+							<small>-> 관리자 : ${relist.contents }</small><br>
+						</div> 
+						</c:if>
+					</c:forEach>
+	 				</div> 
 				</div>
 				</div>
 			</c:forEach>			

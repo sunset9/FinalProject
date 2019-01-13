@@ -182,7 +182,7 @@ text-align:left;
 </div><!-- util_menu -->
 
 <div class="middle">
-<a href="/ticket/ticketmain" id="logo"><img  height="80" alt="바나나로고" src="/resources/image/bananalogo2.png"></a>
+<a href="/ticket/ticketmain" id="logo"><img  height="80" alt="바나나로고" src="/resources/image/bananalogo.png"></a>
 
 <div class="main_srch">
 	<form action="/ticket/ticketsearch" method="get">

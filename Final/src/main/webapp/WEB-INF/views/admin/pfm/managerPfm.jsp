@@ -134,13 +134,16 @@ li.pfmInfo{
 /* 	margin-left: 0; */
 /*     padding-right: 1px; */
 /* } */
+
 .pfmInfo a{
  	display: block;
-/*     width: 180px; */
+    width: 212px; 
     height: 355px;
     padding: 20px 15px 15px;
     border: 1px solid #eee;
-    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .thumb {

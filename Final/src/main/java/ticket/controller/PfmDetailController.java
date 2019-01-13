@@ -258,6 +258,10 @@ public class PfmDetailController {
 		List<QNA> qnaList = detailService.getQNAList(pfm);
 		map.put("qnaList", qnaList);
 
+		// QNA 대댓글 리스트
+		List<QNARecomm> qnaRecommList = detailService.getQNARecommList(pfm);
+		map.put("qnaRecommList", qnaRecommList);
+		
 		return map;
 	}
 	
@@ -282,6 +286,10 @@ public class PfmDetailController {
 		// QNA 리스트 출력해주기
 		List<QNA> qnaList = detailService.getQNAList(pfm);
 		map.put("qnaList", qnaList);
+		
+		// QNA 대댓글 리스트
+		List<QNARecomm> qnaRecommList = detailService.getQNARecommList(pfm);
+		map.put("qnaRecommList", qnaRecommList);
 		
 		return map;
 	}

@@ -1642,7 +1642,7 @@ function setComma(inNum){
       		<button type="button" id="searchArtistBtn">검색</button> 
       		<div id="resultArtist">
       		</div>
-	      	<div class="text-center">d
+	      	<div class="text-center">
 				<ul class="pagination">
 			 	</ul>
 			</div>
