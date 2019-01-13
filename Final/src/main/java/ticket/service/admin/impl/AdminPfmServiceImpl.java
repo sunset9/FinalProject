@@ -945,25 +945,23 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 	}
 
 	@Override
-	public void mainbannerfileupload(MultipartFile thumbFile, MultipartFile bannerFile, String thumbStored,
-			String bannerStored) {
+	public void mainbannerfileupload(
+			MultipartFile File,
+			String fileName) {
 		// 메인 배너 서버 업로드
 
 		// 파일이 저장될 경로
 		String stored = context.getRealPath("resources/image");
 		
 		// 서버에 저장될 파일의 이름
-		String tStoredName = thumbStored;
-		String bStoredName = bannerStored;
+		String tStoredName = fileName;
 		
 		// 파일 객체
 		File dest = new File(stored, tStoredName);
-		File dest2 = new File(stored, bStoredName);
 		
 		// 파일 업로드
 		try {
-			thumbFile.transferTo(dest);
-			bannerFile.transferTo(dest2);
+			File.transferTo(dest);
 			
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
