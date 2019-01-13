@@ -408,7 +408,7 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			e.printStackTrace();
 		}
 
-		String linkName = "http://localhost:8088/resources/image/" + name;
+		String linkName = "/resources/image/" + name;
 
 		Map<Object, Object> responseData = new HashMap<Object, Object>();
 		responseData.put("link", linkName);
