@@ -114,7 +114,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
 	public String joinProc(User user, @RequestParam(value = "themeIdx[]") List<String> themeIdx, HttpSession session,
-			String year, String month, String day, @RequestParam(defaultValue = "/upload/profile.png") String profile) {
+			String year, String month, String day, @RequestParam(defaultValue = "/resources/image/profile.png") String profile) {
 		logger.info("회원 가입 처리");
 
 		// String 타입 -> Date 타입으로 변경
