@@ -82,6 +82,12 @@ div.seatCharts-cell {
 .glyphicon-remove:hover {
 	color: #F2B134 !important;
 }
+
+
+.selectSeatsList{
+    padding-right: 5px;
+    text-align: right;
+}
            			
 </style>
 </head>
@@ -168,16 +174,16 @@ div.seatCharts-cell {
                                           	price=price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                           
                                           $(
-                                                '<li>'
+                                                '<tr><td class="selectSeatsList">'
                                                       + this.data().category
-                                                      + ' 석 '
+                                                      + '석</td><td class="selectSeatsList">'
 //                                                       + this.settings.label 
 //                                                       + this.settings.id
-                                                      + area + "구역 " +row+"행 "+col+"열"
-                                                      + ' : '
+                                                      + area + "구역 </td><td class='selectSeatsList' style='width:40px;'>" +row+"행</td><td class='selectSeatsList' style='width:40px;'>"+col+"열</td><td class='selectSeatsList'>"
+                                                      + '  </td><td class="selectSeatsList">'
                                                       + price
-                                                      + '<b> 원'
-                                                      + '</b> <a href="#" class="cancel-cart-item"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #F2B134"></span></a></li>')
+                                                      + ' 원'
+                                                      + ' </td><td class="selectSeatsList"><a href="#" class="cancel-cart-item"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color: #F2B134"></span></a></td></tr>')
                                                 .attr('id','cart-item-'+ this.settings.id)
                                                 .data('seatId',this.settings.id).appendTo($cart);
 
@@ -218,7 +224,7 @@ div.seatCharts-cell {
                      $('#selected-seats').on('click','.cancel-cart-item',function() {
                               //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
                               try{
-                            	  sc.get($(this).parents('li:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
+                            	  sc.get($(this).parents('tr:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
                               }catch(e){
                               }
 //                               var id = $(this).parents('li:first').attr("id"); //클릭된 li의 id 구하기
