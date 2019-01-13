@@ -423,13 +423,11 @@ $(document).ready(function(){
 		if($(this).is($('#nextBtn'))){
 			// 유효성 검사
 			if(curStep == 1){
-				if($('#posterBtn').val().length == 0 ){
-					alert("포스터를 선택해주세요."); return;
-				} else if($('input[name="name"]').val().length == 0){
+				if($('input[name="name"]').val().length == 0){
 		 			alert("공연 제목을 입력해주세요."); return;
 		 		} else if($('select[name="genreIdx"]').val() == 0){
 		 			alert('공연 분류를 선택해주세요.'); return;
-		 		} else if($('input[name^="thmList"]:checked').length == 0){
+		 		} else if($('.resSelect span').text().length == 0){
 		 			alert('공연 테마를 선택해주세요.'); return;
 		 		} else if($('#ticketStartDate').val() == '' || $('#ticketEndDate').val() == ''){
 		 			alert('티켓 오픈일을 입력해주세요.'); return;

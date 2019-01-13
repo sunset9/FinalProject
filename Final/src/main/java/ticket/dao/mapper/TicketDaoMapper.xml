@@ -121,7 +121,7 @@
 </select>
 
 <select id ="selectDayByTimeIdx" resultType="int">
-	select pfm_dbt_idx from PFM_DATEBYTIME where pfm_idx=#{pfmIdx} and pfm_date=#{date} and pfm_time=#{time}
+	select pfm_dbt_idx from PFM_DATEBYTIME where pfm_idx=#{pfmIdx} and pfm_date=TO_DATE(#{date}, 'YYYY-MM-DD') and pfm_time=#{time}
 </select>
 
 <select id ="selectOriSecIdx" resultType="int">
