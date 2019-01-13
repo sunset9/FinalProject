@@ -1125,8 +1125,8 @@ function tempSeatAdd(){
 					<li class="nth nth1 txt_prod_schedule" style="border-bottom: 1px solid #eeeeee;
     width: 205px; text-align: center; font-size: 15px;">${param.date} <br> ${param.time}</li>
 					<li class="nth nth2 txt_ticket_info">
-						<ul class ="nth nth2_1">
-						</ul>
+						<table class ="nth nth2_1">
+						</table>
 					</li>
 				</ul>
 			</div> <!-- box_ticket -->

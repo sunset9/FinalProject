@@ -310,7 +310,7 @@ div.seatCharts-cell {
     		  
     		  var pay = ${seatMap.pay};
     		  pay=pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    		  $(".nth2_1").append("<li class='seatInfo "+seat+"'>"+array[2]+"석 " +array[3]+"구역 "+" "+seatArr[1]+"행 "+seatArr[2]+"열"+" : "+pay+"</li>")
+    		  $(".nth2_1").append("<tr class='seatInfo "+seat+"'><td class='selectSeatsList' style='padding-left: 35px;'>"+array[2]+"석</td><td class='selectSeatsList'>" +array[3]+"구역</td><td class='selectSeatsList'>"+seatArr[1]+"행</td><td class='selectSeatsList'>"+seatArr[2]+"열</td><td class='selectSeatsList'>"+pay+" 원</td></tr>")
 
     		  
     	  }else{
@@ -322,7 +322,7 @@ div.seatCharts-cell {
 	   		  var array = new Array(); 
 	   		  array = str.split(" ");
 	   		  
-	   		  $("li."+seat).remove()
+	   		  $("tr."+seat).remove()
     		  
     	  } 
     	  
