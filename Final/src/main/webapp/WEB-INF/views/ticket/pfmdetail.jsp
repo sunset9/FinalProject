@@ -704,8 +704,8 @@ function insertQnaRecommList(qnaRecommList) {
 }
 
 .choicePosterImg {
-	width: 250px;
-	height: 300px;
+	width: 231px;
+    height: 320px;
 }
 
 .posterImgDiv {
@@ -763,7 +763,7 @@ ul.tabs li.current{
 .topDiv {
 	margin-top: 40px;
 	margin-bottom: 30px;
-    padding: 0px 30px;
+    padding: 0px 47px;
 }
 
 /* 기대평, 관람후기, qna */

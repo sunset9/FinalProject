@@ -48,6 +48,9 @@ $(window).load(function() {
 		
 		// 랭킹 가져오기
 		$('.kind span').click(function(){
+			$('.kind span').removeClass('clicked');
+			$(this).addClass('clicked');
+			
 			$.ajax({
 				url: "/ticket/mainrank"
 				, method: "GET"
@@ -131,7 +134,7 @@ $(window).load(function() {
 	position: relative;
 	max-width: 100%;
 	height: auto;
- 	border: 1px solid black;   
+ 	border-bottom: 1px solid #ccc;   
 /* 	overflow: hidden; */
 	margin: 0 auto;
 /* 	z-index: 2; */
@@ -169,8 +172,8 @@ $(window).load(function() {
 
 /* 탭 메뉴 */
 .main_tab{
-	width: 970px;
-	margin: 20px auto 10px auto;
+	width: 1010px;
+	margin: 20px auto 35px auto;
 }
  
 ul.tabs{
@@ -186,6 +189,8 @@ ul.tabs li{
 	cursor: pointer;
 	width: 320px;
 	text-align: center;
+	font-weight: 600;
+   	font-size: 19px;
 }
  
 ul.tabs li.current{
@@ -198,12 +203,16 @@ ul.tabs li.current{
 	display: none;
 /* 	background: #ededed; */
 	padding: 15px;
-    border: 1px solid #BDBDBD;
+    border: 1px solid #dfdfdf;
 }
  
 .tab-content.current{
 	display: inline-block;
 	text-align: center;
+}
+
+#tab-1 {
+	padding-top: 30px;
 }
 
 /* 랭킹 */
@@ -222,11 +231,12 @@ ul.kind li span{
 }
 .kindDiv {
     width: 650px;
-    height: 493px;
+    height: 505px;
     float: right;
     position: relative;
     padding: 15px;
-    border: 1px solid #bdbdbd;
+    padding-top: 10px;
+    border: 1px solid #dfdfdf;
 }
 
 .kindDiv ul.kind {
@@ -234,13 +244,41 @@ ul.kind li span{
     padding: 10px;
 }
 
+#rankList {
+	counter-reset: my-counter 0;
+}
+li.pfmInfo:before {
+	content: counter(my-counter);
+    counter-increment: my-counter 1;
+    position: absolute;
+    background: #f2b133;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 2.3;
+    left: -1px;
+    top: -1px;
+    color: #fff;
+    font-weight: bold;
+}
+li.pfmInfo:nth-child(n+4):before{
+    background: #ccc;
+}
+li.pfmInfo:first-child:before {
+    width: 50px;
+    height: 50px;
+    line-height: 2.1;
+    left: -4px;
+    top: -7px;
+    color: #fff;
+    font-size: 26px;
+}
 li.pfmInfo:first-child {
     position: absolute;
-    left: 7px;
-    top: 8px;
-    border: 1px solid #eee;
+    top: 22px;
     padding: 10px;
-    left: -5px;
+    left: 2px;
 }
 
 li.pfmInfo:nth-child(2),li.pfmInfo:nth-child(3),
@@ -254,29 +292,25 @@ li.pfmInfo:nth-child(4),li.pfmInfo:nth-child(5){
 li.pfmInfo:nth-child(2) {
     position: absolute;
 	left: 296px;
-    top: 8px;
-    border: 1px solid #eee;
+    top: 0px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(3) {
 	position: absolute;
-    left: 463px;
-    top: 8px;
-    border: 1px solid #eee;
+    left: 450px;
+    top: 0px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(4) {
     position: absolute;
 	left: 296px;
-	top: 216px;
-    border: 1px solid #eee;
+	top: 220px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(5) {
     position: absolute;
-    left: 463px;
-    top: 216px;
-    border: 1px solid #eee;
+    left: 450px;
+    top: 220px;
     padding: 10px;
 }
 
@@ -294,8 +328,8 @@ li.pfmInfo {
 }
 
 .rankPoster {
-    width: 120px;
-    height: 156px;
+    width: 133px;
+    height: 185px;
     margin-bottom: 10px;
 }
 
@@ -321,14 +355,11 @@ li.pfmInfo {
 	margin: 10px;
 }
 
-.ranking h4{
-    font-weight: 900;
+.ranking h4, .alignPfm h4{
+    font-weight: 600;
     font-size: 30px;
-}
-
-.alignPfm h4{
-    font-weight: 900;
-    font-size: 30px;
+    text-align: left;
+    padding-left: 48px;
 }
 
 div>h4 {
@@ -337,10 +368,23 @@ div>h4 {
 
 #tabPfmList {
 	float: left;
-    margin: 15px;
-    padding-top: 15px;
+    margin: 0 15px;
 }
-
+#tabPfmList a {
+	display: block;
+    width: 165px;
+}
+#tabPfmList img {
+	width: 100%;
+    height: 220px;
+}
+#tabPfmList div{
+    position: relative;
+    top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .tab-content {
 	width: 100%;
 }
@@ -357,12 +401,11 @@ div>h4 {
     top: 48px;
 }
 
-.kind span {
+.kind span.clicked {
 	font-weight: 700;
 }
-
 .kind span:hover {
-	color: #f1c40f;
+/* 	color: #F2B134; */
 }
 
 li.pfmInfo:first-child span span {
@@ -449,9 +492,8 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		<c:forEach items="${newList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.storedName}"
-					style="width: 150px; height: 200px;"/><br>
-					${list.name }
+				<img src="/resources/image/${list.storedName}"/>
+				<div>${list.name }</div>
 			</a>
 		</span>
 		</c:forEach>
@@ -488,7 +530,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 <div><h4>랭킹</h4></div>
 	<div class="kindDiv">
 		<ul class="kind">
-			<li><span id="CON">콘서트</span></li>
+			<li><span id="CON" class="clicked">콘서트</span></li>
 			<li><span id="MU">뮤지컬&연극</span></li>
 			<li><span id="FAM">가족&아동</span></li>
 		</ul><br><br>

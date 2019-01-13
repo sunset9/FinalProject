@@ -123,6 +123,9 @@ public class MainController {
 		
 		// 전체 리스트
 		List<Performance> posterList = mainService.getConPfmPoster();
+		// 전체리스트 - 최근 30일간 인기순
+//		int genreIdx = 1;
+//		List<Performance> posterList = mainService.getPopularityList(genreIdx);
 		model.addAttribute("posterList", posterList);
 	}
 	
