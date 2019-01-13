@@ -724,7 +724,7 @@ function openList(listName) {
 						<div class="tabB">
 							<input type="hidden" value="${ntb.tabIdx }" id="tabIdx">
 							<div>
-								<img src="${ntb.bannerPath }"
+								<img src="/resources/image/${ntb.bannerPath }"
 									style="width: 180px; height: 254px;">
 							</div>
 							<div id="nameDiv">${ntb.name}</div>
@@ -756,7 +756,7 @@ function openList(listName) {
 				<c:forEach items="${muTabBanner }" var="mtb">
 					<div class="tabB">
 						<div>
-							<img src="${mtb.bannerPath }"
+							<img src="/resources/image/${mtb.bannerPath }"
 								style="width: 180px; height: 254px;">
 						</div>
 						<div id="nameDiv">${mtb.name}</div>
@@ -787,7 +787,7 @@ function openList(listName) {
 				<c:forEach items="${conTabBanner }" var="ctb">
 					<div class="tabB">
 						<div>
-							<img src="${ctb.bannerPath }"
+							<img src="/resources/image/${ctb.bannerPath }"
 								style="width: 180px; height: 254px;">
 						</div>
 						<div id="nameDiv">${ctb.name}</div>
