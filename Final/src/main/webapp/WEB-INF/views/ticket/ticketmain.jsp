@@ -28,7 +28,7 @@ $(window).load(function() {
 // 		$('.mainbanner').bxSlider({
 // 			minSlides: 1,
 // 			maxSlides: 1
-// 		});
+// 		});x	
 		
 		// 배너 썸네일
 		$('.mainbanner').bxSlider({
@@ -84,44 +84,58 @@ $(window).load(function() {
 	});
 
 	// 맞춤 공연
-	function loginFitPfm() {
-		var userIdx = '${loginUser.userIdx }';
-		console.log("loginUserIdx : " + userIdx);
+// 	function loginFitPfm() {
+// 		var userIdx = '${loginUser.userIdx }';
+// 		console.log("loginUserIdx : " + userIdx);
 		
-		$.ajax({
-			type:"get",
-			url:"/ticket/fit",
-			data:{
-				"userIdx" : userIdx
-			},
-			dataType:"json",
-			success:function(d){
-				console.log('+ + + 맞춤공연 불러오기 성공 + + +');
+// 		$.ajax({
+// 			type:"get",
+// 			url:"/ticket/fit",
+// 			data:{
+// 				"userIdx" : userIdx
+// 			},
+// 			dataType:"json",
+// 			success:function(d){
+// 				console.log('+ + + 맞춤공연 불러오기 성공 + + +');
 				
-				insertFitPfm(d.fitPfmList);
-			}
-			, error:function(e) {
-				console.log('로그인 되어있지 않음 - 맞춤 공연 x');
-			}
-		});
-	};
+// 				insertFitPfm(d.fitPfmList);
+// 			}
+// 			, error:function(e) {
+// 				console.log('로그인 되어있지 않음 - 맞춤 공연 x');
+// 			}
+// 		});
+// 	};
 	
-	function insertFitPfm(fitPfmList) {
+// 	function insertFitPfm(fitPfmList) {
 		
-		$('#slider').html('');
+// 		$('#slider').html('');
 		
-		fitPfmList.forEach(function(list) {
-			var li = $('<li>');
-			var a = $('<a href="/ticket/pfmdetail?pfmIdx=' + list.pfmIdx + '">');
-			var img = $('<img id="fitImg" src="/resources/image/' + list.posterName + '"/>');
+// 		fitPfmList.forEach(function(list) {
+// 			var li = $('<li>');
+// 			var a = $('<a href="/ticket/pfmdetail?pfmIdx=' + list.pfmIdx + '">');
+// 			var img = $('<img id="fitImg" src="/resources/image/' + list.posterName + '"/>');
 			
-			a.append(img);
-			li.append(a);
+// 			a.append(img);
+// 			li.append(a);
 			
-			$('#slider').append(li);
+// 			$('#slider').append(li);
 			
-		});
-	};
+// 		});
+// 	};
+
+// 찜하기 버튼 눌렀을 때 반응할 메소드
+function pfmChoice(pfmIdx){
+	console.log("함수 실행 되나용");
+	// form 태그 만들어서 공연IDX 보내기 
+	var form = $("<form>");
+	form.attr('action' , "/mypage/pfmchoice");
+	form.attr('method', "post");
+	form.appendTo('body');
+	
+	form.append('<input type="hidden" name ="pfmIdx" value="'+pfmIdx+'"/>');
+	
+	form.submit();
+}
 </script>
  
 <style type="text/css">
@@ -165,7 +179,7 @@ $(window).load(function() {
 	text-align: center;
 }
 
-#fitImg {
+.fitImg {
 	width: 200px;
 	height: 300px;
 }
@@ -455,6 +469,22 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 	width: 300px;
 	height: 400px;
 }
+.fitPfmbox {
+	width:350px;
+	height: 505px;
+    display: table;
+    text-align: center;
+    padding: 18px;
+	border: 1px solid #DDD;
+}
+.fitPfmbox span {
+	
+	display:table-cell;
+	vertical-align:middle;
+	font-size: 2em;
+}
+
+
 </style>
 
 <!-- 메인 배너 -->
@@ -556,19 +586,30 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 <div class="alignPfm">
 
 <h4>맞춤 공연</h4>
-<!-- 	<div class="fitPfmbox" onload="loginFitPfm();"> -->
 	<c:if test="${login }">
-		<div id="sliderbox">
-			<ul id="slider" onload="loginFitPfm();">
-			
-			</ul>
+		<div class="fitPfmbox" >
+			<div id="sliderbox">
+				<ul id="slider" >
+				     <c:forEach items="${recomList }" var ="recom"  varStatus="index">
+						<c:if test ="${! empty recom}">
+						<li><a href="/ticket/pfmdetail?pfmIdx="${recom.pfmIdx }>
+							<img class = "fitImg" src="/resources/image/${recom.posterName }" />
+							</a>
+						</li>
+						</c:if>
+						<div class ="btnDiv">
+							<hr>
+							<button onclick="pfmChoice(${recom.pfmIdx });" class="choiceBtn" >내 공연에 담기</button></div>
+					 </c:forEach>
+				</ul>
+			</div>
 		</div>
 	</c:if>
-
+	
 		
 	<c:if test="${not login }">
 		<div class="fitPfmbox">
-			<h5 style="text-align: center;">로그인 시 맞춤 공연을 추천해드립니다.</h5>
+			<span>로그인 하시면 맞춤공연 <br> 추천을 받으실 수 있습니다.</span>
 		</div>
 	</c:if>
 </div>

@@ -46,9 +46,9 @@ public class MainController {
 	}
 	
 	/**
-	 * 최종수정일: 2019.01.01
+	 * 최종수정일: 2019.01.14
 	 * @Method설명: 홈페이지 접속시 첫 페이지
-	 * @작성자: 배수연, 전해진
+	 * @작성자: 배수연, 전해진, 홍나영
 	 */
 	@RequestMapping(value="/ticket/ticketmain", method=RequestMethod.GET)
 	public void ticketmain(Model model, HttpSession session) {
@@ -75,6 +75,22 @@ public class MainController {
 		String genre = "CON"; // 장르 기본값: 콘서트 기준
 		List<Performance> rankList = mainService.getTopRankByGenre(genre);
 		model.addAttribute("rankPfm", rankList);
+		
+		// 세션에서 유저 정보 얻기
+		User user = (User) session.getAttribute("loginUser");
+		if(user != null) {
+			int userIdx = user.getUserIdx();
+		
+			// 유저가 선택한 테마 리스트 불러오기
+			List<PreferTheme> ptList = preferTService.choiceList(userIdx);
+			model.addAttribute("ptList", ptList);
+	
+			// 테마에 맞는 추천공연 리스트 불러오기
+			List<Performance> recomList = userService.recommendPfm(userIdx,ptList);
+			logger.info("선호 테마에 대한 공연추천" + recomList);
+			
+			model.addAttribute("recomList", recomList);
+		}
 	}
 	
 	@RequestMapping(value="/ticket/fit", method=RequestMethod.GET)

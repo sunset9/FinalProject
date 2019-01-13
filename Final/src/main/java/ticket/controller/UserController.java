@@ -578,7 +578,6 @@ public class UserController {
 		// 테마에 맞는 추천공연 리스트 불러오기
 		List<Performance> recomList = userService.recommendPfm(userIdx,ptList);
 		logger.info("선호 테마에 대한 공연추천" + recomList);
-		List<Performance> lastList ;
 		
 		model.addAttribute("recomList", recomList);
 
