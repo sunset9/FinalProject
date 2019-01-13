@@ -87,7 +87,7 @@
 	text-decoration: none !important;
 }
 .listA:hover{
-/* 	color: black; */
+ 	color: black; 
 	text-decoration: none ;
 	cursor: pointer;
 }
@@ -224,10 +224,12 @@ $(document).ready(function(){
 		console.log("클릭함수 실행");
 		if($(this).children($('.icon')).hasClass("changeColor") === true) {
 			$(this).children($('.icon')).removeClass('changeColor');
+			$('.listA:hover').css('color','#000');
 
 		}else{
 			
 			$(this).children($('.icon')).addClass('changeColor');
+			$('.listA:hover').css('color','#F2B134');
 			
 		}
 	});//end on
