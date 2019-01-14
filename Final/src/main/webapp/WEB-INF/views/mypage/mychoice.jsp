@@ -347,14 +347,14 @@ function pfmChoice(pfmIdx){
 <div class ="preferTitle"><span class ="preferTitle">선호 아티스트</span></div>
 <div id = "selectedArt">
 	<ul>
-		<c:forEach items="${aList }" var ="a">
-		<c:if test ="${! empty  a}">
-		<li data-paidx="${a.artistIdx }" class = "artistSec">
-			<img class = "artistImg" src="${a.imgUri }" />
-			<span>${a.name } </span>
-		</li>
-		</c:if>
-		</c:forEach>
+<%-- 		<c:forEach items="${aList }" var ="a"> --%>
+<%-- 		<c:if test ="${! empty  a}"> --%>
+<%-- 		<li data-paidx="${a.artistIdx }" class = "artistSec"> --%>
+<%-- 			<img class = "artistImg" src="${a.imgUri }" /> --%>
+<%-- 			<span>${a.name } </span> --%>
+<!-- 		</li> -->
+<%-- 		</c:if> --%>
+<%-- 		</c:forEach> --%>
 	</ul>
 </div>
 
