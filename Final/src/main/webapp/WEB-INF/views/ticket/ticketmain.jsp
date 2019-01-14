@@ -526,6 +526,13 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
     margin: 10px;
 }
 
+#mainThumb{
+    position: relative;
+    float: left;
+    top: -110px;
+    left: 35%;
+}
+
 </style>
 
 <!-- 메인 배너 -->
