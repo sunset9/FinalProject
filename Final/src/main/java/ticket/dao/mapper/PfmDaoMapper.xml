@@ -394,23 +394,13 @@
 	</delete>
 	
 	<update id="updatePfmDetail" parameterType="ticket.dto.PfmDetail">
-		MERGE INTO pfm_detail
-		USING DUAL ON (pfm_idx = #{pfmIdx })
-		WHEN MATCHED THEN
-			UPDATE SET contents = #{contents }
-		WHEN NOT MATCHED THEN
-			INSERT (pfm_detail_idx ,pfm_idx ,contents)
-	 		VALUES (pfm_detail_seq.nextval, #{pfmIdx }, #{contents })	
+		UPDATE pfm_detail
+		SET contents = #{contents }
 	</update>
 	
 	<update id="updatePfmBookinfo" parameterType="ticket.dto.PfmBookinfo">
-		MERGE INTO pfm_bookinfo
-		USING DUAL ON (pfm_idx = #{pfmIdx })
-		WHEN MATCHED THEN
-			UPDATE SET contents = #{contents }
-		WHEN NOT MATCHED THEN
-			INSERT (pfm_bookinfo_idx ,pfm_idx ,contents)
-		 	VALUES (pfm_bookinfo_seq.nextval, #{pfmIdx }, #{contents })
+		UPDATE pfm_bookinfo 
+		SET contents = #{contents }
 	</update>
 	
 	<insert id="insertSeatSection" parameterType="ticket.dto.SeatSection">
@@ -813,4 +803,14 @@
 		INSERT INTO tab_banner
 		VALUES(tab_banner_seq.nextval, #{pfmIdx}, #{tabGenre}, #{bannerPath}, sysdate)
 	</insert>
+	
+	<select id="selectCntPfmDetail" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM pfm_detail
+		WHERE pfm_idx = #{pfmIdx}
+	</select>
+	
+	<select id="selectCntPfmBookinfo" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM pfm_bookinfo
+		WHERE pfm_idx = #{pfmIdx}
+	</select>
 </mapper>

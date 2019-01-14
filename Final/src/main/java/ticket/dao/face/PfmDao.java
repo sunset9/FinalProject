@@ -545,5 +545,19 @@ public interface PfmDao {
 	 * @작성자: 김지은
 	 */
 	public void updateMainbanner(MainBanner mainbanner);
+
+	/**
+	 * @최종수정일: 2019.01.14
+	 * @Method설명: 공연 인덱스와 일치하는 공연 상세정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public int selectCntPfmDetail(int pfmIdx);
+
+	/**
+	 * @최종수정일: 2019.01.14
+	 * @Method설명: 공연 인덱스와 일치하는 공연 예매정보 가져오기
+	 * @작성자: 전해진
+	 */
+	public int selectCntPfmBookinfo(int pfmIdx);
 	
 }
