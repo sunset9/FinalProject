@@ -295,7 +295,13 @@ div.seatCharts-cell {
                     	 $("div.seatCharts-row").css("margin","-15px");
                      }
                      
-                     if(row >=25 || col > 25){
+                     if(row <= 20 || col <= 20 ){
+                    	 $("div.seatCharts-cell").css("height","25px");
+                    	 $("div.seatCharts-cell").css("width","25px");
+                    	 $("div.seatCharts-row").css("margin","-20px");
+                     }
+                     
+                     if(row >=25 || col >= 25){
                     	 $("div.seatCharts-cell").css("height","20px");
                     	 $("div.seatCharts-cell").css("width","20px");
                     	 $("div.seatCharts-row").css("margin","-25px");

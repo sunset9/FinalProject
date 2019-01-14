@@ -117,11 +117,11 @@ public class TicketController {
 	 */
 	@RequestMapping(value="ticket/cntBookedSeats", method=RequestMethod.POST)
 	public ModelAndView numOfReservedSeats(Performance pfm,String time, String date) {
-
+		logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		//전체 좌석 갯수
 		List<NumBookedSeat> allSeats = new ArrayList<>();
 		allSeats = ticketService.countAllSeats(pfm);
-		
+		logger.info("allSeats : "+allSeats);
 //		System.out.println("allSeats : " + allSeats);
 		
 		//날짜,시간,공연번호로 pfmDbtIdx 구하기
@@ -140,6 +140,7 @@ public class TicketController {
 		
 		//JSON 활용 키,값 형태면 JSON으로보내준다
 		mav.setViewName("jsonView");
+		
 		
 		Map seatCntMap = new HashMap();
 		seatCntMap.put("allSeats", allSeats);

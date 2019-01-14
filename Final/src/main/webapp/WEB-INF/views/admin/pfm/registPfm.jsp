@@ -947,6 +947,13 @@ $(document).ready(function(){
 						$(this).removeClass('clicked');
 					}
 				});
+				
+				
+				$('#seatHall svg').on('click','text',function(){
+					var selector = ".section."+$(this).children().text();
+					$(this).parent().find(selector).click();
+					console.log(1);
+				})
 			}
 			, error: function(){
 				console.log("좌석 배치도 로드 실패");
