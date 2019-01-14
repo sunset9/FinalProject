@@ -187,7 +187,7 @@ public class TicketController {
 		
 		
 		//좌석 인덱스 구하기(seatInfo정보로 공연장번호,구역,좌석행렬,공연번호로 구하기)
-		for(int i = 0;i<seatInfo.length-1;i++) {
+		for(int i = 0;i<seatInfo.length;i++) {
 			String[] seatInfoStr; 
 			String[] seatInfoStr2;
 			logger.info(""+seatInfo[i]);
