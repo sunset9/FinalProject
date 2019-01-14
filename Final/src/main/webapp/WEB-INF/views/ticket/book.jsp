@@ -191,12 +191,8 @@ $(document).ready(function() {
 					success:function(res){
 						$('#selectedSeats').html(res);
 					}
-					
 				});
-			  
-			
 		});
-	
 	
 		//구역이름 클릭시 구역 선택하게
 		 $('text').click(function () {
@@ -574,6 +570,7 @@ function loadSectionPay(){
 				$('#selectedSeats').find('path').each(function () {
 					if($(this).hasClass(appSec)){
 						console.log($(this).css("fill"));
+						console.log($(this));
 						$('#legend2').append("<li><div class='payRect' style='background-color: "+$(this).css("fill")+";'></div>"+appSec+" 석 "+secPay+" 원"+"</li>");
 						return false;
 					}; 
