@@ -993,7 +993,7 @@ $(document).ready(function(){
 				
 				// 원본 섹션 명 추출
 				var oriSec = clickedSec.attr('class').split(' ')[0];
-				console.log(oriSec);
+				console.log("선택한 원본 섹션명:" + oriSec);
 				
 				// 처음 구역 설정해주는 경우
 				if(!clickedSec.hasClass('completeSet')){
@@ -1018,6 +1018,13 @@ $(document).ready(function(){
 							setSec.secPay = secPay;
 						}
 					});
+					
+					// 색 지정해서 칠해주기
+					for(var i=0;i<secNamePay.length;i++){
+						if(secNamePay[i].secName == appSec){
+							clickedSec.attr('fill',sectionColor[i]);
+						}
+					}
 				}
 				
 				// 클릭 상태 해제

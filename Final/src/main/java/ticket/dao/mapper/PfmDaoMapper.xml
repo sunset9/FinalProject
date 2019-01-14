@@ -417,7 +417,7 @@
 		<selectKey keyProperty="oriSecIdx" resultType="int" order="BEFORE">
 			SELECT ori_sec_idx 
 			FROM originsection
-			WHERE sec_name = #{oriSecName }
+			WHERE sec_name = #{oriSecName } AND hall_idx = #{hallIdx }
 		</selectKey>
 		
 		INSERT INTO seatsection(sec_idx, hall_idx, pfm_idx, ori_sec_idx, app_sec, sec_pay)
