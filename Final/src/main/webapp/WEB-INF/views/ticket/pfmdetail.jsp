@@ -555,7 +555,7 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 		var div3 = $('<div id="oneExpec">');
 		
 		var div1 = $('<div class="expListUserInfo">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var img = $('<img id="userProfile" class="img-circle" src="' + list.profile + '"/><br>');
 		var strong = $('<strong>' + list.nick + '</strong>');
 		
 		div1.append(img).append(strong);
@@ -594,7 +594,7 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 		var div3 = $('<div id="oneReview">');
 			
 		var div1 = $('<div class="revListUserInfo">');
-		var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+		var img = $('<img id="userProfile" class="img-circle" src="' + list.profile + '"/><br>');
 		var strong = $('<strong>' + list.nick + '</strong>');
 		
 		div1.append(img).append(strong);
@@ -635,7 +635,7 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 			var div3 = $('<div id="oneQna">');
 				
 			var div1 = $('<div class="qnaListUserInfo">');
-			var img = $('<img id="userProfile" class="img-circle" src="/resources/image/' + list.profile + '"/><br>');
+			var img = $('<img id="userProfile" class="img-circle" src="' + list.profile + '"/><br>');
 			var strong = $('<strong>' + list.nick + '</strong>');
 				
 			div1.append(img).append(strong);
@@ -1218,7 +1218,7 @@ td {
 				<c:if test="${login }">
 				<div class="insertExpUserInfo">
 				<img id="loginUserImg" class="img-circle"
-					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
+					 src="<c:url value="${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
 
@@ -1243,7 +1243,7 @@ td {
 				<!-- 댓글 하나를 감싸는 div -->
 				<div id="oneExpec">
 				<div class="expListUserInfo">
-					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
+					<img id="userProfile" class="img-circle" src="${list.profile }"/><br>
 					<strong>${list.nick }</strong> 
 				</div>
 				
@@ -1284,7 +1284,7 @@ td {
 				<c:if test="${login }">
 				<div class="insertRevUserInfo">
 				<img id="loginUserImg" class="img-circle"
-					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
+					 src="<c:url value="${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
 				<textarea id="review" cols="100" rows="4"></textarea>
@@ -1307,7 +1307,7 @@ td {
 				<div id="oneReview">
 				<!-- 관람후기 작성한 사람의 정보 출력 div -->
 				<div class="revListUserInfo">
-					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
+					<img id="userProfile" class="img-circle" src="${list.profile }"/><br>
 					<strong>${list.nick }</strong> 
 				</div>
 				
@@ -1345,7 +1345,7 @@ td {
 				<c:if test="${login }">
 				<div class="insertQnaUserInfo">
 				<img id="loginUserImg" class="img-circle"
-					 src="<c:url value="/resources/image/${loginUser.profile}"/>"/><br>
+					 src="<c:url value="${loginUser.profile}"/>"/><br>
 					<strong>${loginUser.nick }</strong>
 				</div>
 				<textarea id="qna" cols="100" rows="4"></textarea>
@@ -1368,7 +1368,7 @@ td {
 				<div id="oneQna">
 				<!-- QNA 작성한 사람의 정보 출력 div -->
 				<div class="qnaListUserInfo">
-					<img id="userProfile" class="img-circle" src="/resources/image/${list.profile }"/><br>
+					<img id="userProfile" class="img-circle" src="${list.profile }"/><br>
 					<strong>${list.nick }</strong> 
 				</div>
 				
