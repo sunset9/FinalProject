@@ -93,7 +93,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 	position: relative;
     border-top: 1px solid #eee;
     width: 100%;
-    height: 56px;
+    height: 55px;
     background: #222c3a;
 }
 .tap_menu ul {
