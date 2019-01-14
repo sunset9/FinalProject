@@ -433,29 +433,30 @@ $(document).ready(function() {
 <!-- //결제내역 -->
 
 <!-- 환불 내역 -->
-
+<c:if test="${! empty cancelSob }">
 <h2>환불내역</h2>
 <div class="boxDiv">
-<table>
-	<tr>
-		<td class="pfmInfo">
-			환불방법
-		</td>
-		<td class="fontSize">
-			카드
-		</td>
-	</tr>
-	<tr>
-		<td class="pfmInfo"> 거래자명</td>
-		<td class="fontSize">${payment.buyerName }</td>
-	</tr>
-	<tr>
-		<td class="pfmInfo">환불 금액</td>
-		<td class="fontSize">${cancelSob.ea * ss.secPay }원</td>
-	</tr>
-
-</table>
-
+	<table>
+		<tr>
+			<td class="pfmInfo">
+				환불방법
+			</td>
+			<td class="fontSize">
+				카드
+			</td>
+		</tr>
+		<tr>
+			<td class="pfmInfo"> 거래자명</td>
+			<td class="fontSize">${payment.buyerName }</td>
+		</tr>
+		<tr>
+			<td class="pfmInfo">환불 금액</td>
+			<td class="fontSize">${cancelSob.ea * ss.secPay }원</td>
+		</tr>
+	
+	</table>
+</div>
+</c:if>
 <!-- 좌석정보  -->
 <h2>좌석정보</h2>
 <div id="seat" class="boxDiv"><table class="fontSize">
@@ -467,7 +468,7 @@ $(document).ready(function() {
 </tr>
 <c:forEach items="${seatList }" var="s">
 	<tr>
-		<td>${ss.appSec }</td>
+		<td>${ss.appSec }석</td>
 		<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
 		<td><fmt:formatNumber value="${ss.secPay }" pattern="#,###"/> 원</td>
 		
