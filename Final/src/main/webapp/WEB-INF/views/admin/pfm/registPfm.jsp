@@ -1336,7 +1336,7 @@ $(document).ready(function(){
 	
 	// 상세정보, 예매정보 스마트 에디터 적용
 	$('textarea').froalaEditor({
-		width: '800' // 너비
+		width: '920' // 너비
 		, heightMin : 400 // 초기화시 크기
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
 		, language: 'ko'

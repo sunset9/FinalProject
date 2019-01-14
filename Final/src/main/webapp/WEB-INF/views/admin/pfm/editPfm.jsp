@@ -1429,7 +1429,7 @@ $(document).ready(function(){
 	
 	$('textarea').froalaEditor({
 		language: 'ko'
-		, width: '800' // 너비
+		, width: '920' // 너비
 		, heightMin : 400 // 초기화시 크기
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
 		// 툴바 버튼 목록
