@@ -89,6 +89,7 @@ $(document).ready(function() {
 	
 	function themeList(pfmList) {
 		
+		
 		$('#pfmList').html('');
 		
 		pfmList.forEach(function(list) {
@@ -100,12 +101,12 @@ $(document).ready(function() {
 		var img = $('<img class="familyImg" src="/resources/image/'+ list.posterName + '"><br>');
 		
 		a.append(span.append(img));
-		a.append($('<strong>'+ list.name +'</strong>'));
+		a.append($('<strong class="imgname">'+ list.name +'</strong><br>'));
 
 		var pfmStart = getDateSimpleString(list.pfmStart);
 		var pfmEnd = getDateSimpleString(list.pfmEnd);
-		a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small>'));
-		
+		a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small><br>'));
+		a.append($('<small>${list.hallName }</small>'));
 		li.append(a);
 		
 		$('#pfmList').append(li);
