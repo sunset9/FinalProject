@@ -467,7 +467,6 @@ $(document).ready(function() {
 	})
 	
 });
-
 	  
 	  //섹션 데이터 받아오기
 	  function loadSectionData(obj){
@@ -510,14 +509,58 @@ $(document).ready(function() {
 								  path.data("pay",res.hashMap.secMap[i].secPay); //pay라는 임의의 커스텀 데이터를 넣어줌
 								  path.data("secName",res.hashMap.secMap[i].oriSecName);
 								  path.data("appName",res.hashMap.secMap[i].appSec);
+								  path.data("IsSec",true);
 							  }
-						  
+							  
 						  }
 					
 					}
 					if(obj.is($('#selectedSeats'))){
 						loadSectionInfo();
 					}
+					
+					//구역 저장안했으면 클릭안되게
+					$('.seat_block').find('path').each(function () {
+						
+							if(typeof $(this).data("IsSec") == "undefined"){
+								
+								$(this).css("display","none");
+								var classStr = $(this).attr("class");
+								var classStrArr = new Array();
+								console.log(classStr);
+								if(typeof classStr != "undefined"){
+									classStrArr = classStr.split(" ");
+									$('.seat_block').find('text').each(function () {
+	 									var textVal = $.trim($(this).text());
+	 									if( textVal == classStrArr[0]){
+	 										$(this).css("display","none");
+	 									}
+	 								});
+								}
+							}
+// 							
+					})
+					
+					$('.seat_block').find('rect').each(function () {
+						
+						if(typeof $(this).data("IsSec") == "undefined"){
+							
+							$(this).css("display","none");
+							var classStr = $(this).attr("class");
+							var classStrArr = new Array();
+							console.log(classStr);
+							if(typeof classStr != "undefined"){
+								classStrArr = classStr.split(" ");
+								$('.seat_block').find('text').each(function () {
+ 									var textVal = $.trim($(this).text());
+ 									if( textVal == classStrArr[0]){
+ 										$(this).css("display","none");
+ 									}
+ 								});
+							}
+						}
+						
+					})
 					
 			  },
 			  error:function(e){
