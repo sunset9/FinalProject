@@ -1296,7 +1296,7 @@ $(document).ready(function(){
 		, heightMax : 400 // 스크롤 생기는 지점의 크기
 		, language: 'ko'
 		// 툴바 버튼 목록
-		, toolbarButtons: ['fontFamily','bold', 'italic', 'underline','align','|','insertLink','insertImage','|', 'undo', 'redo']
+		, toolbarButtons: ['fontFamily','bold', 'italic', 'underline','align', 'color','|','insertLink','insertImage','|', 'undo', 'redo']
 		 // Set the image upload URL.
         , imageUploadURL: '/admin/uploadpfmimg'
         , imageUploadParams: {
