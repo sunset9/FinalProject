@@ -160,10 +160,13 @@ text-align:left;
 <div id ="header_wrap" class="pr_none">
 
 <div id="util_menu">
+
 	<ul>
+		<c:if test="${loginUser.mGradeIdx == 2 }">
 		<li class="first_child">
 		<a href="/admin/main"><span>관리자</span></a>
 		</li>
+		</c:if>
 		<c:if test="${login }">
 		<li><a href="/user/logout"><span>로그아웃</span></a></li>
 		</c:if>
