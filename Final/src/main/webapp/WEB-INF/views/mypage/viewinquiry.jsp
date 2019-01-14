@@ -95,7 +95,7 @@ if($('#inqList tbody').find('tr').length == 0 ){
 <tbody>
 <c:forEach items="${inqList }" var="inq">
 <tr>
-	<td>${inq.inqIdx }</td>
+	<td>${inq.rnum }</td>
 	<td><a href="/mypage/detailinquiry?inqIdx=${inq.inqIdx }">${inq.title }</a></td>
 	<c:if test="${inq.replyStatus eq 0}"><td class="waiting">답변 대기</td></c:if>
 	<c:if test="${inq.replyStatus eq 1}"><td>답변 완료</td></c:if>
@@ -109,4 +109,76 @@ if($('#inqList tbody').find('tr').length == 0 ){
 </table>
 </div>
 </div>
-</div>
+
+<!-- <div class="text-center"> -->
+<!-- <nav> -->
+<!--   <ul class="pagination"> -->
+  
+<!--   	<!-- 이전 페이지 --> -->
+<!--   	<!-- 첫 페이지라면 금지 표시 --> -->
+<%--   	<c:if test="${paging.curPage eq 1 }"><!-- 첫페이지일때 --> --%>
+<!--   	<li class="disabled"> -->
+<!--       <a href="/mypage/viewinquiry" -->
+<!--        aria-label="Previous"> -->
+<!--         <span aria-hidden="true">&laquo;</span> -->
+<!--       </a> -->
+<!--     </li> -->
+<%--   	</c:if> --%>
+<%--   	<c:if test="${paging.curPage ne 1 }"><!-- 첫페이지가아닐때 --> --%>
+<!--   	<li> -->
+<%--   	  <fmt:parseNumber var="p" integerOnly="true" value="${(paging.curPage/paging.pageCount)}"/> --%>
+<%--   	  <fmt:parseNumber var="prevPage" integerOnly="true" value="${(p-1)*paging.pageCount+1 }"/> --%>
+<%--       <a href="/board/list?curPage=${prevPage }" --%>
+<!--        aria-label="Previous"> -->
+<!--         <span aria-hidden="true">&laquo;</span> -->
+<!--       </a> -->
+<!--     </li> -->
+<%--     </c:if> --%>
+    
+    
+    
+<!--     페이징 번호 -->
+<%--     <c:forEach begin="${paging.startPage }" --%>
+<%--     	end="${paging.endPage }" --%>
+<%--     	var="page"> --%>
+    	
+<%--     	<c:if test="${paging.curPage eq page }"> --%>
+<!-- 	   	<li class="active"> -->
+<%-- 	   		<a href="/board/list?curPage=${page }">${page }</a> --%>
+<!-- 	   	</li> -->
+<%-- 	   	</c:if> --%>
+	
+<%-- 	   	<c:if test="${paging.curPage ne page }"> --%>
+<!-- 	   	<li> -->
+<%-- 		   	<a href="/board/list?curPage=${page }">${page }</a> --%>
+<!-- 	   	</li> -->
+<%-- 	   	</c:if> --%>
+<%--     </c:forEach> --%>
+    
+
+<!--     다음 페이지 -->
+<!--   	<!-- 마지막 페이지라면 금지 표시 --> -->
+<%--   	<c:if test="${paging.curPage eq paging.totalPage }"><!-- 마지막 페이지일때 --> --%>
+<!--   	<li class="disabled"> -->
+<%--       <a href="/board/list?curPage=${paging.totalPage }" --%>
+<!--        aria-label="Next"> -->
+<!--         <span aria-hidden="true">&raquo;</span> -->
+<!--       </a> -->
+<!--     </li> -->
+<%--   	</c:if> --%>
+<%--   	<c:if test="${paging.curPage ne paging.totalPage }"><!-- 마지막 페이지가아닐때 --> --%>
+    
+<%--     <fmt:parseNumber var="n" integerOnly="true" value="${(paging.curPage/paging.pageCount)}"/> --%>
+<%--   	<fmt:parseNumber var="nextPage" integerOnly="true" value="${(p+1)*paging.pageCount+1 }"/> --%>
+
+<!--   	<li> -->
+<%--       <a href="/board/list?curPage=${nextPage }" --%>
+<!--        aria-label="Next"> -->
+<!--         <span aria-hidden="true">&raquo;</span> -->
+<!--       </a> -->
+<!--     </li> -->
+<%--     </c:if> --%>
+    
+<!--   </ul> -->
+<!-- </nav> -->
+<!-- </div> -->

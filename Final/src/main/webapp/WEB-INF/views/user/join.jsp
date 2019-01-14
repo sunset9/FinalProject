@@ -234,12 +234,12 @@ $(document).ready(function() {
 			
 		}
 		
-		if($("#name").val().length < 1){
+		if($("#userName").val().length < 1){
 			console.log("이름 확인 안함");
-			$('#name').attr('data-toggle', "tooltip");
-			$('#name').attr('data-placement', "top");
-			$('#name').attr('title', "이름을 확인 해주세요!");
-			$('#name').focus();
+			$('#userName').attr('data-toggle', "tooltip");
+			$('#userName').attr('data-placement', "top");
+			$('#userName').attr('title', "이름을 확인 해주세요!");
+			$('#userName').focus();
 			
 			return;
 			
