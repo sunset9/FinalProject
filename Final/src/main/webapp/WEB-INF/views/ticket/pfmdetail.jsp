@@ -694,6 +694,7 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
     position: absolute;
     right: 65px;
     border: 1px solid #dadada;
+    background-color: white;
 }
 
 #contentDay {
@@ -708,9 +709,17 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 	border: 1px solid #e6e6e6;
 }
 
-.expListContentInfo, .revListContentInfo {
+.revListContentInfo {
 	margin-left: 30px;
 	font-size: 18px;
+	position: relative;
+	
+}
+
+.expListContentInfo {
+	margin-left: 30px;
+	font-size: 18px;
+	position: relative;
 }
 
 .qnaListContentInfo {
@@ -718,7 +727,6 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 	position: relative;
 }
 
-.qnaListContentInfo > 
 
 #choiceBtn {
     float: right;
@@ -980,7 +988,7 @@ ul.tabs li.current{
 
 #revDeleteBtn, #qnaDeleteBtn, #qnaReBtn, #revReBtn, #expReBtn {
 	border: none;
-	background-color: #FFFFFF;
+	background-color: #ffffff00;
 	color: #6E6E6E;
 	font-size: 15px;
 	border: 0px;
@@ -993,14 +1001,21 @@ ul.tabs li.current{
 	font-size: 15px;
 	border: 0px;
 	padding : 0px;
+	position: absolute;
+    top: 26px;
+    left: 125px;
 }
 
 #expDeleteBtn {
 	padding: 0px;
-	background-color: #FFFFFF;
+	background-color: #ffffff00;
 	color: #6E6E6E;
 	font-size: 15px;
 	border: 0px;
+	left: 140px;
+    position: absolute;
+    top: 27px;
+    
 }
 
 table {
@@ -1047,6 +1062,7 @@ td {
     position: absolute;
     right: 65px;
     border: 1px solid #dadada;
+    background-color: white;
 }
 
 #qnaBtn {
@@ -1055,6 +1071,7 @@ td {
     float: right;
     position: absolute;
     right: 65px;
+    background-color: white;
     border: 1px solid #dadada;
 }
 
@@ -1079,6 +1096,7 @@ td {
 
 .qnaReBtn {
     border: 1px solid #dadada;
+    background-color: white;
 }
 /* #infoTitle { */
 /* 	width: 150px; */
