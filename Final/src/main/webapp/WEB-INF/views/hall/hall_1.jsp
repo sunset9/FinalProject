@@ -56,14 +56,14 @@ $(document).ready(function () {
 	                      
 	                  
 	                  <!-- 스탠딩A -->
-	                  <path fill="#bea886" stroke="#000000" class="Astanding section" d="M945.3296296296296,721.7518518518519L944.1981481481482,1192.4481481481482L1462.4166666666665,1192.4481481481482L1464.6796296296297,857.5296296296297L1383.212962962963,857.5296296296297L1384.3444444444444,536.188888888889L1147.864814814815,535.0574074074076L945.3296296296296,721.7518518518519Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#bea886" stroke="#000000" class="A section" d="M945.3296296296296,721.7518518518519L944.1981481481482,1192.4481481481482L1462.4166666666665,1192.4481481481482L1464.6796296296297,857.5296296296297L1383.212962962963,857.5296296296297L1384.3444444444444,536.188888888889L1147.864814814815,535.0574074074076L945.3296296296296,721.7518518518519Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
 	                  <text x="1192.5975115740725" y="932.5102838494236" text-anchor="middle" font-family="Malgun Gothic" font-size="80px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 80px; font-style: normal; font-weight: bold;">
-	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Astanding</tspan></text>
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">A</tspan></text>
 	                  
 	                  <!-- 스탠딩B -->
-	                  <path fill="#bea886" stroke="#000000" class="Bstanding section" d="M1478.2148148148133,857.4425925925927L1479.4462962962948,1191.1740740740743L1995.4370370370355,1191.1740740740743L1996.668518518517,721.9796296296299L1795.9370370370355,537.2574074074076L1561.955555555554,537.2574074074076L1563.1870370370355,857.4425925925927L1478.2148148148133,857.4425925925927Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+	                  <path fill="#bea886" stroke="#000000" class="B section" d="M1478.2148148148133,857.4425925925927L1479.4462962962948,1191.1740740740743L1995.4370370370355,1191.1740740740743L1996.668518518517,721.9796296296299L1795.9370370370355,537.2574074074076L1561.955555555554,537.2574074074076L1563.1870370370355,857.4425925925927L1478.2148148148133,857.4425925925927Z" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
 	                  <text x="1734.5424189814796" y="935.0732468123866" text-anchor="middle" font-family="Malgun Gothic" font-size="80px" font-style="normal" font-weight="bold" stroke="none" fill="#ffffff" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Malgun Gothic&quot;; font-size: 80px; font-style: normal; font-weight: bold;">
-	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Bstanding</tspan></text>
+	                  <tspan dy="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">B</tspan></text>
 	                  
 	             
 	                  <!-- 9구역 -->
