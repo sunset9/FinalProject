@@ -226,6 +226,7 @@ ul.tabs li.current{
 /* 	background: #ededed; */
 	padding: 15px;
     border: 1px solid #dfdfdf;
+    padding-top: 30px;
 }
  
 .tab-content.current{
@@ -589,9 +590,8 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		<c:forEach items="${conList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.storedName}"
-					style="width: 150px; height: 200px;"/><br>
-					${list.name }
+				<img src="/resources/image/${list.storedName}" />
+				<div>${list.name }</div>
 			</a>
 		</span>
 		</c:forEach>
@@ -601,9 +601,8 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		<c:forEach items="${muList }" var="list">
 		<span id="tabPfmList">
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.storedName}"
-					style="width: 150px; height: 200px;"/><br>
-					${list.name }
+				<img src="/resources/image/${list.storedName}" />
+				<div>${list.name }</div>
 			</a>
 		</span>
 		</c:forEach>
