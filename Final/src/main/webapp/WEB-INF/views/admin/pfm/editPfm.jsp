@@ -1057,6 +1057,11 @@ $(document).ready(function(){
 					}
 				});
 				
+				$('#seatHall svg').on('click','text',function(){
+					var selector = ".section."+$(this).children().text();
+					$(this).parent().find(selector).click();
+				})
+				
 				// 콜백 함수 호출 - 이미 지정된 구역들 색 칠해주기
 				if(drawCompletedSec){
 					drawCompletedSec();

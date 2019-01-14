@@ -957,7 +957,6 @@ $(document).ready(function(){
 				$('#seatHall svg').on('click','text',function(){
 					var selector = ".section."+$(this).children().text();
 					$(this).parent().find(selector).click();
-					console.log(1);
 				})
 			}
 			, error: function(){

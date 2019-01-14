@@ -1054,6 +1054,18 @@ function tempSeatAdd(){
     width: 649px !important;
     margin-bottom: 15px;
 }
+
+svg > text:hover{
+	cursor: pointer;
+}
+
+svg > path:hover{
+	cursor: pointer;
+}
+
+svg > rect:hover{
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
