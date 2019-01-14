@@ -146,6 +146,7 @@ $(document).ready(function() {
 	width: 230px;
 	height: 280px;
 	margin: 5px;
+	margin-bottom: 16px;
 }
 
 .bannerImg {

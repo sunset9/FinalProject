@@ -147,6 +147,7 @@ $(document).ready(function() {
 	width: 230px;
 	height: 280px;
 	margin: 5px;
+	margin-bottom: 16px;
 }
 
 .bannerImg {
@@ -248,7 +249,7 @@ li.pfmInfo {
 			<li class="pfmInfo">
 				<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
 				<span class="thumImg">
-					<img class="concertImg" src="/resources/image/${list.posterName}" /><br>
+					<img class="familyImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
 				<strong class="imgname">${list.name }</strong><br>
 				<small>
