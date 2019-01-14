@@ -527,10 +527,11 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 }
 
 #mainThumb{
-    position: relative;
+	position: relative;
     float: left;
     top: -110px;
-    left: 35%;
+    margin: 0 auto;
+    width: 100%;
 }
 
 </style>
