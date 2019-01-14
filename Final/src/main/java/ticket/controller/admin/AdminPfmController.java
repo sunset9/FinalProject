@@ -454,8 +454,8 @@ public class AdminPfmController {
 	 * @Method설명: 카테고리 뮤지컬&공연 배너 정보 삭제하기
 	 * @작성자: 박주희
 	 */
-	@RequestMapping(value = "/admin/deletecatemu/{pfmIdx}", method = RequestMethod.GET)
-	public String deletecateMu(@PathVariable int pfmIdx) {
+	@RequestMapping(value = "/admin/deletecatemu", method = RequestMethod.GET)
+	public String deletecateMu(int pfmIdx) {
 
 		logger.info("delete category banner mu GET");
 		logger.info(pfmIdx + "");
@@ -557,15 +557,15 @@ public class AdminPfmController {
 	 * @Method설명:카테고리 배너 중 가족&아동 배너 삭제 
 	 * @작성자:박주희
 	 */
-	@RequestMapping(value = "/admin/deletecatefam/{pfmIdx}", method = RequestMethod.GET)
-	public String deletecateFam(@PathVariable int pfmIdx) {
+	@RequestMapping(value = "/admin/deletecatefam", method = RequestMethod.GET)
+	public String deletecateFam(int pfmIdx) {
 
 		logger.info("delete category banner fam GET");
 		logger.info(pfmIdx + "");
 		CategoryFam fam = new CategoryFam();
 		fam.setPfmIdx(pfmIdx);
 		pService.removeFam(fam);
-		return "redirect:/admin/registcatemu";
+		return "redirect:/admin/registcatefam";
 	}
 
 	/**

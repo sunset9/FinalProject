@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../layout/menu.jsp" />
 
 <style>
@@ -17,6 +16,7 @@
     margin-left: 10px;
     text-align: center;
    	position: relative;
+   	width: 208px; height: 328px;
 }
 .h3, h3 {
     font-size: 15px;
@@ -31,86 +31,50 @@
     background-color: #33333352;
     height:254px;
     width: 180px;
-    right: 14px;   
+    right: 15px;
     position: absolute;
 }
 .cover2 {
 	z-index: 10;
     background-color: #33333352;
-    height:150px;
-    width: 103px;
+    height:254px;
+    width: 180px;
     right: 15px;
     position: absolute;
 }
 .removeBtn {
-	margin-top: 80px;
+	margin-top: 95px;
 }
 .deleteBtn {
-	margin-top: 95px; 
-	margin-left: 55px; 
+	margin-top: 95px;
 }
-.pfmIdx > img {
-    height: 200px;
-    width: 150px;
-    margin-bottom: 5px; 
+
+.img {
+	width: 180px;
+	heigth: 254px;
 }
-.pfmIdx {
-    width: 150px;
-    height: 220px; 
-}
-.pfmName { 
-	overflow: hidden;
-    text-overflow: ellipsis;
-    width: 148px;
-    white-space: nowrap;  
-}
+
 .thumbnail {
-    width: 209px;
-    height: 350px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: left;
+    display: inline-block;
+    margin-left: 10px;
+    text-align: center;
+   	position: relative;
 }
 
-/* .thumbnail:hover{
-	border: 2px solid #8da7d3;
-} */
-
-.caption > label > img {
-    height: 200px;
-    width: 150px;
-    margin-bottom: 3px;
+.cateconImg {
+	width: 180px;
+	height: 254px;
+	
 }
 
-.caption {
-    width: 192px;
-    height: 272px;
-}
-
-.pfmDate {
+.pfmIdx>img {
     width: 180px;
-    font-weight: 200px;
+    height: 254px;
 }
 
-.hallName {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 180px;
-    white-space: nowrap;
-    font-size: 13px;
-    font-weight: 400;
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.pfmName { 
-	overflow: hidden;
-    text-overflow: ellipsis;
-    width: 180px;
-    white-space: nowrap;  
-    font-weight: 700;
+#thum.thumbnail {
+	width: 180px;
+    height: 254px;
 }
 </style>
 
@@ -163,17 +127,13 @@ function ajax(url){
 				var paging = d.paging;
 				$('#resultposter').html('');
 		  		list.forEach(function(item){
-		  			var div =  $('<div id="'+item.pfmIdx+'" class="thumbnail" style="width: 178px; height:278px;">');
-				  	var input = $('<input type="radio" style="margin: 1px 0px 10px;" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
-				  	var caption = $('<div class="caption">');
+				  	var input = $('<input type="radio" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
+				    var div =  $('<div class="thumbnail" style="width: 180px; height: 254px;">');
 				  	var img = $('<img src="/resources/image/'+item.storedName+'">');
-				  	var h3 = $('<div class="pfmName">'+item.name+'</div>');
-					var label = $('<label for ="'+ item.pfmIdx+'">');
-				  	caption.append(input);
-				 	label.append(img);
-				  	label.append(h3);
-				  	caption.append(label);
-				  	div.append(caption);
+				  	var h3 = $('<h3 style="text-align :center;">'+item.name+'</h3>');
+				  	div.append(input);
+				  	div.append(img);
+				  	div.append(h3);	
 			  	 	$('#resultposter').append(div);
 			  	});
 		  		
@@ -308,13 +268,13 @@ $('#myModal').find('.btn').on('click',function() {
 	}
 
 	var div1 = $('<div class="" style="height: 100%;" id ="position_'+selectedId+'">');
-	var div2 = $('<div class="thumbnail">');
+	var div2 = $('<div class="thumbnail" style="width: 208px; height: 328px;">');
 	var div3 = $('<div class="caption" id="pfmIdx_"'+selectedId+'>');
 	var div4 = $('<div class="pfmIdx" id='+selectedId+'>');
 	var image =$('<img>');
 	image.attr('src','/resources/image/'+ labelName);
 	var atag = $('<a>');
-	var htag= $('<div class="pfmName">'+name+'</div>');
+	var htag= $('<h3>'+name+'</h3>');
 	//htag.text(name);
 	atag.attr('href','"/admin/deletecatemu/'+selectedId+'/>"');
 	//삭제 버튼 (div5) 현재는 바뀐 removeBtn으로 쓰고 있어서 주석처리
@@ -332,7 +292,7 @@ $('#myModal').find('.btn').on('click',function() {
 	start.append(div1);
 	//이전에 그렸던것들을 지움 
 	$('div[id^=draw]').remove();
-	var adddiv1=$('<div class="" style=" width:137px; height: 224px;" id="draw_'+selectedId+'">');
+	var adddiv1=$('<div class="" style=" width:180px; height: 254px;" id="draw_'+selectedId+'">');
 	//해당 이미지 
 	var adddiv2=$('<div class="thumbnail"style=" text-align: center;" id="thum_'+selectedId+'">');
 	//포스터 추가 버튼 (div형태 )
@@ -367,7 +327,7 @@ $('#myModal').find('.btn').on('click',function() {
 // 			console.log("error");
 // 			}
 // 		}); //end of ajax 
-		  
+		
 // }); //endof function
 
 $('.caption').on('mouseover','.pfmIdx',function(){ //이미지 위에 마우스를 가져다 놓을때
@@ -384,13 +344,6 @@ $('.caption').on('mouseleave','.cover',function(){
  
 		$('div[class^=cover]').remove(); //cover div 를 찾아서 삭제 
 });
-
-$('#resultposter').on("click",".thumbnail", function () {
-  	var pfmIdx = $('<input type="hidden" name="pfmIdx" value="'+$(this).attr("id")+'">');
-	$(this).append(pfmIdx);
-	$('#registCateCon').submit();
-})
-
 }); // end ready
 </script>
 
@@ -400,7 +353,7 @@ $('#resultposter').on("click",".thumbnail", function () {
 카테고리 뮤지컬 배너 관리
 </h1>
 </div>
-<hr> 
+<hr>
 
 <!-- 카테고리 부분 FORM 시작  -->
 <form action="/admin/registcatemu" method="post">
@@ -408,19 +361,12 @@ $('#resultposter').on("click",".thumbnail", function () {
 <div class="row" id ="start" style="display: flex; flex-wrap: wrap;">
 <c:forEach var="item" items="${posterList }" varStatus="status">
 <div class="" style=" height: 100%;">
-	<div class="thumbnail" style="border-radius: 0;">
+	<div class="thumbnail">
 		<div class="caption">
 			<div class="pfmIdx" id="${item.pfmIdx }">
-					<img src="/resources/image/${item.storedName }" style="width: 180px; height: 254px;"> 
+					<img src="/resources/image/${item.storedName }"> 
 <%-- 					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a> --%>
-								<div class="pfmName">${item.name } <!--,  ${item.pfmIdx }--></div>
-								<div class="pfmDate">
-									<fmt:formatDate value="${item.pfmStart }" pattern="yyyy.MM.dd" />
-					     			~ <fmt:formatDate value="${item.pfmEnd }" pattern="yyyy.MM.dd" />
-								</div>
-								<div class="hallName">
-									${item.hallName}
-								</div>
+								<h3>${item.name } <!--,  ${item.pfmIdx }--></h3>
 						</div>
 			</div>
 		</div>
@@ -440,7 +386,7 @@ $('#resultposter').on("click",".thumbnail", function () {
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="width: 583px;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
@@ -468,5 +414,5 @@ $('#resultposter').on("click",".thumbnail", function () {
 			</div>
 		</div>
 	</div>
-</form> 
+</form>
 </div>
