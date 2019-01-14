@@ -146,10 +146,6 @@ function pfmChoice(pfmIdx){
  
 <style type="text/css">
 
-img{
-	border: 1px solid #efefef !important;
-}
-
 .fitPfmSlider {
 	padding: 5px;
 }
@@ -356,6 +352,7 @@ li.pfmInfo {
     width: 133px;
     height: 185px;
     margin-bottom: 3px;
+    border: 1px solid #efefef;
 }
 
 /* 메인 하단 */
