@@ -81,9 +81,10 @@ table{
 	width: 140px;
     height: 40px;
     border-radius: 10px;
-    border: 2px solid #F2B134;
-    color:#FFF;
+    border: 2px solid #DDD;
+    color:#8f8d8d;
     font-weight: bold;
+    background: #FFF;
 }
 .btnDiv{
 	margin: 20px auto;

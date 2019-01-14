@@ -419,6 +419,7 @@ public class UserController {
 		// 예매한 공연 상세 정보 가져오기
 		StateOfBook sob = userService.getDetailBook(user, bookGroup);
 		logger.info("sob"+sob);
+		
 		model.addAttribute("sob", sob);
 		
 		// 티켓수령 정보 가져오기(수령 방법, 배송지 정보)
@@ -447,6 +448,11 @@ public class UserController {
 		payment = userService.getPayment(sob.getImpUid());
 		logger.info("결제정보:"+payment);
 		model.addAttribute("payment", payment);
+		
+		// 공연 취소 상세 정보 가져오기
+		StateOfBook cancelSob = userService.getDetailCancel(user, bookGroup);
+		logger.info("cancelSob"+cancelSob);
+		model.addAttribute("cancelSob", cancelSob);
 		
 		// 좌석 정보 
 		// 1. 좌석 등급 -- 구매 내역(ss)에서 보낸값 사용
