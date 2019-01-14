@@ -3,6 +3,7 @@ package ticket.dto;
 import java.util.Date;
 
 public class Inquiry {
+	private int rnum;
 	private int inqIdx;
 	private int userIdx;
 	private String title;
@@ -20,8 +21,15 @@ public class Inquiry {
 	}
 	@Override
 	public String toString() {
-		return "Inquiry [inqIdx=" + inqIdx + ", userIdx=" + userIdx + ", title=" + title + ", contents=" + contents
-				+ ", replyStatus=" + replyStatus + ", createDate=" + createDate + ", userName=" + userName + "]";
+		return "Inquiry [rnum=" + rnum + ", inqIdx=" + inqIdx + ", userIdx=" + userIdx + ", title=" + title
+				+ ", contents=" + contents + ", replyStatus=" + replyStatus + ", createDate=" + createDate
+				+ ", userName=" + userName + "]";
+	}
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 	public int getInqIdx() {
 		return inqIdx;
