@@ -226,7 +226,17 @@
 		        , PP.*
 		    FROM (
 		        SELECT
-		            p.*
+		            DISTINCT P.PFM_IDX,
+		            P.NAME,
+		            P.GENRE_IDX,
+		            P.PFM_START,
+		            P.PFM_END,
+		            P.TICKET_START,
+		            P.TICKET_END,
+		            P.HALL_IDX,
+		            P.AGE_GRADE_IDX,
+		            P.RUNNING_TIME,
+		            P.CREATE_DATE 
 		            , h.hall_name
 		            , pi.stored_name poster_name
 		        FROM performance p
