@@ -691,7 +691,11 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			PfmDetail pfmDetail = new PfmDetail();
 			pfmDetail.setPfmIdx(pfmIdx);
 			pfmDetail.setContents(pfmDetailContents);
-			pDao.updatePfmDetail(pfmDetail);
+			if(pDao.selectCntPfmDetail(pfmIdx) > 0) {
+				pDao.updatePfmDetail(pfmDetail);
+			}else {
+				pDao.insertPfmDetail(pfmDetail);
+			}
 		}
 
 		// 공연 예약정보 수정
@@ -699,7 +703,11 @@ public class AdminPfmServiceImpl implements AdminPfmService {
 			PfmBookinfo pfmBookinfo = new PfmBookinfo();
 			pfmBookinfo.setPfmIdx(pfmIdx);
 			pfmBookinfo.setContents(pfmBookinfoContents);
-			pDao.updatePfmBookinfo(pfmBookinfo);
+			if(pDao.selectCntPfmBookinfo(pfmIdx) > 0) {
+				pDao.updatePfmBookinfo(pfmBookinfo);
+			} else {
+				pDao.insertPfmBookinfo(pfmBookinfo);
+			}
 		}
 
 	}
