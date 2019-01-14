@@ -253,8 +253,8 @@ public class MainController {
 			map.put("pfmList", posterList);
 			
 		} else if(array.equals("Deadline")) {
-			// 마감 임박순
-			// 오늘 날짜 - 티켓마감일 순
+			// 공연 임박순
+			// 오늘 날짜 - 티켓마감일 순  -->>> 공연 시작일 순으로 변경 했어요 
 			List<Performance> posterList = mainService.getDeadlineList(genreIdx);
 			map.put("pfmList", posterList);
 			
