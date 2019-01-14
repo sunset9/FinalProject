@@ -46,6 +46,10 @@
 	width:100px;
 }
 
+#noticon {
+	text-align:left;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -68,23 +72,44 @@ $(document).ready(function(){
 
 <div class="container">
 
-<table class="table table-striped table-hover">	
-	<tr>
-		<td class="num">번호 : ${noticeView.noticeIdx }</td>
-		<td class="type">분류  : ${noticeView.NTypeIdx }</td>
-		<td class="title">제목 : ${noticeView.noticeTitle }</td>	
-		<td class="date">작성일 : <fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td></td>		
-		<td class="content"> ${noticeView.noticeContent }</td>
-		<td></td>
-	</tr>	
-</table>
-<hr>
+	
+	<div class="form-group">
+			<label for="noticeIdx" class="col-sm-2 control-label"> 글번호</label>
+		
+			<input type="text" id="noticeIdx" name="noticeIdx" class="form-control" value="${noticeView.noticeIdx }" readonly="readonly"/>
+		
+	</div>
+	
+		<div class="form-group">
+			<label for="NTypeIdx" class="col-sm-2 control-label"> 분류</label>
+			<input type="text" id="NTypeIdx" name="NTypeIdx" class="form-control" value="${noticeView.NTypeIdx }" readonly="readonly"/>
+	</div>
+	
+		<div class="form-group">
+			<label for="noticeTitle" class="col-sm-2 control-label"> 글제목</label>
+			<input type="text" id="noticeTitle" name="noticeTitle" class="form-control" value="${noticeView.noticeTitle }" readonly="readonly"/>
+	</div>
+	
 
-<hr>
+	<div class="form-group">
+		<label for="createDate" class="col-sm-2 control-label"> 등록일</label>
+		<div class="col-sm-10">
+			<span><fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></span>
+		</div>	
+	</div>	
+
+
+
+
+
+	<br><br>
+	
+		<div id="noticon">
+			<label>  글내용 </label>
+			<p>${noticeView.noticeContent }</p>
+		</div>	
+			
+
 
 <!-- prev(이전글 번호), prevTitle(이전글 제목), next(다음글 번호), nextTitle(다음글 번호) -->
 <!-- 이전글 --> 
