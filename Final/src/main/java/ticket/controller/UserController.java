@@ -416,6 +416,7 @@ public class UserController {
 		user = (User) session.getAttribute("loginUser");
 		logger.info("" + user);
 		
+		logger.info("bookGroup : "+bookGroup);
 		// 예매한 공연 상세 정보 가져오기
 		StateOfBook sob = userService.getDetailBook(user, bookGroup);
 		logger.info("sob"+sob);
