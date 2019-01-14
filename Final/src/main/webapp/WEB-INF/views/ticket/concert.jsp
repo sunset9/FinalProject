@@ -220,7 +220,7 @@ li.pfmInfo {
 	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
 			<img class="bannerImg" src="/resources/image/${topList.storedName}" />
-			<small>${topList.name }</small>
+			<span style="font-size: 15px;">${topList.name }</span>
 		</a>
 	</li>
 	</c:forEach>
