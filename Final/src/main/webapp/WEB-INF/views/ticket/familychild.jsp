@@ -217,7 +217,7 @@ li.pfmInfo {
 	<c:forEach items="${topBanList }" var="topList">
 	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
-			<img class="bannerImg" src="/resources/image/${topList.storedName}" /><br>
+			<img class="bannerImg" src="/resources/image/${topList.storedName}" />
 			<small>${topList.name }</small>
 		</a>
 	</li>
