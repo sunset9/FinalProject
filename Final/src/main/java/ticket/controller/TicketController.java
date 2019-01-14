@@ -184,36 +184,64 @@ public class TicketController {
 		UUID uuid = UUID.randomUUID();
 		String bookGroup = uuid.toString().split("-")[4];
 		
+		
+		
 		//좌석 인덱스 구하기(seatInfo정보로 공연장번호,구역,좌석행렬,공연번호로 구하기)
+		logger.info(""+seatInfo.length);
+		for(String info:seatInfo) {
+			logger.info(info);
+		}
 		for(int i = 0;i<seatInfo.length;i++) {
 			String[] seatInfoStr; 
-			seatInfoStr = seatInfo[i].split(" ");
+			String[] seatInfoStr2;
+//			logger.info(""+seatInfo[i]);
+//			seatInfoStr = seatInfo[i].split(" ");
+			seatInfoStr = seatInfo[i].split("구역");
+			seatInfoStr2 = seatInfoStr[0].split("석");
 			
-//			System.out.println(seatInfoStr[0]); //석
-//			System.out.println(seatInfoStr[1]); //구역
-//			System.out.println(seatInfoStr[2]); //빈값
-//			System.out.println(seatInfoStr[3]); //행
-//			System.out.println(seatInfoStr[4]); //열
-//			System.out.println(seatInfoStr[5]); // :
-//			System.out.println(seatInfoStr[6]); // 가격
+//			logger.info(""+seatInfoStr2[1]);
+//			logger.info(""+seatInfoStr[0].split("석"));
+			
+//			logger.info(""+seatInfoStr[i]);
+//			System.out.println("0:"+seatInfoStr[0]); //석
+//			System.out.println("1:"+seatInfoStr[1]); //구역
+//			System.out.println("2:"+seatInfoStr[2]); //빈값
+//			System.out.println("3:"+seatInfoStr[3]); //행
+//			System.out.println("4:"+seatInfoStr[4]); //열
+//			System.out.println("5:"+seatInfoStr[5]); // :
+//			System.out.println("6:"+seatInfoStr[6]); // 가격
 			
 			//공연장 Idx와 구역이름으로 구역 idx 조회
-			oriSecIdx.add(ticketService.loadOriginSecIdx(hallIdx,seatInfoStr[1].substring(0, 1)));
+			oriSecIdx.add(ticketService.loadOriginSecIdx(hallIdx,seatInfoStr2[1]));
 			int seatRow = 0;
 			int seatCol = 0;
 			//좌석 행, 열 값 구하기
 			
-			if(seatInfoStr[3].length() == 2) {
-				seatRow = Integer.parseInt(seatInfoStr[3].substring(0, 1)); 
-			}else if(seatInfoStr[3].length() == 3) {
-				seatRow = Integer.parseInt(seatInfoStr[3].substring(0, 2)); 
-			}
-			if(seatInfoStr[4].length() == 2) {
-				seatCol = Integer.parseInt(seatInfoStr[4].substring(0, 1)); 
-				
-			}else if(seatInfoStr[4].length() == 3) {
-				seatCol = Integer.parseInt(seatInfoStr[4].substring(0, 2)); 
-			}
+			String[] RowStr = seatInfo[i].split("행");
+			
+			String[] RowStr2 = RowStr[0].split("구역");
+	
+			
+			seatRow = Integer.parseInt(RowStr2[1]);
+			
+			
+			String[] ColStr = seatInfo[i].split("열");
+			
+			String[] ColStr2 = ColStr[0].split("행");
+			
+			seatCol = Integer.parseInt(ColStr2[1]); 
+			
+//			if(seatInfoStr[3].length() == 2) {
+//				seatRow = Integer.parseInt(seatInfoStr[3].substring(0, 1)); 
+//			}else if(seatInfoStr[3].length() == 3) {
+//				seatRow = Integer.parseInt(seatInfoStr[3].substring(0, 2)); 
+//			}
+//			if(seatInfoStr[4].length() == 2) {
+//				seatCol = Integer.parseInt(seatInfoStr[4].substring(0, 1)); 
+//				
+//			}else if(seatInfoStr[4].length() == 3) {
+//				seatCol = Integer.parseInt(seatInfoStr[4].substring(0, 2)); 
+//			}
 			
 			
 //			//공연장Idx, 구역idx, 좌석 행렬로 좌석 idx조회

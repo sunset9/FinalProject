@@ -71,7 +71,7 @@ $(document).ready(function(){
 <table class="table table-striped table-hover">	
 	<tr>
 		<td class="num">번호 : ${noticeView.noticeIdx }</td>
-		<td class="type">분류 ㅇㅇㅇㅇ : ${noticeView.NTypeIdx }</td>
+		<td class="type">분류  : ${noticeView.NTypeIdx }</td>
 		<td class="title">제목 : ${noticeView.noticeTitle }</td>	
 		<td class="date">작성일 : <fmt:formatDate value="${noticeView.createDate }" pattern="yyyy-MM-dd"/></td>
 	</tr>

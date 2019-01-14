@@ -46,6 +46,34 @@ $(document).ready(function(){
 		};
 	});
 	
+	/* 삭제(체크박스된 것 전부) */
+	function deleteAction(){
+	  var checknotice = "";
+	  $( "input[id='checknotice']:checked" ).each (function (){
+		  checknotice = checknotice + $(this).val()+"," ;
+	  });
+	  checknotice = checknotice.substring(0,checknotice.lastIndexOf( ",")); //맨끝 콤마 지우기
+	 
+	  if(checknotice == ''){
+	    alert("삭제할 대상을 선택하세요.");
+	    return false;
+	  }
+	  console.log("### checknotice => {}"+checknotice);
+	 
+	  if(confirm("정보를 삭제 하시겠습니까?")){
+	      
+	      //삭제처리 후 다시 불러올 리스트 url      
+	      var url = document.location.href;
+	      var page = $("#page").val();
+	      var saleType = $("#saleType").val();
+	      var schtype = $("#schtype").val();
+	      var schval = $("#schval").val();
+	      location.href="${rc.contextPath}/test_proc.do?idx="+checknotice+"&goUrl="+url+"&page="+page+"&saleType="+saleType+"schtype="+schtype+"schval="+schval;      
+	  }
+	}
+
+
+	
 });
 </script>
 
@@ -97,7 +125,7 @@ $(document).ready(function(){
 	
 	<tr>
 <!-- 		<th>선택</th> -->
-		<th><input type="checkbox" id="checknoticeall" value="${noli.noticeIdx }"></th>
+		<th><input type="checkbox" id="checknoticeall" name="checkAll" onclick="checkAll();"></th>
 		<th>글번호</th>
 		<th>분류</th>
 		<th>제목</th>
@@ -122,7 +150,7 @@ $(document).ready(function(){
 <div class="col-md-offset-3">
  <ul class="pagination">
   <c:if test="${pageMaker.prev}">
-   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전 목록</a></li>
+   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전 10개</a></li>
   </c:if> 
   
   <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
@@ -131,7 +159,7 @@ $(document).ready(function(){
   </c:forEach>
     
   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음 목록</a></li>
+   <li><a href="noticelist${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음 10개</a></li>
   </c:if> 
  </ul>
 </div>
@@ -158,5 +186,10 @@ $(document).ready(function(){
 
 </div>
 </div>
+
+
 </body>
 </html>
+
+
+
