@@ -1407,7 +1407,7 @@ td {
 		<div id="tab-5" class="tab-content">
 		<div>
 			<div id="hallImg">
-				 <img style="width: 200px; height: 200px;" src="/resources/image/${hallImg.storedName }">
+				 <img style="width: 200px; height: 200px;" src="/resources/hall/hall_${hallInfoList.hallIdx}.JPG">
 			</div>
 			<div id="hallInfo">
 			 공연장 이름 : ${hallInfoList.hallName }<br><br>
