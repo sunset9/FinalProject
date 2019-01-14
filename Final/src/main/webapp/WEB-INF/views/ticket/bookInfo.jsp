@@ -3,10 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
 <script>
 
 $(document).ready(function() {
@@ -410,8 +407,6 @@ $(document).ready(function() {
 }
   
 </style>
-</head>
-<body>
 <div id = "ticketNotOpen">
 
 </div>
@@ -450,6 +445,3 @@ $(document).ready(function() {
 </div>
 <!-- <a href="" target="_blank"></a> -->
 
-
-</body>
-</html>
