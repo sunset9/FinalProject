@@ -120,7 +120,7 @@ $(document).ready(function() {
 	 $("#allAgreement").change(function(){
 	        if($("#allAgreement").is(":checked")){
 	        	console.log("동의 후 다음버튼 활성화");
-	        	$("#agreement1").attr("checked","checked");
+	        	$("#agreement1").attr("checked",true);
 	        	$("#agreement2").attr("checked","checked");
 	        	$("#agreement3").attr("checked","checked");
 	        	$("#agreement4").attr("checked","checked");
@@ -245,18 +245,18 @@ $(document).ready(function() {
 			
 		}
 		
-		if($("#sex").val().length < 1){
+		if($('input[name=sex]:checked').val().length < 1){
 			console.log("이름 확인 안함");
-			$('#sex').attr('data-toggle', "tooltip");
-			$('#sex').attr('data-placement', "top");
-			$('#sex').attr('title', "성별을 입력해주세요!");
-			$('#sex').focus();
+			$('.sex').attr('data-toggle', "tooltip");
+			$('.sex').attr('data-placement', "top");
+			$('.sex').attr('title', "성별을 입력해주세요!");
+			$('.sex').focus();
 			
 			return;
 			
 		}
 		
-		if($("#phCheck").length < 1){
+		if($("#phone").val().length < 1){
 			console.log("연락처 확인 안함");
 			$('#phone').attr('data-toggle', "tooltip");
 			$('#phone').attr('data-placement', "top");
@@ -798,10 +798,10 @@ function DaumPostcode() {
 	
 			<td>
 				<label class="radio-inline"> 
-					<input type="radio" name="sex"  value="m" /> 남
+					<input type="radio" name="sex" class="sex" value="m" /> 남
 				</label> 
 				<label class="radio-inline"> 
-					<input type="radio" name="sex" value="f"/> 여
+					<input type="radio" name="sex" class="sex" value="f"/> 여
 				</label>
 			</td>
 		</tr>
