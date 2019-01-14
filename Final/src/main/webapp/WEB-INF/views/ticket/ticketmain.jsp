@@ -113,11 +113,8 @@ $(window).load(function() {
 // 			}
 // 		});
 // 	};
-	
 // 	function insertFitPfm(fitPfmList) {
-		
 // 		$('#slider').html('');
-		
 // 		fitPfmList.forEach(function(list) {
 // 			var li = $('<li>');
 // 			var a = $('<a href="/ticket/pfmdetail?pfmIdx=' + list.pfmIdx + '">');
