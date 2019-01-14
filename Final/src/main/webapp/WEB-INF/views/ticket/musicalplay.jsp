@@ -25,6 +25,11 @@ $(document).ready(function() {
 		var themeIdx = $(this).attr('id');
 		console.log("themeIdx"+themeIdx);
 		
+		if(themeIdx==22 || themeIdx==23 ){
+			$('ul.array').hide();
+		} else {
+			$('ul.array').show();
+		}
 		var genreIdx = 2;
 		console.log(genreIdx);
 		
@@ -52,7 +57,7 @@ $(document).ready(function() {
 	// 인기순, 임박순, 최신순
 	$("#popularity, #Deadline, #Latest").click(function() {
 		$('.array span').removeClass('clicked');
-// 		$(this).addClass('clicked');
+		$(this).addClass('clicked');
 
 		var arrayList = $(this).attr('id');
 		console.log(arrayList);
@@ -172,6 +177,7 @@ ul.array li span{
 .arrayDiv {
 	width:100%;
 	float: right;
+	height: 30px;
 }
 
 li.pfmInfo {
@@ -198,6 +204,7 @@ li.pfmInfo {
 
 .clicked {
 	font-weight: bold;
+	color: #f2b134
 }
 </style>
 <div class="container">

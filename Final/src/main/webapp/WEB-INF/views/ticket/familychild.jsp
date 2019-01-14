@@ -25,6 +25,12 @@ $(document).ready(function() {
 		var themeIdx = $(this).attr('id');
 		console.log(themeIdx);
 		
+		if(themeIdx==31 || themeIdx==32 || themeIdx==33 ){
+			$('ul.array').hide();
+		} else {
+			$('ul.array').show();
+		}
+		
 		var genreIdx = 3;
 		console.log(genreIdx);
 		
@@ -52,7 +58,7 @@ $(document).ready(function() {
 	// 인기순, 임박순, 최신순
 	$("#popularity, #Deadline, #Latest").click(function() {
 		$('.array span').removeClass('clicked');
-// 		$(this).addClass('clicked');
+		$(this).addClass('clicked');
 
 		var arrayList = $(this).attr('id');
 		console.log(arrayList);
@@ -172,6 +178,7 @@ ul.array li span{
 .arrayDiv {
 	width:100%;
 	float: right;
+	height: 30px;
 }
 
 li.pfmInfo {
@@ -198,6 +205,7 @@ li.pfmInfo {
 
 .clicked {
 	font-weight: bold;
+	color: #f2b134
 }
 </style>
 <div class="container">
@@ -220,7 +228,7 @@ li.pfmInfo {
 	<div class="main_wrapper">
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
-		<button id="conall" class="clicked" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
+		<button id="famall" class="clicked" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
 		<button id="31" style="border: none; background-color: #FFFFFF; color: black;">소극장</button>
 		<button id="32" style="border: none; background-color: #FFFFFF; color: black;">효콘서트</button>
 		<button id="33" style="border: none; background-color: #FFFFFF; color: black;">개그/마술</button>

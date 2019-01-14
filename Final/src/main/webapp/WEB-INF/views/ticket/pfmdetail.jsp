@@ -852,6 +852,7 @@ ul.tabs li.current{
 }
 
 .insertRev {
+	
     height: auto;
     margin-bottom: 30px;
     height: 140px;
@@ -859,6 +860,7 @@ ul.tabs li.current{
     padding: 20px;
     background: #fcfcfc;
     position: relative;
+    text-align: center;
 }
 
 .insertExp {

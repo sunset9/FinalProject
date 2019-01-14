@@ -272,8 +272,11 @@
 			    ON p.pfm_idx = pi.pfm_idx
 		        JOIN hall h
 		        ON p.hall_idx = h.hall_idx
-		        WHERE genre_idx=${genreIdx}
-		        ORDER BY ROUND(ABS(SYSDATE-ticket_end),0)
+		        WHERE genre_idx=${genreIdx} 
+		        <![CDATA[
+		        AND pfm_start > sysdate
+		        ]]>
+		        ORDER BY pfm_start
 		    ) PP
 		)
 	</select>
@@ -293,7 +296,10 @@
 			    ON p.pfm_idx = pi.pfm_idx
 		        JOIN hall h
 		        ON p.hall_idx = h.hall_idx
-		        WHERE genre_idx=${genreIdx}
+		        WHERE genre_idx=${genreIdx} 
+		        <![CDATA[
+		        AND ticket_end > sysdate
+		        ]]>
 		        ORDER BY ticket_start DESC
 		    ) PP
 		)
