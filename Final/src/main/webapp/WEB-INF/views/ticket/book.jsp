@@ -484,7 +484,7 @@ $(document).ready(function() {
 				  
 				  //정해진 구역 랜덤으로 색 칠해주기 위해 선언한 color 배열
 // 				  var color = ['#D47D9A','#3E4982','#B1D275','#F2E9B5','#C5B3D1','#8A7676'];
-				  var color = ['#00382A','#EDD88A','#DBDBC8','#1B1D2B','#BB7A5C','#83A563'];
+				  var color = ['#075c47','#EDD88A','#DBDBC8','#1B1D2B','#BB7A5C','#83A563'];
 				  var json = { };
 				  var secName; 
 				  for(var i=0;i<res.hashMap.secName.length;i++){
