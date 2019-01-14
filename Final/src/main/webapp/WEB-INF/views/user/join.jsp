@@ -190,104 +190,104 @@ $(document).ready(function() {
 	// 정보입력 하고 선호테마 선택창으로 넘어가기 
 	$("#btnJoin").click(function() {
 		
-// 		if($("#eCheck").length < 1){
-// 			console.log("이메일 중복확인 안함");
-// 			$('#emailCheck').attr('data-toggle', "tooltip");
-// 			$('#emailCheck').attr('data-placement', "top");
-// 			$('#emailCheck').attr('title', "이메일 중복 확인을 해주세요!");
-// 			$('#emailCheck').focus();
+		if($("#eCheck").length < 1){
+			console.log("이메일 중복확인 안함");
+			$('#emailCheck').attr('data-toggle', "tooltip");
+			$('#emailCheck').attr('data-placement', "top");
+			$('#emailCheck').attr('title', "이메일 중복 확인을 해주세요!");
+			$('#emailCheck').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#nCheck").length < 1){
-// 			console.log("닉네임 중복확인 안함");
-// 			$('#nickCheck').attr('data-toggle', "tooltip");
-// 			$('#nickCheck').attr('data-placement', "top");
-// 			$('#nickCheck').attr('title', "닉네임 중복 확인을 해주세요!");
-// 			$('#nickCheck').focus();
+		if($("#nCheck").length < 1){
+			console.log("닉네임 중복확인 안함");
+			$('#nickCheck').attr('data-toggle', "tooltip");
+			$('#nickCheck').attr('data-placement', "top");
+			$('#nickCheck').attr('title', "닉네임 중복 확인을 해주세요!");
+			$('#nickCheck').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#pwCheck").length < 1){
-// 			console.log("비밀번호 정규식 확인 안함");
-// 			$('#password').attr('data-toggle', "tooltip");
-// 			$('#password').attr('data-placement', "top");
-// 			$('#password').attr('title', "비밀번호를 확인을 해주세요!");
-// 			$('#password').focus();
+		if($("#pwCheck").length < 1){
+			console.log("비밀번호 정규식 확인 안함");
+			$('#password').attr('data-toggle', "tooltip");
+			$('#password').attr('data-placement', "top");
+			$('#password').attr('title', "비밀번호를 확인을 해주세요!");
+			$('#password').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#pw2Check").length < 1){
-// 			console.log("비밀번호 일치 확인 안함");
-// 			$('#passwordc').attr('data-toggle', "tooltip");
-// 			$('#passwordc').attr('data-placement', "top");
-// 			$('#passwordc').attr('title', "비밀번호 일치를 확인을 해주세요!");
-// 			$('#passwordc').focus();
+		if($("#pw2Check").length < 1){
+			console.log("비밀번호 일치 확인 안함");
+			$('#passwordc').attr('data-toggle', "tooltip");
+			$('#passwordc').attr('data-placement', "top");
+			$('#passwordc').attr('title', "비밀번호 일치를 확인을 해주세요!");
+			$('#passwordc').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#name").val().length < 1){
-// 			console.log("이름 확인 안함");
-// 			$('#name').attr('data-toggle', "tooltip");
-// 			$('#name').attr('data-placement', "top");
-// 			$('#name').attr('title', "이름을 확인 해주세요!");
-// 			$('#name').focus();
+		if($("#name").val().length < 1){
+			console.log("이름 확인 안함");
+			$('#name').attr('data-toggle', "tooltip");
+			$('#name').attr('data-placement', "top");
+			$('#name').attr('title', "이름을 확인 해주세요!");
+			$('#name').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#sex").val().length < 1){
-// 			console.log("이름 확인 안함");
-// 			$('#sex').attr('data-toggle', "tooltip");
-// 			$('#sex').attr('data-placement', "top");
-// 			$('#sex').attr('title', "성별을 입력해주세요!");
-// 			$('#sex').focus();
+		if($("#sex").val().length < 1){
+			console.log("이름 확인 안함");
+			$('#sex').attr('data-toggle', "tooltip");
+			$('#sex').attr('data-placement', "top");
+			$('#sex').attr('title', "성별을 입력해주세요!");
+			$('#sex').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#phCheck").length < 1){
-// 			console.log("연락처 확인 안함");
-// 			$('#phone').attr('data-toggle', "tooltip");
-// 			$('#phone').attr('data-placement', "top");
-// 			$('#phone').attr('title', "연락처를 확인해주세요!");
-// 			$('#phone').focus();
+		if($("#phCheck").length < 1){
+			console.log("연락처 확인 안함");
+			$('#phone').attr('data-toggle', "tooltip");
+			$('#phone').attr('data-placement', "top");
+			$('#phone').attr('title', "연락처를 확인해주세요!");
+			$('#phone').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#postcode").val().length < 1){
-// 			console.log("우편번호 확인 안함");
-// 			$('#postcode').attr('data-toggle', "tooltip");
-// 			$('#postcode').attr('data-placement', "top");
-// 			$('#postcode').attr('title', "우편번호를 입력해주세요!");
-// 			$('#postcode').focus();
+		if($("#postcode").val().length < 1){
+			console.log("우편번호 확인 안함");
+			$('#postcode').attr('data-toggle', "tooltip");
+			$('#postcode').attr('data-placement', "top");
+			$('#postcode').attr('title', "우편번호를 입력해주세요!");
+			$('#postcode').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 		
-// 		if($("#addr").val().length < 1){
-// 			console.log("주소 확인 안함");
-// 			$('#addr').attr('data-toggle', "tooltip");
-// 			$('#addr').attr('data-placement', "top");
-// 			$('#addr').attr('title', "주소를 입력해주세요!");
-// 			$('#addr').focus();
+		if($("#addr").val().length < 1){
+			console.log("주소 확인 안함");
+			$('#addr').attr('data-toggle', "tooltip");
+			$('#addr').attr('data-placement', "top");
+			$('#addr').attr('title', "주소를 입력해주세요!");
+			$('#addr').focus();
 			
-// 			return;
+			return;
 			
-// 		}
+		}
 	
 		$("#joinInfo").hide();
 		$("#theme").show();
@@ -522,10 +522,10 @@ function setDate() {
 		$("#month").append("<option value='"+i+"'>"+i+"월"+"</option>");
 	}
 	
-    $("#year").val("1948");
-    $("#month").val("12");
-    $("#month").change();
-    $("#day").val("13");
+//     $("#year").val("1948");
+//     $("#month").val("12");
+//     $("#month").change();
+//     $("#day").val("13");
 
 	
 }
@@ -755,8 +755,8 @@ function DaumPostcode() {
 	<table>
 		<tr>
 			<td class="info"><label >이메일 주소</label></td> 
-			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" onchange="changeEmail();"  value="test<%=new Date().getTime()%>"/> 
-			 @ <input name="email2" type="text"  class="form-control" id="email2"  value="daum.net">
+			<td><input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" onchange="changeEmail();"  /> 
+			 @ <input name="email2" type="text"  class="form-control" id="email2" >
 				<select class="form-control" name="email_select" id="email_select"  onchange="directInput(); " >
 				
 				    <option value="1" selected="selected">직접입력</option>
@@ -771,26 +771,26 @@ function DaumPostcode() {
 
 		<tr>
 			<td class="info"><label>닉네임</label></td>
-			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" onchange="changeNick();"value="testNick<%=new Date().getTime()%>"/>
+			<td><input type="text" class="form-control"	name="nick" id = "nick" placeholder="닉네임을 입력하세요" onchange="changeNick();"/>
 			<input type="button" name="nickCheck" id="nickCheck" value="중복확인" class="btn btn-default" />
 			<div id = "checkMsg2"></div></td>
 		</tr>	
 
 		<tr>
 			<td class="info"><label>비밀번호</label></td>
-			<td><input type="password" class="form-control"	name="password" id="password" placeholder="비밀번호 입력" value="123123abc"/>
+			<td><input type="password" class="form-control"	name="password" id="password" placeholder="비밀번호 입력" />
 			<div id="passRule"></div></td>
 		</tr>
 
 		<tr>
 			<td class="info"><label>비밀번호 체크</label></td> 
-			<td><input type="password" class="form-control"name="passwordc" id="passwordc"onkeyup="checkPw()" placeholder="비밀번호 확인 입력" value="123123abc"/>
+			<td><input type="password" class="form-control"name="passwordc" id="passwordc"onkeyup="checkPw()" placeholder="비밀번호 확인 입력" />
 			<div id="checkPW3"></div></td>
 		</tr>	
 	
 		<tr>
 			<td class="info"><label>이름</label></td>
-			<td> <input type="text" class="form-control" name="name" id ="userName" placeholder="이름 입력" value="testName"/></td>
+			<td> <input type="text" class="form-control" name="name" id ="userName" placeholder="이름 입력"/></td>
 		<tr>
 	
 		<tr>	
@@ -798,7 +798,7 @@ function DaumPostcode() {
 	
 			<td>
 				<label class="radio-inline"> 
-					<input type="radio" name="sex"  value="m" checked/> 남
+					<input type="radio" name="sex"  value="m" /> 남
 				</label> 
 				<label class="radio-inline"> 
 					<input type="radio" name="sex" value="f"/> 여
@@ -820,17 +820,17 @@ function DaumPostcode() {
 		<tr>
 			<td class="info"><label>연락처</label> </td>
 			<td><input type="text" class="form-control" id = "phone" name="phone" placeholder="숫자만 입력"
-			onblur="checkPhone();" value="01099998888"/>
+			onblur="checkPhone();" />
 			<div id = "phoneCheck"></div></td>
 		</tr>
 
 		<tr>
 			<td class="info"><label>주소</label> </td>
 			<td> 
-				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" onclick="DaumPostcode();" value="05576"/> 
+				<input type="text" class="form-control"name="postcode" id="postcode" placeholder="우편번호" onclick="DaumPostcode();"/> 
 				<input type="button" class="btn btn-default" onclick="DaumPostcode();" value="우편번호 찾기" /><br>
-				<input type="text" class="form-control" name="addr" id="addr" placeholder="주소" value="testAddr"/> 
-				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소" value="testAddrDetail"/> 
+				<input type="text" class="form-control" name="addr" id="addr" placeholder="주소" /> 
+				<input type="text" class="form-control" name="addrDetail" id="addrDetail" placeholder="상세주소"/> 
 			</td>
 		</tr>
 	<hr>
