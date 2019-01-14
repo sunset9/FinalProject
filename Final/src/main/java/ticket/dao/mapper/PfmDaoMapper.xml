@@ -337,7 +337,7 @@
 		            order by pfm_idx
 		
 		        ) 
-		       WHERE pfm_idx NOT IN ( SELECT pfm_idx FROM my_choice WHERE user_idx= #{userIdx } 
+		       WHERE pfm_idx NOT IN ( SELECT pfm_idx FROM my_choice WHERE user_idx= #{userIdx } )
 		       ORDER BY pfm_idx
 		    ) A 
 		) 
