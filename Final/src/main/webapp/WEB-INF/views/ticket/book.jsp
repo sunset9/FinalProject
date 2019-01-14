@@ -118,6 +118,7 @@ $(document).ready(function() {
 				$('#selectedSeats_small').html(res);
 				
 				//사이즈조절
+				$('#selectedSeats_small #ez_canvas_zone')
 				$('#selectedSeats_small #ez_canvas_zone').css("width","100px");
 				$('#selectedSeats_small #ez_canvas_zone').css("height","100px");
 				$('#selectedSeats_small #scroller').css("width","100px");
@@ -126,6 +127,9 @@ $(document).ready(function() {
 				$('#selectedSeats_small #wrapper').css("width","10px");
 				$('#selectedSeats_small #wrapper').css("height","10px");
 				$('#selectedSeats_small .stage_img').height('207px');
+				
+				var height = $('#selectedSeats_small .stage_img').css("height");
+				$('#selectedSeats_small svg').css("height",height);
 				
 				loadSectionData($('#selectedSeats_small'));
 
