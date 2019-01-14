@@ -20,11 +20,11 @@
 	width: 1000px;
 }
 
-/* body { */
-/*   	position:relative;   */
-/*  	background-color:blue; */
-/*   	z-index:100;  */
-/*  } */
+.btnwrite {
+ position:fixed;
+ right:20px;
+ bottom:50px;
+}
 
 </style>
 
@@ -124,7 +124,7 @@ $(document).ready(function(){
 <div class="col-md-offset-3">
  <ul class="pagination">
   <c:if test="${pageMaker.prev}">
-  	<li><a href="noticelistsearch${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전 목록</a></li> 
+  	<li><a href="noticelistsearch${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전 10개</a></li> 
   </c:if> 
   
   <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
@@ -133,7 +133,7 @@ $(document).ready(function(){
   </c:forEach>
     
   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-   <li><a href="noticelistsearch${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음 목록</a></li>
+   <li><a href="noticelistsearch${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음 10개</a></li>
   </c:if> 
  </ul>
 </div>
@@ -146,11 +146,12 @@ $(document).ready(function(){
 </div>
 
 </form>
+
 <div class="btnwrite">
-<a href="/admin/noticewrite"><button> 글쓰기 </button></a>
-</div>
-<!-- <a href="/admin/noticelist">페이징 테스트</a> -->
-<%-- <jsp:include page="../../utils/noticepaging.jsp"/> --%>
+<a href="/admin/noticewrite">
+<img src="/resources/image/notiwrite.png"></a>
+
+
 </div>
 </div>
 
