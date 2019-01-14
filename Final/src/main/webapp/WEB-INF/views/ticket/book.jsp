@@ -477,14 +477,14 @@ $(document).ready(function() {
 			  data:{
 				  "hallIdx":${param.hallIdx},
 				  "pfmIdx":${param.pfmIdx}
-		  },
+		  	  },
 			  dataType:"json",
 			  success:function(res){
 				  pfmSeatSection = res.hashMap.pfmSeatSection;
 				  
 				  //정해진 구역 랜덤으로 색 칠해주기 위해 선언한 color 배열
 // 				  var color = ['#D47D9A','#3E4982','#B1D275','#F2E9B5','#C5B3D1','#8A7676'];
-				  var color = ['#075c47','#EDD88A','#DBDBC8','#1B1D2B','#BB7A5C','#83A563'];
+				  var color = ['#04775b','#EDD88A','#DBDBC8','#1B1D2B','#BB7A5C','#83A563'];
 				  var json = { };
 				  var secName; 
 				  for(var i=0;i<res.hashMap.secName.length;i++){
@@ -536,7 +536,6 @@ $(document).ready(function() {
 				data:{
 					"pfmIdx":${param.pfmIdx }
 					  },
-				async: false,
 				dataType:"json",
 				success:function(res){
 					for(var i=0;i<res.secInfo.length;i++){
@@ -560,7 +559,6 @@ function loadSectionPay(){
 		data:{
 			"pfmIdx":${param.pfmIdx },
 			  },
-		async: false,
 		dataType:"json",
 		success:function(res){
 			var appSec;
