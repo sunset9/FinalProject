@@ -193,7 +193,7 @@ li.pfmInfo{
 </style>
 
 <script>
-var genre = "CON"; // 조회 기준 (콘서트(기본), 뮤지컬, 가족, 검색)
+var genre = '${genre }'; // 조회 기준 (콘서트(기본), 뮤지컬, 가족, 검색)
 var keyword =""; // 검색 키워드
 var order; // 정렬 기준
 
@@ -202,8 +202,11 @@ var isEnd = false; // 스크롤시 ajax 통신 중단 여부
 
 $(document).ready(function(){
 	
+	console.log(genre);
 	// 페이지 로드 시
-    $("ul.tabs li:first").addClass("active").show(); // 첫번째 탭메뉴 활성화
+	// 서버에서 넘어온 장르 탭 활성화
+	$('#'+genre).parent('li').addClass("active").show();
+//     $("ul.tabs li:first").addClass("active").show(); // 첫번째 탭메뉴 활성화
 	
     var totalPage = ${paging.totalPage };
     if( totalPage <= curPage){ isEnd = true;  }
@@ -265,10 +268,12 @@ $(document).ready(function(){
     	$('.cover').remove();
     	// 자신에게 cover 없으면, cover 생성
 		if($(this).parent().find('.cover').length == 0){
+			var genre = $('.active').find('span').attr('id');
+			
 			var pfmIdx = $(this).attr('href').split("=")[1];
 			var cover = $('<div class="cover">');
-			var editBtn = $('<button class="editPfmBtn" onclick="location.href=\'/admin/editpfm?pfmIdx='+pfmIdx+'\'">공연 수정</button>');
-			var delBtn = $('<button class="deletePfmBtn" onclick="location.href=\'/admin/deletePfm?pfmIdx='+pfmIdx+'\'">공연 삭제</button>');
+			var editBtn = $('<button class="editPfmBtn" onclick="location.href=\'/admin/editpfm?pfmIdx='+pfmIdx+'&genre='+genre+'\'">공연 수정</button>');
+			var delBtn = $('<button class="deletePfmBtn" onclick="location.href=\'/admin/deletePfm?pfmIdx='+pfmIdx+'&genre='+genre+'\'">공연 삭제</button>');
 			cover.append(editBtn);
 			cover.append(delBtn);
 			$(this).parent('.pfmInfo').prepend(cover);

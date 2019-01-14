@@ -1,11 +1,9 @@
 package ticket.controller.admin;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +36,7 @@ import ticket.dto.CategoryCon;
 import ticket.dto.CategoryFam;
 import ticket.dto.CategoryMu;
 import ticket.dto.Genre;
+import ticket.dto.GenreEnum;
 import ticket.dto.Hall;
 import ticket.dto.MainBanner;
 import ticket.dto.Performance;
@@ -159,7 +157,7 @@ public class AdminPfmController {
 
 		// 새 공연 등록
 		pService.registPfm(pfm, posterUpload, themeList, castList, seatSecList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
-		return "redirect:/admin/managerpfm";
+		return "redirect:/admin/managerpfm?genre="+GenreEnum.values()[pfm.getGenreIdx()-1];
 	}
 
 	/**
@@ -265,7 +263,7 @@ public class AdminPfmController {
 		// 공연 수정
 		pService.editPfm(pfm, posterUpload, themeList, castList, seatSecList, pfmDbtList, pfmDetailContents, pfmBookinfoContents);
 		
-		return "redirect:/admin/managerpfm";
+		return "redirect:/admin/managerpfm?genre="+GenreEnum.values()[pfm.getGenreIdx()-1];
 	}
 
 	/**
@@ -579,14 +577,14 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.18
+	 * @최종수정일: 2019.01.14
 	 * @Method설명: 공연 정보 삭제하기
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/deletePfm", method = RequestMethod.GET)
-	public String deletePfm(Performance pfm) {
+	public String deletePfm(Performance pfm, String genre) {
 		pService.deletePfm(pfm);
-		return "redirect:/admin/managerpfm";
+		return "redirect:/admin/managerpfm?genre="+genre;
 	}
 
 	/**
@@ -1246,13 +1244,14 @@ public class AdminPfmController {
 	}
 
 	/**
-	 * @최종수정일: 2018.12.11
+	 * @최종수정일: 2019.01.14
 	 * @Method설명: 공연 관리 페이지 띄워주기
 	 * @작성자: 전해진
 	 */
 	@RequestMapping(value = "/admin/managerpfm", method = RequestMethod.GET)
-	public String viewPfmManager(Model model) {
-		String genre = "CON"; //목록 불러오는 기본값: 콘서트 기준
+	public String viewPfmManager(
+			@RequestParam(value="genre", defaultValue="CON") String genre //목록 불러오는 기본값: 콘서트 기준
+			, Model model) {
 		String order = "LATEST"; // 정렬기준 기본값: 등록순
 				
 		// 페이징 계산
@@ -1264,6 +1263,7 @@ public class AdminPfmController {
 		List<Performance> pfmList = pService.getPfmListByGenreNOrder(genre, order, paging);
 		model.addAttribute("pfmList",pfmList);
 		
+		model.addAttribute("genre", genre);
 		return "admin/pfm/managerPfm";
 	}
 	

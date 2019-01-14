@@ -211,7 +211,14 @@ table button {
 	cursor: pointer;
 }
 
-
+#allSelBtn {
+	position: absolute;
+    width: 77px;
+    z-index: 10;
+    background: #fff;
+    margin-left: 5px;
+    margin-top: 5px;
+}
 #registStep{
 	width: 700px;
     height: 100px;
@@ -1010,6 +1017,7 @@ $(document).ready(function(){
 			, success: function(d){
 				// 홀 jsp 삽입
 				$('#seatHall td').html(d);
+				$('#seatHall td').prepend($('<button type="button" id="allSelBtn">전체 선택</button>'))
 				// 사이즈 조절
 				$('#seatHall .stage_img').height('260px');
 				$('#seatHall .stage_img').width('380px');
