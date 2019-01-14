@@ -107,7 +107,7 @@ public class AdminPfmController {
 
 		// 페이징 계산
 		int totalCnt = pService.getArtistSearchCnt(artist);
-		Paging paging = new Paging(totalCnt, curPage, 8, 4);
+		Paging paging = new Paging(totalCnt, curPage, 12, 4);
 
 		// HashMap 을 통해 결과값 넘기기
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -1281,7 +1281,7 @@ public class AdminPfmController {
 		
 		// 페이징 계산
 		int totalCnt = pService.getPfmCntByGenre(genre);
-		Paging paging = new Paging(totalCnt, curPage, 8, 4);
+		Paging paging = new Paging(totalCnt, curPage, 12, 4);
 				
 		// 장르가 일치하는 공연 리스트 가져오기
 		List<Performance> pfmList = pService.getPfmListByGenreNOrder(genre, order, paging);
@@ -1306,7 +1306,7 @@ public class AdminPfmController {
 			){
 		// 페이징 계산
 		int totalCnt = pService.getPfmSearchCnt(keyword);
-		Paging paging = new Paging(totalCnt, curPage, 8, 4);
+		Paging paging = new Paging(totalCnt, curPage, 12, 4);
 				
 		// 검색어 일치하는 공연 리스트 가져오기
 		List<Performance> pfmList = pService.getPfmSearchList(keyword, paging);
