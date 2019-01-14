@@ -17,16 +17,16 @@ $(document).ready(function() {
 // 	console.log('LOGIN USER IDX : ' + ${loginUser.userIdx});
 
 	$('.castImgUl').bxSlider({
-		// 슬라이드 아래의 동그라미 버튼 여부
-		pager: false,
-		// 무한 루프 설정
-		infiniteLoop: false,
+		pager: false, // 슬라이드 아래의 동그라미 버튼 여부
+		infiniteLoop: false, // 무한 루프 설정
+		shrinkItems: true, // 캐러셀은 전체 항목을 표시하고 maxSlides / MinSlides에 기초한 뷰포트에 맞게 이미지를 축소할 것
 		hideControlOnEnd: true,
 		moveSlides : 1,
-		maxSlides : 7,
 		slideWidth : 150,
+		adaptiveHeight : true,
+		maxSlides : 7,
 		minSlides : 1,
-		slideMargin : 5
+		slideMargin : 20
 	});
 	
 	
@@ -686,7 +686,6 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 </script>
 
 <style>
-  
 #contentDay {
 	color: #A4A4A4;
 }
@@ -771,6 +770,7 @@ ul.tabs{
 	padding: 0px;
 	list-style: none;
 }
+
 ul.tabs li{
 	background: none;
 /* 	color: #222; */
@@ -832,8 +832,9 @@ ul.tabs li.current{
 .imgli {
 /* 	list-style: none; */
 /* 	float: left; */
-	margin: 5px;
+	margin: 0px 5px;
 	width: 150px;
+	text-align: -webkit-center;
 }
 
 .castInfo {
@@ -1028,7 +1029,7 @@ td {
 			<ul class="castImgUl">
 			<c:forEach items="${castList }" var="list">
 				<li class="imgli">
-					<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/><br>
+					<img id="castimg" class="img-circle" src="<c:url value="${list.imgUri}"/>"/>
 					${list.name }
 				</li>
 			</c:forEach>
@@ -1251,7 +1252,7 @@ td {
 			 <!-- 지도가 붙을 위치 -->
 			 <div id="hallmap">
 				<strong>공연장 위치</strong><br>
-	       		<div id="map" style="width: 1000px; height: 500px;"></div>
+	       		<div id="map" style="width: 1130px; height: 500px;"></div>
 	       		
 	       		<!-- 위에 설정 시 지도 확인되지 않아 여기에 설정 -->
 	       		<script>
@@ -1275,7 +1276,7 @@ td {
 				// 지도를 표시하는 div 크기를 변경하는 함수입니다
 				function resizeMap() {
 				    var mapContainer = document.getElementById('map');
-				    mapContainer.style.width = '1000px';
+				    mapContainer.style.width = '1130px';
 				    mapContainer.style.height = '500px'; 
 				}
 				
@@ -1313,6 +1314,10 @@ td {
 				        });
 				        infowindow.open(map, marker);
 				
+// 				        console.log('coords : ' + coords);
+// 				        console.log('x : ' + x);
+// 				        console.log('y : ' + y);
+				        
 				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				        map.setCenter(coords);
 				    } 
