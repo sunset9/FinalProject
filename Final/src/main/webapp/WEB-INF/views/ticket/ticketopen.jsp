@@ -226,6 +226,8 @@ ul.array li span{
 
 .main_wrapper {
 	margin-bottom: 50px;
+	display: grid;
+	
 }
 
 .ticketStartDay {
