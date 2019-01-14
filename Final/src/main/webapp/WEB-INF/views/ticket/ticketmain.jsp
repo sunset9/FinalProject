@@ -160,6 +160,7 @@ a:focus, a:hover {
 /* 	height: auto; */
  	border-bottom: 1px solid #ccc;   
 	margin: 0 auto;
+	margin-top: -1px;
 }
 
 .mainbanner {
