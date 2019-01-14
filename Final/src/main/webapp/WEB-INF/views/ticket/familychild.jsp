@@ -14,7 +14,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#famall, #8, #9, #10").click(function() {
+	$("#famall, #31, #32, #33").click(function() {
 		$('.choiceDiv button').removeClass('clicked');
 		$('.array span').removeClass('clicked');
 // 		$('.array span:first').addClass('clicked');

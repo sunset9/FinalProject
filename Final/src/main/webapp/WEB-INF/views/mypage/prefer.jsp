@@ -352,16 +352,19 @@ $(document).ready(function(){
 		
 		var artistList = [];
 		
-		// 선택된 아티스트 가져와서 배열에 저장하기
-		selectedList.each(function(i) {
-			// data-paidx 가져오기! data-* 의 반환타입이 JSON 이라서 이렇게 받음
-			var p = $(this).data('paidx');
-			console.log(p);
-
-			artistList.push(p);
-		}); // each end
+		if($(selectedList).length > 1){
 		
-		console.log("체크된 아티스트 값:"+artistList);
+			// 선택된 아티스트 가져와서 배열에 저장하기
+			selectedList.each(function(i) {
+				// data-paidx 가져오기! data-* 의 반환타입이 JSON 이라서 이렇게 받음
+				var p = $(this).data('paidx');
+				console.log(p);
+	
+				artistList.push(p);
+			}); // each end
+			
+			console.log("체크된 아티스트 값:"+artistList);
+		}
 		
 		
 		$.ajax({

@@ -14,7 +14,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 }
 #header {
 /*     width: 1130px; */
-    height: 204px;
+    height: 200px;
     margin: 0 auto;
     padding: 20px 0 0 0;
 }
@@ -125,6 +125,7 @@ a:link	{color:#1a1a1a; text-decoration:none;}
 
 /* 마이페이지 드롭 박스 */
 .tap_menu li ul{
+top: 49px;
 background-color: white;
 display:none;
 height:auto;

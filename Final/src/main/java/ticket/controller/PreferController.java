@@ -93,7 +93,7 @@ public class PreferController {
 	@RequestMapping(value="/mypage/prefer", method=RequestMethod.POST)
 	public String choiceProc(HttpSession session
 				,@RequestParam(value="themeIdx[]") List<String> themeIdx
-				,@RequestParam(value="artistIdx[]") List<String> artistIdx
+				,@RequestParam(value="artistIdx[]", defaultValue="null") List<String> artistIdx
 			) {
 		logger.info("선호 선택 완료 처리");
 		logger.info("테마IDX:"+themeIdx);
@@ -104,10 +104,12 @@ public class PreferController {
 		
 		// 선택한 테마 넣기
 		preferTService.choiceTheme(userIdx, themeIdx);
+		logger.info(artistIdx.get(0));
 		
-		// 선택한 아티스트 넣기
-		preferAService.choiceArtist(userIdx,artistIdx);
-		
+		if(!artistIdx.get(0).equals("null")) {
+			// 선택한 아티스트 넣기
+			preferAService.choiceArtist(userIdx,artistIdx);
+		}
 		return "redirect:/mypage/mychoice";
 	}
 	

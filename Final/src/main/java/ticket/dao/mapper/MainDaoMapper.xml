@@ -234,6 +234,8 @@
 			    ON p.pfm_idx = pi.pfm_idx
 		        JOIN hall h
 		        ON p.hall_idx = h.hall_idx
+		        JOIN pfm_theme PT
+        		ON P.pfm_idx = PT.pfm_idx
 		        WHERE p.pfm_idx IN (
 		            SELECT pfm_idx
 		            FROM pfm_theme
