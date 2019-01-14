@@ -16,8 +16,9 @@ $(window).load(function() {
 	
 	// 맞춤 공연
 	$('#slider').bxSlider({
-		 minSlides: 1,
-		 maxSlides: 1
+		touchEnabled : false,
+		minSlides: 1,
+		maxSlides: 1
 	});
 	
 });
