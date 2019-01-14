@@ -472,10 +472,10 @@ $(document).ready(function() {
 				  "hallIdx":${param.hallIdx},
 				  "pfmIdx":${param.pfmIdx}
 		  	  },
+// 		  	  async: false,
 			  dataType:"json",
 			  success:function(res){
 				  pfmSeatSection = res.hashMap.pfmSeatSection;
-				  
 				  //정해진 구역 랜덤으로 색 칠해주기 위해 선언한 color 배열
 // 				  var color = ['#D47D9A','#3E4982','#B1D275','#F2E9B5','#C5B3D1','#8A7676'];
 				  var color = ['#04775b','#EDD88A','#DBDBC8','#1B1D2B','#BB7A5C','#83A563'];
@@ -497,61 +497,81 @@ $(document).ready(function() {
 						}
 						
 						  for(var j=0;j<res.hashMap.secName.length;j++){
-							  
 							  if(res.hashMap.secName[j] ==res.hashMap.secMap[i].appSec ){
 								  var secName = res.hashMap.secName[j];
 								  path.attr("fill",json[secName]);
 								  path.data("pay",res.hashMap.secMap[i].secPay); //pay라는 임의의 커스텀 데이터를 넣어줌
 								  path.data("secName",res.hashMap.secMap[i].oriSecName);
 								  path.data("appName",res.hashMap.secMap[i].appSec);
-								  path.data("IsSec",true);
+// 								  path.data("IsSec",true);
+								  path.addClass("IsSec");
 							  }
 							  
 						  }
 					
 					}
+					
+					
 					if(obj.is($('#selectedSeats'))){
 						loadSectionInfo();
 					}
 					
 					//구역 저장안했으면 클릭안되게
+// 					$('.seat_block').find('path').each(function () {
+// 							if(typeof $(this).data("IsSec") == "undefined"){
+// 								$(this).css("display","none");
+// 								var classStr = $(this).attr("class");
+// 								var classStrArr = new Array();
+// 								console.log(classStr);
+// 								if(typeof classStr != "undefined"){
+// 									classStrArr = classStr.split(" ");
+// 									$('.seat_block').find('text').each(function () {
+// 	 									var textVal = $.trim($(this).text());
+// 	 									if( textVal == classStrArr[0]){
+// 	 										$(this).css("display","none");
+// 	 									}
+// 	 								});
+// 								}
+// 							}
+// 					})
+
 					$('.seat_block').find('path').each(function () {
-						
-							if(typeof $(this).data("IsSec") == "undefined"){
-								$(this).css("display","none");
-								var classStr = $(this).attr("class");
-								var classStrArr = new Array();
-								console.log(classStr);
-								if(typeof classStr != "undefined"){
-									classStrArr = classStr.split(" ");
-									$('.seat_block').find('text').each(function () {
-	 									var textVal = $.trim($(this).text());
-	 									if( textVal == classStrArr[0]){
-	 										$(this).css("display","none");
-	 									}
-	 								});
-								}
-							}
-// 							
-					})
-					
-					$('.seat_block').find('rect').each(function () {
-						
-						if(typeof $(this).data("IsSec") == "undefined"){
-							
+						if(!$(this).hasClass("IsSec")){
 							$(this).css("display","none");
 							var classStr = $(this).attr("class");
-							var classStrArr = new Array();
-							console.log(classStr);
 							if(typeof classStr != "undefined"){
+								var classStrArr = new Array();
 								classStrArr = classStr.split(" ");
+								var secName = classStrArr[0];
 								$('.seat_block').find('text').each(function () {
- 									var textVal = $.trim($(this).text());
- 									if( textVal == classStrArr[0]){
- 										$(this).css("display","none");
- 									}
- 								});
+									var textVal = $.trim($(this).text());
+									if( textVal == classStrArr[0]){
+										$(this).css("display","none");
+									}
+								});	
 							}
+						
+						}
+						
+					})
+					
+					
+					$('.seat_block').find('rect').each(function () {
+						if(!$(this).hasClass("IsSec")){
+							$(this).css("display","none");
+							var classStr = $(this).attr("class");
+							if(typeof classStr != "undefined"){
+								var classStrArr = new Array();
+								classStrArr = classStr.split(" ");
+								var secName = classStrArr[0];
+								$('.seat_block').find('text').each(function () {
+									var textVal = $.trim($(this).text());
+									if( textVal == classStrArr[0]){
+										$(this).css("display","none");
+									}
+								});	
+							}
+						
 						}
 						
 					})
