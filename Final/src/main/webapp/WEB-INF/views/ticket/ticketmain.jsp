@@ -20,6 +20,14 @@ $(window).load(function() {
 		 maxSlides: 1
 	});
 	
+	// 로그인 후에 맞춤 공연이 없는 경우
+	if('${login}'){
+		if( $('.fitImg').length == 0 ) {
+			$('.fitPfmbox').hide();
+			$('#noRecPfm').show();
+		}
+	}
+	
 });
 
 	$(document).ready(function() {
@@ -105,11 +113,8 @@ $(window).load(function() {
 // 			}
 // 		});
 // 	};
-	
 // 	function insertFitPfm(fitPfmList) {
-		
 // 		$('#slider').html('');
-		
 // 		fitPfmList.forEach(function(list) {
 // 			var li = $('<li>');
 // 			var a = $('<a href="/ticket/pfmdetail?pfmIdx=' + list.pfmIdx + '">');
@@ -139,6 +144,7 @@ function pfmChoice(pfmIdx){
 </script>
  
 <style type="text/css">
+
 .fitPfmSlider {
 	padding: 5px;
 }
@@ -290,9 +296,9 @@ li.pfmInfo:first-child:before {
 }
 li.pfmInfo:first-child {
     position: absolute;
-    top: 22px;
+    top: 0px;
     padding: 10px;
-    left: 2px;
+    left: 6px;
 }
 
 li.pfmInfo:nth-child(2),li.pfmInfo:nth-child(3),
@@ -305,26 +311,26 @@ li.pfmInfo:nth-child(4),li.pfmInfo:nth-child(5){
 
 li.pfmInfo:nth-child(2) {
     position: absolute;
-	left: 296px;
+	left: 300px;
     top: 0px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(3) {
 	position: absolute;
-    left: 450px;
+    left: 447px;
     top: 0px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(4) {
     position: absolute;
-	left: 296px;
-	top: 220px;
+	left: 300px;
+	top: 211px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(5) {
     position: absolute;
-    left: 450px;
-    top: 220px;
+    left: 447px;
+    top: 212px;
     padding: 10px;
 }
 
@@ -337,14 +343,15 @@ li.pfmInfo {
 }
 
 .pfmInfo:first-child img {
-    width: 260px;
-    height: 359px;
+    width: 271px;
+    height: 372px;
 }
 
 .rankPoster {
     width: 133px;
     height: 185px;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
+    border: 1px solid #efefef;
 }
 
 /* 메인 하단 */
@@ -423,13 +430,15 @@ div>h4 {
 }
 
 li.pfmInfo:first-child span span {
-    font-size: 16px;
+    font-size: 23px;
     display: block;
     width: 260px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 400;
+    margin: 0 auto;
+    margin-top: 8px;
 }
 
 li.pfmInfo:nth-child(2) span span, li.pfmInfo:nth-child(3) span span,
@@ -445,7 +454,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 #sliderbox {
 	position: relative;
 	width: 300px;
-	height: 400px;
+	height: 460px;
 /* 	border: 1px solid black; */
 	/* div 영역을 벗어난 내용물 숨기기 */
 	overflow: hidden;
@@ -484,6 +493,46 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 	font-size: 2em;
 }
 
+#noRecPfm {
+	width:350px;
+	height: 505px;
+    display: table;
+    text-align: center;
+    padding: 18px;
+	border: 1px solid #DDD;
+}
+#noRecPfm span {
+
+	font-size: 2em;
+}
+.nonePfm{
+	display:table-cell;
+	vertical-align:middle;
+}
+
+/* 아래 점들 정렬 */
+.bx-pager{
+	margin-bottom: 30px !important;
+}
+
+.choiceBtn {
+    width: 140px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #a5a5a5;
+    background: #FFF;
+    color: #888;
+    font-weight: bold;
+    margin: 10px;
+}
+
+#mainThumb{
+	position: relative;
+    float: left;
+    top: -110px;
+    margin: 0 auto;
+    width: 100%;
+}
 
 </style>
 
@@ -592,14 +641,11 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 				<ul id="slider" >
 				     <c:forEach items="${recomList }" var ="recom"  varStatus="index">
 						<c:if test ="${! empty recom}">
-						<li><a href="/ticket/pfmdetail?pfmIdx="${recom.pfmIdx }>
+						<li><a href="/ticket/pfmdetail?pfmIdx=${recom.pfmIdx }">
 							<img class = "fitImg" src="/resources/image/${recom.posterName }" />
 							</a>
 						</li>
 						</c:if>
-						<div class ="btnDiv">
-							<hr>
-							<button onclick="pfmChoice(${recom.pfmIdx });" class="choiceBtn" >내 공연에 담기</button></div>
 					 </c:forEach>
 				</ul>
 			</div>
@@ -609,9 +655,20 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		
 	<c:if test="${not login }">
 		<div class="fitPfmbox">
-			<span>로그인 하시면 맞춤공연 <br> 추천을 받으실 수 있습니다.</span>
+			<div class ="nonePfm">
+				<span>로그인 하시면 맞춤공연 <br> 추천을 받으실 수 있습니다.</span>
+				<button  onclick="location.href='/user/login'" class="choiceBtn ">로그인 하기</button>
+			</div>
 		</div>
 	</c:if>
+	
+	<!-- 추천 공연 없는 경우 활성화 -->
+	<div id="noRecPfm" style="display:none">
+		<div class ="nonePfm">
+			<span>취향에 맞는 공연이  <br>등록되면 알려드릴게요</span>
+			<button onclick="location.href='/mypage/prefer'" class="choiceBtn ">취향 변경하기</button>
+		</div>
+	</div>
 </div>
 </div>
 

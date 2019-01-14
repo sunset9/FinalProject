@@ -44,7 +44,11 @@ public class PfmDetailController {
 	 * @작성자: 배수연
 	 */
 	@RequestMapping(value = "/ticket/pfmdetail", method = RequestMethod.GET)
-	public void pfmdetail(Model model, Performance pfm) {
+	public void pfmdetail(Model model, Performance pfm, int pfmIdx) {
+		logger.info(""+pfmIdx);
+		
+		pfm.setPfmIdx(pfmIdx);
+		
 		// 선택한 이미지의 포스터 출력해주기
 		Poster posterList = detailService.getChoicePfmDetail(pfm);
 		model.addAttribute("posterList", posterList);

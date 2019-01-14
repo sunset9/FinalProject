@@ -373,7 +373,16 @@ $(document).ready(function(){
 	$('#btn_search').click(function() {
 		
 		console.log("검색 버튼 함수 실행");
-		searchArtistAjax();
+// 		console.log($('#artist_text').length <1 );
+// 		console.log($('#artist_text').val())
+// 		if ($('#artist_text').length <1 ){
+// 			$('#searchArtist').show();
+// 			$('#searchArtist').html('');
+// 			$('#searchArtist').html('<span>아티스트의 이름을 입력해주세요.<span>');
+// 			return ;
+// 		}else {
+			searchArtistAjax();
+// 		}
 	});
 	
 	

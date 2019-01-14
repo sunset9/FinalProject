@@ -187,15 +187,19 @@ public class TicketController {
 		
 		
 		//좌석 인덱스 구하기(seatInfo정보로 공연장번호,구역,좌석행렬,공연번호로 구하기)
+		logger.info(""+seatInfo.length);
+		for(String info:seatInfo) {
+			logger.info(info);
+		}
 		for(int i = 0;i<seatInfo.length;i++) {
 			String[] seatInfoStr; 
 			String[] seatInfoStr2;
-			logger.info(""+seatInfo[i]);
+//			logger.info(""+seatInfo[i]);
 //			seatInfoStr = seatInfo[i].split(" ");
 			seatInfoStr = seatInfo[i].split("구역");
 			seatInfoStr2 = seatInfoStr[0].split("석");
 			
-			logger.info(""+seatInfoStr2[1]);
+//			logger.info(""+seatInfoStr2[1]);
 //			logger.info(""+seatInfoStr[0].split("석"));
 			
 //			logger.info(""+seatInfoStr[i]);
