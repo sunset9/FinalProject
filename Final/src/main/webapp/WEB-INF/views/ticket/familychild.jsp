@@ -221,9 +221,9 @@ li.pfmInfo {
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="conall" class="clicked" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
-		<button id="8" style="border: none; background-color: #FFFFFF; color: black;">소극장</button>
-		<button id="9" style="border: none; background-color: #FFFFFF; color: black;">효콘서트</button>
-		<button id="10" style="border: none; background-color: #FFFFFF; color: black;">개그/마술</button>
+		<button id="31" style="border: none; background-color: #FFFFFF; color: black;">소극장</button>
+		<button id="32" style="border: none; background-color: #FFFFFF; color: black;">효콘서트</button>
+		<button id="33" style="border: none; background-color: #FFFFFF; color: black;">개그/마술</button>
 	</div>
 	
 	<div class="arrayDiv">
