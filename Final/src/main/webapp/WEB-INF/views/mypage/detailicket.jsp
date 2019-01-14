@@ -432,6 +432,30 @@ $(document).ready(function() {
 
 <!-- //결제내역 -->
 
+<!-- 환불 내역 -->
+
+<h2>환불내역</h2>
+<div class="boxDiv">
+<table>
+	<tr>
+		<td class="pfmInfo">
+			환불방법
+		</td>
+		<td class="fontSize">
+			카드
+		</td>
+	</tr>
+	<tr>
+		<td class="pfmInfo"> 거래자명</td>
+		<td class="fontSize">${payment.buyerName }</td>
+	</tr>
+	<tr>
+		<td class="pfmInfo">환불 금액</td>
+		<td class="fontSize">${cancelSob.ea * ss.secPay }원</td>
+	</tr>
+
+</table>
+
 <!-- 좌석정보  -->
 <h2>좌석정보</h2>
 <div id="seat" class="boxDiv"><table class="fontSize">
@@ -442,18 +466,18 @@ $(document).ready(function() {
 <th style="width:25%">예매/취소</th>
 </tr>
 <c:forEach items="${seatList }" var="s">
-<tr>
-	<td>${ss.appSec }</td>
-	<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
-	<td><fmt:formatNumber value="${ss.secPay }" pattern="#,###"/> 원</td>
-	
-	<td>${s.state }
-<%-- 	${s.state eq '예매완료(결제완료)' || s.state eq '예매완료(부분취소)'} --%>
-		<c:if test='${s.state eq "예매완료(결제완료)" || s.state eq "예매완료(부분취소)"}'>
-			<span id="cancelCkb"><input type="checkbox" value="${s.bookIdx}" name="cancelCheck"/>취소 가능</span>
-		</c:if>
-	</td>
-</tr>
+	<tr>
+		<td>${ss.appSec }</td>
+		<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
+		<td><fmt:formatNumber value="${ss.secPay }" pattern="#,###"/> 원</td>
+		
+		<td>${s.state }
+	<%-- 	${s.state eq '예매완료(결제완료)' || s.state eq '예매완료(부분취소)'} --%>
+			<c:if test='${s.state eq "예매완료(결제완료)" || s.state eq "예매완료(부분취소)"}'>
+				<span id="cancelCkb"><input	type="checkbox" value="${s.bookIdx}" name="cancelCheck"/>취소 가능</span>
+			</c:if>
+		</td>
+	</tr>
 </c:forEach>
 
 </table>

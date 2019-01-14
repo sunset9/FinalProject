@@ -58,7 +58,7 @@
 
 </style>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 
 if($('#inqList tbody').find('tr').length == 0 ){
 	$('#inqList tbody').append('<tr><td colspan=5>문의 내역이 없습니다.</td></tr>');
