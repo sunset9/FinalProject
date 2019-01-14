@@ -39,11 +39,19 @@ public class MainController {
 	private PreferTService preferTService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
+	
+	@RequestMapping(value="/bananaticket", method=RequestMethod.GET)
+	public String main() {
+		
+		return "/ticket/ticketmain";
+	}
 
 	@RequestMapping(value="/ticket/test")
 	public void test(Model model) {
 		logger.info("Test");
 	}
+	
 	
 	/**
 	 * 최종수정일: 2019.01.14
