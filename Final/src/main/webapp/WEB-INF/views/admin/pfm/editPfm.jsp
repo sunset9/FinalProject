@@ -207,6 +207,11 @@ table button {
 	width: 125px;
 }
 
+.stage_img tspan, .stage_img rect, .stage_img path {
+	cursor: pointer;
+}
+
+
 #registStep{
 	width: 700px;
     height: 100px;
