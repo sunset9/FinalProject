@@ -523,7 +523,6 @@ $(document).ready(function() {
 					$('.seat_block').find('path').each(function () {
 						
 							if(typeof $(this).data("IsSec") == "undefined"){
-								
 								$(this).css("display","none");
 								var classStr = $(this).attr("class");
 								var classStrArr = new Array();
