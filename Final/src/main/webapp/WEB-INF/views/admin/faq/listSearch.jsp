@@ -33,12 +33,12 @@
     
     .container {
     	display:inline-block;
-    	width:500px;
+    	width:1000px;
     }
     
-     .faqCotent { 
-     	width:1500px; 
-     } 
+    .f_answer1 {   
+       	width:1200px;   
+    } 
 </style>
 
 
@@ -100,7 +100,7 @@
         </li>
         <li class="f_answer1">
             <ul class="clearfix">
-                <li>글번호 : ${flist.faqIdx } </li>
+<%--                 <li>글번호 : ${flist.faqIdx } </li> --%>
                 <li>${flist.faqAnswer }</li>             
             </ul>
 			<button class="btnUpdate" data-idx='${flist.faqIdx }'>수정</button>
@@ -117,7 +117,7 @@
 <div class="col-md-offset-3">
  <ul class="pagination">
   <c:if test="${pageMaker.prev}">
-   <li><a href="faqlistsearch${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전 목록</a></li>
+   <li><a href="faqlistsearch${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전 10개</a></li>
   </c:if> 
   
   <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
@@ -126,7 +126,7 @@
   </c:forEach>
     
   <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-   <li><a href="faqlistsearch${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음 목록</a></li>
+   <li><a href="faqlistsearch${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음 10개</a></li>
   </c:if> 
  </ul>
 </div>

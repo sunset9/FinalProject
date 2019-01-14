@@ -42,8 +42,8 @@ href="${pageContext.request.contextPath}/resources/daumOpenEditor/css/editor.css
 			id="tx_editor_form">
 			<table>
 				<tr>
-					<td>작성자</td>
-					<td>${userIdx }</td>
+<!-- 					<td>작성자</td> -->
+<%-- 					<td>${userIdx }</td> --%>
 				</tr>
 				<tr>
 					<td>분류</td>
