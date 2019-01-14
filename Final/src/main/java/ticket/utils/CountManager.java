@@ -16,7 +16,7 @@ public class CountManager implements HttpSessionListener {
 	//	System.out.println("만들어집니다");
 		// 세션이 만들어질 때 호출
 		HttpSession session = se.getSession(); // request에서 얻는 session과 동일한 객체
-		session.setMaxInactiveInterval(60 * 20);
+		session.setMaxInactiveInterval(3600);
 
 		count++;
 
