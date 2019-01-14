@@ -340,6 +340,7 @@ public class AdminPfmController {
 
 		logger.info(pfmIdx.toString());
 		logger.info("POST");
+		
 		for (int i = 0; i < pfmIdx.size(); i++) { // 받은 포스터 개수 만큼
 			CategoryCon con = new CategoryCon();
 			con.setPfmIdx(Integer.parseInt(pfmIdx.get(i)));

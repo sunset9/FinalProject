@@ -66,7 +66,12 @@
 	width: 178px;
 	height: 248px;
 }
-.caption > img {
+
+.thumbnail:hover{
+	border: 2px solid #8da7d3;
+}
+
+.caption > label > img {
     height: 200px;
     width: 150px;
     margin-bottom: 3px;
@@ -122,14 +127,16 @@ function ajax(url){
 				var paging = d.paging;
 				$('#resultposter').html('');
 		  		list.forEach(function(item){
-		  			var div =  $('<div class="thumbnail" style="width: 178px; height:278px;">');
+		  			var div =  $('<div id="'+item.pfmIdx+'" class="thumbnail" style="width: 178px; height:278px;">');
 				  	var input = $('<input type="radio" style="margin: 1px 0px 10px;" id='+item.pfmIdx+' name="radio_test"'+'value='+item.storedName +'>');
 				  	var caption = $('<div class="caption">');
 				  	var img = $('<img src="/resources/image/'+item.storedName+'">');
 				  	var h3 = $('<div class="pfmName">'+item.name+'</div>');
+					var label = $('<label for ="'+ item.pfmIdx+'">');
 				  	caption.append(input);
-				  	caption.append(img);
-				  	caption.append(h3);
+				 	label.append(img);
+				  	label.append(h3);
+				  	caption.append(label);
 				  	div.append(caption);
 			  	 	$('#resultposter').append(div);
 			  	});
@@ -341,6 +348,13 @@ $('.caption').on('mouseleave','.cover',function(){
  
 		$('div[class^=cover]').remove(); //cover div 를 찾아서 삭제 
 });
+
+$('#resultposter').on("click",".thumbnail", function () {
+  	var pfmIdx = $('<input type="hidden" name="pfmIdx" value="'+$(this).attr("id")+'">');
+	$(this).append(pfmIdx);
+	$('#registCateCon').submit();
+})
+
 }); // end ready
 </script>
 
