@@ -518,63 +518,45 @@ $(document).ready(function() {
 					
 					//구역 저장안했으면 클릭안되게
 // 					$('.seat_block').find('path').each(function () {
-// 							if(typeof $(this).data("IsSec") == "undefined"){
-// 								$(this).css("display","none");
-// 								var classStr = $(this).attr("class");
+// 						if(!$(this).hasClass("IsSec")){
+// 							$(this).css("display","none");
+// 							var classStr = $(this).attr("class");
+// 							if(typeof classStr != "undefined"){
 // 								var classStrArr = new Array();
-// 								console.log(classStr);
-// 								if(typeof classStr != "undefined"){
-// 									classStrArr = classStr.split(" ");
-// 									$('.seat_block').find('text').each(function () {
-// 	 									var textVal = $.trim($(this).text());
-// 	 									if( textVal == classStrArr[0]){
-// 	 										$(this).css("display","none");
-// 	 									}
-// 	 								});
-// 								}
+// 								classStrArr = classStr.split(" ");
+// 								var secName = classStrArr[0];
+// 								$('.seat_block').find('text').each(function () {
+// 									var textVal = $.trim($(this).text());
+// 									if( textVal == classStrArr[0]){
+// 										$(this).css("display","none");
+// 									}
+// 								});	
 // 							}
+						
+// 						}
+						
 // 					})
-
-					$('.seat_block').find('path').each(function () {
-						if(!$(this).hasClass("IsSec")){
-							$(this).css("display","none");
-							var classStr = $(this).attr("class");
-							if(typeof classStr != "undefined"){
-								var classStrArr = new Array();
-								classStrArr = classStr.split(" ");
-								var secName = classStrArr[0];
-								$('.seat_block').find('text').each(function () {
-									var textVal = $.trim($(this).text());
-									if( textVal == classStrArr[0]){
-										$(this).css("display","none");
-									}
-								});	
-							}
-						
-						}
-						
-					})
 					
 					
-					$('.seat_block').find('rect').each(function () {
-						if(!$(this).hasClass("IsSec")){
-							$(this).css("display","none");
-							var classStr = $(this).attr("class");
-							if(typeof classStr != "undefined"){
-								var classStrArr = new Array();
-								classStrArr = classStr.split(" ");
-								var secName = classStrArr[0];
-								$('.seat_block').find('text').each(function () {
-									var textVal = $.trim($(this).text());
-									if( textVal == classStrArr[0]){
-										$(this).css("display","none");
-									}
-								});	
-							}
+// 					$('.seat_block').find('rect').each(function () {
+// 						if(!$(this).hasClass("IsSec")){
+// 							$(this).css("display","none");
+// 							var classStr = $(this).attr("class");
+// 							if(typeof classStr != "undefined"){
+// 								var classStrArr = new Array();
+// 								classStrArr = classStr.split(" ");
+// 								var secName = classStrArr[0];
+// 								$('.seat_block').find('text').each(function () {
+// 									var textVal = $.trim($(this).text());
+// 									if( textVal == classStrArr[0]){
+// 										$(this).css("display","none");
+// 									}
+// 								});	
+// 							}
 						
-						}
+// 						}
 						
-					})
+// 					})
 					
 			  },
 			  error:function(e){
