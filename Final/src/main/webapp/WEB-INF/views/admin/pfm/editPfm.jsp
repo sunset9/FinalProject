@@ -219,6 +219,9 @@ table button {
     margin-left: 5px;
     margin-top: 5px;
 }
+#allSelBtn.selAll{
+	border: 1px solid #1e88e5;
+}
 #registStep{
 	width: 700px;
     height: 100px;
@@ -1079,6 +1082,9 @@ $(document).ready(function(){
 	
 	//' 구역 설정' 버튼 클릭 시
 	$('#seatSecSelect').on('click','#setSecBtn', function(){
+			// '전체 선택' 버튼 선택 풀기
+			$('#allSelBtn').removeClass('selAll');
+			
 			// 선택한 섹션 정보
 			var clickedSections = $('#seatHall').find('.clicked');
 			if(clickedSections.length == 0) return;
@@ -1299,6 +1305,17 @@ $(document).ready(function(){
 		});
 		return arr;
 	}
+	
+	// '전체 선택' 버튼 클릭 시
+	$('#seatDiv').on('click','#allSelBtn',function(){
+		if($(this).hasClass('selAll')){
+			$(this).removeClass('selAll');
+			$('#seatDiv rect.section, #seatDiv path.section').removeClass('clicked');
+		}else{
+			$(this).addClass('selAll');
+			$('#seatDiv rect.section, #seatDiv path.section').addClass('clicked');
+		}
+	});
 	
 	// 추가한 공연 일정 보여주는 메소드
 	function viewTimeList(list){

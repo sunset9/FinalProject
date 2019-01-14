@@ -210,6 +210,17 @@ table button {
 	cursor: pointer;
 }
 
+#allSelBtn {
+	position: absolute;
+    width: 77px;
+    z-index: 10;
+    background: #fff;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+#allSelBtn.selAll{
+	border: 1px solid #1e88e5;
+}
 
 #registStep{
 	width: 700px;
@@ -914,6 +925,7 @@ $(document).ready(function(){
 			, success: function(d){
 				// 홀 jsp 삽입
 				$('#seatHall td').html(d);
+				$('#seatHall td').prepend($('<button type="button" id="allSelBtn">전체 선택</button>'))
 				// 사이즈 조절
 				$('#seatHall .stage_img').height('260px');
 				$('#seatHall .stage_img').width('380px');
@@ -977,6 +989,9 @@ $(document).ready(function(){
 	
 	//' 구역 설정' 버튼 클릭 시
 	$('#seatSecSelect').on('click','#setSecBtn', function(){
+			// '전체 선택' 버튼 선택 풀기
+			$('#allSelBtn').removeClass('selAll');
+		
 			// 선택한 섹션 정보
 			var clickedSections = $('#seatHall').find('.clicked');
 			if(clickedSections.length == 0) return;
@@ -1198,6 +1213,17 @@ $(document).ready(function(){
 		});
 		return arr;
 	}
+
+	// '전체 선택' 버튼 클릭 시
+	$('#seatDiv').on('click','#allSelBtn',function(){
+		if($(this).hasClass('selAll')){
+			$(this).removeClass('selAll');
+			$('#seatDiv rect.section, #seatDiv path.section').removeClass('clicked');
+		}else{
+			$(this).addClass('selAll');
+			$('#seatDiv rect.section, #seatDiv path.section').addClass('clicked');
+		}
+	});
 	
 	// 추가한 공연 일정 보여주는 메소드
 	function viewTimeList(list){
