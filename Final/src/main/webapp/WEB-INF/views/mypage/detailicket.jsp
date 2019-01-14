@@ -208,6 +208,9 @@ $(document).ready(function() {
 	$('#extraFee').text(extraFee.toString().replace(regexp, ',')+' 원');
 	
 	var totalFee = fee + parseInt(delivery)+ parseInt(totalTicket) ;
+	
+	totalFee = totalFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
 	console.log("총 결제 금액 : " +totalFee);
 	
 	$('#totalFee').text(totalFee.toString().replace(regexp, ',')+' 원');
@@ -413,7 +416,7 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<td class="pfmInfo">결제 금액</td>
-		<td class="fontSize">${payment.paidAmount }원</td>
+		<td class="fontSize"><fmt:formatNumber value="${payment.paidAmount }" pattern="#,###"/>원</td>
 	</tr>
 	<tr>
 		<td class="pfmInfo">결제 날짜</td>
@@ -442,7 +445,7 @@ $(document).ready(function() {
 <tr>
 	<td>${ss.appSec }</td>
 	<td>${s.seatFloor }층 ${s.seatRow }-${s.seatCol } 자리</td>
-	<td>${ss.secPay } 원</td>
+	<td><fmt:formatNumber value="${ss.secPay }" pattern="#,###"/> 원</td>
 	
 	<td>${s.state }
 <%-- 	${s.state eq '예매완료(결제완료)' || s.state eq '예매완료(부분취소)'} --%>
