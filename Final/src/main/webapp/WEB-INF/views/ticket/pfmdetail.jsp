@@ -937,6 +937,10 @@ td {
 /* #infoContent { */
 /* 	width: 200px; */
 /* } */
+
+.pfmInfo{
+	width: 100%;
+}
 </style>
 
 <div class="main_wrapper">
