@@ -164,7 +164,7 @@ public class MainController {
 			String theme
 			, String genreIdx
 		) {
-		
+		logger.info("테마에 맞는공연리스트 조회");
 		HashMap<String, Object> map = new HashMap<>();
 		
 		logger.info(genreIdx);

@@ -14,7 +14,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	$("#muall, #6, #7").click(function() {
+	$("#muall, #22, #23").click(function() {
 		$('.choiceDiv button').removeClass('clicked');
 		$('.array span').removeClass('clicked');
 // 		$('.array span:first').addClass('clicked');
@@ -23,7 +23,7 @@ $(document).ready(function() {
 		// 각 버튼을 눌렀을 경우 해당 버튼에 대한 id 값을 가져옴
 		//  id 값을 넘겨 themeIdx로 사용하여 조회하기 테스트
 		var themeIdx = $(this).attr('id');
-		console.log(themeIdx);
+		console.log("themeIdx"+themeIdx);
 		
 		var genreIdx = 2;
 		console.log(genreIdx);
@@ -39,8 +39,8 @@ $(document).ready(function() {
 			, success: function(d) {
 				// 테마에 맞는 리스트 가져오기
 				console.log('성공');
-// 				console.log(d);
-				
+				console.log(d);
+				console.log("테마에 맞는 공연리스트"+d);
 				themeList(d.pfmList);
 			}
 			, error: function(e) {
@@ -82,7 +82,7 @@ $(document).ready(function() {
 	}); // 정렬 선택 btn
 	
 	function themeList(pfmList) {
-		
+	
 		$('#pfmList').html('');
 		
 		pfmList.forEach(function(list) {
@@ -94,12 +94,12 @@ $(document).ready(function() {
 		var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
 		
 		a.append(span.append(img));
-		a.append($('<strong>'+ list.name +'</strong>'));
+		a.append($('<strong class="imgname">'+ list.name +'</strong><br>'));
 
 		var pfmStart = getDateSimpleString(list.pfmStart);
 		var pfmEnd = getDateSimpleString(list.pfmEnd);
-		a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small>'));
-		
+		a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small><br>'));
+		a.append($('<small>' + list.hallName + '</small>'));
 		li.append(a);
 		
 		$('#pfmList').append(li);
@@ -221,8 +221,8 @@ li.pfmInfo {
 	<!-- 테마 리스트, 클릭시 해당 테마의 포스터만 확인가능 -->
 	<div class="choiceDiv">
 		<button id="muall" class="clicked" style="border: none; background-color: #FFFFFF; color: black;">전체</button>
-		<button id="6" style="border: none; background-color: #FFFFFF; color: black;">뮤지컬</button>
-		<button id="7" style="border: none; background-color: #FFFFFF; color: black;">연극</button>
+		<button id="22" style="border: none; background-color: #FFFFFF; color: black;">뮤지컬</button>
+		<button id="23" style="border: none; background-color: #FFFFFF; color: black;">공연</button>
 	</div>
 	
 	<div class="arrayDiv">
