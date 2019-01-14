@@ -20,6 +20,12 @@ $(window).load(function() {
 		 maxSlides: 1
 	});
 	
+	// 맞춤 공연이 없는 경우
+	if( $('.fitImg').length == 0 ) {
+		$('.fitPfmbox').hide();
+		$('#noRecPfm').show();
+	}
+	
 });
 
 	$(document).ready(function() {
@@ -445,7 +451,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 #sliderbox {
 	position: relative;
 	width: 300px;
-	height: 400px;
+	height: 460px;
 /* 	border: 1px solid black; */
 	/* div 영역을 벗어난 내용물 숨기기 */
 	overflow: hidden;
@@ -484,7 +490,34 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 	font-size: 2em;
 }
 
+#noRecPfm {
+	width:350px;
+	height: 505px;
+    display: table;
+    text-align: center;
+    padding: 18px;
+	border: 1px solid #DDD;
+}
+#noRecPfm span {
+	display:table-cell;
+	vertical-align:middle;
+	font-size: 2em;
+}
 
+/* 아래 점들 정렬 */
+.bx-pager{
+	margin-bottom: 30px !important;
+}
+.choiceBtn {
+    width: 140px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #a5a5a5;
+    background: #FFF;
+    color: #888;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 </style>
 
 <!-- 메인 배너 -->
@@ -592,14 +625,11 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 				<ul id="slider" >
 				     <c:forEach items="${recomList }" var ="recom"  varStatus="index">
 						<c:if test ="${! empty recom}">
-						<li><a href="/ticket/pfmdetail?pfmIdx="${recom.pfmIdx }>
+						<li><a href="/ticket/pfmdetail?pfmIdx=${recom.pfmIdx }">
 							<img class = "fitImg" src="/resources/image/${recom.posterName }" />
 							</a>
 						</li>
 						</c:if>
-						<div class ="btnDiv">
-							<hr>
-							<button onclick="pfmChoice(${recom.pfmIdx });" class="choiceBtn" >내 공연에 담기</button></div>
 					 </c:forEach>
 				</ul>
 			</div>
@@ -612,6 +642,12 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 			<span>로그인 하시면 맞춤공연 <br> 추천을 받으실 수 있습니다.</span>
 		</div>
 	</c:if>
+	
+	<!-- 추천 공연 없는 경우 활성화 -->
+	<div id="noRecPfm" style="display:none">
+		<span>취향에 맞는 공연이 등록되면 <br>알려드릴게요</span>
+		<button id="changePrefer" onclick="location.href='/mypage/prefer'" class="choiceBtn ">취향 변경하기</button>
+	</div>
 </div>
 </div>
 
