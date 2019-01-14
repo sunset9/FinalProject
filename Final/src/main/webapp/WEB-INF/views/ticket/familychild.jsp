@@ -128,8 +128,8 @@ $(document).ready(function() {
 		hideControlOnEnd: true,
 		minSlides : 5,
 		maxSlides : 5,
-		slideWidth : 350
-// 		slideMargin : 20
+		slideWidth : 220,
+		slideMargin : 5
 // 		ticker : true,
 // 		speed : 50000
 	});

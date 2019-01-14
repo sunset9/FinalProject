@@ -130,8 +130,8 @@ $(document).ready(function() {
 		hideControlOnEnd: true,
 		minSlides : 5,
 		maxSlides : 5,
-		slideWidth : 350
-// 		slideMargin : 20
+		slideWidth : 220,
+		slideMargin : 5
 // 		ticker : true,
 // 		speed : 50000
 	});
@@ -218,7 +218,7 @@ li.pfmInfo {
 	<c:forEach items="${topBanList }" var="topList">
 	<li class="thumImg">
 		<a href="/ticket/pfmdetail?pfmIdx=${topList.pfmIdx}">
-			<img class="bannerImg" src="/resources/image/${topList.storedName}" /><br>
+			<img class="bannerImg" src="/resources/image/${topList.storedName}" />
 			<small>${topList.name }</small>
 		</a>
 	</li>

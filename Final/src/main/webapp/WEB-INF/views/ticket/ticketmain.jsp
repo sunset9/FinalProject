@@ -17,8 +17,9 @@ $(window).load(function() {
 	
 	// 맞춤 공연
 	$('#slider').bxSlider({
-		 minSlides: 1,
-		 maxSlides: 1
+		touchEnabled : false,
+		minSlides: 1,
+		maxSlides: 1
 	});
 	
 	// 로그인 후에 맞춤 공연이 없는 경우
