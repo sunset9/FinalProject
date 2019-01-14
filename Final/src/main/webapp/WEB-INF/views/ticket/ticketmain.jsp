@@ -20,10 +20,12 @@ $(window).load(function() {
 		 maxSlides: 1
 	});
 	
-	// 맞춤 공연이 없는 경우
-	if( $('.fitImg').length == 0 ) {
-		$('.fitPfmbox').hide();
-		$('#noRecPfm').show();
+	// 로그인 후에 맞춤 공연이 없는 경우
+	if('${login}'){
+		if( $('.fitImg').length == 0 ) {
+			$('.fitPfmbox').hide();
+			$('#noRecPfm').show();
+		}
 	}
 	
 });
@@ -499,15 +501,19 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 	border: 1px solid #DDD;
 }
 #noRecPfm span {
+
+	font-size: 2em;
+}
+.nonePfm{
 	display:table-cell;
 	vertical-align:middle;
-	font-size: 2em;
 }
 
 /* 아래 점들 정렬 */
 .bx-pager{
 	margin-bottom: 30px !important;
 }
+
 .choiceBtn {
     width: 140px;
     height: 40px;
@@ -516,8 +522,9 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
     background: #FFF;
     color: #888;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin: 10px;
 }
+
 </style>
 
 <!-- 메인 배너 -->
@@ -639,14 +646,19 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		
 	<c:if test="${not login }">
 		<div class="fitPfmbox">
-			<span>로그인 하시면 맞춤공연 <br> 추천을 받으실 수 있습니다.</span>
+			<div class ="nonePfm">
+				<span>로그인 하시면 맞춤공연 <br> 추천을 받으실 수 있습니다.</span>
+				<button  onclick="location.href='/user/login'" class="choiceBtn ">로그인 하기</button>
+			</div>
 		</div>
 	</c:if>
 	
 	<!-- 추천 공연 없는 경우 활성화 -->
 	<div id="noRecPfm" style="display:none">
-		<span>취향에 맞는 공연이 등록되면 <br>알려드릴게요</span>
-		<button id="changePrefer" onclick="location.href='/mypage/prefer'" class="choiceBtn ">취향 변경하기</button>
+		<div class ="nonePfm">
+			<span>취향에 맞는 공연이  <br>등록되면 알려드릴게요</span>
+			<button onclick="location.href='/mypage/prefer'" class="choiceBtn ">취향 변경하기</button>
+		</div>
 	</div>
 </div>
 </div>
