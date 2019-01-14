@@ -160,9 +160,13 @@ function openZipSearch() { //다음 우편번호 API
 		var date = "${param.date}";
 		var pfmIdx = ${param.pfmIdx};
 		var hallIdx = ${param.hallIdx };
+		
 		$(".seatInfo").each(function() {
-			seatInfoArr.push($(this).text());
+			seatInfoArr.push($(this).text().replace(",", ""));
 		});
+		
+		console.log(seatInfoArr);
+		
 		var phone = $('#delvyTel1').val()
 					+$('#delvyTel2').val()
 					+$('#delvyTel3').val();
@@ -294,20 +298,20 @@ function openZipSearch() { //다음 우편번호 API
 // 						msg += '\n카드 승인번호 : ' + rsp.apply_num;
 // 						msg += '\n[done]';
 						ticketing(rsp.imp_uid);
-						alert(msg);
+// 						alert(msg);
 
 					} else {
 						var msg = '결제가 제대로 되지 않았습니다. 자동 취소 처리 하였습니다.'
 						//[3] 아직 제대로 결제가 되지 않았습니다.
 						//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-						alert(msg);
+// 						alert(msg);
 					}
 				});
 			} else { // 결제 실패 로직
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
 			}
-			alert(msg);
+// 			alert(msg);
 			//예매상세 페이지이동
 
 			
