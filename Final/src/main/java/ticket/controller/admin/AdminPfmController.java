@@ -1258,6 +1258,7 @@ public class AdminPfmController {
 		// 페이징 계산
 		int totalCnt = pService.getPfmCntByGenre(genre);
 		Paging paging = new Paging(totalCnt, 1, 12, 4);
+		model.addAttribute("paging", paging);
 		
 		// 특정 장르에 해당하는 공연 리스트 가져오기
 		List<Performance> pfmList = pService.getPfmListByGenreNOrder(genre, order, paging);

@@ -357,8 +357,11 @@ $(document).ready(function(){
 		console.log(secNamePay);
 		secNamePay.forEach(function(secInfo){
 			addSeatInput();
+			// 구역명 그려주기
 			$('.tempSecName').last().val(secInfo.secName);
-			$('.tempSecPay').last().val(secInfo.secPay);
+			// 화폐단위로 가격 그려주기
+			var secPay = secInfo.secPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+			$('.tempSecPay').last().val(secPay);
 		});
 	}else{
 		addSeatInput();
@@ -920,16 +923,24 @@ $(document).ready(function(){
 	$('#seatDiv').on('change','.tempSecPay', function(){
 		// 구역명 , 좌석정보 담고 있는 리스트의 값 변경
 		var targetSecName = $(this).parent().find('.tempSecName').val();
-		console.log(targetSecName);
+		console.log("입력한 구역명: " +targetSecName);
 		var changePay = $(this).val();
+		
 		if(changePay == ''){
 			changePay = 0;
 		}
 		// 화폐단위 (,) 로 구분되어 있는 경우 콤마 제거
 		if(changePay != 0) changePay = changePay.split(',').join('');
-		console.log(changePay);
+		console.log("입력한 가격: " + changePay);
 		
 		if( targetSecName != ''){ // 구역명을 입력한 경우에만
+			// 구역명, 가격 정보 담고 있는 배열 변경
+			secNamePay.forEach(function(secInfo){
+				if (secInfo.secName == targetSecName){ // 변경한 가격의 구역명인 경우
+					secInfo.secPay = changePay;
+				} 
+			});
+		
 			// 지정 완료된 구역 정보 담은 배열에서도 가격 정보 바꿔줌
 			completeSetSec.forEach(function(setSec){
 				if(setSec.appSec == targetSecName){
@@ -1108,6 +1119,12 @@ $(document).ready(function(){
 							setSec.secPay = secPay;
 						}
 					});
+					// 색 지정해서 칠해주기
+					for(var i=0;i<secNamePay.length;i++){
+						if(secNamePay[i].secName == appSec){
+							clickedSec.attr('fill',sectionColor[i]);
+						}
+					}
 				}
 				
 				// 클릭 상태 해제
