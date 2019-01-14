@@ -158,7 +158,17 @@ $(document).ready(function(){
 	  $('#thumbinputtd').change(function(e){
 		  var thumbFile = $('#thumbinputtd').val().replace(/.*(\/|\\)/, '');  
 		  var thumbDiv = $('.thumbimgtd');
-		  var thumbImg = $('<img src="/resources/image/'+thumbFile+'" style="width: 130px; height: 130px;"/>'); 
+		  var thumbImg = $('<img src="#" style="width: 130px; height: 130px;"/>'); 
+		  
+		  
+		  var file = this.files;
+		  var reader = new FileReader();
+		  
+		  reader.onload = function name(rst) {
+// 			  var postImg = $('#thumbinputtd');
+	            thumbImg.attr('src', rst.target.result);
+		}
+		  reader.readAsDataURL(file[0]); 
 		  
 		  thumbDiv.html(' ');
 		  thumbDiv.append(thumbImg);
@@ -169,7 +179,16 @@ $(document).ready(function(){
 	  $('#bannerFile').change(function(){
 		  var bannerFile = $('#bannerFile').val().replace(/.*(\/|\\)/, '');
 		  var bannerDiv = $('.bannerimgtd');
-		  var bannerImg = $('<img src="/resources/image/'+bannerFile+'" style="width: 320px; height: 130px;"/>');
+		  var bannerImg = $('<img src="#" style="width: 320px; height: 130px;"/>');
+		  
+		  var file = this.files;
+		  var reader = new FileReader();
+		  
+		  reader.onload = function name(rst) {
+// 			  var postImg = $('#thumbinputtd');
+	            bannerImg.attr('src', rst.target.result);
+		}
+		  reader.readAsDataURL(file[0]); 
 		  
 		  bannerDiv.html(' '); 	
 		  bannerDiv.append(bannerImg);
