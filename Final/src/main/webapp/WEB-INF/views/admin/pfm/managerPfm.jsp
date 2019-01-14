@@ -205,6 +205,9 @@ $(document).ready(function(){
 	// 페이지 로드 시
     $("ul.tabs li:first").addClass("active").show(); // 첫번째 탭메뉴 활성화
 	
+    var totalPage = ${paging.totalPage };
+    if( totalPage <= curPage){ isEnd = true;  }
+    
     // 검색버튼 클릭 시
     $('#searchPfmBtn').click(function(){
     	curPage = 1; // 현재 페이지 초기화
