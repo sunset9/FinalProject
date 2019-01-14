@@ -300,7 +300,6 @@ $(document).ready(function() {
 		  if($(this).is($('.nextBtn'))){
 			  if(curStep == 1){
 				  //이전단계 버튼 활성화
-// 				   tempSeatAdd();
 				  if (isTempSeat){
 					  $('#stepInfo').hide();
 					  $('#seatBtn').show();
@@ -423,13 +422,9 @@ $(document).ready(function() {
 		 resultPay=resultPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		 
 		 $('#paymentAmount').text(resultPay);
-		 
-		 
 	})
 	
-	
 	$('#copyDelvyAddr').change(function() {
-		
 	
 		if($('#copyDelvyAddr').is(":checked")){
 			//체크박스 체크
@@ -578,6 +573,7 @@ $(document).ready(function() {
 				data:{
 					"pfmIdx":${param.pfmIdx }
 					  },
+			    async: false,
 				dataType:"json",
 				success:function(res){
 					for(var i=0;i<res.secInfo.length;i++){
@@ -602,6 +598,7 @@ function loadSectionPay(){
 			"pfmIdx":${param.pfmIdx },
 			  },
 		dataType:"json",
+		async: false,
 		success:function(res){
 			var appSec;
 			var secPay;
@@ -613,8 +610,6 @@ function loadSectionPay(){
 				findclass="."+appSec+"."+secPay;
 				$('#selectedSeats').find('path').each(function () {
 					if($(this).hasClass(appSec)){
-						console.log($(this).css("fill"));
-						console.log($(this));
 						$('#legend2').append("<li><div class='payRect' style='background-color: "+$(this).css("fill")+";'></div>"+appSec+" 석 "+secPay+" 원"+"</li>");
 						return false;
 					}; 
