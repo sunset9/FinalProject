@@ -42,7 +42,7 @@ public class MainController {
 	
 	
 	@RequestMapping(value="/bananaticket", method=RequestMethod.GET)
-	public String main() {
+	public String main(Model model, HttpSession session) {
 		
 		return "/ticket/ticketmain";
 	}
