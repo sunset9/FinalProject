@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../layout/menu.jsp" />
 
 <style>
@@ -28,24 +29,25 @@
 .cover {
 	z-index: 10;
     background-color: #33333352;
-    height:200px;
-    width: 150px;
+    height:254px;
+    width: 180px;
     right: 14px;   
-    position: absolute; 
+    position: absolute;
 }
 .cover2 {
 	z-index: 10;
     background-color: #33333352;
-    height:150px;
-    width: 103px;
-    right:15px;
+    height:254px;
+    width: 180px;
+    right: 14px;   
     position: absolute;
 }
 .removeBtn {
 	margin-top: 80px;
 }
 .deleteBtn {
-	margin-top: 80px; 
+	margin-top: 95px; 
+	margin-left: 55px; 
 }
 .pfmIdx > img {
     height: 200px;
@@ -59,12 +61,18 @@
 .pfmName { 
 	overflow: hidden;
     text-overflow: ellipsis;
-    width: 148px;
+    width: 180px;
     white-space: nowrap;  
+    font-weight: 700; 
 }
 .thumbnail {
-	width: 178px;
-    height: 248px;    
+    width: 209px;
+    height: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left; 
+    border-radius: 0;
 }
 
 .caption > label> img {
@@ -73,8 +81,30 @@
     margin-bottom: 3px;
 }
 
-.thumbnail:hover{
+/* .thumbnail:hover{
 	border: 2px solid #8da7d3;
+} */
+
+.caption {
+    width: 192px;
+    height: 272px;
+}
+
+.pfmDate {
+    width: 180px;
+    font-weight: 200px;
+}
+
+.hallName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 </style>
@@ -376,12 +406,19 @@ $('#resultposter').on("click",".thumbnail", function () {
 <div class="row" id ="start" style="display: flex; flex-wrap: wrap;">
 <c:forEach var="item" items="${posterList }" varStatus="status">
 <div class="" style=" height: 100%;">
-	<div class="thumbnail">
+	<div class="thumbnail" style="border-radius: 0;">
 		<div class="caption">
 			<div class="pfmIdx" id="${item.pfmIdx }">
-					<img src="/resources/image/${item.storedName }"> 
+					<img src="/resources/image/${item.storedName }" style="width: 180px; height: 254px;"> 
 <%-- 					<a href="<c:url value='/admin/deletecatecon/${ item.pfmIdx }' />" class="glyphicon glyphicon-remove">삭제</a> --%>
 								<div class="pfmName">${item.name } <!--,  ${item.pfmIdx }--></div>
+								<div class="pfmDate">
+									<fmt:formatDate value="${item.pfmStart }" pattern="yyyy.MM.dd" />
+					     			~ <fmt:formatDate value="${item.pfmEnd }" pattern="yyyy.MM.dd" />
+								</div>
+								<div class="hallName">
+									${item.hallName}
+								</div>
 						</div>
 			</div>
 		</div>

@@ -86,6 +86,7 @@ public class MainController {
 		
 		// 세션에서 유저 정보 얻기
 		User user = (User) session.getAttribute("loginUser");
+		
 		if(user != null) {
 			int userIdx = user.getUserIdx();
 		

@@ -498,6 +498,7 @@ public class AdminPfmController {
 	@RequestMapping(value = "/admin/registcatefam", method = RequestMethod.GET)
 	public String registerCategoryFam(Model model, @RequestParam(defaultValue = "1") int curPage) {
 		List<Poster> posterList = pService.getListFam();// selectBypfmIdx();
+		logger.info("ddddddddddddddddddddddddddddddddddd "+posterList.toString());
 		int totalCnt = pService.getModalListFamCnt();
 		Paging paging = new Paging(totalCnt, curPage, 8, 5);
 		List<Poster> modalList = pService.getModalListFam(paging);
