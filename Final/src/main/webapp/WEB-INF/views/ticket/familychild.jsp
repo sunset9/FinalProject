@@ -155,6 +155,7 @@ $(document).ready(function() {
 	width: 200px;
 	height: 250px;
 	margin: 3px;
+	margin-bottom: 13px;
 }
 
 .themeList {
