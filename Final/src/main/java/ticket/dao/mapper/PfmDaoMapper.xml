@@ -319,33 +319,33 @@
 	
 	<select id="selectPfmByPreferTheme" resultMap="Performance" parameterType="hashmap">
 	
-				SELECT * FROM (
-		    SELECT ROWNUM as rnum, A.*  FROM (
-				SELECT * FROM (
-					SELECT 
-					    DISTINCT P.pfm_idx
-					    , (SELECT stored_name FROM poster_info PI WHERE PI.pfm_idx = P.pfm_idx) poster_name 
-					    , theme_idx
-					FROM performance P
-					INNER JOIN pfm_theme PT
-					ON P.pfm_idx = PT.pfm_idx
-					<if test="ptList != null">
-			  		WHERE theme_idx IN
-			  			<foreach collection="ptList" item="theme" open="(" close=")" separator=",">
-			  				#{theme.themeIdx}
-			  			</foreach>
-			  		</if>	
-			  	)
-			  	WHERE PFM_IDX NOT IN (
-			  		SELECT pfm_idx 
-			  		FROM my_choice 
-			  		WHERE user_idx= 1
-		        )
-		    ) A
-		)
+		SELECT * FROM ( 
+		    SELECT ROWNUM as rnum, A.* FROM ( 
+		        SELECT DISTINCT pfm_idx ,poster_name FROM ( 
+		            SELECT DISTINCT P.pfm_idx 
+		            , (SELECT stored_name FROM poster_info PI WHERE PI.pfm_idx = P.pfm_idx) poster_name 
+		            
+		            FROM performance P 
+		            INNER JOIN pfm_theme PT 
+		            ON P.pfm_idx = PT.pfm_idx 
+		            <if test="ptList != null">
+					  	WHERE theme_idx IN
+					  	<foreach collection="ptList" item="theme" open="(" close=")" separator=",">
+					  				#{theme.themeIdx}
+					  	</foreach>
+					  </if>	 
+		            order by pfm_idx
+		
+		        ) 
+		       WHERE pfm_idx NOT IN ( SELECT pfm_idx FROM my_choice WHERE user_idx= #{userIdx ) 
+		       ORDER BY pfm_idx
+		    ) A 
+		) 
 		<![CDATA[
-		WHERE rnum <11
-		]]>
+		WHERE rnum <11]]>
+
+			
+
 		
 
 	</select>
