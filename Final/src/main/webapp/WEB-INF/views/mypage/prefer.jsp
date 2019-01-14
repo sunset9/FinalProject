@@ -25,9 +25,12 @@
 	background: #EEE;
 }
 #searchArtist{
+	z-index: 9999;
+	
 	display: none;
 	border: 3px solid #CCC;
-	
+	width:300px;
+	height:506px;
 	position: absolute;
     top: 410px;
     right: 400px;
@@ -151,11 +154,13 @@
 	text-align: center;
 	border-top: 1px solid #CCC;
 	padding : 10px;
+	background: #FFF;
 }
 
 .resUnit{
+	text-align :center;
 	width:300px;
-	height: 500px;
+	height: 420px;
 	overflow-x:hidden;
 	overflow-y:scroll;
 }
@@ -207,6 +212,12 @@ li{
 	width: 60px;
 	height: 60px;
 	margin: 10px;
+	
+}
+.noneName{
+
+	font-size: 1.5em;
+	margin-top:20px;
 }
 </style>
 
@@ -375,14 +386,21 @@ $(document).ready(function(){
 		console.log("검색 버튼 함수 실행");
 // 		console.log($('#artist_text').length <1 );
 // 		console.log($('#artist_text').val())
-// 		if ($('#artist_text').length <1 ){
-// 			$('#searchArtist').show();
-// 			$('#searchArtist').html('');
-// 			$('#searchArtist').html('<span>아티스트의 이름을 입력해주세요.<span>');
-// 			return ;
-// 		}else {
+		if ($('#artist_text').val().length <1 ){
+			$('.resUnit').html('');
+			$('.resUnit').html('<span class ="noneName">아티스트의 이름을<br> 입력해주세요.<span>');
+
+			var btnDiv = $('<div class="btnDiv">');
+			
+			btnDiv.append('<button id = "cancelSearch" class ="cancel">취소</button>');
+			btnDiv.append('<button id = "selecting">선택완료</button>');
+			$('#searchArtist').append(btnDiv);	
+
+			$('#searchArtist').show();
+			return ;
+		}else {
 			searchArtistAjax();
-// 		}
+		}
 	});
 	
 	
@@ -398,16 +416,18 @@ $(document).ready(function(){
 				console.log("ajax 통신 성공:" +d);
 // 				var artists = d.artists;
 				var artists = d;
+				var unitDiv = $('<div class="resUnit">'); 
 				
 				// 아티스트 검색 결과 띄워주기
-				$('#searchArtist').show();
 				$('#searchArtist').html('');
+				$('#searchArtist').show();
+				
 				
 				if(artists.length == 0){
-					$('#searchArtist').html('검색 결과가 없습니다.');
+					unitDiv.append('<span class ="noneName">검색 결과가 <br> 없습니다.<span>');
+					$('#searchArtist').append(unitDiv)
 				}
 				var unit = 1;
-				var unitDiv = $('<div class="resUnit">'); 
 				var ul = $('<ul>')
 				
 				artists.forEach(function(artist){
@@ -524,7 +544,9 @@ function artChoice(artistIdx, name){
 
 <!-- 아티스트 검색결과 보여줄 Div -->
 <div id="searchArtist">
+	<div class="resUnit">
 	
+	</div>
 	
 </div>
 
