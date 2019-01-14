@@ -258,10 +258,10 @@ div.seatCharts-cell {
                             	  sc.get($(this).parents('tr:first').data('seatId')).click(); //좌석 클릭햇을때와 똑같은 동작
                               }catch(e){
                               }
-//                               var id = $(this).parents('li:first').attr("id"); //클릭된 li의 id 구하기
-//                               var ids = new Array(); 
-//                               ids = id.split("-"); 
-//                               $("li."+ids[2]).remove() //클릭된 li삭제
+                              var id = $(this).parents('tr:first').attr("id"); //클릭된 li의 id 구하기
+                              var ids = new Array(); 
+                              ids = id.split("-"); 
+                              $("tr."+ids[2]).remove() //클릭된 li삭제
                            });
 
                      //예약된 좌석 목록 
