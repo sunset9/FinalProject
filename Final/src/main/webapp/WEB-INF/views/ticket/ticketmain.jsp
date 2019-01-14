@@ -14,6 +14,7 @@
 $(window).load(function() {
 	/* 모두 로드된 후에 실행 */
 	
+	
 	// 맞춤 공연
 	$('#slider').bxSlider({
 		 minSlides: 1,
@@ -152,18 +153,15 @@ function pfmChoice(pfmIdx){
 /* 메인 배너 */
 #mainbannerbox {
 	position: relative;
-	max-width: 100%;
-	height: auto;
+/* 	max-width: 100%; */
+/* 	height: auto; */
  	border-bottom: 1px solid #ccc;   
-/* 	overflow: hidden; */
 	margin: 0 auto;
-/* 	z-index: 2; */
 }
 
 .mainbanner {
 	padding: 0;
 	margin: 0;
-/* 	height: 500px; */
 	list-style: none;
 }
 
@@ -172,8 +170,8 @@ function pfmChoice(pfmIdx){
 }
 
 .mainbanner li img {
-	max-width: 100%;
-	height: 350px;
+/* 	max-width: 100%; */
+/* 	height: 350px; */
 }
 
 #thumbImg {
@@ -534,6 +532,11 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
     width: 100%;
 }
 
+.mainBannerImg{
+	width: 100%;
+	height: 555.63px;
+}
+
 </style>
 
 <!-- 메인 배너 -->
@@ -542,7 +545,7 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
 		<c:forEach items="${bannerList }" var="list">
 			<li>
 			<a href="/ticket/pfmdetail?pfmIdx=${list.pfmIdx}">
-				<img src="/resources/image/${list.bannerImgStr}" style="width:1440px; height: 380px;" />
+				<img class="mainBannerImg" src="/resources/image/${list.bannerImgStr}" />
 			</a>
 			</li>
 		</c:forEach>
