@@ -105,9 +105,9 @@ $(document).ready(function() {
 			var pfmEnd = getDateSimpleString(list.pfmEnd);
 // 			console.log(pfmStart);
 			
-			a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small>'));
+			a.append($('<small>' + pfmStart + ' ~ ' + pfmEnd + '</small><br>'));
 			
-			a.append($('<p>'+ list.hallName +'</p>'));
+			a.append($('<small>'+ list.hallName +'</small>'));
 			li.append(a);
 			
 			$('#pfmList').append(li);
