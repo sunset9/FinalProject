@@ -145,6 +145,11 @@ function pfmChoice(pfmIdx){
 </script>
  
 <style type="text/css">
+
+img{
+	border: 1px solid #efefef !important;
+}
+
 .fitPfmSlider {
 	padding: 5px;
 }
@@ -296,9 +301,9 @@ li.pfmInfo:first-child:before {
 }
 li.pfmInfo:first-child {
     position: absolute;
-    top: 22px;
+    top: 0px;
     padding: 10px;
-    left: 2px;
+    left: 6px;
 }
 
 li.pfmInfo:nth-child(2),li.pfmInfo:nth-child(3),
@@ -311,26 +316,26 @@ li.pfmInfo:nth-child(4),li.pfmInfo:nth-child(5){
 
 li.pfmInfo:nth-child(2) {
     position: absolute;
-	left: 296px;
+	left: 300px;
     top: 0px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(3) {
 	position: absolute;
-    left: 450px;
+    left: 447px;
     top: 0px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(4) {
     position: absolute;
-	left: 296px;
-	top: 220px;
+	left: 300px;
+	top: 211px;
     padding: 10px;
 }
 li.pfmInfo:nth-child(5) {
     position: absolute;
-    left: 450px;
-    top: 220px;
+    left: 447px;
+    top: 212px;
     padding: 10px;
 }
 
@@ -343,14 +348,14 @@ li.pfmInfo {
 }
 
 .pfmInfo:first-child img {
-    width: 260px;
-    height: 359px;
+    width: 271px;
+    height: 372px;
 }
 
 .rankPoster {
     width: 133px;
     height: 185px;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
 }
 
 /* 메인 하단 */
@@ -429,13 +434,15 @@ div>h4 {
 }
 
 li.pfmInfo:first-child span span {
-    font-size: 16px;
+    font-size: 23px;
     display: block;
     width: 260px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 400;
+    margin: 0 auto;
+    margin-top: 8px;
 }
 
 li.pfmInfo:nth-child(2) span span, li.pfmInfo:nth-child(3) span span,
