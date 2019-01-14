@@ -525,6 +525,14 @@ li.pfmInfo:nth-child(4) span span, li.pfmInfo:nth-child(5) span span {
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+#mainThumb{
+    position: relative;
+    float: left;
+    top: -110px;
+    left: 35%;
+}
+
 </style>
 
 <!-- 메인 배너 -->
