@@ -144,7 +144,9 @@ function pfmChoice(pfmIdx){
 </script>
  
 <style type="text/css">
-
+a:focus, a:hover {
+    color: #1a1a1a;
+}
 .fitPfmSlider {
 	padding: 5px;
 }
@@ -278,7 +280,7 @@ li.pfmInfo:before {
     text-align: center;
     line-height: 2.3;
     left: -1px;
-    top: -1px;
+    top: 3px;
     color: #fff;
     font-weight: bold;
 }
