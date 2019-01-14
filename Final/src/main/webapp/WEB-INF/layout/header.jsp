@@ -124,6 +124,7 @@ a:hover	{color:#1a1a1a; text-decoration:none;}
 /* 마이페이지 드롭 박스 */
 .tap_menu li ul{
 background-color: white;
+top:49px;
 display:none;
 height:auto;
 padding:0px;
