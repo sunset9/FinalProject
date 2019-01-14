@@ -155,13 +155,7 @@ div.seatCharts-cell {
                                        if (this.status() == 'available') {
                                           //let's create a new <li> which we'll add to the cart items
                                           
-                                          var IsSeatSelect = $('#seat-map').find('.selected');
-                                          
-                                          if (IsSeatSelect.size() == 4){
-                                        	  alert ("좌석은 최대 4개만 선택 가능합니다");
-                                    		  return " ";
-                                    	  }
-                                          
+                                            var isTempSeat = false;
                                             var seatArr = new Array();
                                             var id= this.settings.id;
     		  								seatArr= id.split("_");
@@ -170,8 +164,45 @@ div.seatCharts-cell {
                                           	var col = seatArr[2];
                                           	
                                           	var price =  this.data().price;
-                                          	
                                           	price=price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+											  
+                                          	$.ajax({
+													type:"GET",
+													url:"/ticket/tempTicketing",
+													async: false,
+													data:{
+														"pfmIdx":${param.pfmIdx}
+											             , "hallIdx" : ${param.hallIdx}
+											             , "secName" : seatArr[0]
+											             , "seatRow" : seatArr[1]
+											             , "seatCol" : seatArr[2]
+														},
+													dataType:"json",
+													success:function(res){
+														if (res.isTempSeat){
+															isTempSeat = true;
+														}else{
+															isTempSeat = false;
+														}
+													},
+													error:function(e){
+														console.log(e);
+													}
+												})
+                                          
+										 if( isTempSeat == true){
+											 alert("이미선택된 좌석입니다.");
+											 return "available";
+										 }
+                                          
+                                          var IsSeatSelect = $('#seat-map').find('.selected');
+                                          
+                                          
+                                          if (IsSeatSelect.size() == 4){
+                                        	  alert ("좌석은 최대 4개만 선택 가능합니다");
+                                    		  return "available";
+                                    	  }
+                                          
                                           
                                           $(
                                                 '<tr><td class="selectSeatsList">'

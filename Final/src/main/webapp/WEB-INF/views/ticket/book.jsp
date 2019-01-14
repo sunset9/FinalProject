@@ -300,7 +300,7 @@ $(document).ready(function() {
 		  if($(this).is($('.nextBtn'))){
 			  if(curStep == 1){
 				  //이전단계 버튼 활성화
-				   tempSeatAdd();
+// 				   tempSeatAdd();
 				  if (isTempSeat){
 					  $('#stepInfo').hide();
 					  $('#seatBtn').show();
@@ -711,10 +711,7 @@ function tempSeatAdd(){
 					console.log(e);
 				}
 			})
-		  
 	  });
-
-	
 }
 	
 
