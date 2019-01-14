@@ -561,12 +561,12 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 		div1.append(img).append(strong);
 		
 		var div2 = $('<div class="expListContentInfo">');
-		var small1 = $('<small id="exptationContent">' + list.expContent + '</small><br>');
+		var small1 = $('<div id="exptationContent">' + list.expContent + '</div>');
 		var createDate = getDateSimpleString(list.createDate);
-		var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
+		var small2 = $('<div id="contentDay">등록일 ' + createDate + '</div>');
 		
 		if(list.nick == '${loginUser.nick }') {
-			var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">삭제</button>');
+			var btn1 = $('<button id="expDeleteBtn" onclick="deleteExp(' + list.expIdx + ');">x</button>');
 		}
 		
 // 		var input = $('<input type="text" id="expRecomm">');
@@ -600,12 +600,12 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 		div1.append(img).append(strong);
 		
 		var div2 = $('<div class="revListContentInfo">');
-		var small1 = $('<small id="reviewContent">' + list.reviewContent + '</small><br>');
+		var small1 = $('<div id="reviewContent">' + list.reviewContent + '</div>');
 		var createDate = getDateSimpleString(list.createDate);
-		var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
+		var small2 = $('<div id="contentDay">등록일 ' + createDate + '</div>');
 
 		if(list.nick == '${loginUser.nick }') {
-			var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">삭제</button>');
+			var btn1 = $('<button id="revDeleteBtn" onclick="deleteRev(' + list.reviewIdx + ');">x</button>');
 		}
 		
 // 		var input = $('<input type="text" id="revRecomm">');
@@ -641,18 +641,18 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 			div1.append(img).append(strong);
 				
 			var div2 = $('<div class="qnaListContentInfo">');
-			var small1 = $('<small id="QnaContent">' + list.qnaContent + '</small><br>');
+			var small1 = $('<div id="QnaContent">' + list.qnaContent + '</div>');
 			var createDate = getDateSimpleString(list.createDate);
-			var small2 = $('<small id="contentDay">등록일 ' + createDate + '</small>');
+			var small2 = $('<div id="contentDay">등록일 ' + createDate + '</div>');
 			
 			if(list.nick == '${loginUser.nick }') {
-				var btn1 = $('<button id="qnaDeleteBtn'+list.qnaIdx+'" type="button" onclick="deleteQna(' + list.qnaIdx + ');">삭제</button>');
+				var btn1 = $('<button id="qnaDeleteBtn'+list.qnaIdx+'" type="button" onclick="deleteQna(' + list.qnaIdx + ');" class="qnaDeleteBtn">x</button>');
 			}
 			
 			// 대댓 관련
 			var recommDiv =  $('<div class="inputRecomm">');
 			var recInput = $('<input type="text" id="qnaRecomm'+list.qnaIdx+'" name="qnaRecomm">');
-			var btn2 = $('<button id="qnaReBtn'+list.qnaIdx+'" type="button" value="'+list.qnaIdx+'" onclick="insertQnaRecomm(' + list.qnaIdx + ');">답글</button>');
+			var btn2 = $('<button id="qnaReBtn'+list.qnaIdx+'" type="button" value="'+list.qnaIdx+'" onclick="insertQnaRecomm(' + list.qnaIdx + ');" class="qnaReBtn">답글</button>');
 			recommDiv.append(recInput).append(btn2);
 			console.log(recommDiv);
 			console.log(recInput);
@@ -686,18 +686,39 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 </script>
 
 <style>
+  
+#revBtn {
+    width: 86px;
+    height: 86px;
+    float: right;
+    position: absolute;
+    right: 65px;
+    border: 1px solid #dadada;
+}
+
 #contentDay {
 	color: #A4A4A4;
+	font-size : 14px;
+	margin-top: 8px;
+    margin-bottom: 8px;
+    height: 22px;
 }
   
 .top-wrapper {
 	border: 1px solid #e6e6e6;
 }
 
-.expListContentInfo, .revListContentInfo, .qnaListContentInfo  {
+.expListContentInfo, .revListContentInfo {
 	margin-left: 30px;
 	font-size: 18px;
 }
+
+.qnaListContentInfo {
+	width: 700px;
+	position: relative;
+}
+
+.qnaListContentInfo > 
 
 #choiceBtn {
     float: right;
@@ -812,15 +833,51 @@ ul.tabs li.current{
 	 height: 50px;
 }
 
-.insertExp, .insertRev, .insertQna {
-	height: auto;
-	margin-bottom: 30px;
+.insertQna {
+    height: auto;
+    margin-bottom: 30px;
+    height: 140px;
+    margin-bottom: 34px;
+    padding: 20px;
+    background: #fcfcfc;
+    position: relative;
 }
 
-.insertExpUserInfo, .insertRevUserInfo, .insertQnaUserInfo {
-	float: left;
-	text-align: center;
-	margin: 5px;
+.insertRev {
+    height: auto;
+    margin-bottom: 30px;
+    height: 140px;
+    margin-bottom: 34px;
+    padding: 20px;
+    background: #fcfcfc;
+    position: relative;
+}
+
+.insertExp {
+    height: 140px;
+    margin-bottom: 34px;
+    padding: 20px;
+    /* border: 1px solid; */
+    background: #fcfcfc;
+    position: relative;
+}
+
+.insertRevUserInfo{
+    float: left;
+    position: absolute;
+    left: 53px;
+}
+
+.insertQnaUserInfo {
+    float: left;
+    position: absolute;
+    left: 53px;
+}
+
+.insertExpUserInfo {
+    float: left;
+    position: absolute;
+    left: 53px;
 }
 
 #castimg{
@@ -878,21 +935,42 @@ ul.tabs li.current{
 /* 	background-color: yellow; */
 }
 
-#expectationContent, #reviewContent, #qnaContent {
+#exptationContent, #reviewContent, #qnaContent {
 	font-size: 15px;
 }
 
-.expListUserInfo, .revListUserInfo, .qnaListUserInfo {
+.revListUserInfo, .qnaListUserInfo {
 	float: left;
 	text-align: center;
 	width: 170px;
 }
 
-#oneExpec, #oneReview, #oneQna {
+.expListUserInfo {
+	float: left;
+	text-align: center;
+	width: 160px;
+}
+#oneQna {
+    display: flex;
+    margin: 20px 0px 20px 0px;
+    padding-bottom: 0px;
+    padding-top: 20px;
+    border-top: 1px solid #e6e6e6;
+}
+
+#oneReview {
+    display: flex;
+    margin: 20px 0px 20px 0px;
+    padding-bottom: 0px;
+    padding-top: 20px;
+    border-top: 1px solid #e6e6e6;
+}
+#oneExpec {
 	display: flex;
-	margin: 20px 0px 20px 0px;
-	padding-bottom: 5px;
-	border-bottom: 1px solid #BDBDBD;
+    margin: 20px 0px 20px 0px;
+    padding-bottom: 0px;
+    padding-top: 20px;
+    border-top: 1px solid #e6e6e6;
 }
 
 .tab-link {
@@ -900,11 +978,29 @@ ul.tabs li.current{
 	text-align: center;
 }
 
-#expDeleteBtn, #revDeleteBtn, #qnaDeleteBtn, #qnaReBtn, #revReBtn, #expReBtn {
+#revDeleteBtn, #qnaDeleteBtn, #qnaReBtn, #revReBtn, #expReBtn {
 	border: none;
 	background-color: #FFFFFF;
 	color: #6E6E6E;
 	font-size: 15px;
+	border: 0px;
+}
+
+#revDeleteBtn {
+	border: none;
+	background-color: #FFFFFF;
+	color: #6E6E6E;
+	font-size: 15px;
+	border: 0px;
+	padding : 0px;
+}
+
+#expDeleteBtn {
+	padding: 0px;
+	background-color: #FFFFFF;
+	color: #6E6E6E;
+	font-size: 15px;
+	border: 0px;
 }
 
 table {
@@ -926,11 +1022,64 @@ td {
     padding-left: 45px;
 }
 
-#expectation, #review, #qna, #exptextarea, #revtextarea, #qnatextarea {
+#review, #qna, #exptextarea, #revtextarea, #qnatextarea {
 	/* textarea 사이즈 임의로 수정하지 못하도록 */
 	resize: none;
+	float: left;
+    width: 830px;
+    position: absolute;
+    right: 171px;
+    border: 1px solid #dadada;
 }
 
+#expectation {
+    float: left;
+    width: 830px;
+    position: absolute;
+    right: 171px;
+    border: 1px solid #dadada;
+}
+
+#expecBtn {
+    width: 86px;
+    height: 86px;
+    float: right;
+    position: absolute;
+    right: 65px;
+    border: 1px solid #dadada;
+}
+
+#qnaBtn {
+	width: 86px;
+    height: 86px;
+    float: right;
+    position: absolute;
+    right: 65px;
+    border: 1px solid #dadada;
+}
+
+.noresize {
+  resize: none; /* 사용자 임의 변경 불가 */
+  resize: both; /* 사용자 변경이 모두 가능 */
+  resize: horizontal; /* 좌우만 가능 */
+  resize: vertical; /* 상하만 가능 */
+}
+
+#qnaRecomm22 {
+    margin-top: 10px;
+}
+
+.qnaDeleteBtn {
+    float: right;
+    position: absolute;
+    left: 125px;
+    top: 25px;
+    border: 0px solid #dadada;
+}
+
+.qnaReBtn {
+    border: 1px solid #dadada;
+}
 /* #infoTitle { */
 /* 	width: 150px; */
 /* } */
@@ -1055,7 +1204,7 @@ td {
 					<strong>${loginUser.nick }</strong>
 				</div>
 
-				<textarea id="expectation" cols="100" rows="4"></textarea>
+				<textarea class="noresize" id="expectation" cols="100" rows="4"></textarea>
 					<button type="submit" id="expecBtn">작성</button>
 				</c:if>
 				
@@ -1082,10 +1231,10 @@ td {
 				
 				<!-- 기대평 내용 출력 div -->
 				<div class="expListContentInfo">
-					<small id="exptationContent">${list.expContent }</small><br>
-					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+					<div id="exptationContent">${list.expContent }</div>
+					<div id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></div>
 					<c:if test="${loginUser.nick eq list.nick}">
-						<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">삭제</button>
+						<button id="expDeleteBtn" onclick="deleteExp(${list.expIdx});">x</button>
 <%-- 						<button id="expUpdateBtn" onclick="updateExp(${list.expIdx});">수정</button> --%>
 					</c:if>
 <%-- 					<input type="text" id="expRecomm"><button id="expReBtn" value="${list.expIdx }">답글</button> --%>
@@ -1146,10 +1295,10 @@ td {
 				
 				<!-- 관람후기 내용 출력 div -->
 				<div class="revListContentInfo">
-					<small id="reviewContent">${list.reviewContent }</small><br>
-					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+					<div id="reviewContent">${list.reviewContent }</div>
+					<div id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></div>
 					<c:if test="${loginUser.nick eq list.nick}">
-						<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">삭제</button>
+						<button id="revDeleteBtn" onclick="deleteRev(${list.reviewIdx});">x</button>
 					</c:if>
 <%-- 					<input type="text" id="revRecomm"><button id="revReBtn" value="${list.reviewIdx }">답글</button> --%>
 				</div>
@@ -1207,17 +1356,17 @@ td {
 				
 				<!-- QNA 내용 출력 div -->
 				<div class="qnaListContentInfo">
-					<small id="QnaContent">${list.qnaContent }</small><br>
-					<small id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></small>
+					<div id="QnaContent">${list.qnaContent }</div>
+					<div id="contentDay">등록일 <fmt:formatDate value="${list.createDate }" pattern="yyyy.MM.dd"/></div>
 					<c:if test="${loginUser.nick eq list.nick}">
-						<button id="qnaDeleteBtn${list.qnaIdx }" type="button" onclick="deleteQna(${list.qnaIdx});">삭제</button>
+						<button id="qnaDeleteBtn${list.qnaIdx }" type="button" onclick="deleteQna(${list.qnaIdx});" class="qnaDeleteBtn">x</button>
 					</c:if>
 					
 					<!-- 대댓글 입력 -->
 					<div class="inputRecomm">
 					<input type="text" id="qnaRecomm${list.qnaIdx}" name="qnaRecomm">
 					<button id="qnaReBtn${list.qnaIdx}" type="button" value="${list.qnaIdx }"
-						 onclick="insertQnaRecomm(${list.qnaIdx});">답글</button>
+						 onclick="insertQnaRecomm(${list.qnaIdx});" class="qnaReBtn">답글</button>
 					</div>
 					
 					<!-- 대댓글 리스트 -->
