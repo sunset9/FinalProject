@@ -6,8 +6,8 @@ $(document).ready(function () {
 	
 	// 	$('.14').attr("fill","#FFF");
 	
-	$('path').attr("fill","#CCC");
-	$('rect').attr("fill","#CCC");
+	$('path').attr("fill","#83A563");
+	$('rect').attr("fill","#83A563");
 
 	//섹션에 idx를 넣어주기위해 ajax로 DB에 저장된 원본 구역정보를 불러온다 
 	$.ajax({
