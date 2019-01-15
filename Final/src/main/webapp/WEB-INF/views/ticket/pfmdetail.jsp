@@ -653,12 +653,18 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 			var recommDiv =  $('<div class="inputRecomm">');
 			var recInput = $('<input type="text" id="qnaRecomm'+list.qnaIdx+'" name="qnaRecomm">');
 			var btn2 = $('<button id="qnaReBtn'+list.qnaIdx+'" type="button" value="'+list.qnaIdx+'" onclick="insertQnaRecomm(' + list.qnaIdx + ');" class="qnaReBtn">답글</button>');
-			recommDiv.append(recInput).append(btn2);
+			
+			if(${loginUser.mGradeIdx} == 2){
+				recommDiv.append(recInput).append(btn2);
+				div2.append(small1).append(small2).append(recommDiv);
+			}else{
+				div2.append(small1).append(small2);
+			}
 			console.log(recommDiv);
 			console.log(recInput);
 			console.log(btn2);
 			
-			div2.append(small1).append(small2).append(recommDiv);
+			
 			
 			if(list.nick == '${loginUser.nick }') {
 				div2.append(btn1);
@@ -1383,12 +1389,13 @@ td {
 					</c:if>
 					
 					<!-- 대댓글 입력 -->
-					<div class="inputRecomm">
-					<input type="text" id="qnaRecomm${list.qnaIdx}" name="qnaRecomm">
-					<button id="qnaReBtn${list.qnaIdx}" type="button" value="${list.qnaIdx }"
-						 onclick="insertQnaRecomm(${list.qnaIdx});" class="qnaReBtn">답글</button>
-					</div>
-					
+					<c:if test = "${loginUser.mGradeIdx eq 2}">
+						<div class="inputRecomm">
+						<input type="text" id="qnaRecomm${list.qnaIdx}" name="qnaRecomm">
+						<button id="qnaReBtn${list.qnaIdx}" type="button" value="${list.qnaIdx }"
+							 onclick="insertQnaRecomm(${list.qnaIdx});" class="qnaReBtn">답글</button>
+						</div>
+					</c:if>
 					<!-- 대댓글 리스트 -->
 					<div id="qnaRecomm_2${list.qnaIdx}">
 					<c:forEach items="${qnaRecommList }" var="relist">
