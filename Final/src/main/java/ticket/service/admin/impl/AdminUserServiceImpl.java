@@ -162,7 +162,7 @@ public class AdminUserServiceImpl implements AdminUserService{
 			sumSecPay += pay.get(i).getSecPay();
 			//DB삭제
 			uDao.deleteBook(pay.get(i)); //예매내역삭제
-			uDao.deleteSeat(pay.get(i)); //좌석 취소
+			//uDao.deleteSeat(pay.get(i)); //좌석 취소
 			pDao.updatePayment(pay.get(i)); //paid_amount에서 취소값 빼주기
 			
 		}
