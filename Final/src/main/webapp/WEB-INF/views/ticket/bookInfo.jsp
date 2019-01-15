@@ -166,6 +166,7 @@ $(document).ready(function() {
 			success:function(res){
 				$('#ResidualSeatList').html("");
 				for(var i =0;i<res.hashMap.allSeats.length;i++){ //전체좌석
+					var check = false;
 					var pay = res.hashMap.allSeats[i].secPay;
 					pay = pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					
@@ -173,21 +174,32 @@ $(document).ready(function() {
 					if (res.hashMap.BookedSeats.length > 0){//예매된 좌석이 있을경우
 						for(var j=0;j<res.hashMap.BookedSeats.length;j++){
 							if(res.hashMap.allSeats[i].appSec == res.hashMap.BookedSeats[j].appSec){
+								check = true;
 								var ResidualSeat = res.hashMap.allSeats[i].cnt - res.hashMap.BookedSeats[j].cnt;
 								$('#ResidualSeatList').append("<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec + " 석</td> <td style='width:30%; text-align: right;'>"+" "+pay+" 원 </td> <td style='width: 20%; text-align: right;'>"+ ResidualSeat +" 석</td></tr></table></li>");
 								
-							}else{
-								$('#ResidualSeatList').append(
+							}
+						}
+					
+						if(check == false){
+							$('#ResidualSeatList').append(
 										"<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec 
 										+ " 석 </td> <td style='width:30%; text-align: right;'>"+" "+pay+" 원 </td> <td style='width:20%;  text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
 								);
-							}
-						}
+						};
+					
 					}else{//예매된 좌석이 없을경우
 						$('#ResidualSeatList').append(
 								"<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec 
 								+ " 석</td> <td style='width:30%; text-align: right;'> "+" "+pay+" 원 </td> <td style='width:20%; text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
 						);
+					}
+					
+					if(check = false){
+						$('#ResidualSeatList').append(
+									"<li><table class='table'><tr><td style='width:20%; color: #F2B134;'>"+ res.hashMap.allSeats[i].appSec 
+									+ " 석 </td> <td style='width:30%; text-align: right;'>"+" "+pay+" 원 </td> <td style='width:20%;  text-align: right;'>"+ res.hashMap.allSeats[i].cnt +" 석</td></tr></table></li>"
+							);
 					}
 				
 				}
