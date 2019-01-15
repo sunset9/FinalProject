@@ -158,6 +158,23 @@ $(document).ready(function() {
 	margin-bottom: 13px;
 }
 
+.bannerImg  span{
+	display: inline-block;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.imgname{
+	display: inline-block;
+	width: 230px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
 .themeList {
 	margin: 5px;
 	text-align: center;

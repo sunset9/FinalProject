@@ -138,6 +138,11 @@ td{
 }
 .pfminfo span:first-child {
 	display: block;
+	width: 220px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
 }
 .pfminfo span:not(:first-child) {
 	color: #666;
