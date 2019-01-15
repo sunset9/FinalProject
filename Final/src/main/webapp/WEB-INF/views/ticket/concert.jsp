@@ -92,14 +92,15 @@ $(document).ready(function() {
 		
 		pfmList.forEach(function(list) {
 			
+			
 			var li =$('<li class="pfmInfo">');
 			
 			var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
 			var span = $('<span class="thumImg">');
-			var img = $('<img class="imgname" src="/resources/image/'+ list.posterName + '"><br>');
+			var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
 			
 			a.append(span.append(img));
-			a.append($('<strong class= "pfmTitle">'+ list.name +'</strong><br>'));
+			a.append($('<strong class= "imgname">'+ list.name +'</strong><br>'));
 			
 			var pfmStart = getDateSimpleString(list.pfmStart);
 			var pfmEnd = getDateSimpleString(list.pfmEnd);
@@ -141,7 +142,7 @@ $(document).ready(function() {
 </script>
 
 <style>
-.imgname{
+.concertImg{
 	display: inline-block;
 	width: 230px;
 	white-space: nowrap;
@@ -270,7 +271,7 @@ li.pfmInfo {
 				<span class="thumImg">
 					<img class="concertImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
-				<strong class="imgname">${list.name }</strong><br>
+				<strong class="concertImg">${list.name }</strong><br>
 				<small>
 					<fmt:formatDate value="${list.pfmStart }" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${list.pfmEnd }" pattern="yyyy.MM.dd"/><br>
 				</small>
