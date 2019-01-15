@@ -155,6 +155,13 @@ $(document).ready(function() {
 	margin: 3px;
 	margin-bottom: 13px;
 }
+.bannerImg  span{
+	display: inline-block;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
 .themeList {
 	margin: 5px;
@@ -208,6 +215,15 @@ li.pfmInfo {
 	font-weight: bold;
 	color: #f2b134
 }
+.imgname{
+	display: inline-block;
+	width: 230px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+
 </style>
 <div class="container">
 	<!-- 관리자가 선택한 콘서트 상단 배너 15개 -->

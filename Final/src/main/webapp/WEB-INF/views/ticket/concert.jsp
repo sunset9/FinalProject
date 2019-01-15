@@ -96,10 +96,10 @@ $(document).ready(function() {
 			
 			var a = $('<a href="/ticket/pfmdetail?pfmIdx='+ list.pfmIdx + '">');
 			var span = $('<span class="thumImg">');
-			var img = $('<img class="concertImg" src="/resources/image/'+ list.posterName + '"><br>');
+			var img = $('<img class="imgname" src="/resources/image/'+ list.posterName + '"><br>');
 			
 			a.append(span.append(img));
-			a.append($('<strong>'+ list.name +'</strong><br>'));
+			a.append($('<strong class= "pfmTitle">'+ list.name +'</strong><br>'));
 			
 			var pfmStart = getDateSimpleString(list.pfmStart);
 			var pfmEnd = getDateSimpleString(list.pfmEnd);
@@ -141,6 +141,14 @@ $(document).ready(function() {
 </script>
 
 <style>
+.imgname{
+	display: inline-block;
+	width: 230px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
 .topbannerimg {
 	text-align: center;
 }
@@ -157,6 +165,13 @@ $(document).ready(function() {
 	height: 250px;
 	margin: 3px;
 	margin-bottom: 13px;
+}
+.bannerImg span{
+	display: inline-block;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .themeList {
