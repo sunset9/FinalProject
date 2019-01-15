@@ -133,7 +133,7 @@ td{
 	display: inline-block;
 	margin-top: 25px;
 	position: relative;
-	left: -18px;
+	left: -5px;
     text-align: left;
 }
 .pfminfo span:first-child {
