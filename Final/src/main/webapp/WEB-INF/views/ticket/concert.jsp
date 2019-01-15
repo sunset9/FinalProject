@@ -271,7 +271,7 @@ li.pfmInfo {
 				<span class="thumImg">
 					<img class="concertImg" src="/resources/image/${list.posterName}" /><br>
 				</span>
-				<strong class="concertImg">${list.name }</strong><br>
+				<strong class="imgname">${list.name }</strong><br>
 				<small>
 					<fmt:formatDate value="${list.pfmStart }" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${list.pfmEnd }" pattern="yyyy.MM.dd"/><br>
 				</small>
