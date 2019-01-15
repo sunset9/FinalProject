@@ -503,69 +503,27 @@ $(document).ready(function() {
 								  path.data("pay",res.hashMap.secMap[i].secPay); //pay라는 임의의 커스텀 데이터를 넣어줌
 								  path.data("secName",res.hashMap.secMap[i].oriSecName);
 								  path.data("appName",res.hashMap.secMap[i].appSec);
-// 								  path.data("IsSec",true);
-								  path.addClass("IsSec");
+								  path.data("IsSec",true);
+// 								  path.addClass("IsSec");
 							  }
-							  
 						  }
-					
 					}
-					
-					
 					if(obj.is($('#selectedSeats'))){
 						loadSectionInfo();
 					}
-					
-					//구역 저장안했으면 클릭안되게
-// 					$('.seat_block').find('path').each(function () {
-// 						if(!$(this).hasClass("IsSec")){
-// 							$(this).css("display","none");
-// 							var classStr = $(this).attr("class");
-// 							if(typeof classStr != "undefined"){
-// 								var classStrArr = new Array();
-// 								classStrArr = classStr.split(" ");
-// 								var secName = classStrArr[0];
-// 								$('.seat_block').find('text').each(function () {
-// 									var textVal = $.trim($(this).text());
-// 									if( textVal == classStrArr[0]){
-// 										$(this).css("display","none");
-// 									}
-// 								});	
-// 							}
-						
-// 						}
-						
-// 					})
-					
-					
-// 					$('.seat_block').find('rect').each(function () {
-// 						if(!$(this).hasClass("IsSec")){
-// 							$(this).css("display","none");
-// 							var classStr = $(this).attr("class");
-// 							if(typeof classStr != "undefined"){
-// 								var classStrArr = new Array();
-// 								classStrArr = classStr.split(" ");
-// 								var secName = classStrArr[0];
-// 								$('.seat_block').find('text').each(function () {
-// 									var textVal = $.trim($(this).text());
-// 									if( textVal == classStrArr[0]){
-// 										$(this).css("display","none");
-// 									}
-// 								});	
-// 							}
-						
-// 						}
-						
-// 					})
 					
 			  },
 			  error:function(e){
 				  console.log(e);
 			  }
 			  
-		  })
+		  });
+	
 		  
 	  }
+	  
+
+	  
 	  
 		//세션 정보 클래스에 넣어주기
 		function loadSectionInfo() {
@@ -585,6 +543,49 @@ $(document).ready(function() {
 					}
 					
 					loadSectionPay();
+					
+					  
+					//구역 저장안했으면 클릭안되게
+					$('.seat_block').find('path').each(function () {
+						if(typeof $(this).data("IsSec") == "undefined"){
+							$(this).css("display","none");
+							console.log($(this).data("IsSec"))
+							var classStr = $(this).attr("class");
+							if(typeof classStr != "undefined"){
+								var classStrArr = new Array();
+								classStrArr = classStr.split(" ");
+								var secName = classStrArr[0];
+								$('.seat_block').find('text').each(function () {
+									var textVal = $.trim($(this).text());
+									if( textVal == classStrArr[0]){
+										$(this).css("display","none");
+									}
+								});	
+							}
+						}
+						
+					});
+					
+					
+					$('.seat_block').find('rect').each(function () {
+						if(typeof $(this).data("IsSec") == "undefined"){
+							$(this).css("display","none");
+							var classStr = $(this).attr("class");
+							if(typeof classStr != "undefined"){
+								var classStrArr = new Array();
+								classStrArr = classStr.split(" ");
+								var secName = classStrArr[0];
+								$('.seat_block').find('text').each(function () {
+									var textVal = $.trim($(this).text());
+									if( textVal == classStrArr[0]){
+										$(this).css("display","none");
+									}
+								});	
+							}
+						
+						}
+					})  	
+					
 				}
 			});	
 			
