@@ -654,7 +654,9 @@ function insertQnaRecommList(qnaRecommList,qnaIdx) {
 			var recInput = $('<input type="text" id="qnaRecomm'+list.qnaIdx+'" name="qnaRecomm">');
 			var btn2 = $('<button id="qnaReBtn'+list.qnaIdx+'" type="button" value="'+list.qnaIdx+'" onclick="insertQnaRecomm(' + list.qnaIdx + ');" class="qnaReBtn">답글</button>');
 			
-			if(${loginUser.mGradeIdx} == 2){
+			var mGrade = '${loginUser.mGradeIdx}';
+			
+			if( mGrade == '2'){
 				recommDiv.append(recInput).append(btn2);
 				div2.append(small1).append(small2).append(recommDiv);
 			}else{
@@ -1114,7 +1116,7 @@ td {
 /* 	width: 200px; */
 /* } */
 
-.pfmInfo{
+.pfmInfo, .pfmInfo table{
 	width: 100%;
 }
 </style>

@@ -47,11 +47,6 @@ public class MainController {
 		return "/ticket/ticketmain";
 	}
 
-	@RequestMapping(value="/ticket/test")
-	public void test(Model model) {
-		logger.info("Test");
-	}
-	
 	
 	/**
 	 * 최종수정일: 2019.01.14
